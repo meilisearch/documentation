@@ -69,7 +69,7 @@ curl \
 
 
 
-## Get one index
+## Get an index schema
 
 <RouteHighlighter method="GET" route="/indexes/:index"/>
 
@@ -87,7 +87,6 @@ Get the schema of a specific index.
 | Variable  | Description           |
 |-----------|-----------------------|
 | **index** | The name of the index |
-
 
 ### Example
 
