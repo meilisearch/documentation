@@ -24,19 +24,3 @@ Response body :
      "message": "A message error"
 }
 ```
-
-## Routes
-
-||||
-|-|-|-|
-| <span class="get_method">GET</span>  | /indexes                                   | [Get all indexes](/indexes#list-all-indexes) |
-| <span class="get_method">GET</span>  | /indexes/`:index`                          | [Get one index](/indexes#get-index) |
-| <span class="get_method">GET</span> | /indexes/`:index`/documents/`:identifier`   | [Get one document](/documents#get-one-document) |
-| <span class="get_method">GET</span> | /indexes/`:index`/documents                 | [Browse documents](/documents#browse-documents) |
-| <span class="get_method">GET</span>   | /indexes/`:index`/search                  | [Search in an index](/search#search-in-index) |
-| <span class="post_method">POST</span> | /indexes/`:index`/documents               | [Add or Update documents](/documents#create-documents) |
-| <span class="post_method">POST</span> | /indexes/`:index`/documents/clear         | [Add or Update documents](/documents#create-documents) |
-| <span class="post_method">POST</span> | /indexes/`:index`/documents/batch         | [Batch write documents](/documents#batch-documents) |
-| <span class="post_method">POST</span> | /indexes/`:index`/documents/clear         | [Clear all documents](/documents#create-documents) |
-| <span class="delete_method">DELETE</span> | /indexes/`:index`/documents           | [Delete multiple documents](/documents#delete-documents) |
-| <span class="delete_method">DELETE</span> | /indexes/`:index`/documents/`:documentId` | [Delete one document](/documents#delete-document) |

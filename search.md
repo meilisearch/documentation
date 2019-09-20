@@ -8,7 +8,7 @@ First we have to explain some terms that are used in this reading.
 - A query string is the full list of all the words that the end user is searching for (i.e. "saturday night fever").
 - A query word is one of the words that compose the query string (i.e "night")
 
-## Typo rules
+### Typo rules
 
 The typo rules are used before sorting the documents. They are used to aggregate them, to choose which documents contain words similar to the queried words.
 
@@ -33,7 +33,7 @@ This means that "saturday", which is 7 characters long uses the second rule and 
 - "satuday" is accepted because it contains **one typo**.
 - "s**u**tuday" is not accepted because it contains **two typos**.
 
-## Ranking rules
+### Ranking rules
 
 All the documents that have been aggregated using the typo rules above can now be sorted. Meili uses a [bucket sort].
 
@@ -61,7 +61,7 @@ Search for documents matching a specific query in the given index.
 
 | Header              | Value         |                        |
 |---------------------|---------------|------------------------|
-| **X-Meili-API-Key** | `$APIKEY`     | _ACL: `DocumentsRead`_ |
+| **X-Meili-API-Key** | `$API_KEY`    | _ACL: `DocumentsRead`_ |
 | **Accept-encoding** | gzip, deflate |                        |
 
 #### Path Variables
@@ -77,7 +77,7 @@ Search for documents matching a specific query in the given index.
 | **q**                     | query string _(mandatory)_                         |               |
 | **offset**                | number of documents to skip                        | 0             |
 | **limit**                 | number of documents to take                        | 20            |
-| **attributesToRetrieve**  | attributes to show                                 | *             |
+| **attributesToRetrieve**  | document attributes to show                        | *             |
 | **attributesToSearchIn**  | which attributes are used to match documents       | *             |
 | **attributesToCrop**      | which attributes to crop                           | none          |
 | **cropLength**            | limit length at which to crop specified attributes | 200           |
@@ -85,14 +85,16 @@ Search for documents matching a specific query in the given index.
 | **matches**               | whether to return the raw matches or not           | false         |
 
 #### Example
+
 ```bash
 curl \
   --location \
   --request GET 'http://localhost:8080/indexes/movie/search?q=american%20ninja%205' \
-  --header 'X-Meili-API-Key: {{apiKey}}'
+  --header "X-Meili-API-Key: $API_KEY"
 ```
 
-<span class="exemple_child">**Response**: `200 Ok`</span>
+#### Response: `200 Ok`
+
 ```json
 [
   {

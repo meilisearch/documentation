@@ -32,7 +32,7 @@ By default the Meili dashboard infer the schema from the **first** document sent
 :::
 
 ::: danger
-Document fields which do not correspond to the schema fields are ignored.
+Documents fields which do not correspond to the schema fields are ignored.
 The only mandatory document field is the **identifier**.
 :::
 
@@ -65,31 +65,40 @@ the document _B_ will be considered better than the document _A_. You can read m
 [1]: /search#ranking-rules
 
 
+
+
+
 ## Get one document
 
 <RouteHighlighter method="GET" route="/indexes/:index/documents/:identifier"/>
 
-Get one document using its specific identifier.
+Get one document using its unique identifier.
 
-| Header              | Value          |                        |
-|---------------------|----------------|------------------------|
-| **X-Meili-API-Key** | `$API_KEY`     | _ACL: `DocumentsRead`_ |
-| **Accept-encoding** | gzip, deflate  |                        |
+#### Headers
+
+| Header              | Value         |                        |
+|---------------------|---------------|------------------------|
+| **X-Meili-API-Key** | `$API_KEY`    | _ACL: `DocumentsRead`_ |
+| **Accept-encoding** | gzip, deflate |                        |
+
+#### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index**         | The name of the index |
-| **identifier**    | [The unique identifier of the document](/indexes#schema_definition) |
+| **identifier**    | [The unique identifier of the document](/documents#schemas) |
 
-#### Example Query
+#### Example
+
 ```bash
 curl \
   --location \
-  --request GET "localhost:8080/indexes/movie/documents/25684" \
+  --request GET 'https://localhost:8080/indexes/movie/documents/25684' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
-##### Response `200 Ok`
+#### Response: `200 Ok`
+
 ```json
 {
   "id": 25684,
@@ -111,37 +120,42 @@ curl \
 Get the documents in an unordered way.
 
 ::: danger
-non-optimized route
+This route is a non-optimized route, it can be a little bit slow to answer.
 :::
 
 #### Headers
 
-||||
-|---|---|---|
-| **X-Meili-API-Key** | API_KEY | <em> ACL:`DocumentsRead` </em> |
-| **Content-Type**  |  application/json | |
+| Header              | Value            |                        |
+|---------------------|------------------|------------------------|
+| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsRead`_ |
+| **Content-Type**    | application/json |                        |
+| **Accept-encoding** | gzip, deflate    |                        |
 
 #### Path Variables
-|||
-|---|---|
-| **index** | The name of the index  |
+
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **index**         | The name of the index |
 
 #### Query Parameters
-|**Key**| **value description** | **default** |
-|---|---|---|
-| **offset** | number to offset  | 0 |
-| **length** | number of elements to get back  | 20 |
-| **attributesToRetrieve** | attributes of documents to retrieve  | * |
+
+| Query Parameter           | Description                          | Default Value |
+|---------------------------|--------------------------------------|:-------------:|
+| **offset**                | number of documents to skip          | 0             |
+| **length**                | number of documents to take          | 20            |
+| **attributesToRetrieve**  | document attributes to show          | *             |
 
 #### Example
+
 ```bash
 curl \
   --location \
-  --request GET "localhost:8080/indexes/movie/documents?length=5" \
-  --header 'X-Meili-API-Key: API_KEY'
+  --request GET 'https://localhost:8080/indexes/movie/documents?length=5' \
+  --header "X-Meili-API-Key: $API_KEY"
 ```
 
-<span class="exemple_child">**response**: `200` Ok</span>
+#### Response: `200 Ok`
+
 ```json
 [
   {
@@ -162,26 +176,36 @@ curl \
 
 
 
+
+
 ## Add or Update documents
 
 <RouteHighlighter method="POST" route="/indexes/:index/documents"/>
 
-Add a list of document(s) or update them if their identifier already exist.
+Insert a list of documents or update them if they already exist based on [their unique identifiers](/documents#schemas).
 
 #### Headers
-||||
-|---|---|---|
-| **X-Meili-API-Key** | API_KEY  | <em> ACL:`DocumentsWrite` </em> |
-| **Content-Type** | `application/json`  | |
-| **Accept-encoding** | `gzip, deflate` ||
+
+| Header              | Value            |                        |
+|---------------------|------------------|------------------------|
+| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsRead`_ |
+| **Content-Type**    | application/json |                        |
+| **Accept-encoding** | gzip, deflate    |                        |
 
 #### Path Variables
-|||
-|---|---|
-| **index** | The name of the index  |
+
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **index**         | The name of the index |
 
 #### Body
-**Json array** of documents containing attributes from the given `index`. [See indexes documentation](/indexes#summary)
+
+The body is composed of a **Json array** of documents composed of fields corresponding to the index schema.
+You can [read more about fields and schemas](/documents#schemas).
+
+::: warning
+Documents fields which are not known to the index schema will be ignored
+:::
 
 ```json
 [
@@ -191,18 +215,18 @@ Add a list of document(s) or update them if their identifier already exist.
     "poster": "https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
     "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
     "release_date": "2019-03-23"
-  },
+  }
 ]
 ```
-> Unkown attributes will be ignored
-
 
 #### Example
+
 ```bash
 curl \
   --location \
-  --request POST "http://localhost:8080/indexes/movie/documents" \
-  --header "Content-Type: application/json" \
+  --request POST 'https://localhost:8080/indexes/movie/documents' \
+  --header 'Content-Type: application/json' \
+  --header "X-Meili-API-Key: $API_KEY" \
   --data '[{
       "id": 287947,
       "title": "Shazam",
@@ -212,33 +236,47 @@ curl \
     }]'
 ```
 
-<span class="exemple_child">**response**: `201` Created</span>
+#### Response: `202 Accepted`
 
 ```json
 {
-  "success": ["287947"]
+  "updateId": 3
 }
 ```
+
+
+
+
 
 ## Batch write documents
 
 <RouteHighlighter method="POST" route="/indexes/:index/documents/batch"/>
 
-Update multiple documents at once.
+Insert and Delete multiple documents in one request.
 
 #### Headers
-||||
-|---|---|---|
-| **X-Meili-API-Key** | API_KEY  | <em> ACL:`indexesWrite` </em> |
-| **Content-Type** | `application/json`  | |
+
+| Header              | Value            |                        |
+|---------------------|------------------|------------------------|
+| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsRead`_ |
+| **Content-Type**    | application/json |                        |
+| **Accept-encoding** | gzip, deflate    |                        |
 
 #### Path Variables
-|||
-|---|---|
-| **index** | The name of the index  |
+
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **index**         | The name of the index |
 
 #### Body
-Batch write `insert` and `delete` actions. **Insert** expect same input as [Add or Update documents](#create-documents). **Delete** expect same input as [Delete multiple documents](#delete-documents)
+
+The body must contain a **Json Object** containing an `insert` and a `delete` field:
+ - the `insert` field expect the same body as the [Add or Update documents](#add-or-update-documents) route.
+ - the `delete` field expect the same body as the [Delete multiple documents](#delete-multiple-documents) route.
+
+::: warning
+Unknown documents attributes will be ignored. You can [read more about that](/documents#schemas).
+:::
 
 ```json
 {
@@ -247,18 +285,14 @@ Batch write `insert` and `delete` actions. **Insert** expect same input as [Add 
 }
 ```
 
-::: warning
-Unkown attributes in insert documents will be ignored
-:::
-
-
 #### Example
+
 ```bash
 curl \
   --location \
-  --request POST "http://localhost:8080/indexes/movie/documents" \
-  --header "X-Meili-API-Key: " \
-  --header "Content-Type: application/json" \
+  --request POST 'https://localhost:8080/indexes/movie/documents' \
+  --header 'Content-Type: application/json' \
+  --header "X-Meili-API-Key: $API_KEY" \
   --data '{
       "insert": [
         {
@@ -275,46 +309,53 @@ curl \
     }'
 ```
 
-<span class="exemple_child">**response**: `201` Created</span>
+#### Response: `202 Accepted`
 
 ```json
 {
-  "inserted": ["287947"],
-  "deleted": ["522681"]
+  "updateId": 12
 }
 ```
+
+
+
+
+
 ## Clear all documents
 
-<RouteHighlighter method="POST" route="/indexes/:index/documents"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index/documents"/>
 
-Delete all documents.
+Delete all documents in the specified index.
 
 #### Headers
-||||
-|---|---|---|
-| **X-Meili-API-Key** | API_KEY  | <em> ACL:`DocumentsWrite` </em> |
+
+| Header              | Value            |                         |
+|---------------------|------------------|-------------------------|
+| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsWrite`_ |
+| **Content-Type**    | application/json |                         |
 
 #### Path Variables
-|||
-|---|---|
-| **index** | The name of the index  |
 
-::: danger
-This route will disapear in the next MeiliDB beta version. It does not comply to RESTfull rules.
-:::
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **index**         | The name of the index |
 
 #### Example
+
 ```bash
 curl \
   --location \
-  --request POST "http://localhost:8080/indexes/movie/documents/clear" \
+  --request DELETE 'https://localhost:8080/indexes/movie/documents' \
   --header "X-Meili-API-Key: $API_KEY" \
-  --header "Content-Type: application/json"
+  --header 'Content-Type: application/json'
 ```
 
-<span class="exemple_child">**response**: `205` Reset Content</span>
+#### Response: `202 Accepted`
 
-> No response body
+::: warning
+No response body
+:::
+
 
 
 
@@ -323,75 +364,78 @@ curl \
 
 <RouteHighlighter method="DELETE" route="/indexes/:index/documents/:identifier"/>
 
-Delete one document. Based on document identifier. [See identifier documentation](/indexes#schema_definition).
+Delete one document based on its unique identifier.<br/>
+You can read more about [identifiers and schemas](/documents#schemas).
 
 #### Headers
-||||
-|---|---|---|
-| **X-Meili-API-Key** | API_KEY  | <em> ACL:`DocumentsWrite` </em> |
 
+| Header              | Value            |                         |
+|---------------------|------------------|-------------------------|
+| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsWrite`_ |
 
 #### Path Variables
-|||
-|---|---|
-| **index** | The name of the index  |
 
-#### Body
-Array of identifiers.
-```json
-[1, 2, ...]
-```
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **index**         | The name of the index |
 
 #### Example
+
 ```bash
   curl \
   --location \
-  --request DELETE "localhost:8080/indexes/movie" \
+  --request DELETE 'https://localhost:8080/indexes/movie/documents/25684' \
   --header "X-Meili-API-Key: $API_KEY"
-  --data '[
-      23488,
-      153738,
-      437035,
-      363869
-    ]'
 ```
-<span class="exemple_child">**response**: `202` Accepted</span>
 
-::: warning
-no response body
-:::
+#### Response: `202 Accepted`
+
+```json
+{
+  "updateId": 27
+}
+```
+
+
 
 
 ## Delete multiple documents
 
-<RouteHighlighter method="DELETE" route="/indexes/:index/documents"/>
+<RouteHighlighter method="POST" route="/indexes/:index/documents/delete"/>
 
-Delete selection of documents. Based on array of identifiers. [See identifier documentation](/indexes#schema_definition).
+Delete a selection of documents based on array of identifiers.<br/>
+You can read more about [identifiers and schemas](/documents#schemas).
 
 #### Headers
-||||
-|---|---|---|
-| **X-Meili-API-Key** | `$API_KEY` | <em> ACL:`DocumentsWrite` </em> |
-| **Content-Type** | `application/json` | |
-| **Accept-encoding** | `gzip, deflate` | |
+
+| Header              | Value              |                         |
+|---------------------|--------------------|-------------------------|
+| **X-Meili-API-Key** | `$API_KEY`         | _ACL: `DocumentsWrite`_ |
+| **Content-Type**    | `application/json` |                         |
+| **Accept-encoding** | `gzip, deflate`    |                         |
 
 #### Path Variables
-|||
-|---|---|
-| **index** | The name of the index |
+
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **index**         | The name of the index |
 
 #### Body
-Array of identifiers.
+
+The body must be a **Json Array** with the unique identifiers of the documents to delete.
+
 ```json
-[1, 2, ...]
+[23488, 153738, 437035, 363869]
 ```
 
 #### Example
+
 ```bash
   curl \
   --location \
-  --request DELETE "http://localhost:8080/indexes/movie" \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request POST 'https://localhost:8080/indexes/movie' \
+  --header "X-Meili-API-Key: $API_KEY" \
+  --header 'Content-Type: application/json' \
   --data '[
       23488,
       153738,
@@ -399,8 +443,11 @@ Array of identifiers.
       363869
     ]'
 ```
-<span class="exemple_child">**response**: `202` Accepted</span>
 
-::: warning
-no response body
-:::
+#### Response: `202 Accepted`
+
+```json
+{
+  "updateId": 127
+}
+```
