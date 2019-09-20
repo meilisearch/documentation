@@ -84,12 +84,12 @@ Search for documents matching a specific query in the given index.
 | **attributesToHighlight** | which attributes to highlight                      | none          |
 | **matches**               | whether to return the raw matches or not           | false         |
 
-#### Example
+### Example
 
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movie/search?q=american%20ninja%205' \
+  --request GET 'https://localhost:8080/indexes/movie/search?q=american%20ninja%205' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 

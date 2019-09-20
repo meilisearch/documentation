@@ -88,7 +88,7 @@ Get one document using its unique identifier.
 | **index**         | The name of the index |
 | **identifier**    | [The unique identifier of the document](/documents#schemas) |
 
-#### Example
+### Example
 
 ```bash
 curl \
@@ -145,7 +145,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 | **length**                | number of documents to take          | 20            |
 | **attributesToRetrieve**  | document attributes to show          | *             |
 
-#### Example
+### Example
 
 ```bash
 curl \
@@ -219,7 +219,7 @@ Documents fields which are not known to the index schema will be ignored
 ]
 ```
 
-#### Example
+### Example
 
 ```bash
 curl \
@@ -285,7 +285,7 @@ Unknown documents attributes will be ignored. You can [read more about that](/do
 }
 ```
 
-#### Example
+### Example
 
 ```bash
 curl \
@@ -340,7 +340,7 @@ Delete all documents in the specified index.
 |-------------------|-----------------------|
 | **index**         | The name of the index |
 
-#### Example
+### Example
 
 ```bash
 curl \
@@ -379,7 +379,7 @@ You can read more about [identifiers and schemas](/documents#schemas).
 |-------------------|-----------------------|
 | **index**         | The name of the index |
 
-#### Example
+### Example
 
 ```bash
   curl \
@@ -428,7 +428,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 [23488, 153738, 437035, 363869]
 ```
 
-#### Example
+### Example
 
 ```bash
   curl \

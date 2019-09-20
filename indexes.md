@@ -50,7 +50,7 @@ List all indexes names.
 | **X-Meili-API-Key** | `$API_KEY`    | _ACL: `indexesRead`_ |
 | **Accept-encoding** | gzip, deflate |                      |
 
-#### Example
+### Example
 
 ```bash
 curl \
@@ -88,7 +88,7 @@ Get the schema of a specific index.
 | **index** | The name of the index |
 
 
-#### Example
+### Example
 
 ```bash
 curl \
