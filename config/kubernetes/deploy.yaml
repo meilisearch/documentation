@@ -1,0 +1,61 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: docs-ingress
+spec:
+  rules:
+  - host: docs.meilisearch.com
+    http:
+      paths:
+      - backend:
+          serviceName: docs-svc
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - docs.meilisearch.com
+    secretName: meilisearch.com-secret-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docs-svc
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: docs
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: docs-dp
+  labels:
+    app: docs
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+        labels:
+          app: docs
+    spec:
+      containers:
+      - env:
+        - name: BASIC_USER
+          value: admin
+        - name: BASIC_PASS
+          value: admin
+        image: registry.gitlab.com/meilisearch/public/documentation:master
+        imagePullPolicy: Always
+        name: docs
+      imagePullSecrets:
+      - name: gitlab-auth.documentation
+      restartPolicy: Always
