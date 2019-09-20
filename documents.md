@@ -62,7 +62,7 @@ We can also deduct that the "id" attribute is more important than the "title", "
 Which means that if you search for something that matches in the "description" of the document _A_ and in the "title" of the document _B_,
 the document _B_ will be considered better than the document _A_. You can read more about these rules [in the search section][1].
 
-[1]: /search#ranking-rules
+[1]: /search.md#ranking-rules
 
 
 
@@ -86,7 +86,7 @@ Get one document using its unique identifier.
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index**         | The name of the index |
-| **identifier**    | [The unique identifier of the document](/documents#schemas) |
+| **identifier**    | [The unique identifier of the document](/documents.md#schemas) |
 
 ### Example
 
@@ -182,7 +182,7 @@ curl \
 
 <RouteHighlighter method="POST" route="/indexes/:index/documents"/>
 
-Insert a list of documents or update them if they already exist based on [their unique identifiers](/documents#schemas).
+Insert a list of documents or update them if they already exist based on [their unique identifiers](/documents.md#schemas).
 
 #### Headers
 
@@ -201,7 +201,7 @@ Insert a list of documents or update them if they already exist based on [their 
 #### Body
 
 The body is composed of a **Json array** of documents composed of fields corresponding to the index schema.
-You can [read more about fields and schemas](/documents#schemas).
+You can [read more about fields and schemas](/documents.md#schemas).
 
 ::: warning
 Documents fields which are not known to the index schema will be ignored
@@ -275,7 +275,7 @@ The body must contain a **Json Object** containing an `insert` and a `delete` fi
   - the `delete` field expect the same body as the [Delete multiple documents](#delete-multiple-documents) route.
 
 ::: warning
-Unknown documents attributes will be ignored. You can [read more about that](/documents#schemas).
+Unknown documents attributes will be ignored. You can [read more about that](/documents.md#schemas).
 :::
 
 ```json
@@ -365,7 +365,7 @@ No response body
 <RouteHighlighter method="DELETE" route="/indexes/:index/documents/:identifier"/>
 
 Delete one document based on its unique identifier.<br/>
-You can read more about [identifiers and schemas](/documents#schemas).
+You can read more about [identifiers and schemas](/documents.md#schemas).
 
 #### Headers
 
@@ -404,7 +404,7 @@ You can read more about [identifiers and schemas](/documents#schemas).
 <RouteHighlighter method="POST" route="/indexes/:index/documents/delete"/>
 
 Delete a selection of documents based on array of identifiers.<br/>
-You can read more about [identifiers and schemas](/documents#schemas).
+You can read more about [identifiers and schemas](/documents.md#schemas).
 
 #### Headers
 

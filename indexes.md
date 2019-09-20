@@ -19,7 +19,7 @@ Take the example of a movie collection. We have several fields:
 
 ::: warning
 The order of the document fields has a huge impact on the relevancy. So please order fields from the most important to the less.
-You can read more about that on [the documents page](/documents).
+You can read more about that on [the documents page](/documents.md).
 :::
 
 Our schema will be:
@@ -117,7 +117,7 @@ curl \
 
 <RouteHighlighter method="GET" route="/indexes/:index/updates/:update-id"/>
 
-Get the status of an update which have been returned by [an update method](/documents#add-or-update-documents).
+Get the status of an update which have been returned by [an update method](/documents.md#add-or-update-documents).
 
 #### Headers
 
