@@ -33,9 +33,8 @@ Our schema will be :
 
 
 ## List all indexes
-```
-GET /indexes
-```
+
+<RouteHighlighter method="GET" route="/indexes"/>
 
 List all indexes names.
 
@@ -61,25 +60,24 @@ curl \
 
 
 ## Get one index
-```
-GET /indexes/:index
-```
+
+<RouteHighlighter method="GET" route="/indexes/:index"/>
 
 Get the schema of one index
 
-##### Headers
+#### Headers
 ||||
 |---|---|---|
 | **X-Meili-API-Key** | $API_KEY  | _ACL: `indexesRead`_ |
 | **Content-Type** | application/json | |
 
-##### Path Variables
+#### Path Variables
 |||
 |---|---|
 | **index** | The name of the index |
 
 
-##### Example
+#### Example
 ```bash
 curl \
   --location \

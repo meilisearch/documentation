@@ -66,9 +66,8 @@ the document _B_ will be considered better than the document _A_. You can read m
 
 
 ## Get one document
-```
-GET /indexes/:index/documents/:identifier
-```
+
+<RouteHighlighter method="GET" route="/indexes/:index/documents/:identifier"/>
 
 Get one document using its specific identifier.
 
@@ -106,9 +105,8 @@ curl \
 
 
 ## Browse documents
-```
-/indexes/:index/documents
-```
+
+<RouteHighlighter method="GET" route="/indexes/:index/documents"/>
 
 Get the documents in an unordered way.
 
@@ -166,10 +164,7 @@ curl \
 
 ## Add or Update documents
 
-```
-/indexes/<span><code>:index</code>/documents</span>
-```
-
+<RouteHighlighter method="POST" route="/indexes/:index/documents"/>
 
 Add a list of document(s) or update them if their identifier already exist.
 
@@ -227,12 +222,9 @@ curl \
 
 ## Batch write documents
 
-```
-/indexes/<span><code>:index</code>/documents/batch</span>
-```
+<RouteHighlighter method="POST" route="/indexes/:index/documents/batch"/>
 
-
-Delete all
+Update multiple documents at once.
 
 #### Headers
 ||||
@@ -293,12 +285,9 @@ curl \
 ```
 ## Clear all documents
 
-```json
-/indexes/:index/documents/
-```
+<RouteHighlighter method="POST" route="/indexes/:index/documents"/>
 
-
-Delete all documents
+Delete all documents.
 
 #### Headers
 ||||
@@ -326,11 +315,13 @@ curl \
 <span class="exemple_child">**response**: `205` Reset Content</span>
 
 > No response body
+
+
+
+
 ## Delete one document
 
-```
-/indexes/:index/documents/:identifier
-```
+<RouteHighlighter method="DELETE" route="/indexes/:index/documents/:identifier"/>
 
 Delete one document. Based on document identifier. [See identifier documentation](/indexes#schema_definition).
 
@@ -373,9 +364,7 @@ no response body
 
 ## Delete multiple documents
 
-```
-/indexes/:index/documents
-```
+<RouteHighlighter method="DELETE" route="/indexes/:index/documents"/>
 
 Delete selection of documents. Based on array of identifiers. [See identifier documentation](/indexes#schema_definition).
 

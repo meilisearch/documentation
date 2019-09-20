@@ -52,9 +52,8 @@ Here is the list of all the default rules that are executed in this specific ord
 [Levenshtein algorithm]: https://en.wikipedia.org/wiki/Levenshtein_distance
 
 ## Search in an index
-```
-GET /indexes/:index/search
-```
+
+<RouteHighlighter method="GET" route="/indexes/:index/search"/>
 
 Search for documents matching a specific query in the given index.
 
