@@ -59,10 +59,10 @@ Search for documents matching a specific query in the given index.
 
 #### Headers
 
-| Header              | Value         |                        |
-|---------------------|---------------|------------------------|
-| **X-Meili-API-Key** | `$API_KEY`    | _ACL: `DocumentsRead`_ |
-| **Accept-encoding** | gzip, deflate |                        |
+| Header              | Value         |
+|---------------------|---------------|
+| **X-Meili-API-Key** | `$API_KEY`    |
+| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 

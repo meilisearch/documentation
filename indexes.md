@@ -45,10 +45,10 @@ List all indexes names.
 
 #### Headers
 
-| Header              | Value         |                      |
-|---------------------|---------------|----------------------|
-| **X-Meili-API-Key** | `$API_KEY`    | _ACL: `indexesRead`_ |
-| **Accept-encoding** | gzip, deflate |                      |
+| Header              | Value         |
+|---------------------|---------------|
+| **X-Meili-API-Key** | `$API_KEY`    |
+| **Accept-encoding** | gzip, deflate |
 
 ### Example
 
@@ -76,10 +76,10 @@ Get the schema of a specific index.
 
 #### Headers
 
-| Header              | Value         |                      |
-|---------------------|---------------|----------------------|
-| **X-Meili-API-Key** | `$API_KEY`    | _ACL: `indexesRead`_ |
-| **Accept-encoding** | gzip, deflate |                      |
+| Header              | Value         |
+|---------------------|---------------|
+| **X-Meili-API-Key** | `$API_KEY`    |
+| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 

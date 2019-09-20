@@ -76,10 +76,10 @@ Get one document using its unique identifier.
 
 #### Headers
 
-| Header              | Value         |                        |
-|---------------------|---------------|------------------------|
-| **X-Meili-API-Key** | `$API_KEY`    | _ACL: `DocumentsRead`_ |
-| **Accept-encoding** | gzip, deflate |                        |
+| Header              | Value         |
+|---------------------|---------------|
+| **X-Meili-API-Key** | `$API_KEY`    |
+| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 
@@ -125,11 +125,11 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 #### Headers
 
-| Header              | Value            |                        |
-|---------------------|------------------|------------------------|
-| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsRead`_ |
-| **Content-Type**    | application/json |                        |
-| **Accept-encoding** | gzip, deflate    |                        |
+| Header              | Value            |
+|---------------------|------------------|
+| **X-Meili-API-Key** | `$API_KEY`       |
+| **Content-Type**    | application/json |
+| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -186,11 +186,11 @@ Insert a list of documents or update them if they already exist based on [their 
 
 #### Headers
 
-| Header              | Value            |                        |
-|---------------------|------------------|------------------------|
-| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsRead`_ |
-| **Content-Type**    | application/json |                        |
-| **Accept-encoding** | gzip, deflate    |                        |
+| Header              | Value            |
+|---------------------|------------------|
+| **X-Meili-API-Key** | `$API_KEY`       |
+| **Content-Type**    | application/json |
+| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -256,11 +256,11 @@ Insert and Delete multiple documents in one request.
 
 #### Headers
 
-| Header              | Value            |                        |
-|---------------------|------------------|------------------------|
-| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsRead`_ |
-| **Content-Type**    | application/json |                        |
-| **Accept-encoding** | gzip, deflate    |                        |
+| Header              | Value            |
+|---------------------|------------------|
+| **X-Meili-API-Key** | `$API_KEY`       |
+| **Content-Type**    | application/json |
+| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -271,8 +271,8 @@ Insert and Delete multiple documents in one request.
 #### Body
 
 The body must contain a **Json Object** containing an `insert` and a `delete` field:
- - the `insert` field expect the same body as the [Add or Update documents](#add-or-update-documents) route.
- - the `delete` field expect the same body as the [Delete multiple documents](#delete-multiple-documents) route.
+  - the `insert` field expect the same body as the [Add or Update documents](#add-or-update-documents) route.
+  - the `delete` field expect the same body as the [Delete multiple documents](#delete-multiple-documents) route.
 
 ::: warning
 Unknown documents attributes will be ignored. You can [read more about that](/documents#schemas).
@@ -329,10 +329,10 @@ Delete all documents in the specified index.
 
 #### Headers
 
-| Header              | Value            |                         |
-|---------------------|------------------|-------------------------|
-| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsWrite`_ |
-| **Content-Type**    | application/json |                         |
+| Header              | Value            |
+|---------------------|------------------|
+| **X-Meili-API-Key** | `$API_KEY`       |
+| **Content-Type**    | application/json |
 
 #### Path Variables
 
@@ -369,9 +369,9 @@ You can read more about [identifiers and schemas](/documents#schemas).
 
 #### Headers
 
-| Header              | Value            |                         |
-|---------------------|------------------|-------------------------|
-| **X-Meili-API-Key** | `$API_KEY`       | _ACL: `DocumentsWrite`_ |
+| Header              | Value            |
+|---------------------|------------------|
+| **X-Meili-API-Key** | `$API_KEY`       |
 
 #### Path Variables
 
@@ -408,11 +408,11 @@ You can read more about [identifiers and schemas](/documents#schemas).
 
 #### Headers
 
-| Header              | Value              |                         |
-|---------------------|--------------------|-------------------------|
-| **X-Meili-API-Key** | `$API_KEY`         | _ACL: `DocumentsWrite`_ |
-| **Content-Type**    | `application/json` |                         |
-| **Accept-encoding** | `gzip, deflate`    |                         |
+| Header              | Value              |
+|---------------------|--------------------|
+| **X-Meili-API-Key** | `$API_KEY`         |
+| **Content-Type**    | `application/json` |
+| **Accept-encoding** | `gzip, deflate`    |
 
 #### Path Variables
 
