@@ -6,7 +6,7 @@ This is a our first draft guide into the limb of the http meili routes.
 You can navigate into the documentation using the sidebar or by using the search bar above.
 
 If you spot any typo or any error in the documentation like an miss-documented response body for example,
-Please contact us by using the link above.
+please contact us.
 
 Thank you for your interest and have fun with your HTTP client 🌍
 
@@ -31,6 +31,6 @@ Response body :
 
 ```json
 {
-     "message": "An message error"
+  "message": "An message error"
 }
 ```

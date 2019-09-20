@@ -109,3 +109,82 @@ curl \
   "objectId": ["stored", "indexed"]
 }
 ```
+
+
+
+
+## Get an update status
+
+<RouteHighlighter method="GET" route="/indexes/:index/updates/:update-id"/>
+
+Get the status of an update which have been returned by [an update method](/documents#add-or-update-documents).
+
+#### Headers
+
+| Header              | Value         |
+|---------------------|---------------|
+| **X-Meili-API-Key** | `$API_KEY`    |
+| **Accept-encoding** | gzip, deflate |
+
+#### Path Variables
+
+| Variable      | Description           |
+|---------------|-----------------------|
+| **index**     | The name of the index |
+| **update-id** | An update identifier  |
+
+### Example
+
+```bash
+curl \
+  --location \
+  --request GET 'https://localhost:8080/indexes/movie/updates/27' \
+  --header "X-Meili-API-Key: $API_KEY"
+```
+
+#### Response: `200 Ok`
+
+Here is an example response of an update that have been processed.
+
+```json
+{
+  "status": "processed",
+  "data": {
+    "update_id": 27,
+    "update_type": {
+      "DocumentsAddition": {
+        "number": 1
+      }
+    },
+    "result": {
+      "Ok": null
+    },
+    "detailed_duration": {
+      "main": {
+        "secs": 0,
+        "nanos": 30798318
+      }
+    }
+  }
+}
+```
+
+#### Response: `200 Ok`
+
+Here is an example response of an update which is enqueued and will processed later.
+
+```json
+{
+  "status": "enqueued",
+}
+```
+
+#### Response: `404 Not Found`
+
+Here is an example response of an update which is unknown to the engine.
+
+```json
+{
+  "message": "unknown update id"
+}
+```
