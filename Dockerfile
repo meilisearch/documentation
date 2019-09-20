@@ -1,11 +1,17 @@
-FROM node:9.11.1 AS builder
+FROM node:12 AS builder
 
-RUN ["npm" "install" "-g" "vuepress"]
+WORKDIR /build
 
-RUN ["vuepress", "build", "."]
+COPY . .
+
+RUN npm install -g vuepress
+
+RUN vuepress build .
+
+
 
 FROM nginx:latest
 
-COPY --from=builder ./.vuepress/dist/ /usr/share/nginx/html
+COPY --from=builder /build/.vuepress/dist /usr/share/nginx/html
 
-COPY --from=builder ./config/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /build/config/default.conf /etc/nginx/conf.d/default.conf
