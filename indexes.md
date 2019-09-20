@@ -1,21 +1,22 @@
 # Indexes
 
-With the notion of Index, that can be called table in SQL, we also have the notion of Schema.
+With the notion of index, that can be called table in SQL, we also have the notion of schema.
 
-A schema is a correspondence between all fields present into your data and how this field will be understood by our database. We have some tags that should be associated with a field in the scheme:
+A schema is a correspondence between all fields present in your documents and how these fields will be understood by our database.
+We have some tags that should be associated with fields in the schema:
 
-* **identifier** : Unique identifier of a document, should be set on only one field. This field shout is unique on all the collection.
-* **indexed** : Every indexed field will serve to make our search engine work. It's, for example, a text, but not an URL.
-* **stored** : Stored field can be retrievable during the search. A none stored field will never appear in the search response.
-* **ranked** : should not be given during the index creation but only by the settings. Will sort all response by this field.
+* **identifier**: The unique identifier of a document, must only be set on one field. This field is must be unique between documents.
+* **indexed**: Indexed fields feed our search engine.
+* **stored**: Displayed fields can be showed during searches. A non-displayed field will never appear in the search response.
+* **ranked**: Ranked fields are used to sort documents. <Badge text="soon" type="warn"/>
 
-Take the example of a movie collection. We have several fields:
+Take for example a movie collection. We have several fields:
 
-* **id**: Is a unique identifier for a movie (tag: identifier). Not useful to search into the id field. will be used for redirection into the website (tag: stored).
-* **title**: the most important field (tag: indexed). Surely printed on the front (tag: stored).
-* **description**: give much information about the movie (tag: indexed), perhaps we will show the first line of the description on the front (tag: stored).
-* **release_date**: the release date can be used for sort movies (tag: ranked), but nobody will search precisely the release date of a film. It's will be shown on the website (tag: stored);
-* **cover**: the URL of the poster or images related to the movie. Will be showed into the front (tag: stored).
+* **id**: The unique identifier of a movie (tag: identifier).
+* **title**: The most important field (tag: indexed). Surely printed on the front (tag: displayed).
+* **description**: Give much information about the movie (tag: indexed), perhaps we will show the first line of the description on the front (tag: displayed).
+* **release_date**: The release date can be used to sort movies (tag: ranked), but nobody will search precisely the release date of a film. It will be shown on the website (tag: displayed).
+* **cover**: The URL of the poster or the image related to the movie. Will be showed on the front (tag: displayed).
 
 ::: warning
 The order of the document fields has a huge impact on the relevancy. So please order fields from the most important to the less.
@@ -26,11 +27,11 @@ Our schema will be:
 
 ```json
 {
-    "id": ["identifier", "stored"],
-    "title": ["indexed", "stored"],
-    "description": ["indexed", "stored"],
-    "release_date": ["ranked", "stored"],
-    "cover": ["stored"]
+    "id": ["identifier", "displayed"],
+    "title": ["indexed", "displayed"],
+    "description": ["indexed", "displayed"],
+    "release_date": ["ranked", "displayed"],
+    "cover": ["displayed"]
 }
 ```
 
