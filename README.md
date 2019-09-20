@@ -1,5 +1,15 @@
 # API Documentation
 
+Welcome to the beta version of the Meili Api documentation.
+
+This is a our first draft guide into the limb of the http meili routes.
+You can navigate into the documentation using the sidebar or by using the search bar above.
+
+If you spot any typo or any error in the documentation like an miss-documented response body for example,
+Please contact us by using the link above.
+
+Thank you for your interest and have fun with your HTTP client 🌍
+
 ## Response Status Code
 
 #### Success
@@ -21,6 +31,6 @@ Response body :
 
 ```json
 {
-     "message": "A message error"
+     "message": "An message error"
 }
 ```
