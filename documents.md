@@ -142,7 +142,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 | Query Parameter           | Description                          | Default Value |
 |---------------------------|--------------------------------------|:-------------:|
 | **offset**                | number of documents to skip          | 0             |
-| **length**                | number of documents to take          | 20            |
+| **limit**                 | number of documents to take          | 20            |
 | **attributesToRetrieve**  | document attributes to show          | *             |
 
 ### Example
@@ -150,7 +150,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 ```bash
 curl \
   --location \
-  --request GET 'https://localhost:8080/indexes/movie/documents?length=5' \
+  --request GET 'https://localhost:8080/indexes/movie/documents?limit=5' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
