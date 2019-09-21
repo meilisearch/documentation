@@ -22,10 +22,10 @@ The **fields** are the combination of attributes and data (i.e. `"title": "Inter
 #### Schemas
 
 A schema is a representation of the documents attributes.
-It is used by Meili to know how to handle documents like which fields to store and which fields to index.
+It is used by Meili to know how to handle documents like which fields to display and which fields to index.
 
-- **Indexed** attributes are used by the search system.
-- **Stored** attributes will be returned by Meili when a document is returned.
+- **Indexed** attributes are used by the search engine.
+- **Displayed** attributes will be shown when a document is returned.
 
 ::: tip
 By default the Meili dashboard infer the schema from the **first** document sent.
@@ -39,7 +39,7 @@ The only mandatory document field is the **identifier**.
 If you upload a file via the dashboard the schema is infered this way:
   - the order of the first document fields is the order of the schema fields
   - the identifier is the first field containing "id" (case insensitive)
-  - every field is indexed and stored
+  - every field is indexed and displayed
 
 ::: tip
 The order of the schema fields determine the precedence:
@@ -48,14 +48,14 @@ a field which is declared before another one is more important.
 
 ```json
 {
-  "id": ["identifier", "indexed", "stored"],
-  "title": ["indexed", "stored"],
-  "description": ["indexed", "stored"],
-  "type": ["indexed", "stored"]
+  "id": ["identifier", "indexed", "displayed"],
+  "title": ["indexed", "displayed"],
+  "description": ["indexed", "displayed"],
+  "type": ["indexed", "displayed"]
 }
 ```
 
-In this schema example we can see that every field is indexed and stored.
+In this schema example we can see that every field is indexed and displayed.
 This is the typical schema that would be infered by uploading the previous document via the dashboard.
 
 We can also deduct that the "id" attribute is more important than the "title", "description" and "type".
