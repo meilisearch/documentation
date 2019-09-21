@@ -184,6 +184,8 @@ curl \
 
 Insert a list of documents or update them if they already exist based on [their unique identifiers](/documents.md#schemas).
 
+The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
+
 #### Headers
 
 | Header              | Value            |
@@ -253,6 +255,8 @@ curl \
 <RouteHighlighter method="POST" route="/indexes/:index/documents/batch"/>
 
 Insert and Delete multiple documents in one request.
+
+The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
 
 #### Headers
 
@@ -327,6 +331,8 @@ curl \
 
 Delete all documents in the specified index.
 
+The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
+
 #### Headers
 
 | Header              | Value            |
@@ -336,9 +342,9 @@ Delete all documents in the specified index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index**         | The name of the index |
+| Variable  | Description           |
+|-----------|-----------------------|
+| **index** | The name of the index |
 
 ### Example
 
@@ -352,9 +358,11 @@ curl \
 
 #### Response: `202 Accepted`
 
-::: warning
-No response body
-:::
+```json
+{
+  "updateId": 37
+}
+```
 
 
 
@@ -367,17 +375,19 @@ No response body
 Delete one document based on its unique identifier.<br/>
 You can read more about [identifiers and schemas](/documents.md#schemas).
 
+The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
+
 #### Headers
 
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
+| Header              | Value      |
+|---------------------|------------|
+| **X-Meili-API-Key** | `$API_KEY` |
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index**         | The name of the index |
+| Variable  | Description           |
+|-----------|-----------------------|
+| **index** | The name of the index |
 
 ### Example
 
@@ -406,6 +416,8 @@ You can read more about [identifiers and schemas](/documents.md#schemas).
 Delete a selection of documents based on array of identifiers.<br/>
 You can read more about [identifiers and schemas](/documents.md#schemas).
 
+The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
+
 #### Headers
 
 | Header              | Value              |
@@ -416,9 +428,9 @@ You can read more about [identifiers and schemas](/documents.md#schemas).
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index**         | The name of the index |
+| Variable  | Description           |
+|-----------|-----------------------|
+| **index** | The name of the index |
 
 #### Body
 
