@@ -5,6 +5,7 @@ This object form is used by most of the Meili API endpoints.
 
 ::: tip
 Documents identifiers are always converted into strings and only strings and integers are valid identifiers.
+It means that it is forbidden to use arrays or objects as identifier for example.
 :::
 
 ```json
