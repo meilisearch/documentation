@@ -86,7 +86,7 @@ Get the schema of a specific index.
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **index** | The name of the index |
+| **index** | The index UID |
 
 ### Example
 
@@ -130,7 +130,7 @@ Get the status of an update which have been returned by [an update method](/docu
 
 | Variable      | Description           |
 |---------------|-----------------------|
-| **index**     | The name of the index |
+| **index**     | The index UID |
 | **update-id** | An update identifier  |
 
 ### Example

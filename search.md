@@ -65,9 +65,9 @@ Search for documents matching a specific query in the given index.
 
 #### Path Variables
 
-| Variable  | Description           |
-|-----------|-----------------------|
-| **index** | The name of the index |
+| Variable  | Description   |
+|-----------|---------------|
+| **index** | The index UID |
 
 #### Query Parameters
 
