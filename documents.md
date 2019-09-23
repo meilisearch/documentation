@@ -29,7 +29,7 @@ It is used by Meili to know how to handle documents like which fields to display
 - **Displayed** attributes will be shown when a document is returned.
 
 ::: tip
-By default the Meili dashboard infer the schema from the **first** document sent.
+By default the Meili dashboard infers the schema from the **first** document sent.
 :::
 
 ::: danger
@@ -43,7 +43,7 @@ If you upload a file via the dashboard the schema is infered this way:
   - every field is indexed and displayed
 
 ::: tip
-The order of the schema fields determine the precedence:
+The order of the schema fields determines the precedence:
 a field which is declared before another one is more important.
 :::
 
