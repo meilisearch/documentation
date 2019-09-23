@@ -61,7 +61,6 @@ Search for documents matching a specific query in the given index.
 
 | Header              | Value         |
 |---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
 | **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
@@ -89,8 +88,7 @@ Search for documents matching a specific query in the given index.
 ```bash
 curl \
   --location \
-  --request GET 'https://localhost:8080/indexes/movie/search?q=american%20ninja%205' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'https://localhost:8080/indexes/movie/search?q=american%20ninja%205'
 ```
 
 #### Response: `200 Ok`
