@@ -56,7 +56,7 @@ List all indexes names.
 ```bash
 curl \
   --location \
-  --request GET 'https://localhost:8080/indexes' \
+  --request GET 'https://4eb345y7.getmeili.com/indexes' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -93,7 +93,7 @@ Get the schema of a specific index.
 ```bash
 curl \
   --location \
-  --request GET 'https://localhost:8080/indexes/movie' \
+  --request GET 'https://4eb345y7.getmeili.com/indexes/4eb345y7' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -138,7 +138,7 @@ Get the status of an update which have been returned by [an update method](/docu
 ```bash
 curl \
   --location \
-  --request GET 'https://localhost:8080/indexes/movie/updates/27' \
+  --request GET 'https://4eb345y7.getmeili.com/indexes/4eb345y7/updates/27' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
