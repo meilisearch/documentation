@@ -1,6 +1,6 @@
 # Search
 
-Meili provide a fast and relevant search engine. You can access it via the API described below.
+Meili provides a fast and relevant search engine. You can access it via the API described below.
 
 It follows some basic typo and rules to sort documents. This is an explanation of the default rules used in Meili.
 First we have to explain some terms that are used in this reading.

@@ -31,6 +31,6 @@ Response body :
 
 ```json
 {
-  "message": "An message error"
+  "message": "The error message"
 }
 ```
