@@ -42,6 +42,7 @@ module.exports = {
     `]
   ],
   themeConfig: {
+    logo: '/logo.png',
     sidebar: [
       '/',
       '/indexes',
