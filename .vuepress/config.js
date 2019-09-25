@@ -1,7 +1,7 @@
 module.exports = {
+  title: 'Meili Documentation',
+  description: 'The Meili incredible documentation',
   themeConfig: {
-    title: 'Meili Documentation',
-    description: 'The Meili incredible documentation',
     sidebar: [
       '/',
       '/indexes',
