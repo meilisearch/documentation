@@ -27,7 +27,7 @@ Our schema will be:
 
 ```json
 {
-    "id": ["identifier", "displayed"],
+    "id": ["identifier", "indexed", "displayed"],
     "title": ["indexed", "displayed"],
     "description": ["indexed", "displayed"],
     "release_date": ["ranked", "displayed"],
