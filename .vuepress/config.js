@@ -44,10 +44,61 @@ module.exports = {
   themeConfig: {
     logo: '/logo.png',
     sidebar: [
-      '/',
-      '/indexes',
-      '/documents',
-      '/search',
+      {
+        title: 'Introduction',   // required
+        path:  '/introduction/',      // optional, which should be a absolute path.
+        collapsable: false, // optional, defaults to true
+        sidebarDepth: 0,    // optional, defaults to 1
+        children: [
+          '',
+          '/introduction/quickstart',
+          '/introduction/features'
+        ]
+      },
+      {
+        title: 'Main concepts',   // required
+        path:  '/main_concept/',      // optional, which should be a absolute path.
+        collapsable: false, // optional, defaults to true
+        sidebarDepth: 1,    // optional, defaults to 1
+        children: [
+          '/main_concept/indexes',
+          '/main_concept/documents',
+          '/main_concept/search'
+        ]
+      },
+      // {
+      //   title: 'Advanced Guide',   // required
+      //   path:  '/advanced_guides/',      // optional, which should be a absolute path.
+      //   collapsable: false, // optional, defaults to true
+      //   sidebarDepth: 1,    // optional, defaults to 1
+      //   children: [
+      //     '/main_concept/updates',
+      //     '/main_concept/custom_ranking',
+      //     '/main_concept/tokenizer',
+      //     '/main_concept/highlight',
+      //     '/main_concept/distinct',
+      //     '/main_concept/ranking',
+      //     '/main_concept/filters',
+      //     '/main_concept/custom_ranking',
+      //     '/main_concept/bucket_sort',
+      //     '/main_concept/typo_tolerance',
+      //     '/main_concept/ranking_rules',
+      //     '/main_concept/inverted_index',
+      //   ]
+      // },
+      {
+        title: 'API References',   // required
+        path:  '/references/',      // optional, which should be a absolute path.
+        collapsable: true, // optional, defaults to true
+        sidebarDepth: 1,    // optional, defaults to 1
+        children: [
+          '/references/indexes',
+          '/references/documents',
+          '/references/search',
+          // '/references/stats',
+          // '/references/health'
+        ]
+      },
     ]
   }
 }
