@@ -37,7 +37,7 @@ Search for documents matching a specific query in the given index.
 ```bash
 curl \
   --location \
-  --request GET 'https://4eb345y7.getmeili.com/indexes/4eb345y7/search?q=american%20ninja%205'
+  --request GET 'http://localhost:8080/indexes/4eb345y7/search?q=american%20ninja%205'
 ```
 
 #### Response: `200 Ok`

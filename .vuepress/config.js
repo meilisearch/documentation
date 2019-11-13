@@ -95,6 +95,7 @@ module.exports = {
           '/references/indexes',
           '/references/documents',
           '/references/search',
+          '/references/updates',
           // '/references/stats',
           // '/references/health'
         ]
