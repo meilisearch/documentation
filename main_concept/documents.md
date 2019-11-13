@@ -20,7 +20,7 @@ It means that it is forbidden to use arrays or objects as identifier for example
 In this document example, **attributes** are `"id"`, `"title"`, `"description"` and `"type"`.</br>
 The **fields** are the combination of attributes and data (i.e. `"title": "Interstellar"`).
 
-#### Schemas
+## Schemas
 
 A schema is a representation of the documents attributes.
 It is used by Meili to know how to handle documents like which fields to display and which fields to index.
