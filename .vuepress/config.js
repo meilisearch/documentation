@@ -50,14 +50,14 @@ module.exports = {
         collapsable: false, // optional, defaults to true
         sidebarDepth: 0,    // optional, defaults to 1
         children: [
-          '',
+          '/introduction/',
           '/introduction/quickstart',
           '/introduction/features'
         ]
       },
       {
         title: 'Main concepts',   // required
-        path:  '/main_concept/',      // optional, which should be a absolute path.
+        path:  '/main_concept/indexes',      // optional, which should be a absolute path.
         collapsable: false, // optional, defaults to true
         sidebarDepth: 1,    // optional, defaults to 1
         children: [
@@ -69,10 +69,11 @@ module.exports = {
       {
         title: 'Advanced Guide',   // required
         path:  '/advanced_guides/synonyms',      // optional, which should be a absolute path.
-        collapsable: false, // optional, defaults to true
+        collapsable: true, // optional, defaults to true
         sidebarDepth: 1,    // optional, defaults to 1
         children: [
           '/advanced_guides/synonyms',
+          '/advanced_guides/stop_words',
           // '/main_concept/updates',
           // '/main_concept/custom_ranking',
           // '/main_concept/tokenizer',
