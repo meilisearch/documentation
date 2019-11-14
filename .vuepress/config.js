@@ -50,14 +50,14 @@ module.exports = {
         collapsable: false, // optional, defaults to true
         sidebarDepth: 0,    // optional, defaults to 1
         children: [
-          '',
+          '/introduction/',
           '/introduction/quickstart',
           '/introduction/features'
         ]
       },
       {
         title: 'Main concepts',   // required
-        path:  '/main_concept/',      // optional, which should be a absolute path.
+        path:  '/main_concept/indexes',      // optional, which should be a absolute path.
         collapsable: false, // optional, defaults to true
         sidebarDepth: 1,    // optional, defaults to 1
         children: [
@@ -66,26 +66,28 @@ module.exports = {
           '/main_concept/search'
         ]
       },
-      // {
-      //   title: 'Advanced Guide',   // required
-      //   path:  '/advanced_guides/',      // optional, which should be a absolute path.
-      //   collapsable: false, // optional, defaults to true
-      //   sidebarDepth: 1,    // optional, defaults to 1
-      //   children: [
-      //     '/main_concept/updates',
-      //     '/main_concept/custom_ranking',
-      //     '/main_concept/tokenizer',
-      //     '/main_concept/highlight',
-      //     '/main_concept/distinct',
-      //     '/main_concept/ranking',
-      //     '/main_concept/filters',
-      //     '/main_concept/custom_ranking',
-      //     '/main_concept/bucket_sort',
-      //     '/main_concept/typo_tolerance',
-      //     '/main_concept/ranking_rules',
-      //     '/main_concept/inverted_index',
-      //   ]
-      // },
+      {
+        title: 'Advanced Guide',   // required
+        path:  '/advanced_guides/synonyms',      // optional, which should be a absolute path.
+        collapsable: true, // optional, defaults to true
+        sidebarDepth: 1,    // optional, defaults to 1
+        children: [
+          '/advanced_guides/synonyms',
+          '/advanced_guides/stop_words',
+          // '/main_concept/updates',
+          // '/main_concept/custom_ranking',
+          // '/main_concept/tokenizer',
+          // '/main_concept/highlight',
+          // '/main_concept/distinct',
+          // '/main_concept/ranking',
+          // '/main_concept/filters',
+          // '/main_concept/custom_ranking',
+          // '/main_concept/bucket_sort',
+          // '/main_concept/typo_tolerance',
+          // '/main_concept/ranking_rules',
+          // '/main_concept/inverted_index',
+        ]
+      },
       {
         title: 'API References',   // required
         path:  '/references/',      // optional, which should be a absolute path.
@@ -95,6 +97,7 @@ module.exports = {
           '/references/indexes',
           '/references/documents',
           '/references/search',
+          '/references/synonyms',
           '/references/updates',
           // '/references/stats',
           // '/references/health'
