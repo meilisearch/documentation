@@ -13,7 +13,7 @@ However, when a sentence is considered the synonym of another word or sentence, 
 
 There are several ways to associate words with each other.
 
-## The One-way association:
+## The One-way association
 
 This makes it possible to determine that a word will be synonymous with another but not the other way around. 
 
@@ -24,7 +24,7 @@ phone => iphone
 
 By searching `phone` you will get all results containing `iphone` with the same relevance. However, if you search for `iphone`, the data containing `phone` will not change your results.
 
-## The multi-way association:
+## The multi-way association
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
 
