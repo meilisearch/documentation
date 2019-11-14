@@ -176,12 +176,16 @@ curl \
 
 ```json
 {
-  "updateId": 3
+  "updateId": 1
 }
 ```
+This [update id allows you to track](/references/updates) the current action.
 
+## Update documents
 
+<RouteHighlighter method="PUT" route="/indexes/:index/documents"/>
 
+same as [Add or Update](/references/documents.html#add-or-update-documents)
 
 
 ## Batch write documents
@@ -251,12 +255,10 @@ curl \
 
 ```json
 {
-  "updateId": 12
+  "updateId": 1
 }
 ```
-
-
-
+This [update id allows you to track](/references/updates) the current action.
 
 
 ## Clear all documents
@@ -294,10 +296,10 @@ curl \
 
 ```json
 {
-  "updateId": 37
+  "updateId": 1
 }
 ```
-
+This [update id allows you to track](/references/updates) the current action.
 
 
 
@@ -336,9 +338,10 @@ The update id returned by this function can be sent to the [get update status ro
 
 ```json
 {
-  "updateId": 27
+  "updateId": 1
 }
 ```
+This [update id allows you to track](/references/updates) the current action.
 
 
 
@@ -394,6 +397,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```json
 {
-  "updateId": 127
+  "updateId": 1
 }
 ```
+This [update id allows you to track](/references/updates) the current action.
