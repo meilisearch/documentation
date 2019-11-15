@@ -98,6 +98,7 @@ module.exports = {
           '/references/documents',
           '/references/search',
           '/references/synonyms',
+          '/references/stop_words',
           '/references/updates',
           // '/references/stats',
           // '/references/health'
