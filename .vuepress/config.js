@@ -42,15 +42,16 @@ module.exports = {
     `]
   ],
   themeConfig: {
+    repo: 'meilisearch/MeiliDB',
     logo: '/logo.png',
     sidebar: [
       {
         title: 'Introduction',   // required
-        path:  '/introduction/',      // optional, which should be a absolute path.
+        path:  '',      // optional, which should be a absolute path.
         collapsable: false, // optional, defaults to true
         sidebarDepth: 0,    // optional, defaults to 1
         children: [
-          '/introduction/',
+          '',
           '/introduction/quickstart',
           '/introduction/features'
         ]
