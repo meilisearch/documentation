@@ -75,6 +75,9 @@ module.exports = {
         children: [
           '/advanced_guides/synonyms',
           '/advanced_guides/stop_words',
+          '/advanced_guides/filters',
+          '/advanced_guides/keys',
+          '/advanced_guides/settings',
           // '/main_concept/updates',
           // '/main_concept/custom_ranking',
           // '/main_concept/tokenizer',
@@ -101,6 +104,11 @@ module.exports = {
           '/references/synonyms',
           '/references/stop_words',
           '/references/updates',
+          '/references/keys',
+          '/references/stats',
+          '/references/health',
+          '/references/version',
+          '/references/sys-info',
           // '/references/stats',
           // '/references/health'
         ]
