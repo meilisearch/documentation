@@ -8,7 +8,10 @@ First we have to explain some terms that are used in this reading.
 - A query string is the full list of all the words that the end user is searching for (i.e. "saturday night fever").
 - A query word is one of the words that compose the query string (i.e "night")
 
-### Typo rules
+
+
+
+## Typo rules
 
 The typo rules are used before sorting the documents. They are used to aggregate them, to choose which documents contain words similar to the queried words.
 
@@ -33,7 +36,10 @@ This means that "saturday", which is 7 characters long uses the second rule and 
 - "satuday" is accepted because it contains **one typo**.
 - "s**u**tuday" is not accepted because it contains **two typos**.
 
-### Ranking rules
+
+
+
+## Ranking rules
 
 All the documents that have been aggregated using the typo rules above can now be sorted. Meili uses a [bucket sort].
 
@@ -50,4 +56,3 @@ Here is the list of all the default rules that are executed in this specific ord
 
 [bucket sort]: https://en.wikipedia.org/wiki/Bucket_sort
 [Levenshtein algorithm]: https://en.wikipedia.org/wiki/Levenshtein_distance
-
