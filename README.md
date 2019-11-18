@@ -10,7 +10,7 @@ That's why we created meiliSearch, an open-source solution accessible to everyon
 Our solution is **instant**; it **accepts typos**; it allows **filters**, **rankings**, and a lot of other [features](/features.md).
 
 
-## Forword
+## Foreword
 
 Welcome to the beta version of the Meili Api documentation.
 
