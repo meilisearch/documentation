@@ -91,7 +91,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 <RouteHighlighter method="DELETE" route="/indexes/:index/stop-words" />
 
-Delete [stop-words](/advanced_guides/stop_words) from the list.
+Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
 
 
 #### Headers
