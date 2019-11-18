@@ -73,6 +73,8 @@ module.exports = {
         collapsable: true, // optional, defaults to true
         sidebarDepth: 1,    // optional, defaults to 1
         children: [
+          '/advanced_guides/typotolerance',
+          '/advanced_guides/ranking',
           '/advanced_guides/synonyms',
           '/advanced_guides/stop_words',
           '/advanced_guides/filters',
