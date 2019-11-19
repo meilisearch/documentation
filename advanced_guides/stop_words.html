@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Stop Words | Meili Documentation</title>
+    <meta name="description" content="The Meili incredible documentation">
+    <script>
+      window.$crisp=[];
+      window.CRISP_WEBSITE_ID="38a71dd2-729c-4970-b061-3e1db1c1eb20";
+      (function() {
+          var d=document;
+          var s=d.createElement("script");
+          s.src="https://client.crisp.chat/l.js";
+          s.async=1;
+          d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  <script>
+      (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
+      ;r.type="text/javascript"
+      ;r.integrity="sha384-d/yhnowERvm+7eCU79T/bYjOiMmq4F11ElWYLmt0ktvYEVgqLDazh4+gW9CKMpYW"
+      ;r.crossOrigin="anonymous";r.async=true
+      ;r.src="https://cdn.amplitude.com/libs/amplitude-5.2.2-min.gz.js"
+      ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
+      console.log("[Amplitude] Error: could not load SDK")}}
+      ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
+      ;function s(e,t){e.prototype[t]=function(){
+      this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
+      var o=function(){this._q=[];return this}
+      ;var a=["add","append","clearAll","prepend","set","setOnce","unset"]
+      ;for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[]
+      ;return this}
+      ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
+      ;for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c
+      ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
+      ;function v(e){function t(t){e[t]=function(){
+      e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
+      for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
+      e=(!e||e.length===0?"$default_instance":e).toLowerCase()
+      ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
+      ;e.amplitude=n})(window,document);
+
+      amplitude.getInstance().init("b1e93a7d40b5ea629cf0abee212cb54c");
+    </script>
+    
+    <link rel="preload" href="/assets/css/0.styles.6b3ccc64.css" as="style"><link rel="preload" href="/assets/js/app.517acb4b.js" as="script"><link rel="preload" href="/assets/js/2.f47d6e8e.js" as="script"><link rel="preload" href="/assets/js/11.9078c06f.js" as="script"><link rel="prefetch" href="/assets/js/10.76ec48e2.js"><link rel="prefetch" href="/assets/js/12.7359ab35.js"><link rel="prefetch" href="/assets/js/13.63d4460e.js"><link rel="prefetch" href="/assets/js/14.a252bf07.js"><link rel="prefetch" href="/assets/js/15.f3472add.js"><link rel="prefetch" href="/assets/js/16.3886fe30.js"><link rel="prefetch" href="/assets/js/17.88d49bc8.js"><link rel="prefetch" href="/assets/js/18.781ff385.js"><link rel="prefetch" href="/assets/js/19.f48f2b6c.js"><link rel="prefetch" href="/assets/js/20.2d777388.js"><link rel="prefetch" href="/assets/js/21.73028bd0.js"><link rel="prefetch" href="/assets/js/22.84beeb50.js"><link rel="prefetch" href="/assets/js/23.614d7db5.js"><link rel="prefetch" href="/assets/js/24.be46682d.js"><link rel="prefetch" href="/assets/js/25.eeb59894.js"><link rel="prefetch" href="/assets/js/26.42e04fc3.js"><link rel="prefetch" href="/assets/js/27.fc421041.js"><link rel="prefetch" href="/assets/js/28.6691dba7.js"><link rel="prefetch" href="/assets/js/29.097ddb03.js"><link rel="prefetch" href="/assets/js/3.3bce55f9.js"><link rel="prefetch" href="/assets/js/30.7ddd08a7.js"><link rel="prefetch" href="/assets/js/31.a0cbbb23.js"><link rel="prefetch" href="/assets/js/32.b23c549c.js"><link rel="prefetch" href="/assets/js/33.b713eee8.js"><link rel="prefetch" href="/assets/js/34.ecbfc7c7.js"><link rel="prefetch" href="/assets/js/35.0b89cf71.js"><link rel="prefetch" href="/assets/js/4.4bbe49e3.js"><link rel="prefetch" href="/assets/js/5.a14355bf.js"><link rel="prefetch" href="/assets/js/6.1a4a4466.js"><link rel="prefetch" href="/assets/js/7.48235542.js"><link rel="prefetch" href="/assets/js/8.f4ca2863.js"><link rel="prefetch" href="/assets/js/9.1d98b074.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6b3ccc64.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="Meili Documentation" class="logo"> <span class="site-name can-hide">Meili Documentation</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"> <a href="https://github.com/meilisearch/MeiliDB" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"> <a href="https://github.com/meilisearch/MeiliDB" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Introduction</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/" class="sidebar-link">Introduction</a></li><li><a href="/introduction/quickstart.html" class="sidebar-link">Quick Start</a></li><li><a href="/introduction/features.html" class="sidebar-link">Features</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/main_concept/" class="sidebar-heading clickable"><span>Main concepts</span> <span class="arrow right"></span></a> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/advanced_guides/typotolerance" class="sidebar-heading clickable open"><span>Advanced Guide</span> <span class="arrow down"></span></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/advanced_guides/typotolerance.html" class="sidebar-link">Typo tolerance</a></li><li><a href="/advanced_guides/ranking.html" class="sidebar-link">Ranking</a></li><li><a href="/advanced_guides/synonyms.html" class="sidebar-link">Synonyms</a></li><li><a href="/advanced_guides/stop_words.html" class="active sidebar-link">Stop Words</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/advanced_guides/stop_words.html#language-driven" class="sidebar-link">Language driven</a></li></ul></li><li><a href="/advanced_guides/filters.html" class="sidebar-link">Filters</a></li><li><a href="/advanced_guides/keys.html" class="sidebar-link">Keys</a></li><li><a href="/advanced_guides/settings.html" class="sidebar-link">Settings</a></li><li><a href="/advanced_guides/updates.html" class="sidebar-link">Updates</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><a href="/references/" class="sidebar-heading clickable"><span>API References</span> <span class="arrow right"></span></a> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="stop-words"><a href="#stop-words" class="header-anchor">#</a> Stop Words</h1> <p>Stop-words words allow you to <strong>ignore certain words in the relevance of your search</strong>.</p> <p>During a search, if your query contains words that you have put in stop-words, they will be ignored by the algorithm that defines the relevance of each document. This increases the speed of the search.</p> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>Using stop-words allows the relevance of the search to be focused on more interesting elements such as ranking rather than on the accuracy of the sequence with another one.</p></div> <h2 id="language-driven"><a href="#language-driven" class="header-anchor">#</a> Language driven</h2> <p>Stop-words are strongly related to the language in which your data is written. Thus &quot;the&quot; or &quot;of&quot; are words that do not add much interest in English research.</p> <p>However, their recurrence in the data makes them decisive for calculating the relevance of a document, which could be counterproductive. In most cases it is more desirable to ignore any recurrence of these words and to base research results on more relevant distinctions.</p> <h3 id="example"><a href="#example" class="header-anchor">#</a> Example</h3> <p>Let's take a movie dataset where the release year is written in timestamp format like this:</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;299537&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Captain Marvel&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://image.tmdb.org/t/p/w1280/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token string">&quot;The story follows Carol Danvers as she becomes one of the universe’s most powerful heroes when Earth is caught in the middle of a galactic war between two alien races. Set in the 1990s, Captain Marvel is an all-new adventure from a previously unseen period in the history of the Marvel Cinematic Universe.&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token number">1551830400</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Now the schema should be defined like this :</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">&quot;identifier&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;displayed&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;indexed&quot;</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">&quot;displayed&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;indexed&quot;</span> <span class="token punctuation">]</span><span class="token punctuation">,</span> 
+  <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">&quot;indexed&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;displayed&quot;</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;ranked&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;displayed&quot;</span> <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span> <span class="token string">&quot;displayed&quot;</span> <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Lets make a search on this dataset</p> <h4 id="without-stop-words"><a href="#without-stop-words" class="header-anchor">#</a> Without stop words</h4> <div class="language-bash extra-class"><pre class="language-bash"><code>➜ <span class="token function">curl</span> -G <span class="token punctuation">\</span>
+  --request GET <span class="token string">'http://localhost:8080/indexes/rangemovies/search?limit=3'</span> <span class="token punctuation">\</span>
+  --data-urlencode <span class="token string">&quot;q=the road to &quot;</span>
+</code></pre></div><div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;hits&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;31804&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;The Road to Hong Kong&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Bob Hope and Bing Crosby return as con men Chester Babcock and Harry Turner, in the last of their road movies. When Chester accidentally memorizes and destroys the only copy of a secret Russian formula for a new and improved rocket fuel, they are thrust into international intrigue, trying to stay alive while keeping the formula out of enemy hands.&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token number">-252460800</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://image.tmdb.org/t/p/w1280/50vcozuZ03PD8xD7sQfUqca3UvE.jpg&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;10467&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;The Road to Wellville&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token string">&quot;An unhappy young couple visit the infamous Kellogg spa in Battle Creek, Michigan while a young hustler tries get into the breakfast-cereal business and compete against John Kellogg's corn flakes.&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token number">783302400</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://image.tmdb.org/t/p/w1280/zh7OVdFMpqpZ027z9RgVIwzxYjZ.jpg&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;7872&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;The Road to Guantanamo&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Part drama, part documentary, The Road to Guantánamo focuses on the Tipton Three, a trio of British Muslims who were held in Guantanamo Bay for two years until they were released without charge.&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token number">1141862400</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://image.tmdb.org/t/p/w1280/2ttqAXqS1kUGMLg7itTQ1jVCU6M.jpg&quot;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;offset&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;limit&quot;</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;processingTimeMs&quot;</span><span class="token operator">:</span> <span class="token number">48</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;query&quot;</span><span class="token operator">:</span> <span class="token string">&quot;the road to &quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>The Road to Hong Kong</code> is the first film in our search results. It is there because of the recurrence of the words &quot;the&quot; and &quot;of&quot; in the title and description. However, it is the oldest film in the documents offered.</p> <p>In order to allow the search engine to focus more on the release date, let's add stop-words that prevent giving so much importance to documents that have no specificity other than the recurrence of stop-words.</p> <h4 id="now-lets-add-some-stop-words"><a href="#now-lets-add-some-stop-words" class="header-anchor">#</a> Now lets add some stop words</h4> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">curl</span> <span class="token punctuation">\</span>
+  --request PUT <span class="token string">'http://localhost:8080/indexes/rangemovies/stop-words'</span> <span class="token punctuation">\</span>
+  --data <span class="token string">'[&quot;the&quot;, &quot;of&quot;, &quot;to&quot;]'</span>
+</code></pre></div><p>and lets try the same search again.</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;hits&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;20618&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Road Trip: Beer Pong&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token string">&quot;It’s Road Trip - Beer Pong! Three college roommates are on the ride of their lives when they drop everything to join a bus full of sexy, scantily clad models to compete in the ultimate sport competition: the National Beer Pong Tournament.&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token number">1249952400</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://image.tmdb.org/t/p/w1280/g3SnxYhaysmCn3V7nmwI3ZvRLth.jpg&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;4147&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Road to Perdition&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Mike Sullivan works as a hit man for crime boss John Rooney. Sullivan views Rooney as a father figure, however after his son is witness to a killing, Mike Sullivan finds himself on the run in attempt to save the life of his son and at the same time looking for revenge on those who wronged him.&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token number">1026435600</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://image.tmdb.org/t/p/w1280/jn0GH8klINSQtRNifY8W2Kv4ajl.jpg&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">&quot;id&quot;</span><span class="token operator">:</span> <span class="token string">&quot;10135&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;title&quot;</span><span class="token operator">:</span> <span class="token string">&quot;Road House&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;overview&quot;</span><span class="token operator">:</span> <span class="token string">&quot;The Double Deuce is the meanest, loudest and rowdiest bar south of the Mason-Dixon Line, and Dalton (Patrick Swayze) has been hired to clean it up. He might not look like much, but the Ph.D.-educated bouncer proves he's more than capable -- busting the heads of troublemakers and turning the roadhouse into a jumping hot-spot. But Dalton's romance with the gorgeous Dr. Clay (Kelly Lynch) puts him on the bad side of cutthroat local big shot Brad Wesley (Ben Gazzara).&quot;</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;release_date&quot;</span><span class="token operator">:</span> <span class="token number">611542800</span><span class="token punctuation">,</span>
+      <span class="token property">&quot;poster&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://image.tmdb.org/t/p/w1280/epxeFRI1Ig3CU7hnz9pZVkarfOz.jpg&quot;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;offset&quot;</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;limit&quot;</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;processingTimeMs&quot;</span><span class="token operator">:</span> <span class="token number">16</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;query&quot;</span><span class="token operator">:</span> <span class="token string">&quot;the road to &quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>this time the results are much more related to the release date
+of the film rather than the number of recurrences of the stop-words. The response time is much shorter too, from <code>48ms</code> to <code>16ms</code></p> <p>You can see where the line is drawn between the importance of getting rid of stop-words and also the relevance those words can give to you search.</p> <p>Find the best way they will fit for you !</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/advanced_guides/synonyms.html" class="prev">Synonyms</a></span> <span class="next"><a href="/advanced_guides/filters.html">Filters</a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.517acb4b.js" defer></script><script src="/assets/js/2.f47d6e8e.js" defer></script><script src="/assets/js/11.9078c06f.js" defer></script>
+  </body>
+</html>
