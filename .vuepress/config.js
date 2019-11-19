@@ -58,10 +58,11 @@ module.exports = {
       },
       {
         title: 'Main concepts',   // required
-        path:  '/main_concept/indexes',      // optional, which should be a absolute path.
-        collapsable: false, // optional, defaults to true
+        path:  '/main_concept/',      // optional, which should be a absolute path.
+        collapsable: true, // optional, defaults to true
         sidebarDepth: 1,    // optional, defaults to 1
         children: [
+          
           '/main_concept/indexes',
           '/main_concept/documents',
           '/main_concept/search'

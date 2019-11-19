@@ -1,12 +1,6 @@
 # Indexes
 
-## Glossary
-
-MeiliSearch uses the following terms inside the documentation. The reader should become familiar with them before continuing.
-
-* **Index** : Like a table in `SQL`. It's the entity that gathers all the documents of a given structure.
-* **Schema** : The definition of the index. The `schema` describes the structure of the `document`.
-* **Document** : Object containing the defined attributed with their associated data.
+An `index` is an entity, like a *table in SQL*, with a specific `schema` definition. It gathers a collection of `documents` with the structure defined by the schema. 
 
 No other information than a **name and a schema are required for the [creation of an index](/references/indexes.md#create-an-index)**. The schema can also be inferred if none is given.
 
@@ -23,6 +17,10 @@ In the schema definition, each attribute has one or multiple of the following ta
 
 As a result, it is possible to have indexed fields that are not displayed or displayed fields that are not indexed. Depending on your documents and your needs, this could be useful.
 
+::: danger
+The only mandatory document field is the **identifier**.
+:::
+
 ### Fields order
 
 The **order of the fields represents their relevance** in the search engine.
@@ -30,10 +28,14 @@ The **order of the fields represents their relevance** in the search engine.
 Thus, if a `title` field is defined before a `description` field, its content will be considered more relevant to a search query than that of a "description" field.
 <!-- <Badge text="soon" type="warn"/> -->
 
+Which means that if you search for something that matches in the `description` of the document _A_ and in the `title` of the document _B_,
+the document _B_ will be considered better than the document _A_. You can read more about these rules [in the ranking section][1].
+
+[1]: /advanced_guides/ranking.html#ranking-rules
+
 <!-- TODO change doc link -->
-::: warning
-The order of the document fields has a huge impact on the relevancy. So please order fields from the most important to the less.
-You can read more about that on [the documents page](/main_concept/documents.md).
+::: tip
+The **order of the document fields has a huge impact on the relevancy**. So please order fields from the most important to the less.
 :::
 
 ### Example
