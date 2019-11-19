@@ -1,0 +1,24 @@
+{
+  "name": "documentation",
+  "version": "1.0.0",
+  "description": "Documentation for MeiliSearch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vuepress build ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:meilisearch/public/documentation.git"
+  },
+  "keywords": [
+    "documentation",
+    "vuepress",
+    "meilisearch"
+  ],
+  "author": "tpayet",
+  "license": "MIT",
+  "dependencies": {
+    "vuepress": "^1.2.0"
+  }
+}
