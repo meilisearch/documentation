@@ -6,7 +6,7 @@ MeiliSearch uses the following terms inside the documentation. The reader should
 
 * **Index** : Like a table in `SQL`. It's the entity that gathers all the documents of a given structure.
 * **Schema** : The definition of the index. The `schema` describes the structure of the `document`.
-* **Document** : Object containing the defined fields with their associated data.
+* **Document** : Object containing the defined attributed with their associated data.
 
 No other information than a **name and a schema are required for the [creation of an index](/references/indexes.md#create-an-index)**. The schema can also be inferred if none is given.
 
@@ -21,7 +21,6 @@ In the schema definition, each attribute has one or multiple of the following ta
 * **displayed**: Fields that will appear in the returned documents.
 * **ranked**: Ranked fields are used to create ranking rules. 
 
-<!-- Ranked field give you the possibility of creating ranking rules -->
 As a result, it is possible to have indexed fields that are not displayed or displayed fields that are not indexed. Depending on your documents and your needs, this could be useful.
 
 ### Fields order
@@ -77,7 +76,7 @@ When no schema is given at the creation of an index, the schema is inferred. [In
 
 ## Identifier
 
-This tag is given to the field that contains the **unique key of each document**. 
+This tag is given to the attribute that contains the **unique key of each document**. 
 
 If two documents added at the same time have the same ID, MeiliSearch will only save the last one.
 
@@ -109,8 +108,9 @@ The inference of the schema is based on the first document added to MeiliSearch.
 
 To be able to infer a schema based on your first document MeiliSearch will look for **an identifier** and **the order of the fields** inside the document.
 
-To determine the identifier, a field that contains the case insensitive string `id` is expected. Thus, `_id`, `myId`, 
-for example, are correct keys. This field will receieve the [identifier](/main_concept/indexes.md#identifier) tag, so it should contain the unique identifier of a document.
+To determine the identifier, an attribute that contains the case insensitive string `id` is expected. Thus, `_id`, `myId`, for example, are correct keys. 
+
+This field will receieve the [identifier](/main_concept/indexes.md#identifier) tag, so it should contain the unique identifier of a document.
 If **the `identifier` field is missing**, the inference will not be completed, and the **documents will not be added**.
 
 
