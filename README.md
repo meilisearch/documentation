@@ -1,4 +1,16 @@
-# API Documentation
+## Introduction
+
+Meilisearch is a **RESTfull search API** which aims to become a **ready-to-go solution** for everyone wanting a **powerful, fast and relevant search experience** for their end-users.
+
+Efficient search engines are often only accessible to companies with the financial means and resources necessary to develop a search solution adapted to their needs. The majority of other companies that do not have the means or do not realize that the lack of relevance of a search greatly impacts the pleasure of navigation on their application,
+end up with poor solutions that are more frustrating than effective, for both the developer and the user
+
+That's why we created meiliSearch, an open-source solution accessible to everyone, meeting the vast majority of needs, even specific ones. Installable very easily with little or no configuration required but with a high capacity for customization.
+
+Our solution is **instant**; it **accepts typos**; it allows **filters**, **rankings**, and a lot of other [features](/features.md).
+
+
+## Foreword
 
 Welcome to the beta version of the Meili Api documentation.
 
@@ -10,27 +22,3 @@ please contact us using the little chat box at the bottom right of this page.
 
 Thank you for your interest and have fun with your HTTP client 🌍
 
-## Response Status Code
-
-#### Success
-
-- **200** : Ok, for all get methods request
-- **201** : Created, for all post method request
-- **202** : Accepted, for all put and delete methods request
-- **205** : Reset Content, for a clear request
-
-#### Error
-
-- **400**: Bad Request, A global error, see the JSON message to understand the issue
-- **401**: Unauthorized, an authentification header is missing
-- **403**: Forbidden, the token have not the permissions
-- **404**: Not Found, the requested resource is not found, it could be an `index` or if a document is missing an identifier.
-
-
-Response body :
-
-```json
-{
-  "message": "The error message"
-}
-```

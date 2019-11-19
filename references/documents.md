@@ -1,72 +1,5 @@
 # Documents
 
-Documents are objects composed of fields containing any data, a field is composed of an attribute **and** its associated data.
-This object form is used by most of the Meili API endpoints.
-
-::: tip
-Documents identifiers are always converted into strings and only strings and integers are valid identifiers.
-It means that it is forbidden to use arrays or objects as identifier for example.
-:::
-
-```json
-{
-  "id": 3205,
-  "title": "Interstellar",
-  "description": "This is a great movie.",
-  "type": ["sci fi", "space"]
-}
-```
-
-In this document example, **attributes** are `"id"`, `"title"`, `"description"` and `"type"`.</br>
-The **fields** are the combination of attributes and data (i.e. `"title": "Interstellar"`).
-
-#### Schemas
-
-A schema is a representation of the documents attributes.
-It is used by Meili to know how to handle documents like which fields to display and which fields to index.
-
-- **Indexed** attributes are used by the search engine.
-- **Displayed** attributes will be shown when a document is returned.
-
-::: tip
-By default the Meili dashboard infers the schema from the **first** document sent.
-:::
-
-::: danger
-Documents fields which do not correspond to the schema fields are ignored.
-The only mandatory document field is the **identifier**.
-:::
-
-If you upload a file via the dashboard the schema is infered this way:
-  - the order of the first document fields is the order of the schema fields
-  - the identifier is the first field containing "id" (case insensitive)
-  - every field is indexed and displayed
-
-::: tip
-The order of the schema fields determines the precedence:
-a field which is declared before another one is more important.
-:::
-
-```json
-{
-  "id": ["identifier", "indexed", "displayed"],
-  "title": ["indexed", "displayed"],
-  "description": ["indexed", "displayed"],
-  "type": ["indexed", "displayed"]
-}
-```
-
-In this schema example we can see that every field is indexed and displayed.
-This is the typical schema that would be infered by uploading the previous document via the dashboard.
-
-We can also deduct that the "id" attribute is more important than the "title", "description" and "type".
-Which means that if you search for something that matches in the "description" of the document _A_ and in the "title" of the document _B_,
-the document _B_ will be considered better than the document _A_. You can read more about these rules [in the search section][1].
-
-[1]: /search.md#ranking-rules
-
-
-
 
 
 ## Get one document
@@ -94,7 +27,7 @@ Get one document using its unique identifier.
 ```bash
 curl \
   --location \
-  --request GET 'https://4eb345y7.getmeili.com/indexes/4eb345y7/documents/25684' \
+  --request GET 'http://localhost:8080/indexes/movies/documents/25684' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -151,7 +84,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 ```bash
 curl \
   --location \
-  --request GET 'https://4eb345y7.getmeili.com/indexes/4eb345y7/documents?limit=5' \
+  --request GET 'http://localhost:8080/indexes/movies/documents?limit=5' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -227,7 +160,7 @@ Documents fields which are not known to the index schema will be ignored
 ```bash
 curl \
   --location \
-  --request POST 'https://4eb345y7.getmeili.com/indexes/4eb345y7/documents' \
+  --request POST 'http://localhost:8080/indexes/movies/documents' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '[{
@@ -243,12 +176,16 @@ curl \
 
 ```json
 {
-  "updateId": 3
+  "updateId": 1
 }
 ```
+This [update id allows you to track](/references/updates) the current action.
 
+## Update documents
 
+<RouteHighlighter method="PUT" route="/indexes/:index/documents"/>
 
+same as [Add or Update](/references/documents.html#add-or-update-documents)
 
 
 ## Batch write documents
@@ -295,7 +232,7 @@ Unknown documents attributes will be ignored. You can [read more about that](/do
 ```bash
 curl \
   --location \
-  --request POST 'https://4eb345y7.getmeili.com/indexes/4eb345y7/documents' \
+  --request POST 'http://localhost:8080/indexes/movies/documents' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
@@ -318,12 +255,10 @@ curl \
 
 ```json
 {
-  "updateId": 12
+  "updateId": 1
 }
 ```
-
-
-
+This [update id allows you to track](/references/updates) the current action.
 
 
 ## Clear all documents
@@ -352,7 +287,7 @@ The update id returned by this function can be sent to the [get update status ro
 ```bash
 curl \
   --location \
-  --request DELETE 'https://4eb345y7.getmeili.com/indexes/4eb345y7/documents' \
+  --request DELETE 'http://localhost:8080/indexes/movies/documents' \
   --header "X-Meili-API-Key: $API_KEY" \
   --header 'Content-Type: application/json'
 ```
@@ -361,10 +296,10 @@ curl \
 
 ```json
 {
-  "updateId": 37
+  "updateId": 1
 }
 ```
-
+This [update id allows you to track](/references/updates) the current action.
 
 
 
@@ -395,7 +330,7 @@ The update id returned by this function can be sent to the [get update status ro
 ```bash
   curl \
   --location \
-  --request DELETE 'https://4eb345y7.getmeili.com/indexes/4eb345y7/documents/25684' \
+  --request DELETE 'http://localhost:8080/indexes/movies/documents/25684' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -403,9 +338,10 @@ The update id returned by this function can be sent to the [get update status ro
 
 ```json
 {
-  "updateId": 27
+  "updateId": 1
 }
 ```
+This [update id allows you to track](/references/updates) the current action.
 
 
 
@@ -446,7 +382,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 ```bash
   curl \
   --location \
-  --request POST 'https://4eb345y7.getmeili.com/indexes/4eb345y7' \
+  --request POST 'http://localhost:8080/indexes/movies' \
   --header "X-Meili-API-Key: $API_KEY" \
   --header 'Content-Type: application/json' \
   --data '[
@@ -461,6 +397,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```json
 {
-  "updateId": 127
+  "updateId": 1
 }
 ```
+This [update id allows you to track](/references/updates) the current action.
