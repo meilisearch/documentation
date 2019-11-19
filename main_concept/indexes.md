@@ -6,7 +6,7 @@ MeiliSearch uses the following terms inside our documentation. The reader should
 
 * **Index** : Like a table in `SQL`. It's the entity that gathers all the documents of a given structure.
 * **Schema** : The definition of the index. The `schema` describes the structure of the `document`.
-* **Documents** : A json object containing the defined tags with their respective values.
+* **Document** : A json object containing the defined tags with their respective values.
 
 No other information than a **name and a schema are required for the [creation of an index](/references/indexes.md#create-an-index)**. The schema can also be inferred if none is given.
 
