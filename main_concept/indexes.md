@@ -2,11 +2,11 @@
 
 ## Glossary
 
-MeiliSearch uses the following terms inside our documentation. The reader should become familiar with them before continuing.
+MeiliSearch uses the following terms inside the documentation. The reader should become familiar with them before continuing.
 
 * **Index** : Like a table in `SQL`. It's the entity that gathers all the documents of a given structure.
 * **Schema** : The definition of the index. The `schema` describes the structure of the `document`.
-* **Document** : A json object containing the defined tags with their respective values.
+* **Document** : Object containing the defined fields with their associated data.
 
 No other information than a **name and a schema are required for the [creation of an index](/references/indexes.md#create-an-index)**. The schema can also be inferred if none is given.
 
