@@ -82,6 +82,11 @@ If two documents added at the same time have the same ID, MeiliSearch will only 
 
 If a document is added when there is already a document with the same ID in MeiliSearch, it will be updated.
 
+::: tip
+Documents identifiers are always converted into strings and only strings and integers are valid identifiers.
+It means that it is, for example, forbidden to use arrays or objects as identifier.
+:::
+
 ## Indexed
 
 It defines the fields that will be used to find the documents.
@@ -106,13 +111,24 @@ The inference of the schema is based on the first document added to MeiliSearch.
 
 ### Inference rules
 
-To be able to infer a schema based on your first document MeiliSearch will look for **an identifier** and **the order of the fields** inside the document.
+the schema is infered this way:
+  - the **order of the fields** is the order of the schema fields
+  - the **identifier** is the first field containing `"id"` (case insensitive)
+  - every field is `indexed` and `displayed`
+
+The order of the fields inside the document will [determine their relevance in the search engine](/main_concept/indexes.md#fields-order). 
 
 To determine the identifier, an attribute that contains the case insensitive string `id` is expected. Thus, `_id`, `myId`, for example, are correct keys. 
 
 This field will receieve the [identifier](/main_concept/indexes.md#identifier) tag, so it should contain the unique identifier of a document.
-If **the `identifier` field is missing**, the inference will not be completed, and the **documents will not be added**.
+
+::: warning
+If the `identifier` field is missing, the inference will not be completed, and the **documents will not be added**.
+:::
+
+Every other field will have the `indexed` and `displayed`tags.
 
 
-The order of the fields inside the document will [determine their relevance in the search engine](/main_concept/indexes.md#fields-order). 
-
+::: tip
+By default the Meili dashboard infers the schema from the **first** document sent.
+:::
