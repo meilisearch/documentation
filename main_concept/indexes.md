@@ -1,6 +1,6 @@
 # Indexes
 
-## Important Vocabulary 
+## Glossary
 
 MeiliSearch uses the following terms inside our documentation. The reader should become familiar with them before continuing.
 
@@ -28,7 +28,7 @@ As a result, it is possible to have indexed fields that are not displayed or dis
 
 The **order of the fields represents their relevance** in the search engine.
 
-Thus, if a "title" field is defined before a "description" field, its content will be considered more relevant to a search query than that of a "description" field.
+Thus, if a `title` field is defined before a `description` field, its content will be considered more relevant to a search query than that of a "description" field.
 <!-- <Badge text="soon" type="warn"/> -->
 
 <!-- TODO change doc link -->
@@ -77,7 +77,7 @@ When no schema is given at the creation of an index, the schema is inferred. [In
 
 ## Identifier
 
-This tag is given to the field that contains the **unique value of each document**. 
+This tag is given to the field that contains the **unique key of each document**. 
 
 If two documents added at the same time have the same ID, MeiliSearch will only save the last one.
 
