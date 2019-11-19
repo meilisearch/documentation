@@ -18,7 +18,7 @@ Adding documents :
   "update_id": 3,
   "update_type": {
     "name": "DocumentsAddition",
-    "number": 19652w
+    "number": 19652
   },
   "enqueued_at": "2019-11-13T14:51:22.857056Z"
 }
