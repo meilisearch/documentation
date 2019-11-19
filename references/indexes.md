@@ -18,7 +18,7 @@ List all indexes names.
 ```bash
 curl \
   --location \
-  --request GET 'http://4eb345y7.getmeili.com/indexes' \
+  --request GET 'http://localhost:8080/indexes' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -52,7 +52,7 @@ Get the schema of a specific index.
 ```bash
 curl \
   --location \
-  --request GET 'http://4eb345y7.getmeili.com/indexes/4eb345y7' \
+  --request GET 'http://localhost:8080/indexes/movies' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -60,12 +60,11 @@ curl \
 
 ```json
 {
-  "id": ["identifier", "indexed", "stored"],
-  "title": ["stored", "indexed"],
-  "overview": ["stored", "indexed"],
-  "release_date": ["stored"],
-  "poster": ["stored"],
-  "objectId": ["stored", "indexed"]
+  "id": ["identifier", "indexed", "displayed"],
+  "title": ["displayed", "indexed"],
+  "overview": ["displayed", "indexed"],
+  "release_date": ["displayed"],
+  "poster": ["displayed"]
 }
 ```
 
@@ -122,10 +121,10 @@ curl \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
     "id": ["identifier", "indexed", "displayed"],
-    "title": ["indexed", "displayed"],
-    "description": ["indexed", "displayed"],
+    "title": ["displayed", "indexed"],
+    "overview": ["displayed", "indexed"],
     "release_date": ["displayed"],
-    "cover": ["displayed"]
+    "poster": ["displayed"]
 }'
 ```
 
@@ -173,7 +172,7 @@ The body accepts a new schema for the given index.
     "id": ["identifier", "indexed", "displayed"],
     "title": ["indexed", "displayed"],
     "description": ["indexed", "displayed"],
-    "release_date": ["displayed"],
+    "release_date": ["displayed", "ranked"],
     "cover": ["displayed"]
 }
 ```
@@ -187,11 +186,11 @@ curl \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
-    "id": ["identifier", "indexed", "displayed"],
-    "title": ["indexed", "displayed"],
-    "description": ["indexed", "displayed"],
-    "release_date": ["displayed"],
-    "cover": ["displayed"]
+  "id": ["identifier", "indexed", "displayed"],
+  "title": ["displayed", "indexed"],
+  "overview": ["displayed", "indexed"],
+  "release_date": ["displayed", "ranked"],
+  "poster": ["displayed"]
 }'
 ```
 

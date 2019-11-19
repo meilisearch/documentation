@@ -69,7 +69,7 @@ module.exports = {
       },
       {
         title: 'Advanced Guide',   // required
-        path:  '/advanced_guides/synonyms',      // optional, which should be a absolute path.
+        path:  '/advanced_guides/typotolerance',      // optional, which should be a absolute path.
         collapsable: true, // optional, defaults to true
         sidebarDepth: 1,    // optional, defaults to 1
         children: [
@@ -80,6 +80,7 @@ module.exports = {
           '/advanced_guides/filters',
           '/advanced_guides/keys',
           '/advanced_guides/settings',
+          '/advanced_guides/updates',
           // '/main_concept/updates',
           // '/main_concept/custom_ranking',
           // '/main_concept/tokenizer',
