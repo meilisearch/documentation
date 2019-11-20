@@ -42,7 +42,7 @@ MeiliSearch has default `criteria`.
 
 Here is the list of all the `criteria` that are executed in this specific order by default:
 
-- `Number of Typos` - The less typos there are beween the query words and the document words, the better is the document.
+- `Number of Typos` - The less typos there are beween the query words and the document words, the more relevant is the document.
 - `Number of Words` - A document containing more of the query words will be more important than one that contains less.
 - `Words Proximity` - The closer the query words are in the document the better is the document.
 - `Attribute` - A document containing the query words in a more important attribute than another document is considered better.
