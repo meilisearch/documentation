@@ -54,7 +54,7 @@ Here is the list of all the `criteria` that are executed in this specific order 
 
 Custom ranking rules gives you the possibility to add new rules. New rules can be added on attributes that has the `ranked` tag in the [schema](/main_concept/indexes.md#ranked).
 
-A rule is defined by an **attribute** and a **ascendent** `asc` or **descendent** `dsc` property.
+A rule is defined by an **attribute** and an order,  which can be **ascendent** `asc` or **descendent** `dsc`.
 
 The name of the ranking rule is the name of the attribute on which the rule is made. 
 
