@@ -33,7 +33,6 @@ par exemple skuid sur une liste de vetement de differentes couleur
 
  -->
 
-<!--  -->
 
 MeiliSearch uses ranking rules called `criteria` or `criterion`. They are used in the [bucket sort](/advanced_guides/bucket_sort)
 
