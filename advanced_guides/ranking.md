@@ -47,7 +47,7 @@ Here is the list of all the `criteria` that are executed in this specific order 
 - `Words Proximity` - The closer the query words are in the document the more relevant is the document.
 - `Attribute` - A document containing the query words in a more important attribute than another document is considered more relevant.
 - `Position` - A document containing the query words at the start of an attribute is considered more relevant than a document that contains them in the end.
-- `Exact` - A document containing the query words in their exact form, not only a prefix of them, is considered better.
+- `Exact` - A document containing the query words in their exact form, not only a prefix of them, is considered more relevant.
 
 
 ## Custom ranking rules
