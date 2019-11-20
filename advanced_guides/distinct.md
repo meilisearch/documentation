@@ -1,6 +1,6 @@
 # Distinct
 
-A field can be setted as `distinct`. 
+A field can be set as `distinct`. 
 
 When a field is `distinct`, there will **never be two, or more, occurence of the same value of that attribute** in the different documents that are returned by MeiliSearch.
 
