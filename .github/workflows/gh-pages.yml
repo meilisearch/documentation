@@ -28,6 +28,8 @@ jobs:
 
     - run: yarn build
 
+    - run: echo 'docs.meilisearch.com' > .vuepress/dist/CNAME
+
     - name: deploy
       uses: peaceiris/actions-gh-pages@v2.5.0
       env:
