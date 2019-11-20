@@ -46,10 +46,10 @@ module.exports = {
     logo: '/logo.png',
     sidebar: [
       {
-        title: 'Introduction',   // required
-        path:  '',      // optional, which should be a absolute path.
-        collapsable: false, // optional, defaults to true
-        sidebarDepth: 0,    // optional, defaults to 1
+        title: 'Introduction',
+        path:  '',
+        collapsable: false,
+        sidebarDepth: 0,
         children: [
           '',
           '/introduction/quickstart',
@@ -57,10 +57,10 @@ module.exports = {
         ]
       },
       {
-        title: 'Main concepts',   // required
-        path:  '/main_concept/',      // optional, which should be a absolute path.
-        collapsable: true, // optional, defaults to true
-        sidebarDepth: 1,    // optional, defaults to 1
+        title: 'Main concepts',
+        path:  '/main_concept/',
+        collapsable: true,
+        sidebarDepth: 1,
         children: [
           
           '/main_concept/indexes',
@@ -69,10 +69,10 @@ module.exports = {
         ]
       },
       {
-        title: 'Advanced Guide',   // required
-        path:  '/advanced_guides/typotolerance',      // optional, which should be a absolute path.
-        collapsable: true, // optional, defaults to true
-        sidebarDepth: 1,    // optional, defaults to 1
+        title: 'Advanced Guide',
+        path:  '/advanced_guides/typotolerance',
+        collapsable: true,
+        sidebarDepth: 1,
         children: [
           '/advanced_guides/typotolerance',
           '/advanced_guides/ranking',
@@ -82,25 +82,14 @@ module.exports = {
           '/advanced_guides/keys',
           '/advanced_guides/distinct',
           '/advanced_guides/updates',
-          '/advanced_guides/bucket_sort',
-          // '/main_concept/custom_ranking',
-          // '/main_concept/tokenizer',
-          // '/main_concept/highlight',
-          // '/main_concept/distinct',
-          // '/main_concept/ranking',
-          // '/main_concept/filters',
-          // '/main_concept/custom_ranking',
-          // '/main_concept/bucket_sort',
-          // '/main_concept/typo_tolerance',
-          // '/main_concept/ranking_rules',
-          // '/main_concept/inverted_index',
+          '/advanced_guides/bucket_sort'
         ]
       },
       {
-        title: 'API References',   // required
-        path:  '/references/',      // optional, which should be a absolute path.
-        collapsable: true, // optional, defaults to true
-        sidebarDepth: 1,    // optional, defaults to 1
+        title: 'API References',
+        path:  '/references/',
+        collapsable: true,
+        sidebarDepth: 1,
         children: [
           '/references/indexes',
           '/references/documents',
@@ -113,9 +102,7 @@ module.exports = {
           '/references/stats',
           '/references/health',
           '/references/version',
-          '/references/sys-info',
-          // '/references/stats',
-          // '/references/health'
+          '/references/sys-info'
         ]
       },
     ]
