@@ -1,12 +1,6 @@
-# Filters
+# Search Parameters
 
 ## Filters
-
-
-## Distinct 
-
-
-## Ranking
 
 ## Crop
 <!-- crop : return value of attribute cropped to a given length 
@@ -15,9 +9,9 @@
   Crop takes matches into account and recalculates position of matches with the cropped version of the document.
 -->
 
-## matches
+## Matches
 
-Renvoie les indexes des occurences trouvées : 
+<!-- Renvoie les indexes des occurences trouvées : 
 ex "chaussure => [35, 45]
 
 {
@@ -38,4 +32,4 @@ pub struct SearchHit {
     #[serde(rename = "_matchesInfo", skip_serializing_if = "Option::is_none")]
     pub matches_info: Option<MatchesInfos>, 
 
-    meilidb.rs
+    meilidb.rs -->
