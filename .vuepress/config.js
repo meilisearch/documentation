@@ -78,7 +78,7 @@ module.exports = {
           '/advanced_guides/ranking',
           '/advanced_guides/synonyms',
           '/advanced_guides/stop_words',
-          '/advanced_guides/filters',
+          '/advanced_guides/search_parameters',
           '/advanced_guides/keys',
           '/advanced_guides/distinct',
           '/advanced_guides/updates',
