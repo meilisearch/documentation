@@ -34,7 +34,6 @@ curl \
 {
   "numberOfDocuments": 19654,
   "isIndexing": false,
-  "lastUpdate": "2019-11-15T11:15:22.092896Z",
   "fieldsFrequency": {
     "poster": 19654,
     "release_date": 19654,
@@ -75,11 +74,11 @@ curl \
 ```json
 {
   "databaseSize": 447819776,
+  "lastUpdate": "2019-11-15T11:15:22.092896Z",
   "indexes": {
     "movies": {
       "numberOfDocuments": 19654,
       "isIndexing": false,
-      "lastUpdate": "2019-11-15T11:15:22.092896Z",
       "fieldsFrequency": {
         "poster": 19654,
         "overview": 19654,
@@ -91,7 +90,6 @@ curl \
     "rangemovies": {
       "numberOfDocuments": 19654,
       "isIndexing": false,
-      "lastUpdate": "2019-11-15T17:17:21.235357Z",
       "fieldsFrequency": {
         "overview": 19654,
         "id": 19654,
