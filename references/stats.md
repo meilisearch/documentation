@@ -24,7 +24,7 @@ Get stats of an index.
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/stats/movies' \
+  --request GET 'http://localhost:8080/stats/12345678' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 

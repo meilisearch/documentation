@@ -28,7 +28,7 @@ curl \
 [
   {
     "name": "Movie",
-    "uid": "3d9pkcnb",
+    "uid": "12345678",
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   }
@@ -59,7 +59,7 @@ Get the index relative information.
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies' \
+  --request GET 'http://localhost:8080/indexes/12345678' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -68,7 +68,7 @@ curl \
 ```json
 {
   "name": "Movie",
-  "uid": "3d9pkcnb",
+  "uid": "12345678",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
@@ -123,7 +123,7 @@ If no schema has been defined when the first document is added, the schema will 
 ```bash
 curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies' \
+  --request POST 'http://localhost:8080/indexes' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
@@ -143,7 +143,7 @@ If no schema has been defined :
 ```json
 {
   "name": "Movie",
-  "uid": "3d9pkcnb",
+  "uid": "12345678",
   "schema": null,
   "createdAt": "2019-11-20T09:40:33.711476Z",
   "updatedAt": "2019-11-20T09:40:33.711476Z"
@@ -157,7 +157,7 @@ If schema has been given :
 {
   "updateId": 1,
   "name": "Movie",
-  "uid": "3d9pkcnb",
+  "uid": "12345678",
   "schema": {
     "id": ["identifier", "indexed", "displayed"],
     "title": ["displayed", "indexed"],
@@ -207,7 +207,7 @@ The body accepts a new name for the given index.
 ```bash
 curl \
   --location \
-  --request PUT 'http://localhost:8080/indexes/movies' \
+  --request PUT 'http://localhost:8080/indexes/12345678' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
@@ -220,7 +220,7 @@ curl \
 ```json
 {
   "name": "Movie",
-  "uid": "3d9pkcnb",
+  "uid": "12345678",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
@@ -256,7 +256,7 @@ no body
 ```bash
 curl \
   --location \
-  --request DELETE 'http://localhost:8080/indexes/movies' \
+  --request DELETE 'http://localhost:8080/indexes/12345678' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -301,7 +301,7 @@ Get the schema of one index.
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/schema' \
+  --request GET 'http://localhost:8080/indexes/12345678/schema' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -430,7 +430,7 @@ If `raw` query parameter has been set to `true` :
 ```bash
 curl \
   --location \
-  --request PUT 'http://localhost:8080/indexes/movies' \
+  --request PUT 'http://localhost:8080/indexes/12345678' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
