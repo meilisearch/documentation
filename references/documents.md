@@ -27,7 +27,7 @@ Get one document using its unique identifier.
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/documents/25684' \
+  --request GET 'http://localhost:8080/indexes/12345678/documents/25684' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -84,7 +84,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/documents?limit=5' \
+  --request GET 'http://localhost:8080/indexes/12345678/documents?limit=5' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -160,7 +160,7 @@ Documents fields which are not known to the index schema will be ignored
 ```bash
 curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/documents' \
+  --request POST 'http://localhost:8080/indexes/12345678/documents' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '[{
@@ -232,7 +232,7 @@ Unknown documents attributes will be ignored. You can [read more about that](/do
 ```bash
 curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/documents' \
+  --request POST 'http://localhost:8080/indexes/12345678/documents' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
@@ -287,7 +287,7 @@ The update id returned by this function can be sent to the [get update status ro
 ```bash
 curl \
   --location \
-  --request DELETE 'http://localhost:8080/indexes/movies/documents' \
+  --request DELETE 'http://localhost:8080/indexes/12345678/documents' \
   --header "X-Meili-API-Key: $API_KEY" \
   --header 'Content-Type: application/json'
 ```
@@ -330,7 +330,7 @@ The update id returned by this function can be sent to the [get update status ro
 ```bash
   curl \
   --location \
-  --request DELETE 'http://localhost:8080/indexes/movies/documents/25684' \
+  --request DELETE 'http://localhost:8080/indexes/12345678/documents/25684' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
@@ -382,7 +382,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 ```bash
   curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies' \
+  --request POST 'http://localhost:8080/indexes/12345678' \
   --header "X-Meili-API-Key: $API_KEY" \
   --header 'Content-Type: application/json' \
   --data '[

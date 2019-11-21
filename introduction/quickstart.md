@@ -19,14 +19,29 @@ MeiliDB can serve multiple indexes, with different kinds of documents,
 therefore, it is required to create the index before sending documents to it.
 
 ```bash
-curl -i -X POST 'http://127.0.0.1:8080/indexes/movies'
+curl -i -X POST 'http://127.0.0.1:8080/indexes' \
+  --data '{
+    "name" : "Movie"
+  }'
 ```
+
+The response will look like this : 
+
+```
+{
+  "name": "Movie",
+  "uid": "12345678",
+  ...
+}
+```
+
+the `uid` is the `:index` identifier used in all `indexes/:index` routes.
 
 Now that the server knows about our brand new index, we can send it data.
 We provided you a little dataset, it is available in the `datasets/` directory.
 
 ```bash
-curl -i -X POST 'http://127.0.0.1:8080/indexes/movies/documents' \
+curl -i -X POST 'http://127.0.0.1:8080/indexes/12345678/documents' \
   --header 'content-type: application/json' \
   --data @datasets/movies/movies.json
 ```
@@ -37,7 +52,7 @@ The search engine is now aware of our documents and can serve those via our HTTP
 The [`jq` command line tool](https://stedolan.github.io/jq/) can greatly help you read the server responses.
 
 ```bash
-curl 'http://127.0.0.1:8080/indexes/movies/search?q=botman'
+curl 'http://127.0.0.1:8080/indexes/12345678/search?q=botman'
 ```
 
 ```json

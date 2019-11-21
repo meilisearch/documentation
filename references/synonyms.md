@@ -26,7 +26,7 @@ List one sequence and his synonyms inside an index.
 ```bash
  curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/synonyms/magician' \
+  --request GET 'http://localhost:8080/indexes/12345678/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -64,7 +64,7 @@ List all sequences and their synonyms inside an index.
 ```bash
  curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/synonyms' \
+  --request GET 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -120,7 +120,7 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/synonyms' \
+  --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "input": "magician", "synonyms": ["harry potter", "merlin"]}'
@@ -130,7 +130,7 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/synonyms' \
+  --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "synonyms": ["harry potter", "hp"]}'
@@ -178,7 +178,7 @@ This will **override** the previous synonyms of the given sequence. Don't forget
 ```bash
  curl \
   --location \
-  --request PUT 'http://localhost:8080/indexes/movies/synonyms/magician' \
+  --request PUT 'http://localhost:8080/indexes/12345678/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '["harry potter", "merlin", "Illusionist"]'
@@ -219,7 +219,7 @@ Delete a synonym.
 ```bash
  curl \
   --location \
-  --request DELETE 'http://localhost:8080/indexes/movies/synonyms/magician' \
+  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -266,7 +266,7 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/synonyms/batch' \
+  --request POST 'http://localhost:8080/indexes/12345678/synonyms/batch' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '[
@@ -315,7 +315,7 @@ Delete all synonyms
 ```bash
  curl \
   --location \
-  --request DELETE 'http://localhost:8080/indexes/movies/synonyms' \
+  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```

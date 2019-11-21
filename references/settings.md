@@ -26,7 +26,7 @@ Get the list [settings](/advanced_guides/settings).
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/settings' \
+  --request GET 'http://localhost:8080/indexes/12345678/settings' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -106,7 +106,7 @@ None of the 3 settings parameters is mandatory
 ```bash
 curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/settings' \
+  --request GET 'http://localhost:8080/indexes/12345678/settings' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{
