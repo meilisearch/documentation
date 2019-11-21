@@ -47,7 +47,7 @@ curl \
 
 
 
-## Browse documents
+## Get all documents
 
 <RouteHighlighter method="GET" route="/indexes/:index/documents"/>
 

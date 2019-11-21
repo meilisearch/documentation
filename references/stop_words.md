@@ -18,7 +18,7 @@ Get the list [stop-words](/advanced_guides/stop_words).
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index name        |
+| **index**         | The index UID         |
 
 
 ### Example
@@ -43,7 +43,7 @@ List of all the stop-words in the index.
 
 ## Add stop-words
 
-<RouteHighlighter method="PUT" route="/indexes/:index/stop-words" />
+<RouteHighlighter method="PATCH" route="/indexes/:index/stop-words" />
 
 Add [stop-words](/advanced_guides/stop_words) to the list.
 
@@ -60,7 +60,7 @@ Add [stop-words](/advanced_guides/stop_words) to the list.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index name        |
+| **index**         | The index UID         |
 
 #### Body
 
@@ -71,7 +71,7 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words).
 ```bash
 curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/stop-words' \
+  --request PATCH 'http://localhost:8080/indexes/movies/stop-words' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '["the", "of", "to"]'
@@ -106,7 +106,7 @@ Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index name        |
+| **index**         | The index UID         |
 
 #### Body
 

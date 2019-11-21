@@ -2,7 +2,7 @@
 
 ## List one synonym
 
-<RouteHighlighter method="GET" route="/indexes/:index/synonym/:synonym"/>
+<RouteHighlighter method="GET" route="/indexes/:index/synonyms/:synonym"/>
 
 List one sequence and his synonyms inside an index.
 
@@ -26,7 +26,7 @@ List one sequence and his synonyms inside an index.
 ```bash
  curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/synonym/magician' \
+  --request GET 'http://localhost:8080/indexes/movies/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -41,7 +41,7 @@ array of synonyms of the given sequence in the path variable.
 
 ## List all synonyms
 
-<RouteHighlighter method="GET" route="/indexes/:index/synonym"/>
+<RouteHighlighter method="GET" route="/indexes/:index/synonyms"/>
 
 List all sequences and their synonyms inside an index.
 
@@ -64,7 +64,7 @@ List all sequences and their synonyms inside an index.
 ```bash
  curl \
   --location \
-  --request GET 'http://localhost:8080/indexes/movies/synonym' \
+  --request GET 'http://localhost:8080/indexes/movies/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -89,7 +89,7 @@ List all sequences and their synonyms inside an index.
 
 ## Create synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:index/synonym"/>
+<RouteHighlighter method="POST" route="/indexes/:index/synonyms"/>
 
 Create synonyms.
 
@@ -112,7 +112,7 @@ Create synonyms.
 | key          | Value description           |
 |-------------------|-----------------------|
 | **input**         | the [one-way string](/advanced_guides/synonyms.md#the-one-way-association) that is gonna be associated with the synonyms array |
-| **synonyms**         | array of words to associate together in [a multi-way](/advances_guides/synonyms.md##the-multi-way-association) |
+| **synonyms**         | array of words to associate together in [a multi-way](/advances_guides/synonymss.md##the-multi-way-association) |
 
 An object with either multi-way string associations or one-way string association. 
 
@@ -120,7 +120,7 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/synonym' \
+  --request POST 'http://localhost:8080/indexes/movies/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "input": "magician", "synonyms": ["harry potter", "merlin"]}'
@@ -130,13 +130,13 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/synonym' \
+  --request POST 'http://localhost:8080/indexes/movies/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "synonyms": ["harry potter", "hp"]}'
 ```
 
-#### Response: `201 Created`
+#### Response: `202 Accepted`
 
 ```json
 {
@@ -147,7 +147,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Update a synonym
 
-<RouteHighlighter method="PUT" route="/indexes/:index/synonym/:synonym"/>
+<RouteHighlighter method="PUT" route="/indexes/:index/synonyms/:synonym"/>
 
 Update a synonym.
 
@@ -178,7 +178,7 @@ This will **override** the previous synonyms of the given sequence. Don't forget
 ```bash
  curl \
   --location \
-  --request PUT 'http://localhost:8080/indexes/movies/synonym/magician' \
+  --request PUT 'http://localhost:8080/indexes/movies/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '["harry potter", "merlin", "Illusionist"]'
@@ -195,7 +195,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Delete a synonym
 
-<RouteHighlighter method="DELETE" route="/indexes/:index/synonym/:synonym"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index/synonyms/:synonym"/>
 
 Delete a synonym.
 
@@ -219,7 +219,7 @@ Delete a synonym.
 ```bash
  curl \
   --location \
-  --request DELETE 'http://localhost:8080/indexes/movies/synonym/magician' \
+  --request DELETE 'http://localhost:8080/indexes/movies/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
@@ -235,7 +235,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Batch write synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:index/synonym/batch"/>
+<RouteHighlighter method="POST" route="/indexes/:index/synonyms/batch"/>
 
 Batch write synonyms.
 
@@ -257,8 +257,8 @@ Batch write synonyms.
 
 | key          | Value description           |
 |-------------------|-----------------------|
-| **input**         | the [one-way string](/advanced_guides/synonyms.md#the-one-way-association) that is gonna be associated with the synonyms array |
-| **synonyms**         | array of words to associate together in [a multi-way](/advances_guides/synonyms.md##the-multi-way-association) |
+| **input**         | the [one-way string](/advanced_guides/synonymss.md#the-one-way-association) that is gonna be associated with the synonyms array |
+| **synonyms**         | array of words to associate together in [a multi-way](/advances_guides/synonymss.md##the-multi-way-association) |
 
 An object with either multi-way string associations or one-way string association. 
 
@@ -266,7 +266,7 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/synonym/batch' \
+  --request POST 'http://localhost:8080/indexes/movies/synonyms/batch' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
   --data '[
@@ -289,10 +289,10 @@ An object with either multi-way string associations or one-way string associatio
 ```
 This [update id allows you to track](/references/updates) the current action.
 
-<!-- FIXME: should be DELETE route -->
+
 ## Clear synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:index/synonym/clear"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index/synonyms"/>
 
 Delete all synonyms
 
@@ -315,7 +315,7 @@ Delete all synonyms
 ```bash
  curl \
   --location \
-  --request POST 'http://localhost:8080/indexes/movies/synonym/clear' \
+  --request DELETE 'http://localhost:8080/indexes/movies/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
 ```
