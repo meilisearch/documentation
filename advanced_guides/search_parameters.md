@@ -23,7 +23,7 @@ The query parameter is the **only mandatory** parameter.
 It is the string the search engine uses to find relevant documents.  
 
 ::: tip
-Although the API will send back documents even with only one letter, how more precise the search query is, how faster the API responds.
+Although the API will send back documents even with only one letter, the more precise the search query is, the faster the API responds. 
 :::
 
 ## Offset
