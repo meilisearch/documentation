@@ -54,7 +54,11 @@ Attributes used to match document in the search engine.
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
-Attributes of which the value will be cropped depending on the `cropLength` and the matches . This is useful when you have specific needs for displaying results on the front-end application.
+Attributes of which the value will be cropped depending on the `cropLength` and the matches . 
+
+::: tip
+This is useful when you have specific needs for displaying results on the front-end application.
+:::
 
 **Cropping start at the first occurence of the search query**. It only keeps `(croplength - matchLength)/2 ` chars on each side of the first match.
 
@@ -148,7 +152,11 @@ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
 
 `matches=<Boolean>`
 
-Returns an array of the search query occurrences in all fields. A search query occurence is given by a `start` position in the field and the `length` of the occurence. This is useful when you need to highlight the results without the default html highlighter.
+Returns an array of the search query occurrences in all fields. A search query occurence is given by a `start` position in the field and the `length` of the occurence.
+
+::: tip
+This is useful when you need to highlight the results without the default html highlighter.
+:::
 
 
 #### Example
