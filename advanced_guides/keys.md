@@ -99,8 +99,6 @@ If you use the API on **the browser side to only make search queries**, you do n
 ```bash
 curl \
   --request POST 'http://localhost:8080/keys' \
-  --header "X-Meili-API-Key: $API_KEY"
-  --header 'Content-Type: application/json' \
   --data '{
       "expiresAt": 1574332928,
       "description": "search key",

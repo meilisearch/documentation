@@ -6,13 +6,6 @@
 
 List one sequence and his synonyms inside an index.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -26,8 +19,6 @@ List one sequence and his synonyms inside an index.
 ```bash
  curl \
   --request GET 'http://localhost:8080/indexes/12345678/synonyms/magician' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
 ```
 
 #### Response: `200 OK`
@@ -44,13 +35,6 @@ array of synonyms of the given sequence in the path variable.
 
 List all sequences and their synonyms inside an index.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -63,8 +47,6 @@ List all sequences and their synonyms inside an index.
 ```bash
  curl \
   --request GET 'http://localhost:8080/indexes/12345678/synonyms' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
 ```
 
 #### Response: `200 OK`
@@ -91,13 +73,6 @@ List all sequences and their synonyms inside an index.
 
 Create synonyms.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -118,8 +93,6 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "input": "magician", "synonyms": ["harry potter", "merlin"]}'
 ```
 
@@ -127,8 +100,6 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "synonyms": ["harry potter", "hp"]}'
 ```
 
@@ -147,13 +118,6 @@ This [update id allows you to track](/references/updates) the current action.
 
 Update a synonym.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -174,8 +138,6 @@ This will **override** the previous synonyms of the given sequence. Don't forget
 ```bash
  curl \
   --request PUT 'http://localhost:8080/indexes/12345678/synonyms/magician' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '["harry potter", "merlin", "Illusionist"]'
 ```
 
@@ -194,13 +156,6 @@ This [update id allows you to track](/references/updates) the current action.
 
 Delete a synonym.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -214,8 +169,6 @@ Delete a synonym.
 ```bash
  curl \
   --request DELETE 'http://localhost:8080/indexes/12345678/synonyms/magician' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
 ```
 
 #### Response: `200 Ok`
@@ -233,13 +186,6 @@ This [update id allows you to track](/references/updates) the current action.
 
 Batch write synonyms.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -260,8 +206,6 @@ An object with either multi-way string associations or one-way string associatio
 ```bash
  curl \
   --request POST 'http://localhost:8080/indexes/12345678/synonyms/batch' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '[
     { 
       "input": "magician", 
@@ -289,13 +233,6 @@ This [update id allows you to track](/references/updates) the current action.
 
 Delete all synonyms
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -308,8 +245,6 @@ Delete all synonyms
 ```bash
  curl \
   --request DELETE 'http://localhost:8080/indexes/12345678/synonyms' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
 ```
 
 #### Response: `202 Accepted`

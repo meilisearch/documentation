@@ -5,12 +5,6 @@
 
 Get health of MeiliSearch server.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
@@ -18,7 +12,6 @@ Get health of MeiliSearch server.
 ```bash
 curl \
   --request GET 'http://localhost:8080/health' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `204 No Content`
@@ -30,12 +23,6 @@ curl \
 
 Get health of MeiliSearch server.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
@@ -43,7 +30,6 @@ Get health of MeiliSearch server.
 ```bash
 curl \
   --request GET 'http://localhost:8080/health' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `204 No Content`

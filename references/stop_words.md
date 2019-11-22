@@ -6,13 +6,6 @@
 
 Get the list [stop-words](/advanced_guides/stop_words).
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -26,8 +19,6 @@ Get the list [stop-words](/advanced_guides/stop_words).
 ```bash
 curl \
   --request GET 'http://localhost:8080/indexes/12345678/stop-words' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
 ```
 
 
@@ -47,13 +38,6 @@ List of all the stop-words in the index.
 Add [stop-words](/advanced_guides/stop_words) to the list.
 
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -70,8 +54,6 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words).
 ```bash
 curl \
   --request PATCH 'http://localhost:8080/indexes/12345678/stop-words' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '["the", "of", "to"]'
 ```
 
@@ -92,13 +74,6 @@ This [update id allows you to track](/references/updates) the current action.
 Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
 
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -115,8 +90,6 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words) to 
 ```bash
 curl \
   --request POST 'http://localhost:8080/indexes/12345678/stop-words' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '["the"]'
 ```
 

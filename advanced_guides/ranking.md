@@ -35,8 +35,6 @@ If the rule is not added to the rule ranking order, it will be **ignored** by Me
 On the `release_date` attribute of a movie data set, which contains the timestamp of the release date. 
 ```bash
  curl --request POST 'http://localhost:8080/indexes/movies/settings' 
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "rankingRules" : { "release_date": "dsc" } }'
 ```
 
@@ -67,8 +65,6 @@ To apply the [custom ranking rule added previously](/advanced_guides/ranking.htm
 
 ```bash
 curl --request POST 'http://localhost:8080/indexes/movies/settings' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{
   "rankingOrder": [
     "_sum_of_typos",

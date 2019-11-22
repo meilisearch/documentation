@@ -6,12 +6,6 @@
 
 Get version of MeiliSearch.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
@@ -19,7 +13,6 @@ Get version of MeiliSearch.
 ```bash
 curl \
   --request GET 'http://localhost:8080/version' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `200 Ok`

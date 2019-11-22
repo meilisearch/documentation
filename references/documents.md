@@ -8,12 +8,6 @@
 
 Get one document using its unique identifier.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 
@@ -27,7 +21,6 @@ Get one document using its unique identifier.
 ```bash
 curl \
   --request GET 'http://localhost:8080/indexes/12345678/documents/25684' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `200 Ok`
@@ -56,13 +49,6 @@ Get the documents in an unordered way.
 This route is a non-optimized route, it can be a little bit slow to answer.
 :::
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -83,7 +69,6 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 ```bash
 curl \
   --request GET 'http://localhost:8080/indexes/12345678/documents?limit=5' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `200 Ok`
@@ -118,13 +103,6 @@ Insert a list of documents or update them if they already exist based on [their 
 
 The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -158,8 +136,6 @@ Documents fields which are not known to the index schema will be ignored
 ```bash
 curl \
   --request POST 'http://localhost:8080/indexes/12345678/documents' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '[{
       "id": 287947,
       "title": "Shazam",
@@ -193,13 +169,6 @@ Insert and Delete multiple documents in one request.
 
 The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -229,8 +198,6 @@ Unknown documents attributes will be ignored. You can [read more about that](/do
 ```bash
 curl \
   --request POST 'http://localhost:8080/indexes/12345678/documents' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{
       "insert": [
         {
@@ -265,12 +232,6 @@ Delete all documents in the specified index.
 
 The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
 
 #### Path Variables
 
@@ -283,7 +244,6 @@ The update id returned by this function can be sent to the [get update status ro
 ```bash
 curl \
   --request DELETE 'http://localhost:8080/indexes/12345678/documents' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --header 'Content-Type: application/json'
 ```
 
@@ -308,12 +268,6 @@ You can read more about [identifiers and schemas](/documents.md#schemas).
 
 The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
 
-#### Headers
-
-| Header              | Value      |
-|---------------------|------------|
-| **X-Meili-API-Key** | `$API_KEY` |
-
 #### Path Variables
 
 | Variable  | Description           |
@@ -325,7 +279,6 @@ The update id returned by this function can be sent to the [get update status ro
 ```bash
   curl \
   --request DELETE 'http://localhost:8080/indexes/12345678/documents/25684' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `202 Accepted`
@@ -349,13 +302,6 @@ You can read more about [identifiers and schemas](/documents.md#schemas).
 
 The update id returned by this function can be sent to the [get update status route](/indexes.md#get-an-update-status) to retrieve informations about its advancement.
 
-#### Headers
-
-| Header              | Value              |
-|---------------------|--------------------|
-| **X-Meili-API-Key** | `$API_KEY`         |
-| **Content-Type**    | `application/json` |
-| **Accept-encoding** | `gzip, deflate`    |
 
 #### Path Variables
 
@@ -376,8 +322,6 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 ```bash
   curl \
   --request POST 'http://localhost:8080/indexes/12345678' \
-  --header "X-Meili-API-Key: $API_KEY" \
-  --header 'Content-Type: application/json' \
   --data '[
       23488,
       153738,

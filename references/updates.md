@@ -6,12 +6,6 @@
 
 Get the status of an [update](/main_concept/indexes.md#Updates) in a given [index](/main_concept/indexes.md).
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 
@@ -25,7 +19,6 @@ Get the status of an [update](/main_concept/indexes.md#Updates) in a given [inde
 ```bash
 curl \
   --request GET 'http://localhost:8080/indexes/12345678/updates/3' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `200 Ok`
@@ -50,12 +43,6 @@ Here is an example response of an update that has been processed.
 
 Get the status of all [updates](/main_concept/indexes.md#updates) in a given [index](/main_concept/indexes.md).
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 
@@ -69,7 +56,6 @@ Get the status of all [updates](/main_concept/indexes.md#updates) in a given [in
 ```bash
 curl \
   --request GET 'http://localhost:8080/indexes/12345678/updates' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `200 Ok`

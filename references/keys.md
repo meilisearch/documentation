@@ -6,12 +6,6 @@
 
 Get api keys.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
@@ -20,7 +14,6 @@ Get api keys.
 curl \
   --request GET 'http://localhost:8080/keys' \
   --header 'Content-Type: application/json'
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `200 Ok`
@@ -50,12 +43,6 @@ curl \
 
 Get one api key information.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
@@ -64,7 +51,6 @@ Get one api key information.
 curl \
   --request GET 'http://localhost:8080/keys/VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF' \
   --header 'Content-Type: application/json'
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `200 Ok`
@@ -92,12 +78,6 @@ curl \
 
 Create an API keys.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 ### Body
 
@@ -114,8 +94,6 @@ Create an API keys.
 ```bash
 curl \
   --request POST 'http://localhost:8080/keys' \
-  --header "X-Meili-API-Key: $API_KEY"
-  --header 'Content-Type: application/json' \
   --data '{
       "expiresAt": 1574332928,
       "description": "search key",
@@ -145,12 +123,6 @@ curl \
 
 Update an API key.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 ### Body
 
@@ -166,8 +138,6 @@ Update an API key.
 ```bash
 curl \
   --request PUT 'http://localhost:8080/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4' \
-  --header "X-Meili-API-Key: $API_KEY"
-  --header 'Content-Type: application/json' \
   --data '{
       "description": "Read and write documents",
       "acl": ["documentsRead", "documentsWrite"]
@@ -195,19 +165,12 @@ curl \
 
 Delete an API key.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 ### Example
 
 ```bash
 curl \
   --request DELETE 'http://localhost:8080/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4' \
-  --header "X-Meili-API-Key: $API_KEY"
 ```
 
 #### Response: `204 No Content`
