@@ -54,7 +54,7 @@ Attributes used to match document in the search engine.
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
-Attributes of which the value will be cropped depending on the `cropLength` and the matches .
+Attributes of which the value will be cropped depending on the `cropLength` and the matches . This is useful when you have specific needs for displaying results on the front-end application.
 
 **Cropping start at the first occurence of the search query**. It only keeps `(croplength - matchLength)/2 ` chars on each side of the first match.
 
