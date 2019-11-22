@@ -53,6 +53,10 @@ OPTIONS:
         --no-analytics <no-analytics>    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
 ```
 
+::: warning
+When **no master key** is set, no `X-meili-API-KEY` is needed on any route.
+:::
+
 ## Executing example
 
 ### With the binary
