@@ -6,13 +6,6 @@
 
 Get the list [settings](/advanced_guides/settings).
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -25,9 +18,7 @@ Get the list [settings](/advanced_guides/settings).
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/settings' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
+  --request GET 'http://localhost:8080/indexes/12345678/settings'
 ```
 
 
@@ -62,13 +53,6 @@ Add or update the following settings :
 * Change [ranking rules order](/advanced_guides/ranking.md#ranking-order)
 * Create distinct field
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -105,8 +89,6 @@ None of the 3 settings parameters is mandatory
 ```bash
 curl \
   --request GET 'http://localhost:8080/indexes/12345678/settings' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{
   "rankingOrder": [
     "_sum_of_typos",

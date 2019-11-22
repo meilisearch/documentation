@@ -6,11 +6,6 @@
 
 Search for documents matching a specific query in the given index.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 

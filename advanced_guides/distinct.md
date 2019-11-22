@@ -36,8 +36,6 @@ By [setting `skuid` as a distinct field](/references/settings.md#add-settings) :
 ```bash
 curl 
   --request POST 'http://localhost:8080/indexes/jackets/settings' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{ "distinctField": "skuid" }'
 ```
 

@@ -6,19 +6,12 @@
 
 List all indexes.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/indexes'
 ```
 
 #### Response: `200 Ok`
@@ -40,12 +33,6 @@ curl \
 
 Get the index relative information.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 
@@ -57,8 +44,7 @@ Get the index relative information.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/indexes/12345678'
 ```
 
 #### Response: `200 Ok`
@@ -85,13 +71,6 @@ If no [schema](/main_concept/indexes.md) has been defined when the first documen
 
 A randomly generated UID will be returned. It's associated to the new index. This UID will be essential to make all request over the created index.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Body
 
@@ -121,8 +100,6 @@ If no schema has been defined when the first document is added, the schema will 
 ```bash
 curl \
   --request POST 'http://localhost:8080/indexes' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{
   "name": "Movies",
   "schema": {
@@ -175,13 +152,6 @@ This [update id allows you to track](/references/updates) the current action.
 
 Update an index name.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -204,8 +174,6 @@ The body accepts a new name for the given index.
 ```bash
 curl \
   --request PUT 'http://localhost:8080/indexes/12345678' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{
   "name": "Movies"
 }'
@@ -229,13 +197,6 @@ curl \
 
 Delete an index.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -251,9 +212,7 @@ no body
 
 ```bash
 curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
+  --request DELETE 'http://localhost:8080/indexes/12345678'
 ```
 
 #### Response: `200 OK`
@@ -272,12 +231,6 @@ This [update id allows you to track](/references/updates) the current action.
 
 Get the schema of one index.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 
@@ -295,8 +248,7 @@ Get the schema of one index.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/schema' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/indexes/12345678/schema'
 ```
 
 
@@ -351,13 +303,6 @@ If `raw` query parameter has been set to `true` :
 
 Update an index schema.
 
-#### Headers
-
-| Header              | Value            |
-|---------------------|------------------|
-| **X-Meili-API-Key** | `$API_KEY`       |
-| **Content-Type**    | application/json |
-| **Accept-encoding** | gzip, deflate    |
 
 #### Path Variables
 
@@ -424,8 +369,6 @@ If `raw` query parameter has been set to `true` :
 ```bash
 curl \
   --request PUT 'http://localhost:8080/indexes/12345678' \
-  --header 'Content-Type: application/json' \
-  --header "X-Meili-API-Key: $API_KEY" \
   --data '{
   "id": ["identifier", "indexed", "displayed"],
   "title": ["displayed", "indexed"],

@@ -42,7 +42,6 @@ We provided you a little dataset, it is available in the `datasets/` directory.
 
 ```bash
 curl -i -X POST 'http://127.0.0.1:8080/indexes/12345678/documents' \
-  --header 'content-type: application/json' \
   --data @datasets/movies/movies.json
 ```
 

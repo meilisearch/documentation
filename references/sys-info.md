@@ -6,20 +6,13 @@
 
 Get pretty system information.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/sys-info' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/sys-info'
 ```
 
 #### Response: `200 Ok`
@@ -59,20 +52,13 @@ curl \
 
 Get system information.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/sys-info' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/sys-info'
 ```
 
 #### Response: `200 Ok`

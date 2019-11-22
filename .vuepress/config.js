@@ -90,6 +90,7 @@ module.exports = {
         collapsable: true,
         sidebarDepth: 1,
         children: [
+          '/references/headers',
           '/references/indexes',
           '/references/documents',
           '/references/search',

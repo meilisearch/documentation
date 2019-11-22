@@ -5,20 +5,13 @@
 
 Get health of MeiliSearch server.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/health' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/health'
 ```
 
 #### Response: `204 No Content`
@@ -30,20 +23,13 @@ curl \
 
 Get health of MeiliSearch server.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/health' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/health'
 ```
 
 #### Response: `204 No Content`

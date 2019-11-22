@@ -6,12 +6,6 @@
 
 Get stats of an index.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 #### Path Variables
 
@@ -23,8 +17,7 @@ Get stats of an index.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/stats/12345678' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/stats/12345678'
 ```
 
 #### Response: `200 Ok`
@@ -51,20 +44,13 @@ curl \
 
 Get stats of all indexes.
 
-#### Headers
-
-| Header              | Value         |
-|---------------------|---------------|
-| **X-Meili-API-Key** | `$API_KEY`    |
-| **Accept-encoding** | gzip, deflate |
 
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/stats' \
-  --header "X-Meili-API-Key: $API_KEY"
+  --request GET 'http://localhost:8080/stats'
 ```
 
 #### Response: `200 Ok`
