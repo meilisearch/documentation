@@ -136,7 +136,13 @@ The indexes list: `["english_*"] ` will **give access** to `english_movies` and 
 
 ## Revoked
 
-Coming soon.
+Boolean set to `false` on [key creation](/references/keys.md#create-key). It is updatable on [key update](/references/keys.md#update-key). 
+
+Once it is set to `true` the `API key` **loses all his accesses**. 
+
+::: tip
+The revoked status can be toggled back at any time [by an admin](/advanced_guides/keys.md#acl).
+:::
 
 ## Expires at
 

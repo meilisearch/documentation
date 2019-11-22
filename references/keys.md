@@ -162,6 +162,7 @@ Update an API key.
 | **description** | description of the key    |
 | **acl** | [List of ACL's](/advanced_guides/keys.md#acl) |
 | **indexes** | [List of indexes with wildcards](/advanced_guides/keys.md#indexes) |
+| **revoked** | [Boolean to revoke API KEY](/advanced_guides/keys.md#revoke) |
 
 ### Example
 
@@ -177,7 +178,7 @@ curl \
   }'
 ```
 
-#### Response: `202 Accepted`
+#### Response: `200 Ok`
 
 ```json
 {
@@ -213,7 +214,4 @@ curl \
   --header "X-Meili-API-Key: $API_KEY"
 ```
 
-#### Response: `202 Accepted`
-
-```json
-```
+#### Response: `204 No Content`
