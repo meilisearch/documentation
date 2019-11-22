@@ -27,11 +27,11 @@ cargo run
 
 ### Accessing the binary
 
-Inside the `target`, depening on the version you compiled, you will find the following directories : 
+Inside the `target`, depending on the version you compiled, you will find the following directories : 
 * `debug` : Debug version
 * `release` : Production version
 
-Inside the chosen directory, you will find ` meilidb-http` binary.
+Inside the chosen directory, there is the ` meilidb-http` binary.
 
 ## Usage 
 
