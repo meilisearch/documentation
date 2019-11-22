@@ -18,7 +18,6 @@ Get pretty system information.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/sys-info' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
@@ -72,7 +71,6 @@ Get system information.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/sys-info' \
   --header "X-Meili-API-Key: $API_KEY"
 ```

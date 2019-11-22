@@ -25,7 +25,6 @@ Get the list [stop-words](/advanced_guides/stop_words).
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/12345678/stop-words' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -70,7 +69,6 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words).
 
 ```bash
 curl \
-  --location \
   --request PATCH 'http://localhost:8080/indexes/12345678/stop-words' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -116,7 +114,6 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words) to 
 
 ```bash
 curl \
-  --location \
   --request POST 'http://localhost:8080/indexes/12345678/stop-words' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \

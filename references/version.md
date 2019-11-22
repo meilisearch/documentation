@@ -18,7 +18,6 @@ Get version of MeiliSearch.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/version' \
   --header "X-Meili-API-Key: $API_KEY"
 ```

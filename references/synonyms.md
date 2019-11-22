@@ -25,7 +25,6 @@ List one sequence and his synonyms inside an index.
 #### Example
 ```bash
  curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/12345678/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -63,7 +62,6 @@ List all sequences and their synonyms inside an index.
 #### Example
 ```bash
  curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -119,7 +117,6 @@ An object with either multi-way string associations or one-way string associatio
 #### One-way Example
 ```bash
  curl \
-  --location \
   --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -129,7 +126,6 @@ An object with either multi-way string associations or one-way string associatio
 #### Multi-way Example
 ```bash
  curl \
-  --location \
   --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -177,7 +173,6 @@ This will **override** the previous synonyms of the given sequence. Don't forget
 #### Example
 ```bash
  curl \
-  --location \
   --request PUT 'http://localhost:8080/indexes/12345678/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -218,7 +213,6 @@ Delete a synonym.
 #### Example
 ```bash
  curl \
-  --location \
   --request DELETE 'http://localhost:8080/indexes/12345678/synonyms/magician' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -265,7 +259,6 @@ An object with either multi-way string associations or one-way string associatio
 #### Example
 ```bash
  curl \
-  --location \
   --request POST 'http://localhost:8080/indexes/12345678/synonyms/batch' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -314,7 +307,6 @@ Delete all synonyms
 #### Example
 ```bash
  curl \
-  --location \
   --request DELETE 'http://localhost:8080/indexes/12345678/synonyms' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
