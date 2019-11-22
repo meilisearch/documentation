@@ -69,10 +69,11 @@ module.exports = {
       },
       {
         title: 'Advanced Guide',
-        path:  '/advanced_guides/typotolerance',
+        path:  '/advanced_guides/binary',
         collapsable: true,
         sidebarDepth: 1,
         children: [
+          '/advanced_guides/binary',
           '/advanced_guides/typotolerance',
           '/advanced_guides/ranking',
           '/advanced_guides/synonyms',
