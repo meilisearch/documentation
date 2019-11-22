@@ -11,7 +11,7 @@ List all indexes.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes' \
+  --request GET 'http://localhost:8080/indexes'
 ```
 
 #### Response: `200 Ok`
@@ -44,7 +44,7 @@ Get the index relative information.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678' \
+  --request GET 'http://localhost:8080/indexes/12345678'
 ```
 
 #### Response: `200 Ok`
@@ -212,7 +212,7 @@ no body
 
 ```bash
 curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678' \
+  --request DELETE 'http://localhost:8080/indexes/12345678'
 ```
 
 #### Response: `200 OK`
@@ -248,7 +248,7 @@ Get the schema of one index.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/schema' \
+  --request GET 'http://localhost:8080/indexes/12345678/schema'
 ```
 
 

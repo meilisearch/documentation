@@ -12,7 +12,7 @@ Get pretty system information.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/sys-info' \
+  --request GET 'http://localhost:8080/sys-info'
 ```
 
 #### Response: `200 Ok`
@@ -58,7 +58,7 @@ Get system information.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/sys-info' \
+  --request GET 'http://localhost:8080/sys-info'
 ```
 
 #### Response: `200 Ok`

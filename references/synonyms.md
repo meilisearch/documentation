@@ -18,7 +18,7 @@ List one sequence and his synonyms inside an index.
 #### Example
 ```bash
  curl \
-  --request GET 'http://localhost:8080/indexes/12345678/synonyms/magician' \
+  --request GET 'http://localhost:8080/indexes/12345678/synonyms/magician'
 ```
 
 #### Response: `200 OK`
@@ -46,7 +46,7 @@ List all sequences and their synonyms inside an index.
 #### Example
 ```bash
  curl \
-  --request GET 'http://localhost:8080/indexes/12345678/synonyms' \
+  --request GET 'http://localhost:8080/indexes/12345678/synonyms'
 ```
 
 #### Response: `200 OK`
@@ -168,7 +168,7 @@ Delete a synonym.
 #### Example
 ```bash
  curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms/magician' \
+  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms/magician'
 ```
 
 #### Response: `200 Ok`
@@ -244,7 +244,7 @@ Delete all synonyms
 #### Example
 ```bash
  curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms' \
+  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms'
 ```
 
 #### Response: `202 Accepted`

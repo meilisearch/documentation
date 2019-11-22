@@ -18,7 +18,7 @@ Get the list [settings](/advanced_guides/settings).
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/settings' \
+  --request GET 'http://localhost:8080/indexes/12345678/settings'
 ```
 
 

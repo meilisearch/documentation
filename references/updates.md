@@ -18,7 +18,7 @@ Get the status of an [update](/main_concept/indexes.md#Updates) in a given [inde
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/updates/3' \
+  --request GET 'http://localhost:8080/indexes/12345678/updates/3'
 ```
 
 #### Response: `200 Ok`
@@ -55,7 +55,7 @@ Get the status of all [updates](/main_concept/indexes.md#updates) in a given [in
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/updates' \
+  --request GET 'http://localhost:8080/indexes/12345678/updates'
 ```
 
 #### Response: `200 Ok`

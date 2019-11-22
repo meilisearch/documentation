@@ -18,7 +18,7 @@ Get the list [stop-words](/advanced_guides/stop_words).
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/stop-words' \
+  --request GET 'http://localhost:8080/indexes/12345678/stop-words'
 ```
 
 

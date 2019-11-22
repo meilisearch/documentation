@@ -170,7 +170,7 @@ Delete an API key.
 
 ```bash
 curl \
-  --request DELETE 'http://localhost:8080/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4' \
+  --request DELETE 'http://localhost:8080/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4'
 ```
 
 #### Response: `204 No Content`
