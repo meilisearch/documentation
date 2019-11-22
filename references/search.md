@@ -36,7 +36,6 @@ Search for documents matching a specific query in the given index.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/4eb345y7/search?q=american%20ninja%205'
 ```
 

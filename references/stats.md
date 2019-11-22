@@ -23,7 +23,6 @@ Get stats of an index.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/stats/12345678' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
@@ -64,7 +63,6 @@ Get stats of all indexes.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/stats' \
   --header "X-Meili-API-Key: $API_KEY"
 ```

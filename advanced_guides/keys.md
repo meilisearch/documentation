@@ -98,7 +98,6 @@ If you use the API on **the browser side to only make search queries**, you do n
 
 ```bash
 curl \
-  --location \
   --request POST 'http://localhost:8080/keys' \
   --header "X-Meili-API-Key: $API_KEY"
   --header 'Content-Type: application/json' \

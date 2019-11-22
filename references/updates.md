@@ -24,7 +24,6 @@ Get the status of an [update](/main_concept/indexes.md#Updates) in a given [inde
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/12345678/updates/3' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
@@ -69,7 +68,6 @@ Get the status of all [updates](/main_concept/indexes.md#updates) in a given [in
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/12345678/updates' \
   --header "X-Meili-API-Key: $API_KEY"
 ```

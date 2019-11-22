@@ -17,7 +17,6 @@ Get health of MeiliSearch server.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/health' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
@@ -43,7 +42,6 @@ Get health of MeiliSearch server.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/health' \
   --header "X-Meili-API-Key: $API_KEY"
 ```

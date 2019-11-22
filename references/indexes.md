@@ -17,7 +17,6 @@ List all indexes.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/indexes' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
@@ -58,7 +57,6 @@ Get the index relative information.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/12345678' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
@@ -122,7 +120,6 @@ If no schema has been defined when the first document is added, the schema will 
 
 ```bash
 curl \
-  --location \
   --request POST 'http://localhost:8080/indexes' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -206,7 +203,6 @@ The body accepts a new name for the given index.
 
 ```bash
 curl \
-  --location \
   --request PUT 'http://localhost:8080/indexes/12345678' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -255,7 +251,6 @@ no body
 
 ```bash
 curl \
-  --location \
   --request DELETE 'http://localhost:8080/indexes/12345678' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
@@ -300,7 +295,6 @@ Get the schema of one index.
 
 ```bash
 curl \
-  --location \
   --request GET 'http://localhost:8080/indexes/12345678/schema' \
   --header "X-Meili-API-Key: $API_KEY"
 ```
@@ -429,7 +423,6 @@ If `raw` query parameter has been set to `true` :
 
 ```bash
 curl \
-  --location \
   --request PUT 'http://localhost:8080/indexes/12345678' \
   --header 'Content-Type: application/json' \
   --header "X-Meili-API-Key: $API_KEY" \
