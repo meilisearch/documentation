@@ -19,18 +19,6 @@ Search for documents matching a specific query in the given index.
 | **index** | The index UID |
 
 #### Query Parameters
-<!-- 
-q: String,
-    offset: Option<usize>,
-    limit: Option<usize>,
-    attributes_to_retrieve: Option<String>,
-    attributes_to_search_in: Option<String>,
-    attributes_to_crop: Option<String>,
-    crop_length: Option<usize>,
-    attributes_to_highlight: Option<String>,
-    filters: Option<String>,
-    timeout_ms: Option<u64>,
-    matches: Option<bool>, -->
 
 | Query Parameter           | Description                                        | Default Value |
 |---------------------------|----------------------------------------------------|:-------------:|
