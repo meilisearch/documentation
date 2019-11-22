@@ -148,7 +148,7 @@ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
 
 `matches=<Boolean>`
 
-Returns an array of the search query occurrences in all fields. A search query occurence is given by a `start` position in the field and the `length` of the occurence.
+Returns an array of the search query occurrences in all fields. A search query occurence is given by a `start` position in the field and the `length` of the occurence. This is useful when you need to highlight the results without the default html highlighter.
 
 
 #### Example
