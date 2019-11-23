@@ -5,7 +5,7 @@
 
 ### Dependencies 
 
-MeiliSearch is made in `rust`. Because of that `rust` and his package manager `cargo` must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
+MeiliSearch is made in `rust`. Because of that `rust` and its package manager `cargo` must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
 
 ### Compiling
 
