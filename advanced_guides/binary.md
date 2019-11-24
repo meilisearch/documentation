@@ -9,7 +9,7 @@ MeiliSearch is made in `rust`. Because of that `rust` and its package manager `c
 
 ### Compiling
 
-Once this is done, first we need to clone the project and go to the cloned directory. 
+Now that the Rust toolchain is installed, we need to git clone and go to the cloned directory
 
 ```bash
 git clone https://github.com/meilisearch/MeiliDB
