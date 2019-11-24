@@ -5,7 +5,7 @@
 
 ### Dependencies 
 
-MeiliSearch is made in `rust`. Because of that `rust` and his package manager `cargo` must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
+MeiliSearch is made in `rust`. Because of that `rust` and its package manager `cargo` must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
 
 ### Compiling
 
@@ -16,7 +16,7 @@ git clone https://github.com/meilisearch/MeiliDB
 cd MeiliDB
 ```
 
-inside the folder, lets compile meiliSearch. 
+Inside the folder, let's compile MeiliSearch.
 
 ```bash
 # Production version
@@ -54,7 +54,7 @@ OPTIONS:
 ```
 
 ::: warning
-When **no master key** is set, no `X-meili-API-KEY` is needed on any route.
+When **no master key** is set, no `X-Meili-API-Key` is needed on any route.
 :::
 
 ## Executing example
