@@ -75,6 +75,7 @@ module.exports = {
         children: [
           '/advanced_guides/binary',
           '/advanced_guides/typotolerance',
+          '/advanced_guides/concatanted_and_splitted',
           '/advanced_guides/ranking',
           '/advanced_guides/synonyms',
           '/advanced_guides/stop_words',
