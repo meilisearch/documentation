@@ -325,7 +325,7 @@ The body accepts a new schema for the given index.
   "id": ["identifier", "indexed", "displayed"],
   "title": ["displayed", "indexed"],
   "overview": ["displayed", "indexed"],
-  "release_date": ["displayed"],
+  "release_date": ["displayed", "ranged"],
   "poster": ["displayed"]
 }
 ```
@@ -368,12 +368,12 @@ If `raw` query parameter has been set to `true` :
 
 ```bash
 curl \
-  --request PUT 'http://localhost:8080/indexes/12345678' \
+  --request PUT 'http://localhost:8080/indexes/12345678/schema' \
   --data '{
   "id": ["identifier", "indexed", "displayed"],
   "title": ["displayed", "indexed"],
   "overview": ["displayed", "indexed"],
-  "release_date": ["displayed"],
+  "release_date": ["displayed", "ranged"],
   "poster": ["displayed"]
 }'
 ```
