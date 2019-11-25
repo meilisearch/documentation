@@ -325,7 +325,7 @@ The body accepts a new schema for the given index.
   "id": ["identifier", "indexed", "displayed"],
   "title": ["displayed", "indexed"],
   "overview": ["displayed", "indexed"],
-  "release_date": ["displayed", "ranged"],
+  "release_date": ["displayed", "ranked"],
   "poster": ["displayed"]
 }
 ```
@@ -373,7 +373,7 @@ curl \
   "id": ["identifier", "indexed", "displayed"],
   "title": ["displayed", "indexed"],
   "overview": ["displayed", "indexed"],
-  "release_date": ["displayed", "ranged"],
+  "release_date": ["displayed", "ranked"],
   "poster": ["displayed"]
 }'
 ```
