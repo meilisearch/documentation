@@ -3,10 +3,10 @@
 Since many of the meilisearch actions are asynchronous, their route returns an update identifier. This makes it possible to track the progress of the action. 
 
 Updates returns the following information : 
-* **status** : State of the action (enqueued, processed )
-* **update_id** : Id of the update
-* **update_type** : Information about the action type
-* **enqueued_at** : Date at which the action has been added to the queue 
+* **status**: State of the action (enqueued, processed)
+* **update_id**: Id of the update
+* **update_type**: Information about the action type
+* **enqueued_at**: Date at which the action has been added to the queue 
 * **processed_at**: Date ate which the action has done processing.
 
 ### Examples 
