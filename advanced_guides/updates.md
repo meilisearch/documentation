@@ -2,7 +2,7 @@
 
 Since many of the meilisearch actions are asynchronous, their route returns an update identifier. This makes it possible to track the progress of the action. 
 
-La mise à jour renvoie les informations suivantes :
+Updates returns the following information : 
 * **status** : State of the action (enqueued, processed )
 * **update_id** : Id of the update
 * **update_type** : Information about the action type
