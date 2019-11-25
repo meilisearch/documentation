@@ -9,8 +9,12 @@ You will need to create your own web front display to make it pretty though.
 You can deploy the server on your own machine, it will listen to HTTP requests on the 8080 port by default.
 
 ```bash
-rustup override set nightly
-cargo run --release
+# If you have the Rust toolchain installed
+$ git clone https://github.com/meilisearch/MeiliDB
+$ cd MeiliDB && cargo run --release
+
+# Or using Docker
+$ docker run -it --rm -p 8080:8080 getmeili/meilisearch
 ```
 
 ### Create an Index and Upload Some Documents
