@@ -1,6 +1,6 @@
-# Typo tolerance
+# Typo Tolerance
 
-Meilisearch **implemented typo's management**. So according to the length of your word, **we understand your search even if there are typos**.
+Meilisearch **implements [typo tolerance](/advanced_guides/typotolerance.html#typo-tolerance-rules)**. This means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
 
 #### Example
 
@@ -33,7 +33,7 @@ On a movie dataset, let's search for `botman`
 }
 ```
 
-## Typo management
+## Typo tolerance rules
 
 The typo rules are used before sorting the documents. They are used to aggregate them, to choose which documents contain words similar to the queried words.
 
