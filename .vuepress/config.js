@@ -46,18 +46,18 @@ module.exports = {
     logo: '/logo.png',
     sidebar: [
       {
-        title: 'Introduction',
+        title: '🚀 Getting started',
         path:  '',
-        collapsable: false,
+        collapsable: true,
         sidebarDepth: 0,
         children: [
-          '',
+          '/',
           '/introduction/quickstart',
           '/introduction/features'
         ]
       },
       {
-        title: 'Main concepts',
+        title: '💡 Main concepts',
         path:  '/main_concept/',
         collapsable: true,
         sidebarDepth: 1,
@@ -68,7 +68,7 @@ module.exports = {
         ]
       },
       {
-        title: 'Advanced Guide',
+        title: '📚 Advanced Guide',
         path:  '/advanced_guides/binary',
         collapsable: true,
         sidebarDepth: 1,
@@ -86,7 +86,7 @@ module.exports = {
         ]
       },
       {
-        title: 'API References',
+        title: '📒 API References',
         path:  '/references/',
         collapsable: true,
         sidebarDepth: 1,
