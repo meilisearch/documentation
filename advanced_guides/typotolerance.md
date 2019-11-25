@@ -1,6 +1,6 @@
 # Typo Tolerance
 
-Meilisearch **implements [typo tolerance](/advanced_guides/typotolerance.html#typo-tolerance-rules)**. This means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
+MeiliSearch **implements [typo tolerance](/advanced_guides/typotolerance.html#typo-tolerance-rules)**. This means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
 
 #### Example
 
@@ -57,4 +57,3 @@ This means that "saturday", which is 7 characters long uses the second rule and 
 - "sat" is not accepted because the query word is not a prefix of it (it is the opposite).
 - "satuday" is accepted because it contains **one typo**.
 - "s**u**tuday" is not accepted because it contains **two typos**.
-
