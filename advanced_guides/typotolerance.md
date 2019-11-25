@@ -1,9 +1,43 @@
 # Typo tolerance
-## Typo rules
+
+Meilisearch **implemented typo's management**. So according to the length of your word, **we understand your search even if there are typos**.
+
+#### Example
+
+On a movie dataset, let's search for `botman`
+```json
+{
+  "hits": [
+    {
+      "title": "Batman: Hush",
+      ...
+    },
+    {
+      "title": "Batman vs. Teenage Mutant Ninja Turtles",
+      ...
+    },
+    {
+      "title": "Batman Ninja",
+      ...
+    },
+    {
+      "title": "Batman: Gotham by Gaslight",
+      ...
+    },
+    ...
+  ],
+  "offset": 0,
+  "limit": 20,
+  "processingTimeMs": 1,
+  "query": "botman"
+}
+```
+
+## Typo management
 
 The typo rules are used before sorting the documents. They are used to aggregate them, to choose which documents contain words similar to the queried words.
 
-We use a prefix [Levenshtein algorithm] to check if the words match. The only difference with a Levenshtein algorithm is that it accepts every word that **starts with the query words** too. Therefore words are accepted if they start with or have equal length.
+We use a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to check if the words match. The only difference with a Levenshtein algorithm is that it accepts every word that **starts with the query words** too. Therefore words are accepted if they start with or have equal length.
 
 The Levenshtein distance between two words _M_ and _P_ is called "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations:
 
