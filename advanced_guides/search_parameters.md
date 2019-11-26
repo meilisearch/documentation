@@ -4,17 +4,17 @@ Search parameters let the user customize his search request.
 
 | Query Parameter           | Description                                        | Default Value |
 |---------------------------|----------------------------------------------------|:-------------:|
-| **q**                     | query string _(mandatory)_                         |               |
-| **offset**                | number of documents to skip                        | 0             |
-| **limit**                 | number of documents returned                       | 20            |
-| **attributesToRetrieve**  | document attributes to show                        | *             |
-| **attributesToSearchIn**  | which attributes are used to match documents       | *             |
-| **attributesToCrop**      | which attributes to crop                           | none          |
-| **cropLength**            | limit length at which to crop specified attributes | 200           |
-| **attributesToHighlight** | which attributes to highlight                      | none          |
-| **filters**               |  attribute with an exact match                     | none          |
-| **timeout_ms**            | maximum response time                              | 30 ms         |
-| **matches**               | whether to return the raw matches or not           | false         |
+| **[q](/search_parameters.md#query-q)**                     | query string _(mandatory)_                         |               |
+| **[offset](/search_parameters.md#offset)**                | number of documents to skip                        | 0             |
+| **[limit](/search_parameters.md#limit)**                 | number of documents returned                       | 20            |
+| **[attributesToRetrieve](/search_parameters.md#attributes-to-retrieve)**  | document attributes to show                        | *             |
+| **[attributesToSearchIn](/search_parameters.mdl#attributes-to-search-in)**  | which attributes are used to match documents       | *             |
+| **[attributesToCrop](/search_parameters.md#attributes-to-crop)**      | which attributes to crop                           | none          |
+| **[cropLength](/search_parameters.md#crop-length)**            | limit length at which to crop specified attributes | 200           |
+| **[attributesToHighlight](/search_parameters.mdl#attributes-to-highlight)** | which attributes to highlight                      | none          |
+| **[filters](/search_parameters.mdl#filters)**               |  attribute with an exact match                     | none          |
+| **[timeout_ms](/search_parameters.md#timeout)**            | maximum response time                              | 30 ms         |
+| **[matches](/search_parameters.md#matches)**               | whether to return the raw matches or not           | false         |
 
 ## Query (q)
 
@@ -28,13 +28,13 @@ Although the API will send back documents even with only one letter, the more pr
 
 ## Offset
 
-`offset=Integer`.
+`offset=<Integer>`.
 
 X first documents to skip. This is helpful for **pagination**
 
 ## Limit
 
-`offset=Integer`.
+`offset=<Integer>`.
 
 X number of documents in the search query response. This is helpful for **pagination**
 
@@ -94,7 +94,7 @@ Our **cropped version is in the _formatted object**.
 
 ## Crop length
 
-`cropLength=Integer`
+`cropLength=<Integer>`
 
 Total length of the cropped field. See [attributesToCrop](/advanced_guides/search_parameters.md#attributes-to-crop)
 
@@ -123,7 +123,6 @@ The **overview attribute in formatted** looks like this when evaluated in HTML :
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
 
-
 ## Filters
 
 `filters=<Attribute>:<String>`
@@ -147,6 +146,16 @@ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
   "release_date":1536282000
 }
 ```
+
+## Timeout
+
+`timeout_ms=<Integer>`
+
+**Maximum time** before a search request responds.
+
+::: warning
+When it's faster you lose in relevancy
+:::
 
 ## Matches
 
