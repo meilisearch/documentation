@@ -3,7 +3,7 @@
 Our feature list with extended explanations and links to the documentation.
 
 
-*  **Instant Search** (answers < 50ms): Priority on fast answers for smooth search experience.
+* **Instant Search** (answers < 50ms): Priority on fast answers for smooth search experience.
 * **Search as you type** (*prefix search*): Results are shown as you type. To achieve this, we use a [prefix-search](/advanced_guides/prefix.html#prefix-search).
 * [Typo tolerance](/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and spelling mistakes.
 * [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, kanji and latin based languages.  
