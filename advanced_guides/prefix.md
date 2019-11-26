@@ -4,15 +4,13 @@ In MeiliSearch, **the search is possible even with a single letter sent**.
 
 A prefix search is when the sorting of documents starts by comparing your search query with the start of each word in your dataset.
 
-
-
 All words starting with this letter are added to the [bucket sort](/advanced_guides/bucket_sort.md) and then the other [ranking rules](/advanced_guides/ranking.md#ranking-rules) are applied.
 
 ::: tip
 Since there is so many possible relevant documents with only one letter, the longer the search query is the fastest it will respond.
 :::
 
-#### Example
+### Example
 
 Given a set of word in your dataset : 
 
@@ -33,5 +31,5 @@ Even if, as you can observe, there is an `s` in `movies` and `musical`. The pref
 When I will search for `sho` only the documents containing `show` will be returned.
 
 ::: tip
-Don't worry, we also [enabled splitted and concatenated search queries]() to search inside words.
+We also [apply splitting and concatenating on search queries](/advanced_guides/concatanted_and_splitted.md).
 :::
