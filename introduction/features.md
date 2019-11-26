@@ -1,7 +1,6 @@
 ## Features
 
-Our feature list with extended explainations and link to the documentation.
-
+Our feature list with extended explanations and links to the documentation.
 
 *  **Instant Search** (answers < 50ms): Priority is given on fast answers for smooth search experience.
 * **Search as you type** (*prefix search*): Results are shown as you type, to achieve this we use a prefix-search.
