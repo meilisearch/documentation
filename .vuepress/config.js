@@ -83,7 +83,7 @@ module.exports = {
           '/advanced_guides/keys',
           '/advanced_guides/prefix',
           '/advanced_guides/distinct',
-          '/advanced_guides/updates',
+          '/advanced_guides/asynchronous_updates',
           '/advanced_guides/bucket_sort'
         ]
       },
