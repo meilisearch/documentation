@@ -2,7 +2,7 @@
 
 ## Get the list of stop-words
 
-<RouteHighlighter method="GET" route="/indexes/:index/stop-words" />
+<RouteHighlighter method="GET" route="/indexes/:uid/stop-words" />
 
 Get the list [stop-words](/advanced_guides/stop_words).
 
@@ -33,7 +33,7 @@ List of all the stop-words in the index.
 
 ## Add stop-words
 
-<RouteHighlighter method="PATCH" route="/indexes/:index/stop-words" />
+<RouteHighlighter method="PATCH" route="/indexes/:uid/stop-words" />
 
 Add [stop-words](/advanced_guides/stop_words) to the list.
 
@@ -69,7 +69,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Delete stop-words
 
-<RouteHighlighter method="DELETE" route="/indexes/:index/stop-words" />
+<RouteHighlighter method="DELETE" route="/indexes/:uid/stop-words" />
 
 Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
 

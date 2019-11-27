@@ -4,7 +4,7 @@
 
 ## Get one document
 
-<RouteHighlighter method="GET" route="/indexes/:index/documents/:identifier"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/documents/:identifier"/>
 
 Get one document using its unique identifier.
 
@@ -41,7 +41,7 @@ curl \
 
 ## Get all documents
 
-<RouteHighlighter method="GET" route="/indexes/:index/documents"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/documents"/>
 
 Get the documents in an unordered way.
 
@@ -97,7 +97,7 @@ curl \
 
 ## Add or Update documents
 
-<RouteHighlighter method="POST" route="/indexes/:index/documents"/>
+<RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
 Insert a list of documents or update them if they already exist based on [their unique identifiers](/documents.md#schemas).
 
@@ -156,14 +156,14 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Update documents
 
-<RouteHighlighter method="PUT" route="/indexes/:index/documents"/>
+<RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
 same as [Add or Update](/references/documents.html#add-or-update-documents)
 
 
 ## Batch write documents
 
-<RouteHighlighter method="POST" route="/indexes/:index/documents/batch"/>
+<RouteHighlighter method="POST" route="/indexes/:uid/documents/batch"/>
 
 Insert and Delete multiple documents in one request.
 
@@ -226,7 +226,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Clear all documents
 
-<RouteHighlighter method="DELETE" route="/indexes/:index/documents"/>
+<RouteHighlighter method="DELETE" route="/indexes/:uid/documents"/>
 
 Delete all documents in the specified index.
 
@@ -260,7 +260,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Delete one document
 
-<RouteHighlighter method="DELETE" route="/indexes/:index/documents/:identifier"/>
+<RouteHighlighter method="DELETE" route="/indexes/:uid/documents/:identifier"/>
 
 Delete one document based on its unique identifier.<br/>
 You can read more about [identifiers and schemas](/documents.md#schemas).
@@ -294,7 +294,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Delete multiple documents
 
-<RouteHighlighter method="POST" route="/indexes/:index/documents/delete"/>
+<RouteHighlighter method="POST" route="/indexes/:uid/documents/delete"/>
 
 Delete a selection of documents based on array of identifiers.<br/>
 You can read more about [identifiers and schemas](/documents.md#schemas).

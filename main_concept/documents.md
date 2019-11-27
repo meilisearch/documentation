@@ -1,6 +1,7 @@
 # Documents
 
-`Documents` are objects composed of fields containing any data, a `field` is composed of an `attribute` and its associated data.
+`Documents` are objects composed of fields containing any data.</br>
+A `field` is composed of an `attribute` and its associated data.
 
 ```json
 {
@@ -16,15 +17,11 @@ The **fields** are the combination of attributes and data (i.e. `"title": "Inter
 
 ## Documents structure
 
-A document is added to MeiliSearch in `JSON format`. Each document should be composed of the fields that has been defined in the [index schema](/main_concept/indexes.md#schema-definition).
+A document is added to MeiliSearch in `JSON format`.<br/>
+Each documents fields should correspond to an attribute in the schema to be taken into account.
 
 ::: danger
-Documents fields which do not correspond to the schema fields are ignored.
+Documents fields that do not correspond to the schema fields are ignored.
 :::
 
-When using the [route to add new documents](/references/documents.html#add-or-update-documents) all documents should be sent in an array. Even if there is only one document.
-
-
-
-
-
+When using the [route to add new documents](/references/documents.html#add-or-update-documents) all documents should be sent in an array. And this, even if there is only one document.

@@ -1,17 +1,16 @@
 ## Quick Start
 
-You can deploy your own instant, relevant and typo-tolerant MeiliDB search engine by yourself too.
-Something similar to the demo above can be achieve by following these little three steps first.
-You will need to create your own web front display to make it pretty though.
+You can deploy your own instant, relevant, and typo-tolerant MeiliSearch engine by yourself.
+It can be achieved by following these three steps.
 
 ### Deploy the Server
 
-You can deploy the server on your own machine, it will listen to HTTP requests on the 8080 port by default.
+You can deploy the server on your own machine. It will listen to HTTP requests on the 8080 port by default.
 
 ```bash
 # If you have the Rust toolchain installed
-$ git clone https://github.com/meilisearch/MeiliDB
-$ cd MeiliDB && cargo run --release
+$ git clone https://github.com/meilisearch/MeiliSearch.git
+$ cd MeiliSearch && cargo run --release
 
 # Or using Docker
 $ docker run -it --rm -p 8080:8080 getmeili/meilisearch
@@ -19,8 +18,7 @@ $ docker run -it --rm -p 8080:8080 getmeili/meilisearch
 
 ### Create an Index and Upload Some Documents
 
-MeiliDB can serve multiple indexes, with different kinds of documents,
-therefore, it is required to create the index before sending documents to it.
+MeiliSearch can serve multiple indexes, with different kinds of documents. Therefore, it is required to create an index before sending documents to it.
 
 ```bash
 curl -i -X POST 'http://127.0.0.1:8080/indexes' \
@@ -29,7 +27,7 @@ curl -i -X POST 'http://127.0.0.1:8080/indexes' \
   }'
 ```
 
-The response will look like this : 
+The response looks like this:
 
 ```
 {
@@ -39,10 +37,10 @@ The response will look like this :
 }
 ```
 
-the `uid` is the `:index` identifier used in all `indexes/:index` routes.
+This `uid` is the `:uid` identifier used in all `indexes/:uid` routes.
 
 Now that the server knows about our brand new index, we can send it data.
-We provided you a little dataset, it is available in the `datasets/` directory.
+We provide you a dataset, it is available in the `datasets/` [directory](https://github.com/meilisearch/MeiliSearch/tree/master/datasets).
 
 ```bash
 curl -i -X POST 'http://127.0.0.1:8080/indexes/12345678/documents' \
@@ -51,8 +49,7 @@ curl -i -X POST 'http://127.0.0.1:8080/indexes/12345678/documents' \
 
 ### Search for Documents
 
-The search engine is now aware of our documents and can serve those via our HTTP server again.
-The [`jq` command line tool](https://stedolan.github.io/jq/) can greatly help you read the server responses.
+The search engine is now aware of our documents and can serve those via our HTTP server.
 
 ```bash
 curl 'http://127.0.0.1:8080/indexes/12345678/search?q=botman'
@@ -82,3 +79,7 @@ curl 'http://127.0.0.1:8080/indexes/12345678/search?q=botman'
   "query": "botman"
 }
 ```
+
+::: tip
+The [`jq` command line tool](https://stedolan.github.io/jq/) can greatly help you read the server responses.
+:::

@@ -2,7 +2,7 @@
 
 ## List one synonym
 
-<RouteHighlighter method="GET" route="/indexes/:index/synonyms/:synonym"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/synonyms/:synonym"/>
 
 List one sequence and his synonyms inside an index.
 
@@ -27,11 +27,11 @@ List one sequence and his synonyms inside an index.
 ```json
 ["harry","merlin"]
 ```
-array of synonyms of the given sequence in the path variable. 
+array of synonyms of the given sequence in the path variable.
 
 ## List all synonyms
 
-<RouteHighlighter method="GET" route="/indexes/:index/synonyms"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/synonyms"/>
 
 List all sequences and their synonyms inside an index.
 
@@ -69,7 +69,7 @@ List all sequences and their synonyms inside an index.
 
 ## Create synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:index/synonyms"/>
+<RouteHighlighter method="POST" route="/indexes/:uid/synonyms"/>
 
 Create synonyms.
 
@@ -87,7 +87,7 @@ Create synonyms.
 | **input**         | the [one-way string](/advanced_guides/synonyms.md#the-one-way-association) that is gonna be associated with the synonyms array |
 | **synonyms**         | array of words to associate together in [a multi-way](/advances_guides/synonymss.md##the-multi-way-association) |
 
-An object with either multi-way string associations or one-way string association. 
+An object with either multi-way string associations or one-way string association.
 
 #### One-way Example
 ```bash
@@ -114,7 +114,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Update a synonym
 
-<RouteHighlighter method="PUT" route="/indexes/:index/synonyms/:synonym"/>
+<RouteHighlighter method="PUT" route="/indexes/:uid/synonyms/:synonym"/>
 
 Update a synonym.
 
@@ -152,7 +152,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Delete a synonym
 
-<RouteHighlighter method="DELETE" route="/indexes/:index/synonyms/:synonym"/>
+<RouteHighlighter method="DELETE" route="/indexes/:uid/synonyms/:synonym"/>
 
 Delete a synonym.
 
@@ -182,7 +182,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Batch write synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:index/synonyms/batch"/>
+<RouteHighlighter method="POST" route="/indexes/:uid/synonyms/batch"/>
 
 Batch write synonyms.
 
@@ -200,18 +200,18 @@ Batch write synonyms.
 | **input**         | the [one-way string](/advanced_guides/synonymss.md#the-one-way-association) that is gonna be associated with the synonyms array |
 | **synonyms**         | array of words to associate together in [a multi-way](/advances_guides/synonymss.md##the-multi-way-association) |
 
-An object with either multi-way string associations or one-way string association. 
+An object with either multi-way string associations or one-way string association.
 
 #### Example
 ```bash
  curl \
   --request POST 'http://localhost:8080/indexes/12345678/synonyms/batch' \
   --data '[
-    { 
-      "input": "magician", 
+    {
+      "input": "magician",
       "synonyms": ["harry potter", "merlin", "illusionist"]
-    }, 
-    {  
+    },
+    {
       "synonyms" : ["mickey", "mouse"]
     }
   ]'
@@ -229,7 +229,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Clear synonyms
 
-<RouteHighlighter method="DELETE" route="/indexes/:index/synonyms"/>
+<RouteHighlighter method="DELETE" route="/indexes/:uid/synonyms"/>
 
 Delete all synonyms
 
