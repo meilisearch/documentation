@@ -18,12 +18,12 @@ Search parameters let the user customize his search request.
 
 ## Query (q)
 
-The query parameter is the **only mandatory** parameter. 
+The query parameter is the **only mandatory** parameter.
 
-It is the string the search engine uses to find relevant documents.  
+It is the string the search engine uses to find relevant documents.
 
 ::: tip
-Although the API will send back documents even with only one letter, the more precise the search query is, the faster the API responds. 
+Although the API will send back documents even with only one letter, the more precise the search query is, the faster the API responds.
 :::
 
 ## Offset
@@ -54,7 +54,7 @@ Attributes used to match document in the search engine.
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
-Attributes of which the value will be cropped depending on the `cropLength` and the matches . 
+Attributes of which the value will be cropped depending on the `cropLength` and the matches .
 
 ::: tip
 This is useful when you have specific needs for displaying results on the front-end application.
@@ -62,7 +62,7 @@ This is useful when you have specific needs for displaying results on the front-
 
 **Cropping start at the first occurence of the search query**. It only keeps `(croplength - matchLength)/2 ` chars on each side of the first match.
 
-#### Example 
+#### Example
 
 ```bash
 curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
@@ -104,7 +104,7 @@ Total length of the cropped field. See [attributesToCrop](/advanced_guides/searc
 
 Every matching string sequence in the given attribute's field will be wrapped arround an `<em>` tag
 
-#### Example 
+#### Example
 
 ```json
     {
@@ -118,7 +118,7 @@ Every matching string sequence in the given attribute's field will be wrapped ar
       }
     }
 ```
-The **overview attribute in formatted** looks like this when evaluated in HTML : 
+The **overview attribute in formatted** looks like this when evaluated in HTML :
 
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
@@ -170,7 +170,7 @@ This is useful when you need to highlight the results without the default html h
 
 #### Example
 
-`Shifu` as search query : 
+`Shifu` as search query :
 
 ```json
   {

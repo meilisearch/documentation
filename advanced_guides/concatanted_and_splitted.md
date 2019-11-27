@@ -23,8 +23,8 @@ When you do a search, it **applies the splitting algorithm to every word** (*str
 This consists of finding the most interesting place to separate the words and to create a parallel search query with this proposition.
 
 This is achieved by finding the best frequency of the separate words in the dictionary of all words in the dataset. It will look out that both words have a minimum of interesting results, and not just one of them.
-#### Example 
+#### Example
 
-On a search on "newspaper", it will splits into "news" and "paper" and not into "new" and "spaper". 
+On a search on "newspaper", it will splits into "news" and "paper" and not into "new" and "spaper".
 
 

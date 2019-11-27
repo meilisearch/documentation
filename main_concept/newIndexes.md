@@ -45,18 +45,18 @@ You can read more about that on [the documents page](/main_concept/documents.md)
 
 ## Updates
 
-Since many of the meilisearch actions are asynchronous, their route returns an update identifier. This makes it possible to track the progress of the action. 
+Since many of the meilisearch actions are asynchronous, their route returns an update identifier. This makes it possible to track the progress of the action.
 
 La mise à jour renvoie les informations suivantes :
 * **status** : State of the action (enqueued, processed )
 * **update_id** : Id of the update
 * **update_type** : Information about the action type
-* **enqueued_at** : Date at which the action has been added to the queue 
+* **enqueued_at** : Date at which the action has been added to the queue
 * **processed_at**: Date ate which the action has done processing.
 
-### Examples 
+### Examples
 
-Adding documents : 
+Adding documents :
 ```json
 {
   "status": "enqueued",
@@ -69,8 +69,8 @@ Adding documents :
 }
 ```
 
-Updating a schema : 
-```json 
+Updating a schema :
+```json
 {
   "status": "processed",
   "update_id": 2,

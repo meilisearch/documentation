@@ -22,7 +22,7 @@ Custom ranking rules gives you the possibility to add new rules. New rules can b
 
 A rule is defined by an **attribute** and a **ascendent** `asc` or **descendent** `dsc` property.
 
-The name of the ranking rule is the name of the attribute on which the rule is made. 
+The name of the ranking rule is the name of the attribute on which the rule is made.
 
 For those rules to be applied by MeiliSearch on your search queries, it must be added to the [ranking order](/advanced_guides/ranking.md#ranking-order).
 
@@ -32,9 +32,9 @@ If the rule is not added to the rule ranking order, it will be **ignored** by Me
 
 ### Example
 
-On the `release_date` attribute of a movie data set, which contains the timestamp of the release date. 
+On the `release_date` attribute of a movie data set, which contains the timestamp of the release date.
 ```bash
- curl --request POST 'http://localhost:8080/indexes/movies/settings' 
+ curl --request POST 'http://localhost:8080/indexes/movies/settings'
   --data '{ "rankingRules" : { "release_date": "dsc" } }'
 ```
 
@@ -48,12 +48,12 @@ The ranking order determine the order of each rule in the [bucket sort](/advance
 
 The default ranking order is as follows ([*see above for more detail about each rule*](/advanced_guides/ranking.md#ranking-rules)) :
 
-- `Number of Typos` 
-- `Number of Words` 
+- `Number of Typos`
+- `Number of Words`
 - `Words Proximity`
 - `Attribute`
-- `Position` 
-- `Exact` 
+- `Position`
+- `Exact`
 
 [The ranking order can be changed](/references/settings.html#add-settings). Rules can be removed by omitting them in the ranking order list, and custom rules must be added in the ranking order list to be applied.
 
@@ -79,4 +79,3 @@ curl --request POST 'http://localhost:8080/indexes/movies/settings' \
 ```
 
 Now, our **search results will be ordered by descending date** after all other rules have been applied in the [bucket sort](/advanced_guides/bucket_sort).
-

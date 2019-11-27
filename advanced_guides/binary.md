@@ -3,7 +3,7 @@
 
 ## How to compile meiliSearch
 
-### Dependencies 
+### Dependencies
 
 MeiliSearch is made in `rust`. Because of that `rust` and its package manager `cargo` must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
 
@@ -27,13 +27,13 @@ cargo run
 
 ### Accessing the binary
 
-Inside the `target`, depending on the version you compiled, you will find the following directories : 
+Inside the `target`, depending on the version you compiled, you will find the following directories :
 * `debug` : Debug version
 * `release` : Production version
 
 Inside the chosen directory, there is the ` meilidb-http` binary.
 
-## Usage 
+## Usage
 
 ```bash
 USAGE:
@@ -61,10 +61,10 @@ When **no master key** is set, no `X-Meili-API-Key` is needed on any route.
 
 ### With the binary
 ```bash
-./meilidb-http --api-key myMasterKey 
+./meilidb-http --api-key myMasterKey
 ```
 
 ### With cargo
 ```bash
-cargo run --release -- --api-key myMasterKey 
+cargo run --release -- --api-key myMasterKey
 ```
