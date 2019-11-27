@@ -2,9 +2,9 @@
 
 In MeiliSearch, **the search is possible even with a single letter sent**.
 
-A prefix search is when the sorting of documents starts by comparing your search query with the start of each word in your dataset.
+A prefix search is when the documents sorting starts by comparing your search query with the start of each word in your dataset.
 
-All words starting with this letter are added to the [bucket sort](/advanced_guides/bucket_sort.md) and then the other [ranking rules](/advanced_guides/ranking.md#ranking-rules) are applied.
+All words beginning with this letter are added to the [bucket sort](/advanced_guides/bucket_sort.md) and then the other [ranking rules](/advanced_guides/ranking.md#ranking-rules) are applied.
 
 ::: tip
 Since there are so many possible relevant documents with only one letter, the longer the search query is the fastest it will respond.
