@@ -12,16 +12,16 @@ Since there are so many possible relevant documents with only one letter, the lo
 
 ### Example
 
-Given a set of words in a dataset : 
+Given a set of words in a dataset :
 
 `film` `cinema` `movies` `show` `harry` `potter` `shine` `musical`
 
 If the search query is `s` only the documents containing the following words are returned:
 
 - `show`
-- `shine` 
+- `shine`
 
-but not 
+but not
 
 - `movies`
 - `musical`

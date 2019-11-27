@@ -61,7 +61,7 @@ module.exports = {
         path:  '/main_concept/',
         collapsable: true,
         sidebarDepth: 1,
-        children: [   
+        children: [
           '/main_concept/indexes',
           '/main_concept/documents',
           '/main_concept/search'

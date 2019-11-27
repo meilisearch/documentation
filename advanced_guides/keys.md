@@ -7,10 +7,10 @@ The following information defines a key:
 * A **[Description](/advanced_guides/keys.md#description)**
 * An **[ACL:](/advanced_guides/keys.md#acl)** list of permissions
 * An **[Indexes list](/advanced_guides/keys.md#indexes)**  with wildcard on which the ACL's are applied
-* A **[Revoked](/advanced_guides/keys.md#revoked)** updatable boolean to revoke a key <Badge text="soon" type="warn"/> 
+* A **[Revoked](/advanced_guides/keys.md#revoked)** updatable boolean to revoke a key <Badge text="soon" type="warn"/>
 * An **[Expires_at](/advanced_guides/keys.md#expires-at)** timestamp that indicated the expire date of the token
 
-A key is passed to MeiliSearch using the header 
+A key is passed to MeiliSearch using the header
 ` X-Meili-Api-Key : myApiKey `
 
 ## Master key
@@ -32,7 +32,7 @@ When no master key is set on binary launch, no API key is needed on any route.
 # with the flag
 ./meilidb-http --api-key myMasterKey
 # with the environement variable
-MEILI_API_KEY=myMasterKey ./meilidb-http 
+MEILI_API_KEY=myMasterKey ./meilidb-http
 ```
 
 This header `X-Meili-Api-Key: myMasterKey` gives access to the whole API.
@@ -42,7 +42,7 @@ This header `X-Meili-Api-Key: myMasterKey` gives access to the whole API.
 ./meilidb-http
 ```
 
-The header `X-Meili-Api-Key` is **not required** on any API requests. Creating **an important security breach**. 
+The header `X-Meili-Api-Key` is **not required** on any API requests. Creating **an important security breach**.
 
 
 ## Creating a key
@@ -56,11 +56,11 @@ You can create as many keys as you want.
 
 **MeiliSearch generates the key**.
 
-The key is returned on [key creation](/references/keys.md#create-key). This key is your `API KEY`. 
+The key is returned on [key creation](/references/keys.md#create-key). This key is your `API KEY`.
 
 In the header, the API key is set in the ` X-Meili-Api-Key` attribute.
 
-This way : 
+This way :
 
 ```bash
 curl \
@@ -74,17 +74,17 @@ The description expects a summary on the `API KEY` and the ACL it contains.
 
 It should help you track your keys.
 
-## ACL 
+## ACL
 
 `ACL` or Access-Control List is the list of permissions an `API KEY` can have.
 
 
-* `IndexesRead`: read access on [indexes](/references/indexes) 
-* `IndexesWrite`: write access on [indexes](/references/indexes) 
-* `DocumentsRead`: read access on [documents](/references/documents) 
-* `DocumentsWrite`: write access on [documents](/references/documents) 
-* `SettingsRead`: read access on [settings](/references/settings) 
-* `SettingsWrite`: write access on [settings](/references/settings) 
+* `IndexesRead`: read access on [indexes](/references/indexes)
+* `IndexesWrite`: write access on [indexes](/references/indexes)
+* `DocumentsRead`: read access on [documents](/references/documents)
+* `DocumentsWrite`: write access on [documents](/references/documents)
+* `SettingsRead`: read access on [settings](/references/settings)
+* `SettingsWrite`: write access on [settings](/references/settings)
 * `Admin`: full permission on [keys](/references/keys) and [stats](/references/stats)
 * `All`: all of the above
 
@@ -94,7 +94,7 @@ It should help you track your keys.
 
 ### Example
 
-If you use the API on **the browser side to only make search queries**, you do not need this same API key to be able to do anything else. 
+If you use the API on **the browser side to only make search queries**, you do not need this same API key to be able to do anything else.
 
 ```bash
 curl \
@@ -133,9 +133,9 @@ The indexes list: `["english_*"] ` will **give access** to `english_movies` and 
 
 ## Revoked
 
-Boolean set to `false` on [key creation](/references/keys.md#create-key). It is updatable on [key update](/references/keys.md#update-key). 
+Boolean set to `false` on [key creation](/references/keys.md#create-key). It is updatable on [key update](/references/keys.md#update-key).
 
-Once it is set to `true` the `API key` **loses all his accesses**. 
+Once it is set to `true` the `API key` **loses all his accesses**.
 
 ::: tip
 The revoked status can be toggled back at any time [by an admin](/advanced_guides/keys.md#acl).

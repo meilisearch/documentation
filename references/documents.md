@@ -1,7 +1,5 @@
 # Documents
 
-
-
 ## Get one document
 
 <RouteHighlighter method="GET" route="/indexes/:uid/documents/:identifier"/>
