@@ -1,8 +1,8 @@
-# Settings 
+# Settings
 
 ## Get the list of settings
 
-<RouteHighlighter method="GET" route="/indexes/:index/settings" />
+<RouteHighlighter method="GET" route="/indexes/:uid/settings" />
 
 Get the list [settings](/advanced_guides/settings).
 
@@ -46,7 +46,7 @@ List the settings.
 
 ## Add or update settings
 
-<RouteHighlighter method="POST" route="/indexes/:index/settings" />
+<RouteHighlighter method="POST" route="/indexes/:uid/settings" />
 
 Add or update the following settings :
 * Create [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules)

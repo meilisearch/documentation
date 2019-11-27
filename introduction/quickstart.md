@@ -37,7 +37,7 @@ The response looks like this:
 }
 ```
 
-The `uid` is the `:index` identifier used in all `indexes/:index` routes.
+This `uid` is the `:uid` identifier used in all `indexes/:uid` routes.
 
 Now that the server knows about our brand new index, we can send it data.
 We provide you a dataset, it is available in the `datasets/` [directory](https://github.com/meilisearch/MeiliSearch/tree/master/datasets).

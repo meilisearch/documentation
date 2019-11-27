@@ -29,7 +29,7 @@ curl \
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/:index"/>
+<RouteHighlighter method="GET" route="/indexes/:uid"/>
 
 Get the index relative information.
 
@@ -112,7 +112,7 @@ curl \
 }'
 ```
 
-If no schema has been defined : 
+If no schema has been defined :
 #### Response: `201 created`
 ```json
 {
@@ -124,7 +124,7 @@ If no schema has been defined :
 }
 ```
 
-If schema has been given : 
+If schema has been given :
 #### Response: `201 created`
 
 ```json
@@ -148,7 +148,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/:index"/>
+<RouteHighlighter method="PUT" route="/indexes/:uid"/>
 
 Update an index name.
 
@@ -193,7 +193,7 @@ curl \
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/:index"/>
+<RouteHighlighter method="DELETE" route="/indexes/:uid"/>
 
 Delete an index.
 
@@ -227,7 +227,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Get one index schema
 
-<RouteHighlighter method="GET" route="/indexes/:index/schema"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/schema"/>
 
 Get the schema of one index.
 
@@ -263,7 +263,7 @@ curl \
 }
 ```
 
-If `raw` query parameter has been set to `true` : 
+If `raw` query parameter has been set to `true` :
 ```json
 {
   "identifier": "id",
@@ -299,7 +299,7 @@ If `raw` query parameter has been set to `true` :
 
 ## Update an index schema
 
-<RouteHighlighter method="PUT" route="/indexes/:index/schema"/>
+<RouteHighlighter method="PUT" route="/indexes/:uid/schema"/>
 
 Update an index schema.
 
@@ -330,7 +330,7 @@ The body accepts a new schema for the given index.
 }
 ```
 
-If `raw` query parameter has been set to `true` : 
+If `raw` query parameter has been set to `true` :
 ```json
 {
   "identifier": "id",

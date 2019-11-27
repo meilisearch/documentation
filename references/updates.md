@@ -2,7 +2,7 @@
 
 ## Get an update status
 
-<RouteHighlighter method="GET" route="/indexes/:index/updates/:update-id"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/updates/:update-id"/>
 
 Get the status of an [update](/main_concept/indexes.md#Updates) in a given [index](/main_concept/indexes.md).
 
@@ -39,7 +39,7 @@ Here is an example response of an update that has been processed.
 
 ## Get all update status
 
-<RouteHighlighter method="GET" route="/indexes/:index/updates"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/updates"/>
 
 Get the status of all [updates](/main_concept/indexes.md#updates) in a given [index](/main_concept/indexes.md).
 

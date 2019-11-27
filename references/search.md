@@ -2,7 +2,7 @@
 
 ## Search in an index
 
-<RouteHighlighter method="GET" route="/indexes/:index/search"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/search"/>
 
 Search for documents matching a specific query in the given index.
 
