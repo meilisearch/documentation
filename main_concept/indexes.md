@@ -86,7 +86,7 @@ our search queries to search inside this field (*indexed*), and we also want to 
 
 The `description` field is exactly like the title field. Its 3rd position in the order of the fields puts it after `Title` in relevancy.
 
-The `release_date` field is not indexed because the user does not usually search by date. With the *ranked* tag, we can create a custom ranking rule
+The `release_date` field is not indexed because the user does not usually search for a precise date. With the *ranked* tag, we can create a custom ranking rule
 that will make the recent movies more relevant than the older ones in the search engine.
 
 Finally, the `poster` field contains the image URL to the movie's poster. We do not want to search inside the URL, that's why we omitted the `indexed` tag.
