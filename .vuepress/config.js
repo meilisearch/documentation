@@ -81,6 +81,7 @@ module.exports = {
           '/advanced_guides/stop_words',
           '/advanced_guides/search_parameters',
           '/advanced_guides/keys',
+          '/advanced_guides/prefix',
           '/advanced_guides/distinct',
           '/advanced_guides/updates',
           '/advanced_guides/bucket_sort'
