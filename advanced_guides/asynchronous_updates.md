@@ -2,6 +2,8 @@
 
 MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses.
 
+Some actions are put in a queue and will be executed in turn (asynchronously). In this case, the server response contains the identifier to track the execution of the action.
+
 ### Async flow
 
 - When making a write request (*create/update/delete*) against the search engine, it stores the writing action received in a queue and returns an `update_id`. With this id, the specific action execution is trackable.
