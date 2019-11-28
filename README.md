@@ -7,7 +7,7 @@ end up with poor solutions that are more frustrating than effective, for both th
 
 That's why we created meiliSearch, an open-source solution accessible to everyone, meeting the vast majority of needs, even specific ones. Installable very easily with little or no configuration required but with a high capacity for customization.
 
-Our solution is **instant**; it **accepts typos**; it allows **filters**, **rankings**, and a lot of other [features](/features.md).
+Our solution is **instant**; it **accepts typos**; it allows **filters**, **rankings**, and a lot of other [features](/introduction/features.md).
 
 
 ## Foreword
