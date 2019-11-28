@@ -42,7 +42,10 @@ module.exports = {
     `]
   ],
   themeConfig: {
-    repo: 'meilisearch/MeiliDB',
+    repo: 'meilisearch/MeiliSearch',
+    docsRepo: 'meilisearch/documentation',
+    editLinks: true,
+    lastUpdated: 'Last Updated',
     logo: '/logo.png',
     sidebar: [
       {
