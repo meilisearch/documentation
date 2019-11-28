@@ -97,6 +97,7 @@ module.exports = {
         sidebarDepth: 1,
         children: [
           '/references/headers',
+          '/references/environment',
           '/references/indexes',
           '/references/documents',
           '/references/search',
