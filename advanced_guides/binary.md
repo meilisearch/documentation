@@ -60,5 +60,5 @@ OPTIONS:
         --no-analytics <no-analytics>    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
 ```
 ::: tip Environment variables
-Check the [references](references/environment) to read more about the binary options.
+Check the [references](/references/environment.md) to read more about the binary options.
 :::
