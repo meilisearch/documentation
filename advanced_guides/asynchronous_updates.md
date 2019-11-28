@@ -4,7 +4,7 @@ MeiliSearch is an **asynchronous API**. It means that the API does not behave as
 
 ### Async flow
 
-- When making an update request against the search engine, it stores the update received in a queue and returns a `update_id`.
+- When making a write request (*create/update/delete*) against the search engine, it stores the writing action received in a queue and returns an `update_id`. With this id, the specific action execution is trackable.
 - Each update received is treated following the order it has been received.
 - You can get the update status on the [`/updates`](/references/updates) route.
 
