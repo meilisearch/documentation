@@ -14,7 +14,7 @@ We have some tags that should be associated with fields in the schema:
 * **stored**: Displayed fields can be showed during searches. A non-displayed field will never appear in the search response.
 * **ranked**: Ranked fields are used to sort documents. <Badge text="soon" type="warn"/>
 
-When no schema is given at the creation of an index the schema is inferred. [Inference follows strict rules to index correctly](/main_concept/indexes.md#schema-definition).
+When no schema is given at the creation of an index the schema is inferred. [Inference follows strict rules to index correctly](/main_concepts/indexes.md#schema-definition).
 
 ### Example
 
@@ -28,7 +28,7 @@ Take for example a movie collection. We have several fields:
 
 ::: warning
 The order of the document fields has a huge impact on the relevancy. So please order fields from the most important to the less.
-You can read more about that on [the documents page](/main_concept/documents.md).
+You can read more about that on [the documents page](/main_concepts/documents.md).
 :::
 
 **This is the schema**:
