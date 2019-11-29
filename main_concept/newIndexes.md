@@ -14,7 +14,7 @@ We have some tags that should be associated with fields in the schema:
 * **stored**: Displayed fields can be showed during searches. A non-displayed field will never appear in the search response.
 * **ranked**: Ranked fields are used to sort documents. <Badge text="soon" type="warn"/>
 
-When no schema is given at the creation of an index the schema is inferred. [Inference follows strict rules to index correctly](/main_concept/documents.html#schemas).
+When no schema is given at the creation of an index the schema is inferred. [Inference follows strict rules to index correctly](/main_concept/indexes.md#schema-definition).
 
 ### Example
 

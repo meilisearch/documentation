@@ -131,7 +131,7 @@ Update an API key.
 | **description** | description of the key    |
 | **acl** | [List of ACL's](/advanced_guides/keys.md#acl) |
 | **indexes** | [List of indexes with wildcards](/advanced_guides/keys.md#indexes) |
-| **revoked** | [Boolean to revoke API KEY](/advanced_guides/keys.md#revoke) |
+| **revoked** | [Boolean to revoke API KEY](/advanced_guides/keys.md#revoked) |
 
 ### Example
 

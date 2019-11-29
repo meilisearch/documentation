@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vuepress build .",
     "dev": "vuepress dev",
-    "check-links": "vuepress check-md"
+    "check-links": "vuepress check-md ."
   },
   "repository": {
     "type": "git",

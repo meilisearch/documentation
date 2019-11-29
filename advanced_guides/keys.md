@@ -79,13 +79,13 @@ It should help you track your keys.
 `ACL` or Access-Control List is the list of permissions an `API KEY` can have.
 
 
-* `IndexesRead`: read access on [indexes](/references/indexes)
-* `IndexesWrite`: write access on [indexes](/references/indexes)
-* `DocumentsRead`: read access on [documents](/references/documents)
-* `DocumentsWrite`: write access on [documents](/references/documents)
-* `SettingsRead`: read access on [settings](/references/settings)
-* `SettingsWrite`: write access on [settings](/references/settings)
-* `Admin`: full permission on [keys](/references/keys) and [stats](/references/stats)
+* `IndexesRead`: read access on [indexes](/references/indexes.md)
+* `IndexesWrite`: write access on [indexes](/references/indexes.md)
+* `DocumentsRead`: read access on [documents](/references/documents.md)
+* `DocumentsWrite`: write access on [documents](/references/documents.md)
+* `SettingsRead`: read access on [settings](/references/settings.md)
+* `SettingsWrite`: write access on [settings](/references/settings.md)
+* `Admin`: full permission on [keys](/references/keys.md) and [stats](/references/stats.md)
 * `All`: all of the above
 
 **Read** gives access to all `GET` methods of the given route.
