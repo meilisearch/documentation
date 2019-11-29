@@ -7,14 +7,36 @@ It can be achieved by following these three steps.
 
 You can deploy the server on your own machine. It will listen to HTTP requests on the 7700 port by default.
 
+
+:::: tabs
+
+::: tab curl
+This script will download the latest stable release of MeiliSearch.
 ```bash
-# If you have the Rust toolchain installed
+$ curl https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/download-latest.sh | sh
+$ ./meilisearch
+Server is listening on: http://0.0.0.0:7700
+```
+:::
+
+::: tab Docker
+Using Docker you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags)
+```bash
+$ docker run -it --rm -p 7700:7700 getmeili/meilisearch
+Server is listening on: http://0.0.0.0:7700
+```
+:::
+
+::: tab Cargo
+If you have the Rust toolchain installed you can compile MeiliSearch from the sources.
+```bash
 $ git clone https://github.com/meilisearch/MeiliSearch.git
 $ cd MeiliSearch && cargo run --release
-
-# Or using Docker
-$ docker run -it --rm -p 7700:7700 getmeili/meilisearch
+Server is listening on: http://0.0.0.0:7700
 ```
+:::
+
+::::
 
 ### Create an Index and Upload Some Documents
 
