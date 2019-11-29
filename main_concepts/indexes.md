@@ -77,7 +77,7 @@ This is the **schema**:
 }
 ```
 
-The fields are [sorted by relevancy importance](/main_concept/indexes.md#fields-order).
+The fields are [sorted by relevancy importance](/main_concepts/indexes.md#fields-order).
 
 The `id` field is the unique identifier of a movie document. We want to display it (*displayed*) and give the possibility to users to search for the movie using his ID (*indexed*).
 
@@ -91,7 +91,7 @@ that will make the recent movies more relevant than the older ones in the search
 
 Finally, the `poster` field contains the image URL to the movie's poster. We do not want to search inside the URL, that's why we omitted the `indexed` tag.
 
-When no schema is given at the creation of an index, the schema is inferred. [Inference follows strict rules to index correctly](/main_concept/indexes.md#schema-definition).
+When no schema is given at the creation of an index, the schema is inferred. [Inference follows strict rules to index correctly](/main_concepts/indexes.md#schema-definition).
 
 ## Identifier
 
@@ -135,11 +135,11 @@ The schema is inferred this way:
  - the **identifier** is the first field containing `"id"` (case insensitive)
  - every field is `indexed` and `displayed`
 
-The order of the fields inside the document will [determine their relevance in the search engine](/main_concept/indexes.md#fields-order).
+The order of the fields inside the document will [determine their relevance in the search engine](/main_concepts/indexes.md#fields-order).
 
 To determine the identifier, an attribute that contains the case insensitive string `id` is expected. Thus, `_id`, `myId`, for example, are correct keys.
 
-This field will receieve the [identifier](/main_concept/indexes.md#identifier) tag, so it should contain the unique identifier of a document.
+This field will receieve the [identifier](/main_concepts/indexes.md#identifier) tag, so it should contain the unique identifier of a document.
 
 ::: warning
 If the `identifier` field is missing, the inference will not be completed, and the **documents will not be added**.

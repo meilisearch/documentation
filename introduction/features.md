@@ -16,7 +16,7 @@ Our feature list with extended explanations and links to the documentation.
     - [Maximum response time](/advanced_guides/search_parameters.md#attributes-to-highlight): Never will a response take more time to arrive
     - [Stop-words](/advanced_guides/stop_words.md): Ignore common non-relevant words like `of`, `the`, ..
     - [Custom ranking](/advanced_guides/ranking.md#custom-ranking-rules): Create your own ranking rules on indexation.
-    - [Schema customization](/main_concept/indexes.md#index-uid-and-name): Customize schema  to suit your needs perfectly.
+    - [Schema customization](/main_concepts/indexes.md#index-uid-and-name): Customize schema  to suit your needs perfectly.
 * **RESTfull API**
 * **Asynchronous write actions**: Actions will be added to a queue for **low response time** and **guaranteed consistency**.
 * [Bucket sort](/advanced_guides/bucket_sort.md) with [6 default ranking rules](/advanced_guides/ranking.md#ranking-rules) that [can be re-ordered](/advanced_guides/ranking.md#ranking-order) to suit your needs.

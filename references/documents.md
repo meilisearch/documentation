@@ -12,7 +12,7 @@ Get one document using its unique identifier.
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index**         | The index UID |
-| **identifier**    | [The unique identifier of the document](/main_concept/indexes.md#identifier) |
+| **identifier**    | [The unique identifier of the document](/main_concepts/indexes.md#identifier) |
 
 ### Example
 
@@ -97,7 +97,7 @@ curl \
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
-Insert a list of documents or update them if they already exist based on [their unique identifiers](/main_concept/indexes.md#schema-definition).
+Insert a list of documents or update them if they already exist based on [their unique identifiers](/main_concepts/indexes.md#schema-definition).
 
 The update id returned by this function can be sent to the [get update status route](/references/updates.md#get-an-update-status) to retrieve informations about its advancement.
 
@@ -111,7 +111,7 @@ The update id returned by this function can be sent to the [get update status ro
 #### Body
 
 The body is composed of a **Json array** of documents composed of fields corresponding to the index schema.
-You can [read more about fields and schemas](/main_concept/indexes.md#schema-definition).
+You can [read more about fields and schemas](/main_concepts/indexes.md#schema-definition).
 
 ::: warning
 Documents fields which are not known to the index schema will be ignored
@@ -181,7 +181,7 @@ The body must contain a **Json Object** containing an `insert` and a `delete` fi
   - the `delete` field expect the same body as the [Delete multiple documents](#delete-multiple-documents) route.
 
 ::: warning
-Unknown documents attributes will be ignored. You can [read more about that](/main_concept/indexes.md#schema-definition).
+Unknown documents attributes will be ignored. You can [read more about that](/main_concepts/indexes.md#schema-definition).
 :::
 
 ```json
@@ -261,7 +261,7 @@ This [update id allows you to track](/references/updates) the current action.
 <RouteHighlighter method="DELETE" route="/indexes/:uid/documents/:identifier"/>
 
 Delete one document based on its unique identifier.<br/>
-You can read more about [identifiers and schemas](/main_concept/indexes.md#schema-definition).
+You can read more about [identifiers and schemas](/main_concepts/indexes.md#schema-definition).
 
 The update id returned by this function can be sent to the [get update status route](/references/updates.md#get-an-update-status) to retrieve informations about its advancement.
 
@@ -295,7 +295,7 @@ This [update id allows you to track](/references/updates) the current action.
 <RouteHighlighter method="POST" route="/indexes/:uid/documents/delete"/>
 
 Delete a selection of documents based on array of identifiers.<br/>
-You can read more about [identifiers and schemas](/main_concept/indexes.md#schema-definition).
+You can read more about [identifiers and schemas](/main_concepts/indexes.md#schema-definition).
 
 The update id returned by this function can be sent to the [get update status route](/references/updates.md#get-an-update-status) to retrieve informations about its advancement.
 

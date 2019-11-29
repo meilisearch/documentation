@@ -21,17 +21,17 @@ module.exports = {
       },
       {
         title: '💡 Main concepts',
-        path:  '/main_concept/',
+        path:  '/main_concepts/',
         collapsable: false,
         sidebarDepth: 1,
         children: [
-          '/main_concept/indexes',
-          '/main_concept/documents',
-          '/main_concept/search'
+          '/main_concepts/indexes',
+          '/main_concepts/documents',
+          '/main_concepts/search'
         ]
       },
       {
-        title: '📚 Advanced Guide',
+        title: '📚 Advanced Guides',
         path:  '/advanced_guides/',
         collapsable: true,
         sidebarDepth: 1,
