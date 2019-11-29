@@ -1,6 +1,6 @@
 module.exports = {
-  title: 'Meili Documentation',
-  description: 'The Meili incredible documentation',
+  title: 'MeiliSearch Documentation',
+  description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
     docsRepo: 'meilisearch/documentation',
@@ -10,13 +10,13 @@ module.exports = {
     sidebar: [
       {
         title: '🚀 Getting started',
-        path:  '',
+        path:  '/',
         collapsable: false,
         sidebarDepth: 0,
         children: [
-          '/',
-          '/introduction/quickstart',
-          '/introduction/features'
+          '/getting_started/foreword',
+          '/getting_started/quickstart',
+          '/getting_started/features'
         ]
       },
       {
