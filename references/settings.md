@@ -18,7 +18,7 @@ Get the index settings.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/settings'
+  --request GET 'http://localhost:7700/indexes/12345678/settings'
 ```
 
 
@@ -88,7 +88,7 @@ None of the 3 settings parameters is mandatory
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/settings' \
+  --request GET 'http://localhost:7700/indexes/12345678/settings' \
   --data '{
   "rankingOrder": [
     "_sum_of_typos",

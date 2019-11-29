@@ -11,7 +11,7 @@ Get health of MeiliSearch server.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/health'
+  --request GET 'http://localhost:7700/health'
 ```
 
 #### Response: `204 No Content`
@@ -29,7 +29,7 @@ Get health of MeiliSearch server.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/health'
+  --request GET 'http://localhost:7700/health'
 ```
 
 #### Response: `204 No Content`
