@@ -113,5 +113,8 @@ module.exports = {
         ]
       },
     ]
-  }
+  },
+  plugins:['check-md', {
+    pattern: '**/*.md'
+  }]
 }

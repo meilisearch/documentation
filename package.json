@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vuepress build .",
-    "dev": "vuepress dev"
+    "dev": "vuepress dev",
+    "check-links": "vuepress check-md"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "dependencies": {
     "mermaid": "^8.4.2",
     "vuepress": "^1.2.0"
+  },
+  "devDependencies": {
+    "vuepress-plugin-check-md": "^0.0.2"
   }
 }
