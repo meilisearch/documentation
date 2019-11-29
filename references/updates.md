@@ -18,7 +18,7 @@ Get the status of an [update](/advanced_guides/asynchronous_updates.md) in a giv
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/updates/3'
+  --request GET 'http://localhost:7700/indexes/12345678/updates/3'
 ```
 
 #### Response: `200 Ok`
@@ -55,7 +55,7 @@ Get the status of all [updates](/advanced_guides/asynchronous_updates.md) in a g
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/updates'
+  --request GET 'http://localhost:7700/indexes/12345678/updates'
 ```
 
 #### Response: `200 Ok`

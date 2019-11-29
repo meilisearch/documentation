@@ -18,7 +18,7 @@ List one sequence and his synonyms inside an index.
 #### Example
 ```bash
  curl \
-  --request GET 'http://localhost:8080/indexes/12345678/synonyms/magician'
+  --request GET 'http://localhost:7700/indexes/12345678/synonyms/magician'
 ```
 
 #### Response: `200 OK`
@@ -46,7 +46,7 @@ List all sequences and their synonyms inside an index.
 #### Example
 ```bash
  curl \
-  --request GET 'http://localhost:8080/indexes/12345678/synonyms'
+  --request GET 'http://localhost:7700/indexes/12345678/synonyms'
 ```
 
 #### Response: `200 OK`
@@ -92,14 +92,14 @@ An object with either multi-way string associations or one-way string associatio
 #### One-way Example
 ```bash
  curl \
-  --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
+  --request POST 'http://localhost:7700/indexes/12345678/synonyms' \
   --data '{ "input": "magician", "synonyms": ["harry potter", "merlin"]}'
 ```
 
 #### Multi-way Example
 ```bash
  curl \
-  --request POST 'http://localhost:8080/indexes/12345678/synonyms' \
+  --request POST 'http://localhost:7700/indexes/12345678/synonyms' \
   --data '{ "synonyms": ["harry potter", "hp"]}'
 ```
 
@@ -137,7 +137,7 @@ This will **override** the previous synonyms of the given sequence. Don't forget
 #### Example
 ```bash
  curl \
-  --request PUT 'http://localhost:8080/indexes/12345678/synonyms/magician' \
+  --request PUT 'http://localhost:7700/indexes/12345678/synonyms/magician' \
   --data '["harry potter", "merlin", "Illusionist"]'
 ```
 
@@ -168,7 +168,7 @@ Delete a synonym.
 #### Example
 ```bash
  curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms/magician'
+  --request DELETE 'http://localhost:7700/indexes/12345678/synonyms/magician'
 ```
 
 #### Response: `200 Ok`
@@ -205,7 +205,7 @@ An object with either multi-way string associations or one-way string associatio
 #### Example
 ```bash
  curl \
-  --request POST 'http://localhost:8080/indexes/12345678/synonyms/batch' \
+  --request POST 'http://localhost:7700/indexes/12345678/synonyms/batch' \
   --data '[
     {
       "input": "magician",
@@ -244,7 +244,7 @@ Delete all synonyms
 #### Example
 ```bash
  curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678/synonyms'
+  --request DELETE 'http://localhost:7700/indexes/12345678/synonyms'
 ```
 
 #### Response: `202 Accepted`

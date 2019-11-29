@@ -18,7 +18,7 @@ Get one document using its unique identifier.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/documents/25684'
+  --request GET 'http://localhost:7700/indexes/12345678/documents/25684'
 ```
 
 #### Response: `200 Ok`
@@ -66,7 +66,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 ```bash
 curl \
-  --request GET 'http://localhost:8080/indexes/12345678/documents?limit=2'
+  --request GET 'http://localhost:7700/indexes/12345678/documents?limit=2'
 ```
 
 #### Response: `200 Ok`
@@ -133,7 +133,7 @@ Documents fields which are not known to the index schema will be ignored
 
 ```bash
 curl \
-  --request POST 'http://localhost:8080/indexes/12345678/documents' \
+  --request POST 'http://localhost:7700/indexes/12345678/documents' \
   --data '[{
       "id": 287947,
       "title": "Shazam",
@@ -195,7 +195,7 @@ Unknown documents attributes will be ignored. You can [read more about that](/ma
 
 ```bash
 curl \
-  --request POST 'http://localhost:8080/indexes/12345678/documents' \
+  --request POST 'http://localhost:7700/indexes/12345678/documents' \
   --data '{
       "insert": [
         {
@@ -241,7 +241,7 @@ The update id returned by this function can be sent to the [get update status ro
 
 ```bash
 curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678/documents'
+  --request DELETE 'http://localhost:7700/indexes/12345678/documents'
 ```
 
 #### Response: `202 Accepted`
@@ -275,7 +275,7 @@ The update id returned by this function can be sent to the [get update status ro
 
 ```bash
   curl \
-  --request DELETE 'http://localhost:8080/indexes/12345678/documents/25684'
+  --request DELETE 'http://localhost:7700/indexes/12345678/documents/25684'
 ```
 
 #### Response: `202 Accepted`
@@ -318,7 +318,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```bash
   curl \
-  --request POST 'http://localhost:8080/indexes/12345678' \
+  --request POST 'http://localhost:7700/indexes/12345678' \
   --data '[
       23488,
       153738,
