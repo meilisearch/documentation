@@ -114,7 +114,8 @@ module.exports = {
       },
     ]
   },
-  plugins:['check-md', {
-    pattern: '**/*.md'
-  }]
+  plugins:[
+    ['check-md', { pattern: '**/*.md' }],
+    ['sitemap', { hostname: 'https://docs.meilisearch.com' }]
+  ]
 }
