@@ -24,4 +24,4 @@ Each documents fields should correspond to an attribute in the schema to be take
 Documents fields that do not correspond to the schema fields are ignored.
 :::
 
-When using the [route to add new documents](/references/documents.html#add-or-update-documents) all documents should be sent in an array. And this, even if there is only one document.
+When using the [route to add new documents](/references/documents.md#add-or-update-documents) all documents should be sent in an array. And this, even if there is only one document.

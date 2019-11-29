@@ -1,10 +1,10 @@
 # Settings
 
-## Get the list of settings
+## Get the index settings
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings" />
 
-Get the list [settings](/advanced_guides/settings).
+Get the index settings.
 
 
 #### Path Variables
@@ -66,7 +66,7 @@ Add or update the following settings :
 |-------------------|-----------------------|
 | **rankingRules**         | All [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules)      |
 | **rankingOrder**         | [Ranking order](/advanced_guides/ranking.md#ranking-order) of all rules, custom and default     |
-| **distinct**         | Field to which [distinct](/advanded_guides/distinct) will be applied    |
+| **distinct**         | Field to which [distinct](/advanced_guides/distinct.md) will be applied    |
 
 #### Ranking rules
 

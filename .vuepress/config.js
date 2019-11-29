@@ -72,13 +72,13 @@ module.exports = {
       },
       {
         title: '📚 Advanced Guide',
-        path:  '/advanced_guides/binary',
+        path:  '/advanced_guides/',
         collapsable: true,
         sidebarDepth: 1,
         children: [
           '/advanced_guides/binary',
           '/advanced_guides/typotolerance',
-          '/advanced_guides/concatanted_and_splitted',
+          '/advanced_guides/concat',
           '/advanced_guides/ranking',
           '/advanced_guides/synonyms',
           '/advanced_guides/stop_words',
@@ -97,6 +97,7 @@ module.exports = {
         sidebarDepth: 1,
         children: [
           '/references/headers',
+          '/references/environment',
           '/references/indexes',
           '/references/documents',
           '/references/search',
@@ -112,5 +113,8 @@ module.exports = {
         ]
       },
     ]
-  }
+  },
+  plugins:['check-md', {
+    pattern: '**/*.md'
+  }]
 }

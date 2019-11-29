@@ -31,5 +31,5 @@ Even if, as you can observe, there is an `s` in `movies` and `musical`. The pref
 When the is search `sho` only the documents containing `show` will be returned.
 
 ::: tip
-We also [apply splitting and concatenating on search queries](/advanced_guides/concatanted_and_splitted.md).
+We also [apply splitting and concatenating on search queries](/advanced_guides/concat.md).
 :::

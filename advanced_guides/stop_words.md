@@ -1,4 +1,4 @@
-# Stop Words
+# Stop words
 
 Stop-words words allow you to **ignore certain words in the relevance of your search**.
 

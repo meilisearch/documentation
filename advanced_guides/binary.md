@@ -1,41 +1,48 @@
 # MeiliSearch Binary
 
+## Compiling from source
 
-## How to compile meiliSearch
+MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
 
-### Dependencies
-
-MeiliSearch is made in `rust`. Because of that `rust` and its package manager `cargo` must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
-
-### Compiling
-
-Now that the Rust toolchain is installed, we need to git clone and go to the cloned directory.
+If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliDB
-cd MeiliDB
+git clone https://github.com/meilisearch/MeiliSearch
+cd MeiliSearch
 ```
 
-Inside the folder, let's compile MeiliSearch.
+Inside the folder, compile MeiliSearch.
 
 ```bash
 # Production version
-cargo run --release
+cargo build --release
+
 # Debug version
-cargo run
+cargo build
+```
+::: tip
+Compiling in release mode is longer than in debug mode but the binary will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
+:::
+
+You can find the compiled binary in `target/debug` or `target/release`.
+
+```bash
+# Excuting the server binary
+./target/release/meilisearch
 ```
 
-### Accessing the binary
+## Running with Docker 🐳
 
-Inside the `target`, depending on the version you compiled, you will find the following directories :
-* `debug` : Debug version
-* `release` : Production version
-
-Inside the chosen directory, there is the ` meilidb-http` binary.
+The `latest` docker image is built against each commit on the master branch. You can also run any specific version if you specify the specific tag. 
+```bash
+$ docker run -it --rm -p 8080:8080 getmeili/meilisearch:latest
+Server is listening on: http://0.0.0.0:8080
+```
 
 ## Usage
 
 ```bash
+$ ./meilisearch --help
 USAGE:
     meilidb-http [OPTIONS]
 
@@ -52,19 +59,6 @@ OPTIONS:
                                          [default: 127.0.0.1:8080]
         --no-analytics <no-analytics>    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
 ```
-
-::: warning
-When **no master key** is set, no `X-Meili-API-Key` is needed on any route.
+::: tip Environment variables
+Check the [references](/references/environment.md) to read more about the binary options.
 :::
-
-## Executing example
-
-### With the binary
-```bash
-./meilidb-http --api-key myMasterKey
-```
-
-### With cargo
-```bash
-cargo run --release -- --api-key myMasterKey
-```

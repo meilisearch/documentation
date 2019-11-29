@@ -48,7 +48,7 @@ Thus, if a `title` field is defined before a `description` field, its content wi
 This means that if you search for something that matches in the `description` of the document _A_ and in the `title` of the document _B_,
 the document _B_ will be considered better than the document _A_. You can read more about these rules [in the ranking section][1].
 
-[1]: /advanced_guides/ranking.html#ranking-rules
+[1]: /advanced_guides/ranking.md#ranking-rules
 
 <!-- TODO change doc link -->
 ::: tip
@@ -91,7 +91,7 @@ that will make the recent movies more relevant than the older ones in the search
 
 Finally, the `poster` field contains the image URL to the movie's poster. We do not want to search inside the URL, that's why we omitted the `indexed` tag.
 
-When no schema is given at the creation of an index, the schema is inferred. [Inferrence follows strict rules to index correctly](/main_concept/documents.html#schemas).
+When no schema is given at the creation of an index, the schema is inferred. [Inference follows strict rules to index correctly](/main_concept/indexes.md#schema-definition).
 
 ## Identifier
 

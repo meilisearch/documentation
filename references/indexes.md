@@ -67,7 +67,7 @@ curl \
 Create an index.
 
 The [schema](/main_concept/indexes.md) definition is optionally send through the body.
-If no [schema](/main_concept/indexes.md) has been defined when the first document is sent it will be [infered based on that document](/main_concept/documents.md#schemas).
+If no [schema](/main_concept/indexes.md) has been defined when the first document is sent it will be [infered based on that document](/main_concept/indexes.md#schema-definition).
 
 A randomly generated UID will be returned. It's associated to the new index. This UID will be essential to make all request over the created index.
 
@@ -93,7 +93,7 @@ The body accepts an optional [schema](/main_concept/indexes.md) definition of yo
 
 The index can be created without any schema.
 
-If no schema has been defined when the first document is added, the schema will be [infered based upon the first document](/main_concept/documents.md#schemas).
+If no schema has been defined when the first document is added, the schema will be [infered based upon the first document](/main_concept/indexes.md#schema-definition).
 
 ### Example
 

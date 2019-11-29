@@ -4,7 +4,7 @@
 
 <RouteHighlighter method="GET" route="/indexes/:uid/updates/:update-id"/>
 
-Get the status of an [update](/main_concept/indexes.md#Updates) in a given [index](/main_concept/indexes.md).
+Get the status of an [update](/advanced_guides/asynchronous_updates.md) in a given [index](/main_concept/indexes.md).
 
 
 #### Path Variables
@@ -41,7 +41,7 @@ Here is an example response of an update that has been processed.
 
 <RouteHighlighter method="GET" route="/indexes/:uid/updates"/>
 
-Get the status of all [updates](/main_concept/indexes.md#updates) in a given [index](/main_concept/indexes.md).
+Get the status of all [updates](/advanced_guides/asynchronous_updates.md) in a given [index](/main_concept/indexes.md).
 
 
 #### Path Variables
