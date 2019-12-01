@@ -15,7 +15,7 @@ This script will download the latest stable release of MeiliSearch.
 ```bash
 $ curl https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/download-latest.sh | sh
 $ ./meilisearch
-Server is listening on: http://0.0.0.0:7700
+Server is listening on: http://127.0.0.1:7700
 ```
 :::
 
