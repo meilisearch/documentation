@@ -32,7 +32,7 @@ If you have the Rust toolchain installed you can compile MeiliSearch from the so
 ```bash
 $ git clone https://github.com/meilisearch/MeiliSearch.git
 $ cd MeiliSearch && cargo run --release
-Server is listening on: http://0.0.0.0:7700
+Server is listening on: http://127.0.0.1:7700
 ```
 :::
 
