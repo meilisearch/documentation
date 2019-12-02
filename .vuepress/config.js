@@ -16,7 +16,8 @@ module.exports = {
         children: [
           '/getting_started/foreword',
           '/getting_started/quickstart',
-          '/getting_started/features'
+          '/getting_started/features',
+          '/getting_started/download'
         ]
       },
       {
