@@ -1,5 +1,14 @@
 # MeiliSearch Binary
 
+## Downloading from Curl 
+
+This script will download the **latest stable release** of MeiliSearch.
+```bash
+$ curl https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/download-latest.sh | sh
+$ ./meilisearch
+Server is listening on: http://127.0.0.1:7700
+```
+
 ## Compiling from source
 
 MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
