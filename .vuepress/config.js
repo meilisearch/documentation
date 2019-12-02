@@ -77,7 +77,8 @@ module.exports = {
   plugins:[
     ['check-md', { pattern: '**/*.md' }],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
-    ['seo', {}]
+    ['seo', {}],
+    'vuepress-plugin-element-tabs'
   ],
   head: [
     ['script', {}, `
