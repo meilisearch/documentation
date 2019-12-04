@@ -24,7 +24,3 @@ curl \
   "pkgVersion": "0.1.1"
 }
 ```
-
-::: warning
-  No commitSha in SaaS version of MeiliSearch
-:::
