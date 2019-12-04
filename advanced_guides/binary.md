@@ -1,6 +1,6 @@
 # MeiliSearch Binary
 
-## Downloading from Curl 
+## Downloading from Curl
 
 This script will download the **latest stable release** of MeiliSearch.
 ```bash
@@ -42,7 +42,7 @@ You can find the compiled binary in `target/debug` or `target/release`.
 
 ## Running with Docker 🐳
 
-The `latest` docker image is built against each commit on the master branch. You can also run any specific version if you specify the specific tag. 
+The `latest` docker image is built against each commit on the master branch. You can also run any specific version if you specify the specific tag.
 ```bash
 $ docker run -it --rm -p 7700:7700 getmeili/meilisearch:latest
 Server is listening on: http://0.0.0.0:7700
@@ -68,6 +68,12 @@ OPTIONS:
                                          [default: 127.0.0.1:7700]
         --no-analytics <no-analytics>    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
 ```
-::: tip Environment variables
-Check the [references](/references/environment.md) to read more about the binary options.
-:::
+
+# Environment variables
+
+| Environment Variable | CLI option     | Description                                                                                                                                                            | Default value      |
+|----------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
+| MEILI_DB_PATH        | --db-path      | Define the location for the database files                                                                                                                                         | "./data.ms" |
+| MEILI_HTTP_ADDR      | --http-addr    | Address and port to listen to                                                                                                                                          | "127.0.0.1:7700"   |
+| MEILI_API_KEY        | --api-key      | Default admin API key                                                                                                                                                  |                    |
+| MEILI_NO_ANALYTICS   | --no-analytics | Deactivate analytics. Analytics help us to know how much users are using our project, knowing which versions and which platforms are used. It is completely anonymous. |                    |

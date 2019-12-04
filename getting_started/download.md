@@ -30,4 +30,4 @@ Server is listening on: http://127.0.0.1:7700
 
 ::::
 
-More [ways to run MeiliSearch](/advanced_guides/binary.md) and more information about the [environment variables](/references/environment.md).
+More [ways to run MeiliSearch](/advanced_guides/binary.md) and more information about the [environment variables](/advanced_guides/binary.md#environment-variables).
