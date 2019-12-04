@@ -1,6 +1,6 @@
 # Foreword
 
-Welcome to the beta version of the Meili API documentation 🐣
+Welcome to the beta version of the MeiliSearch API documentation 🐣
 
 This is our first draft guide in the limbo of the HTTP MeiliSearch routes.
 You can navigate into the documentation using the sidebar or by using the search bar above.

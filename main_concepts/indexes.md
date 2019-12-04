@@ -149,5 +149,5 @@ Every other field will have the `indexed` and `displayed` tags.
 
 
 ::: tip
-By default, the Meili dashboard infers the schema from the **first** document sent.
+By default, the MeiliSearch dashboard infers the schema from the **first** document sent.
 :::

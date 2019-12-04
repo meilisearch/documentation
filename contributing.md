@@ -1,6 +1,6 @@
-# Meili documentation
+# MeiliSearch documentation
 
-## Installation 
+## Installation
 
 
 ```bash
@@ -9,7 +9,7 @@ npm install -g vuepress
 
 ## Launch
 
-### development 
+### development
 ```bash
 vuepress dev
 ```
