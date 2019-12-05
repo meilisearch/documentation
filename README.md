@@ -1,6 +1,6 @@
 # MeiliSearch Documentation
 
-Welcome to the Meilisearch Documentation
+Welcome to the MeiliSearch Documentation
 
 ## Introduction
 

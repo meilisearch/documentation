@@ -18,10 +18,10 @@ When the query input is received, MeiliSearch is building a more complex query t
 
 > It would not be a search engine if there was not a notion of relevancy in the results returned.
 
-When all documents corresponding to the request have been collected, *meilisearch sort the documents* using a bucket sort.
+When all documents corresponding to the request have been collected, *MeiliSearch sort the documents* using a bucket sort.
 
 A bucket sort can be described as an ordered set of sorting criteria. All the documents are sorted within the first criterion, then documents that can not be distinguished will be sorted using the second criterion, and so on. Thus, every document are not sorted for every criterion which induces a reduced compute time.
-Here is the ordered list of the default criteria used in meilisearch:
+Here is the ordered list of the default criteria used in MeiliSearch:
 
 - _Number of Typos_ - The fewer typos there are between the query words and the document words, the better is the document.
 - _Number of Words_ - A document containing more of the query words will be more important than one that contains less.

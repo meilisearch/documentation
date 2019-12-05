@@ -1,6 +1,6 @@
 # Version
 
-## Get version of meilisearch
+## Get version of MeiliSearch
 
 <RouteHighlighter method="GET" route="/version"/>
 
@@ -24,7 +24,3 @@ curl \
   "pkgVersion": "0.1.1"
 }
 ```
-
-::: warning
-  No commitSha in SaaS version of MeiliSearch
-:::

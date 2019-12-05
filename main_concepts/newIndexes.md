@@ -45,7 +45,7 @@ You can read more about that on [the documents page](/main_concepts/documents.md
 
 ## Updates
 
-Since many of the meilisearch actions are asynchronous, their route returns an update identifier. This makes it possible to track the progress of the action.
+Since many of the MeiliSearch actions are asynchronous, their route returns an update identifier. This makes it possible to track the progress of the action.
 
 La mise à jour renvoie les informations suivantes :
 * **status** : State of the action (enqueued, processed )
