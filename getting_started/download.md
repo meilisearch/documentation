@@ -2,7 +2,7 @@
 
 :::: tabs
 
-::: tab curl
+::: tab cURL
 Download the **latest stable release** of MeiliSearch with **curl**.
 ```bash
 $ curl -L https://install.meilisearch.com | sh
@@ -16,6 +16,16 @@ Using Docker you can choose to run [any available tags](https://hub.docker.com/r
 ```bash
 $ docker run -it --rm -p 7700:7700 getmeili/meilisearch
 Server is listening on: http://0.0.0.0:7700
+```
+:::
+
+::: tab APT
+If you use the APT package manager
+```bash
+$ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+$ apt update && apt install meilisearch-http
+$ meilisearch
+Server is listening on: http://127.0.0.1:7700
 ```
 :::
 

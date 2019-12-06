@@ -7,13 +7,12 @@ It can be achieved by following these three steps.
 
 You can deploy the server on your own machine. It will listen to HTTP requests on the 7700 port by default.
 
-
 :::: tabs
 
-::: tab curl
-This script will download the latest stable release of MeiliSearch.
+::: tab cURL
+Download the **latest stable release** of MeiliSearch with **curl**.
 ```bash
-$ curl https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/download-latest.sh | sh
+$ curl -L https://install.meilisearch.com | sh
 $ ./meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
@@ -24,6 +23,16 @@ Using Docker you can choose to run [any available tags](https://hub.docker.com/r
 ```bash
 $ docker run -it --rm -p 7700:7700 getmeili/meilisearch
 Server is listening on: http://0.0.0.0:7700
+```
+:::
+
+::: tab APT
+If you use the APT package manager
+```bash
+$ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+$ apt update && apt install meilisearch-http
+$ meilisearch
+Server is listening on: http://127.0.0.1:7700
 ```
 :::
 
