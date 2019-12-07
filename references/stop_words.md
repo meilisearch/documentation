@@ -69,7 +69,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 ## Delete stop-words
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/stop-words" />
+<RouteHighlighter method="POST" route="/indexes/:uid/stop-words" />
 
 Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
 
