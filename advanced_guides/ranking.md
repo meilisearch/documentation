@@ -35,10 +35,10 @@ If the rule is not added to the rule ranking order, it will be **ignored** by Me
 On the `release_date` attribute of a movie data set, which contains the timestamp of the release date.
 ```bash
  curl --request POST 'http://localhost:7700/indexes/movies/settings'
-  --data '{ "rankingRules" : { "release_date": "dsc" } }'
+  --data '{ "rankingRules": { "release_date": "dsc" } }'
 ```
 
-We create a custom ranking rule that must have the attribute name as key : `release_date` and we ask it to be `dsc` which means *descending*.
+We create a custom ranking rule that must have the attribute name as key: `release_date` and we ask it to be `dsc` which means *descending*.
 
 Now if added to the ranking order documents will be ordered by descending release_date.
 
@@ -46,7 +46,7 @@ Now if added to the ranking order documents will be ordered by descending releas
 
 The ranking order determine the order of each rule in the [bucket sort](/advanced_guides/bucket_sort).
 
-The default ranking order is as follows ([*see above for more detail about each rule*](/advanced_guides/ranking.md#ranking-rules)) :
+The default ranking order is as follows ([*see above for more detail about each rule*](/advanced_guides/ranking.md#ranking-rules)):
 
 - `Number of Typos`
 - `Number of Words`

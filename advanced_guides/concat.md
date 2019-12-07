@@ -8,7 +8,7 @@ This means that a search is also done on the concatenation of those words.
 
 #### Example
 
-A search on `news paper` searches with the following queries :
+A search on `news paper` searches with the following queries:
 - News paper
 - Newspaper
 

@@ -28,7 +28,7 @@ Let's take a movie dataset where the release year is written in timestamp format
 }
 ```
 
-Now the schema should be defined like this :
+Now the schema should be defined like this:
 
 ```json
 {

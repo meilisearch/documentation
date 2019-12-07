@@ -17,7 +17,7 @@ There are several ways to associate words with each other.
 
 This makes it possible to determine that a word will be synonymous with another but not the other way around.
 
-example :
+example:
 ```
 phone => iphone
 ```
@@ -28,7 +28,7 @@ By searching `phone` you will get all results containing `iphone` with the same 
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
 
-example :
+example:
 ```
 Shoe <=> boot <=> slipper <=> sneakers
 ```
@@ -37,7 +37,7 @@ When a search is made with one of these words all the others will be considered 
 
 However, in the case of word to sentence or sentence to sentence
 
-example :
+example:
 ```
 "San Fransisco" <=> SF
 ```

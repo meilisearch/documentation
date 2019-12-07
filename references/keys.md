@@ -4,16 +4,14 @@
 
 <RouteHighlighter method="GET" route="/keys"/>
 
-Get api keys.
-
+Get all API keys information.
 
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/keys' \
-  --header 'Content-Type: application/json'
+  --request GET 'http://localhost:7700/keys'
 ```
 
 #### Response: `200 Ok`
@@ -34,49 +32,47 @@ curl \
     "expiresAt": "2019-11-21T10:42:08Z",
     "revoked": false
   }
-  ]
+]
 ```
 
 ## Get one key
 
 <RouteHighlighter method="GET" route="/keys/:key"/>
 
-Get one api key information.
-
+Get information for a given API key.
 
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/keys/VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF' \
-  --header 'Content-Type: application/json'
+  --request GET 'http://localhost:7700/keys/VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF'
 ```
 
 #### Response: `200 Ok`
 
 ```json
-  {
-    "key": "VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF",
-    "description": "search key",
-    "acl": [
-      "documentsRead"
-    ],
-    "indexes": [
-      "movies"
-    ],
-    "createdAt": "2019-11-21T09:59:19.016355Z",
-    "updatedAt": "2019-11-21T09:59:19.016355Z",
-    "expiresAt": "2019-11-21T10:42:08Z",
-    "revoked": false
-  }
+{
+  "key": "VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF",
+  "description": "search key",
+  "acl": [
+    "documentsRead"
+  ],
+  "indexes": [
+    "movies"
+  ],
+  "createdAt": "2019-11-21T09:59:19.016355Z",
+  "updatedAt": "2019-11-21T09:59:19.016355Z",
+  "expiresAt": "2019-11-21T10:42:08Z",
+  "revoked": false
+}
 ```
 
 ## Create Key
 
 <RouteHighlighter method="POST" route="/keys"/>
 
-Create an API keys.
+Create an API key.
 
 
 ### Body
@@ -98,7 +94,7 @@ curl \
       "expiresAt": 1574332928,
       "description": "search key",
       "acl": ["documentsRead"],
-      "indexes" : ["movies"]
+      "indexes": ["movies"]
   }'
 ```
 

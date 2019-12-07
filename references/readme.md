@@ -43,7 +43,7 @@ We support `gzip`, `brotli` and `deflate`.
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
 Please read the [advanced part about keys](/advanced_guides/keys.md) and [how to manage them](/references/keys.md) for more information.
 
-`X-Meili-API-Key : $API_KEY`
+`X-Meili-API-Key: $API_KEY`
 
 ----
 
@@ -56,6 +56,8 @@ Please read the [advanced part about keys](/advanced_guides/keys.md) and [how to
 **201 - Created**: The resource has been created (synchronous)
 
 **202 - Accepted**: The update has been pushed in the update queue (asynchronous)
+
+**204 - No Content**: The resource has been deleted or no content has been returned
 
 **205 - Reset Content**: All the resources have been deleted
 
@@ -73,7 +75,7 @@ Please read the [advanced part about keys](/advanced_guides/keys.md) and [how to
 
 All errors contain a `JSON` body that explains the error.
 
-Response body :
+Response body:
 ```json
 {
   "message": "The error message"

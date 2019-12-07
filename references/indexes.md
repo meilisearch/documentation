@@ -38,7 +38,7 @@ Get the index relative information.
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **index** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
@@ -112,7 +112,7 @@ curl \
 }'
 ```
 
-If no schema has been defined :
+If no schema has been defined:
 #### Response: `201 created`
 ```json
 {
@@ -124,7 +124,7 @@ If no schema has been defined :
 }
 ```
 
-If schema has been given :
+If schema has been given:
 #### Response: `201 created`
 
 ```json
@@ -157,7 +157,7 @@ Update an index name.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID        |
+| **uid**         | The index UID        |
 
 #### Body
 
@@ -179,7 +179,7 @@ curl \
 }'
 ```
 
-#### Response: `202 Accepted`
+#### Response: `200 Ok`
 
 ```json
 {
@@ -202,11 +202,7 @@ Delete an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID        |
-
-#### Body
-
-no body
+| **uid**         | The index UID        |
 
 ### Example
 
@@ -215,14 +211,7 @@ curl \
   --request DELETE 'http://localhost:7700/indexes/12345678'
 ```
 
-#### Response: `200 OK`
-
-```json
-{
-  "updateId": 1,
-}
-```
-This [update id allows you to track](/references/updates) the current action.
+#### Response: `204 No Content`
 
 
 ## Get one index schema
@@ -236,7 +225,7 @@ Get the schema of one index.
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **index** | The index UID         |
+| **uid** | The index UID         |
 
 #### Query Parameters
 
@@ -263,7 +252,7 @@ curl \
 }
 ```
 
-If `raw` query parameter has been set to `true` :
+If `raw` query parameter has been set to `true`:
 ```json
 {
   "identifier": "id",
@@ -308,7 +297,7 @@ Update an index schema.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID        |
+| **uid**         | The index UID        |
 
 #### Query Parameters
 
@@ -330,7 +319,7 @@ The body accepts a new schema for the given index.
 }
 ```
 
-If `raw` query parameter has been set to `true` :
+If `raw` query parameter has been set to `true`:
 ```json
 {
   "identifier": "id",

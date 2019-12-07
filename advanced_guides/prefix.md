@@ -12,7 +12,7 @@ Since there are so many possible relevant documents with only one letter, the lo
 
 ### Example
 
-Given a set of words in a dataset :
+Given a set of words in a dataset:
 
 `film` `cinema` `movies` `show` `harry` `potter` `shine` `musical`
 

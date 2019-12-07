@@ -4,14 +4,14 @@
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings" />
 
-Get the index settings.
+Get settings for a given index.
 
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index name        |
+| **uid**         | The index name        |
 
 
 ### Example
@@ -48,7 +48,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings" />
 
-Add or update the following settings :
+Add or update the following settings:
 * Create [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules)
 * Change [ranking rules order](/advanced_guides/ranking.md#ranking-order)
 * Create distinct field
@@ -58,7 +58,7 @@ Add or update the following settings :
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index name        |
+| **uid**         | The index name        |
 
 #### Body
 

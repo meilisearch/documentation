@@ -39,20 +39,27 @@ curl \
 #### Response: `200 Ok`
 
 ```json
-[
-  {
-    "id": 25684,
-    "title": "American Ninja 5",
-    "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
-    "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.",
-    "release_date": "1993-01-01"
-  },
-  {
-    "id": 25682,
-    "title": "American Ninja 3: Blood Hunt",
-    "poster": "https://image.tmdb.org/t/p/w1280/c7oNrk8bRg0BlmtvidhVD8ivPYT.jpg",
-    "overview": "Jackson is back, and now he has a new partner, karate champion Sean, as they must face a deadly terrorist known as 'The Cobra', who has infected Sean with a virus. Sean and Jackson have no choice but to fight the Cobra and his bands of ninjas.",
-    "release_date": "1989-02-24"
-  }
-]
+{
+  "hits": [
+    {
+      "id": "25684",
+      "title": "American Ninja 5",
+      "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
+      "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.",
+      "release_date": "1993-01-01"
+    },
+    {
+      "id": "25682",
+      "title": "American Ninja 3: Blood Hunt",
+      "poster": "https://image.tmdb.org/t/p/w1280/c7oNrk8bRg0BlmtvidhVD8ivPYT.jpg",
+      "overview": "Jackson is back, and now he has a new partner, karate champion Sean, as they must face a deadly terrorist known as 'The Cobra', who has infected Sean with a virus. Sean and Jackson have no choice but to fight the Cobra and his bands of ninjas.",
+      "release_date": "1989-02-24"
+    },
+    ...
+  ],
+  "offset": 0,
+  "limit": 20,
+  "processingTimeMs": 32,
+  "query": "american ninja 5"
+}
 ```

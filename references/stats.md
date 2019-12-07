@@ -11,7 +11,7 @@ Get stats of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 
 ### Example
 

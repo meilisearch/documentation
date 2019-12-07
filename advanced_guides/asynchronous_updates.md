@@ -6,7 +6,7 @@ Some actions are put in a queue and will be executed in turn (asynchronously). I
 
 ### Async flow
 
-- When making a write request (*create/update/delete*) against the search engine, it stores the writing action received in a queue and returns an `update_id`. With this id, the specific action execution is trackable.
+- When making a write request (*create/update/delete*) against the search engine, it stores the writing action received in a queue and returns an `updateId`. With this id, the specific action execution is trackable.
 - Each update received is treated following the order it has been received.
 - You can get the update status on the [`/updates`](/references/updates) route.
 
@@ -16,10 +16,10 @@ sequenceDiagram
   participant Q as Queue
   participant M as MeiliSearch
   C->>Q: enqueue first update
-  Q-->>C: return update_id: 1
+  Q-->>C: return updateId: 1
   Q-->>+M: begin update 1
   C->>Q: enqueue second update
-  Q-->>C: return update_id: 2
+  Q-->>C: return updateId: 2
   M->>-Q: dequeue update 1
   Q-->>+M: begin update 2
   M->>-Q: dequeue update 2
@@ -34,38 +34,56 @@ Every action which could be compute-expensive is asynchronous. These include:
 
 ### Understanding updates
 
-Updates returns the following informations: 
+Updates returns the following informations:
 * **status**: State of the action (enqueued, processed)
-* **update_id**: Id of the update
-* **update_type**: Information about the action type
-* **enqueued_at**: Date at which the action has been added to the queue 
-* **processed_at**: Date ate which the action has done processing.
+* **updateId**: Id of the update
+* **type**: Information about the action type
+* **enqueuedAt**: Date at which the action has been added to the queue
+* **processedAt**: Date ate which the action has done processing.
 
-### Examples 
+### Examples
 
-Adding documents : 
+Adding documents:
 ```json
 {
-  "status": "enqueued",
-  "update_id": 3,
-  "update_type": {
+  "status": "processed",
+  "updateId": 1,
+  "type": {
     "name": "DocumentsAddition",
-    "number": 19652
+    "number": 19653
   },
-  "enqueued_at": "2019-11-13T14:51:22.857056Z"
+  "duration": 12.757581815,
+  "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
+  "processedAt": "2019-12-07T21:10:20.511525620Z"
 }
 ```
 
-Updating a schema : 
-```json 
+Updating a schema:
+```json
 {
   "status": "processed",
-  "update_id": 2,
+  "updateId": 0,
   "type": {
     "name": "Schema"
   },
-  "duration": 0.006275499,
-  "enqueued_at": "2019-11-13T14:22:50.162113Z",
-  "processed_at": "2019-11-13T14:22:50.169012Z"
+  "duration": 0.000041072,
+  "enqueuedAt": "2019-12-07T21:10:07.506281864Z",
+  "processedAt": "2019-12-07T21:10:07.684496732Z"
+}
+```
+
+Failing to upload document:
+```json
+{
+  "status": "failed",
+  "updateId": 3,
+  "type": {
+    "name": "DocumentsAddition",
+    "number": 1
+  },
+  "error": "document id is missing",
+  "duration": 0.000048524,
+  "enqueuedAt": "2019-12-07T20:23:50.156433207Z",
+  "processedAt": "2019-12-07T20:23:50.157436246Z"
 }
 ```

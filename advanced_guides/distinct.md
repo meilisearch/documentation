@@ -10,28 +10,28 @@ Lets use the following documents sample with 3 jacket of **different `colors`** 
 ```json
 [
   {
-    "id" : 1,
-    "skuid" : "abcdef",
-    "name" : "Really nice Jacket",
-    "color" : "blue"
+    "id": 1,
+    "skuid": "abcdef",
+    "name": "Really nice Jacket",
+    "color": "blue"
   },
   {
-    "id" : 2,
-    "skuid" : "abcdef",
-    "name" : "Really nice Jacket",
-    "color" : "red"
+    "id": 2,
+    "skuid": "abcdef",
+    "name": "Really nice Jacket",
+    "color": "red"
   },
   {
-    "id" : 3,
-    "skuid" : "abcdef",
-    "name" : "Really nice Jacket",
-    "color" : "green"
+    "id": 3,
+    "skuid": "abcdef",
+    "name": "Really nice Jacket",
+    "color": "green"
   },
 ]
 ```
 
 
-By [setting `skuid` as a distinct field](/references/settings.md#distinct) :
+By [setting `skuid` as a distinct field](/references/settings.md#distinct):
 
 ```bash
 curl

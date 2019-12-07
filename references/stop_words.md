@@ -11,7 +11,7 @@ Get the list [stop-words](/advanced_guides/stop_words).
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID         |
+| **uid**         | The index UID         |
 
 
 ### Example
@@ -43,7 +43,7 @@ Add [stop-words](/advanced_guides/stop_words) to the list.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID         |
+| **uid**         | The index UID         |
 
 #### Body
 
@@ -79,7 +79,7 @@ Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID         |
+| **uid**         | The index UID         |
 
 #### Body
 
