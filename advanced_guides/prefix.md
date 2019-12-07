@@ -26,9 +26,9 @@ but not
 - `movies`
 - `musical`
 
-Even if, as you can observe, there is an `s` in `movies` and `musical`. The prefix search begins searching at the **start** of the word.
+Even if, as you can observe, there is an `s` in `movies` and `musical`. The prefix search begins searching at **the start of the word**. Notice that a prefix search is only done for the last word of a query, other words must be of the same length but can contain typos.
 
-When the is search `sho` only the documents containing `show` will be returned.
+If the query is `sho`, only the documents containing `show` will be returned. MeiliSearch also handles typos while performing the prefix search, you can [read more about the typo rules on the dedicated page](/advanced_guides/typotolerance.md#typo-tolerance-rules).
 
 ::: tip
 We also [apply splitting and concatenating on search queries](/advanced_guides/concat.md).
