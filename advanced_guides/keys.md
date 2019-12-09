@@ -30,16 +30,16 @@ When no master key is set on binary launch, no API key is needed on any route.
 
 ```bash
 # with the flag
-./meilidb-http --api-key myMasterKey
+./meilisearch --api-key myMasterKey
 # with the environement variable
-MEILI_API_KEY=myMasterKey ./meilidb-http
+MEILI_API_KEY=myMasterKey ./meilisearch
 ```
 
 This header `X-Meili-Api-Key: myMasterKey` gives access to the whole API.
 
 -----
 ```bash
-./meilidb-http
+./meilisearch
 ```
 
 The header `X-Meili-Api-Key` is **not required** on any API requests. Creating **an important security breach**.
