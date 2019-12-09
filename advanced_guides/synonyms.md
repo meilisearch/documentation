@@ -33,13 +33,6 @@ example :
 Shoe <=> boot <=> slipper <=> sneakers
 ```
 
-When a search is done with one of these words, all the others will be considered as exactly the same word and will appear in the search results.
+When one word is associated with another one word (i.e. smartphone = iPhone) the two words are exactly considered equal, it means that documents matching even one or the other word are considered equal.
 
-However, consider the case of `word => sentence` or `sentence => sentence,` the search engine will find the results less relevant than in a matter of `word => word` where it considers the words to be exactly the same.
-
-example :
-```
-"San Fransisco" <=> SF
-```
-
-The "San Fransisco" search will be considered less relevant than the "SF" search but will still be considered an acceptable search result in the absence of more relevant results.
+But, if we are in the case where multiple words are associated to a one/multiple words or a one word is associated with multiple words, In other words, all other cases than one to one word, we do not consider the synonyms at the same level (i.e. SF = San Fransisco). It means that if we find a document with SF it is considered better than a document containing San Fransisco.
