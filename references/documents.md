@@ -11,7 +11,7 @@ Get one document using its unique identifier.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 | **identifier**    | [The unique identifier of the document](/main_concepts/indexes.md#identifier) |
 
 ### Example
@@ -33,10 +33,6 @@ curl \
 }
 ```
 
-
-
-
-
 ## Get all documents
 
 <RouteHighlighter method="GET" route="/indexes/:uid/documents"/>
@@ -52,7 +48,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 
 #### Query Parameters
 
@@ -106,7 +102,7 @@ The update id returned by this function can be sent to the [get update status ro
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 
 #### Body
 
@@ -171,7 +167,7 @@ The update id returned by this function can be sent to the [get update status ro
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **index** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
@@ -205,7 +201,7 @@ The update id returned by this function can be sent to the [get update status ro
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **index** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
@@ -240,7 +236,7 @@ The update id returned by this function can be sent to the [get update status ro
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **index** | The index UID |
+| **uid** | The index UID |
 
 #### Body
 

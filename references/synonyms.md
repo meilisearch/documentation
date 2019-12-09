@@ -1,17 +1,17 @@
 # Synonyms
 
-## List one synonym
+## List synonyms of one sequence
 
 <RouteHighlighter method="GET" route="/indexes/:uid/synonyms/:synonym"/>
 
-List one sequence and his synonyms inside an index.
+List one sequence and its synonyms in an index.
 
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 | **synonym**         | Sequence of which the synonyms will be returned |
 
 
@@ -27,20 +27,20 @@ List one sequence and his synonyms inside an index.
 ```json
 ["harry","merlin"]
 ```
-array of synonyms of the given sequence in the path variable.
+Array of synonyms of the given sequence in the path variable.
 
-## List all synonyms
+## List all sequences and synonyms
 
 <RouteHighlighter method="GET" route="/indexes/:uid/synonyms"/>
 
-List all sequences and their synonyms inside an index.
+List all sequences and their synonyms in an index.
 
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 
 
 #### Example
@@ -78,7 +78,7 @@ Create synonyms.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 
 #### Body
 
@@ -107,7 +107,7 @@ An object with either multi-way string associations or one-way string associatio
 
 ```json
 {
-  "updateId" : 1
+  "updateId": 1
 }
 ```
 This [update id allows you to track](/references/updates) the current action.
@@ -123,7 +123,7 @@ Update a synonym.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 | **synonym**         | Sequence of which the synonyms will be updated |
 
 #### Body
@@ -145,7 +145,7 @@ This will **override** the previous synonyms of the given sequence. Don't forget
 
 ```json
 {
-  "updateId" : 1
+  "updateId": 1
 }
 ```
 This [update id allows you to track](/references/updates) the current action.
@@ -161,7 +161,7 @@ Delete a synonym.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 | **synonym**         | Sequence of which the synonyms will be deleted |
 
 
@@ -175,7 +175,7 @@ Delete a synonym.
 
 ```json
 {
-  "updateId" : 1
+  "updateId": 1
 }
 ```
 This [update id allows you to track](/references/updates) the current action.
@@ -191,7 +191,7 @@ Batch write synonyms.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 
 #### Body
 
@@ -212,7 +212,7 @@ An object with either multi-way string associations or one-way string associatio
       "synonyms": ["harry potter", "merlin", "illusionist"]
     },
     {
-      "synonyms" : ["mickey", "mouse"]
+      "synonyms": ["mickey", "mouse"]
     }
   ]'
 ```
@@ -221,7 +221,7 @@ An object with either multi-way string associations or one-way string associatio
 
 ```json
 {
-  "updateId" : 1
+  "updateId": 1
 }
 ```
 This [update id allows you to track](/references/updates) the current action.
@@ -238,7 +238,7 @@ Delete all synonyms
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **index**         | The index UID |
+| **uid**         | The index UID |
 
 
 #### Example
@@ -251,7 +251,7 @@ Delete all synonyms
 
 ```json
 {
-  "updateId" : 1
+  "updateId": 1
 }
 ```
 This [update id allows you to track](/references/updates) the current action.

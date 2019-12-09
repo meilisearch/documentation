@@ -11,7 +11,7 @@ The following information defines a key:
 * An **[Expires_at](/advanced_guides/keys.md#expires-at)** timestamp that indicated the expire date of the token
 
 A key is passed to MeiliSearch using the header
-` X-Meili-Api-Key : myApiKey `
+` X-Meili-Api-Key: myApiKey `
 
 ## Master key
 
@@ -60,7 +60,7 @@ The key is returned on [key creation](/references/keys.md#create-key). This key 
 
 In the header, the API key is set in the ` X-Meili-Api-Key` attribute.
 
-This way :
+This way:
 
 ```bash
 curl \
@@ -103,7 +103,7 @@ curl \
       "expiresAt": 1574332928,
       "description": "search key",
       "acl": ["documentsRead"],
-      "indexes" : ["movies"]
+      "indexes": ["movies"]
   }'
 ```
 

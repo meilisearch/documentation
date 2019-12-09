@@ -118,7 +118,7 @@ Every matching string sequence in the given attribute's field will be wrapped ar
       }
     }
 ```
-The **overview attribute in formatted** looks like this when evaluated in HTML :
+The **overview attribute in formatted** looks like this when evaluated in HTML:
 
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
@@ -170,7 +170,7 @@ This is useful when you need to highlight the results without the default html h
 
 #### Example
 
-`Shifu` as search query :
+`Shifu` as search query:
 
 ```json
   {
