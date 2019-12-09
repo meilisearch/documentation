@@ -1,11 +1,9 @@
 # Health
 
-## Get health of MeiliSearch server
+## Get health
 <RouteHighlighter method="GET" route="/health"/>
 
 Get health of MeiliSearch server.
-
-
 
 ### Example
 
@@ -16,20 +14,30 @@ curl \
 
 #### Response: `204 No Content`
 
+## Update health
 
-## Set Health of meiliSearch instance
+<RouteHighlighter method="PUT" route="/health"/>
 
-<RouteHighlighter method="POST" route="/health"/>
+Update health of MeiliSearch server.
 
-Get health of MeiliSearch server.
+#### Body
 
+The body accepts a boolean to define the MeiliSearch health.
 
+```json
+{
+  "health": false
+}
+```
 
 ### Example
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/health'
+  --request PUT 'http://localhost:7700/health' \
+  --data '{
+  "health": false
+}'
 ```
 
 #### Response: `204 No Content`
