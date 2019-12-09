@@ -53,7 +53,7 @@ Server is listening on: http://0.0.0.0:7700
 ```bash
 $ ./meilisearch --help
 USAGE:
-    meilidb-http [OPTIONS]
+    meilisearch [OPTIONS]
 
 FLAGS:
     -h, --help       Prints help information
@@ -63,7 +63,7 @@ OPTIONS:
         --api-key <api-key>              The master key allowing you to do everything on the server. [env:
                                          MEILI_API_KEY=]
         --db-path <db-path>              The destination where the database must be created. [env: MEILI_DB_PATH=]
-                                         [default: /tmp/meilidb]
+                                         [default: ./data.ms]
         --http-addr <http-addr>          The address on which the http server will listen. [env: MEILI_HTTP_ADDR=]
                                          [default: 127.0.0.1:7700]
         --no-analytics <no-analytics>    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
