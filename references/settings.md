@@ -72,6 +72,10 @@ Add or update the following settings:
 
 An objet containing document attributes as keys and  `asc` ascending or `dsc` descending as value of this key. More information about [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules).
 
+::: warning
+ To activate a ranking rule on a field, this **field must have the ranked property** in the [schema](/main_concepts/indexes.md#schema-definition) and it **must be in the ranking order**.
+:::
+
 #### Ranking order
 
 A list of ranking rules ordered by importance for the [bucket sort](/advanced_guides/bucket_sort). The first rule being the most important.
