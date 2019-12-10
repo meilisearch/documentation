@@ -33,7 +33,7 @@ curl \
 }
 ```
 
-## Get all documents
+## Get documents
 
 <RouteHighlighter method="GET" route="/indexes/:uid/documents"/>
 
@@ -154,7 +154,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 same as [Add or Update](/references/documents.md#add-or-update-documents)
 
-## Clear all documents
+## Delete all documents
 
 <RouteHighlighter method="DELETE" route="/indexes/:uid/documents"/>
 
@@ -222,7 +222,7 @@ This [update id allows you to track](/references/updates) the current action.
 
 
 
-## Delete multiple documents
+## Delete documents
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents/delete"/>
 
