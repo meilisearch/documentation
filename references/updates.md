@@ -6,13 +6,12 @@
 
 Get the status of an [update](/advanced_guides/asynchronous_updates.md) in a given [index](/main_concepts/indexes.md).
 
-
 #### Path Variables
 
 | Variable      | Description           |
 |---------------|-----------------------|
 | **uid**     | The index UID |
-| **updateId**  | An update identifier  |
+| **updateId**  | The update identifier  |
 
 ### Example
 
@@ -44,7 +43,6 @@ Here is an example response of an update that has been processed.
 <RouteHighlighter method="GET" route="/indexes/:uid/updates"/>
 
 Get the status of all [updates](/advanced_guides/asynchronous_updates.md) in a given [index](/main_concepts/indexes.md).
-
 
 #### Path Variables
 

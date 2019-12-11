@@ -88,18 +88,16 @@ curl \
 ]
 ```
 
-
-
-
-
-## Add or Update documents
+## Add or replace documents
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
-Insert a list of documents or update them if they already exist based on [their unique identifiers](/main_concepts/indexes.md#schema-definition).
+Insert a list of documents or replace them if they already exist based on [their unique identifiers](/main_concepts/indexes.md#schema-definition).
 
-The update id returned by this function can be sent to the [get update status route](/references/updates.md#get-an-update-status) to retrieve informations about its advancement.
+In case of a replacement, the old document will be completely erased and replaced by the new one.</br>
+For a partial update, check out the [add or update documents route](/references/documents.md#add-or-update-documents).
 
+The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 #### Path Variables
 
@@ -109,11 +107,11 @@ The update id returned by this function can be sent to the [get update status ro
 
 #### Body
 
-The body is composed of a **Json array** of documents composed of fields corresponding to the index schema.
+The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
 You can [read more about fields and schemas](/main_concepts/indexes.md#schema-definition).
 
 ::: warning
-Documents fields which are not known to the index schema will be ignored
+Documents fields which are not known to the index schema will be ignored.
 :::
 
 ```json
@@ -149,13 +147,62 @@ curl \
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).
 
-## Update documents
+## Add or update documents
 
 <RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
-same as [Add or Update](/references/documents.md#add-or-update-documents)
+Insert a list of documents or update them if they already exist based on [their unique identifiers](/main_concepts/indexes.md#schema-definition).
+
+In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
+To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
+
+The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
+
+#### Path Variables
+
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **uid**         | The index UID |
+
+#### Body
+
+The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
+You can [read more about fields and schemas](/main_concepts/indexes.md#schema-definition).
+
+::: warning
+Documents fields which are not known to the index schema will be ignored.
+:::
+
+```json
+[
+  {
+    "id": 287947,
+    "title": "Shazam ⚡️"
+  }
+]
+```
+
+### Example
+
+```bash
+curl \
+  --request POST 'http://localhost:7700/indexes/12345678/documents' \
+  --data '[{
+      "id": 287947,
+      "title": "Shazam ⚡️"
+    }]'
+```
+
+#### Response: `202 Accepted`
+
+```json
+{
+  "updateId": 1
+}
+```
+This `updateId` allows you to [track the current action](/references/updates.md).
 
 ## Delete all documents
 
@@ -163,7 +210,7 @@ same as [Add or Update](/references/documents.md#add-or-update-documents)
 
 Delete all documents in the specified index.
 
-The update id returned by this function can be sent to the [get update status route](/references/updates.md#get-an-update-status) to retrieve informations about its advancement.
+The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 
 #### Path Variables
@@ -186,10 +233,7 @@ curl \
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
-
-
-
+This `updateId` allows you to [track the current action](/references/updates.md).
 
 ## Delete one document
 
@@ -198,7 +242,7 @@ This [update id allows you to track](/references/updates) the current action.
 Delete one document based on its unique identifier.<br/>
 You can read more about [identifiers and schemas](/main_concepts/indexes.md#schema-definition).
 
-The update id returned by this function can be sent to the [get update status route](/references/updates.md#get-an-update-status) to retrieve informations about its advancement.
+The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 #### Path Variables
 
@@ -220,7 +264,7 @@ The update id returned by this function can be sent to the [get update status ro
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).
 
 
 
@@ -232,7 +276,7 @@ This [update id allows you to track](/references/updates) the current action.
 Delete a selection of documents based on array of identifiers.<br/>
 You can read more about [identifiers and schemas](/main_concepts/indexes.md#schema-definition).
 
-The update id returned by this function can be sent to the [get update status route](/references/updates.md#get-an-update-status) to retrieve informations about its advancement.
+The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 
 #### Path Variables
@@ -269,4 +313,4 @@ The body must be a **Json Array** with the unique identifiers of the documents t
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).

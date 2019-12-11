@@ -118,4 +118,4 @@ curl \
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).
