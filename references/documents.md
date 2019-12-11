@@ -37,7 +37,10 @@ curl \
 
 <RouteHighlighter method="GET" route="/indexes/:uid/documents"/>
 
-Get the documents in an unordered way.
+Get documents by batch.</br>
+Using the query parameters `offset` and `limit`, you can browse through all your documents.
+
+Documents are ordered in a specific way by MeiliSearch (the hash of the identifier).
 
 ::: danger
 This route is a non-optimized route, it can be a little bit slow to answer.
