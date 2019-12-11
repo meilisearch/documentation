@@ -110,7 +110,7 @@ An object with either multi-way string associations or one-way string associatio
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).
 
 ## Update a synonym
 
@@ -148,7 +148,7 @@ This will **override** the previous synonyms of the given sequence. Don't forget
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).
 
 ## Delete a synonym
 
@@ -178,7 +178,7 @@ Delete a synonym.
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).
 
 ## Batch write synonyms
 
@@ -224,8 +224,7 @@ An object with either multi-way string associations or one-way string associatio
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
-
+This `updateId` allows you to [track the current action](/references/updates.md).
 
 ## Clear synonyms
 
@@ -254,4 +253,4 @@ Delete all synonyms
   "updateId": 1
 }
 ```
-This [update id allows you to track](/references/updates) the current action.
+This `updateId` allows you to [track the current action](/references/updates.md).

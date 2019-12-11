@@ -8,7 +8,7 @@ Some actions are put in a queue and will be executed in turn (asynchronously). I
 
 - When making a write request (*create/update/delete*) against the search engine, it stores the writing action received in a queue and returns an `updateId`. With this id, the specific action execution is trackable.
 - Each update received is treated following the order it has been received.
-- You can get the update status on the [`/updates`](/references/updates) route.
+- You can get the update status on the [`/updates`](/references/updates.md) route.
 
 <mermaid>
 sequenceDiagram
@@ -34,7 +34,7 @@ Every action which could be compute-expensive is asynchronous. These include:
 
 ### Understanding updates
 
-Updates returns the following informations:
+Updates returns the following information:
 * **status**: State of the action (enqueued, processed)
 * **updateId**: Id of the update
 * **type**: Information about the action type
