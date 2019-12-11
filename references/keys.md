@@ -129,6 +129,10 @@ Update an API key.
 | **indexes** | [List of indexes with wildcards](/advanced_guides/keys.md#indexes) |
 | **revoked** | [Boolean to revoke API KEY](/advanced_guides/keys.md#revoked) |
 
+::: warning
+`expiresAt` attribute can not be updated. Adding it in the body will result in a bad request error. 
+:::
+
 ### Example
 
 ```bash
