@@ -1,6 +1,6 @@
 # Settings
 
-## Get the index settings
+## Get index settings
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings" />
 
@@ -44,11 +44,11 @@ List the settings.
 }
 ```
 
-## Add or update settings
+## Add or replace index settings
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings" />
 
-Add or update the following settings:
+Add or replace the following settings:
 * Create [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules)
 * Change [ranking rules order](/advanced_guides/ranking.md#ranking-order)
 * Create distinct field
@@ -78,17 +78,19 @@ An objet containing document attributes as keys and  `asc` ascending or `dsc` de
 
 #### Ranking order
 
-A list of ranking rules ordered by importance for the [bucket sort](/advanced_guides/bucket_sort). The first rule being the most important.
+A list of ranking rules ordered by importance for the [bucket sort](/advanced_guides/bucket_sort.md). The first rule being the most important.
 
-#### Distinct
+#### Distinct field
 
-A string containing the attribute that needs to be [distinct](/advanced_guides/distinct).
+A string containing the attribute that needs to be [distinct](/advanced_guides/distinct.md).
 
-::: warning
-None of the 3 settings parameters is mandatory
+::: note
+None of the 3 settings parameters are mandatory
 :::
 
-### Example
+### Examples
+
+#### Add settings
 
 ```bash
 curl \
@@ -110,6 +112,22 @@ curl \
 }'
 ```
 
+#### Set back the default MeiliSearch settings
+
+```bash
+curl \
+  --request GET 'http://localhost:7700/indexes/12345678/settings' \
+  --data '{
+  "rankingOrder": null,
+  "distinctField": null,
+  "rankingRules": null
+}'
+```
+
+::: danger
+You must set the fields to `null` and not to empty.</br>
+Setting the fields to `[]`, `{}` or `""` will erase **all rules**, even the MeiliSearch default behavior.
+:::
 
 #### Response: `202 Accepted`
 
