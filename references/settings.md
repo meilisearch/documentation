@@ -1,6 +1,6 @@
 # Settings
 
-## Get settings of an index
+## Get index settings
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings" />
 
@@ -48,7 +48,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings" />
 
-Add or replace the following settings:
+Add or replace the following settings of an index:
 * Create [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules)
 * Change [ranking rules order](/advanced_guides/ranking.md#ranking-order)
 * Create distinct field
@@ -105,7 +105,6 @@ curl \
     "_exact",
     "release_date"
   ],
-  "distinctField": "",
   "rankingRules": {
     "release_date": "dsc"
   }
