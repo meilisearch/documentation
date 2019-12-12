@@ -147,7 +147,7 @@ curl \
   "updateId": 1
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Add or update documents
 
@@ -202,7 +202,7 @@ curl \
   "updateId": 1
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Delete all documents
 
@@ -233,7 +233,7 @@ curl \
   "updateId": 1
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Delete one document
 
@@ -264,7 +264,7 @@ The `updateId` returned by this route can be sent to the [update status route](/
   "updateId": 1
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
 
 
 
@@ -313,4 +313,4 @@ The body must be a **Json Array** with the unique identifiers of the documents t
   "updateId": 1
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).

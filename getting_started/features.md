@@ -18,5 +18,5 @@ Our feature list with extended explanations and links to the documentation.
     - [Custom ranking](/advanced_guides/ranking.md#custom-ranking-rules): Create your own ranking rules on indexation.
     - [Schema customization](/main_concepts/indexes.md#index-uid-and-name): Customize schema  to suit your needs perfectly.
 * **RESTfull API**
-* **Asynchronous write actions**: Actions will be added to a queue for **low response time** and **guaranteed consistency**.
+* **Asynchronous write updates**: Updates will be added to a queue for **low response time** and **guaranteed consistency**.
 * [Bucket sort](/advanced_guides/bucket_sort.md) with [6 default ranking rules](/advanced_guides/ranking.md#ranking-rules) that [can be re-ordered](/advanced_guides/ranking.md#ranking-order) to suit your needs.

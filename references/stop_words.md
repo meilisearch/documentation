@@ -65,7 +65,7 @@ curl \
   "updateId": 1,
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Delete stop-words
 
@@ -101,4 +101,4 @@ curl \
   "updateId": 1,
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
