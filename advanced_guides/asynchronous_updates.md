@@ -6,7 +6,7 @@ Some operations are put in a queue and will be executed in turn (asynchronously)
 
 ### Async flow
 
-- When making a write request (*create/update/delete*) against the search engine, it stores the writing operation received in a queue and returns an `updateId`. With this id, the specific operation update is trackable.
+- When making a write request (*create/update/delete*) against the search engine, it stores the operation received in a queue and returns an `updateId`. With this id, the operation update is trackable.
 - Each update received is treated following the order it has been received.
 - You can get the update status on the [`/updates`](/references/updates.md) route.
 
