@@ -2,11 +2,11 @@
 
 MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses.
 
-Some actions are put in a queue and will be executed in turn (asynchronously). In this case, the server response contains the identifier to track the execution of the action.
+Some updates are put in a queue and will be executed in turn (asynchronously). In this case, the server response contains the identifier to track the execution of the update.
 
 ### Async flow
 
-- When making a write request (*create/update/delete*) against the search engine, it stores the writing action received in a queue and returns an `updateId`. With this id, the specific action execution is trackable.
+- When making a write request (*create/update/delete*) against the search engine, it stores the writing udpate received in a queue and returns an `updateId`. With this id, the specific update execution is trackable.
 - Each update received is treated following the order it has been received.
 - You can get the update status on the [`/updates`](/references/updates.md) route.
 
@@ -25,9 +25,9 @@ sequenceDiagram
   M->>-Q: dequeue update 2
 </mermaid>
 
-### Which actions are async?
+### Which updates are async?
 
-Every action which could be compute-expensive is asynchronous. These include:
+Every update which could be compute-expensive is asynchronous. These include:
 - Create/update a schema
 - Update index settings
 - Add/update/delete documents
@@ -35,11 +35,11 @@ Every action which could be compute-expensive is asynchronous. These include:
 ### Understanding updates
 
 Updates returns the following information:
-* **status**: State of the action (enqueued, processed)
+* **status**: State of the update (enqueued, processed)
 * **updateId**: Id of the update
-* **type**: Information about the action type
-* **enqueuedAt**: Date at which the action has been added to the queue
-* **processedAt**: Date ate which the action has done processing.
+* **type**: Information about the update type
+* **enqueuedAt**: Date at which the update has been added to the queue
+* **processedAt**: Date ate which the update has done processing.
 
 ### Examples
 

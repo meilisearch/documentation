@@ -143,7 +143,7 @@ If schema has been given:
   "updatedAt": "2019-11-20T09:40:33.711476Z"
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Update an index
 
@@ -373,4 +373,4 @@ curl \
   "updateId": 1,
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).

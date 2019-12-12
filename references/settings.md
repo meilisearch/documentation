@@ -135,4 +135,4 @@ Setting the fields to `[]`, `{}` or `""` will erase **all rules**, even the Meil
   "updateId": 1
 }
 ```
-This `updateId` allows you to [track the current action](/references/updates.md).
+This `updateId` allows you to [track the current update](/references/updates.md).
