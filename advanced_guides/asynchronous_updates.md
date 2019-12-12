@@ -35,11 +35,11 @@ Every update which could be compute-expensive is asynchronous. These include:
 ### Understanding updates
 
 Updates returns the following information:
-* **status**: State of the update (enqueued, processed)
-* **updateId**: Id of the update
-* **type**: Information about the update type
-* **enqueuedAt**: Date at which the update has been added to the queue
-* **processedAt**: Date ate which the update has done processing.
+* **status**: The state of the update (enqueued, processed, or failed).
+* **updateId**: The id of the update.
+* **type**: An information about the update type.
+* **enqueuedAt**: The date at which the update has been added to the queue.
+* **processedAt**: The date at which the update has been processed.
 
 ### Examples
 
