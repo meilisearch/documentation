@@ -125,7 +125,7 @@ curl \
 ```
 
 ::: danger
-You must set the fields to `null` and not to empty.</br>
+You must set the fields to `null` to reset them and not to the empty value.</br>
 Setting the fields to `[]`, `{}` or `""` will erase **all rules**, even the MeiliSearch default behavior.
 :::
 
