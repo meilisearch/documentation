@@ -2,11 +2,11 @@
 
 MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses.
 
-Some updates are put in a queue and will be executed in turn (asynchronously). In this case, the server response contains the identifier to track the execution of the update.
+Some operations are put in a queue and will be executed in turn (asynchronously). In this case, the server response contains the identifier to track the execution of the operation.
 
 ### Async flow
 
-- When making a write request (*create/update/delete*) against the search engine, it stores the writing udpate received in a queue and returns an `updateId`. With this id, the specific update execution is trackable.
+- When making a write request (*create/update/delete*) against the search engine, it stores the writing operation received in a queue and returns an `updateId`. With this id, the specific operation update is trackable.
 - Each update received is treated following the order it has been received.
 - You can get the update status on the [`/updates`](/references/updates.md) route.
 
@@ -25,9 +25,9 @@ sequenceDiagram
   M->>-Q: dequeue update 2
 </mermaid>
 
-### Which updates are async?
+### Which operations are async?
 
-Every update which could be compute-expensive is asynchronous. These include:
+Every operation which could be compute-expensive is asynchronous. These include:
 - Create/update a schema
 - Update index settings
 - Add/update/delete documents
@@ -35,11 +35,11 @@ Every update which could be compute-expensive is asynchronous. These include:
 ### Understanding updates
 
 Updates returns the following information:
-* **status**: State of the update (enqueued, processed)
-* **updateId**: Id of the update
-* **type**: Information about the update type
-* **enqueuedAt**: Date at which the update has been added to the queue
-* **processedAt**: Date ate which the update has done processing.
+* **status**: The state of the operation (enqueued, processed, or failed).
+* **updateId**: The id of the update.
+* **type**: An information type of the operation.
+* **enqueuedAt**: The date at which the operation has been added to the queue.
+* **processedAt**: The date at which the operation has been processed.
 
 ### Examples
 
