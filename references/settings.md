@@ -1,6 +1,6 @@
 # Settings
 
-## Get index settings
+## Get settings of an index
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings" />
 
