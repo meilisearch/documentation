@@ -48,6 +48,20 @@ $ docker run -it --rm -p 7700:7700 getmeili/meilisearch:latest
 Server is listening on: http://0.0.0.0:7700
 ```
 
+## Running on Heroku
+
+You can deploy the latest stable build of MeiliSearch straight on Heroku.
+
+<p align="center">
+  <a href="https://heroku.com/deploy?template=https://github.com/meilisearch/MeiliSearch">
+    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+  </a>
+</p>
+
+::: note
+The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
+:::
+
 ## Usage
 
 ```bash
