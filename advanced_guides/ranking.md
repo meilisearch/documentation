@@ -1,19 +1,114 @@
 # Ranking
 
-MeiliSearch uses ranking rules. We talk about one `criterion` (singular) and many `criteria` (plural). They are used in the [bucket sort](/advanced_guides/bucket_sort)
+<!-- - Criterion 
+- Ranking rules
+- sorting rules -->
 
-## Ranking rules
+In meilisearch, the search responses are considered relevant according to a sorted list of rules called **ranking rules**. When a search query is made, it will be compared in different ways with all the documents stored in meilisearch. This comparison will start with the first ranking rule and continue with the next one until the desired number of matching documents has been found. This is called the [bucket sort](/advanced_guides/bucket_sort).
 
-MeiliSearch has default `criteria`.
+MeiliSearch proposes default ranking rules and has given them a default order as well. **This order can be modified, rules can be deleted and new ones can be added.**
 
-Here is the list of all the `criteria` that are executed in this specific order by default:
 
-- `Number of Typos` - The less typos there are beween the query words and the document words, the better is the document.
-- `Number of Words` - A document containing more of the query words will be more important than one that contains less.
-- `Words Proximity` - The closer the query words are in the document the better is the document.
-- `Attribute` - A document containing the query words in a more important attribute than another document is considered better.
-- `Position` - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
+<mermaid>
+graph LR
+    A[client] -->|Search Query| B(meilisearch)
+    B --> C{bucket sort}
+    C -->|One| D[Number of Typos]
+    C -->|Two| E[Number of Words]
+    C -->|Three| F[Words Proximity]
+    C -->|Four| G[Attribute]
+    C -->|Five| H[Position]
+    C -->|Six| I[Exact]
+    C --> B
+    B --> |found documents| A
+</mermaid>
+
+[For some in depth explanations about the mechanism and about each default sorting rule](https://github.com/meilisearch/MeiliSearch/issues/358).
+
+In order to be able to play with these rules and match them to the needs of your search engine, it is important to understand how each works and how to create new ones.
+
+## MeiliSearch ranking rules
+
+Some rules already exist in MeiliSearch. These rules are essential to the relevance of the search engine.
+
+Each of the rules has a role in finding the right documents for the given search query. The order in which they are declared affects the importance of each rule. So the first rule is the most important, then the second and so on. By default, Meilisearch has these rules in a specific order, thinking it meets the most standard needs. This order can be changed to fit your needs.
+
+Using a [bucket sort](/advanced_guides/bucket_sort) algorithm, MeiliSearch uses rule by rule to find documents, filling them in buckets until the desired amount of documents is obtained.
+
+Here is the list of all the rules that are executed in this specific order by default:
+
+- `typo` - The less typos there are beween the query words and the document words, the better is the document.
+- `words` - A document containing more of the query words will be more important than one that contains less.
+- `proximity` - The closer the query words are in the document the better is the document.
+- `attribute` - A document containing the query words in a more important attribute than another document is considered better.
+- `words position` - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
 - `Exact` - A document containing the query words in their exact form, not only a prefix of them, is considered better.
+
+
+## Example
+![Image from alias](../public/image/ranking_example.png)
+
+Lets analyze this example. 
+
+**Rule one** : `typo`
+- `Shinjuku` 
+- `Shizuku`
+- `Shizuka`
+
+All three examples are at a levenhstein distance of 3 with `shinzu`. So by our first rule `typo` all 3 documents have the same relevance.
+
+**Rule two** : `words`
+
+Our query is `shinzu`. All three documents contains a matching word. This means they all have the same relevance. If we had made a search request with multiple words and some documents only have one of the two words, those would be less relevant than the documents containing both.
+
+![look at this example](http://localhost:8080/assets/img/proximity_example.8c58dbb3.png)
+
+**Rule three** : `proximity`
+
+Proximity is used when more than one word is given in the search query. In this case, how closer the words that compose the query are near eachother how more relevant the document become ([look at this example](./assets/img/proximity_example.8c58dbb3.png)). In our case, our search query
+
+**Rule four** : `attribute`
+- `Shinjuku` is in the `title`.
+- `Shizuku` is in the `overview`.
+- `Shizuka` is in the `overview`.
+
+When adding the first documents in the index. Inside each document the `title` attribute was declaredd before the `overview` attribute. Because of that, MeiliSearch infered that the `title` attribute was more relevant than the `overview` attribute.
+
+In this case, `Shinjuku` is in a more relevant attribute than the two others, that's why he is before them in the search results.
+
+**Rule five** : `words position`
+
+All three documents have the matches word at the start of their attrbute. This means they are considered at the same relevancy. All documents with matching words placed farther away in the attributes are considered less relevant.
+
+**Rule six** : `Exact`
+
+
+
+<!-- is before `Shinzoku lives a simple life`  -->
+
+
+## Changing the rules order
+
+Depending on your needs, you might want to change the order in which the rules are processed.
+
+For example, you could consider 
+
+## Creating your rule
+
+## Adding your rule
+
+
+
+
+<!-- What happens when there is no ranking order :
+  - Key => value dans la database 
+  - Du coup au pif les docum qui se trouvent la
+
+ -->
+
+
+
+
 
 
 ## Custom ranking rules
