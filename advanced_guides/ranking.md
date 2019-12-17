@@ -46,7 +46,16 @@ Here is the list of all the rules that are executed in this specific order by de
 
 
 ## Example
+
+:::: tabs
+
+::: tab typo
+
+:::
+
+::: tab attribute
 ![Image from alias](../public/image/ranking_example.png)
+
 
 Lets analyze this example. 
 
@@ -61,7 +70,6 @@ All three examples are at a levenhstein distance of 3 with `shinzu`. So by our f
 
 Our query is `shinzu`. All three documents contains a matching word. This means they all have the same relevance. If we had made a search request with multiple words and some documents only have one of the two words, those would be less relevant than the documents containing both.
 
-![look at this example](http://localhost:8080/assets/img/proximity_example.8c58dbb3.png)
 
 **Rule three** : `proximity`
 
@@ -81,8 +89,13 @@ In this case, `Shinjuku` is in a more relevant attribute than the two others, th
 All three documents have the matches word at the start of their attrbute. This means they are considered at the same relevancy. All documents with matching words placed farther away in the attributes are considered less relevant.
 
 **Rule six** : `Exact`
+:::
 
+::: tab proximity
+![Image from alias](../public/image/proximity_example.png)
+:::
 
+::::
 
 <!-- is before `Shinzoku lives a simple life`  -->
 
