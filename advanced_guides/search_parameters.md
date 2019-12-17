@@ -65,7 +65,7 @@ This is useful when you have specific needs for displaying results on the front-
 #### Example
 
 ```bash
-curl --request GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
+curl -X GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=shifu \
         -d attributesToCrop=overview \
         -d cropLength=100 \
@@ -132,7 +132,7 @@ Attribute's value must be **equal** to the given string in the documents.
 The **equality is case insenstive**.
 
 ```bash
-curl --request GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
+curl -X GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=n \
         -d filters='title:Nightshift'
 ```

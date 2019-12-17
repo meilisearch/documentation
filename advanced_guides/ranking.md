@@ -34,7 +34,7 @@ If the rule is not added to the rule ranking order, it will be **ignored** by Me
 
 On the `release_date` attribute of a movie data set, which contains the timestamp of the release date.
 ```bash
- curl --request POST 'http://localhost:7700/indexes/movies/settings'
+ curl -X POST 'http://localhost:7700/indexes/movies/settings'
   --data '{ "rankingRules": { "release_date": "dsc" } }'
 ```
 
@@ -64,7 +64,7 @@ Each time you create **a new ranking rule it must be added to the existing ranki
 To apply the [custom ranking rule added previously](/advanced_guides/ranking.md#custom-ranking-rules), lets add it to the ranking order.
 
 ```bash
-curl --request POST 'http://localhost:7700/indexes/movies/settings' \
+curl -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
   "rankingOrder": [
     "_sum_of_typos",
