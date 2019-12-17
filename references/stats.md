@@ -17,7 +17,7 @@ Get stats of an index.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/stats/12345678'
+  -X GET 'http://localhost:7700/stats/12345678'
 ```
 
 #### Response: `200 Ok`
@@ -50,7 +50,7 @@ Get stats of all indexes.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/stats'
+  -X GET 'http://localhost:7700/stats'
 ```
 
 #### Response: `200 Ok`

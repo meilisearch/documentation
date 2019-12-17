@@ -35,7 +35,7 @@ By [setting `skuid` as a distinct field](/references/settings.md#distinct-field)
 
 ```bash
 curl
-  --request POST 'http://localhost:7700/indexes/jackets/settings' \
+  -X POST 'http://localhost:7700/indexes/jackets/settings' \
   --data '{ "distinctField": "skuid" }'
 ```
 

@@ -18,7 +18,7 @@ Get one document using its unique identifier.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/indexes/12345678/documents/25684'
+  -X GET 'http://localhost:7700/indexes/12345678/documents/25684'
 ```
 
 #### Response: `200 Ok`
@@ -65,7 +65,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/indexes/12345678/documents?limit=2'
+  -X GET 'http://localhost:7700/indexes/12345678/documents?limit=2'
 ```
 
 #### Response: `200 Ok`
@@ -130,7 +130,7 @@ Documents fields which are not known to the index schema will be ignored.
 
 ```bash
 curl \
-  --request POST 'http://localhost:7700/indexes/12345678/documents' \
+  -X POST 'http://localhost:7700/indexes/12345678/documents' \
   --data '[{
       "id": 287947,
       "title": "Shazam",
@@ -188,7 +188,7 @@ Documents fields which are not known to the index schema will be ignored.
 
 ```bash
 curl \
-  --request POST 'http://localhost:7700/indexes/12345678/documents' \
+  -X POST 'http://localhost:7700/indexes/12345678/documents' \
   --data '[{
       "id": 287947,
       "title": "Shazam ⚡️"
@@ -223,7 +223,7 @@ The `updateId` returned by this route can be sent to the [update status route](/
 
 ```bash
 curl \
-  --request DELETE 'http://localhost:7700/indexes/12345678/documents'
+  -X DELETE 'http://localhost:7700/indexes/12345678/documents'
 ```
 
 #### Response: `202 Accepted`
@@ -254,7 +254,7 @@ The `updateId` returned by this route can be sent to the [update status route](/
 
 ```bash
   curl \
-  --request DELETE 'http://localhost:7700/indexes/12345678/documents/25684'
+  -X DELETE 'http://localhost:7700/indexes/12345678/documents/25684'
 ```
 
 #### Response: `202 Accepted`
@@ -297,7 +297,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```bash
   curl \
-  --request POST 'http://localhost:7700/indexes/12345678' \
+  -X POST 'http://localhost:7700/indexes/12345678' \
   --data '[
       23488,
       153738,

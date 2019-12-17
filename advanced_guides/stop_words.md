@@ -46,7 +46,7 @@ Lets make a search on this dataset
 
 ```bash
 ➜ curl -G \
-  --request GET 'http://localhost:7700/indexes/rangemovies/search?limit=3' \
+  -X GET 'http://localhost:7700/indexes/rangemovies/search?limit=3' \
   --data-urlencode "q=the road to "
 ```
 
@@ -91,7 +91,7 @@ In order to allow the search engine to focus more on the release date, let's add
 
 ```bash
 curl \
-  --request PUT 'http://localhost:7700/indexes/rangemovies/stop-words' \
+  -X PUT 'http://localhost:7700/indexes/rangemovies/stop-words' \
   --data '["the", "of", "to"]'
 ```
 

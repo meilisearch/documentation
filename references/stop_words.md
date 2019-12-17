@@ -18,7 +18,7 @@ Get the list [stop-words](/advanced_guides/stop_words).
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/indexes/12345678/stop-words'
+  -X GET 'http://localhost:7700/indexes/12345678/stop-words'
 ```
 
 
@@ -53,7 +53,7 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words).
 
 ```bash
 curl \
-  --request PATCH 'http://localhost:7700/indexes/12345678/stop-words' \
+  -X PATCH 'http://localhost:7700/indexes/12345678/stop-words' \
   --data '["the", "of", "to"]'
 ```
 
@@ -89,7 +89,7 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words) to 
 
 ```bash
 curl \
-  --request POST 'http://localhost:7700/indexes/12345678/stop-words' \
+  -X POST 'http://localhost:7700/indexes/12345678/stop-words' \
   --data '["the"]'
 ```
 

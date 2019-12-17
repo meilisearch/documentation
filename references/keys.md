@@ -11,7 +11,7 @@ Get all API keys information.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/keys'
+  -X GET 'http://localhost:7700/keys'
 ```
 
 #### Response: `200 Ok`
@@ -46,7 +46,7 @@ Get information for a given API key.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/keys/VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF'
+  -X GET 'http://localhost:7700/keys/VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF'
 ```
 
 #### Response: `200 Ok`
@@ -89,7 +89,7 @@ Create an API key.
 
 ```bash
 curl \
-  --request POST 'http://localhost:7700/keys' \
+  -X POST 'http://localhost:7700/keys' \
   --data '{
       "expiresAt": 1574332928,
       "description": "search key",
@@ -137,7 +137,7 @@ Update an API key.
 
 ```bash
 curl \
-  --request PUT 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4' \
+  -X PUT 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4' \
   --data '{
       "description": "Read and write documents",
       "acl": ["documentsRead", "documentsWrite"]
@@ -170,7 +170,7 @@ Delete an API key.
 
 ```bash
 curl \
-  --request DELETE 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4'
+  -X DELETE 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4'
 ```
 
 #### Response: `204 No Content`

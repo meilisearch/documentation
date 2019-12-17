@@ -11,7 +11,7 @@ List all indexes.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/indexes'
+  -X GET 'http://localhost:7700/indexes'
 ```
 
 #### Response: `200 Ok`
@@ -44,7 +44,7 @@ Get the index relative information.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/indexes/12345678'
+  -X GET 'http://localhost:7700/indexes/12345678'
 ```
 
 #### Response: `200 Ok`
@@ -99,7 +99,7 @@ If no schema has been defined when the first document is added, the schema will 
 
 ```bash
 curl \
-  --request POST 'http://localhost:7700/indexes' \
+  -X POST 'http://localhost:7700/indexes' \
   --data '{
   "name": "Movies",
   "schema": {
@@ -172,7 +172,7 @@ The body accepts a new name for the given index.
 
 ```bash
 curl \
-  --request PUT 'http://localhost:7700/indexes/12345678' \
+  -X PUT 'http://localhost:7700/indexes/12345678' \
   --data '{
   "name": "Movies"
 }'
@@ -207,7 +207,7 @@ Delete an index.
 
 ```bash
 curl \
-  --request DELETE 'http://localhost:7700/indexes/12345678'
+  -X DELETE 'http://localhost:7700/indexes/12345678'
 ```
 
 #### Response: `204 No Content`
@@ -236,7 +236,7 @@ Get the schema of one index.
 
 ```bash
 curl \
-  --request GET 'http://localhost:7700/indexes/12345678/schema'
+  -X GET 'http://localhost:7700/indexes/12345678/schema'
 ```
 
 
@@ -356,7 +356,7 @@ If `raw` query parameter has been set to `true`:
 
 ```bash
 curl \
-  --request PUT 'http://localhost:7700/indexes/12345678/schema' \
+  -X PUT 'http://localhost:7700/indexes/12345678/schema' \
   --data '{
   "id": ["identifier", "indexed", "displayed"],
   "title": ["displayed", "indexed"],

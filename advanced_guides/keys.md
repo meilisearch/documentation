@@ -64,7 +64,7 @@ This way:
 
 ```bash
 curl \
-  --request POST 'http://localhost:7700/indexes' \
+  -X POST 'http://localhost:7700/indexes' \
   --header ' X-Meili-Api-Key: myApiKey'
 ```
 
@@ -98,7 +98,7 @@ If you use the API on **the browser side to only make search queries**, you do n
 
 ```bash
 curl \
-  --request POST 'http://localhost:7700/keys' \
+  -X POST 'http://localhost:7700/keys' \
   --data '{
       "expiresAt": 1574332928,
       "description": "search key",
