@@ -38,6 +38,20 @@ Server is listening on: http://127.0.0.1:7700
 ```
 :::
 
+::: tab Heroku
+You can deploy the latest stable build of MeiliSearch straight on Heroku.
+
+<p align="center">
+  <a href="https://heroku.com/deploy?template=https://github.com/meilisearch/MeiliSearch">
+    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+  </a>
+</p>
+
+::: note
+The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
+:::
+
+
 ::::
 
 More [ways to run MeiliSearch](/advanced_guides/binary.md) and more information about the [environment variables](/advanced_guides/binary.md#environment-variables).
