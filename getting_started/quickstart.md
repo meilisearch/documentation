@@ -26,6 +26,15 @@ Server is listening on: http://0.0.0.0:7700
 ```
 :::
 
+::: tab Brew
+If you use the Homebrew package manager.
+```bash
+$ brew update && brew install meilisearch
+$ meilisearch
+Server is listening on: http://127.0.0.1:7700
+```
+:::
+
 ::: tab APT
 If you use the APT package manager
 ```bash
