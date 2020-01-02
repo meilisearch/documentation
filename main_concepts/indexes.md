@@ -105,7 +105,6 @@ If a document is added when there is already a document with the same ID in Meil
 **The identifier is mandatory**, and must [follow formatting rules](/main_concepts/documents.md#documents-identifiers).
 :::
 
-
 ::: tip
 Documents identifiers are always converted into strings. Only strings and integers are valid identifiers.
 It means that it is, for example, forbidden to use arrays or objects as an identifier.
