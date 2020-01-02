@@ -1,6 +1,6 @@
 let ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: "MeiliSearch Documentation",
+  title: "MeiliSearch Documentation v0.9",
   description: "Open source Instant Search Engine",
   themeConfig: {
     repo: "meilisearch/MeiliSearch",
@@ -34,7 +34,8 @@ module.exports = {
           children: [
             "/guides/main_concepts/indexes",
             "/guides/main_concepts/documents",
-            "/guides/main_concepts/search"
+            "/guides/main_concepts/search",
+            "/guides/main_concepts/relevancy"
           ]
         },
         {
@@ -42,17 +43,17 @@ module.exports = {
           path: "/guides/advanced_guides/",
           collapsable: false,
           children: [
-            "/guides/advanced_guides/binary",
-            "/guides/advanced_guides/typotolerance",
-            "/guides/advanced_guides/concat",
-            "/guides/advanced_guides/ranking",
-            "/guides/advanced_guides/synonyms",
-            "/guides/advanced_guides/stop_words",
+            "/guides/advanced_guides/installation",
             "/guides/advanced_guides/search_parameters",
             "/guides/advanced_guides/keys",
-            "/guides/advanced_guides/prefix",
-            "/guides/advanced_guides/distinct",
             "/guides/advanced_guides/asynchronous_updates",
+            "/guides/advanced_guides/web_interface",
+            "/guides/advanced_guides/synonyms",
+            "/guides/advanced_guides/stop_words",
+            "/guides/advanced_guides/prefix",
+            "/guides/advanced_guides/typotolerance",
+            "/guides/advanced_guides/concat",
+            "/guides/advanced_guides/distinct",
             "/guides/advanced_guides/bucket_sort"
           ]
         }
@@ -72,11 +73,26 @@ module.exports = {
             "/references/indexes",
             "/references/documents",
             "/references/search",
-            "/references/synonyms",
-            "/references/stop_words",
             "/references/updates",
             "/references/keys",
-            "/references/settings",
+            {
+              title: 'Settings',
+              path: '/references/settings',
+              collapsable: false,
+              children: [
+                {
+                  title: 'All Settings',
+                  path: '/references/settings'
+                },
+                "/references/synonyms",
+                "/references/stop_words",
+                "/references/ranking_rules",
+                "/references/distinct_attribute",
+                "/references/searchable_attributes",
+                "/references/displayed_attributes",
+                "/references/accept_new_fields",
+              ]
+            },
             "/references/stats",
             "/references/health",
             "/references/version",
@@ -123,7 +139,8 @@ module.exports = {
     ["sitemap", { hostname: "https://docs.meilisearch.com" }],
     ["seo", {}],
     "vuepress-plugin-element-tabs",
-    ['vuepress-plugin-container', { type: 'note' }]
+    ['vuepress-plugin-container', { type: 'note' }],
+    ['vue-directive-tooltip']
   ],
   head: [
     ["meta", { charset: "utf-8" }],

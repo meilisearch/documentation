@@ -2,45 +2,21 @@
 
 Welcome to the beta version of the MeiliSearch API documentation.
 
-This is our first draft guide in the limbo of the http MeiliSearch routes.
-You can navigate into the documentation using the sidebar or by using the search bar above.
-
-If you spot any typo or any error in the documentation like a miss-documented response body for example,
-please contact us using the little chat box at the bottom right of this page.
-
-Thank you for your interest and have fun with your HTTP client 🌍
-
 ::: warning
-The documentation is written for the latest stable release: [v0.8.4](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.8.4).
 
-v0.9.0 is on its way and will bring significant changes in the settings API.
+The documentation is written for the latest stable release: [v0.9.0](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.9.0).
+
 :::
 
-# Headers
+## Headers
 
-## Recommended Headers
+### Recommended Headers
 
 #### Content Type
 
 All request and response body are in `JSON`. Always specify it in your header.
 
 `Content-Type: application/json`
-
-#### Encoding
-
-You can compress the data you send to your MeiliSearch API. We recommend using it when you add a very large number of documents on the [add documents route](/references/documents.md#add-or-update-documents)
-
-`Content-Encoding: gzip`
-
-We support `gzip`, `brotli` and `deflate`.
-
-#### Decoding
-
-You can request compressed data from MeiliSearch API. We recommend using it on [search route](/references/search.md#search-in-an-index). But only if you have an unusually long response time due to the size of the response.
-
-`Accept-Encoding: gzip, deflate`
-
-We support `gzip`, `brotli` and `deflate`.
 
 #### Authentication
 
@@ -49,9 +25,7 @@ Please read the [advanced part about keys](/guides/advanced_guides/keys.md) and 
 
 `X-Meili-API-Key: $API_KEY`
 
-----
-
-# Errors & Status Code
+## Errors & Status Code
 
 #### Success
 
@@ -65,9 +39,7 @@ Please read the [advanced part about keys](/guides/advanced_guides/keys.md) and 
 
 **205 - Reset Content**: All the resources have been deleted
 
-
 #### Error
-
 
 **400 - Bad Request**: The request was unacceptable, often due to missing a required parameter.
 
@@ -86,11 +58,9 @@ Response body:
 }
 ```
 
-----
+## Asynchronous Updates
 
-# Asynchronous Updates
-
-In a lot of cases you will receive as server response a simple JSON with only an `updateId` attribute:
+MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `updateId` attribute:
 
 ```json
 {
@@ -98,4 +68,7 @@ In a lot of cases you will receive as server response a simple JSON with only an
 }
 ```
 
-MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses. See [advanced guide](/guides/advanced_guides/asynchronous_updates.md) for more information.
+This kind of successful response indicates that the operation has been taken into account, but it may not have been executed yet.<br>
+You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
+
+See more information about [asynchronous updates](/guides/advanced_guides/asynchronous_updates.md).

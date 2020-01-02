@@ -1,25 +1,22 @@
-# Stop words
+# Stop-words
 
-The stop-words list is part of the [settings][1] category.
+The stop-words route lets you add a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
 
-[1]: /references/settings.md
-::: tip
-The stop-words list is considered as one resource and has the REST routes in line with this logic.
-:::
+Child route of the [settings route](/references/settings.md).
 
-## Get stop-words list
+Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+
+## Get stop-words
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings/stop-words" />
 
-Get the list [stop-words](/guides/advanced_guides/stop_words.md).
-
+Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **uid**         | The index UID         |
-
 
 ### Example
 
@@ -28,25 +25,17 @@ $ curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings/stop-words'
 ```
 
-
 #### Response: `200 Ok`
-
-List of all the stop-words in the index.
 
 ```json
 ["of","the","to"]
 ```
 
-
-## Create stop-words list
+## Update stop-words
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings/stop-words" />
 
-Create the list of [stop-words](/guides/advanced_guides/stop_words.md).
-
-::: warning
-**If one already exists, it will be overridden.**
-:::
+Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
 
 #### Path Variables
 
@@ -58,6 +47,8 @@ Create the list of [stop-words](/guides/advanced_guides/stop_words.md).
 
 An array of strings containing the [stop-words](/guides/advanced_guides/stop_words.md).
 
+If a list of stop-words already exists it will be overwritten (*replaced*).
+
 ### Example
 
 ```bash
@@ -65,7 +56,6 @@ $ curl \
   -X POST 'http://localhost:7700/indexes/12345678/settings/stop-words' \
   --data '["the", "of", "to"]'
 ```
-
 
 #### Response: `202 Accepted`
 
@@ -76,11 +66,15 @@ $ curl \
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Delete stop-words list
+## Reset stop-words
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
 
-Delete the list of [stop-words](/guides/advanced_guides/stop_words.md).
+Reset the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index to its default value.
+
+#### Default value
+
+Empty array: `[]`
 
 #### Path Variables
 
@@ -88,14 +82,12 @@ Delete the list of [stop-words](/guides/advanced_guides/stop_words.md).
 |-------------------|-----------------------|
 | **uid**         | The index UID         |
 
-
 ### Example
 
 ```bash
 $ curl \
   -X DELETE 'http://localhost:7700/indexes/12345678/settings/stop-words' \
 ```
-
 
 #### Response: `202 Accepted`
 

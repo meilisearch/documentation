@@ -65,16 +65,6 @@ Here is an example response of updates that have been processed.
 [
   {
     "status": "processed",
-    "updateId": 0,
-    "type": {
-      "name": "Schema"
-    },
-    "duration": 0.000066131,
-    "enqueuedAt": "2019-12-07T21:16:09.623198Z",
-    "processedAt": "2019-12-07T21:16:09.624601Z"
-  },
-  {
-    "status": "processed",
     "updateId": 1,
     "type": {
       "name": "DocumentsAddition",

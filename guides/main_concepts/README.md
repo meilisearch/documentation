@@ -11,5 +11,4 @@ MeiliSearch is an **asynchronous** API. It means that when it does not behave li
 MeiliSearch uses the following terms inside the documentation. You should become familiar with them before continuing.
 
 * **[Index](indexes.md)**: Like a table in `SQL`. It's the entity that gathers all the documents of a given structure.
-* **[Schema](indexes.md#schema-definition)**: The definition of the index. The `schema` describes the structure of the `document`.
 * **[Document](documents.md)**: Object containing the defined attributes with their associated data.

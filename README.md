@@ -2,7 +2,7 @@
 
 MeiliSearch is a **RESTful search API** that is the **ready-to-go solution** for everyone wanting a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
 
-<linkButton method="GET" text="🚀  GETTING STARTED" url="/guides/introduction/quick_start_guide.html"/>
+<linkButton method="GET" text="🚀 GETTING STARTED" url="/guides/getting_started/quick_start_guide.html"/>
 
 Efficient search engines are often only accessible to companies with the financial means and resources necessary to develop a search solution adapted to their needs. The majority of other companies that do not have the means or do not realize that the lack of relevance of a search greatly impacts the pleasure of navigation on their application,
 end up with poor solutions that are more frustrating than effective, for both the developer and the user.
@@ -36,8 +36,9 @@ Why should you use MeiliSearch instead of any other existing solution? If it is 
 * [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, kanji and latin based languages.
 * **Return the whole document**: The entire document is returned upon search.
 * **Highly customizable search and indexation**:
-    - [Custom ranking](/guides/advanced_guides/ranking.md#custom-ranking-rules): Create your own ranking rules on indexation.
-    - [Stop-words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of`, `the`, ..
+    - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
+    - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
     - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
     - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
 * **RESTful API**
+* **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that lets you try the search engine when developing.

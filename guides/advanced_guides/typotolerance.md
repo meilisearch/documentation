@@ -1,6 +1,6 @@
 # Typo Tolerance
 
-MeiliSearch **implements [typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance-rules)**. This means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
+MeiliSearch **is [typo tolerant](/guides/advanced_guides/typotolerance.md#typo-tolerance-rules)**; this means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
 
 #### Example
 
@@ -51,9 +51,9 @@ There are some rules about what can be considered "similar". These rules are **b
 - If the query word is between 5 and 8 characters long, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
 - If the query word contains more than 8 characters, we accept a maximum of **two typos**.
 
-This means that "saturday", which is 7 characters long uses the second rule and every document containing words that only have **one typo** will match. For example:
+This means that "saturday", which is 7 characters long use the second rule, and every document containing words that only have **one typo** will match. For example:
 
-- "saturday" is accepted because it is exactly the same word.
+- "saturday" is accepted because it is the same word.
 - "sat" is not accepted because the query word is not a prefix of it (it is the opposite).
 - "satuday" is accepted because it contains **one typo**.
 - "s**u**tuday" is not accepted because it contains **two typos**.

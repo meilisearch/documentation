@@ -2,23 +2,22 @@
 
 ## Get one document
 
-<RouteHighlighter method="GET" route="/indexes/:uid/documents/:identifier"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:document_id"/>
 
-Get one document using its unique identifier.
-
+Get one document using its unique id.
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
-| **identifier**    | [The unique identifier of the document](/guides/main_concepts/indexes.md#identifier) |
+| **index_uid**         | The index UID |
+| **document_id**    | [The document id](/guides/main_concepts/documents.md#primary-key) |
 
 ### Example
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/documents/25684'
+  -X GET 'http://localhost:7700/indexes/movies/documents/25684'
 ```
 
 #### Response: `200 Ok`
@@ -35,23 +34,21 @@ $ curl \
 
 ## Get documents
 
-<RouteHighlighter method="GET" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
 
-Get documents by batch.</br>
+Get documents by batch.
+
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
-Documents are ordered in a specific way by MeiliSearch (the hash of the identifier).
-
-::: danger
-This route is a non-optimized route, it can be a little bit slow to answer.
+::: note
+Documents are ordered by MeiliSearch depending on the hash of their id.
 :::
-
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 
 #### Query Parameters
 
@@ -65,7 +62,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/documents?limit=2'
+  -X GET 'http://localhost:7700/indexes/movies/documents?limit=2'
 ```
 
 #### Response: `200 Ok`
@@ -90,25 +87,31 @@ $ curl \
 
 ## Add or replace documents
 
-<RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
 
-Insert a list of documents or replace them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
+Add a list of documents or replace them if they already exist.
 
-In case of a replacement, the old document will be completely erased and replaced by the new one.</br>
-For a partial update, check out the [add or update documents route](/references/documents.md#add-or-update-documents).
+If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
 
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
+For a partial update of the document see [add or update documents](/references/documents.md#add-or-update-documents).
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
+
+#### Query Parameters
+
+| Query Parameter           | Description                          | Default Value |
+|---------------------------|--------------------------------------|:-------------:|
+| **primaryKey**    | [The unique primary key of the document](/guides/main_concepts/documents.md#primary-key) | none |
+
+If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
-The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
-You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
+The body is composed of a **JSON array** of documents.
 
 ::: warning
 Documents fields which are not known to the index schema will be ignored.
@@ -130,7 +133,7 @@ Documents fields which are not known to the index schema will be ignored.
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/12345678/documents' \
+  -X POST 'http://localhost:7700/indexes/movies/documents' \
   --data '[{
       "id": 287947,
       "title": "Shazam",
@@ -151,29 +154,32 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Add or update documents
 
-<RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
 
-Insert a list of documents or update them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
+Add a list of documents and update them if they already.
 
-In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
+If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
+
 To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
-
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
+
+If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+
+#### Query Parameters
+
+| Query Parameter           | Description                          | Default Value |
+|---------------------------|--------------------------------------|:-------------:|
+| **primaryKey**    | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents  | none |
+
 
 #### Body
 
-The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
-You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
-
-::: warning
-Documents fields which are not known to the index schema will be ignored.
-:::
+The body is composed of a **JSON array** of documents.
 
 ```json
 [
@@ -188,9 +194,10 @@ Documents fields which are not known to the index schema will be ignored.
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/12345678/documents' \
+  -X POST 'http://localhost:7700/indexes/movies/documents' \
+  -d 'primaryKey=movieskud'
   --data '[{
-      "id": 287947,
+      "movieskud": 287947,
       "title": "Shazam ⚡️"
     }]'
 ```
@@ -206,24 +213,23 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete all documents
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents"/>
 
 Delete all documents in the specified index.
 
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 
 #### Path Variables
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Example
 
 ```bash
 curl \
-  -X DELETE 'http://localhost:7700/indexes/12345678/documents'
+  -X DELETE 'http://localhost:7700/indexes/movies/documents'
 ```
 
 #### Response: `202 Accepted`
@@ -237,24 +243,22 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete one document
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/documents/:identifier"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:document_id"/>
 
-Delete one document based on its unique identifier.<br/>
-You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
-
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
+Delete one document based on its unique id.<br/>
 
 #### Path Variables
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
+| **document_id**    | [The document id](/guides/main_concepts/documents.md#primary-key) |
 
 ### Example
 
 ```bash
   curl \
-  -X DELETE 'http://localhost:7700/indexes/12345678/documents/25684'
+  -X DELETE 'http://localhost:7700/indexes/movies/documents/25684'
 ```
 
 #### Response: `202 Accepted`
@@ -267,27 +271,21 @@ The `updateId` returned by this route can be sent to the [update status route](/
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 
-
-
 ## Delete documents
 
-<RouteHighlighter method="POST" route="/indexes/:uid/documents/delete"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete-batch"/>
 
-Delete a selection of documents based on array of identifiers.<br/>
-You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
-
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
-
+Delete a selection of documents based on array of document id's.<br/>
 
 #### Path Variables
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 #### Body
 
-The body must be a **Json Array** with the unique identifiers of the documents to delete.
+The body must be a **JSON Array** with the unique id's of the documents to delete.
 
 ```json
 [23488, 153738, 437035, 363869]
@@ -297,7 +295,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```bash
   curl \
-  -X POST 'http://localhost:7700/indexes/12345678' \
+  -X POST 'http://localhost:7700/indexes/movies/delete-batch' \
   --data '[
       23488,
       153738,
