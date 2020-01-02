@@ -3,7 +3,6 @@
 `Documents` are objects composed of fields containing any data.</br>
 A `field` is composed of an `attribute` and its associated data.
 
-
 ```json
 {
   "id": 3205,
