@@ -111,7 +111,6 @@ It means that it is, for example, forbidden to use arrays or objects as an ident
 :::
 
 
-
 ## Indexed
 
 It defines the fields that will be used to find the documents.
