@@ -1,5 +1,5 @@
 module.exports = {
-  title: "MeiliSearch Documentation",
+  title: "MeiliSearch Documentation v0.9",
   description: "Open source Instant Search Engine",
   themeConfig: {
     repo: "meilisearch/MeiliSearch",
