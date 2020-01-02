@@ -19,7 +19,7 @@ The **fields** are the combination of attributes and data (i.e., `"title": "Inte
 ## Documents structure
 
 A document is added to MeiliSearch in `JSON format`.<br/>
-Each field in a document should correspond to a field defined in the [schema](/main_concepts/indexes.html#schema-definition) to be taken into account.
+Each field in a document should correspond to a field defined in the [schema](/main_concepts/indexes.md#schema-definition) to be taken into account.
 
 A **document must contain** [one identifier field](/main_concepts/documents.md#documents-identifiers) to be indexed in meiliSearch.
 
@@ -33,7 +33,7 @@ When using the [route to add new documents](/references/documents.md#add-or-upda
 
 To be indexed by MeiliSearch, a document must have an **identifier**. A document without an identifier will be ignored when added to MeiliSearch.
 
-The identifier attribute name can be anything (unless the [schema is inferred when adding documents](/main_concepts/indexes.html#inferred-schema)).
+The identifier attribute name can be anything (unless the [schema is inferred when adding documents](/main_concepts/indexes.md#inferred-schema)).
 
 
 The identifier value must contain only `A-Z a-z 0-0` and `-_`.
