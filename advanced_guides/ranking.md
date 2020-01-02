@@ -1,6 +1,6 @@
 # Ranking
 
-<!-- - Criterion 
+<!-- - Criterion
 - Ranking rules
 - sorting rules -->
 
@@ -9,25 +9,13 @@ In meilisearch, the search responses are considered relevant according to a sort
 MeiliSearch proposes default ranking rules and has given them a default order as well. **This order can be modified, rules can be deleted and new ones can be added.**
 
 
-<mermaid>
-graph LR
-    A[client] -->|Search Query| B(meilisearch)
-    B --> C{bucket sort}
-    C -->|One| D[Number of Typos]
-    C -->|Two| E[Number of Words]
-    C -->|Three| F[Words Proximity]
-    C -->|Four| G[Attribute]
-    C -->|Five| H[Position]
-    C -->|Six| I[Exact]
-    C --> B
-    B --> |found documents| A
-</mermaid>
+
 
 [For some in depth explanations about the mechanism and about each default sorting rule](https://github.com/meilisearch/MeiliSearch/issues/358).
 
 In order to be able to play with these rules and match them to the needs of your search engine, it is important to understand how each works and how to create new ones.
 
-## MeiliSearch ranking rules
+## Ranking rules
 
 Some rules already exist in MeiliSearch. These rules are essential to the relevance of the search engine.
 
@@ -37,76 +25,98 @@ Using a [bucket sort](/advanced_guides/bucket_sort) algorithm, MeiliSearch uses 
 
 Here is the list of all the rules that are executed in this specific order by default:
 
-- `typo` - The less typos there are beween the query words and the document words, the better is the document.
-- `words` - A document containing more of the query words will be more important than one that contains less.
-- `proximity` - The closer the query words are in the document the better is the document.
-- `attribute` - A document containing the query words in a more important attribute than another document is considered better.
-- `words position` - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
-- `Exact` - A document containing the query words in their exact form, not only a prefix of them, is considered better.
+- `typo` - Sort by increasing number of typos.
+- `words` - Sort by decreasing number of matched query words.
+- `proximity` -  Sort by increasing proximity of query words in hits.
+- `attribute` - Sort according to the order of attributes (defined by the [schema](/main_concepts/indexes.md#schema-definition)).
+- `words position` - Sort according to the position of query words in the attribute. Start is better than end.
+- `Exact` - Sort by similarity of the matched words with the query words. Same words are better than prefixes.
 
 
-## Example
+## Examples
 
 :::: tabs
 
 ::: tab typo
+![Image from alias](../public/image/vogli.png)
 
-:::
-
-::: tab attribute
-![Image from alias](../public/image/ranking_example.png)
-
-
-Lets analyze this example. 
+search query : `vogli`
 
 **Rule one** : `typo`
-- `Shinjuku` 
-- `Shizuku`
-- `Shizuka`
 
-All three examples are at a levenhstein distance of 3 with `shinzu`. So by our first rule `typo` all 3 documents have the same relevance.
+Matched words :
+- `vogli` : 0 typo
+- `volli` : 1 typo
+- `mogli` : 1 typo
+
+The typo sorts the results by ascending typos on matched query words.
 
 **Rule two** : `words`
 
-Our query is `shinzu`. All three documents contains a matching word. This means they all have the same relevance. If we had made a search request with multiple words and some documents only have one of the two words, those would be less relevant than the documents containing both.
-
+All three documents have the same number of matched query words. Thus, **no impact** on the relevancy.
 
 **Rule three** : `proximity`
 
-Proximity is used when more than one word is given in the search query. In this case, how closer the words that compose the query are near eachother how more relevant the document become ([look at this example](./assets/img/proximity_example.8c58dbb3.png)). In our case, our search query
+Since our search query is only one word, the results are **not impacted** by the `proximity rule`.
 
 **Rule four** : `attribute`
-- `Shinjuku` is in the `title`.
-- `Shizuku` is in the `overview`.
-- `Shizuka` is in the `overview`.
+- `vogli` : overview
+- `volli` : title
+- `mogli` : overview
 
-When adding the first documents in the index. Inside each document the `title` attribute was declaredd before the `overview` attribute. Because of that, MeiliSearch infered that the `title` attribute was more relevant than the `overview` attribute.
+In our [schema](/main_concepts/indexes.md#ranked) definition, we defined the `title` before the `overview`. This make any results found in title more relevant than one found in `overview`. Because `typo` is a more important rule than `attribute`, `vogli` is still first but `volli` is sorted higher than `mogli`.
 
-In this case, `Shinjuku` is in a more relevant attribute than the two others, that's why he is before them in the search results.
-
-**Rule five** : `words position`
-
-All three documents have the matches word at the start of their attrbute. This means they are considered at the same relevancy. All documents with matching words placed farther away in the attributes are considered less relevant.
-
-**Rule six** : `Exact`
+Since previous rules defined the sorting of our three documents none of the following rules will affect their position : `words position`, `Exact`
 :::
+
 
 ::: tab proximity
 ![Image from alias](../public/image/proximity_example.png)
 :::
 
+
+::: tab words
+![Image from alias](../public/image/madison.png)
+
+search query : `Madison zeppelin`
+
+**Rule one** : `typo`
+All documents found have no typos. Order not impacted
+
+**Rule Two** : `words`
+- `The song remains the same` : **4** occurences of our query words.
+- `Billy Madison` : **3** occurences of our query words.
+- `The bridges of Madison County` : **1** occurence of our query words.
+
+All other rules being less important than `words`, they will not impact the ordering.
+:::
+
 ::::
-
-<!-- is before `Shinzoku lives a simple life`  -->
-
 
 ## Changing the rules order
 
 Depending on your needs, you might want to change the order in which the rules are processed.
 
-For example, you could consider 
+For example, in your datasat, the `words` rule that sorts by number of matched query words in a document, could be less important than the `attribute` rule in which we find our matches.
+
+In this case, using the [settings route](/references/settings.md#add-or-replace-index-settings) of your index, you can change the ranking order of the sorting rules.
+
+```json
+{
+  "rankingOrder": [
+       "_typo",
+        "_attribute",
+        "_proximity",
+        "_words",
+        "_words_position",
+        "_exact",
+  ]
+}
+```
 
 ## Creating your rule
+
+
 
 ## Adding your rule
 
@@ -114,7 +124,7 @@ For example, you could consider
 
 
 <!-- What happens when there is no ranking order :
-  - Key => value dans la database 
+  - Key => value dans la database
   - Du coup au pif les docum qui se trouvent la
 
  -->
