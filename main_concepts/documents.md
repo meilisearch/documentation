@@ -3,6 +3,7 @@
 `Documents` are objects composed of fields containing any data.</br>
 A `field` is composed of an `attribute` and its associated data.
 
+
 ```json
 {
   "id": 3205,
@@ -13,15 +14,35 @@ A `field` is composed of an `attribute` and its associated data.
 ```
 
 In this document, **attributes** are `"id"`, `"title"`, `"description"` and `"type"`.</br>
-The **fields** are the combination of attributes and data (i.e. `"title": "Interstellar"`).
+The **fields** are the combination of attributes and data (i.e., `"title": "Interstellar"`).
 
 ## Documents structure
 
 A document is added to MeiliSearch in `JSON format`.<br/>
-Each documents fields should correspond to an attribute in the schema to be taken into account.
+Each field in a document should correspond to a field defined in the [schema](/main_concepts/indexes.html#schema-definition) to be taken into account.
+
+A **document must contain** [one identifier field](/main_concepts/documents.md#documents-identifiers) to be indexed in meiliSearch.
 
 ::: danger
-Documents fields that do not correspond to the schema fields are ignored.
+Documents fields that do not exist in the schema are ignored.
 :::
 
-When using the [route to add new documents](/references/documents.md#add-or-update-documents) all documents should be sent in an array. And this, even if there is only one document.
+When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents should be sent in an array. And this, even if there is only one document.
+
+## Documents identifiers
+
+To be indexed by MeiliSearch, a document must have an **identifier**. A document without an identifier will be ignored when added to MeiliSearch.
+
+The identifier attribute name can be anything (unless the [schema is inferred when adding documents](/main_concepts/indexes.html#inferred-schema)).
+
+
+The identifier value must contain only `A-Z a-z 0-0` and `-_`.
+#### Examples
+Good :
+```
+"id" : "_Aabc012_"
+```
+Bad :
+```
+"id" : "@BI+* ^5h2%"
+```
