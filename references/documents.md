@@ -105,6 +105,13 @@ The `updateId` returned by this route can be sent to the [update status route](/
 |-------------------|-----------------------|
 | **uid**         | The index UID |
 
+#### Query Parameters
+
+| Query Parameter           | Description                                        |
+|---------------------------|----------------------------------------------------|
+| **identifier**            | attribute name of the identifier in order to [infer the schema](/main_concepts/indexes.md#inferred-schema). |
+
+
 #### Body
 
 The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
@@ -165,6 +172,12 @@ The `updateId` returned by this route can be sent to the [update status route](/
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **uid**         | The index UID |
+
+#### Query Parameters
+
+| Query Parameter           | Description                                        |
+|---------------------------|----------------------------------------------------|
+| **identifier**            | attribute name of the identifier in order to [infer the schema](/main_concepts/indexes.md#inferred-schema). |
 
 #### Body
 

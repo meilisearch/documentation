@@ -124,30 +124,28 @@ This property allows the creation of a custom ranking rule. See [custom ranking 
 
 ## Inferred Schema
 
-When creating an index, MeiliSearch expects a name for the index and a schema definition. **If no schema is defined before adding documents, the schema will be inferred**.
+If no schema is defined before adding documents, the schema will be inferred.
 
 The inference of the schema is based on the first document added to MeiliSearch. Then, by following the inference rules, the schema will be created.
 
 ### Inference rules
 
-The schema is inferred this way:
- - the **order of the fields** is the order of the schema fields
- - the **identifier** is the first field containing `"id"` (case insensitive)
- - every field is `indexed` and `displayed`
+The scheme infers the following informations :
 
-The order of the fields inside the document will [determine their relevance in the search engine](/main_concepts/indexes.md#fields-order).
+* **The [order of the schema fields][2]** is the same as the order of the fields in the first document.
 
-To determine the identifier, an attribute that contains the case insensitive string `id` is expected. Thus, `_id`, `myId`, for example, are correct keys.
+* **The [identifier][3]** field is found either with:
+    * [The query parameter identifier][4] given when adding the first batch of documents (i.e. *`?identifier=MyUnIqueIdentiFier`*).
+    * The first field in the document of which the attribute contains the case insensitive string `id`(*`_id`, `myId`, for example, are correct keys.*).
 
-This field will receieve the [identifier](/main_concepts/indexes.md#identifier) property, so it should contain the unique identifier of a document.
+* **Every field of the documents** will be defined in the schema with the [indexed][5] and [displayed][6] property.
+
+ [2]: /main_concepts/indexes.md#fields-order
+ [3]: /main_concepts/indexes.md#identifier
+ [4]: /references/documents.md#add-or-replace-documents
+ [5]: /main_concepts/indexes.md#indexed
+ [6]: /main_concepts/indexes.md#displayed
 
 ::: warning
 If the `identifier` field is missing, the inference will not be completed, and the **documents will not be added**.
-:::
-
-Every other field will have the `indexed` and `displayed` properties.
-
-
-::: tip
-By default, MeiliSearch infers the schema from the **first** document sent.
 :::
