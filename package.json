@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "vuepress-plugin-check-md": "^0.0.2",
-    "vuepress-plugin-element-tabs": "^0.1.8"
+    "vuepress-plugin-element-tabs": "^0.2.8"
   }
 }

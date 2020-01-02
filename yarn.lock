@@ -7976,10 +7976,10 @@ vuepress-plugin-container@^2.0.2:
   dependencies:
     markdown-it-container "^2.0.0"
 
-vuepress-plugin-element-tabs@^0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-element-tabs/-/vuepress-plugin-element-tabs-0.1.8.tgz#13a7a69fd3fe1325a4d0e649c7fff571640518d5"
-  integrity sha512-BVG/ooJpuNpuh1XEsXlOf3V21A8JDWqN3KPF0BzH3v28bOxvC8ZoFfG+OsbJYTHYNJYGGaAZoyFb9IbWiCVpyg==
+vuepress-plugin-element-tabs@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-element-tabs/-/vuepress-plugin-element-tabs-0.2.8.tgz#7e52c97090156c11b18450f848cd4a5767f76502"
+  integrity sha512-wyZNM++o5nIncgqHBHwlDf8B5o5o235ZWRFjLGgFiXY5Zds7Hl/fB0DL54skqNSP6Vn2MOEPd9pyYBW+piYjwA==
   dependencies:
     node-sass "^4.11.0"
     resize-observer-polyfill "^1.5.1"
