@@ -34,7 +34,6 @@ To be indexed by MeiliSearch, a document must have an **identifier**. A document
 
 The identifier attribute name can be anything (unless the [schema is inferred when adding documents](/main_concepts/indexes.md#inferred-schema)).
 
-
 The identifier value must contain only `A-Z a-z 0-0` and `-_`.
 #### Examples
 Good :
