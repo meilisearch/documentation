@@ -139,7 +139,6 @@ The schema infers the following information:
     * The first field in the document of which the attribute contains the case insensitive string `id`(*`_id`, `myId`, for example, are correct keys.*).
 
 * **Every field of the documents** will be defined in the schema with the [indexed][5] and [displayed][6] property.
-
  [2]: /main_concepts/indexes.md#fields-order
  [3]: /main_concepts/indexes.md#identifier
  [4]: /references/documents.md#add-or-replace-documents
