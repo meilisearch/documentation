@@ -20,7 +20,7 @@ The **fields** are the combination of attributes and data (i.e., `"title": "Inte
 A document is added to MeiliSearch in `JSON format`.<br/>
 Each field in a document should correspond to a field defined in the [schema](/main_concepts/indexes.md#schema-definition) to be taken into account.
 
-A **document must contain** [one identifier field](/main_concepts/documents.md#documents-identifiers) to be indexed in meiliSearch.
+A **document must contain** [one identifier field](/main_concepts/documents.md#documents-identifiers) to be indexed in MeiliSearch.
 
 ::: danger
 Documents fields that do not exist in the schema are ignored.
