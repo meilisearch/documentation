@@ -45,7 +45,7 @@ List of all the stop-words in the index.
 Create the list of [stop-words](/advanced_guides/stop_words).
 
 ::: warning
-**If one already existed it will be overide.**
+**If one already exists, it will be overridden.**
 :::
 
 #### Path Variables
