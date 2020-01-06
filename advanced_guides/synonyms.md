@@ -2,7 +2,7 @@
 
 To make your search more relevant there is the possibility of creating synonyms.
 
-Thus, if your database contains a lot of a word that has on or more popular synonyms, by configuring the synonyms the words can be associated. **This allows the same results if you write one or the other word**.
+Thus, if your database contains a lot of a term that has on or more popular synonyms, by creating a synonym list, terms can be associated. **This allows the same search results if you query one or the other terms**.
 
 Synonyms are considered to be exactly the same.
 A search on a word or its synonym will return the same search result.
@@ -13,7 +13,7 @@ However, when a sentence is considered the synonym of another word or sentence, 
 
 There are several ways to associate words with each other.
 
-## The One-way association
+## A is synonym of B but B is not synonym of A
 
 This makes it possible to determine that a word will be synonymous with another but not the other way around.
 
@@ -24,7 +24,7 @@ phone => iphone
 
 By searching `phone` you will get all results containing `iphone` with the same relevance. However, if you search for `iphone`, the data containing `phone` will not change your results.
 
-## The multi-way association
+## A is synonym of B and B is synonym of A
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
 
