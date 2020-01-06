@@ -42,12 +42,6 @@ A lot of configuration can be made at *query-time*. Here is some usage examples
 curl -X GET 'http://localhost:7700/indexes/4eb345y7/search?q=batman&limit=5&offset=10'
 ```
 
-- _Search only in specific attributes_ - Search can be configured at query time, for example, you can search in only selected attributes
-
-```bash
-curl -X GET 'https://localhost:7700/indexes/4eb345y7/search?q=moliere&attributesToSearchIn=title'
-```
-
 - _Filters_ - You can build a faceted search using the query param `filter`. It will only returned the specific filtered documents.
 
 ```bash
