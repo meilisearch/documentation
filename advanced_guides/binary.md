@@ -9,6 +9,25 @@ $ ./meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
 
+## Downloading with Homebrew
+
+The MeiliSearch binary (latest stable release) can be downloaded with the Homebrew package manager.
+```bash
+$ brew install meilisearch
+$ meilisearch
+Server is listening on: http://127.0.0.1:7700
+```
+
+## Downloading with APT
+
+The MeiliSearch binary (latest stable release) can be downloaded with the APT package manager.
+```bash
+$ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+$ apt update && apt install meilisearch-http
+$ meilisearch
+Server is listening on: http://127.0.0.1:7700
+```
+
 ## Compiling from source
 
 MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
