@@ -2,7 +2,7 @@
 
 ## Get stat of an index
 
-<RouteHighlighter method="GET" route="/stats/:uid"/>
+<RouteHighlighter method="GET" route="/indexes/:uid/stats"/>
 
 Get stats of an index.
 
@@ -17,7 +17,7 @@ Get stats of an index.
 
 ```bash
 curl \
-  -X GET 'http://localhost:7700/stats/12345678'
+  -X GET 'http://localhost:7700/indexes/12345678/stats'
 ```
 
 #### Response: `200 Ok`
