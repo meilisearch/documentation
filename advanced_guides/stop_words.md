@@ -1,6 +1,6 @@
 # Stop words
 
-Stop-words words allow you to create a list of words **ignored in your search queries**.
+Stop-words allow you to create a list of words **ignored in your search queries**.
 
 During a search, if your search query contains words that you have put in the stop-words, they will be ignored by the sorting algorithm that searches for the occurency of the search query words in each document. This increases the speed and the relevancy of a search.
 
@@ -135,4 +135,3 @@ of the film rather than the number of recurrences of the stop-words. The respons
 You can see where the line is drawn between the importance of getting rid of stop-words and also the relevance those words can give to you search.
 
 Find the best way they will fit for you !
-
