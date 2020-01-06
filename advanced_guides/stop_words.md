@@ -2,10 +2,14 @@
 
 Stop-words allow you to create a list of words **ignored in your search queries**.
 
-During a search, if your search query contains words that you have put in the stop-words, they will be ignored by the sorting algorithm that searches for the occurency of the search query words in each document. This increases the speed and the relevancy of a search.
+During a search, the stop-words contained in your search query will be ignored by the sorting algorithm.
+
+I.e., if `the` is a stop word, and your search query contains `the`, the number of occurrences of `the` in any of your documents will have no impact on the search results.
+
+Stop-words **improves** **the speed** and **relevancy** of a search.
 
 ::: tip
-Using stop-words allows the relevance of the search to be focused on more interesting elements such as ranking rather than on the accuracy of the sequence with another one.
+Using stop-words allows the search to focus on more relevant elements rather than the number of occurrences of words that are very common in your dataset.
 :::
 
 ## Language driven
@@ -84,10 +88,8 @@ Lets make a search on this dataset
 
 `The Road to Hong Kong` is the first film in our search results. It is there because of the recurrence of the words "the" and "of" in the title and description. However, it is the oldest film in the documents offered.
 
-In order to allow the search engine to focus more on the release date, let's add stop-words that prevent giving so much importance to documents that have no specificity other than the recurrence of very common words.
-
-
-#### Now lets add some stop words
+The number of occurrences of common words, impacts a lot the search results. If we want to focus on more relevant information, `the`, `of` and `to` should be added to the stop word list.
+#### Lets add some stop words
 
 ```bash
 curl \
