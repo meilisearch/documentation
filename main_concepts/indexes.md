@@ -130,7 +130,7 @@ The inference of the schema is based on the first document added to MeiliSearch.
 
 ### Inference rules
 
-The scheme infers the following informations :
+The schema infers the following information:
 
 * **The [order of the schema fields][2]** is the same as the order of the fields in the first document.
 
