@@ -110,7 +110,6 @@ Documents identifiers are always converted into strings. Only strings and intege
 It means that it is, for example, forbidden to use arrays or objects as an identifier.
 :::
 
-
 ## Indexed
 
 It defines the fields that will be used to find the documents.
