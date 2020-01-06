@@ -1,6 +1,6 @@
 # Stop words
 
-The stop-word list is part of the [settings][1] category.
+The stop-words list is part of the [settings][1] category.
 
 [1]: /references/settings.md
 ::: tip
