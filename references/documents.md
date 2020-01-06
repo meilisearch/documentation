@@ -297,7 +297,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```bash
   curl \
-  -X POST 'http://localhost:7700/indexes/documents/delete-batch' \
+  -X POST 'http://localhost:7700/indexes/12345678/documents/delete-batch' \
   --data '[
       23488,
       153738,
