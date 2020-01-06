@@ -1,6 +1,6 @@
 # Stop words
 
-Stop-words allow you to create a list of words **ignored in your search queries**.
+Stop-words allows you to create a list of words **ignored in your search queries**.
 
 During a search, the stop-words contained in your search query will be ignored by the sorting algorithm.
 
