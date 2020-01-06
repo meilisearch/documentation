@@ -1,8 +1,8 @@
 # Stop words
 
-Stop-words words allow you to **ignore certain words in the relevance of your search**.
+Stop-words words allow you to create a list of words **ignored in your search queries**.
 
-During a search, if your query contains words that you have put in stop-words, they will be ignored by the algorithm that defines the relevance of each document. This increases the speed of the search.
+During a search, if your search query contains words that you have put in the stop-words, they will be ignored by the sorting algorithm that searches for the occurency of the search query words in each document. This increases the speed and the relevancy of a search.
 
 ::: tip
 Using stop-words allows the relevance of the search to be focused on more interesting elements such as ranking rather than on the accuracy of the sequence with another one.
@@ -10,7 +10,7 @@ Using stop-words allows the relevance of the search to be focused on more intere
 
 ## Language driven
 
-Stop-words are strongly related to the language in which your data is written. Thus "the" or "of" are words that do not add much interest in English research.
+Stop-words are strongly related to the language in which your data is written. Thus "the" or "of" are words that are very common in the English language and could be less relevant than a more specific word.
 
 However, their recurrence in the data makes them decisive for calculating the relevance of a document, which could be counterproductive. In most cases it is more desirable to ignore any recurrence of these words and to base research results on more relevant distinctions.
 
@@ -84,7 +84,7 @@ Lets make a search on this dataset
 
 `The Road to Hong Kong` is the first film in our search results. It is there because of the recurrence of the words "the" and "of" in the title and description. However, it is the oldest film in the documents offered.
 
-In order to allow the search engine to focus more on the release date, let's add stop-words that prevent giving so much importance to documents that have no specificity other than the recurrence of stop-words.
+In order to allow the search engine to focus more on the release date, let's add stop-words that prevent giving so much importance to documents that have no specificity other than the recurrence of very common words.
 
 
 #### Now lets add some stop words
