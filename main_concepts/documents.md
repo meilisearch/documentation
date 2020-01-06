@@ -32,9 +32,9 @@ When using the [route to add new documents](/references/documents.md#add-or-upda
 
 To be indexed by MeiliSearch, a document must have an **identifier**. A document without an identifier will be ignored when added to MeiliSearch.
 
-The identifier attribute name can be anything (unless the [schema is inferred when adding documents](/main_concepts/indexes.md#inferred-schema)).
+The identifier **attribute** can be anything, unless the [schema is inferred when adding documents](/main_concepts/indexes.md#inferred-schema).
 
-The identifier value must contain only `A-Z a-z 0-0` and `-_`.
+The identifier **value** must contain only `A-Z a-z 0-0` and `-_` characters.
 #### Examples
 Good :
 ```
