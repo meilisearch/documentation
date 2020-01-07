@@ -20,3 +20,4 @@ Our feature list with extended explanations and links to the documentation.
 * **RESTfull API**
 * **Asynchronous write operations**: Operations will be added to a queue for **low response time** and **guaranteed consistency**.
 * [Bucket sort](/advanced_guides/bucket_sort.md) with [6 default ranking rules](/advanced_guides/ranking.md#ranking-rules) that [can be re-ordered](/advanced_guides/ranking.md#ranking-order) to suit your needs.
+* **Friendly web interface**: [Integrated web interface](/advanced_guides/web_interface) in MeiliSearch that let you try the search on the go.
