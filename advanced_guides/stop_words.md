@@ -9,7 +9,7 @@ I.e., if `the` is a stop word, and your search query contains `the`, the number 
 Stop-words **improves** **the speed** and **relevancy** of a search.
 
 ::: tip
-Using stop-words allows the search to focus on more relevant elements rather than the number of occurrences of words that are very common in your dataset.
+Using stop-words allows the search to focus on more relevant elements rather than words that appears very frequently in your dataset.
 :::
 
 ## Language driven
