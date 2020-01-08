@@ -3,7 +3,6 @@
 Stop-words allows you to create a list of words **ignored in your search queries**.
 
 During a search, the stop-words contained in your search query will be ignored by the sorting algorithm.
-
 I.e., if `the` is a stop word, and your search query contains `the`, the number of occurrences of `the` in any of your documents will have no impact on the search results.
 
 Stop-words **improves** **the speed** and **relevancy** of a search.
