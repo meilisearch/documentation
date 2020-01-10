@@ -12,7 +12,7 @@ Get one document using its unique identifier.
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **uid**         | The index UID |
-| **identifier**    | [The unique identifier of the document](/main_concepts/indexes.md#identifier) |
+| **identifier**    | [The unique identifier of the document](/guides/main_concepts/indexes.md#identifier) |
 
 ### Example
 
@@ -92,7 +92,7 @@ curl \
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
-Insert a list of documents or replace them if they already exist based on [their unique identifiers](/main_concepts/indexes.md#schema-definition).
+Insert a list of documents or replace them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
 
 In case of a replacement, the old document will be completely erased and replaced by the new one.</br>
 For a partial update, check out the [add or update documents route](/references/documents.md#add-or-update-documents).
@@ -108,7 +108,7 @@ The `updateId` returned by this route can be sent to the [update status route](/
 #### Body
 
 The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
-You can [read more about fields and schemas](/main_concepts/indexes.md#schema-definition).
+You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
 
 ::: warning
 Documents fields which are not known to the index schema will be ignored.
@@ -153,7 +153,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
-Insert a list of documents or update them if they already exist based on [their unique identifiers](/main_concepts/indexes.md#schema-definition).
+Insert a list of documents or update them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
 
 In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
 To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
@@ -169,7 +169,7 @@ The `updateId` returned by this route can be sent to the [update status route](/
 #### Body
 
 The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
-You can [read more about fields and schemas](/main_concepts/indexes.md#schema-definition).
+You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
 
 ::: warning
 Documents fields which are not known to the index schema will be ignored.
@@ -240,7 +240,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 <RouteHighlighter method="DELETE" route="/indexes/:uid/documents/:identifier"/>
 
 Delete one document based on its unique identifier.<br/>
-You can read more about [identifiers and schemas](/main_concepts/indexes.md#schema-definition).
+You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
 
 The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
@@ -274,7 +274,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 <RouteHighlighter method="POST" route="/indexes/:uid/documents/delete"/>
 
 Delete a selection of documents based on array of identifiers.<br/>
-You can read more about [identifiers and schemas](/main_concepts/indexes.md#schema-definition).
+You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
 
 The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 

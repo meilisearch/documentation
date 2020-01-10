@@ -84,8 +84,8 @@ Create synonyms.
 
 | key          | Value description           |
 |-------------------|-----------------------|
-| **input**         | the [one-way string](/advanced_guides/synonyms.md#the-one-way-association) that is gonna be associated with the synonyms array |
-| **synonyms**         | array of words to associate together in [a multi-way](/advanced_guides/synonyms.md#the-multi-way-association) |
+| **input**         | the [one-way string](/guides/advanced_guides/synonyms.md#the-one-way-association) that is gonna be associated with the synonyms array |
+| **synonyms**         | array of words to associate together in [a multi-way](/guides/advanced_guides/synonyms.md#the-multi-way-association) |
 
 An object with either multi-way string associations or one-way string association.
 
@@ -197,8 +197,8 @@ Batch write synonyms.
 
 | key          | Value description           |
 |-------------------|-----------------------|
-| **input**         | the [one-way string](/advanced_guides/synonyms.md#the-one-way-association) that is gonna be associated with the synonyms array |
-| **synonyms**         | array of words to associate together in [a multi-way](/advanced_guides/synonyms.md#the-multi-way-association) |
+| **input**         | the [one-way string](/guides/advanced_guides/synonyms.md#the-one-way-association) that is gonna be associated with the synonyms array |
+| **synonyms**         | array of words to associate together in [a multi-way](/guides/advanced_guides/synonyms.md#the-multi-way-association) |
 
 An object with either multi-way string associations or one-way string association.
 

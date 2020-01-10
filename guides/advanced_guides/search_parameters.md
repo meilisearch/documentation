@@ -4,17 +4,17 @@ Search parameters let the user customize his search request.
 
 | Query Parameter           | Description                                        | Default Value |
 |---------------------------|----------------------------------------------------|:-------------:|
-| **[q](/advanced_guides/search_parameters.md#query-q)**                     | query string _(mandatory)_                         |               |
-| **[offset](/advanced_guides/search_parameters.md#offset)**                | number of documents to skip                        | 0             |
-| **[limit](/advanced_guides/search_parameters.md#limit)**                 | number of documents returned                       | 20            |
-| **[attributesToRetrieve](/advanced_guides/search_parameters.md#attributes-to-retrieve)**  | document attributes to show                        | *             |
-| **[attributesToSearchIn](/advanced_guides/search_parameters.md#attributes-to-search-in)**  | which attributes are used to match documents       | *             |
-| **[attributesToCrop](/advanced_guides/search_parameters.md#attributes-to-crop)**      | which attributes to crop                           | none          |
-| **[cropLength](/advanced_guides/search_parameters.md#crop-length)**            | limit length at which to crop specified attributes | 200           |
-| **[attributesToHighlight](/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      | none          |
-| **[filters](/advanced_guides/search_parameters.md#filters)**               |  attribute with an exact match                     | none          |
-| **[timeout_ms](/advanced_guides/search_parameters.md#timeout)**            | maximum response time                              | 30 ms         |
-| **[matches](/advanced_guides/search_parameters.md#matches)**               | whether to return the raw matches or not           | false         |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                     | query string _(mandatory)_                         |               |
+| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                | number of documents to skip                        | 0             |
+| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                 | number of documents returned                       | 20            |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**  | document attributes to show                        | *             |
+| **[attributesToSearchIn](/guides/advanced_guides/search_parameters.md#attributes-to-search-in)**  | which attributes are used to match documents       | *             |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**      | which attributes to crop                           | none          |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**            | limit length at which to crop specified attributes | 200           |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      | none          |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**               |  attribute with an exact match                     | none          |
+| **[timeout_ms](/guides/advanced_guides/search_parameters.md#timeout)**            | maximum response time                              | 30 ms         |
+| **[matches](/guides/advanced_guides/search_parameters.md#matches)**               | whether to return the raw matches or not           | false         |
 
 ## Query (q)
 
@@ -96,7 +96,7 @@ Our **cropped version is in the _formatted object**.
 
 `cropLength=<Integer>`
 
-Total length of the cropped field. See [attributesToCrop](/advanced_guides/search_parameters.md#attributes-to-crop)
+Total length of the cropped field. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
 
 ## Attributes to highlight
 

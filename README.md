@@ -24,7 +24,6 @@ MeiliSearch is open-source. You can support the project by starring it on [our G
 
 Feel free to contribute by submitting an [issue](https://github.com/meilisearch/MeiliSearch/issues) or a pull request.
 
-
 ## Demo
 
 There is a live demo running on [crates.meilisearch.com](https://crates.meilisearch.com)

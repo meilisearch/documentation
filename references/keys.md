@@ -80,8 +80,8 @@ Create an API key.
 | Variable              | Value         |
 |---------------------|---------------|
 | **description** | description of the key    |
-| **acl** | [List of ACL's](/advanced_guides/keys.md#acl) |
-| **indexes** | [List of indexes with wildcards](/advanced_guides/keys.md#indexes) |
+| **acl** | [List of ACL's](/guides/advanced_guides/keys.md#acl) |
+| **indexes** | [List of indexes with wildcards](/guides/advanced_guides/keys.md#indexes) |
 | **expiresAt** | Timestamp of expire date |
 
 
@@ -125,12 +125,12 @@ Update an API key.
 | Variable              | Value         |
 |---------------------|---------------|
 | **description** | description of the key    |
-| **acl** | [List of ACL's](/advanced_guides/keys.md#acl) |
-| **indexes** | [List of indexes with wildcards](/advanced_guides/keys.md#indexes) |
-| **revoked** | [Boolean to revoke API KEY](/advanced_guides/keys.md#revoked) |
+| **acl** | [List of ACL's](/guides/advanced_guides/keys.md#acl) |
+| **indexes** | [List of indexes with wildcards](/guides/advanced_guides/keys.md#indexes) |
+| **revoked** | [Boolean to revoke API KEY](/guides/advanced_guides/keys.md#revoked) |
 
 ::: warning
-`expiresAt` attribute can not be updated. Adding it in the body will result in a bad request error. 
+`expiresAt` attribute can not be updated. Adding it in the body will result in a bad request error.
 :::
 
 ### Example
