@@ -1,8 +1,6 @@
+
+
 # MeiliSearch Documentation
-
-Welcome to the MeiliSearch Documentation.
-
-## Introduction
 
 MeiliSearch is a **RESTfull search API** that is the **ready-to-go solution** for everyone wanting a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
 
@@ -13,8 +11,11 @@ That's why we created MeiliSearch, an open-source solution accessible to everyon
 
 Our solution is **instant**; it **accepts typos**; it understands **filters**, **custom rankings**, and a lot of other [features](/getting_started/features.md).
 
+<linkButton method="GET" text="🚀  QUICKSTART" url="/tutorials"/>
+
+
 ## Open-source
-MeiliSearch is open-source. You can support the project by starring it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
+MeiliSearch is open-source. You can **support the project by starring** it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
 
 <!-- Place this tag where you want the button to render. -->
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a><!-- Place this tag where you want the button to render. -->
@@ -22,11 +23,21 @@ MeiliSearch is open-source. You can support the project by starring it on [our G
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-Feel free to contribute by submitting an [issue](https://github.com/meilisearch/MeiliSearch/issues) or a pull request.
-
 
 ## Demo
 
-There is a live demo running on [crates.meilisearch.com](https://crates.meilisearch.com)
-
 ![crates.io demo gif](/crates-io-demo.gif)
+> Meili helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
+## Features
+
+* **Instant Search** (answers < 50ms): Priority on fast answers for smooth search experience.
+* **Search as you type** (*prefix search*): Results are updated on each keystroke. To make this possible, we use a [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
+* [Typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and spelling mistakes.
+* [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, kanji and latin based languages.
+* **Return the whole document**: The entire document is returned upon search.
+* **Highly customizable search and indexation**:
+    - [Custom ranking](/guides/advanced_guides/ranking.md#custom-ranking-rules): Create your own ranking rules on indexation.
+    - [Stop-words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of`, `the`, ..
+    - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
+    - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
+* **RESTfull API**

@@ -48,7 +48,7 @@ Thus, if a `title` field is defined before a `description` field, its content wi
 This means that if you search for something that matches in the `description` of the document _A_ and in the `title` of the document _B_,
 the document _B_ will be considered better than the document _A_. You can read more about these rules [in the ranking section][1].
 
-[1]: /advanced_guides/ranking.md#ranking-rules
+[1]: /guides/advanced_guides/ranking.md#ranking-rules
 
 <!-- TODO change doc link -->
 ::: tip
@@ -77,7 +77,7 @@ This is the **schema**:
 }
 ```
 
-The fields are [sorted by relevancy importance](/main_concepts/indexes.md#fields-order).
+The fields are [sorted by relevancy importance](/guides/main_concepts/indexes.md#fields-order).
 
 The `id` field is the unique identifier of a movie document. We want to display it (*displayed*) and give the possibility to users to search for the movie using his ID (*indexed*).
 
@@ -91,7 +91,7 @@ that will make the recent movies more relevant than the older ones in the search
 
 Finally, the `poster` field contains the image URL to the movie's poster. We do not want to search inside the URL, that's why we omitted the `indexed` property.
 
-When no schema is given at the creation of an index, the schema is inferred. [Inference follows strict rules to index correctly](/main_concepts/indexes.md#schema-definition).
+When no schema is given at the creation of an index, the schema is inferred. [Inference follows strict rules to index correctly](/guides/main_concepts/indexes.md#schema-definition).
 
 ## Identifier
 
@@ -120,7 +120,7 @@ For example, if the field contains a large amount of data, returning it would sl
 
 ## Ranked
 
-This property allows the creation of a custom ranking rule. See [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules) for more information.
+This property allows the creation of a custom ranking rule. See [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules) for more information.
 
 ## Inferred Schema
 
@@ -135,11 +135,11 @@ The schema is inferred this way:
  - the **identifier** is the first field containing `"id"` (case insensitive)
  - every field is `indexed` and `displayed`
 
-The order of the fields inside the document will [determine their relevance in the search engine](/main_concepts/indexes.md#fields-order).
+The order of the fields inside the document will [determine their relevance in the search engine](/guides/main_concepts/indexes.md#fields-order).
 
 To determine the identifier, an attribute that contains the case insensitive string `id` is expected. Thus, `_id`, `myId`, for example, are correct keys.
 
-This field will receieve the [identifier](/main_concepts/indexes.md#identifier) property, so it should contain the unique identifier of a document.
+This field will receive the [identifier](/guides/main_concepts/indexes.md#identifier) property, so it should contain the unique identifier of a document.
 
 ::: warning
 If the `identifier` field is missing, the inference will not be completed, and the **documents will not be added**.
