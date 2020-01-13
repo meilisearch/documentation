@@ -4,7 +4,6 @@ After adding documents to your MeiliSearch it is possible to try out the search 
 
 The **web interface is located on the same address and port as meilisearch**.
 
-
 ## Example
 
 The server is listening on: `http://127.0.0.1:7700`.
