@@ -2,7 +2,7 @@
 
 After adding documents to your MeiliSearch, it is possible to try out the search engine with the integrated web interface.
 
-The **web interface is located on the same address and port as meilisearch**.
+The web interface is served on **the same port** as MeiliSearch.
 
 ## Example
 
