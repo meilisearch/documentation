@@ -8,7 +8,7 @@ The **web interface is located on the same address and port as meilisearch**.
 
 The server is listening on: `http://127.0.0.1:7700`.
 
-Lets add some movies.
+Let's add some movies.
 
 ```bash
 curl -X POST  'http://127.0.0.1:8080/indexes/movies_uid/documents'\
