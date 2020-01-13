@@ -4,7 +4,7 @@ The synonyms list is part of the [settings][1] category.
 
 [1]: /references/settings.md
 
-::: tip
+::: note
 The synonyms list is considered as one resource and has the REST routes in line with this logic.
 :::
 
