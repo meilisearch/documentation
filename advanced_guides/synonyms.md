@@ -2,7 +2,7 @@
 
 To make your search more relevant there is the possibility of creating synonyms.
 
-Thus, if your database contains a lot of a term that has on or more popular synonyms, by creating a synonym list, terms can be associated. **This allows the same search results if you query one or the other terms**.
+Your database might contain a lot of a term that has one or more popular synonyms. By creating a synonym list, these terms can be associated. **This allows the same search results if you query one or the other terms**.
 
 Synonyms are considered to be exactly the same.
 A search on a word or its synonym will return the same search result.
