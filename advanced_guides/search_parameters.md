@@ -43,7 +43,6 @@ X number of documents in the search query response. This is helpful for **pagina
 
 Attributes that will appear in the returned documents.
 
-
 ## Attributes to crop
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
