@@ -9,7 +9,7 @@ That's why we created MeiliSearch, an open-source solution accessible to everyon
 
 Our solution is **instant**; it **accepts typos**; it understands **filters**, **custom rankings**, and a lot of other [features](/getting_started/features.md).
 
-<linkButton method="GET" text="🚀  GETTING STARTED" url="/tutorials"/>
+<linkButton method="GET" text="🚀  QUICKSTART" url="/tutorials"/>
 
 ## Open-source
 MeiliSearch is open-source. You can support the project by starring it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
