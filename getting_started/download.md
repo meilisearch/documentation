@@ -63,4 +63,4 @@ The deploy can take up to 20 minutes because it will compile the whole project f
 
 ::::
 
-More [ways to run MeiliSearch](/advanced_guides/binary.md) and more information about the [environment variables](/advanced_guides/binary.md#environment-variables).
+More [ways to run MeiliSearch](/guides/advanced_guides/binary.md) and more information about the [environment variables](/guides/advanced_guides/binary.md#environment-variables).
