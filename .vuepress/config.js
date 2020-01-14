@@ -9,6 +9,7 @@ module.exports = {
     logo: "/logo.png",
     sidebarDepth: 1,
     nav: [
+      { text: 'Download', link: '/download/' },
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
       { text: 'Tutorials', link: '/tutorials/' },
@@ -35,9 +36,9 @@ module.exports = {
           path: "/guides/advanced_guides/",
           collapsable: false,
           children: [
+            "/guides/advanced_guides/binary",
             "/guides/advanced_guides/typotolerance",
             "/guides/advanced_guides/concat",
-            "/guides/advanced_guides/binary",
             "/guides/advanced_guides/ranking",
             "/guides/advanced_guides/synonyms",
             "/guides/advanced_guides/stop_words",
@@ -48,6 +49,12 @@ module.exports = {
             "/guides/advanced_guides/asynchronous_updates",
             "/guides/advanced_guides/bucket_sort"
           ]
+        }
+      ],
+      '/download/': [
+        {
+          title: "Download",
+          path:'/download/'
         }
       ],
       '/references/': [
