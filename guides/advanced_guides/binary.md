@@ -100,7 +100,7 @@ The deploy can take up to 20 minutes because it will compile the whole project f
 
 
 ## Flags
-[Flags](/guides/advanced_guides/binary.html#environment-variables) can be added on launch.
+[Flags](/guides/advanced_guides/binary.md#environment-variables) can be added on launch.
 
 ```bash
 $ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
