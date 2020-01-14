@@ -1,8 +1,15 @@
 # Stop words
 
-## Get the list of stop-words
+The stop-words list is part of the [settings][1] category.
 
-<RouteHighlighter method="GET" route="/indexes/:uid/stop-words" />
+[1]: /references/settings.md
+::: tip
+The stop-words list is considered as one resource and has the REST routes in line with this logic.
+:::
+
+## Get stop-words list
+
+<RouteHighlighter method="GET" route="/indexes/:uid/settings/stop-words" />
 
 Get the list [stop-words](/advanced_guides/stop_words).
 
@@ -18,7 +25,7 @@ Get the list [stop-words](/advanced_guides/stop_words).
 
 ```bash
 curl \
-  -X GET 'http://localhost:7700/indexes/12345678/stop-words'
+  -X GET 'http://localhost:7700/indexes/12345678/settings/stop-words'
 ```
 
 
@@ -31,13 +38,15 @@ List of all the stop-words in the index.
 ```
 
 
-## Add stop-words
+## Create stop-words list
 
-<RouteHighlighter method="PATCH" route="/indexes/:uid/stop-words" />
+<RouteHighlighter method="POST" route="/indexes/:uid/settings/stop-words" />
 
-Add [stop-words](/advanced_guides/stop_words) to the list.
+Create the list of [stop-words](/advanced_guides/stop_words).
 
-
+::: warning
+**If one already exists, it will be overridden.**
+:::
 
 #### Path Variables
 
@@ -53,7 +62,7 @@ An array of strings containing the [stop-words](/advanced_guides/stop_words).
 
 ```bash
 curl \
-  -X PATCH 'http://localhost:7700/indexes/12345678/stop-words' \
+  -X POST 'http://localhost:7700/indexes/12345678/settings/stop-words' \
   --data '["the", "of", "to"]'
 ```
 
@@ -67,13 +76,11 @@ curl \
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Delete stop-words
+## Delete stop-words list
 
-<RouteHighlighter method="POST" route="/indexes/:uid/stop-words" />
+<RouteHighlighter method="DELETE" route="/indexes/:uid/settings/stop-words" />
 
-Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
-
-
+Delete the list of [stop-words](/advanced_guides/stop_words).
 
 #### Path Variables
 
@@ -81,16 +88,12 @@ Delete a list of [stop-words](/advanced_guides/stop_words) from the list.
 |-------------------|-----------------------|
 | **uid**         | The index UID         |
 
-#### Body
-
-An array of strings containing the [stop-words](/advanced_guides/stop_words) to delete.
 
 ### Example
 
 ```bash
 curl \
-  -X POST 'http://localhost:7700/indexes/12345678/stop-words' \
-  --data '["the"]'
+  -X DELETE 'http://localhost:7700/indexes/12345678/settings/stop-words' \
 ```
 
 
