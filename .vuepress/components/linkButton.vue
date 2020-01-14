@@ -1,6 +1,6 @@
 <template>
   <div class="route">
-    <a href="#">
+    <a v-bind:href="`${ url }`">
       <div class="method get" v-if="method.toLowerCase() === 'get'">{{ text }}</div>
     </a>
   </div>
@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'linkButton',
-  props: ['method', 'text'],
+  props: ['method', 'text', 'url'],
   data () {
     return {
 
