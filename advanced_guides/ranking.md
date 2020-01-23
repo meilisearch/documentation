@@ -71,7 +71,7 @@ curl -X POST 'http://localhost:7700/indexes/movies/settings' \
     "_words",
     "_proximity",
     "_attribute",
-    "_words__position",
+    "_words_position",
     "_exact",
     "release_date"
   ]
