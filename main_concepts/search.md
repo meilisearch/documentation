@@ -23,12 +23,12 @@ When all documents corresponding to the request have been collected, *MeiliSearc
 A bucket sort can be described as an ordered set of sorting criteria. All the documents are sorted within the first criterion, then documents that can not be distinguished will be sorted using the second criterion, and so on. Thus, every document are not sorted for every criterion which induces a reduced compute time.
 Here is the ordered list of the default criteria used in MeiliSearch:
 
-- _Number of Typos_ - The fewer typos there are between the query words and the document words, the better is the document.
-- _Number of Words_ - A document containing more of the query words will be more important than one that contains less.
-- _Words Proximity_ - The closer the query words are in the document, the better is the document.
-- _Attribute_ - A document containing the query words in a more important attribute than another document is considered better.
-- _Position_ - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
-- _Exact_ - A document containing the query words in their exact form, not only a prefix of them, is considered better.
+- __typo_ - The fewer typos there are between the query words and the document words, the better is the document.
+- __words_ - A document containing more of the query words will be more important than one that contains less.
+- __proximity_ - The closer the query words are in the document, the better is the document.
+- __attribute_ - A document containing the query words in a more important attribute than another document is considered better.
+- __words_position_ - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
+- __exact_ - A document containing the query words in their exact form, not only a prefix of them, is considered better.
 
 You can change the order of these criteria, but you should know that these work well for a majority of use-cases. You can also add your own criteria using the [ranking feature](/advanced_guides/ranking.md#custom-ranking-rules) for domains specific needs. For example, you could add a date sorting criterion when searching into documents where the date of publication is essential. Check the 'Advanced Guides' on ranking to see how to add this kind of criterion.
 

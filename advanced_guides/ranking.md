@@ -8,12 +8,12 @@ MeiliSearch has default `criteria`.
 
 Here is the list of all the `criteria` that are executed in this specific order by default:
 
-- `Number of Typos` - The less typos there are beween the query words and the document words, the better is the document.
-- `Number of Words` - A document containing more of the query words will be more important than one that contains less.
-- `Words Proximity` - The closer the query words are in the document the better is the document.
-- `Attribute` - A document containing the query words in a more important attribute than another document is considered better.
-- `Position` - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
-- `Exact` - A document containing the query words in their exact form, not only a prefix of them, is considered better.
+- `_typo`: The less typos there are beween the query words and the document words, the better is the document.
+- `_words` - A document containing more of the query words will be more important than one that contains less.
+- `_proximity` - The closer the query words are in the document the better is the document.
+- `_attribute` - A document containing the query words in a more important attribute than another document is considered better.
+- `_words_position` - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
+- `_exact` - A document containing the query words in their exact form, not only a prefix of them, is considered better.
 
 
 ## Custom ranking rules
@@ -48,12 +48,12 @@ The ranking order determine the order of each rule in the [bucket sort](/advance
 
 The default ranking order is as follows ([*see above for more detail about each rule*](/advanced_guides/ranking.md#ranking-rules)):
 
-- `Number of Typos`
-- `Number of Words`
-- `Words Proximity`
-- `Attribute`
-- `Position`
-- `Exact`
+- `_typo`
+- `_words`
+- `_proximity`
+- `_attribute`
+- `_words_position`
+- `_exact`
 
 [The ranking order can be changed](/references/settings.md#ranking-rules). Rules can be removed by omitting them in the ranking order list, and custom rules must be added in the ranking order list to be applied.
 
@@ -67,11 +67,11 @@ To apply the [custom ranking rule added previously](/advanced_guides/ranking.md#
 curl -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
   "rankingOrder": [
-    "_sum_of_typos",
-    "_number_of_words",
-    "_word_proximity",
-    "_sum_of_words_attribute",
-    "_sum_of_words_position",
+    "_typo",
+    "_words",
+    "_proximity",
+    "_attribute",
+    "_words__position",
     "_exact",
     "release_date"
   ]

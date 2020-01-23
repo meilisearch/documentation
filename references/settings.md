@@ -29,11 +29,11 @@ List the settings.
 ```json
 {
   "rankingOrder": [
-    "_sum_of_typos",
-    "_number_of_words",
-    "_word_proximity",
-    "_sum_of_words_attribute",
-    "_sum_of_words_position",
+    "_typo",
+    "_words",
+    "_proximity",
+    "_attribute",
+    "_words_position",
     "_exact",
     "release_date"
   ],
@@ -97,11 +97,11 @@ curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings' \
   --data '{
   "rankingOrder": [
-    "_sum_of_typos",
-    "_number_of_words",
-    "_word_proximity",
-    "_sum_of_words_attribute",
-    "_sum_of_words_position",
+    "_typo",
+    "_words",
+    "_proximity",
+    "_attribute",
+    "_words_position",
     "_exact",
     "release_date"
   ],
