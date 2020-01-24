@@ -15,7 +15,6 @@ Our solution is **instant**; it **accepts typos**; it understands **filters**, *
 
 
 
-
 ## Open-source
 MeiliSearch is open-source. You can **support the project by starring** it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
 
