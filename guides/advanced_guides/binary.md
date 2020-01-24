@@ -104,13 +104,8 @@ $ ./target/release/meilisearch
 ::::
 
 
-## Flags
-[Flags](/guides/advanced_guides/binary.md#environment-variables) can be added on launch.
 
-```bash
-$ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
-Server is listening on: http://127.0.0.1:7700
-```
+
 
 ## Usage
 
@@ -133,7 +128,16 @@ OPTIONS:
         --no-analytics <no-analytics>    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
 ```
 
-# Environment variables
+## Environment variables and Flags
+
+[Flags](/guides/advanced_guides/binary.md#environment-variables) can be added on launch.
+
+```bash
+$ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
+Server is listening on: http://127.0.0.1:7700
+```
+
+Here is the list of **all Environment variables and Flags** (CLI options).
 
 | Environment Variable | CLI option     | Description                                                                                                                                                            | Default value      |
 |----------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
