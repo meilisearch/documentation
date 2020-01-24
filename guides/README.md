@@ -20,7 +20,6 @@ First of all, you must have access to a running instance of MeiliSearch.
 There are [several download possibilities](/guides/advanced_guides/binary.md#download-and-launch).
 
 :::: tabs
-
 ::: tab cURL
 Download the **latest stable release** of MeiliSearch with **curl**.
 
@@ -357,5 +356,3 @@ And the SDK's links here :
 - [Ressources](/resources/sdks.md)
 
 Tutorials and Cookbooks are being made. They will be available soon.
-
-
