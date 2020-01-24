@@ -6,7 +6,7 @@ When a field is `distinct`, there will **never be two, or more, occurence of the
 
 ### Example
 
-Lets use the following documents sample with 3 jacket of **different `colors`** but **same `skuid`**:
+Let's use the following documents sample with 3 jacket of **different `colors`** but **same `skuid`**:
 ```json
 [
   {

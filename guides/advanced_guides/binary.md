@@ -1,6 +1,7 @@
 # Installation
 
 ## Download and launch
+
 :::: tabs
 
 ::: tab cURL
@@ -42,7 +43,7 @@ Docker is not persistent. You should share a volume to make your container files
 
 Download the **latest stable release** of MeiliSearch with **APT**.
 
-Launch MeiliSearch to start the server..
+Launch MeiliSearch to start the server.
 ```bash
 $ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 $ apt update && apt install meilisearch-http
@@ -76,8 +77,8 @@ MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](
 If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliSearch
-cd MeiliSearch
+$ git clone https://github.com/meilisearch/MeiliSearch
+$ cd MeiliSearch
 ```
 
 Inside the folder, compile MeiliSearch.

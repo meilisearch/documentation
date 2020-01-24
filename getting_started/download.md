@@ -64,7 +64,6 @@ The deploy can take up to 20 minutes because it will compile the whole project f
 The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. The Heroku deploy is okay for testing purposes, but it won't work for production.
 :::
 
-
 ::::
 
 More [ways to run MeiliSearch](/guides/advanced_guides/binary.md) and more information about the [environment variables and the flags](/guides/advanced_guides/binary.md#environment-variables-and-flags).

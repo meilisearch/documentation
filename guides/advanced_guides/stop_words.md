@@ -43,7 +43,7 @@ Now the schema should be defined like this:
 }
 ```
 
-Lets make a search on this dataset
+Let's make a search on this dataset
 
 #### Without stop words
 
@@ -88,7 +88,7 @@ Lets make a search on this dataset
 `The Road to Hong Kong` is the first film in our search results. It is there because of the recurrence of the words "the" and "of" in the title and description. However, it is the oldest film in the documents offered.
 
 The number of occurrences of common words impacts a lot the search results. If we want to focus on more relevant information, `the`, `of` and `to` should be added to the stop word list.
-#### Lets add some stop words
+#### Let's add some stop words
 
 ```bash
 curl \
@@ -96,7 +96,7 @@ curl \
   --data '["the", "of", "to"]'
 ```
 
-and lets try the same search again.
+and let's try the same search again.
 
 ```json
 {

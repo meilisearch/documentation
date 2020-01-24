@@ -11,7 +11,7 @@ Contents :
 - [Launching an instance of MeiliSearch](/guides/#download-and-launch)
 - [Create your index](/guides/#create-your-index)
 - [Add documents](/guides/#add-documents)
-- [Search !](/guides/#searches)
+- [Search!](/guides/#searches)
 
 ### Download and launch
 
@@ -78,13 +78,11 @@ You can deploy the latest stable build of MeiliSearch straight on Heroku.
   </a>
 </p>
 
-
 The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
 
 ::: warning
 The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
 :::
-
 
 ::: tab Source
 
@@ -93,18 +91,18 @@ MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](
 If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliSearch
-cd MeiliSearch
+$ git clone https://github.com/meilisearch/MeiliSearch
+$ cd MeiliSearch
 ```
 
 Inside the folder, compile MeiliSearch.
 
 ```bash
 # Production version
-cargo build --release
+$ cargo build --release
 
 # Debug version
-cargo build
+$ cargo build
 ```
 
 Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
@@ -193,7 +191,7 @@ Once the index has been created it need to be filled with [documents](/guides/ma
 
 The documents must have at least one field in common. This field contains the identifier of the document.
 
-Lets use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
+Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
 
 
 :::: tabs
@@ -228,26 +226,24 @@ index.add_documents(movies)
 ::: tab PHP
 
 ```php
-$index->addOrReplaceDocuments($movies)
+$index->addOrReplaceDocuments($movies);
 ```
 :::
 
 ::: tab Python
 
 ```python
-
 index = self.client.get_index(uid="movies_uid")
 json_file = open('movies.json')
 data = json.load(json_file)
 response = index.add_documents(data)
-
 ```
 :::
 ::::
 
 ### Checking updates
 
-In MeiliSearch most actions are asynchronous. This lets you stack actions. They will be executed in the order in which they were made.
+In MeiliSearch, most actions are asynchronous. This lets you stack actions. They will be executed in the order in which they were made.
 
 You can [track the state of each action](/guides/advanced_guides/asynchronous_updates.md).
 
@@ -299,7 +295,7 @@ index.search('botman')
 ::: tab PHP
 
 ```php
-$index->search('botman')
+$index->search('botman');
 ```
 :::
 
@@ -307,9 +303,8 @@ $index->search('botman')
 
 ```python
 index.search({
-            'q': 'How to Train Your Dragon'
-        })
-
+  'q': 'How to Train Your Dragon'
+})
 ```
 :::
 ::::
@@ -340,11 +335,9 @@ Meilisearch **response** :
 }
 ```
 
-
 ### Afterword
 
-
-In MeiliSearch we have three concepts on which we build our search engine. If you haven't read these pages yet, do not hesitate, they give an essential insight.
+In MeiliSearch, we have three concepts on which we build our search engine. If you haven't read these pages yet, do not hesitate, they give an essential insight.
 - [Indexes](/guides/main_concepts/indexes.md)
 - [Documents](/guides/main_concepts/documents.md)
 - [Search](/guides/main_concepts/search.md)

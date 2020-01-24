@@ -82,18 +82,18 @@ MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](
 If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliSearch
-cd MeiliSearch
+$ git clone https://github.com/meilisearch/MeiliSearch
+$ cd MeiliSearch
 ```
 
 Inside the folder, compile MeiliSearch.
 
 ```bash
 # Production version
-cargo build --release
+$ cargo build --release
 
 # Debug version
-cargo build
+$ cargo build
 ```
 
 Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
