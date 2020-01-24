@@ -351,7 +351,7 @@ In MeiliSearch we have three concepts on which we build our search engine. If yo
 - [Search](/guides/main_concepts/search.md)
 
 Finally, you can find the API references here :
-- [API References](/references/)
+- [API References](/references)
 
 And the SDK's links here :
 - [Ressources](/resources/sdks.md)
