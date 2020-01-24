@@ -10,7 +10,11 @@ please contact us using the little chat box at the bottom right of this page.
 
 Thank you for your interest and have fun with your HTTP client 🌍
 
-----
+::: warning
+The documentation is written for the latest stable release: [v0.8.4](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.8.4).
+
+v0.9.0 is on its way and will bring significant changes in the settings API.
+:::
 
 # Headers
 
@@ -41,7 +45,7 @@ We support `gzip`, `brotli` and `deflate`.
 #### Authentication
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
-Please read the [advanced part about keys](/advanced_guides/keys.md) and [how to manage them](/references/keys.md) for more information.
+Please read the [advanced part about keys](/guides/advanced_guides/keys.md) and [how to manage them](/references/keys.md) for more information.
 
 `X-Meili-API-Key: $API_KEY`
 
@@ -94,4 +98,4 @@ In a lot of cases you will receive as server response a simple JSON with only an
 }
 ```
 
-MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses. See [advanced guide](/advanced_guides/asynchronous_updates.md) for more information.
+MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses. See [advanced guide](/guides/advanced_guides/asynchronous_updates.md) for more information.

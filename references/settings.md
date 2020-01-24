@@ -49,8 +49,8 @@ List the settings.
 <RouteHighlighter method="POST" route="/indexes/:uid/settings" />
 
 Add or replace the following settings of an index:
-* Create [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules)
-* Change [ranking rules order](/advanced_guides/ranking.md#ranking-order)
+* Create [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules)
+* Change [ranking rules order](/guides/advanced_guides/ranking.md#ranking-order)
 * Create distinct field
 
 
@@ -64,25 +64,25 @@ Add or replace the following settings of an index:
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **rankingRules**         | All [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules)      |
-| **rankingOrder**         | [Ranking order](/advanced_guides/ranking.md#ranking-order) of all rules, custom and default     |
-| **distinct**         | Field to which [distinct](/advanced_guides/distinct.md) will be applied    |
+| **rankingRules**         | All [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules)      |
+| **rankingOrder**         | [Ranking order](/guides/advanced_guides/ranking.md#ranking-order) of all rules, custom and default     |
+| **distinct**         | Field to which [distinct](/guides/advanced_guides/distinct.md) will be applied    |
 
 #### Ranking rules
 
-An objet containing document attributes as keys and  `asc` ascending or `dsc` descending as value of this key. More information about [custom ranking rules](/advanced_guides/ranking.md#custom-ranking-rules).
+An objet containing document attributes as keys and  `asc` ascending or `dsc` descending as value of this key. More information about [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules).
 
 ::: warning
- To activate a ranking rule on a field, this **field must have the ranked property** in the [schema](/main_concepts/indexes.md#schema-definition) and it **must be in the ranking order**.
+ To activate a ranking rule on a field, this **field must have the ranked property** in the [schema](/guides/main_concepts/indexes.md#schema-definition) and it **must be in the ranking order**.
 :::
 
 #### Ranking order
 
-A list of ranking rules ordered by importance for the [bucket sort](/advanced_guides/bucket_sort.md). The first rule being the most important.
+A list of ranking rules ordered by importance for the [bucket sort](/guides/advanced_guides/bucket_sort.md). The first rule being the most important.
 
 #### Distinct field
 
-A string containing the attribute that needs to be [distinct](/advanced_guides/distinct.md).
+A string containing the attribute that needs to be [distinct](/guides/advanced_guides/distinct.md).
 
 ::: note
 None of the 3 settings parameters are mandatory

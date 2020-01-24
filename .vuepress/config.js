@@ -7,71 +7,102 @@ module.exports = {
     editLinks: true,
     lastUpdated: "Last Updated",
     logo: "/logo.png",
-    sidebar: [
-      {
-        title: "🚀 Getting started",
-        path: "/",
-        collapsable: false,
-        sidebarDepth: 0,
-        children: [
-          "/getting_started/foreword",
-          "/getting_started/quickstart",
-          "/getting_started/features",
-          "/getting_started/download"
-        ]
-      },
-      {
-        title: "💡 Main concepts",
-        path: "/main_concepts/",
-        collapsable: false,
-        sidebarDepth: 1,
-        children: [
-          "/main_concepts/indexes",
-          "/main_concepts/documents",
-          "/main_concepts/search"
-        ]
-      },
-      {
-        title: "📚 Advanced Guides",
-        path: "/advanced_guides/",
-        collapsable: true,
-        sidebarDepth: 1,
-        children: [
-          "/advanced_guides/binary",
-          "/advanced_guides/typotolerance",
-          "/advanced_guides/concat",
-          "/advanced_guides/ranking",
-          "/advanced_guides/synonyms",
-          "/advanced_guides/stop_words",
-          "/advanced_guides/search_parameters",
-          "/advanced_guides/keys",
-          "/advanced_guides/prefix",
-          "/advanced_guides/distinct",
-          "/advanced_guides/asynchronous_updates",
-          "/advanced_guides/bucket_sort"
-        ]
-      },
-      {
-        title: "📒 API References",
-        path: "/references/",
-        collapsable: true,
-        sidebarDepth: 1,
-        children: [
-          "/references/indexes",
-          "/references/documents",
-          "/references/search",
-          "/references/synonyms",
-          "/references/stop_words",
-          "/references/updates",
-          "/references/keys",
-          "/references/settings",
-          "/references/stats",
-          "/references/health",
-          "/references/version",
-          "/references/sys-info"
-        ]
-      }
-    ]
+    sidebarDepth: 1,
+    nav: [
+      { text: 'Guides', link: '/guides/' },
+      { text: 'API References', link: '/references/' },
+      { text: 'Tutorials', link: '/tutorials/' },
+      { text: 'Resources', link: '/resources/' }
+    ],
+    sidebar: {
+      '/guides/': [
+        {
+          title: "🚀 Getting started",
+          path:'/guides/',
+          sidebarDepth: 0
+        },
+        {
+          title: "💡 Main concepts",
+          path: "/guides/main_concepts/",
+          collapsable: false,
+          children: [
+            "/guides/main_concepts/indexes",
+            "/guides/main_concepts/documents",
+            "/guides/main_concepts/search"
+          ]
+        },
+        {
+          title: "📚 Advanced Guides",
+          path: "/guides/advanced_guides/",
+          collapsable: false,
+          children: [
+            "/guides/advanced_guides/binary",
+            "/guides/advanced_guides/typotolerance",
+            "/guides/advanced_guides/concat",
+            "/guides/advanced_guides/ranking",
+            "/guides/advanced_guides/synonyms",
+            "/guides/advanced_guides/stop_words",
+            "/guides/advanced_guides/search_parameters",
+            "/guides/advanced_guides/keys",
+            "/guides/advanced_guides/prefix",
+            "/guides/advanced_guides/distinct",
+            "/guides/advanced_guides/asynchronous_updates",
+            "/guides/advanced_guides/bucket_sort"
+          ]
+        }
+      ],
+      '/download/': [
+        {
+          title: "Download",
+          path:'/download/'
+        }
+      ],
+      '/references/': [
+        {
+          title: '📒 API References',
+          path: '/references/',
+          collapsable: false,
+          children: [
+            "/references/indexes",
+            "/references/documents",
+            "/references/search",
+            "/references/synonyms",
+            "/references/stop_words",
+            "/references/updates",
+            "/references/keys",
+            "/references/settings",
+            "/references/stats",
+            "/references/health",
+            "/references/version",
+            "/references/sys-info"
+          ]
+        }
+      ],
+      '/tutorials/': [
+        {
+          title: '🚀 Quickstart',
+          path: '/tutorials/'
+        },
+        {
+          title: '🍳 Cookbooks',
+          path: '/tutorials/cookbooks/'
+        },
+        {
+          title: '🧷 How to\'s',
+          path: '/tutorials/howtos/'
+        }
+      ],
+      '/resources/': [
+        {
+          title: "📦 Resources",
+          path: '/resources/',
+          collapsable: false,
+          children: [
+            "/resources/sdks"
+          ]
+        }
+      ]
+    },
   },
   plugins: [
     ["check-md", { pattern: "**/*.md" }],

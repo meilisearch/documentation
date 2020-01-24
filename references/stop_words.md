@@ -11,7 +11,7 @@ The stop-words list is considered as one resource and has the REST routes in lin
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings/stop-words" />
 
-Get the list [stop-words](/advanced_guides/stop_words).
+Get the list [stop-words](/guides/advanced_guides/stop_words).
 
 
 #### Path Variables
@@ -42,7 +42,7 @@ List of all the stop-words in the index.
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings/stop-words" />
 
-Create the list of [stop-words](/advanced_guides/stop_words).
+Create the list of [stop-words](/guides/advanced_guides/stop_words).
 
 ::: warning
 **If one already exists, it will be overridden.**
@@ -56,7 +56,7 @@ Create the list of [stop-words](/advanced_guides/stop_words).
 
 #### Body
 
-An array of strings containing the [stop-words](/advanced_guides/stop_words).
+An array of strings containing the [stop-words](/guides/advanced_guides/stop_words).
 
 ### Example
 
@@ -80,7 +80,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:uid/settings/stop-words" />
 
-Delete the list of [stop-words](/advanced_guides/stop_words).
+Delete the list of [stop-words](/guides/advanced_guides/stop_words).
 
 #### Path Variables
 
