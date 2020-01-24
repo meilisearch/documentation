@@ -343,7 +343,6 @@ Meilisearch **response** :
 
 ### Afterword
 
-
 In MeiliSearch we have three concepts on which we build our search engine. If you did not go to those pages, they give an essential insight.
 - [Indexes](/guides/main_concepts/indexes.md)
 - [Documents](/guides/main_concepts/documents.md)
@@ -356,4 +355,3 @@ And the SDK's links here :
 - [Ressources](/resources/sdks.md)
 
 Tutorials and Cookbooks are being made. They will be available soon.
-
