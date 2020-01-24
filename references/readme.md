@@ -13,7 +13,7 @@ Thank you for your interest and have fun with your HTTP client 🌍
 ::: warning
 The documentation is written for the latest stable release: [v0.8.4](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.8.4).
 
-v0.9.0 is on its way and will bring significant changes in the settings API.
+v0.9.0 is on its way and will bring significant changes in the settings API!
 :::
 
 # Headers
