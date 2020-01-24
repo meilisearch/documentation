@@ -85,10 +85,12 @@ module.exports = {
         },
         {
           title: '🍳 Cookbooks',
+          sidebarDepth: 0,
           path: '/tutorials/cookbooks/'
         },
         {
           title: '🧷 How to\'s',
+          sidebarDepth: 0,
           path: '/tutorials/howtos/'
         }
       ],
