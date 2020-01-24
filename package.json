@@ -21,7 +21,7 @@
   "author": "tpayet",
   "license": "MIT",
   "dependencies": {
-    "mermaid": "^8.4.5",
+    "mermaid": "^8.4.6",
     "vuepress": "^1.2.0",
     "vuepress-plugin-seo": "^0.1.2",
     "vuepress-plugin-sitemap": "^2.3.1"
