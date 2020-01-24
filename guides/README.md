@@ -345,7 +345,7 @@ Meilisearch **response** :
 ### Afterword
 
 
-In MeiliSearch we have three concepts on which we build our search engine. If you did not go to those pages, they give an essential insight.
+In MeiliSearch we have three concepts on which we build our search engine. If you haven't read these pages yet, do not hesitate, they give an essential insight.
 - [Indexes](/guides/main_concepts/indexes.md)
 - [Documents](/guides/main_concepts/documents.md)
 - [Search](/guides/main_concepts/search.md)
