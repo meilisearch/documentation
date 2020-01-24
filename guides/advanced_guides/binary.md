@@ -6,7 +6,7 @@
 ::: tab cURL
 Download the **latest stable release** of MeiliSearch with **curl**.
 
-Launch the MeiliSearch package to start MeiliSearch's server.
+Launch MeiliSearch to start the server.
 ```bash
 $ curl -L https://install.meilisearch.com | sh
 $ ./meilisearch
@@ -17,7 +17,7 @@ Server is listening on: http://127.0.0.1:7700
 ::: tab Brew
 Download the **latest stable release** of MeiliSearch with **Homebrew**.
 
-Launch the MeiliSearch package to start MeiliSearch's server.
+Launch MeiliSearch to start the server.
 ```bash
 $ brew update && brew install meilisearch
 $ meilisearch
@@ -42,7 +42,7 @@ Docker is not persistent. You should share a volume to make your container files
 
 Download the **latest stable release** of MeiliSearch with **APT**.
 
-Launch the MeiliSearch package to start MeiliSearch's server.
+Launch MeiliSearch to start the server..
 ```bash
 $ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 $ apt update && apt install meilisearch-http
