@@ -106,7 +106,6 @@ $ ./target/release/meilisearch
 
 
 
-
 ## Usage
 
 ```bash
