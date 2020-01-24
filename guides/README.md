@@ -127,7 +127,7 @@ $ ./target/release/meilisearch
 
 Now that our meilisearch server is up and running, we will be able to communicate with it.
 
-This is done through a [RESTFul API](/references/readme.md) or one of our [SDK's](/resources/sdks.md).
+This is done through a [RESTFul API](/references/README.md) or one of our [SDK's](/resources/sdks.md).
 
 For this getting started, communication will be done with the RESTful API using cURL.
 
