@@ -67,4 +67,4 @@ The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my
 
 ::::
 
-More [ways to run MeiliSearch](/guides/advanced_guides/binary.md) and more information about the [environment variables](/guides/advanced_guides/binary.md#environment-variables).
+More [ways to run MeiliSearch](/guides/advanced_guides/binary.md) and more information about the [environment variables and the flags](/guides/advanced_guides/binary.md#environment-variables-and-flags).

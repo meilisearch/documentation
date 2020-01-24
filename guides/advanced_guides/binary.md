@@ -6,7 +6,7 @@
 ::: tab cURL
 Download the **latest stable release** of MeiliSearch with **curl**.
 
-Launch the MeiliSearch package to start MeiliSearch's server.
+Launch MeiliSearch to start the server.
 ```bash
 $ curl -L https://install.meilisearch.com | sh
 $ ./meilisearch
@@ -17,7 +17,7 @@ Server is listening on: http://127.0.0.1:7700
 ::: tab Brew
 Download the **latest stable release** of MeiliSearch with **Homebrew**.
 
-Launch the MeiliSearch package to start MeiliSearch's server.
+Launch MeiliSearch to start the server.
 ```bash
 $ brew update && brew install meilisearch
 $ meilisearch
@@ -42,7 +42,7 @@ Docker is not persistent. You should share a volume to make your container files
 
 Download the **latest stable release** of MeiliSearch with **APT**.
 
-Launch the MeiliSearch package to start MeiliSearch's server.
+Launch MeiliSearch to start the server..
 ```bash
 $ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 $ apt update && apt install meilisearch-http
@@ -104,13 +104,7 @@ $ ./target/release/meilisearch
 ::::
 
 
-## Flags
-[Flags](/guides/advanced_guides/binary.md#environment-variables) can be added on launch.
 
-```bash
-$ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
-Server is listening on: http://127.0.0.1:7700
-```
 
 ## Usage
 
@@ -133,7 +127,16 @@ OPTIONS:
         --no-analytics <no-analytics>    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
 ```
 
-# Environment variables
+## Environment variables and Flags
+
+Flags can be added on launch.
+
+```bash
+$ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
+Server is listening on: http://127.0.0.1:7700
+```
+
+Here is the list of **all Environment variables and Flags** (CLI options).
 
 | Environment Variable | CLI option     | Description                                                                                                                                                            | Default value      |
 |----------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
