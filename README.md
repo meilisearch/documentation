@@ -6,7 +6,6 @@ MeiliSearch is a **RESTfull search API** that is the **ready-to-go solution** fo
 
 <linkButton method="GET" text="🚀  GETTING STARTED" url="/guides/#getting-started"/>
 
-
 Efficient search engines are often only accessible to companies with the financial means and resources necessary to develop a search solution adapted to their needs. The majority of other companies that do not have the means or do not realize that the lack of relevance of a search greatly impacts the pleasure of navigation on their application,
 end up with poor solutions that are more frustrating than effective, for both the developer and the user.
 
