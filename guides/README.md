@@ -118,7 +118,7 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environnements variables and flags](/guides/advanced_guides/binary.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
+[Environment variables and flags](/guides/advanced_guides/binary.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
 
 ### Communicate with MeiliSearch
 
@@ -252,7 +252,7 @@ You can [track the state of each action](/guides/advanced_guides/asynchronous_up
 
 Now that our documents have been added to MeiliSearch we are be able to [search](/guides/main_concepts/search.md) in it.
 
-Meilisearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default the search is already relevant.
+MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default the search is already relevant.
 
 The search engine is now aware of our documents and can serve those via our HTTP server.
 
@@ -309,7 +309,7 @@ index.search({
 :::
 ::::
 
-Meilisearch **response** :
+MeiliSearch **response** :
 ```json
 {
   "hits": [
