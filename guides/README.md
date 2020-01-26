@@ -124,20 +124,18 @@ $ ./target/release/meilisearch
 
 Now that our meilisearch server is up and running, we will be able to communicate with it.
 
-This is done through a [RESTFul API](/references/README.md) or one of our [SDK's](/resources/sdks.md).
-
-For this getting started, communication will be done with the RESTful API using cURL.
+This is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
 ### Create your Index
 
 In MeiliSearch, the information is subdivided into [indexes](/guides/main_concepts/indexes.md). Each index contains a data structure and the associated documents.
 The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
 
-In order to be able to store our documents in an index, we [have to create one first](/guides/main_concepts/indexes.md).
+In order to be able to store our documents in an [index](/guides/main_concepts/indexes.md), we have to create one first.
 
 :::: tabs
 
-::: tab Curl
+::: tab cURL
 
 [API references](/references/indexes.md)
 ```bash
@@ -345,7 +343,7 @@ In MeiliSearch, we have three concepts on which we build our search engine. If y
 Finally, you can find the API references here :
 - [API References](/references/README.md)
 
-And the SDK's links here :
+And the SDKs links here :
 - [Ressources](/resources/sdks.md)
 
 Tutorials and Cookbooks are being made. They will be available soon.

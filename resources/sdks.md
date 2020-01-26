@@ -1,4 +1,4 @@
-# Official SDK's / Libraries
+# Official SDKs / Libraries
 
 You can use MeiliSearch API wrappers in your favorite language. These libraries support the main methods for search and indexation and are tested against MeiliSearch v0.8.4.
 
