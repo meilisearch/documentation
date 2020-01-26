@@ -131,7 +131,7 @@ For this getting started, communication will be done with the RESTful API using 
 ### Create your Index
 
 In MeiliSearch, the information is subdivided into [indexes](/guides/main_concepts/indexes.md). Each index contains a data structure and the associated documents.
-The indexes can be imagined as SQL tables. But you wont need to define the table, [meiliSearch does that for your](/guides/main_concepts/indexes.md#inferred-schema).
+The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
 
 In order to be able to store our documents in an index, we [have to create one first](/guides/main_concepts/indexes.md).
 
