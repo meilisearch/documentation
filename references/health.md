@@ -33,7 +33,7 @@ The body accepts a boolean to define the MeiliSearch health.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X PUT 'http://localhost:7700/health' \
   --data '{
   "health": false

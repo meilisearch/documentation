@@ -6,7 +6,7 @@ A prefix search is when the documents sorting starts by comparing your search qu
 
 All words beginning with this letter are added to the [bucket sort](/guides/advanced_guides/bucket_sort.md) and then the other [ranking rules](/guides/advanced_guides/ranking.md#ranking-rules) are applied.
 
-::: tip
+::: note
 Since there are so many possible relevant documents with only one letter, the longer the search query is the fastest it will respond.
 :::
 

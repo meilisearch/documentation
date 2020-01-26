@@ -52,12 +52,10 @@ curl \
 
 Get system information.
 
-
-
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/sys-info'
 ```
 

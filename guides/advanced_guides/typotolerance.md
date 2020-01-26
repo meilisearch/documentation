@@ -4,7 +4,7 @@ MeiliSearch **implements [typo tolerance](/guides/advanced_guides/typotolerance.
 
 #### Example
 
-On a movie dataset, let's search for `botman`
+On a movie dataset, let's search for `botman`.
 ```json
 {
   "hits": [
@@ -37,7 +37,7 @@ On a movie dataset, let's search for `botman`
 
 The typo rules are used before sorting the documents. They are used to aggregate them, to choose which documents contain words similar to the queried words.
 
-We use a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to check if the words match. The only difference with a Levenshtein algorithm is that it accepts every word that **starts with the query words** too. Therefore words are accepted if they start with or have equal length.
+We use a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to check if the words match. The only difference with a Levenshtein algorithm is that it accepts every word that **starts with the query words** too. Therefore, words are accepted if they start with or have equal length.
 
 The Levenshtein distance between two words _M_ and _P_ is called "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations:
 
@@ -47,8 +47,8 @@ The Levenshtein distance between two words _M_ and _P_ is called "the minimum co
 
 There are some rules about what can be considered "similar". These rules are **by word** and not for the whole query string.
 
-- If the query word is between 1 and 4 characters long therefore **no typo** is allowed, only documents that contains words that **starts with** or are of **equal length** with this query word are considered valid for this request.
-- If the query word is between 5 and 8 characters long, **one typo** is allowed. Documents that contains words that match with **one typo** are retained for the next steps.
+- If the query word is between 1 and 4 characters long, therefore, **no typo** is allowed. Only documents that contain words that **start with** or are of **equal length** with this query word are considered valid for this request.
+- If the query word is between 5 and 8 characters long, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
 - If the query word contains more than 8 characters, we accept a maximum of **two typos**.
 
 This means that "saturday", which is 7 characters long uses the second rule and every document containing words that only have **one typo** will match. For example:

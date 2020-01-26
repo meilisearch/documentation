@@ -16,7 +16,7 @@ Get the status of an [update](/guides/advanced_guides/asynchronous_updates.md) i
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/updates/1'
 ```
 
@@ -53,7 +53,7 @@ Get the status of all [updates](/guides/advanced_guides/asynchronous_updates.md)
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/updates'
 ```
 

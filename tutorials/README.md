@@ -109,13 +109,12 @@ $ ./target/release/meilisearch
 
 ::::
 
-
 ### Create an Index and Upload Some Documents
 
 MeiliSearch can serve multiple indexes, with different kinds of documents. Therefore, it is required to create an index before sending documents to it.
 
 ```bash
-curl -i -X POST 'http://127.0.0.1:7700/indexes' \
+$ curl -i -X POST 'http://127.0.0.1:7700/indexes' \
   --data '{
     "name": "Movie"
   }'
@@ -137,7 +136,7 @@ Now that the server knows about our brand new index, we can send it data.
 We provide you a dataset, it is available in the `datasets/` [directory](https://github.com/meilisearch/MeiliSearch/tree/master/datasets).
 
 ```bash
-curl -i -X POST 'http://127.0.0.1:7700/indexes/12345678/documents' \
+$ curl -i -X POST 'http://127.0.0.1:7700/indexes/12345678/documents' \
   --data @datasets/movies/movies.json
 ```
 
@@ -146,7 +145,7 @@ curl -i -X POST 'http://127.0.0.1:7700/indexes/12345678/documents' \
 The search engine is now aware of our documents and can serve those via our HTTP server.
 
 ```bash
-curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
+$ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 
 ```json

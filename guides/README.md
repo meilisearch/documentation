@@ -3,6 +3,7 @@
 This guide is made to give you a fast overview of MeiliSearch. Every bit of information is linked to its advanced documentation.
 
 If you want an even quicker overview we suggest [you look into our quickstart](/tutorials).
+
 ## Getting Started
 
 MeiliSearch has been developed to provide an easily integrated search solution. Each step of the implementation process has been designed to be **as simple as possible**. This guide will help you get started with MeiliSearch.
@@ -128,10 +129,10 @@ This is done through a [RESTFul API](/references/README.md) or one of our [SDKs]
 
 ### Create your Index
 
-In MeiliSearch, the information is subdivided into [indexes](/guides/main_concepts/indexes.md). Each index contains a data structure and the associated documents.
+In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
 The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
 
-In order to be able to store our documents in an [index](/guides/main_concepts/indexes.md), we have to create one first.
+In order to be able to store our documents in an index, we have to create one first.
 
 :::: tabs
 
@@ -139,7 +140,7 @@ In order to be able to store our documents in an [index](/guides/main_concepts/i
 
 [API references](/references/indexes.md)
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
   "name": "Movies",
@@ -183,9 +184,9 @@ client.create_index(name="movies", uid="movies_uid")
 
 ### Add Documents
 
-Once the index has been created it need to be filled with [documents](/guides/main_concepts/documents.md). It is these [documents](/guides/main_concepts/documents.md) that will be used and returned when [searches](/guides/main_concepts/search.md) are made on MeiliSearch.
+Once the index has been created it need to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are made on MeiliSearch.
 
-[Documents](/guides/main_concepts/documents.md) are sent to MeiliSearch in JSON format.
+Documents are sent to MeiliSearch in JSON format.
 
 The documents must have at least one field in common. This field contains the identifier of the document.
 
@@ -198,7 +199,7 @@ Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliS
 
 [API references](/references/documents.md)
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/movies_uid/documents' \
   --data @movies.json
 ```
@@ -255,7 +256,7 @@ MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.m
 The search engine is now aware of our documents and can serve those via our HTTP server.
 
 ```bash
-curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
+$ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 
 :::: tabs
@@ -264,7 +265,7 @@ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 
 [API references](/references/search.md)
 ```bash
-curl \
+$ curl \
   -X POST 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 :::

@@ -6,7 +6,7 @@ When a field is `distinct`, there will **never be two, or more, occurence of the
 
 ### Example
 
-Let's use the following documents sample with 3 jacket of **different `colors`** but **same `skuid`**:
+Let's use the following documents sample with 3 jackets of **different `colors`** but **same `skuid`**:
 ```json
 [
   {
@@ -34,13 +34,13 @@ Let's use the following documents sample with 3 jacket of **different `colors`**
 By [setting `skuid` as a distinct field](/references/settings.md#distinct-field):
 
 ```bash
-curl
+ $ curl
   -X POST 'http://localhost:7700/indexes/jackets/settings' \
   --data '{ "distinctField": "skuid" }'
 ```
 
-With this setted, document request made to MeiliSearch **will never return two or more jacket with the same `skuid`**.
+With this settings, document request made to MeiliSearch **will never return two or more jackets with the same `skuid`**.
 
 ::: error
-If the field does not exist no error will be thrown
+If the field does not exist, no error will be thrown.
 :::

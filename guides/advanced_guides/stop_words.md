@@ -48,7 +48,7 @@ Let's make a search on this dataset
 #### Without stop words
 
 ```bash
-➜ curl -G \
+$ curl -G \
   -X GET 'http://localhost:7700/indexes/rangemovies/search?limit=3' \
   --data-urlencode "q=the road to "
 ```
@@ -91,7 +91,7 @@ The number of occurrences of common words impacts a lot the search results. If w
 #### Let's add some stop words
 
 ```bash
-curl \
+$ curl \
   -X PUT 'http://localhost:7700/indexes/rangemovies/stop-words' \
   --data '["the", "of", "to"]'
 ```

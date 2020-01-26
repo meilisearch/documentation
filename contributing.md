@@ -2,21 +2,20 @@
 
 ## Installation
 
-
 ```bash
-npm install -g vuepress
+$ npm install -g vuepress
 ```
 
 ## Launch
 
 ### development
 ```bash
-vuepress dev
+$ vuepress dev
 ```
 
 # production
 ```bash
-vuepress build
+$ vuepress build
 ```
 
 ## Changing the documentation

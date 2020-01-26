@@ -11,7 +11,7 @@ Get version of MeiliSearch.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/version'
 ```
 

@@ -17,7 +17,7 @@ Get one document using its unique identifier.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/documents/25684'
 ```
 
@@ -64,7 +64,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/documents?limit=2'
 ```
 
@@ -129,7 +129,7 @@ Documents fields which are not known to the index schema will be ignored.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/12345678/documents' \
   --data '[{
       "id": 287947,
@@ -187,7 +187,7 @@ Documents fields which are not known to the index schema will be ignored.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/12345678/documents' \
   --data '[{
       "id": 287947,

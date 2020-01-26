@@ -17,7 +17,7 @@ List one sequence and its synonyms in an index.
 
 #### Example
 ```bash
- curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/synonyms/magician'
 ```
 
@@ -45,7 +45,7 @@ List all sequences and their synonyms in an index.
 
 #### Example
 ```bash
- curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/synonyms'
 ```
 
@@ -91,14 +91,14 @@ An object with either multi-way string associations or one-way string associatio
 
 #### One-way Example
 ```bash
- curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/12345678/synonyms' \
   --data '{ "input": "magician", "synonyms": ["harry potter", "merlin"]}'
 ```
 
 #### Multi-way Example
 ```bash
- curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/12345678/synonyms' \
   --data '{ "synonyms": ["harry potter", "hp"]}'
 ```
@@ -136,7 +136,7 @@ This will **override** the previous synonyms of the given sequence. Don't forget
 
 #### Example
 ```bash
- curl \
+$ curl \
   -X PUT 'http://localhost:7700/indexes/12345678/synonyms/magician' \
   --data '["harry potter", "merlin", "Illusionist"]'
 ```
@@ -167,7 +167,7 @@ Delete a synonym.
 
 #### Example
 ```bash
- curl \
+$ curl \
   -X DELETE 'http://localhost:7700/indexes/12345678/synonyms/magician'
 ```
 
@@ -204,7 +204,7 @@ An object with either multi-way string associations or one-way string associatio
 
 #### Example
 ```bash
- curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/12345678/synonyms/batch' \
   --data '[
     {
@@ -242,7 +242,7 @@ Delete all synonyms
 
 #### Example
 ```bash
- curl \
+$ curl \
   -X DELETE 'http://localhost:7700/indexes/12345678/synonyms'
 ```
 

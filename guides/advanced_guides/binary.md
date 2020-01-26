@@ -62,13 +62,11 @@ You can deploy the latest stable build of MeiliSearch straight on Heroku.
   </a>
 </p>
 
-
 The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
 
 ::: warning
 The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
 :::
-
 
 ::: tab Source
 
@@ -85,10 +83,10 @@ Inside the folder, compile MeiliSearch.
 
 ```bash
 # Production version
-cargo build --release
+$ cargo build --release
 
 # Debug version
-cargo build
+$ cargo build
 ```
 
 Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
