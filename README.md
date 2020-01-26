@@ -1,5 +1,3 @@
-
-
 # MeiliSearch Documentation
 
 MeiliSearch is a **RESTfull search API** that is the **ready-to-go solution** for everyone wanting a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
@@ -17,12 +15,9 @@ Our solution is **instant**; it **accepts typos**; it understands **filters**, *
 
 MeiliSearch is open-source. You can **support the project by starring** it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
 
-<!-- Place this tag where you want the button to render. -->
-<a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a><!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a>
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a>
-<!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-
 
 ## Demo
 
