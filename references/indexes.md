@@ -10,7 +10,7 @@ List all indexes.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes'
 ```
 
@@ -43,7 +43,7 @@ Get the index relative information.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678'
 ```
 
@@ -98,7 +98,7 @@ If no schema has been defined when the first document is added, the schema will 
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
   "name": "Movies",
@@ -171,7 +171,7 @@ The body accepts a new name for the given index.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X PUT 'http://localhost:7700/indexes/12345678' \
   --data '{
   "name": "Movies"
@@ -206,7 +206,7 @@ Delete an index.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X DELETE 'http://localhost:7700/indexes/12345678'
 ```
 
@@ -235,7 +235,7 @@ Get the schema of one index.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/schema'
 ```
 
@@ -355,7 +355,7 @@ If `raw` query parameter has been set to `true`:
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X PUT 'http://localhost:7700/indexes/12345678/schema' \
   --data '{
   "id": ["identifier", "indexed", "displayed"],

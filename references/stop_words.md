@@ -24,7 +24,7 @@ Get the list [stop-words](/guides/advanced_guides/stop_words).
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings/stop-words'
 ```
 
@@ -61,7 +61,7 @@ An array of strings containing the [stop-words](/guides/advanced_guides/stop_wor
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/12345678/settings/stop-words' \
   --data '["the", "of", "to"]'
 ```
@@ -92,7 +92,7 @@ Delete the list of [stop-words](/guides/advanced_guides/stop_words).
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X DELETE 'http://localhost:7700/indexes/12345678/settings/stop-words' \
 ```
 

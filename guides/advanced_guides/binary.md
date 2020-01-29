@@ -1,6 +1,7 @@
 # Installation
 
 ## Download and launch
+
 :::: tabs
 
 ::: tab cURL
@@ -42,7 +43,7 @@ Docker is not persistent. You should share a volume to make your container files
 
 Download the **latest stable release** of MeiliSearch with **APT**.
 
-Launch MeiliSearch to start the server..
+Launch MeiliSearch to start the server.
 ```bash
 $ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 $ apt update && apt install meilisearch-http
@@ -61,13 +62,11 @@ You can deploy the latest stable build of MeiliSearch straight on Heroku.
   </a>
 </p>
 
-
 The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
 
 ::: warning
 The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
 :::
-
 
 ::: tab Source
 
@@ -76,18 +75,18 @@ MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](
 If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliSearch
-cd MeiliSearch
+$ git clone https://github.com/meilisearch/MeiliSearch
+$ cd MeiliSearch
 ```
 
 Inside the folder, compile MeiliSearch.
 
 ```bash
 # Production version
-cargo build --release
+$ cargo build --release
 
 # Debug version
-cargo build
+$ cargo build
 ```
 
 Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.

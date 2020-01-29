@@ -17,7 +17,7 @@ Get settings for a given index.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings'
 ```
 
@@ -93,7 +93,7 @@ None of the 3 settings parameters are mandatory
 #### Add settings
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings' \
   --data '{
   "rankingOrder": [
@@ -114,7 +114,7 @@ curl \
 #### Set back the default MeiliSearch settings
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings' \
   --data '{
   "rankingOrder": null,

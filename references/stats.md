@@ -16,7 +16,7 @@ Get stats of an index.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/stats/12345678'
 ```
 
@@ -49,7 +49,7 @@ Get stats of all indexes.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/stats'
 ```
 

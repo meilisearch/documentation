@@ -3,6 +3,7 @@
 This guide is made to give you a fast overview of MeiliSearch. Every bit of information is linked to its advanced documentation.
 
 If you want an even quicker overview we suggest [you look into our quickstart](/tutorials).
+
 ## Getting Started
 
 MeiliSearch has been developed to provide an easily integrated search solution. Each step of the implementation process has been designed to be **as simple as possible**. This guide will help you get started with MeiliSearch.
@@ -11,7 +12,7 @@ Contents :
 - [Launching an instance of MeiliSearch](/guides/#download-and-launch)
 - [Create your index](/guides/#create-your-index)
 - [Add documents](/guides/#add-documents)
-- [Search !](/guides/#searches)
+- [Search!](/guides/#searches)
 
 ### Download and launch
 
@@ -78,13 +79,11 @@ You can deploy the latest stable build of MeiliSearch straight on Heroku.
   </a>
 </p>
 
-
 The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
 
 ::: warning
 The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
 :::
-
 
 ::: tab Source
 
@@ -93,18 +92,18 @@ MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](
 If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliSearch
-cd MeiliSearch
+$ git clone https://github.com/meilisearch/MeiliSearch
+$ cd MeiliSearch
 ```
 
 Inside the folder, compile MeiliSearch.
 
 ```bash
 # Production version
-cargo build --release
+$ cargo build --release
 
 # Debug version
-cargo build
+$ cargo build
 ```
 
 Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
@@ -120,30 +119,28 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environnements variables and flags](/guides/advanced_guides/binary.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
+[Environment variables and flags](/guides/advanced_guides/binary.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
 
 ### Communicate with MeiliSearch
 
 Now that our meilisearch server is up and running, we will be able to communicate with it.
 
-This is done through a [RESTFul API](/references/README.md) or one of our [SDK's](/resources/sdks.md).
-
-For this getting started, communication will be done with the RESTful API using cURL.
+This is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
 ### Create your Index
 
-In MeiliSearch, the information is subdivided into [indexes](/guides/main_concepts/indexes.md). Each index contains a data structure and the associated documents.
-The indexes can be imagined as SQL tables. But you wont need to define the table, [meiliSearch does that for your](/guides/main_concepts/indexes.md#inferred-schema).
+In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
+The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
 
-In order to be able to store our documents in an index, we [have to create one first](/guides/main_concepts/indexes.md).
+In order to be able to store our documents in an index, we have to create one first.
 
 :::: tabs
 
-::: tab Curl
+::: tab cURL
 
 [API references](/references/indexes.md)
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
   "name": "Movies",
@@ -187,13 +184,13 @@ client.create_index(name="movies", uid="movies_uid")
 
 ### Add Documents
 
-Once the index has been created it need to be filled with [documents](/guides/main_concepts/documents.md). It is these [documents](/guides/main_concepts/documents.md) that will be used and returned when [searches](/guides/main_concepts/search.md) are made on MeiliSearch.
+Once the index has been created it need to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are made on MeiliSearch.
 
-[Documents](/guides/main_concepts/documents.md) are sent to MeiliSearch in JSON format.
+Documents are sent to MeiliSearch in JSON format.
 
 The documents must have at least one field in common. This field contains the identifier of the document.
 
-Lets use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
+Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
 
 
 :::: tabs
@@ -202,7 +199,7 @@ Lets use an example [movies.json dataset](https://github.com/meilisearch/MeiliSe
 
 [API references](/references/documents.md)
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes/movies_uid/documents' \
   --data @movies.json
 ```
@@ -228,26 +225,24 @@ index.add_documents(movies)
 ::: tab PHP
 
 ```php
-$index->addOrReplaceDocuments($movies)
+$index->addOrReplaceDocuments($movies);
 ```
 :::
 
 ::: tab Python
 
 ```python
-
 index = self.client.get_index(uid="movies_uid")
 json_file = open('movies.json')
 data = json.load(json_file)
 response = index.add_documents(data)
-
 ```
 :::
 ::::
 
 ### Checking updates
 
-In MeiliSearch most actions are asynchronous. This lets you stack actions. They will be executed in the order in which they were made.
+In MeiliSearch, most actions are asynchronous. This lets you stack actions. They will be executed in the order in which they were made.
 
 You can [track the state of each action](/guides/advanced_guides/asynchronous_updates.md).
 
@@ -256,12 +251,12 @@ You can [track the state of each action](/guides/advanced_guides/asynchronous_up
 
 Now that our documents have been added to MeiliSearch we are be able to [search](/guides/main_concepts/search.md) in it.
 
-Meilisearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default the search is already relevant.
+MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default the search is already relevant.
 
 The search engine is now aware of our documents and can serve those via our HTTP server.
 
 ```bash
-curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
+$ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 
 :::: tabs
@@ -270,7 +265,7 @@ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 
 [API references](/references/search.md)
 ```bash
-curl \
+$ curl \
   -X POST 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 :::
@@ -299,7 +294,7 @@ index.search('botman')
 ::: tab PHP
 
 ```php
-$index->search('botman')
+$index->search('botman');
 ```
 :::
 
@@ -307,14 +302,13 @@ $index->search('botman')
 
 ```python
 index.search({
-            'q': 'How to Train Your Dragon'
-        })
-
+  'q': 'How to Train Your Dragon'
+})
 ```
 :::
 ::::
 
-Meilisearch **response** :
+MeiliSearch **response** :
 ```json
 {
   "hits": [
@@ -340,11 +334,9 @@ Meilisearch **response** :
 }
 ```
 
-
 ### Afterword
 
-
-In MeiliSearch we have three concepts on which we build our search engine. If you haven't read these pages yet, do not hesitate, they give an essential insight.
+In MeiliSearch, we have three concepts on which we build our search engine. If you haven't read these pages yet, do not hesitate, they give an essential insight.
 - [Indexes](/guides/main_concepts/indexes.md)
 - [Documents](/guides/main_concepts/documents.md)
 - [Search](/guides/main_concepts/search.md)
@@ -352,7 +344,7 @@ In MeiliSearch we have three concepts on which we build our search engine. If yo
 Finally, you can find the API references here :
 - [API References](/references/README.md)
 
-And the SDK's links here :
+And the SDKs links here :
 - [Ressources](/resources/sdks.md)
 
 Tutorials and Cookbooks are being made. They will be available soon.

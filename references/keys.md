@@ -10,7 +10,7 @@ Get all API keys information.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/keys'
 ```
 
@@ -45,7 +45,7 @@ Get information for a given API key.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/keys/VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF'
 ```
 
@@ -74,7 +74,6 @@ curl \
 
 Create an API key.
 
-
 ### Body
 
 | Variable              | Value         |
@@ -88,7 +87,7 @@ Create an API key.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/keys' \
   --data '{
       "expiresAt": 1574332928,
@@ -136,7 +135,7 @@ Update an API key.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X PUT 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4' \
   --data '{
       "description": "Read and write documents",
@@ -169,7 +168,7 @@ Delete an API key.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X DELETE 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4'
 ```
 

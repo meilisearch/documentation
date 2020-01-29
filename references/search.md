@@ -32,7 +32,7 @@ Search for documents matching a specific query in the given index.
 ### Example
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/4eb345y7/search?q=american%20ninja%205'
 ```
 

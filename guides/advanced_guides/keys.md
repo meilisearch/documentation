@@ -30,16 +30,16 @@ When no master key is set on binary launch, no API key is needed on any route.
 
 ```bash
 # with the flag
-./meilisearch --api-key myMasterKey
+$ ./meilisearch --api-key myMasterKey
 # with the environement variable
-MEILI_API_KEY=myMasterKey ./meilisearch
+$ MEILI_API_KEY=myMasterKey ./meilisearch
 ```
 
 This header `X-Meili-Api-Key: myMasterKey` gives access to the whole API.
 
 -----
 ```bash
-./meilisearch
+$ ./meilisearch
 ```
 
 The header `X-Meili-Api-Key` is **not required** on any API requests. Creating **an important security breach**.
@@ -50,7 +50,6 @@ The header `X-Meili-Api-Key` is **not required** on any API requests. Creating *
 Depending on the environment from which you use the MeiliSearch API, you only use a certain action set. It is possible to [create an API key](/references/keys.md#create-key) that only gives access to this set of actions.
 
 You can create as many keys as you want.
-
 
 ## Key
 
@@ -63,7 +62,7 @@ In the header, the API key is set in the ` X-Meili-Api-Key` attribute.
 This way:
 
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/indexes' \
   --header ' X-Meili-Api-Key: myApiKey'
 ```
@@ -97,7 +96,7 @@ It should help you track your keys.
 If you use the API on **the browser side to only make search queries**, you do not need this same API key to be able to do anything else.
 
 ```bash
-curl \
+$ curl \
   -X POST 'http://localhost:7700/keys' \
   --data '{
       "expiresAt": 1574332928,
