@@ -39,7 +39,7 @@ By [setting `skuid` as a distinct field](/references/settings.md#distinct-field)
   --data '{ "distinctField": "skuid" }'
 ```
 
-With this settings, document request made to MeiliSearch **will never return two or more jackets with the same `skuid`**.
+With this setting, search requests **will never return two or more jackets with the same `skuid`**.
 
 ::: error
 If the field does not exist, no error will be thrown.
