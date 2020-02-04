@@ -41,6 +41,6 @@ By [setting `skuid` as a distinct field](/references/settings.md#distinct-field)
 
 With this setting, search requests **will never return two or more jackets with the same `skuid`**.
 
-::: error
+::: warning
 If the field does not exist, no error will be thrown.
 :::
