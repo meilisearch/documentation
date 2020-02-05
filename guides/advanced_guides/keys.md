@@ -15,7 +15,7 @@ A key is passed to MeiliSearch using the header
 
 ## Master key
 
-This is the only key that is not created by the API but is **set as environement variable or as a binary flag** when [launching the MeiliSearch binary](/guides/advanced_guides/binary).
+This is the only key that is not created by the API but is **set as environement variable or as a binary flag** when [launching the MeiliSearch binary](/guides/advanced_guides/binary.md).
 
 This key gives access to every route of the API.
 
