@@ -80,7 +80,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:uid/settings/stop-words" />
 
-Delete the list of [stop-words](/guides/advanced_guides/stop_words).
+Delete the list of [stop-words](/guides/advanced_guides/stop_words.md).
 
 #### Path Variables
 
