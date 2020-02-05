@@ -2,19 +2,19 @@
 
 This guide is made to give you a fast overview of MeiliSearch. Every bit of information is linked to its advanced documentation.
 
-If you want an even quicker overview we suggest [you look into our quickstart](/tutorials).
+If you want an even quicker overview we suggest [you look into our quickstart](/tutorials/quickstart).
 
-## Getting Started
+# Getting Started
 
 MeiliSearch has been developed to provide an easily integrated search solution. Each step of the implementation process has been designed to be **as simple as possible**. This guide will help you get started with MeiliSearch.
 
 Contents :
-- [Launching an instance of MeiliSearch](/guides/#download-and-launch)
-- [Create your index](/guides/#create-your-index)
-- [Add documents](/guides/#add-documents)
-- [Search!](/guides/#searches)
+- [Launching an instance of MeiliSearch](/guides/getting_started/#download-and-launch)
+- [Create your index](/guides/getting_started/#create-your-index)
+- [Add documents](/guides/getting_started/#add-documents)
+- [Search!](/guides/getting_started/#searches)
 
-### Download and launch
+## Download and launch
 
 First of all, you must have access to a running instance of MeiliSearch.
 
@@ -121,13 +121,13 @@ $ ./target/release/meilisearch
 
 [Environment variables and flags](/guides/advanced_guides/binary.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
 
-### Communicate with MeiliSearch
+## Communicate with MeiliSearch
 
 Now that our meilisearch server is up and running, we will be able to communicate with it.
 
 This is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
-### Create your Index
+## Create your Index
 
 In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
 The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
@@ -182,7 +182,7 @@ client.create_index(name="movies", uid="movies_uid")
 ::::
 
 
-### Add Documents
+## Add Documents
 
 Once the index has been created it need to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are made on MeiliSearch.
 
@@ -240,14 +240,14 @@ response = index.add_documents(data)
 :::
 ::::
 
-### Checking updates
+## Checking updates
 
 In MeiliSearch, most actions are asynchronous. This lets you stack actions. They will be executed in the order in which they were made.
 
 You can [track the state of each action](/guides/advanced_guides/asynchronous_updates.md).
 
 
-### Searches
+## Searches
 
 Now that our documents have been added to MeiliSearch we are be able to [search](/guides/main_concepts/search.md) in it.
 
@@ -334,7 +334,7 @@ MeiliSearch **response** :
 }
 ```
 
-### Afterword
+## Afterword
 
 In MeiliSearch, we have three concepts on which we build our search engine. If you haven't read these pages yet, do not hesitate, they give an essential insight.
 - [Indexes](/guides/main_concepts/indexes.md)

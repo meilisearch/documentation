@@ -9,17 +9,17 @@ module.exports = {
     logo: "/logo.png",
     sidebarDepth: 1,
     nav: [
-      { text: 'Guides', link: '/guides/' },
+      { text: 'Guides', link: '/guides/getting_started/' },
       { text: 'API References', link: '/references/' },
-      { text: 'Tutorials', link: '/tutorials/' },
+      { text: 'Tutorials', link: '/tutorials/quickstart/' },
       { text: 'Resources', link: '/resources/' }
     ],
     sidebar: {
       '/guides/': [
         {
           title: "🚀 Getting started",
-          path:'/guides/',
-          sidebarDepth: 0
+          path:'/guides/getting_started/',
+          collapsable: false
         },
         {
           title: "💡 Main concepts",
@@ -80,17 +80,15 @@ module.exports = {
       ],
       '/tutorials/': [
         {
-          title: '🚀 Quickstart',
-          path: '/tutorials/'
+          title: '🚀 Quick Start',
+          path: '/tutorials/quickstart/'
         },
         {
           title: '🍳 Cookbooks',
-          sidebarDepth: 0,
           path: '/tutorials/cookbooks/'
         },
         {
           title: '🧷 How to\'s',
-          sidebarDepth: 0,
           path: '/tutorials/howtos/'
         }
       ],
