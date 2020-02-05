@@ -1,6 +1,6 @@
 # Ranking
 
-MeiliSearch uses ranking rules. We talk about one `criterion` (singular) and many `criteria` (plural). They are used in the [bucket sort](/guides/advanced_guides/bucket_sort)
+MeiliSearch uses ranking rules. We talk about one `criterion` (singular) and many `criteria` (plural). They are used in the [bucket sort](/guides/advanced_guides/bucket_sort.md)
 
 ## Ranking rules
 
@@ -44,7 +44,7 @@ Now if added to the ranking order documents will be ordered by descending releas
 
 ## Ranking order
 
-The ranking order determines the order of each rule in the [bucket sort](/guides/advanced_guides/bucket_sort).
+The ranking order determines the order of each rule in the [bucket sort](/guides/advanced_guides/bucket_sort.md).
 
 The default ranking order is as follows ([*see above for more detail about each rule*](/guides/advanced_guides/ranking.md#ranking-rules)):
 
@@ -78,4 +78,4 @@ $ curl -X POST 'http://localhost:7700/indexes/movies/settings' \
 }'
 ```
 
-Now, our **search results will be ordered by descending date** after all other rules have been applied in the [bucket sort](/guides/advanced_guides/bucket_sort).
+Now, our **search results will be ordered by descending date** after all other rules have been applied in the [bucket sort](/guides/advanced_guides/bucket_sort.md).
