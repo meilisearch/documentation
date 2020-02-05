@@ -1,6 +1,6 @@
 # MeiliSearch Documentation
 
-MeiliSearch is a **RESTfull search API** that is the **ready-to-go solution** for everyone wanting a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
+MeiliSearch is a **RESTful search API** that is the **ready-to-go solution** for everyone wanting a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
 
 <linkButton method="GET" text="🚀  GETTING STARTED" url="/guides/getting_started/"/>
 
@@ -36,4 +36,4 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
     - [Stop-words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of`, `the`, ..
     - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
     - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
-* **RESTfull API**
+* **RESTful API**
