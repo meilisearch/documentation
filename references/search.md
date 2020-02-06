@@ -29,6 +29,9 @@ Search for documents matching a specific query in the given index.
 | **timeout_ms**            | maximum response time                              | 30 ms         |
 | **matches**               | whether to return the raw matches or not           | false         |
 
+> `filters` parameter is a sequence of key-values where each key and value, and each pair of key-values
+are all separated by `:`, .e.g: `filters=first_name:John:last_name:Lakeman`
+
 ### Example
 
 ```bash
