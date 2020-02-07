@@ -4,8 +4,8 @@ MeiliSearch is a **RESTful search API** that is the **ready-to-go solution** for
 
 <linkButton method="GET" text="🚀  GETTING STARTED" url="/guides/getting_started/"/>
 
-Efficient search engines are often only accessible to companies with the financial means and resources necessary to develop a search solution adapted to their needs. The majority of other companies that do not have the means or do not realize that the lack of relevance of a search greatly impacts the pleasure of navigation on their application,
-end up with poor solutions that are more frustrating than effective, for both the developer and the user.
+Efficient search engines are often only accessible to companies with the financial means and resources necessary to develop a search solution adapted to their needs. The majority of other companies that do not have the means or do not realize that the lack of relevance of a search greatly impacts the pleasure of navigation on their application. This
+ends up with poor solutions that are more frustrating than effective, for both the developer and the user.
 
 That's why we created MeiliSearch, an open-source solution accessible to everyone, meeting the vast majority of needs, even specific ones. Installable very easily with little or no configuration required but with a high capacity for customization.
 
@@ -33,7 +33,7 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
 * **Return the whole document**: The entire document is returned upon search.
 * **Highly customizable search and indexation**:
     - [Custom ranking](/guides/advanced_guides/ranking.md#custom-ranking-rules): Create your own ranking rules on indexation.
-    - [Stop-words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of`, `the`, ..
-    - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
+    - [Stop-words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
+    - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents.
     - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
 * **RESTful API**
