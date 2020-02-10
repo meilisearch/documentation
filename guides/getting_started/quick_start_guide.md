@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-This quick tour will help you get started with MeiliSearch in only few steps.
+This quick tour will help you get started with MeiliSearch in only a few steps.
 
 ## Download and launch
 
