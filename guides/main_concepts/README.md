@@ -1,6 +1,6 @@
 # Main Concepts
 
-In this section, we go through the main concept of MeiliSearch.
+In this section, we go through the main concepts of MeiliSearch.
 
 ::: tip Important
 MeiliSearch is an **asynchronous** API. It means that when it does not behave like a synchronous API when you are dealing with the request's responses. [Read more in the advanced guide](/guides/advanced_guides/asynchronous_updates.md).
