@@ -29,8 +29,7 @@ Search for documents matching a specific query in the given index.
 | **timeout_ms**            | maximum response time                              | 30 ms         |
 | **matches**               | whether to return the raw matches or not           | false         |
 
-> `filters` parameter is a sequence of key-values where each key and value, and each pair of key-values
-are all separated by `:`, .e.g: `filters=first_name:John:last_name:Lakeman`
+> `filters` takes `key:value` as parameter, with the key to be the name of the field to filter, and the value the filter to be applied on this field, e.g.: `filters=first_name:John`. Only a single filter is supported in a query.
 
 ### Example
 
