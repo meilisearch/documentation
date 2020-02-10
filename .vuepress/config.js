@@ -8,18 +8,23 @@ module.exports = {
     lastUpdated: "Last Updated",
     logo: "/logo.png",
     sidebarDepth: 1,
+    smoothScroll: true,
     nav: [
-      { text: 'Guides', link: '/guides/getting_started/' },
+      { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
-      { text: 'Tutorials', link: '/tutorials/quickstart/' },
+      { text: 'Tutorials', link: '/tutorials/' },
       { text: 'Resources', link: '/resources/' }
     ],
     sidebar: {
       '/guides/': [
         {
           title: "🚀 Getting started",
-          path:'/guides/getting_started/',
-          collapsable: false
+          path: '/guides/getting_started/',
+          collapsable: false,
+          children: [
+            "/guides/getting_started/quick_start_guide",
+            "/guides/getting_started/whats_next"
+          ]
         },
         {
           title: "💡 Main concepts",
