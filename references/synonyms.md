@@ -63,7 +63,7 @@ Create the list of [synonyms][1].
 
 #### Body
 
-An object with every synonym to every term.
+An object with every synonym for every term.
 
 #### Example
 ```bash
