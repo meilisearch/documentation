@@ -8,7 +8,6 @@ Search parameters let the user customize his search request.
 | **[offset](/guides/advanced_guides/search_parameters.md#offset)**                | number of documents to skip                        | 0             |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                 | number of documents returned                       | 20            |
 | **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**  | document attributes to show                        | *             |
-| **[attributesToSearchIn](/guides/advanced_guides/search_parameters.md#attributes-to-search-in)**  | which attributes are used to match documents       | *             |
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**      | which attributes to crop                           | none          |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**            | limit length at which to crop specified attributes | 200           |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      | none          |
@@ -43,12 +42,6 @@ X number of documents in the search query response. This is helpful for **pagina
 `attributesToRetrieve=<Attribute>,<Attribute>,...`.
 
 Attributes that will appear in the returned documents.
-
-## Attributes to search in
-
-`attributesToSearchIn=<Attribute>,<Attribute>,...`.
-
-Attributes used to match document in the search engine.
 
 ## Attributes to crop
 
