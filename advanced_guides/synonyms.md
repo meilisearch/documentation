@@ -13,7 +13,7 @@ However, when a sentence is considered the synonym of another word or sentence, 
 
 There are several ways to associate words with each other.
 
-## A is synonym of B but B is not synonym of A
+## A is a synonym for B but B is not a synonym for A
 
 This makes it possible to determine that a word will be synonymous with another but not the other way around.
 
