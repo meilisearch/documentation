@@ -24,7 +24,7 @@ phone => iphone
 
 By searching `phone` you will get all results containing `iphone` with the same relevance. However, if you search for `iphone`, the data containing `phone` will not change your results.
 
-## A is synonym of B and B is synonym of A
+## A is a synonym for B and B is a synonym of A
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
 
