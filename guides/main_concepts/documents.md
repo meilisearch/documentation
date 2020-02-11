@@ -14,6 +14,7 @@ A `field` is composed of an `attribute` and its associated data.
 
 #### Wording
 
+
 - **attributes**: `"id"`, `"title"`, `"description"` and `"type"`</br>
 - **fields**: the combination of attributes and data (i.e, `"title": "Interstellar"`)
 
