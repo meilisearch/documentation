@@ -37,3 +37,4 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
     - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
     - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
 * **RESTful API**
+* **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that lets you try the search engine when developing.
