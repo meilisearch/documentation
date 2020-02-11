@@ -52,7 +52,8 @@ module.exports = {
             "/guides/advanced_guides/prefix",
             "/guides/advanced_guides/distinct",
             "/guides/advanced_guides/asynchronous_updates",
-            "/guides/advanced_guides/bucket_sort"
+            "/guides/advanced_guides/bucket_sort",
+            "/guides/advanced_guides/web_interface"
           ]
         }
       ],
