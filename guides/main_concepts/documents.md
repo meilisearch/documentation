@@ -62,7 +62,6 @@ If the identifier is not found in a document, it will not be added.
 
 <!-- To be indexed by MeiliSearch, a document must have an **identifier**. A document without an identifier will be ignored by MeiliSearch. -->
 <!--  -->
-
 ### Setting the identifier
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
