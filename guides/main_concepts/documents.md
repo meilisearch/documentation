@@ -87,7 +87,7 @@ The identifier **value** may contain only `A-Z a-z 0-0` and `-_` characters.
 #### Examples
 Good :
 ```
-"id" : "_Aabc012_"
+"id": "_Aabc012_"
 ```
 Bad:
 ```
