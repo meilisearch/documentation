@@ -21,7 +21,6 @@ Search for documents matching a specific query in the given index.
 | **offset**                | number of documents to skip                        | 0             |
 | **limit**                 | number of documents to take                        | 20            |
 | **attributesToRetrieve**  | document attributes to show                        | *             |
-| **attributesToSearchIn**  | which attributes are used to match documents       | *             |
 | **attributesToCrop**      | which attributes to crop                           | none          |
 | **cropLength**            | limit length at which to crop specified attributes | 200           |
 | **attributesToHighlight** | which attributes to highlight                      | none          |
