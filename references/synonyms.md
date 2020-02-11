@@ -72,7 +72,9 @@ An object with every synonym for every term.
   --data '{
     "Potter" : ["Harry", "hp"],
     "Harry" : ["Potter", "hp"],
-    "Magician": ["Harry Potter", "Merlin"]
+    "harry potter": ["hp"],
+    "hp": ["harry potter"],
+    "magician": ["harry potter", "merlin"]
   }'
 ```
 
