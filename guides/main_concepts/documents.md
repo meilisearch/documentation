@@ -60,7 +60,6 @@ In an index called `movie` there are 200k `documents`. Each of these 200k docume
 
 If the identifier is not found in a document, it will not be added.
 
-<!-- To be indexed by MeiliSearch, a document must have an **identifier**. A document without an identifier will be ignored by MeiliSearch. -->
 <!--  -->
 ### Setting the identifier
 
