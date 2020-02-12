@@ -66,9 +66,9 @@ If the identifier is not found in a document, it will not be added.
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
 
-- [On index creation](#) <Badge text="soon" type="warn"/>
-- [On document addition](#)
-- MeiliSearch [finds the id](/guides/main_concepts/documents.html#finding-the-identifier) based on your first document.
+- MeiliSearch [finds the id](/guides/main_concepts/documents.md#finding-the-identifier) based on your first document.
+- You set it [on index creation](/guides/main_concepts/documents.md#setting-the-identifier) <Badge text="soon" type="warn"/>
+- You set it [on document addition](/references/documents.md#add-or-replace-documents)
 
 
 #### Finding the identifier
