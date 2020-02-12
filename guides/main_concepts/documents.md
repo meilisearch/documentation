@@ -14,6 +14,7 @@ A **field** is composed of an **attribute** and its associated data.
 
 #### Wording
 
+
 - **Attribute**: `"id"`, `"title"`, `"description"` and `"type"`</br>
 - **Field**: the combination of attributes and data (i.e, `"title": "Interstellar"`)
 - **Document**: The combination of all the fields between brackets.
