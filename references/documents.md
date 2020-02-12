@@ -12,7 +12,6 @@ Get one document using its unique identifier.
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **uid**         | The index UID |
-| **identifier**    | [The unique identifier of the document](/guides/main_concepts/indexes.md#identifier) |
 
 ### Example
 
@@ -41,11 +40,6 @@ Get documents by batch.</br>
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
 Documents are ordered in a specific way by MeiliSearch (the hash of the identifier).
-
-::: danger
-This route is a non-optimized route, it can be a little bit slow to answer.
-:::
-
 
 #### Path Variables
 
@@ -88,15 +82,15 @@ $ curl \
 ]
 ```
 
-## Add or replace documents
+## Add and replace documents
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
-Insert a list of documents or replace them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
+Add a list of documents or replace them if they already exist.
 
-If you send an already existing document (same identifier) all the fields of the old document will be override by the new document.
+If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **the whole old document**  will be override by the new document. Thus, removing any fields previously in the document not present in the new document.
 
-For a partial update of the document see [add or update documents route](/references/documents.md#add-or-update-documents).
+For a partial update of the document see [add or update documents](/references/documents.md#add-and-update-documents).
 
 
 #### Path Variables
@@ -104,15 +98,15 @@ For a partial update of the document see [add or update documents route](/refere
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **uid**         | The index UID |
+| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) |
+
+
+If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
 The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
 You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
-
-::: warning
-Documents fields which are not known to the index schema will be ignored.
-:::
 
 ```json
 [
@@ -149,14 +143,15 @@ $ curl \
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Add or update documents
+## Add and update documents
 
 <RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
-Insert a list of documents or update them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
+Add a list of documents or update them if they already.
 
-In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
-To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
+If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **only the field of the new documents** will be changed in the old document. Thus, any fields not present in the new document remained unchanged.
+
+To completely overwrite a document, check out the [add and replace documents](/references/documents.md#add-and-replace-documents).
 
 
 #### Path Variables
@@ -164,15 +159,15 @@ To completely overwrite a document, check out the [add and replace documents rou
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **uid**         | The index UID |
+| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) |
+
+If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
 The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
 You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
 
-::: warning
-Documents fields which are not known to the index schema will be ignored.
-:::
 
 ```json
 [
@@ -188,6 +183,7 @@ Documents fields which are not known to the index schema will be ignored.
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/12345678/documents' \
+  -d 'identifier=id'
   --data '[{
       "id": 287947,
       "title": "Shazam ⚡️"

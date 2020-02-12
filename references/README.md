@@ -28,7 +28,7 @@ All request and response body are in `JSON`. Always specify it in your header.
 
 #### Encoding
 
-You can compress the data you send to your MeiliSearch API. We recommend using it when you add a very large number of documents on the [add documents route](/references/documents.md#add-or-update-documents)
+You can compress the data you send to your MeiliSearch API. We recommend using it when you add a very large number of documents on the [add documents route](/references/documents.md#add-and-update-documents)
 
 `Content-Encoding: gzip`
 

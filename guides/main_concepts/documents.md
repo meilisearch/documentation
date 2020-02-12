@@ -21,7 +21,7 @@ A **field** is composed of an **attribute** and its associated data.
 ## Structure
 
 A document is added to MeiliSearch in `JSON format`.<br/>
-When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents should be sent in an array. And this, even if there is only one document.
+When using the [route to add new documents](/references/documents.md#add-and-update-documents), all documents should be sent in an array. And this, even if there is only one document.
 
 ```bash
 curl -X POST `http://localhost:7700/indexes/movie/documents` \
@@ -33,13 +33,13 @@ curl -X POST `http://localhost:7700/indexes/movie/documents` \
 ]'
 ```
 
-A **document must contain** [one identifier field](/guides/main_concepts/documents.md#documents-identifiers) to be indexed in MeiliSearch.
+A **document must contain** [one identifier field](/guides/main_concepts/documents.md#identifier) to be indexed in MeiliSearch.
 
 ## Identifier
 
 An identifier is an attribute with a unique value, found in each document of a given index.
 
-Each index recognizes **only one** identifier attribute. Once the [identifier is set on the index](/guides/main_concepts/documents.html#setting-the-identifier), it **cannot be changed**.
+Each index recognizes **only one** identifier attribute. Once the [identifier is set on the index](/guides/main_concepts/documents.md#setting-the-identifier), it **cannot be changed**.
 
 **Example:**
 
@@ -62,14 +62,13 @@ If the identifier is not found in a document, it will not be added.
 
 <!-- To be indexed by MeiliSearch, a document must have an **identifier**. A document without an identifier will be ignored by MeiliSearch. -->
 <!--  -->
-
 ### Setting the identifier
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
 
-- [On index creation](#) <Badge text="soon" type="warn"/>
-- [On document addition](#)
-- MeiliSearch [finds the id](/guides/main_concepts/documents.html#finding-the-identifier) based on your first document.
+- MeiliSearch [finds the id](/guides/main_concepts/documents.md#finding-the-identifier) based on your first document.
+- You set it [on index creation](/guides/main_concepts/documents.md#setting-the-identifier) <Badge text="soon" type="warn"/>
+- You set it [on document addition](/references/documents.md#add-and-replace-documents)
 
 
 #### Finding the identifier
@@ -83,14 +82,16 @@ If none has been found, no documents will be added.
 ### Identifier value format
 
 The identifier **value** may contain only `A-Z a-z 0-0` and `-_` characters.
+
 #### Examples
-Good :
+
+Good:
 ```
-"id" : "_Aabc012_"
+"id": "_Aabc012_"
 ```
-Bad :
+Bad:
 ```
-"id" : "@BI+* ^5h2%"
+"id": "@BI+* ^5h2%"
 ```
 
 
