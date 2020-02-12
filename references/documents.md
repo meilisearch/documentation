@@ -92,7 +92,11 @@ $ curl \
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
+<<<<<<< HEAD
 Insert a list of documents or replace them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
+=======
+Add a list of documents and replace them if they already exist.
+>>>>>>> d4aea45... typos
 
 If you send an already existing document (same identifier) all the fields of the old document will be override by the new document.
 
@@ -153,7 +157,13 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
+<<<<<<< HEAD
 Insert a list of documents or update them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
+=======
+Add a list of documents and update them if they already.
+
+If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **only the field of the new documents** will be changed in the old document. Thus, any fields not present in the new document remained unchanged.
+>>>>>>> d4aea45... typos
 
 In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
 To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
