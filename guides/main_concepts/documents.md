@@ -21,7 +21,7 @@ A **field** is composed of an **attribute** and its associated data.
 ## Structure
 
 A document is added to MeiliSearch in `JSON format`.<br/>
-When using the [route to add new documents](/references/documents.md#add-and-update-documents), all documents should be sent in an array. And this, even if there is only one document.
+When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents should be sent in an array. And this, even if there is only one document.
 
 ```bash
 curl -X POST `http://localhost:7700/indexes/movie/documents` \
@@ -68,7 +68,7 @@ MeiliSearch has several ways of knowing which field is the `identifier`.
 
 - MeiliSearch [finds the id](/guides/main_concepts/documents.md#finding-the-identifier) based on your first document.
 - You set it [on index creation](/guides/main_concepts/documents.md#setting-the-identifier) <Badge text="soon" type="warn"/>
-- You set it [on document addition](/references/documents.md#add-and-replace-documents)
+- You set it [on document addition](/references/documents.md#add-or-replace-documents)
 
 
 #### Finding the identifier

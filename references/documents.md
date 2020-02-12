@@ -82,15 +82,15 @@ $ curl \
 ]
 ```
 
-## Add and replace documents
+## Add or replace documents
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
-Add a list of documents and replace them if they already exist.
+Add a list of documents or replace them if they already exist.
 
 If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **the whole old document**  will be override by the new document. Thus, removing any fields previously in the document not present in the new document.
 
-For a partial update of the document see [add or update documents](/references/documents.md#add-and-update-documents).
+For a partial update of the document see [add or update documents](/references/documents.md#add-or-update-documents).
 
 
 #### Path Variables
@@ -143,15 +143,15 @@ $ curl \
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Add and update documents
+## Add or update documents
 
 <RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
-Add a list of documents and update them if they already.
+Add a list of documents or update them if they already.
 
 If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **only the field of the new documents** will be changed in the old document. Thus, any fields not present in the new document remained unchanged.
 
-To completely overwrite a document, check out the [add and replace documents](/references/documents.md#add-and-replace-documents).
+To completely overwrite a document, check out the [add and replace documents](/references/documents.md#add-or-replace-documents).
 
 
 #### Path Variables
