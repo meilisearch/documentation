@@ -100,7 +100,6 @@ For a partial update of the document see [add or update documents](/references/d
 | **uid**         | The index UID |
 | **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) |
 
-
 If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
