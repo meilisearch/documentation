@@ -37,13 +37,13 @@ A **document must contain** [one identifier field](/guides/main_concepts/documen
 
 ## Identifier
 
-An identifier is an attribute with a unique value, found in each document of a given index.
+An identifier is an attribute with a unique value found in each document of a given index.
 
 Each index recognizes **only one** identifier attribute. Once the [identifier is set on the index](/guides/main_concepts/documents.md#setting-the-identifier), it **cannot be changed**.
 
 **Example:**
 
-In a index called `movie` there are 200k `documents`. Each of these 200k documents has an identifier called `movie_id` whose value is unique.
+In an index called `movie` there are 200k `documents`. Each of these 200k documents has an identifier called `movie_id` whose value is unique.
 
 ```json
 [
@@ -73,9 +73,9 @@ MeiliSearch has several ways of knowing which field is the `identifier`.
 
 #### Finding the identifier
 
-If no identifier has been given through the index creation or through document additions MeiliSearch will search for the identifier field in the first document sent.
+If no identifier has been given through the index creation or through document additions, MeiliSearch will search for the identifier field in the first document sent.
 
-MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitvely. (i.e, `uid`, `MovieId`, `ID`, `123id123`).
+MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).
 If none has been found, no documents will be added.
 
 
@@ -95,5 +95,4 @@ Bad:
 ```
 
 
-The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)), thus if you add 200 documents in one go, if
-one of the documents has a badly formatted identifier, an error will occur and none of the documents will be added.
+The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)), thus if you add 200 documents in one go, if one of the documents has a badly formatted identifier, an error will occur, and none of the documents will be added.

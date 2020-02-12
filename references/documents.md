@@ -86,7 +86,7 @@ $ curl \
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
-Add a list of documents or replace them if they already exist.
+Add a list of documents and replace them if they already exist.
 
 If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **the whole old document**  will be override by the new document. Thus, removing any fields previously in the document not present in the new document.
 
@@ -147,7 +147,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
-Add a list of documents or update them if they already.
+Add a list of documents and update them if they already.
 
 If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **only the field of the new documents** will be changed in the old document. Thus, any fields not present in the new document remained unchanged.
 
