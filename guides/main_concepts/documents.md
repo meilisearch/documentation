@@ -70,7 +70,6 @@ MeiliSearch has several ways of knowing which field is the `identifier`.
 - You set it [on index creation](/guides/main_concepts/documents.md#setting-the-identifier) <Badge text="soon" type="warn"/>
 - You set it [on document addition](/references/documents.md#add-or-replace-documents)
 
-
 #### Finding the identifier
 
 If no identifier has been given through the index creation or through document additions, MeiliSearch will search for the identifier field in the first document sent.
