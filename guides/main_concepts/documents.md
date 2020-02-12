@@ -76,7 +76,6 @@ If no identifier has been given through the index creation or through document a
 MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).
 If none has been found, no documents will be added.
 
-
 ### Identifier value format
 
 The identifier **value** may contain only `A-Z a-z 0-0` and `-_` characters.
