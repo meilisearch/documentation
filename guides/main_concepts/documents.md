@@ -60,7 +60,6 @@ In an index called `movie` there are 200k `documents`. Each of these 200k docume
 
 If the identifier is not found in a document, it will not be added.
 
-<!--  -->
 ### Setting the identifier
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
