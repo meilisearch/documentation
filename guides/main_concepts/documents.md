@@ -1,7 +1,7 @@
 # Documents
 
-Documents are objects composed of fields containing any data.</br>
-A `field` is composed of an `attribute` and its associated data.
+**Documents** are objects composed of fields containing any type of data.</br>
+A **field** is composed of an **attribute** and its associated data.
 
 ```json
 {
@@ -14,8 +14,9 @@ A `field` is composed of an `attribute` and its associated data.
 
 #### Wording
 
-- **attributes**: `"id"`, `"title"`, `"description"` and `"type"`</br>
-- **fields**: the combination of attributes and data (i.e, `"title": "Interstellar"`)
+- **Attribute**: `"id"`, `"title"`, `"description"` and `"type"`</br>
+- **Field**: the combination of attributes and data (i.e, `"title": "Interstellar"`)
+- **Document**: The combination of all the fields between brackets.
 
 ## Structure
 
@@ -38,7 +39,7 @@ A **document must contain** [one identifier field](/guides/main_concepts/documen
 
 An identifier is an attribute with a unique value, found in each document of a given index.
 
-Each index recognizes **only one** identifier attribute. Once the identifier has been set, it **cannot be changed**.
+Each index recognizes **only one** identifier attribute. Once the [identifier is set on the index](/guides/main_concepts/documents.html#setting-the-identifier), it **cannot be changed**.
 
 **Example:**
 
@@ -66,12 +67,10 @@ If the identifier is not found in a document, it will not be added.
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
 
-- [On index creation](#)
+- [On index creation](#) <Badge text="soon" type="warn"/>
 - [On document addition](#)
 - MeiliSearch [finds the id](/guides/main_concepts/documents.html#finding-the-identifier) based on your first document.
 
-
-<!-- If you want to **change the identifier** after it has been set you will need to recreate a new index, set the right identifier through one of the above methods, and reupload all the documents. -->
 
 #### Finding the identifier
 

@@ -94,10 +94,10 @@ $ curl \
 
 Insert a list of documents or replace them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
 
-In case of a replacement, the old document will be completely erased and replaced by the new one.</br>
-For a partial update, check out the [add or update documents route](/references/documents.md#add-or-update-documents).
+If you send an already existing document (same identifier) all the fields of the old document will be override by the new document.
 
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
+For a partial update of the document see [add or update documents route](/references/documents.md#add-or-update-documents).
+
 
 #### Path Variables
 
@@ -158,7 +158,6 @@ Insert a list of documents or update them if they already exist based on [their 
 In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
 To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
 
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 #### Path Variables
 
@@ -210,7 +209,6 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Delete all documents in the specified index.
 
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 
 #### Path Variables
@@ -242,7 +240,6 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 Delete one document based on its unique identifier.<br/>
 You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
 
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 #### Path Variables
 
@@ -276,7 +273,6 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 Delete a selection of documents based on array of identifiers.<br/>
 You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
 
-The `updateId` returned by this route can be sent to the [update status route](/references/updates.md#get-an-update-status) to retrieve information about its progress.
 
 
 #### Path Variables
