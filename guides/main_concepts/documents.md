@@ -37,7 +37,7 @@ A **document must contain** [one identifier field](/guides/main_concepts/documen
 
 ## Identifier
 
-An identifier is an attribute with a unique value found in each document of a given index.
+An identifier is an attribute with a unique value found in each document of a given index. It is used to store the document in the index.
 
 Each index recognizes **only one** identifier attribute. Once the [identifier is set on the index](/guides/main_concepts/documents.md#setting-the-identifier), it **cannot be changed**.
 
