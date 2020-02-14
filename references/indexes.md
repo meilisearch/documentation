@@ -71,7 +71,7 @@ $ curl \
 
 Create an index.
 
-Takes as parameter a unique `uid` and **optionnaly** the name of the <glossary word="document identifier"/>: `identifier`.
+This route takes as parameter an unique `uid` and **optionally** the name of the <glossary word="document identifier"/>: `identifier`.
 
 #### Body
 
@@ -179,4 +179,3 @@ $ curl \
 ```
 
 #### Response: `204 No Content`
-
