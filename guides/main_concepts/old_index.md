@@ -1,130 +1,75 @@
+# Indexes
 
-## Schema definition
+An index is an entity, like a table in `SQL`, or a collection in `mongoDb`, that collects a set of documents.
 
-**A schema is a representation of the attributes of the document and how MeiliSearch will handle these fields.**
+An index is defined by an `uid` and contains the following information:
+- One document identifier
+- A set of relevancy rules (based on presets and customization)
+- Synonyms, stop-words, and other customizable addons
+- Rules for each field of a document
 
-In the schema definition, each attribute has one or multiple of the following properties :
+#### Example
+An index will typically be the collection of a certain type of data. For example, a `movie` index with documents containing each information about a movie. On the same server, you could have another index containing all the movie reviews, where each document contains information about a review.
 
-* **identifier**: The unique identifier of a document (e.g `id`)
-* **indexed**: the search engine will search inside those fields.
-* **displayed**: Fields that will appear in the returned documents.
-* **ranked**: Ranked fields are used to create ranking rules.
+Each of the indexes will have information about the fields found in the documents. What should be done with each field, and their order of importance. Different synonyms, relevancy rules, stop-words, could be set on both indexes based on the context.
 
-As a result, it is possible to have indexed fields that are not displayed or displayed fields that are not indexed. Depending on your documents and your needs, this could be useful.
+## Index UID
 
-::: danger
-The only mandatory document field is the **identifier**.
-:::
+The `uid` of an index is its **unique** identifier. It is the `:uid` parameter found on every `indexes/:uid` route.
 
-### Fields order
+The uid is set on [index creation](/references/indexes.md#create-an-index). After which you cannot create another index with the same `uid`.
+The `uid` cannot be changed.
 
-The **order of the fields represents their relevance** in the search engine.
-
-Thus, if a `title` field is defined before a `description` field, its content will be considered more relevant to a search query than that of a "description" field.
-
-This means that if you search for something that matches in the `description` of the document _A_ and in the `title` of the document _B_,
-the document _B_ will be considered better than the document _A_. You can read more about these rules [in the ranking section][1].
-
-[1]: /guides/advanced_guides/ranking.md#ranking-rules
-
-<!-- TODO change doc link -->
-::: tip
-The **order of the document fields has a huge impact on the relevancy**. So please order fields from the most important to the less.
-:::
-
-### Example
-
-Take, for example, a movie collection. We have several fields:
-
-* **id**: The unique identifier of a movie.
-* **title**: Title of the movie, will be showcased
-* **description**: A description of the movie.
-* **release_date**: The release date of the movies.
-* **poster**: The URL of the poster or the image related to the movie.
-
-This is the **schema**:
 
 ```json
 {
-    "id": ["identifier", "indexed", "displayed"],
-    "title": ["indexed", "displayed"],
-    "description": ["indexed", "displayed"],
-    "release_date": ["ranked", "displayed"],
-    "poster": ["displayed"]
-}
+    "uid": "movie",
+    "createdAt": "2019-11-20T09:40:33.711324Z",
+    "updatedAt": "2019-11-20T10:16:42.761858Z"
+  }
 ```
 
-The fields are [sorted by relevancy importance](/guides/main_concepts/indexes.md#fields-order).
+## Document identifier
 
-The `id` field is the unique identifier of a movie document. We want to display it (*displayed*) and give the possibility to users to search for the movie using his ID (*indexed*).
+The document identifier is a <glossary word="field" /> in a document. This field is composed of an identifier <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same identifier attribute, with each an unique value. The identifier's attribute name **must** be known by the index. There are [multiple ways to set your identifier](#).
 
-The `title` field is an important field, which is why it is ranked second in the order of fields. We want
-our search queries to search inside this field (*indexed*), and we also want to showcase it to the user (*displayed*).
+[More information about the document identifier](#)
 
-The `description` field is exactly like the title field. Its 3rd position in the order of the fields puts it after `Title` in relevancy.
+## Relevancy rules
 
-The `release_date` field is not indexed because the user does not usually search for a precise date. With the *ranked* property, we can create a custom ranking rule
-that will make the recent movies more relevant than the older ones in the search engine.
+Each index has his own relevancy rules. By default all index starts with the same ranking rules applied in the same order.
+Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
 
-Finally, the `poster` field contains the image URL to the movie's poster. We do not want to search inside the URL, that's why we omitted the `indexed` property.
+This means if your first document has the following keys in this order : `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
 
-When no schema is given at the creation of an index, the schema is inferred. [Inference follows strict rules to index correctly](/guides/main_concepts/indexes.md#schema-definition).
+On top of that, you can add your own relevancy rules. For example, you could add a rule where a recent movie will be considered more relevant than an old movie. Or a rule where a a movie with a higher popularity is more relevant. And so one, dependning on your available data and your users needs.
 
-## Identifier
+[More information about ranking rules](#)
 
-This property is given to the attribute that contains the **unique key of each document**.
+## Synonyms, stop-words, ...
 
-If two documents added at the same time have the same ID, MeiliSearch will only save the last one.
+An index can contain a set of synonyms. On those words, a document containing the synonym of your search query, will be considered as relevant as the same document with the search query in itself. The synonyms are linked to the given index, they will not apply on any other index on the same MeiliSearch instance.
 
-If a document is added when there is already a document with the same ID in MeiliSearch, it will be updated.
+[More information about synonyms](#)
 
-::: tip
-Documents identifiers are always converted into strings. Only strings and integers are valid identifiers.
-It means that it is, for example, forbidden to use arrays or objects as an identifier.
-:::
+An index can contain, like synonyms, a list of stop-words. Those words will be ignored if present in a search query. Typically those words could be redundant words of your chosen language.
+For example `the` or `of` in english. By adding those words in the stop-words list you avoid having documents considered highly relevant because of the reccurence of one of those word in a the document.
 
-## Indexed
+For example, if you want that the presence of the word `the` in a film review should not make the film more relevant. By adding `the` to the list you avoid having that document in the search results when search for lets say `the great gatsby`.
 
-It defines the fields that will be used to find the documents.
+[More information about stop-words](#)
 
-For example, an `url` field is not necessarily interesting for the search engine. So by omitting this property, the `url` will not be indexed but can still be returned inside the documents with the `displayed` property.
+## Rules of fields
 
-## Displayed
+In MeiliSearch, by default, every field of you document is `indexed`, `displayed` and `searchable`. Those rules can be changed.
 
-It defines the fields that will be returned when querying MeiliSearch. A non-displayed field will never appear in the search response.
+You could give a list of **indexed fields** that will be added by MeiliSearch on document addition. Making it easy to ignore some uninteresting field that you have not cleaned out.
 
-For example, if the field contains a large amount of data, returning it would slow down server returns. By not storing it but still indexing it, the data will be used by the search engine but not returned in the documents.
+You could give a list of **searchable fields** that will be used to determine the documents relevancy. Excluding some fields with non-relevant information.
 
-## Ranked
+You could give a list of **displayed fields** that will be present in the returned documents after a search. Removing some fields that will not be displayed to the end-users and take unecessary bandwidth.
 
-This property allows the creation of a custom ranking rule. See [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules) for more information.
+By default the 3 options take all the fields presents in all the documents, once you send a list of field, it will only take the fields present in the list. Not applying the option on the fields not present in the list.
 
-## Inferred Schema
+[More information about settings](#)
 
-When creating an index, MeiliSearch expects a name for the index and a schema definition. **If no schema is defined before adding documents, the schema will be inferred**.
-
-The inference of the schema is based on the first document added to MeiliSearch. Then, by following the inference rules, the schema will be created.
-
-### Inference rules
-
-The schema is inferred this way:
- - the **order of the fields** is the order of the schema fields
- - the **identifier** is the first field containing `"id"` (case insensitive)
- - every field is `indexed` and `displayed`
-
-The order of the fields inside the document will [determine their relevance in the search engine](/guides/main_concepts/indexes.md#fields-order).
-
-To determine the identifier, an attribute that contains the case insensitive string `id` is expected. Thus, `_id`, `myId`, for example, are correct keys.
-
-This field will receive the [identifier](/guides/main_concepts/indexes.md#identifier) property, so it should contain the unique identifier of a document.
-
-::: warning
-If the `identifier` field is missing, the inference will not be completed, and the **documents will not be added**.
-:::
-
-Every other field will have the `indexed` and `displayed` properties.
-
-
-::: tip
-By default, MeiliSearch infers the schema from the **first** document sent.
-:::
