@@ -2,7 +2,7 @@
 
 ## Get one document
 
-<RouteHighlighter method="GET" route="/indexes/:uid/documents/:identifier"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:identifier"/>
 
 Get one document using its unique identifier.
 
@@ -11,14 +11,18 @@ Get one document using its unique identifier.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
+<<<<<<< HEAD
 | **uid**         | The index UID |
 | **identifier**    | [The unique identifier of the document](/guides/main_concepts/indexes.md#identifier) |
+=======
+| **index_uid**         | The index UID |
+>>>>>>> 9614c94... Changed movie uid to movies, changed :index to :index_uid and removed uid name completely
 
 ### Example
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/movie/documents/25684'
+  -X GET 'http://localhost:7700/indexes/movies/documents/25684'
 ```
 
 #### Response: `200 Ok`
@@ -35,7 +39,7 @@ $ curl \
 
 ## Get documents
 
-<RouteHighlighter method="GET" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
 
 Get documents by batch.</br>
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
@@ -51,7 +55,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 
 #### Query Parameters
 
@@ -65,7 +69,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/movie/documents?limit=2'
+  -X GET 'http://localhost:7700/indexes/movies/documents?limit=2'
 ```
 
 #### Response: `200 Ok`
@@ -90,7 +94,7 @@ $ curl \
 
 ## Add or replace documents
 
-<RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
 
 Add a list of documents or replace them if they already exist.
 
@@ -103,7 +107,11 @@ For a partial update of the document see [add or update documents route](/refere
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
+| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) |
+
+
+If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
@@ -129,7 +137,7 @@ Documents fields which are not known to the index schema will be ignored.
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movie/documents' \
+  -X POST 'http://localhost:7700/indexes/movies/documents' \
   --data '[{
       "id": 287947,
       "title": "Shazam",
@@ -150,7 +158,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Add or update documents
 
-<RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
 
 
 Add a list of documents and update them if they already.
@@ -164,7 +172,10 @@ To completely overwrite a document, check out the [add and replace documents rou
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
+| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) |
+
+If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
@@ -183,7 +194,7 @@ The body is composed of a **JSON array** of documents.
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movie/documents' \
+  -X POST 'http://localhost:7700/indexes/movies/documents' \
   -d 'identifier=id'
   --data '[{
       "id": 287947,
@@ -202,7 +213,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete all documents
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/documents"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents"/>
 
 Delete all documents in the specified index.
 
@@ -212,13 +223,13 @@ Delete all documents in the specified index.
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Example
 
 ```bash
 curl \
-  -X DELETE 'http://localhost:7700/indexes/movie/documents'
+  -X DELETE 'http://localhost:7700/indexes/movies/documents'
 ```
 
 #### Response: `202 Accepted`
@@ -232,7 +243,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete one document
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/documents/:identifier"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:identifier"/>
 
 Delete one document based on its unique identifier.<br/>
 
@@ -240,13 +251,13 @@ Delete one document based on its unique identifier.<br/>
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Example
 
 ```bash
   curl \
-  -X DELETE 'http://localhost:7700/indexes/movie/documents/25684'
+  -X DELETE 'http://localhost:7700/indexes/movies/documents/25684'
 ```
 
 #### Response: `202 Accepted`
@@ -263,7 +274,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete documents
 
-<RouteHighlighter method="POST" route="/indexes/:uid/documents/delete"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete"/>
 
 Delete a selection of documents based on array of identifiers.<br/>
 
@@ -271,7 +282,7 @@ Delete a selection of documents based on array of identifiers.<br/>
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 #### Body
 
@@ -285,7 +296,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```bash
   curl \
-  -X POST 'http://localhost:7700/indexes/movie' \
+  -X POST 'http://localhost:7700/indexes/movies' \
   --data '[
       23488,
       153738,

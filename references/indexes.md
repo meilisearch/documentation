@@ -19,13 +19,13 @@ $ curl \
 ```json
 [
   {
-    "name": "movie",
+    "uid": "movie",
     "identifier": "movie_id",
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   },
   {
-    "name": "movie_reviews",
+    "uid": "movie_reviews",
     "identifier": null,
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
@@ -36,7 +36,7 @@ $ curl \
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/:index"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid"/>
 
 Get information about an index.
 
@@ -45,20 +45,20 @@ Get information about an index.
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Example
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/movie'
+  -X GET 'http://localhost:7700/indexes/movies'
 ```
 
 #### Response: `200 Ok`
 
 ```json
 {
-  "name": "movie",
+  "uid": "movies",
   "identifier": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
@@ -85,7 +85,7 @@ The body take at least an index uid. The document identifier is optionnal.
 
 ```json
 {
-  "uid": "movie",
+  "uid": "movies",
   "identifier": "movie_id"
 }
 ```
@@ -96,14 +96,14 @@ The body take at least an index uid. The document identifier is optionnal.
 $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
-  "uid": "movie",
+  "uid": "movies",
 }'
 ```
 
 #### Response: `201 created`
 ```json
 {
-  "uid": "movie",
+  "uid": "movies",
   "identifier": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711476Z",
   "updatedAt": "2019-11-20T09:40:33.711476Z"
@@ -114,7 +114,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/:index"/>
+<RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
 
 Update an index.
 
@@ -160,7 +160,7 @@ $ curl \
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/:index"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
 
 Delete an index.
 
