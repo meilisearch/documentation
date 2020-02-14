@@ -66,7 +66,7 @@ In MeiliSearch, by default, every field of the document is `indexed`, `displayed
 
 You could give a list of **indexed fields** that will be added by MeiliSearch on document addition — making it easy to ignore some uninteresting field that you have not cleaned out.
 
-You could give a list of **searchable fields** that will be used to determine the relevancy of the documents. Excluding some fields with non-relevant information.
+You could give a list of **searchable fields** that will be used to determine the relevancy of the documents - excluding some fields with non-relevant information.
 
 You could give a list of **displayed fields** that will be present in the returned documents after a search — removing some fields that will not be displayed to the end-users and take unnecessary bandwidth.
 
