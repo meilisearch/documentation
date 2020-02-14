@@ -91,7 +91,7 @@ $ curl \
 
 Add a list of documents or replace them if they already exist.
 
-If you send an already existing document (same [id](/guides/main_concepts/documents.md#identifier)) the old document will be overwrite by the new document. Fields of the old document not present in the new document are removed.
+If you send an already existing document (same [id](/guides/main_concepts/documents.md#identifier)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
 
 For a partial update of the document see [add or update documents route](/references/documents.md#add-or-update-documents).
 
