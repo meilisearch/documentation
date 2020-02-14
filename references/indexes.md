@@ -19,7 +19,7 @@ $ curl \
 ```json
 [
   {
-    "uid": "movie",
+    "uid": "movies",
     "identifier": "movie_id",
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
@@ -71,14 +71,14 @@ $ curl \
 
 Create an index.
 
-This route takes as parameter an unique `uid` and **optionally** the name of the <glossary word="document identifier"/>: `identifier`.
+This route takes as parameter an unique `uid` and **optionally** the name of the <glossary word="document identifier"/>.
 
 #### Body
 
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index unique identifier |
+| **index_uid** | The index unique identifier |
 | **identifier** | The document <glossary word="attribute" /> of its unique identifier |
 
 The body take at least an index uid. The document identifier is optionnal.
@@ -123,7 +123,7 @@ Update an index.
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 
 #### Body
@@ -169,7 +169,7 @@ Delete an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID        |
+| **index_uid**         | The index UID        |
 
 ### Example
 

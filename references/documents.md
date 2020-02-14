@@ -2,21 +2,16 @@
 
 ## Get one document
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:identifier"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:document_id"/>
 
-Get one document using its unique identifier.
-
+Get one document using its unique id.
 
 #### Path Variables
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-<<<<<<< HEAD
-| **uid**         | The index UID |
-| **identifier**    | [The unique identifier of the document](/guides/main_concepts/indexes.md#identifier) |
-=======
 | **index_uid**         | The index UID |
->>>>>>> 9614c94... Changed movie uid to movies, changed :index to :index_uid and removed uid name completely
+| **document_id**    | [The document id](/guides/main_concepts/indexes.md#identifier) |
 
 ### Example
 
@@ -41,15 +36,13 @@ $ curl \
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
 
-Get documents by batch.</br>
+Get documents by batch.
+
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
-Documents are ordered in a specific way by MeiliSearch (the hash of the identifier).
-
-::: danger
-This route is a non-optimized route, it can be a little bit slow to answer.
+::: note
+Documents are ordered by MeiliSearch depending on the hash of their id.
 :::
-
 
 #### Path Variables
 
@@ -98,7 +91,7 @@ $ curl \
 
 Add a list of documents or replace them if they already exist.
 
-If you send an already existing document (same identifier) all the fields of the old document will be override by the new document.
+If you send an already existing document (same [id](/guides/main_concepts/documents.md#identifier)) the old document will be overwrite by the new document. Fields of the old document not present in the new document are removed.
 
 For a partial update of the document see [add or update documents route](/references/documents.md#add-or-update-documents).
 
@@ -108,8 +101,12 @@ For a partial update of the document see [add or update documents route](/refere
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
-| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) |
 
+#### Query Parameters
+
+| Query Parameter           | Description                          | Default Value |
+|---------------------------|--------------------------------------|:-------------:|
+| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) | none |
 
 If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
@@ -163,9 +160,8 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Add a list of documents and update them if they already.
 
-If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **only the field of the new documents** will be changed in the old document. Thus, any fields not present in the new document remained unchanged.
+If you send an already existing document (same [id](/guides/main_concepts/documents.md#identifier)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
-In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
 To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
 
 #### Path Variables
@@ -173,9 +169,14 @@ To completely overwrite a document, check out the [add and replace documents rou
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
-| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) |
 
 If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+
+#### Query Parameters
+
+| Query Parameter           | Description                          | Default Value |
+|---------------------------|--------------------------------------|:-------------:|
+| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) | none |
 
 #### Body
 
@@ -243,7 +244,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete one document
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:identifier"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:document_id"/>
 
 Delete one document based on its unique identifier.<br/>
 
@@ -252,6 +253,7 @@ Delete one document based on its unique identifier.<br/>
 | Variable  | Description           |
 |-----------|-----------------------|
 | **index_uid** | The index UID |
+| **document_id**    | [The document id](/guides/main_concepts/indexes.md#identifier) |
 
 ### Example
 
@@ -270,13 +272,11 @@ Delete one document based on its unique identifier.<br/>
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 
-
-
 ## Delete documents
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete"/>
 
-Delete a selection of documents based on array of identifiers.<br/>
+Delete a selection of documents based on array of document id's.<br/>
 
 #### Path Variables
 
@@ -286,7 +286,7 @@ Delete a selection of documents based on array of identifiers.<br/>
 
 #### Body
 
-The body must be a **Json Array** with the unique identifiers of the documents to delete.
+The body must be a **JSON Array** with the unique id's of the documents to delete.
 
 ```json
 [23488, 153738, 437035, 363869]
