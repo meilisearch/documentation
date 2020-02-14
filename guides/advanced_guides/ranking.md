@@ -18,7 +18,7 @@ Here is the list of all the `criteria` that are executed in this specific order 
 
 ## Custom ranking rules
 
-Custom ranking rules gives you the possibility to add new rules.
+Custom ranking rules give you the possibility to add new rules.
 
 A rule is defined by an **attribute** and a **ascendent** `asc` or **descendent** `dsc` property.
 
