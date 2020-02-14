@@ -79,7 +79,7 @@ This route takes as parameter an unique `uid` and **optionally** the name of the
 | Variable  | Description           |
 |-----------|-----------------------|
 | **uid** | The index unique identifier |
-| **identifier** | the document <glossary word="attribute" /> of his unique identifier |
+| **identifier** | The document <glossary word="attribute" /> of its unique identifier |
 
 The body take at least an index uid. The document identifier is optionnal.
 
