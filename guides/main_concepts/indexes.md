@@ -60,8 +60,7 @@ An index can contain a set of synonyms. On those words, a document containing th
 [More information about synonyms](/guides/advanced_guides/synonyms.md)
 
 An index can contain, like synonyms, a list of stop-words. Those words will be ignored if present in a search query. Typically those words could be redundant words of your chosen language, like `the` or `of` in English.
-
-For example, `the` or `of` in English. By adding those words in the stop-words list, you avoid having documents considered highly relevant because of the recurrence of one of those words in a document.
+By adding those words in the stop-words list, you avoid having documents considered highly relevant because of the recurrence of one of those words in a document.
 
 For example, on the following search query: `the great gatsby`, if the presence of the word `the` in a film review should not make the review more relevant. By adding `the` to the stop-word list, you avoid having a document full of that word high in the search results.
 
@@ -73,7 +72,7 @@ In MeiliSearch, by default, every field of the document is `indexed`, `displayed
 
 You could give a list of **indexed fields** that will be added by MeiliSearch on document addition — making it easy to ignore some uninteresting field that you have not cleaned out.
 
-You could give a list of **searchable fields** that will be used to determine the relevancy of the documents. Excluding some fields with non-relevant information.
+You could give a list of **searchable fields** that will be used to determine the relevancy of the documents - excluding some fields with non-relevant information.
 
 You could give a list of **displayed fields** that will be present in the returned documents after a search — removing some fields that will not be displayed to the end-users and take unnecessary bandwidth.
 
