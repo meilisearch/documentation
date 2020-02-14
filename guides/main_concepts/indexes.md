@@ -5,7 +5,7 @@ An index is an entity, like a table in `SQL`, or a collection in `mongoDb`, that
 An index is defined by an `uid` and contains the following information:
 - One document identifier <glossary word="attribute"/>
 - A set of relevancy rules (based on presets and customization)
-- A list of Synonyms and stop-words
+- A list of synonyms and stop-words
 - Rules for each field of a document
 - Settings
 
