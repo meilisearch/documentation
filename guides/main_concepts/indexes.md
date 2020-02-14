@@ -43,7 +43,6 @@ The only mandatory document field is the **identifier**.
 The **order of the fields represents their relevance** in the search engine.
 
 Thus, if a `title` field is defined before a `description` field, its content will be considered more relevant to a search query than that of a "description" field.
-<!-- <Badge text="soon" type="warn"/> -->
 
 This means that if you search for something that matches in the `description` of the document _A_ and in the `title` of the document _B_,
 the document _B_ will be considered better than the document _A_. You can read more about these rules [in the ranking section][1].
