@@ -1,6 +1,8 @@
 # Indexes
 
-An index is an entity, like a table in `SQL`, or a collection in `mongoDb`, that collects a set of documents.
+An index is the collection of a certain type of data.
+
+It is, like a table in `SQL`, or a collection in `mongoDb`, an entity that collects a set of documents.
 
 An index is defined by an `uid` and contains the following information:
 - One document identifier <glossary word="attribute"/>
@@ -9,11 +11,15 @@ An index is defined by an `uid` and contains the following information:
 - Rules for each field of a document
 - Settings
 
+
 #### Example
 
-An index will typically be the collection of a certain type of data. For example, a `movie` index with documents containing each information about a movie. On the same server, you could have another index containing all the movie reviews, where each document contains information about a review.
+For example, a `movie` index with documents containing each information about a movie. On the same server, you could have another index containing all the `movie reviews`, where each document contains information about a review.
 
-Each of the indexes will have information about the fields found in the documents. What should be done with each field, and their order of importance. Different synonyms, relevancy rules, stop-words, could be set on both indexes based on the context.
+Each of the indexes has information about the fields found in the documents, what should be done with each field, and their order of importance. An index also has its own synonyms, relevancy rules and stop-words. The information of one index never acts on another index.
+
+This means, you can create synonyms for a `movie` index and different synonyms for a `clothes` index on the same MeiliSearch server.
+
 
 ## Index UID
 
