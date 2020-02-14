@@ -10,6 +10,7 @@ An index is defined by an `uid` and contains the following information:
 - Settings
 
 #### Example
+
 An index will typically be the collection of a certain type of data. For example, a `movie` index with documents containing each information about a movie. On the same server, you could have another index containing all the movie reviews, where each document contains information about a review.
 
 Each of the indexes will have information about the fields found in the documents. What should be done with each field, and their order of importance. Different synonyms, relevancy rules, stop-words, could be set on both indexes based on the context.
