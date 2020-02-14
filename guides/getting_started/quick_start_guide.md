@@ -118,8 +118,8 @@ This is done through a [RESTFul API](/references/README.md) or one of our [SDKs]
 ## Create your Index
 
 In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
-The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
-
+The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is schemaless.
+<!-- todo glossary schemaless -->
 In order to be able to store our documents in an index, we have to create one first.
 
 :::: tabs

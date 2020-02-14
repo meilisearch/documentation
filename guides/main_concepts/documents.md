@@ -35,6 +35,10 @@ curl -X POST `http://localhost:7700/indexes/movie/documents` \
 
 A **document must contain** [one identifier field](/guides/main_concepts/documents.md#documents-identifiers) to be indexed in MeiliSearch.
 
+## Fields
+
+<!-- comming -->
+
 ## Identifier
 
 An identifier is an attribute with a unique value found in each document of a given index. It is used to store the document in the index.

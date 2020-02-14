@@ -18,7 +18,7 @@ Get one document using its unique identifier.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/documents/25684'
+  -X GET 'http://localhost:7700/indexes/movie/documents/25684'
 ```
 
 #### Response: `200 Ok`
@@ -65,7 +65,7 @@ This route is a non-optimized route, it can be a little bit slow to answer.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/documents?limit=2'
+  -X GET 'http://localhost:7700/indexes/movie/documents?limit=2'
 ```
 
 #### Response: `200 Ok`
@@ -92,23 +92,11 @@ $ curl \
 
 <RouteHighlighter method="POST" route="/indexes/:uid/documents"/>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-Insert a list of documents or replace them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
-=======
-Add a list of documents and replace them if they already exist.
->>>>>>> d4aea45... typos
-=======
 Add a list of documents or replace them if they already exist.
->>>>>>> 5123968... changed title
 
 If you send an already existing document (same identifier) all the fields of the old document will be override by the new document.
 
-<<<<<<< HEAD
 For a partial update of the document see [add or update documents route](/references/documents.md#add-or-update-documents).
-=======
-For a partial update of the document see [add or update documents](/references/documents.md#add-or-update-documents).
->>>>>>> 5123968... changed title
 
 
 #### Path Variables
@@ -119,8 +107,7 @@ For a partial update of the document see [add or update documents](/references/d
 
 #### Body
 
-The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
-You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
+The body is composed of a **JSON array** of documents.
 
 ::: warning
 Documents fields which are not known to the index schema will be ignored.
@@ -142,7 +129,7 @@ Documents fields which are not known to the index schema will be ignored.
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/12345678/documents' \
+  -X POST 'http://localhost:7700/indexes/movie/documents' \
   --data '[{
       "id": 287947,
       "title": "Shazam",
@@ -165,25 +152,13 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="PUT" route="/indexes/:uid/documents"/>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-Insert a list of documents or update them if they already exist based on [their unique identifiers](/guides/main_concepts/indexes.md#schema-definition).
-=======
+
 Add a list of documents and update them if they already.
-=======
-Add a list of documents or update them if they already.
->>>>>>> 5123968... changed title
 
 If you send an already existing document (same [identifier](/guides/main_concepts/documents.md#identifier)) **only the field of the new documents** will be changed in the old document. Thus, any fields not present in the new document remained unchanged.
->>>>>>> d4aea45... typos
 
-<<<<<<< HEAD
 In case of an update, the old document will be only partially updated according to the fields in the request body. It will not be overwritten entirely.</br>
 To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
-=======
-To completely overwrite a document, check out the [add and replace documents](/references/documents.md#add-or-replace-documents).
->>>>>>> 5123968... changed title
-
 
 #### Path Variables
 
@@ -193,12 +168,7 @@ To completely overwrite a document, check out the [add and replace documents](/r
 
 #### Body
 
-The body is composed of a **JSON array** of documents. The fields of each document correspond to those in the index schema.
-You can [read more about fields and schemas](/guides/main_concepts/indexes.md#schema-definition).
-
-::: warning
-Documents fields which are not known to the index schema will be ignored.
-:::
+The body is composed of a **JSON array** of documents.
 
 ```json
 [
@@ -213,7 +183,8 @@ Documents fields which are not known to the index schema will be ignored.
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/12345678/documents' \
+  -X POST 'http://localhost:7700/indexes/movie/documents' \
+  -d 'identifier=id'
   --data '[{
       "id": 287947,
       "title": "Shazam ⚡️"
@@ -247,7 +218,7 @@ Delete all documents in the specified index.
 
 ```bash
 curl \
-  -X DELETE 'http://localhost:7700/indexes/12345678/documents'
+  -X DELETE 'http://localhost:7700/indexes/movie/documents'
 ```
 
 #### Response: `202 Accepted`
@@ -264,8 +235,6 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 <RouteHighlighter method="DELETE" route="/indexes/:uid/documents/:identifier"/>
 
 Delete one document based on its unique identifier.<br/>
-You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
-
 
 #### Path Variables
 
@@ -277,7 +246,7 @@ You can read more about [identifiers and schemas](/guides/main_concepts/indexes.
 
 ```bash
   curl \
-  -X DELETE 'http://localhost:7700/indexes/12345678/documents/25684'
+  -X DELETE 'http://localhost:7700/indexes/movie/documents/25684'
 ```
 
 #### Response: `202 Accepted`
@@ -297,9 +266,6 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 <RouteHighlighter method="POST" route="/indexes/:uid/documents/delete"/>
 
 Delete a selection of documents based on array of identifiers.<br/>
-You can read more about [identifiers and schemas](/guides/main_concepts/indexes.md#schema-definition).
-
-
 
 #### Path Variables
 
@@ -319,7 +285,7 @@ The body must be a **Json Array** with the unique identifiers of the documents t
 
 ```bash
   curl \
-  -X POST 'http://localhost:7700/indexes/12345678' \
+  -X POST 'http://localhost:7700/indexes/movie' \
   --data '[
       23488,
       153738,

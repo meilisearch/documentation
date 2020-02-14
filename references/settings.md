@@ -72,9 +72,6 @@ Add or replace the following settings of an index:
 
 An objet containing document attributes as keys and  `asc` ascending or `dsc` descending as value of this key. More information about [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules).
 
-::: warning
- To activate a ranking rule on a field, this **field must have the ranked property** in the [schema](/guides/main_concepts/indexes.md#schema-definition) and it **must be in the ranking order**.
-:::
 
 #### Ranking order
 
