@@ -33,6 +33,11 @@ Another simple search engine is Typesense, which has been designed and optimized
 
 #### Lucene-Solr
 
+Solr is a subproject of Apache Lucene, created in 2004 by Yonik Seeley, and is today one of the most popular search engines available worldwide. Solr is a search platform, written in Java, and built on top of Lucene. In other words, Solr is an HTTP wrapper around Lucene’s Java API, meaning you can leverage all the features of Lucene by using it. In addition, Solr server is combined with Solr Cloud, providing distributed indexing and searching capabilities, thus ensuring high availability and scalability. Data is shared but also automatically replicated.
+Furthermore, Solr is not only a search engine; it is often used as a document-structured NoSQL database. Documents are stored in collections, which can be comparable to tables in a relational database.  
+
+Due to its extensible plugin architecture and customizable features, Solr is a search engine with an endless number of use cases even though, since it can index and search documents and email attachments, it is specifically popular for enterprise search.  
+
 #### Bleve & Tantivy
 
 Bleve and Tantivy are search engine projects, respectively written in Golang and Rust, inspired by Apache Lucene and its algorithms (e.g. tf-idf, short for term frequency inverse document frequency). Such as Lucene, both are libraries to be used for any search project; however they are not ready-to-use APIs.  
