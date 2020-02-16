@@ -23,6 +23,8 @@ Nowadays, since Lucene is a widely used tool, it is considered as the reference 
 
 #### Sonic
 
+Sonic is a lightweight and schema-less search index server written in Rust. Sonic does not store any documents, which mean an application using Sonic has to retrieve the search results from another database with the IDs that are returned. The fact that Sonic can run on a few MBs of RAM makes it a minimalist and resource-efficient alternative to database tools that can be too heavyweight to scale.  
+
 #### Typesense
 
 #### Lucene derivatives
