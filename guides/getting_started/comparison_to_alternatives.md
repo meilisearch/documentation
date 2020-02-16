@@ -19,7 +19,7 @@ Lucene has since been divided into several projects:
 * **Solr**: an enterprise search server with a powerful REST API.  
 * **Nutch**: an extensible and scalable web crawler relying on Apache Hadoop.  
 
-Since Lucene is a widely used tool, it is considered as the reference search library and many open source or closed source search engines are based on it.  
+Since Lucene is the technology behind many open source or closed source search engines, it is considered as the reference search library.  
 
 #### Sonic
 
@@ -33,7 +33,7 @@ Another simple search engine is Typesense, which has been designed and optimized
 
 #### Lucene-Solr
 
-Solr is a subproject of Apache Lucene, created in 2004 by Yonik Seeley, and is today one of the most popular search engines available worldwide. Solr is a search platform, written in Java, and built on top of Lucene. In other words, Solr is an HTTP wrapper around Lucene’s Java API, meaning you can leverage all the features of Lucene by using it. In addition, Solr server is combined with Solr Cloud, providing distributed indexing and searching capabilities, thus ensuring high availability and scalability. Data is shared but also automatically replicated.
+Solr is a subproject of Apache Lucene, created in 2004 by Yonik Seeley, and is today one of the most widely used search engines available worldwide. Solr is a search platform, written in Java, and built on top of Lucene. In other words, Solr is an HTTP wrapper around Lucene’s Java API, meaning you can leverage all the features of Lucene by using it. In addition, Solr server is combined with Solr Cloud, providing distributed indexing and searching capabilities, thus ensuring high availability and scalability. Data is shared but also automatically replicated.  
 Furthermore, Solr is not only a search engine; it is often used as a document-structured NoSQL database. Documents are stored in collections, which can be comparable to tables in a relational database.  
 
 Due to its extensible plugin architecture and customizable features, Solr is a search engine with an endless number of use cases even though, since it can index and search documents and email attachments, it is specifically popular for enterprise search.  
@@ -45,6 +45,7 @@ Bleve and Tantivy are search engine projects, respectively written in Golang and
 #### Elasticsearch
 
 Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options called index sharding gives you the ability to divide indexes in physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing huge datasets, analyzing logs, and running complex queries. You can perform operations and analysis on documents that match a specified query (e.g. calculate the mean age of all users named "Thomas").  
+
 Today, Lucene and Elasticsearch are dominant players in the open source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of MeiliSearch or Algolia.  
 
 
