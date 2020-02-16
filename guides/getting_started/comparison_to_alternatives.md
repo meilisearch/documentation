@@ -15,15 +15,18 @@ The present article covers a comparison of alternatives to MeiliSearch, i.e. ava
 Apache Lucene is a free and open source search library, built in Java, used for the full text indexing and search of documents. This project was first created in 1999 by Doug Cutting who had previously written search engines at Xerox's Palo Alto Research Center (PARC) and Apple. Since Lucene has been developed to build web search applications such as Google, you’ll see that DuckDuckGo still uses it for some specific searches.  
 
 Lucene has since been divided into several projects:  
-— Lucene itself, the full-text search library  
-— Solr, an enterprise search server with a powerful REST API  
-— Nutch, an extensible and scalable web crawler relying on Apache Hadoop  
+* Lucene itself, the full-text search library  
+* Solr, an enterprise search server with a powerful REST API  
+* Nutch, an extensible and scalable web crawler relying on Apache Hadoop  
 
 Nowadays, since Lucene is a widely used tool, it is considered as the reference search library and many open source or closed source search engines are based on it.  
 
 #### Lucene derivatives
 
 #### Elasticsearch
+
+Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options called index sharding, gives you the ability to divide indexes in physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing huge datasets, analyzing logs, and performing complex queries. You can perform operations and analysis on documents that match a specified query (e.g. calculate the mean age of all users named "Thomas").  
+
 
 ### Closed Source
 
