@@ -54,7 +54,7 @@ Today, Lucene and Elasticsearch are dominant players in the open source search e
 #### Algolia
 
 Algolia is a company providing a search engine on a SaaS model. Its software is closed source. In its early stages, Algolia offered mobile search engines that could be embedded in apps, facing the challenge of implementing the search algorithms from scratch. From the very beginning, the decision was made to build a search engine directly dedicated to the end users, i.e. implementing search within mobile apps or websites.  
-Algolia successfully demonstrated over the past few years how critical tolerating typos is in order to improve the users ’s experience, and in the same way, its impact on reducing bounce rate and increasing conversion.  
+Algolia successfully demonstrated over the past few years how critical tolerating typos is in order to improve the users’ experience, and in the same way, its impact on reducing bounce rate and increasing conversion.  
 
 #### Swiftype
 
