@@ -21,17 +21,31 @@ Lucene has since been divided into several projects:
 
 Nowadays, since Lucene is a widely used tool, it is considered as the reference search library and many open source or closed source search engines are based on it.  
 
+#### Sonic
+
+#### Typesense
+
 #### Lucene derivatives
+
+#### Lucene-Solr
+
+#### Bleve & Tantivy
+
+Bleve and Tantivy are search engine libraries, respectively written in Golang and Rust, inspired by Apache Lucene and its algorithms (e.g. tf-idf, short for term frequency inverse document frequency). Such as Lucene, both are to be considered for any search project; however they are not ready-to-use APIs.  
 
 #### Elasticsearch
 
 Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options called index sharding, gives you the ability to divide indexes in physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing huge datasets, analyzing logs, and performing complex queries. You can perform operations and analysis on documents that match a specified query (e.g. calculate the mean age of all users named "Thomas").  
-Today, Lucene and Elasticsearch are dominant players in the open source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products; however they require to be configured properly to get similar results to those of MeiliSearch or Algolia.  
+Today, Lucene and Elasticsearch are dominant players in the open source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of MeiliSearch or Algolia.  
 
 
 ### Closed Source
 
 #### Algolia
+
+#### Swiftype
+
+#### Doofinder
 
 ## Comparisons
 
