@@ -102,6 +102,7 @@ For a partial update of the document see [add or update documents](/references/d
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
+
 #### Query Parameters
 
 | Query Parameter           | Description                          | Default Value |

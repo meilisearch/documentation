@@ -64,8 +64,6 @@ In an index called `movie` there are 200k `documents`. Each of these 200k docume
 
 If the identifier is not found in a document, it will not be added.
 
-<!-- To be indexed by MeiliSearch, a document must have an **identifier**. A document without an identifier will be ignored by MeiliSearch. -->
-<!--  -->
 ### Setting the identifier
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
@@ -74,14 +72,12 @@ MeiliSearch has several ways of knowing which field is the `identifier`.
 - You set it [on index creation](/guides/main_concepts/documents.md#setting-the-identifier) <Badge text="soon" type="warn"/>
 - You set it [on document addition](/references/documents.md#add-or-replace-documents)
 
-
 #### Finding the identifier
 
 If no identifier has been given through the index creation or through document additions, MeiliSearch will search for the identifier field in the first document sent.
 
 MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).
 If none has been found, no documents will be added.
-
 
 ### Identifier value format
 
