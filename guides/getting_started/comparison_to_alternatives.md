@@ -80,7 +80,14 @@ MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a t
 
 ### MeiliSearch vs. Algolia
 
+MeiliSearch was inspired by Algolia’s product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. MeiliSearch is thus a new search engine based on the work of Algolia and recent research papers.  
+It provides similar features and reaches the same level of relevance just as quickly as its predecessor. Icing on the cake, MeiliSearch is open source!  
+The fact that MeiliSearch is written in Rust, a low-level and modern language, allows to rapidly build features; which is not especially the case in other low-level languages such as C++ or C. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.  
+
+One of Algolia major assets is the robust worldwide infrastructure that they offer to their customers.  
+MeiliSearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to develop and maintain than Algolia’s.  
+
 ## Conclusions
 
 MeiliSearch offers the same features as Algolia but is intended to be a more simplified alternative. In addition, providing an open source code allows to unleash a large number of opportunities for monetization: SaaS, support services, enterprise-features, and so on.  
-Today, Algolia is no longer perceived as a dev tool, a developer friendly tool, since Algolia's marketing strategy is now mainly focused on large businesses; especially on e-commerce market where instant search is proving effective in bringing a strong added value. By being open source, MeiliSearch will be integrated in relatively smaller projects and will be managed by the development team rather than the marketing team or the product team. MeiliSearch will continue growing driven by its projects! Our ambition for MeiliSearch is to become the reference technology in the search engine market.  
+Today, Algolia is no longer perceived as a dev tool, a developer friendly tool, since Algolia's marketing strategy is now mainly focused on large businesses; especially on e-commerce market where instant search is proving effective in bringing a strong added value. Since MeiliSearch is open source, it will be integrated in relatively smaller projects and will be managed by the development team rather than the marketing team or the product team. MeiliSearch will continue growing driven by its projects! Our ambition for MeiliSearch is to become the reference technology in the search engine market.  
