@@ -44,7 +44,7 @@ Bleve and Tantivy are search engine projects, respectively written in Golang and
 
 #### Elasticsearch
 
-Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options called index sharding gives you the ability to divide indexes in physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing huge datasets, analyzing logs, and running complex queries. You can perform operations and analysis on documents that match a specified query (e.g. calculate the mean age of all users named "Thomas").  
+Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options called index sharding gives you the ability to divide indexes in physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing large datasets, analyzing logs, and running complex queries. You can perform operations and analysis on documents that match a specified query (e.g. calculate the mean age of all users named "Thomas").  
 
 Today, Lucene and Elasticsearch are dominant players in the open source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of MeiliSearch or Algolia.  
 
@@ -65,6 +65,18 @@ Apart from Algolia, a wide range of SaaS products exist on the Search Engine Mar
 ## Comparisons
 
 ### MeiliSearch vs. Elasticsearch
+
+Elasticsearch has been designed as a backend search engine and, although it is not at first suited for this purpose, is commonly used to build search bars for the end users.  
+
+Unlike Elasticsearch which is a general search engine, MeiliSearch focuses on delivering a specific kind of features.  
+
+Elasticsearch can handle search through massive amounts of data and perform text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to configure it properly.  
+
+MeiliSearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing large datasets (over 100 M documents) is not possible.  
+
+Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the times, it is significantly slower in returning search results compared to MeiliSearch.  
+
+MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar, that provides a prefix searching capability, makes search intuitive for users and returns them their results instantly with near perfect relevance.  
 
 ### MeiliSearch vs. Algolia
 
