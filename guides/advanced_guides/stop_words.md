@@ -30,19 +30,6 @@ Let's take a movie dataset where the release year is written in timestamp format
   "release_date": 1551830400
 }
 ```
-
-Now the schema should be defined like this:
-
-```json
-{
-  "id": [ "identifier", "displayed", "indexed" ],
-  "title": [ "displayed", "indexed" ],
-  "overview": [ "indexed", "displayed" ],
-  "release_date": ["ranked", "displayed" ],
-  "poster": [ "displayed" ]
-}
-```
-
 Let's make a search on this dataset
 
 #### Without stop words
