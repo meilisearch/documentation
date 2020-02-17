@@ -56,6 +56,8 @@ Today, Lucene and Elasticsearch are dominant players in the open source search e
 Algolia is a company providing a search engine on a SaaS model. Its software is closed source. In its early stages, Algolia offered mobile search engines that could be embedded in apps, facing the challenge of implementing the search algorithms from scratch. From the very beginning, the decision was made to build a search engine directly dedicated to the end users, i.e. implementing search within mobile apps or websites.  
 Algolia successfully demonstrated over the past few years how critical tolerating typos is in order to improve the users’ experience, and in the same way, its impact on reducing bounce rate and increasing conversion.  
 
+Apart from Algolia, a wide range of SaaS products exist on the Search Engine Market. Most of them use Elasticsearch, and fine tune its settings in order to have a custom and personalized solution.  
+
 #### Swiftype
 
 #### Doofinder
@@ -68,3 +70,5 @@ Algolia successfully demonstrated over the past few years how critical toleratin
 
 ## Conclusions
 
+MeiliSearch offers the same features as Algolia but is intended to be a more simplified alternative. In addition, providing an open source code allows to unleash a large number of opportunities for monetization: SaaS, support services, enterprise-features, and so on.  
+Today, Algolia is no longer perceived as a dev tool, a developer friendly tool, since Algolia's marketing strategy is now mainly focused on large businesses; especially on e-commerce market where instant search is proving effective in bringing a strong added value. By being open source, MeiliSearch will be integrated in relatively smaller projects and will be managed by the development team rather than the marketing team or the product team. MeiliSearch will continue growing driven by its projects! Our ambition for MeiliSearch is to become the reference technology in the search engine market.  
