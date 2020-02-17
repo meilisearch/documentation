@@ -1,7 +1,6 @@
 # Quick Start
 
-You can deploy your own instant, relevant, and typo-tolerant MeiliSearch engine by yourself.
-It can be achieved by following these three steps.
+MeiliSearch is simply to install and deploy. It will be up and running by following these few steps.
 
 ### Deploy the Server
 
@@ -111,7 +110,9 @@ $ ./target/release/meilisearch
 
 ### Create an Index and Upload Some Documents
 
-MeiliSearch can serve multiple indexes, with different kinds of documents. Therefore, it is required to create an index before sending documents to it.
+MeiliSearch can serve multiple indexes, with different kinds of documents.
+
+It is required to create an index before sending documents to it.
 
 ```bash
 $ curl -i -X POST 'http://127.0.0.1:7700/indexes' \
@@ -120,24 +121,21 @@ $ curl -i -X POST 'http://127.0.0.1:7700/indexes' \
   }'
 ```
 
-The response looks like this:
-
-```
-{
-  "uid": "movies",
-  "identifier": none
-}
-```
-
 This `uid` is the `:index_uid` identifier used in all `indexes/:index_uid` routes.
 
-Now that the server knows about our brand new index, we can send it data.
-We provide you a dataset, it is available in the `datasets/` [directory](https://github.com/meilisearch/MeiliSearch/tree/master/datasets).
+Now that the server knows about our brand new index, we can send our data to it.
+
+If you have no dataset, [here is a movie dataset](https://www.notion.so/meilisearch/A-movies-dataset-to-test-Meili-1cbf7c9cfa4247249c40edfa22d7ca87#b5ae399b81834705ba5420ac70358a65) you can use.
+
 
 ```bash
 $ curl -i -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
   --data @datasets/movies/movies.json
 ```
+
+::: warning
+If you have the `missing identifier`  error. [More information about the identifier here](/guides/main_concepts/documents.md#identifier).
+:::
 
 ### Search for Documents
 
