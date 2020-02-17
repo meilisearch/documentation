@@ -11,7 +11,7 @@ Get one document using its unique id.
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
-| **document_id**    | [The document id](/guides/main_concepts/indexes.md#identifier) |
+| **document_id**    | [The document id](/guides/main_concepts/documents.md#identifier) |
 
 ### Example
 
@@ -249,7 +249,7 @@ Delete one document based on its unique identifier.<br/>
 | Variable  | Description           |
 |-----------|-----------------------|
 | **index_uid** | The index UID |
-| **document_id**    | [The document id](/guides/main_concepts/indexes.md#identifier) |
+| **document_id**    | [The document id](/guides/main_concepts/documents.md#identifier) |
 
 ### Example
 
