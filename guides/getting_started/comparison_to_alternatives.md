@@ -60,22 +60,23 @@ Apart from Algolia, a wide range of SaaS products exist on the Search Engine Mar
 
 #### Swiftype
 
+Swiftype is a search service provider specialized in website search and analytics. Swiftype was founded in 2012 by Matt Riley and Quin Hoxie, and is now owned by Elastic since November 2017. It is a end-to-end solution built on top of Elasticsearch, meaning it has the ability to leverage the Elastic Stack.  
+
 #### Doofinder
+
+Doofinder is a paid on-site search service which was developed to integrate to any website with very little configuration. Doofinder is used by online stores to increase their sales, aiming to facilitate the purchase process.  
 
 ## Comparisons
 
 ### MeiliSearch vs. Elasticsearch
 
 Elasticsearch has been designed as a backend search engine and, although it is not at first suited for this purpose, is commonly used to build search bars for the end users.  
-
 Unlike Elasticsearch which is a general search engine, MeiliSearch focuses on delivering a specific kind of features.  
 
 Elasticsearch can handle search through massive amounts of data and perform text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to configure it properly.  
-
 MeiliSearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing large datasets (over 100 M documents) is not possible.  
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the times, it is significantly slower in returning search results compared to MeiliSearch.  
-
 MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar, that provides a prefix searching capability, makes search intuitive for users and returns them their results instantly with near perfect relevance.  
 
 ### MeiliSearch vs. Algolia
