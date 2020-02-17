@@ -2,7 +2,7 @@
 
 ## Get an update status
 
-<RouteHighlighter method="GET" route="/indexes/:uid/updates/:updateId"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/updates/:updateId"/>
 
 Get the status of an [update](/guides/advanced_guides/asynchronous_updates.md) in a given [index](/guides/main_concepts/indexes.md).
 
@@ -10,7 +10,7 @@ Get the status of an [update](/guides/advanced_guides/asynchronous_updates.md) i
 
 | Variable      | Description           |
 |---------------|-----------------------|
-| **uid**     | The index UID |
+| **index_uid**         | The index UID |
 | **updateId**  | The update identifier  |
 
 ### Example
@@ -40,7 +40,7 @@ Here is an example response of an update that has been processed.
 
 ## Get all update status
 
-<RouteHighlighter method="GET" route="/indexes/:uid/updates"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/updates"/>
 
 Get the status of all [updates](/guides/advanced_guides/asynchronous_updates.md) in a given [index](/guides/main_concepts/indexes.md).
 
@@ -48,7 +48,7 @@ Get the status of all [updates](/guides/advanced_guides/asynchronous_updates.md)
 
 | Variable      | Description           |
 |---------------|-----------------------|
-| **uid**     | The index UID |
+| **index_uid**         | The index UID |
 
 ### Example
 

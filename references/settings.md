@@ -2,7 +2,7 @@
 
 ## Get index settings
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings" />
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
 
 Get settings for a given index.
 
@@ -11,7 +11,7 @@ Get settings for a given index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index name        |
+| **index_uid**         | The index UID |
 
 
 ### Example
@@ -46,7 +46,7 @@ List the settings.
 
 ## Add or replace index settings
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings" />
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
 Add or replace the following settings of an index:
 * Create [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules)
@@ -58,7 +58,7 @@ Add or replace the following settings of an index:
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index name        |
+| **index_uid**         | The index UID |
 
 #### Body
 
@@ -72,9 +72,6 @@ Add or replace the following settings of an index:
 
 An objet containing document attributes as keys and  `asc` ascending or `dsc` descending as value of this key. More information about [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules).
 
-::: warning
- To activate a ranking rule on a field, this **field must have the ranked property** in the [schema](/guides/main_concepts/indexes.md#schema-definition) and it **must be in the ranking order**.
-:::
 
 #### Ranking order
 

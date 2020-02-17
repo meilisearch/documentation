@@ -2,7 +2,7 @@
 
 ## List synonyms of one sequence
 
-<RouteHighlighter method="GET" route="/indexes/:uid/synonyms/:synonym"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/synonyms/:synonym"/>
 
 List one sequence and its synonyms in an index.
 
@@ -11,7 +11,7 @@ List one sequence and its synonyms in an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 | **synonym**         | Sequence of which the synonyms will be returned |
 
 
@@ -31,7 +31,7 @@ Array of synonyms of the given sequence in the path variable.
 
 ## List all sequences and synonyms
 
-<RouteHighlighter method="GET" route="/indexes/:uid/synonyms"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/synonyms"/>
 
 List all sequences and their synonyms in an index.
 
@@ -40,7 +40,7 @@ List all sequences and their synonyms in an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 
 
 #### Example
@@ -69,7 +69,7 @@ $ curl \
 
 ## Create synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:uid/synonyms"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/synonyms"/>
 
 Create synonyms.
 
@@ -78,7 +78,7 @@ Create synonyms.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 
 #### Body
 
@@ -114,7 +114,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Update a synonym
 
-<RouteHighlighter method="PUT" route="/indexes/:uid/synonyms/:synonym"/>
+<RouteHighlighter method="PUT" route="/indexes/:index_uid/synonyms/:synonym"/>
 
 Update a synonym.
 
@@ -123,7 +123,7 @@ Update a synonym.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 | **synonym**         | Sequence of which the synonyms will be updated |
 
 #### Body
@@ -152,7 +152,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete a synonym
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/synonyms/:synonym"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/synonyms/:synonym"/>
 
 Delete a synonym.
 
@@ -161,7 +161,7 @@ Delete a synonym.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 | **synonym**         | Sequence of which the synonyms will be deleted |
 
 
@@ -182,7 +182,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Batch write synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:uid/synonyms/batch"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/synonyms/batch"/>
 
 Batch write synonyms.
 
@@ -191,7 +191,7 @@ Batch write synonyms.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 
 #### Body
 
@@ -228,7 +228,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Clear synonyms
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/synonyms"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/synonyms"/>
 
 Delete all synonyms
 
@@ -237,7 +237,7 @@ Delete all synonyms
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**         | The index UID |
 
 
 #### Example

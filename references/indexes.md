@@ -19,46 +19,51 @@ $ curl \
 ```json
 [
   {
-    "name": "Movie",
-    "uid": "12345678",
+    "uid": "movies",
+    "identifier": "movie_id",
+    "createdAt": "2019-11-20T09:40:33.711324Z",
+    "updatedAt": "2019-11-20T10:16:42.761858Z"
+  },
+  {
+    "uid": "movie_reviews",
+    "identifier": null,
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   }
+
 ]
 ```
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/:uid"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid"/>
 
-Get the index relative information.
+Get information about an index.
 
 
 #### Path Variables
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Example
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678'
+  -X GET 'http://localhost:7700/indexes/movies'
 ```
 
 #### Response: `200 Ok`
 
 ```json
 {
-  "name": "Movie",
-  "uid": "12345678",
+  "uid": "movies",
+  "identifier": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
 ```
-
-
 
 ## Create an index
 
@@ -66,34 +71,24 @@ $ curl \
 
 Create an index.
 
-The [schema](/guides/main_concepts/indexes.md) definition is optionally send through the body.
-If no [schema](/guides/main_concepts/indexes.md) has been defined when the first document is sent it will be [infered based on that document](/guides/main_concepts/indexes.md#schema-definition).
-
-A randomly generated UID will be returned. It's associated to the new index. This UID will be essential to make all request over the created index.
-
+This route takes as parameter an unique `uid` and **optionally** the name of the <glossary word="document identifier"/>.
 
 #### Body
 
-The body take at least an index name.
 
-The body accepts an optional [schema](/guides/main_concepts/indexes.md) definition of your documents.
+| Variable  | Description           |
+|-----------|-----------------------|
+| **index_uid** | The index unique identifier |
+| **identifier** | The document <glossary word="attribute" /> of its unique identifier |
+
+The body takes at least an index uid. The document identifier is optional.
 
 ```json
 {
-  "name": "Movies",
-  "schema": {
-    "id": ["identifier", "indexed", "displayed"],
-    "title": ["indexed", "displayed"],
-    "description": ["indexed", "displayed"],
-    "release_date": ["displayed"],
-    "cover": ["displayed"]
-  }
+  "uid": "movies",
+  "identifier": "movie_id"
 }
 ```
-
-The index can be created without any schema.
-
-If no schema has been defined when the first document is added, the schema will be [infered based upon the first document](/guides/main_concepts/indexes.md#schema-definition).
 
 ### Example
 
@@ -101,80 +96,53 @@ If no schema has been defined when the first document is added, the schema will 
 $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
-  "name": "Movies",
-  "schema": {
-    "id": ["identifier", "indexed", "displayed"],
-    "title": ["displayed", "indexed"],
-    "overview": ["displayed", "indexed"],
-    "release_date": ["displayed"],
-    "poster": ["displayed"]
-  }
+  "uid": "movies",
 }'
 ```
 
-If no schema has been defined:
 #### Response: `201 created`
 ```json
 {
-  "name": "Movie",
-  "uid": "12345678",
-  "schema": null,
+  "uid": "movies",
+  "identifier": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711476Z",
   "updatedAt": "2019-11-20T09:40:33.711476Z"
 }
 ```
 
-If schema has been given:
-#### Response: `201 created`
-
-```json
-{
-  "updateId": 1,
-  "name": "Movie",
-  "uid": "12345678",
-  "schema": {
-    "id": ["identifier", "indexed", "displayed"],
-    "title": ["displayed", "indexed"],
-    "overview": ["displayed", "indexed"],
-    "release_date": ["displayed"],
-    "poster": ["displayed"]
-  },
-  "createdAt": "2019-11-20T09:40:33.711476Z",
-  "updatedAt": "2019-11-20T09:40:33.711476Z"
-}
-```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/:uid"/>
+<RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
 
-Update an index name.
+Update an index.
 
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **uid**         | The index UID        |
+| Variable  | Description           |
+|-----------|-----------------------|
+| **index_uid** | The index UID |
+
 
 #### Body
 
-The body accepts a new name for the given index.
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **identifier** | the document <glossary word="attribute" /> of his unique identifier |
 
-```json
-{
-  "name": "Movies"
-}
-```
+The `uid` of an index cannot be changed. The document identifier `identifier` can be added if it does not already exist (to now if it has ben set, use [the get index route](/references/indexes.md#get-one-index)).
+
+[There are many ways in MeiliSearch to set the identifier](/guides/main_concepts/documents.md#identifier).
 
 ### Example
 
 ```bash
 $ curl \
-  -X PUT 'http://localhost:7700/indexes/12345678' \
+  -X PUT 'http://localhost:7700/indexes/movie_review' \
   --data '{
-  "name": "Movies"
+  "identifier" : "movie_review_id"
 }'
 ```
 
@@ -182,8 +150,8 @@ $ curl \
 
 ```json
 {
-  "name": "Movie",
-  "uid": "12345678",
+  "uid": "movie_review",
+  "identifier" : "movie_review_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
@@ -192,7 +160,7 @@ $ curl \
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
 
 Delete an index.
 
@@ -201,176 +169,13 @@ Delete an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID        |
+| **index_uid**         | The index UID        |
 
 ### Example
 
 ```bash
 $ curl \
-  -X DELETE 'http://localhost:7700/indexes/12345678'
+  -X DELETE 'http://localhost:7700/indexes/movie'
 ```
 
 #### Response: `204 No Content`
-
-
-## Get one index schema
-
-<RouteHighlighter method="GET" route="/indexes/:uid/schema"/>
-
-Get the schema of one index.
-
-
-#### Path Variables
-
-| Variable  | Description           |
-|-----------|-----------------------|
-| **uid** | The index UID         |
-
-#### Query Parameters
-
-| Query Parameter | Description | Default Value |
-|-----------------|-------------|:-------------:|
-| **raw**         | Change the format of response | false |
-
-### Example
-
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/schema'
-```
-
-
-#### Response: `200 Ok`
-```json
-{
-  "id": ["identifier", "indexed", "displayed"],
-  "title": ["displayed", "indexed"],
-  "overview": ["displayed", "indexed"],
-  "release_date": ["displayed"],
-  "poster": ["displayed"]
-}
-```
-
-If `raw` query parameter has been set to `true`:
-```json
-{
-  "identifier": "id",
-  "attributes": {
-    "id": {
-      "displayed": true,
-      "indexed": true,
-      "ranked": false
-    },
-    "title": {
-      "displayed": true,
-      "indexed": true,
-      "ranked": false
-    },
-    "overview": {
-      "displayed": true,
-      "indexed": true,
-      "ranked": false
-    },
-    "release_date": {
-      "displayed": true,
-      "indexed": false,
-      "ranked": false
-    },
-    "poster": {
-      "displayed": true,
-      "indexed": false,
-      "ranked": false
-    }
-  }
-}
-```
-
-## Update an index schema
-
-<RouteHighlighter method="PUT" route="/indexes/:uid/schema"/>
-
-Update an index schema.
-
-
-#### Path Variables
-
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **uid**         | The index UID        |
-
-#### Query Parameters
-
-| Query Parameter | Description | Default Value |
-|-----------------|-------------|:-------------:|
-| **raw**         | Change the format of response | false |
-
-#### Body
-
-The body accepts a new schema for the given index.
-
-```json
-{
-  "id": ["identifier", "indexed", "displayed"],
-  "title": ["displayed", "indexed"],
-  "overview": ["displayed", "indexed"],
-  "release_date": ["displayed", "ranked"],
-  "poster": ["displayed"]
-}
-```
-
-If `raw` query parameter has been set to `true`:
-```json
-{
-  "identifier": "id",
-  "attributes": {
-    "id": {
-      "displayed": true,
-      "indexed": true,
-      "ranked": false
-    },
-    "title": {
-      "displayed": true,
-      "indexed": true,
-      "ranked": false
-    },
-    "overview": {
-      "displayed": true,
-      "indexed": true,
-      "ranked": false
-    },
-    "release_date": {
-      "displayed": true,
-      "indexed": false,
-      "ranked": false
-    },
-    "poster": {
-      "displayed": true,
-      "indexed": false,
-      "ranked": false
-    }
-  }
-}
-```
-
-### Example
-
-```bash
-$ curl \
-  -X PUT 'http://localhost:7700/indexes/12345678/schema' \
-  --data '{
-  "id": ["identifier", "indexed", "displayed"],
-  "title": ["displayed", "indexed"],
-  "overview": ["displayed", "indexed"],
-  "release_date": ["displayed", "ranked"],
-  "poster": ["displayed"]
-}'
-```
-
-#### Response: `202 Accepted`
-
-```json
-{
-  "updateId": 1,
-}
-```
-This `updateId` allows you to [track the current update](/references/updates.md).

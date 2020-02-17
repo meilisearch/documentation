@@ -4,14 +4,7 @@
             ref: 'tooltipRef',
             class: 'tooltip-custom'
         }">{{ text }}</span>
-        <!-- <div id="tooltipHtml" class="tooltip-content">
-            <slot></slot>
-        </div> -->
          <div ref="tooltipRef" class="tooltip-content">
-            <!-- <p>Let's use some HTML in this tooltip</p>
-            <ol>
-            <li>set <b>v-tooltip</b> with the <b>ref</b> attribute</li>
-            </ol> -->
             <slot></slot>
         </div>
     </span>

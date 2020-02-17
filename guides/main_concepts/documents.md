@@ -14,7 +14,7 @@ A **field** is composed of an **attribute** and its associated data.
 
 #### Wording
 
-- **Attribute**: `"id"`, `"title"`, `"description"` and `"type"`</br>
+- **Attribute**: `"id"`, `"title"`, `"description"` and `"type"`.
 - **Field**: the combination of attributes and data (i.e, `"title": "Interstellar"`)
 - **Document**: The combination of all the fields between brackets.
 
@@ -34,6 +34,10 @@ curl -X POST `http://localhost:7700/indexes/movie/documents` \
 ```
 
 A **document must contain** [one identifier field](/guides/main_concepts/documents.md#identifier) to be indexed in MeiliSearch.
+
+## Fields
+
+<!-- comming -->
 
 ## Identifier
 
@@ -95,4 +99,4 @@ Bad:
 ```
 
 
-The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)), thus if you add 200 documents in one go, if one of the documents has a badly formatted identifier, an error will occur, and none of the documents will be added.
+The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, if you add 200 documents in one go and if one of the documents has a badly formatted identifier, an error will occur, and none of the documents will be added.
