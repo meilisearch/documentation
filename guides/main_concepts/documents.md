@@ -37,11 +37,15 @@ A **document must contain** [one identifier field](/guides/main_concepts/documen
 
 ## Fields
 
-<!-- comming -->
+All fields present in a document are automaticly <glossary word="searchable" /> and <glossary word="displayed" />.
+The way MeiliSearch handles a field is customizable in the settings <Badge text="soon" type="warn"/>. You can make a field only searchable, or only displayed, or none, in this case MeiliSearch will completely ignore the field when it is send on document addition.
+
+You can also add <glossary word="ranking rules" /> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
+
 
 ## Identifier
 
-An identifier is an attribute with a unique value found in each document of a given index. It is used to store the document in the index.
+An identifier is an <glossary word="attribute" /> with a unique value found in each document of a given index. It is used to store the document in the index.
 
 Each index recognizes **only one** identifier attribute. Once the [identifier is set on the index](/guides/main_concepts/documents.md#setting-the-identifier), it **cannot be changed**.
 
