@@ -119,7 +119,6 @@ This is done through a [RESTFul API](/references/README.md) or one of our [SDKs]
 
 In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
 The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is <glossary word="schemaless"/>.
-<!-- todo glossary schemaless -->
 In order to be able to store our documents in an index, we have to create one first.
 
 :::: tabs
@@ -131,8 +130,7 @@ In order to be able to store our documents in an index, we have to create one fi
 $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
-  "name": "Movies",
-  "uid" : "movies_uid"
+  "uid" : "movies"
 }'
 ```
 :::
@@ -141,8 +139,7 @@ $ curl \
 
 ```js
 meili.createIndex({
-    name: "Movies",
-    uid: "movies_uid"
+    uid: "movies"
 })
 ```
 :::
@@ -150,21 +147,21 @@ meili.createIndex({
 ::: tab Ruby
 
 ```ruby
-client.create_index(name: 'Movies', uid: 'movies_uid')
+client.create_index(uid: 'movies')
 ```
 :::
 
 ::: tab PHP
 
 ```php
-$client->createIndex('Movies', 'movies_uid');
+$client->createIndex('movies');
 ```
 :::
 
 ::: tab Python
 
 ```python
-client.create_index(name="movies", uid="movies_uid")
+client.create_index(uid="movies")
 ```
 :::
 ::::
@@ -188,7 +185,7 @@ Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliS
 [API references](/references/documents.md)
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movies_uid/documents' \
+  -X POST 'http://localhost:7700/indexes/movies/documents' \
   --data @movies.json
 ```
 :::
@@ -198,7 +195,7 @@ $ curl \
 ```js
 const movies = require('./movies.json')
 meili
-    .Index("movies_uid")
+    .Index("movies")
     .addDocuments(movies)
 ```
 :::
@@ -220,7 +217,7 @@ $index->addOrReplaceDocuments($movies);
 ::: tab Python
 
 ```python
-index = self.client.get_index(uid="movies_uid")
+index = self.client.get_index(uid="movies")
 json_file = open('movies.json')
 data = json.load(json_file)
 response = index.add_documents(data)
