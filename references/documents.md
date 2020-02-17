@@ -192,9 +192,9 @@ The body is composed of a **JSON array** of documents.
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/documents' \
-  -d 'identifier=id'
+  -d 'identifier=movieskud'
   --data '[{
-      "id": 287947,
+      "movieskud": 287947,
       "title": "Shazam ⚡️"
     }]'
 ```

@@ -68,16 +68,20 @@ If the identifier is not found in a document, it will not be added.
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
 
-- MeiliSearch [finds the id](/guides/main_concepts/documents.md#finding-the-identifier) based on your first document.
-- You set it [on index creation](/guides/main_concepts/documents.md#setting-the-identifier) <Badge text="soon" type="warn"/>
+- MeiliSearch [infers automaticly the identifier](/guides/main_concepts/documents.md#meilisearch-infers-your-identifier) based on your first document.
+- You set it [on index creation](/references/indexes.md#create-an-index)
 - You set it [on document addition](/references/documents.md#add-or-replace-documents)
 
-#### Finding the identifier
+#### MeiliSearch infers your identifier
 
 If no identifier has been given through the index creation or through document additions, MeiliSearch will search for the identifier field in the first document sent.
 
 MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).
 If none has been found, no documents will be added.
+
+#### Missing identifier error
+
+❗️ If you have the `missing identifier` error, it means MeiliSearch could not recognize your identifier. This mean your identifier does not answer the formatting explained above. To solve this error, you could send the [identifier's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index  to add the identifier's name](/references/indexes.md#create-an-index) as explained in: [setting the identifier](/guides/main_concepts/documents.md#identifier).
 
 ### Identifier value format
 
