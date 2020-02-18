@@ -1,11 +1,17 @@
 # Settings
 
-## Get index settings
+It is possible to update all the settings in one go or individually with the dedicated route.
+
+Here are the reference pages with the didicated routes:
+- [Synonymn](/references/synonyms)
+- [Stop-words](/references/stop_words)
+
+
+## Get settings
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
 
 Get settings for a given index.
-
 
 #### Path Variables
 
@@ -18,7 +24,7 @@ Get settings for a given index.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings'
+  -X GET 'http://localhost:7700/indexes/movies/settings'
 ```
 
 
@@ -28,23 +34,11 @@ List the settings.
 
 ```json
 {
-  "rankingOrder": [
-    "_sum_of_typos",
-    "_number_of_words",
-    "_word_proximity",
-    "_sum_of_words_attribute",
-    "_sum_of_words_position",
-    "_exact",
-    "release_date"
-  ],
-  "distinctField": "",
-  "rankingRules": {
-    "release_date": "dsc"
-  }
+
 }
 ```
 
-## Add or replace index settings
+## Add settings
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
@@ -91,7 +85,7 @@ None of the 3 settings parameters are mandatory
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings' \
+  -X GET 'http://localhost:7700/indexes/movies/settings' \
   --data '{
   "rankingOrder": [
     "_sum_of_typos",
@@ -112,7 +106,7 @@ $ curl \
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings' \
+  -X GET 'http://localhost:7700/indexes/movies/settings' \
   --data '{
   "rankingOrder": null,
   "distinctField": null,
@@ -133,3 +127,5 @@ Setting the fields to `[]`, `{}` or `""` will erase **all rules**, even the Meil
 }
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
+
+## Delete settings
