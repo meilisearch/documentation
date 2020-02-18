@@ -9,7 +9,7 @@ The stop-words list is considered as one resource and has the REST routes in lin
 
 ## Get stop-words list
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
 
 Get the list [stop-words](/guides/advanced_guides/stop_words.md).
 
@@ -18,7 +18,7 @@ Get the list [stop-words](/guides/advanced_guides/stop_words.md).
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**         | The index UID |
 
 
 ### Example
@@ -40,7 +40,7 @@ List of all the stop-words in the index.
 
 ## Create stop-words list
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
 
 Create the list of [stop-words](/guides/advanced_guides/stop_words.md).
 
@@ -52,7 +52,7 @@ Create the list of [stop-words](/guides/advanced_guides/stop_words.md).
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**         | The index UID |
 
 #### Body
 
@@ -78,7 +78,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete stop-words list
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
 
 Delete the list of [stop-words](/guides/advanced_guides/stop_words.md).
 
@@ -86,7 +86,7 @@ Delete the list of [stop-words](/guides/advanced_guides/stop_words.md).
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**         | The index UID |
 
 
 ### Example

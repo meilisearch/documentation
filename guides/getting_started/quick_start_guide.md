@@ -118,8 +118,7 @@ This is done through a [RESTFul API](/references/README.md) or one of our [SDKs]
 ## Create your Index
 
 In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
-The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
-
+The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is <glossary word="schemaless"/>.
 In order to be able to store our documents in an index, we have to create one first.
 
 :::: tabs
@@ -131,8 +130,7 @@ In order to be able to store our documents in an index, we have to create one fi
 $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
-  "name": "Movies",
-  "uid" : "movies_uid"
+  "uid" : "movies"
 }'
 ```
 :::
@@ -141,8 +139,7 @@ $ curl \
 
 ```js
 meili.createIndex({
-    name: "Movies",
-    uid: "movies_uid"
+    uid: "movies"
 })
 ```
 :::
@@ -150,21 +147,21 @@ meili.createIndex({
 ::: tab Ruby
 
 ```ruby
-client.create_index(name: 'Movies', uid: 'movies_uid')
+client.create_index(uid: 'movies')
 ```
 :::
 
 ::: tab PHP
 
 ```php
-$client->createIndex('Movies', 'movies_uid');
+$client->createIndex('movies');
 ```
 :::
 
 ::: tab Python
 
 ```python
-client.create_index(name="movies", uid="movies_uid")
+client.create_index(uid="movies")
 ```
 :::
 ::::
@@ -172,11 +169,14 @@ client.create_index(name="movies", uid="movies_uid")
 
 ## Add Documents
 
-Once the index has been created it need to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are made on MeiliSearch.
+Once the index has been created, it needs to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are done on MeiliSearch.
 
 Documents are sent to MeiliSearch in JSON format.
 
-The documents must have at least one field in common. This field contains the identifier of the document.
+To be processed by MeiliSearch, all documents need one common <glossary word="field" /> which will serve as [identifier](/guides/main_concepts/documents.md#identifier) for the document. The value in this field must be **unique**.
+
+There are [several ways to let MeiliSearch know what your document identifier](/guides/main_concepts/documents.md#identifier) is, the easiest way is to have an <glossary word="attribute" /> that contains the string `id` case-insensitively.
+
 
 Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
 
@@ -188,7 +188,7 @@ Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliS
 [API references](/references/documents.md)
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movies_uid/documents' \
+  -X POST 'http://localhost:7700/indexes/movies/documents' \
   --data @movies.json
 ```
 :::
@@ -198,7 +198,7 @@ $ curl \
 ```js
 const movies = require('./movies.json')
 meili
-    .Index("movies_uid")
+    .Index("movies")
     .addDocuments(movies)
 ```
 :::
@@ -220,7 +220,7 @@ $index->addOrReplaceDocuments($movies);
 ::: tab Python
 
 ```python
-index = self.client.get_index(uid="movies_uid")
+index = self.client.get_index(uid="movies")
 json_file = open('movies.json')
 data = json.load(json_file)
 response = index.add_documents(data)
