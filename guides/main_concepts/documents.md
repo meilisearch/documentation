@@ -42,7 +42,6 @@ The way MeiliSearch handles a field is customizable in the settings <Badge text=
 
 You can also add <glossary word="ranking rules" /> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
 
-
 ## Identifier
 
 An identifier is an <glossary word="attribute" /> with a unique value found in each document of a given index. It is used to store the document in the index.
@@ -72,7 +71,7 @@ If the identifier is not found in a document, it will not be added.
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
 
-- MeiliSearch [infers automaticly the identifier](/guides/main_concepts/documents.md#meilisearch-infers-your-identifier) based on your first document.
+- MeiliSearch [automaticly infers the identifier](/guides/main_concepts/documents.md#meilisearch-infers-your-identifier) based on your first document.
 - You set it [on index creation](/references/indexes.md#create-an-index)
 - You set it [on document addition](/references/documents.md#add-or-replace-documents)
 
@@ -85,7 +84,7 @@ If none has been found, no documents will be added.
 
 #### Missing identifier error
 
-❗️ If you have the `missing identifier` error, it means MeiliSearch could not recognize your identifier. This mean your identifier does not answer the formatting explained above. To solve this error, you could send the [identifier's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index  to add the identifier's name](/references/indexes.md#create-an-index) as explained in: [setting the identifier](/guides/main_concepts/documents.md#identifier).
+❗️ If you get the `missing identifier` error, it means MeiliSearch could not recognize your identifier. This means your identifier does not answer the formatting explained above. To solve this error, you could send the [identifier's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index  to add the identifier's name](/references/indexes.md#create-an-index) as explained in: [setting the identifier](/guides/main_concepts/documents.md#identifier).
 
 ### Identifier value format
 
