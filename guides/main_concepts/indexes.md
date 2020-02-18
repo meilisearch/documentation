@@ -9,7 +9,6 @@ An index is defined by an `uid` and contains the following information:
 - A set of relevancy rules (based on presets and customization)
 - A list of synonyms and stop-words
 - Rules for each field of a document
-- Settings
 
 
 #### Example
