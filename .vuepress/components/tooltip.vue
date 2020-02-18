@@ -22,11 +22,6 @@ export default {
           default: 'text',
           type: String
       }
-  },
-   data () {
-    return {
-
-    }
   }
 };
 </script>
@@ -50,6 +45,4 @@ export default {
   background-color: rgba(0,0,0,0.8);
   padding: 15px 20px;
 }
-
-
 </style>

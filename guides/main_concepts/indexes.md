@@ -19,10 +19,9 @@ Each of the indexes has information about the fields found in the documents, how
 
 This means, you can create synonyms for a `movie` index and different synonyms for a `clothes` index on the same MeiliSearch server.
 
-
 ## Index UID
 
-The `uid` of an index is its **unique** identifier. It is the `:uid` parameter found on every `indexes/:uid` route.
+The `uid` of an index is its **unique** identifier. It is the `:index_uid` parameter found on every `indexes/:index_uid` route.
 
 The uid is set on [index creation](/references/indexes.md#create-an-index). After which you cannot create another index with the same `uid`.
 The `uid` cannot be changed.
@@ -38,13 +37,13 @@ The `uid` cannot be changed.
 
 ## Document identifier
 
-The document identifier is a <glossary word="field" /> in a document. This field is composed of an identifier <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same identifier attribute, with each an unique value. The identifier's attribute name **must** be known by the index. There are [multiple ways to set your identifier](/guides/main_concepts/documents.md#setting-the-identifier).
+The document identifier is a <glossary word="field" /> in a document. This field is composed of an identifier <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same identifier attribute, with each a unique value. The identifier's attribute name **must** be known by the index. There are [multiple ways to set your identifier](/guides/main_concepts/documents.md#setting-the-identifier).
 
 [More information about the document identifier](/guides/main_concepts/documents.md#identifier)
 
 ## Relevancy rules
 
-Each index has its own relevancy rules. By default, all index starts with the same <glossary word="ranking rules"/>  applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
+Each index has its own relevancy rules. By default, all index starts with the same <glossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
 
 For example, if your first document has the following keys in this order: `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
 
