@@ -137,8 +137,7 @@ $ curl \
             "logan": ["wolverine"],
         },
         "indexNewFields": false,
-    });
-'
+    }'
 ```
 
 #### Response: `202 Accepted`
@@ -171,7 +170,7 @@ The settings will look like this after the delete has been processed by MeiliSea
     "stopWords": null,
     "synonyms": null,
     "indexNewFields": true,
-})
+}
 ```
 The value of `RankingRules` is **null** but it still has the default ranking rules. When no modification has been made to the ranking rules the field has a value of null. To remove all ranking rules, which is not recommended for any use-case, you should send an empty array.
 
