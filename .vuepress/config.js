@@ -73,6 +73,7 @@ module.exports = {
             "/references/documents",
             "/references/search",
             "/references/synonyms",
+            "/references/ranking_rules",
             "/references/stop_words",
             "/references/updates",
             "/references/keys",
