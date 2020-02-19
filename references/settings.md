@@ -5,13 +5,13 @@ Settings is a list of all the **customization** possible for an index.
 It is possible to update all the settings in one go or individually with the dedicated route.
 
 These are the reference pages for the dedicated routes:
-- [Synonyn](/references/synonyms)
-- [Stop words](/references/stop_words)
-- [Ranking rules](/references/ranking_rules)
-- [Ranking distinct](/references/ranking_distinct)
-- [Searchable attribute](/references/searchable_attribute)
-- [Displayed attribute](/references/displayed_attribute)
-- [Index new field](/references/index_new_field)
+- [Synonym](/references/synonyms.md)
+- [Stop words](/references/stop_words.md)
+- [Ranking rules](/references/ranking_rules.md)
+- [Ranking distinct](/references/ranking_distinct.md)
+- [Searchable attribute](/references/searchable_attributes.md)
+- [Displayed attribute](/references/displayed_attributes.md)
+- [Index new field](/references/index_new_fields.md)
 
 ## Get settings
 

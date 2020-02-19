@@ -82,7 +82,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:uid/settings/synonyms"/>
 
-Delete the list of [synonyms][1] of an index.
+Delete the list of [synonyms][/guides/advanced_guides/synonyms.md] of an index.
 
 #### Path Variables
 
@@ -104,5 +104,3 @@ Delete the list of [synonyms][1] of an index.
 }
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
-
-[1]: /advanced_guides/synonyms.md

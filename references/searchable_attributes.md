@@ -90,7 +90,7 @@ By deleting the searchable attributes you will have no attributes left to search
 :::
 <!-- By deleting the searchable attributes you reset it to its default value that is a list of all the known fields in the documents. -->
 
-<!-- To remove all searchable attributes, which is not recommended for any use-case, you should send an empty array on the [add or replace searchable attributes route](/references/searchable_attributes.html#add-or-replace-searchable-attributes). -->
+<!-- To remove all searchable attributes, which is not recommended for any use-case, you should send an empty array on the add or replace searchable attributes route. -->
 
 #### Path Variables
 

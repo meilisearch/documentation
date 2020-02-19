@@ -31,7 +31,7 @@ Let's use the following documents sample with 3 jackets of **different `colors`*
 ```
 
 
-By [setting `skuid` as a distinct field](/references/settings.md#distinct-field):
+By [setting `skuid` as a distinct field](/references/ranking-distinct.md):
 
 ```bash
  $ curl

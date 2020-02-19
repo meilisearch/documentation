@@ -89,7 +89,7 @@ By deleting the displayed attributes you will have no attributes left in the ret
 :::
 <!-- By deleting the displayed attributes you reset it to its default value that is a list of all the known fields in the documents.
 
-To remove all displayed attributes, which is not recommended for any use-case, you should send an empty array on the [add or replace displayed attributes route](/references/displayed_attributes.html#add-or-replace-displayed-attributes). -->
+To remove all displayed attributes, which is not recommended for any use-case, you should send an empty array on the [add or replace displayed attributes route](/references/displayed_attributes.md#add-or-replace-displayed-attributes). -->
 
 #### Path Variables
 

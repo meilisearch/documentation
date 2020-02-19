@@ -76,14 +76,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/index-new-fields"/>
 
-Delete the displayed attributes of the index.
-
-::: warning
-By deleting the displayed attributes you will have no attributes left in the returned documents, which is not recommended.
-:::
-<!-- By deleting the displayed attributes you reset it to its default value that is a list of all the known fields in the documents.
-
-To remove all displayed attributes, which is not recommended for any use-case, you should send an empty array on the [add or replace displayed attributes route](/references/displayed_attributes.html#add-or-replace-displayed-attributes). -->
+Set the index new fields back to its default value of `true`.
 
 #### Path Variables
 
