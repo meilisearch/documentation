@@ -1,14 +1,16 @@
-# Ranking Rules
+# Ranking rules
+
+Ranking rules is a list of all the rules that contributes to the relevancy of your search. It is possible to add your own and to change the order of the rules based on your needs.
 
 Child route of the [Settings route](/references/settings.md).
 
-Ranking rules can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other setting.
+Ranking rules can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
 ## Get ranking rules
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/ranking-rules" />
 
-Get the ranking rules of a given index.
+Get the ranking rules of an index.
 
 #### Path Variables
 
@@ -55,6 +57,12 @@ Add or replace the ranking rules of an index.
 
 List of ranking rules in their order of importance.
 
+To add your own ranking rule you need to communicate the field and if its value is descending or ascending.
+
+For ascending it would be : `asc(price)`
+
+For descending it would be : `dsc(release_date)`
+
 ### Examples
 
 ```bash
@@ -85,7 +93,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules"/>
 
-Delete the ranking rules of the index.
+Delete the ranking rules of an index.
 
 By deleting the rules you reset them to their default value.
 

@@ -1,22 +1,23 @@
 # Settings
 
+Settings is a list of all the **customization** possible for an index.
+
 It is possible to update all the settings in one go or individually with the dedicated route.
 
-Here are the reference pages with the didicated routes:
-- [Synonymn](/references/synonyms)
-- [StopWords](/references/stop_words)
-- [rankingRules](/references/stop_words)
-- [rankingDistinct](/references/stop_words)
-- [identifier](/references/stop_words)
-- [searchableAttribute](/references/stop_words)
-- [displayedAttribute](/references/stop_words)
-- [indexNewField](/references/stop_words)
+These are the reference pages for the dedicated routes:
+- [Synonyn](/references/synonyms)
+- [Stop words](/references/stop_words)
+- [Ranking rules](/references/ranking_rules)
+- [Ranking distinct](/references/ranking_distinct)
+- [Searchable attribute](/references/searchable_attribute)
+- [Displayed attribute](/references/displayed_attribute)
+- [Index new field](/references/index_new_field)
 
 ## Get settings
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
 
-Get the settings of a given index.
+Get the settings of an index.
 
 #### Path Variables
 
@@ -86,7 +87,7 @@ Add or replace the settings of an index.
 |-------------------|-----------------------| --- |
 | **rankingRules** | [Strings] | Ranking rules in their order of importance  |
 | **rankingDistinct** | String | Returns only distinct (different) values of the given field |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) |
 | **displayedAttributes** | [Strings] | Fields present in the returned documents |
 | **stopWords** | [Strings] | Words in the search query that will be ignored |
 | **synonyms** | Object | List of associated words that are considered the same in a search query |
@@ -153,11 +154,12 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings"/>
 
-Delete the settings of the index.
+Delete the settings of an index.
 
-All settings will be set to null except for:
+All settings will be reset to null except for:
 -  `indexNewFields` who will be set to its default value of `true`
 - `rankingRules` who will have its default ranking rules in their default order.
+<!-- - `searchableAttributes` and `displayedAttributes` who will have all the fields by default. -->
 
 The settings will look like this after the delete has been processed by MeiliSearch
 
@@ -172,7 +174,9 @@ The settings will look like this after the delete has been processed by MeiliSea
     "indexNewFields": true,
 }
 ```
-The value of `RankingRules` is **null** but it still has the default ranking rules. When no modification has been made to the ranking rules the field has a value of null. To remove all ranking rules, which is not recommended for any use-case, you should send an empty array.
+The value of `RankingRules` is **null** but they have their default value. When no modification has been made to those settings the field has a value of null.
+
+To remove all `RankingRules`, which is not recommended for any use-case, you should send an empty array.
 
 #### Path Variables
 
@@ -195,4 +199,3 @@ $ curl \
 }
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
-
