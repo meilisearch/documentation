@@ -270,7 +270,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete documents
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete-batch"/>
 
 Delete a selection of documents based on array of document id's.<br/>
 
@@ -292,7 +292,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 
 ```bash
   curl \
-  -X POST 'http://localhost:7700/indexes/movies' \
+  -X POST 'http://localhost:7700/indexes/movies/delete-batch' \
   --data '[
       23488,
       153738,
