@@ -97,7 +97,6 @@ To remove all displayed attributes, which is not recommended for any use-case, y
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
-
 #### Example
 ```bash
 $ curl \
@@ -112,4 +111,3 @@ $ curl \
 }
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
-

@@ -1,6 +1,11 @@
 # Index new fields
 
+Index new fields determines if MeiliSearch should index new fields found during document addition.
+Once the first document has been added to MeiliSearch, a list of known fields is stored. After which any other field found in the other documents will stored by default. This can be disabled by setting the `indexNewField` boolean to false.
 
+Child route of the [Settings route](/references/settings.md).
+
+Stop words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
 ## Get index new fields
 
@@ -85,7 +90,6 @@ To remove all displayed attributes, which is not recommended for any use-case, y
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
-
 
 #### Example
 ```bash

@@ -18,7 +18,6 @@ Get the list [stop-words](/guides/advanced_guides/stop_words.md) of an index.
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
-
 ### Example
 
 ```bash
@@ -26,20 +25,17 @@ $ curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings/stop-words'
 ```
 
-
 #### Response: `200 Ok`
 
 ```json
 ["of","the","to"]
 ```
 
-
 ## Add or replace stop-words list
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
 
 Add or replace the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
-
 
 #### Path Variables
 
@@ -61,7 +57,6 @@ $ curl \
   --data '["the", "of", "to"]'
 ```
 
-
 #### Response: `202 Accepted`
 
 ```json
@@ -73,7 +68,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete stop-words list
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />ß
 
 Delete the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
 
@@ -83,14 +78,12 @@ Delete the list of [stop-words](/guides/advanced_guides/stop_words.md) of an ind
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
-
 ### Example
 
 ```bash
 $ curl \
   -X DELETE 'http://localhost:7700/indexes/12345678/settings/stop-words' \
 ```
-
 
 #### Response: `202 Accepted`
 

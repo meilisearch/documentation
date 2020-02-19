@@ -98,7 +98,6 @@ By deleting the searchable attributes you will have no attributes left to search
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
-
 #### Example
 ```bash
 $ curl \

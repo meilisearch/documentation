@@ -76,7 +76,6 @@ Delete the ranking distinct field of an index.
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
-
 #### Example
 ```bash
 $ curl \
@@ -91,4 +90,3 @@ $ curl \
 }
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
-
