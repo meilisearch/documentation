@@ -55,7 +55,7 @@ The default ranking order is as follows ([*see above for more detail about each 
 - `Position`
 - `Exact`
 
-[The ranking order can be changed](/references/ranking-rules). Rules can be removed by omitting them in the ranking order list, and custom rules must be added in the ranking order list to be applied.
+[The ranking order can be changed](/references/ranking_rules.md). Rules can be removed by omitting them in the ranking order list, and custom rules must be added in the ranking order list to be applied.
 
 Each time you create **a new ranking rule it must be added to the existing ranking order to be applied** by the [bucket sort](/guides/advanced_guides/bucket_sort.md).
 
