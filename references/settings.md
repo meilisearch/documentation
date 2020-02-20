@@ -11,7 +11,7 @@ These are the reference pages for the dedicated routes:
 - [Ranking distinct](/references/ranking_distinct.md)
 - [Searchable attributes](/references/searchable_attributes.md)
 - [Displayed attributes](/references/displayed_attributes.md)
-- [Index new field](/references/index_new_fields.md)
+- [Index new fields](/references/index_new_fields.md)
 
 ## Get settings
 
