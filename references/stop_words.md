@@ -10,7 +10,7 @@ Stop-words can also be updated directly through the [add settings route](/refere
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
 
-Get the list [stop-words](/guides/advanced_guides/stop_words.md) of an index.
+Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 #### Path Variables
 
