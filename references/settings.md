@@ -174,7 +174,7 @@ The settings will look like this after the delete has been processed by MeiliSea
     "indexNewFields": true,
 }
 ```
-The value of `RankingRules` is **null** but they have their default value. When no modification has been made to those settings the field has a value of null.
+The value of `RankingRules` is **null** but they have their default value. When no modification has been made to those settings the field has a value of `null`.
 
 To remove all `RankingRules`, which is not recommended for any use-case, you should send an empty array.
 
