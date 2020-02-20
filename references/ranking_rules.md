@@ -59,7 +59,7 @@ List of ranking rules in order of importance.
 
 To add your own ranking rule you need to communicate the field and if its value is descending or ascending.
 
-For ascending it would be : `asc(price)`
+For ascending it would be: `asc(price)`
 
 For descending it would be : `dsc(release_date)`
 
