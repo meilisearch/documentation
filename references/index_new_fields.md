@@ -52,7 +52,7 @@ Update if MeiliSearch should index new fields for an index.
 
 Boolean that will determine if new fields found during documents addition should be indexed or ignored.
 
-True is the default value and will index all new fields, false will ignore all new fields.
+`true` is the default value and will index all new fields, `false` will ignore all new fields.
 
 ### Examples
 
