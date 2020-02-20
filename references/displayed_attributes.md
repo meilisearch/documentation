@@ -2,7 +2,7 @@
 
 Displayed attributes are the fields contained in each matching document.
 
-Child route of the [Settings route](/references/settings.md).
+Child route of the [settings route](/references/settings.md).
 
 Displayed attributes can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
