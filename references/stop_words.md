@@ -68,7 +68,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Delete stop-words list
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />ß
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
 
 Delete the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
 
