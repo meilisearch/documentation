@@ -1,6 +1,6 @@
 # Index new fields
 
-Index new fields determines if MeiliSearch should index new fields found during document addition.
+`indexNewFields` determines if MeiliSearch should index new fields found during documents addition.
 Once the first document has been added to MeiliSearch, a list of known fields is stored. After which any other field found in the other documents will be stored by default. This can be disabled by setting the `indexNewField` boolean to `false`.
 
 Child route of the [settings route](/references/settings.md).
