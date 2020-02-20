@@ -156,7 +156,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Delete the settings of an index.
 
-All settings will be reset to null except for:
+All settings will be reset to `null` except for:
 -  `indexNewFields` who will be set to its default value of `true`
 - `rankingRules` who will have its default ranking rules in their default order.
 <!-- - `searchableAttributes` and `displayedAttributes` who will have all the fields by default. -->
