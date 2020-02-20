@@ -85,7 +85,7 @@ Add or replace the settings of an index.
 
 | Variable          | type |  Description |
 |-------------------|-----------------------| --- |
-| **rankingRules** | [Strings] | Ranking rules in order of importance  |
+| **rankingRules** | [Strings] | Ranking rules in their order of importance  |
 | **rankingDistinct** | String | Returns only distinct (different) values of the given field |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) |
 | **displayedAttributes** | [Strings] | Fields present in the returned documents |
