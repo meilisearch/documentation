@@ -65,7 +65,7 @@ An object with every synonym and its associated words.
   --data '{
     "wolverine": ["xmen", "logan"],
     "logan": ["wolverine", "xmen"],
-    "wow": ["World of warcraft"]
+    "wow": ["world of warcraft"]
   }'
 ```
 
