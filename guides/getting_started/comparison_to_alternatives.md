@@ -20,19 +20,18 @@ MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a t
 
 ### MeiliSearch vs. Typesense
 
-MeiliSearch and Typesense target a set of use cases involving small-medium datasets. We could say their primary focus is on offering a super fast and relevant search for end-user.  
-Both of them use a reverse index with a Levenshtein automaton in order to handle typos. But, contrary to Typesense, MeiliSearch also uses a bucket sort which means that a default relevancy algorithm based on the proximity of words in the documents, the fields in which the words are found, and the number of typos is executed.  
-On the other hand, MeiliSearch is written in Rust, which combines performance, security, and is part of a modern ecosystem that will allow easier maintenance.  
+Typesense uses a default_sorting_field on each document, it means that before indexing your documents you need to compute a relevancy score for typesense to be able to sort them based on your needs (https://typesense.org/docs/0.11.1/guide/#ranking-relevance).  
+On the other hand, MeiliSearch uses a bucket sort which means that there is a default relevancy algorithm based on the proximity of words in the documents, the fields in which the words are found and the number of typos (https://docs.meilisearch.com/guides/advanced_guides/ranking ...). And you can still add your own custom rules if you want to alter the default search behavior.  
 
 ### MeiliSearch vs. Algolia
 
 MeiliSearch was inspired by Algolia’s product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. MeiliSearch is thus a new search engine based on the work of Algolia and recent research papers.  
-It provides similar features and reaches the same level of relevance just as quickly as its predecessor. Icing on the cake, MeiliSearch is open source!  
+It provides similar features and reaches the same level of relevance just as quickly as its predecessor.  
 
-The fact that MeiliSearch is written in Rust, a systems-level and modern programming language, allows to rapidly build features; which is not especially the case in other low-level languages such as C++ or C. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.  
+Contrary to Algolia, MeiliSearch is open-source and written in Rust, a systems-level and modern programming language, allows to rapidly build features. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.  
 
 One of Algolia major assets is the robust worldwide infrastructure that they offer to their customers.  
-MeiliSearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to develop and maintain than Algolia’s.  
+MeiliSearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to deploy and maintain than Algolia’s.  
 
 ## A Quick Look at the Search Engine Landscape
 
@@ -99,3 +98,14 @@ Doofinder is a paid on-site search service which was developed to integrate to a
 
 MeiliSearch offers the same features as Algolia but is intended to be a more simplified alternative. In addition, providing an open source code allows to unleash a large number of opportunities for monetization: SaaS, support services, enterprise-features, and so on.  
 Today, Algolia is no longer perceived as a dev tool, a developer friendly tool, since Algolia's marketing strategy is now mainly focused on large businesses; especially on e-commerce market where instant search is proving effective in bringing a strong added value. Since MeiliSearch is open source, it will be integrated in relatively smaller projects and will be managed by the development team rather than the marketing team or the product team. MeiliSearch will continue growing driven by its projects! Our ambition for MeiliSearch is to become the reference technology in the search engine market.  
+
+Each Search solution has its perfect use case and its not easy to compare the performances on different types of search engines. It would’t be fair to compare the fastness of ElasticSearch and Algolia on a product-based database. Same goes for comparing the fastness on an enormous full text based database.  
+
+Thats why we can not compare ourself with lucene-based or other specific use-case search engines.  
+
+On the use-case MeiliSearch is focussing, the search solution that are the most similar to us are Algolia and Typesense. We all made a search-as-you-type relevant search engine.
+Typesense is a great tool but not at having a lot done with zero configuration.
+While Algolia is the most advanced, it has its price and is marketed to big companies.  
+
+MeiliSearch is made for all types of developers. We focus on a developer friendly tool, easy to install and to deploy. Offering an out-of-the-box awesome search experience for the end users. We want everyone to have access to the best search experiences out there with minimum effort and with no financial means.
+Today a developer wanting a search solution on his application will mostly go for ElasticSearch or less effective solutions. While Elastic is not made for that use case, it is still, a great open-source solution. We are this default solution today.  
