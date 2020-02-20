@@ -20,7 +20,7 @@ MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a t
 
 ### MeiliSearch vs. Typesense
 
-Typesense uses a default_sorting_field on each document, it means that before indexing your documents you need to compute a relevancy score for typesense to be able to sort them based on your needs (https://typesense.org/docs/0.11.1/guide/#ranking-relevance).  
+Typesense uses a default_sorting_field on each document, it means that before indexing your documents you need to compute a relevancy score for Typesense to be able to sort them based on your needs (https://typesense.org/docs/0.11.1/guide/#ranking-relevance).  
 On the other hand, MeiliSearch uses a bucket sort which means that there is a default relevancy algorithm based on the proximity of words in the documents, the fields in which the words are found and the number of typos (https://docs.meilisearch.com/guides/advanced_guides/ranking ...). And you can still add your own custom rules if you want to alter the default search behavior.  
 
 ### MeiliSearch vs. Algolia
@@ -96,11 +96,12 @@ Doofinder is a paid on-site search service which was developed to integrate to a
 
 ## Conclusions
 
-Each Search solution has its perfect use case and its not easy to compare the performances on different types of search engines. It would’t be fair to compare the fastness of ElasticSearch and Algolia on a product-based database. Same goes for comparing the fastness on an enormous full text based database.  
+Each Search solution fits best with the constraints of a particular use case. Since each type of search engines offers a unique set of features, it wouldn't be easy nor relevant to compare their performance. For instance, it wouldn't be fair to make a comparison of speed between Elasticsearch and Algolia over a product-based database. Same goes for a very large full text-based database.  
 
-Thats why we can not compare ourself with Lucene-based or other specific use-case search engines.  
+We cannot therefore compare ourselves with Lucene-based or other search engines targeted to specific tasks.  
 
-On the use-case MeiliSearch is focusing, the search solution that are the most similar to us are Algolia and Typesense. We all made a search-as-you-type relevant search engine.
+In the particular use case covered by MeiliSearch, the most similar solutions to the latter are Algolia and Typesense. The three of them are search-as-you-type relevant search engines.
+
 Typesense is a great tool but not at having a lot done with zero configuration.
 While Algolia is the most advanced, it has its price and is marketed to big companies.  
 
