@@ -53,7 +53,7 @@ Add or replace the searchable attributes of an index.
 
 List of searchable attributes in order of importance.
 
-This means that a document with a match in an attribute at the start of the array will be considered more relevant
+This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 than a document with a match in an atribute at the end of the array.
 
 ### Examples
