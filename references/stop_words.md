@@ -4,7 +4,7 @@ Stop-words are a list of words that will be ignored in search queries. So if you
 
 Child route of the [settings route](/references/settings.md).
 
-Stop words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
 ## Get stop-words list
 
