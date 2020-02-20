@@ -40,7 +40,7 @@ false
 
 Update if MeiliSearch should index new fields for an index.
 
-Index new fields is a Boolean, when set to true, each fields found in the newly added documents will be added in MeiliSearch.
+`indexNewFields` is a boolean. When set to `true`, each field found in the newly added documents will be added in MeiliSearch. When set to `false`, they will be ignored.
 When false will be ignored.
 
 #### Path Variables
