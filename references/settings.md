@@ -10,7 +10,7 @@ These are the reference pages for the dedicated routes:
 - [Ranking rules](/references/ranking_rules.md)
 - [Ranking distinct](/references/ranking_distinct.md)
 - [Searchable attributes](/references/searchable_attributes.md)
-- [Displayed attribute](/references/displayed_attributes.md)
+- [Displayed attributes](/references/displayed_attributes.md)
 - [Index new field](/references/index_new_fields.md)
 
 ## Get settings
