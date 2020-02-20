@@ -37,11 +37,11 @@ List the settings.
 ]
 ```
 
-## Add or replace searchable attributes
+## Update searchable attributes
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/searchable-attributes" />
 
-Add or replace the searchable attributes of an index.
+Update the searchable attributes of an index.
 
 #### Path Variables
 
@@ -78,18 +78,15 @@ A match in title will make a document more relevant than another document with a
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Delete searchable attributes
+## Reset searchable attributes
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/searchable-attributes"/>
 
-Delete the searchable attributes of the index.
+Reset the searchable attributes of the index to the default value.
 
-::: warning
-By deleting the searchable attributes you will have no attributes left to search in, which is not recommended.
-:::
-<!-- By deleting the searchable attributes you reset it to its default value that is a list of all the known fields in the documents. -->
+#### Default value
 
-<!-- To remove all searchable attributes, which is not recommended for any use-case, you should send an empty array on the add or replace searchable attributes route. -->
+All attributes found in the documents added to the index.
 
 #### Path Variables
 

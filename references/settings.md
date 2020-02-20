@@ -8,7 +8,7 @@ These are the reference pages for the dedicated routes:
 - [Synonyms](/references/synonyms.md)
 - [Stop-words](/references/stop_words.md)
 - [Ranking rules](/references/ranking_rules.md)
-- [Ranking distinct](/references/ranking_distinct.md)
+- [Distinct attribute](/references/distinct_attribute.md)
 - [Searchable attributes](/references/searchable_attributes.md)
 - [Displayed attributes](/references/displayed_attributes.md)
 - [Index new fields](/references/index_new_fields.md)
@@ -39,12 +39,12 @@ List the settings.
 ```json
 {
   "rankingRules": [
-      "_typo",
-      "_words",
-      "_proximity",
-      "_attribute",
-      "_words_position",
-      "_exact",
+      "typo",
+      "words",
+      "proximity",
+      "attribute",
+      "wordsPosition",
+      "exactness",
       "dsc(release_date)",
   ],
   "rankingDistinct": null,
@@ -69,7 +69,7 @@ List the settings.
 }
 ```
 
-## Add settings
+## Update settings
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
@@ -83,15 +83,15 @@ Add or replace the settings of an index.
 
 #### Body
 
-| Variable          | type |  Description |
-|-------------------|-----------------------| --- |
-| **rankingRules** | [Strings] | Ranking rules in their order of importance  |
-| **rankingDistinct** | String | Returns only distinct (different) values of the given field |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) |
-| **displayedAttributes** | [Strings] | Fields present in the returned documents |
-| **stopWords** | [Strings] | Words in the search query that will be ignored |
-| **synonyms** | Object | List of associated words that are considered the same in a search query |
-| **indexNewFields** | Boolean | New fields in newly added document are/aren't added to MeiliSearch |
+| Variable          | Type |  Description | Default value |
+|-------------------|-----------------------| --- | --- |
+| **rankingRules** | [Strings] | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/advanced_guides/relevancy.md#order-of-the-rules) |
+| **rankingDistinct** | String | Returns only distinct (different) values of the given field | *null* |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
+| **displayedAttributes** | [Strings] | Fields present in the returned documents | All attributes found in the documents |
+| **stopWords** | [Strings] | Words in the search query that will be ignored | [] |
+| **synonyms** | Object | List of associated words that are considered the same in a search query | {} |
+| **indexNewFields** | Boolean | New fields in newly added document are/aren't added to MeiliSearch | true |
 
 ### Examples
 
@@ -102,12 +102,12 @@ $ curl \
   -X GET 'http://localhost:7700/indexes/movies/settings' \
   --data '{
    "rankingRules": [
-            "_typo",
-            "_words",
-            "_proximity",
-            "_attribute",
-            "_words_position",
-            "_exact",
+            "typo",
+            "words",
+            "proximity",
+            "attribute",
+            "wordsPosition",
+            "exactness",
             "dsc(release_date)",
             "dsc(rank)",
         ],
@@ -150,33 +150,23 @@ $ curl \
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Delete settings
+## Reset settings
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings"/>
 
-Delete the settings of an index.
+Reset the settings of an index.
 
-All settings will be reset to `null` except for:
--  `indexNewFields` that will be set to its default value (`true`).
-- `rankingRules` that will be set to its default ranking rules in their default order.
-<!-- - `searchableAttributes` and `displayedAttributes` who will have all the fields by default. -->
+All settings will be reset to their default value.
 
-The settings will look like this after the delete has been processed by MeiliSearch
-
-```json
-{
-    "rankingRules": null,
-    "rankingDistinct": null,
-    "searchableAttributes": null,
-    "displayedAttributes": null,
-    "stopWords": null,
-    "synonyms": null,
-    "indexNewFields": true,
-}
-```
-The value of `RankingRules` is **null** but they have their default value. When no modification has been made to those settings the field has a value of `null`.
-
-To remove all `RankingRules`, which is not recommended for any use-case, you should send an empty array.
+| Variable          |  Description | Default value |
+|-------------------|-----------------------| --- | --- |
+| **rankingRules**  | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/advanced_guides/relevancy.md#order-of-the-rules) |
+| **rankingDistinct** | Returns only distinct (different) values of the given field | `null` |
+| **searchableAttributes** | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
+| **displayedAttributes** | Fields present in the returned documents | All attributes found in the documents |
+| **stopWords** | Words in the search query that will be ignored | `[]` |
+| **synonyms** | List of associated words that are considered the same in a search query | `{}` |
+| **indexNewFields** | New fields in newly added document are/aren't added to MeiliSearch | `true` |
 
 #### Path Variables
 

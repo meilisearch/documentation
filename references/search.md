@@ -6,7 +6,6 @@
 
 Search for documents matching a specific query in the given index.
 
-
 #### Path Variables
 
 | Variable  | Description   |

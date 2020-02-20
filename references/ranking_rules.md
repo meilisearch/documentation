@@ -31,21 +31,21 @@ List the settings.
 
 ```json
 [
-    "_typo",
-    "_words",
-    "_proximity",
-    "_attribute",
-    "_words_position",
-    "_exact",
+    "typo",
+    "words",
+    "proximity",
+    "attribute",
+    "wordsPosition",
+    "exactness",
     "dsc(release_date)",
 ]
 ```
 
-## Add or replace ranking rules
+## Update ranking rules
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/ranking-rules" />
 
-Add or replace the ranking rules of an index.
+Update the ranking rules of an index.
 
 #### Path Variables
 
@@ -69,12 +69,12 @@ For descending it would be: `dsc(release_date)`
 $ curl \
   -X GET 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
   --data '[
-            "_typo",
-            "_words",
-            "_proximity",
-            "_attribute",
-            "_words_position",
-            "_exact",
+            "typo",
+            "words",
+            "proximity",
+            "attribute",
+            "wordsPosition",
+            "exactness",
             "dsc(release_date)",
             "dsc(rank)",
         ]'
@@ -89,25 +89,26 @@ $ curl \
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Delete ranking rules
+## Reset ranking rules
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules"/>
 
-Delete the ranking rules of an index.
+Reset the [ranking rules](/guides/advanced_guides/relevancy.md#ranking-rules) of an index to its default value.
 
-By deleting the rules you reset them to their default value, which are:
+#### Default value
 
+Array with the [built-in ranking rules](/guides/advanced_guides/relevancy.md#order-of-the-rules) ordered by importance.
 ```json
 [
-    "_typo",
-    "_words",
-    "_proximity",
-    "_attribute",
-    "_words_position",
-    "_exact"
+    "typo",
+    "words",
+    "proximity",
+    "attribute",
+    "wordsPosition",
+    "exactness"
 ]
 ```
-To remove all ranking rules, which is not recommended for any use-case, you should send an empty array on the [add or replace ranking rules route](/references/ranking_rules.md#add-or-replace-ranking-rules).
+To remove all ranking rules, which is not recommended for any use-case, you should send an empty array on the [add or replace ranking rules route](/references/ranking_rules.md#update-ranking-rules).
 
 #### Path Variables
 
