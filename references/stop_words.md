@@ -1,6 +1,6 @@
 # Stop words
 
-Stop words is a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
+Stop-words are a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
 
 Child route of the [Settings route](/references/settings.md).
 
