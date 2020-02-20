@@ -158,7 +158,7 @@ Delete the settings of an index.
 
 All settings will be reset to `null` except for:
 -  `indexNewFields` that will be set to its default value (`true`).
-- `rankingRules` who will have its default ranking rules in their default order.
+- `rankingRules` that will be set to its default ranking rules in their default order.
 <!-- - `searchableAttributes` and `displayedAttributes` who will have all the fields by default. -->
 
 The settings will look like this after the delete has been processed by MeiliSearch
