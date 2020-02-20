@@ -6,7 +6,7 @@ It is possible to update all the settings in one go or individually with the ded
 
 These are the reference pages for the dedicated routes:
 - [Synonyms](/references/synonyms.md)
-- [Stop words](/references/stop_words.md)
+- [Stop-words](/references/stop_words.md)
 - [Ranking rules](/references/ranking_rules.md)
 - [Ranking distinct](/references/ranking_distinct.md)
 - [Searchable attribute](/references/searchable_attributes.md)
