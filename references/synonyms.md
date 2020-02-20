@@ -10,7 +10,7 @@ Synonyms can also be updated directly through the [add settings route](/referenc
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings/synonyms"/>
 
-Get the list of [synonyms][1] of an index.
+Get the list of synonyms of an index.
 
 #### Path Variables
 
