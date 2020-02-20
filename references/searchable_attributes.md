@@ -2,7 +2,7 @@
 
 Searchable attributes are the fields in which to search for matching query words.
 
-Child route of the [Settings route](/references/settings.md).
+Child route of the [settings route](/references/settings.md).
 
 Searchable attributes can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
@@ -112,4 +112,3 @@ $ curl \
 }
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
-
