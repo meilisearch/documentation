@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
   title: "MeiliSearch Documentation v0.9",
   description: "Open source Instant Search Engine",
@@ -41,6 +42,7 @@ module.exports = {
           path: "/guides/advanced_guides/",
           collapsable: false,
           children: [
+            "/guides/advanced_guides/relevancy",
             "/guides/advanced_guides/binary",
             "/guides/advanced_guides/typotolerance",
             "/guides/advanced_guides/concat",
