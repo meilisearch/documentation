@@ -37,7 +37,7 @@ Get the list of [synonyms][1] of an index.
     "xmen"
   ],
   "wow": [
-    "World of warcraft"
+    "world of warcraft"
   ]
 }
 ```
