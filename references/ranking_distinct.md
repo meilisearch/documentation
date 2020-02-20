@@ -2,7 +2,7 @@
 
 Ranking distinct is a field where its value will always be unique in the returned document.
 
-Child route of the [Settings route](/references/settings.md).
+Child route of the [settings route](/references/settings.md).
 
 Ranking distinct can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
