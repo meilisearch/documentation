@@ -98,6 +98,7 @@ By deleting the searchable attributes you will have no attributes left to search
 | **index_uid**         | The index UID |
 
 #### Example
+
 ```bash
 $ curl \
   -X DELETE 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
