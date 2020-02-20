@@ -5,7 +5,7 @@ Settings is a list of all the **customization** possible for an index.
 It is possible to update all the settings in one go or individually with the dedicated routes.
 
 These are the reference pages for the dedicated routes:
-- [Synonym](/references/synonyms.md)
+- [Synonyms](/references/synonyms.md)
 - [Stop words](/references/stop_words.md)
 - [Ranking rules](/references/ranking_rules.md)
 - [Ranking distinct](/references/ranking_distinct.md)
