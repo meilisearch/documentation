@@ -5,7 +5,7 @@ Once the first document has been added to MeiliSearch, a list of known fields is
 
 Child route of the [settings route](/references/settings.md).
 
-Stop words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
 ## Get index new fields
 
