@@ -96,14 +96,11 @@ Doofinder is a paid on-site search service which was developed to integrate to a
 
 ## Conclusions
 
-MeiliSearch offers the same features as Algolia but is intended to be a more simplified alternative. In addition, providing an open source code allows to unleash a large number of opportunities for monetization: SaaS, support services, enterprise-features, and so on.  
-Today, Algolia is no longer perceived as a dev tool, a developer friendly tool, since Algolia's marketing strategy is now mainly focused on large businesses; especially on e-commerce market where instant search is proving effective in bringing a strong added value. Since MeiliSearch is open source, it will be integrated in relatively smaller projects and will be managed by the development team rather than the marketing team or the product team. MeiliSearch will continue growing driven by its projects! Our ambition for MeiliSearch is to become the reference technology in the search engine market.  
-
 Each Search solution has its perfect use case and its not easy to compare the performances on different types of search engines. It would’t be fair to compare the fastness of ElasticSearch and Algolia on a product-based database. Same goes for comparing the fastness on an enormous full text based database.  
 
-Thats why we can not compare ourself with lucene-based or other specific use-case search engines.  
+Thats why we can not compare ourself with Lucene-based or other specific use-case search engines.  
 
-On the use-case MeiliSearch is focussing, the search solution that are the most similar to us are Algolia and Typesense. We all made a search-as-you-type relevant search engine.
+On the use-case MeiliSearch is focusing, the search solution that are the most similar to us are Algolia and Typesense. We all made a search-as-you-type relevant search engine.
 Typesense is a great tool but not at having a lot done with zero configuration.
 While Algolia is the most advanced, it has its price and is marketed to big companies.  
 
