@@ -11,7 +11,7 @@ Stop-words can also be updated directly through the [add settings route](/refere
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/index-new-fields" />
 
-Get if an index indexes new fields.
+Get if MeiliSearch indexes new fields for an index.
 
 #### Path Variables
 
