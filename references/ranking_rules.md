@@ -55,7 +55,7 @@ Add or replace the ranking rules of an index.
 
 #### Body
 
-List of ranking rules in their order of importance.
+List of ranking rules in order of importance.
 
 To add your own ranking rule you need to communicate the field and if its value is descending or ascending.
 
