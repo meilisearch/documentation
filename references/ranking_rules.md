@@ -95,7 +95,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Delete the ranking rules of an index.
 
-By deleting the rules you reset them to their default value.
+By deleting the rules you reset them to their default value, which are:
 
 ```json
 [
