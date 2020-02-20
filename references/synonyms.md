@@ -46,7 +46,7 @@ Get the list of [synonyms][1] of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings/synonyms"/>
 
-Add or replace the list of [synonyms][1] of an index.
+Add or replace the list of synonyms of an index.
 
 #### Path Variables
 
