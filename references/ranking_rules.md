@@ -2,7 +2,7 @@
 
 Ranking rules is a list of all the rules that contributes to the relevancy of your search. It is possible to add your own and to change the order of the rules based on your needs.
 
-Child route of the [Settings route](/references/settings.md).
+Child route of the [settings route](/references/settings.md).
 
 Ranking rules can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
