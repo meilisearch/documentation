@@ -1,6 +1,6 @@
 # Synonyms
 
-Synonyms is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal as its associated word in a search query.
+`Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
 
 Child route of the [settings route](/references/settings.md).
 
