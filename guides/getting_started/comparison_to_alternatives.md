@@ -55,7 +55,7 @@ Its ability to run on a few MBs of RAM makes it a minimalist and resource-effici
 
 #### Typesense
 
-Another simple search engine is Typesense, which has been designed and optimized for speed. Particular attention has been given to ease-of-use. Thus Typesense aims to be simple to set-up, and focus on developer productivity and experience by providing a clean API. It is best suited for light projects.  
+Another simple search engine is Typesense, which has been designed and optimized for speed. Particular attention has been given to ease-of-use. Thus, Typesense aims to be simple to set-up, and focus on developer productivity and experience by providing a clean API. It is best suited for light projects.  
 
 #### Lucene derivatives
 
@@ -100,10 +100,11 @@ Each Search solution fits best with the constraints of a particular use case. Si
 
 We cannot therefore compare ourselves with Lucene-based or other search engines targeted to specific tasks.  
 
-In the particular use case covered by MeiliSearch, the most similar solutions to the latter are Algolia and Typesense. The three of them are search-as-you-type relevant search engines.
+In the particular use case we cover, the most similar solutions to MeiliSearch are Algolia and Typesense. The three of them are search-as-you-type relevant search engines.  
 
-Typesense is a great tool but not at having a lot done with zero configuration.
-While Algolia is the most advanced, it has its price and is marketed to big companies.  
+Typesense is a great tool but is not recommended for achieving a lot of operations with minimal configuration.
+While Algolia offers the most advanced and powerful search features, this efficiency comes with an expensive pricing. Moreover, their service is marketed to big companies.  
 
-MeiliSearch is made for all types of developers. We focus on a developer friendly tool, easy to install and to deploy. Offering an out-of-the-box awesome search experience for the end users. We want everyone to have access to the best search experiences out there with minimum effort and with no financial means.
-Today a developer wanting a search solution on his application will mostly go for ElasticSearch or less effective solutions. While Elastic is not made for that use case, it is still, a great open-source solution. We are this default solution today.  
+MeiliSearch is dedicated to all types of developers. We aim to deliver a developer friendly tool, easy to install and to deploy. Because providing an out-of-the-box awesome search experience for the end users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.  
+
+Most of the times, when a developer is looking for a search solution to integrate into their application, they will go for ElasticSearch or less effective solutions. Even if Elasticsearch is not best suited for this use case, it is still a great open-source solution. We aim to be this default solution today.  
