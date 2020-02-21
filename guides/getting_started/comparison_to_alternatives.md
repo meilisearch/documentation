@@ -3,6 +3,7 @@
 ## About MeiliSearch
 
 MeiliSearch has been designed to be a ready-to-go open source solution and deliver an intuitive and instantaneous search experience. As the amount of information available on the websites increases as time goes by, it is essential to provide users with the most relevant results. Since many closed source search engines and open source alternatives can be used, determining which one to install is critical and may not seem easy at first.  
+
 The present article covers a comparison of alternatives to MeiliSearch, i.e. available search technologies to be considered when planning to implement a search bar.  
 
 ## Comparisons
@@ -12,7 +13,7 @@ The present article covers a comparison of alternatives to MeiliSearch, i.e. ava
 Elasticsearch has been designed as a backend search engine and, although it is not at first suited for this purpose, is commonly used to build search bars for the end users.  
 Unlike Elasticsearch which is a general search engine, MeiliSearch focuses on delivering a specific kind of features.  
 
-Elasticsearch can handle search through massive amounts of data and perform text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to configure it properly.  
+Elasticsearch can handle search through massive amounts of data and perform text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to customize and tailor it to fit your needs.  
 MeiliSearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing large datasets (over 100 M documents) is not possible.  
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the times, it is significantly slower in returning search results compared to MeiliSearch.  
@@ -28,7 +29,7 @@ On the other hand, MeiliSearch uses a bucket sort which means that there is a de
 MeiliSearch was inspired by Algolia’s product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. MeiliSearch is thus a new search engine based on the work of Algolia and recent research papers.  
 It provides similar features and reaches the same level of relevance just as quickly as its predecessor.  
 
-Contrary to Algolia, MeiliSearch is open-source and written in Rust, a systems-level and modern programming language, allows to rapidly build features. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.  
+Contrary to Algolia, MeiliSearch is open-source and written in Rust, a systems-level and modern programming language, that allows to rapidly build features. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.  
 
 One of Algolia major assets is the robust worldwide infrastructure that they offer to their customers.  
 MeiliSearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to deploy and maintain than Algolia’s.  
@@ -72,7 +73,7 @@ Bleve and Tantivy are search engine projects, respectively written in Golang and
 
 #### Elasticsearch
 
-Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options called index sharding gives you the ability to divide indexes in physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing large datasets, analyzing logs, and running complex queries. You can perform operations and analysis (e.g. calculate the average age of all users named "Thomas") on documents that match a specified query.  
+Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options called index sharding gives you the ability to divide indexes in physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing high-volume data streams, analyzing logs, and running complex queries. You can perform operations and analysis (e.g. calculate the average age of all users named "Thomas") on documents that match a specified query.  
 
 Today, Lucene and Elasticsearch are dominant players in the open source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of MeiliSearch or Algolia.  
 
@@ -84,7 +85,7 @@ Today, Lucene and Elasticsearch are dominant players in the open source search e
 Algolia is a company providing a search engine on a SaaS model. Its software is closed source. In its early stages, Algolia offered mobile search engines that could be embedded in apps, facing the challenge of implementing the search algorithms from scratch. From the very beginning, the decision was made to build a search engine directly dedicated to the end users, i.e. implementing search within mobile apps or websites.  
 Algolia successfully demonstrated over the past few years how critical tolerating typos is in order to improve the users’ experience, and in the same way, its impact on reducing bounce rate and increasing conversion.  
 
-Apart from Algolia, a wide range of SaaS products exist on the Search Engine Market. Most of them use Elasticsearch, and fine tune its settings in order to have a custom and personalized solution.  
+Apart from Algolia, a large choice of SaaS products are available on the Search Engine Market. Most of them use Elasticsearch, and fine tune its settings in order to have a custom and personalized solution.  
 
 #### Swiftype
 
@@ -105,6 +106,6 @@ In the particular use case we cover, the most similar solutions to MeiliSearch a
 Typesense is a great tool but is not recommended for achieving a lot of operations with minimal configuration.
 While Algolia offers the most advanced and powerful search features, this efficiency comes with an expensive pricing. Moreover, their service is marketed to big companies.  
 
-MeiliSearch is dedicated to all types of developers. We aim to deliver a developer friendly tool, easy to install and to deploy. Because providing an out-of-the-box awesome search experience for the end users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.  
+MeiliSearch is dedicated to all types of developers. Our goal is to deliver a developer friendly tool, easy to install and to deploy. Because providing an out-of-the-box awesome search experience for the end users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.  
 
-Most of the times, when a developer is looking for a search solution to integrate into their application, they will go for ElasticSearch or less effective solutions. Even if Elasticsearch is not best suited for this use case, it is still a great open-source solution. We aim to be this default solution today.  
+Usually, when a developer is looking for a search solution to integrate into their application, they will go for ElasticSearch or less effective solutions. Even if Elasticsearch is not best suited for this use case, it remains a great open-source solution. We aim to be this default solution today.  
