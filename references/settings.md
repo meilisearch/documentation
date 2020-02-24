@@ -1,11 +1,23 @@
 # Settings
 
-## Get index settings
+Settings is a list of all the **customization** possible for an index.
+
+It is possible to update all the settings in one go or individually with the dedicated routes.
+
+These are the reference pages for the dedicated routes:
+- [Synonyms](/references/synonyms.md)
+- [Stop-words](/references/stop_words.md)
+- [Ranking rules](/references/ranking_rules.md)
+- [Ranking distinct](/references/ranking_distinct.md)
+- [Searchable attributes](/references/searchable_attributes.md)
+- [Displayed attributes](/references/displayed_attributes.md)
+- [Index new fields](/references/index_new_fields.md)
+
+## Get settings
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
 
-Get settings for a given index.
-
+Get the settings of an index.
 
 #### Path Variables
 
@@ -13,14 +25,12 @@ Get settings for a given index.
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
-
 ### Example
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings'
+  -X GET 'http://localhost:7700/indexes/movies/settings'
 ```
-
 
 #### Response: `200 Ok`
 
@@ -28,31 +38,42 @@ List the settings.
 
 ```json
 {
-  "rankingOrder": [
-    "_sum_of_typos",
-    "_number_of_words",
-    "_word_proximity",
-    "_sum_of_words_attribute",
-    "_sum_of_words_position",
-    "_exact",
-    "release_date"
+  "rankingRules": [
+      "_typo",
+      "_words",
+      "_proximity",
+      "_attribute",
+      "_words_position",
+      "_exact",
+      "dsc(release_date)",
   ],
-  "distinctField": "",
-  "rankingRules": {
-    "release_date": "dsc"
-  }
+  "rankingDistinct": null,
+  "searchableAttributes": [
+      "title",
+      "description",
+      "uid",
+  ],
+  "displayedAttributes": [
+      "title",
+      "description",
+      "release_date",
+      "rank",
+      "poster",
+  ],
+  "stopWords": null,
+  "synonyms": {
+      "wolverine": ["xmen", "logan"],
+      "logan": ["wolverine", "xmen"],
+  },
+  "indexNewFields": false
 }
 ```
 
-## Add or replace index settings
+## Add settings
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
-Add or replace the following settings of an index:
-* Create [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules)
-* Change [ranking rules order](/guides/advanced_guides/ranking.md#ranking-order)
-* Create distinct field
-
+Add or replace the settings of an index.
 
 #### Path Variables
 
@@ -62,28 +83,15 @@ Add or replace the following settings of an index:
 
 #### Body
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **rankingRules**         | All [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules)      |
-| **rankingOrder**         | [Ranking order](/guides/advanced_guides/ranking.md#ranking-order) of all rules, custom and default     |
-| **distinct**         | Field to which [distinct](/guides/advanced_guides/distinct.md) will be applied    |
-
-#### Ranking rules
-
-An objet containing document attributes as keys and  `asc` ascending or `dsc` descending as value of this key. More information about [custom ranking rules](/guides/advanced_guides/ranking.md#custom-ranking-rules).
-
-
-#### Ranking order
-
-A list of ranking rules ordered by importance for the [bucket sort](/guides/advanced_guides/bucket_sort.md). The first rule being the most important.
-
-#### Distinct field
-
-A string containing the attribute that needs to be [distinct](/guides/advanced_guides/distinct.md).
-
-::: note
-None of the 3 settings parameters are mandatory
-:::
+| Variable          | type |  Description |
+|-------------------|-----------------------| --- |
+| **rankingRules** | [Strings] | Ranking rules in their order of importance  |
+| **rankingDistinct** | String | Returns only distinct (different) values of the given field |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) |
+| **displayedAttributes** | [Strings] | Fields present in the returned documents |
+| **stopWords** | [Strings] | Words in the search query that will be ignored |
+| **synonyms** | Object | List of associated words that are considered the same in a search query |
+| **indexNewFields** | Boolean | New fields in newly added document are/aren't added to MeiliSearch |
 
 ### Examples
 
@@ -91,39 +99,97 @@ None of the 3 settings parameters are mandatory
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings' \
+  -X GET 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-  "rankingOrder": [
-    "_sum_of_typos",
-    "_number_of_words",
-    "_word_proximity",
-    "_sum_of_words_attribute",
-    "_sum_of_words_position",
-    "_exact",
-    "release_date"
-  ],
-  "rankingRules": {
-    "release_date": "dsc"
-  }
-}'
+   "rankingRules": [
+            "_typo",
+            "_words",
+            "_proximity",
+            "_attribute",
+            "_words_position",
+            "_exact",
+            "dsc(release_date)",
+            "dsc(rank)",
+        ],
+        "rankingDistinct": "movie_id",
+        "searchableAttributes": [
+            "uid",
+            "movie_id",
+            "title",
+            "description",
+            "poster",
+            "release_date",
+            "rank",
+        ],
+        "displayedAttributes": [
+            "title",
+            "description",
+            "poster",
+            "release_date",
+            "rank",
+        ],
+        "stopWords": [
+            "the",
+            "a",
+            "an",
+        ],
+        "synonyms": {
+            "wolverine": ["xmen", "logan"],
+            "logan": ["wolverine"],
+        },
+        "indexNewFields": false,
+    }'
 ```
 
-#### Set back the default MeiliSearch settings
+#### Response: `202 Accepted`
 
+```json
+{
+  "updateId": 1
+}
+```
+This `updateId` allows you to [track the current update](/references/updates.md).
+
+## Delete settings
+
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings"/>
+
+Delete the settings of an index.
+
+All settings will be reset to `null` except for:
+-  `indexNewFields` that will be set to its default value (`true`).
+- `rankingRules` that will be set to its default ranking rules in their default order.
+<!-- - `searchableAttributes` and `displayedAttributes` who will have all the fields by default. -->
+
+The settings will look like this after the delete has been processed by MeiliSearch
+
+```json
+{
+    "rankingRules": null,
+    "rankingDistinct": null,
+    "searchableAttributes": null,
+    "displayedAttributes": null,
+    "stopWords": null,
+    "synonyms": null,
+    "indexNewFields": true,
+}
+```
+The value of `RankingRules` is **null** but they have their default value. When no modification has been made to those settings the field has a value of `null`.
+
+To remove all `RankingRules`, which is not recommended for any use-case, you should send an empty array.
+
+#### Path Variables
+
+| Variable          | Description           |
+|-------------------|-----------------------|
+| **index_uid**         | The index UID |
+
+
+#### Example
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings' \
-  --data '{
-  "rankingOrder": null,
-  "distinctField": null,
-  "rankingRules": null
-}'
+  -X DELETE 'http://localhost:7700/indexes/movies/settings'
 ```
-
-::: danger
-You must set the fields to `null` to reset them and not to the empty value.</br>
-Setting the fields to `[]`, `{}` or `""` will erase **all rules**, even the MeiliSearch default behavior.
-:::
 
 #### Response: `202 Accepted`
 
