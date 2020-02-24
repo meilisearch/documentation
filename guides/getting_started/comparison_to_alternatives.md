@@ -108,4 +108,5 @@ While Algolia offers the most advanced and powerful search features, this effici
 
 MeiliSearch is dedicated to all types of developers. Our goal is to deliver a developer friendly tool, easy to install and to deploy. Because providing an out-of-the-box awesome search experience for the end users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.  
 
-Usually, when a developer is looking for a search solution to integrate into their application, they will go for ElasticSearch or less effective solutions. Even if Elasticsearch is not best suited for this use case, it remains a great open-source solution. We aim to be this default solution today.  
+Usually, when a developer is looking for a search tool to integrate into their application, they will go for ElasticSearch or less effective choices. Even if Elasticsearch is not best suited for this use case, it remains a great open-source solution. However, it requires technical know-how to execute advanced features and hence more time to customize it to your business.  
+We aim to become the default solution for developers.  
