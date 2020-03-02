@@ -35,4 +35,3 @@ This means that you will have to relaunch the MeiliSearch instance with a new ma
 **All key will be changed**. This means that a single key can not be revoked.
 
 Nothing will be lost on instance relaunch, only the keys will be different.
-
