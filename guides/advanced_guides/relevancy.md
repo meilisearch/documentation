@@ -15,7 +15,7 @@ MeiliSearch has built-in ranking rules. These rules are essential to the relevan
 Each of the rules has a role in finding the right documents for the given search query.
 The order in which the rules are set in the settings affects the importance of the rule. The first rule is the most important, then the second and so on. By default, Meilisearch has these rules in a specific order, thinking it meets the most standard needs. This order can be changed in the settings to fit your needs.
 
-Using a [bucket sort](/advanced_guides/bucket_sort) algorithm, MeiliSearch uses rule by rule to find documents, until the desired amount of documents is obtained.
+Using a [bucket sort](/guides/advanced_guides/bucket_sort.md) algorithm, MeiliSearch uses rule by rule to find documents, until the desired amount of documents is obtained.
 
 Here is the list of all the rules that are executed in this specific order by default:
 
@@ -32,7 +32,7 @@ The `proximity` rule sort by increasing proximity of query words in hits.
 
 #### 4. Attribute
 
-The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-order-of-importance).
+The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-importance).
 
 #### 5. Words position
 The `words position` sort according to the position of query words in the attribute. The start is better than the end.
@@ -90,7 +90,7 @@ The proximity rule sorts by descending order of distance length between two matc
 
 `It's Tuesday, This must be Belgium` is first because the matched word: Belgium, is found in the `title` attribute and not the `description`.
 
-The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-order-of-importance).
+The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-importance).
 
 :::
 
@@ -121,7 +121,7 @@ The `word position` rule orders by ascending matching word's index number.
 
 Depending on your needs, you might want to change the order in which the rules are processed.
 
-In this case, using the [settings route](/references/settings.md#add-or-replace-index-settings) of your index, you can change the ranking order of the sorting rules.
+In this case, using the [settings route](/references/ranking_rules.md#add-or-replace-ranking-rules) of your index, you can change the ranking order of the sorting rules.
 
 ```json
 [
@@ -141,7 +141,7 @@ New rules can be added to the existing list at any time and anywhere in the exis
 A custom rule lets you create a descending or ascending sorting rule on a given attribute.
 To create a rule, you will need to communicate the attribute on which the rule is created and the order in which it will be sorted: `Asc(attribute_name)` or `Desc(attribute_name)`.
 
-This rule must be added to the existing list of ranking rules using the [settings route](/references/settings.md#add-or-replace-index-settings).
+This rule must be added to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#add-or-replace-ranking-rules).
 
 #### Example
 
@@ -155,7 +155,7 @@ Asc(movie_ranking)
 ```
 This will create a rule that makes movies with a good rank more relevant than others.
 
-To add this newly created rule to the existing ranking rule, using the [settings route](/references/settings.md#add-or-replace-index-settings), you need to add the rule in the existing order array.
+To add this newly created rule to the existing ranking rule, using the [settings route](/references/ranking_rules.md#add-or-replace-ranking-rules), you need to add the rule in the existing order array.
 
 ```json
 [
@@ -170,7 +170,7 @@ To add this newly created rule to the existing ranking rule, using the [settings
 ]
 ```
 
-## Attributes order of relevancy
+## Attributes importance
 
 In a dataset, some fields are more relevant to the search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `director` name.
 
@@ -178,7 +178,7 @@ By default, MeiliSearch will determine the order of importance of the attributes
 
 This means that, for this inference to work, the order of the fields in your dataset must be ordered before they are added to MeiliSearch. Or at least the first document.
 
-### Changing the attributes relevancy order
+### Changing the attributes order
 
 Possibly, you want to change the order after the documents have been added. This is still very possible.
 
