@@ -1,8 +1,8 @@
 # Synonyms
 
-To make your search more relevant there is the possibility of creating synonyms.
+To make your search more relevant you can [create a list of synonyms](/references/synonyms.md#add-or-replace-synonyms).
 
-Thus, if your database contains a lot of a word that has on or more popular synonyms, by configuring the synonyms the words can be associated. **This allows the same results if you write one or the other word**.
+If your database contains a lot of a word that has on or more popular synonyms, by configuring the synonyms the words can be associated. **This allows the same search results if you write one or the other word**.
 
 Synonyms are considered to be exactly the same.
 A search on a word or its synonym will return the same search result.
@@ -24,13 +24,23 @@ phone => iphone
 
 By searching `phone` you will get all results containing `iphone` with the same relevance. However, if you search for `iphone`, the data containing `phone` will not change your results.
 
+#### Example
+
+To create a one-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#add-or-replace-synonyms).
+
+``` json
+{
+    "phone": ["iphone"]
+}
+```
+
 ## The multi-way association
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
 
 example:
 ```
-Shoe <=> boot <=> slipper <=> sneakers
+shoe <=> boot <=> slipper <=> sneakers
 ```
 
 When a search is made with one of these words all the others will be considered as exactly the same word and will appear in the search results.
@@ -43,3 +53,14 @@ example:
 ```
 
 The "San Fransisco" search will be considered less relevant than the "SF" search but will still be considered an acceptable search result in the absence of a more relevant result.
+
+#### Example
+
+To create a multi-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#add-or-replace-synonyms).
+
+``` json
+{
+    "san francisco": ["sf"],
+    "sf": ["san francisco"]
+}
+```
