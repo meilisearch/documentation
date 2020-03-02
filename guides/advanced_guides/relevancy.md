@@ -1,13 +1,12 @@
 # Relevancy
 
-
-In meilisearch, the search responses are considered relevant according to a list of rules called **ranking rules**. When a search query is made, it will be compared in different ways with all the documents stored in meilisearch. This comparison will start with the first ranking rule and continue with the next one until the desired number of matching documents has been found.
+In MeiliSearch, the search responses are considered relevant according to a list of rules called **ranking rules**. When a search query is made, it will be compared in different ways with all the documents stored in MeiliSearch. This comparison will start with the first ranking rule and continue with the next one until the desired number of matching documents has been found.
 
 MeiliSearch proposes default ranking rules and has given them a default order as well. **This order can be modified, rules can be deleted and new ones can be added.**
 
-[For some in depth explanations about the mechanism and about each default sorting rule](https://github.com/meilisearch/MeiliSearch/issues/358).
+[For some in-depth explanations about the mechanism and about each default sorting rule](https://github.com/meilisearch/MeiliSearch/issues/358).
 
-In order to be able to play with these rules and match them to the needs of your dataset, it is important to understand how each works and how to create new ones.
+To be able to play with these rules and match them to the needs of your dataset, it is important to understand how each works and how to create new ones.
 
 ## Ranking rules
 
@@ -21,86 +20,94 @@ Using a [bucket sort](/advanced_guides/bucket_sort) algorithm, MeiliSearch uses 
 Here is the list of all the rules that are executed in this specific order by default:
 
 #### 1. Typo
-the `typo` rule sorts by ascending number of typos.
+the `typo` rule sorts by ascending numbers of typos.
 
-This means that a matched word with less typo's is more relevant than a matched word with more typos.
+This means that a matched word with fewer typos is more relevant than a matched word with more typos.
 
 #### 2. Words
-The `words` rule sort by decreasing number of matched query words.
+The `words` rule sort by decreasing numbers of matched query words.
 
 #### 3. Proximity
 The `proximity` rule sort by increasing proximity of query words in hits.
 
-#### Attribute
+#### 4. Attribute
 
-The `proximity` rule sort according to the order of attributes.
+The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-order-of-importance).
 
-#### Words position
-The `words position` sort according to the position of query words in the attribute. Start is better than end.
+#### 5. Words position
+The `words position` sort according to the position of query words in the attribute. The start is better than the end.
 
-#### Exact
-The `Exact` - Sort by similarity of the matched words with the query words. Same words are better than prefixes.
+#### 6. Exact
+The `Exact` - Sort by the similarity of the matched words with the query words. Words that are exactly the same are better than prefixes.
 
-
-## Examples
+#### Examples
 
 :::: tabs
 
-::: tab Typo & Word position
+::: tab Typo
 
-![Image from alias](../../public/image/vogli.png)
+![Image from alias](../../public/image/vogli3.png)
 
 ### Typo
 
-Matched words :
 - `vogli` : 0 typo
 - `volli` : 1 typo
-- `mogli` : 1 typo
 
 The typo sorts the results by ascending typos on matched query words.
 
 Because `typo` is set as the first rule of our ranking rules, the number of `typos` sorts the document before
 
-### Word position
-
-The reason why `volli` is before `mogli` is because of the `word position` rule. `volli` appears sooner in the title than `mogli`.
-
 :::
 
-::: tab Words & Proximity
-![Image from alias](../../public/image/distance.png)
+::: tab Words
+![Image from alias](../../public/image/new_house.png)
 
 ### Words
 
 Matched words :
-- **Creature**: `road`, `New`, `road` => 3 words.
-- **Mississippi Grind**: `new`, `road`, `New` => 3 words.
-- **Joy Ride**: `road`, `New` => 2 words.
+- **The Housemaid**: `Housemaid`, `new`, `house`, `housemaid`, `housework`: 5 words.
+- **The open House**: `House`, `new`, `house`: 3 words.
 
 The `words` ranking rule sorts the results by descending number of matching query words.
+
+:::
+
+::: tab Proximity
+![Image from alias](../../public/image/new_road.png)
 
 ### Proximity
 
 The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule.
-The smallest distance between the matching words in `creature` is smaller than the distance of the smallest matching words in `Mississippi Grind`
+The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`
 
 The proximity rule sorts by descending order of distance length between two matches.
 :::
 
-
 ::: tab Attribute
-![Image from alias](../../public/image/attribute.png)
+![Image from alias](../../public/image/belgium.png)
 
 ### Attribute
 
-`It's Tuesday, This must be Belgium` is first because the matched word : Belgium, is found in the `title` attribute and not the `description`.
+`It's Tuesday, This must be Belgium` is first because the matched word: Belgium, is found in the `title` attribute and not the `description`.
 
-The `attribute` rule sorts by ascending attribute importance.
+The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-order-of-importance).
+
+:::
+
+::: tab Words position
+
+![Image from alias](../../public/image/belgium.png)
+
+### Word position
+
+`Gangsta` appears sooner than `Dunkirk` because `Belgium` appears sooner in the attribute.
+
+The `word position` rule orders by ascending matching word's index number.
 
 :::
 
 ::: tab Exactness
-![Image from alias](../../public/image/exactness.png)
+![Image from alias](../../public/image/knight.png)
 
 **Exactness**
 
@@ -110,107 +117,88 @@ The `attribute` rule sorts by ascending attribute importance.
 
 ::::
 
-## Changing the rules order
+## Order of the rules
 
 Depending on your needs, you might want to change the order in which the rules are processed.
-
-For example, in your datasat, the `words` rule that sorts by number of matched query words in a document, could be less important than the `attribute` rule in which we find our matches.
 
 In this case, using the [settings route](/references/settings.md#add-or-replace-index-settings) of your index, you can change the ranking order of the sorting rules.
 
 ```json
-{
-  "rankingOrder": [
-       "_typo",
-        "_attribute",
-        "_proximity",
-        "_words",
-        "_words_position",
-        "_exact",
-  ]
-}
+[
+  "_typo",
+  "_attribute",
+  "_proximity",
+  "_words",
+  "_words_position",
+  "_exact"
+]
 ```
 
-## Creating your rule
+## Adding your rules
 
+New rules can be added to the existing list at any time and anywhere in the existing order.
 
+A custom rule lets you create a descending or ascending sorting rule on a given attribute.
+To create a rule, you will need to communicate the attribute on which the rule is created and the order in which it will be sorted: `Asc(attribute_name)` or `Desc(attribute_name)`.
 
-## Adding your rule
+This rule must be added to the existing list of ranking rules using the [settings route](/references/settings.md#add-or-replace-index-settings).
 
+#### Example
 
+```
+Desc(release_date)
+```
+This will create a rule that makes recent movies more relevant than older ones.
 
+```
+Asc(movie_ranking)
+```
+This will create a rule that makes movies with a good rank more relevant than others.
 
-<!-- What happens when there is no ranking order :
-  - Key => value dans la database
-  - Du coup au pif les docum qui se trouvent la
+To add this newly created rule to the existing ranking rule, using the [settings route](/references/settings.md#add-or-replace-index-settings), you need to add the rule in the existing order array.
 
- -->
-
-
-
-
-
-
-## Custom ranking rules
-
-Custom ranking rules gives you the possibility to add new rules. New rules can be added on attributes that has the `ranked` tag in the [schema](/main_concepts/indexes.md#ranked).
-
-A rule is defined by an **attribute** and a **ascendent** `asc` or **descendent** `dsc` property.
-
-The name of the ranking rule is the name of the attribute on which the rule is made.
-
-For those rules to be applied by MeiliSearch on your search queries, it must be added to the [ranking order](/advanced_guides/ranking.md#ranking-order).
-
-::: warning
-If the rule is not added to the rule ranking order, it will be **ignored** by MeiliSearch.
-:::
-
-### Example
-
-On the `release_date` attribute of a movie data set, which contains the timestamp of the release date.
-```bash
- curl --request POST 'http://localhost:7700/indexes/movies/settings'
-  --data '{ "rankingRules": { "release_date": "dsc" } }'
+```json
+[
+  "_typo",
+  "_attribute",
+  "_proximity",
+  "_words",
+  "_words_position",
+  "_exact",
+  "Desc(release_date)",
+  "Asc(movie_ranking)"
+]
 ```
 
-We create a custom ranking rule that must have the attribute name as key: `release_date` and we ask it to be `dsc` which means *descending*.
+## Attributes order of relevancy
 
-Now if added to the ranking order documents will be ordered by descending release_date.
+In a dataset, some fields are more relevant to the search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `director` name.
 
-## Ranking order
+By default, MeiliSearch will determine the order of importance of the attributes based on the order in which they appear in the first document added. Then, each new attribute present in new documents will be added to the end of this ordered list.
 
-The ranking order determine the order of each rule in the [bucket sort](/advanced_guides/bucket_sort).
+This means that, for this inference to work, the order of the fields in your dataset must be ordered before they are added to MeiliSearch. Or at least the first document.
 
-The default ranking order is as follows ([*see above for more detail about each rule*](/advanced_guides/ranking.md#ranking-rules)):
+### Changing the attributes relevancy order
 
-- `Number of Typos`
-- `Number of Words`
-- `Words Proximity`
-- `Attribute`
-- `Position`
-- `Exact`
+Possibly, you want to change the order after the documents have been added. This is still very possible.
 
-[The ranking order can be changed](/references/settings.md#ranking-rules). Rules can be removed by omitting them in the ranking order list, and custom rules must be added in the ranking order list to be applied.
+When a document is added to MeiliSearch, every new attribute inside will be added to two lists :
+- [Searchable attributes list](/references/searchable_attributes.md): attributes in which to search for matching query words.
+- [Displayed attributes list](/references/displayed_attributes.md): attributes to send back in each document
 
-Each time you create **a new ranking rule it must be added to the existing ranking order to be applied** by the [bucket sort](/advanced_guides/bucket_sort.md).
+The once that concerns this section is the Searchable attributes list.
 
-### Example
+This list is **ordered**. This means that the order in which the attributes appear in the list will determine their relevancy. How sooner they appear in the list, how more important they are.
 
-To apply the [custom ranking rule added previously](/advanced_guides/ranking.md#custom-ranking-rules), lets add it to the ranking order.
+To change this order, you need to send the sorted-list, in the order you want, using the settings route.
 
-```bash
-curl --request POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-  "rankingOrder": [
-    "_sum_of_typos",
-    "_number_of_words",
-    "_word_proximity",
-    "_sum_of_words_attribute",
-    "_sum_of_words_position",
-    "_exact",
-    "release_date"
-  ]
-}'
+#### Example
+
+```json
+[
+  "title",
+  "description",
+  "director"
+]
 ```
-
-Now, our **search results will be ordered by descending date** after all other rules have been applied in the [bucket sort](/advanced_guides/bucket_sort).
+With this new order, the matching words found in `title` will make the document more relevant than once with the same matching word found in `description` or `director`.
