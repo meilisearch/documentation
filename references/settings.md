@@ -156,9 +156,9 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Delete the settings of an index.
 
-All settings will be reset to null except for:
--  `indexNewFields` who will be set to its default value of `true`
-- `rankingRules` who will have its default ranking rules in their default order.
+All settings will be reset to `null` except for:
+-  `indexNewFields` that will be set to its default value (`true`).
+- `rankingRules` that will be set to its default ranking rules in their default order.
 <!-- - `searchableAttributes` and `displayedAttributes` who will have all the fields by default. -->
 
 The settings will look like this after the delete has been processed by MeiliSearch
@@ -174,7 +174,7 @@ The settings will look like this after the delete has been processed by MeiliSea
     "indexNewFields": true,
 }
 ```
-The value of `RankingRules` is **null** but they have their default value. When no modification has been made to those settings the field has a value of null.
+The value of `RankingRules` is **null** but they have their default value. When no modification has been made to those settings the field has a value of `null`.
 
 To remove all `RankingRules`, which is not recommended for any use-case, you should send an empty array.
 

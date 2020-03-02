@@ -1,8 +1,8 @@
 # Synonyms
 
-Synonyms is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal as its associated word in a search query.
+`Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
 
-Child route of the [Settings route](/references/settings.md).
+Child route of the [settings route](/references/settings.md).
 
 Synonyms can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
@@ -10,7 +10,7 @@ Synonyms can also be updated directly through the [add settings route](/referenc
 
 <RouteHighlighter method="GET" route="/indexes/:uid/settings/synonyms"/>
 
-Get the list of [synonyms][1] of an index.
+Get the list of synonyms of an index.
 
 #### Path Variables
 
@@ -37,7 +37,7 @@ Get the list of [synonyms][1] of an index.
     "xmen"
   ],
   "wow": [
-    "World of warcraft"
+    "world of warcraft"
   ]
 }
 ```
@@ -46,7 +46,7 @@ Get the list of [synonyms][1] of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings/synonyms"/>
 
-Add or replace the list of [synonyms][1] of an index.
+Add or replace the list of synonyms of an index.
 
 #### Path Variables
 
@@ -65,7 +65,7 @@ An object with every synonym and its associated words.
   --data '{
     "wolverine": ["xmen", "logan"],
     "logan": ["wolverine", "xmen"],
-    "wow": ["World of warcraft"]
+    "wow": ["world of warcraft"]
   }'
 ```
 
