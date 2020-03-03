@@ -26,7 +26,7 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
 
 ## Alternatives
 
-Why should use you MeiliSearch instead of any other existing solution? If it is clear to us, it may not be for you. We try to answer this question in this article on [comparison to alternatives](/resources/comparison_to_alternatives.md).
+Why should you use MeiliSearch instead of any other existing solution? If it is clear to us, it may not be for you. We try to answer this question in this article on [comparison to alternatives](/resources/comparison_to_alternatives.md).
 
 ## Features
 
