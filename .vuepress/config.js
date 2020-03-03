@@ -23,7 +23,8 @@ module.exports = {
           collapsable: false,
           children: [
             "/guides/getting_started/quick_start_guide",
-            "/guides/getting_started/whats_next"
+            "/guides/getting_started/whats_next",
+            "/guides/getting_started/comparison_to_alternatives"
           ]
         },
         {
