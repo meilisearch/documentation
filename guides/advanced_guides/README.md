@@ -14,5 +14,5 @@ You can also read the following articles to understand how MeiliSearch works und
 - [Typo Tolerance](typotolerance.md)
 - [Concatenate and split queries](concat.md)
 - [Bucket sort](bucket_sort.md)
-- [Ranking](ranking.md)
+- [Relevancy](relevancy.md)
 - [Asynchronous updates](asynchronous_updates.md)

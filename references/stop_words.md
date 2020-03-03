@@ -6,7 +6,7 @@ Child route of the [settings route](/references/settings.md).
 
 Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
-## Get stop-words list
+## Get stop-words
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
 
@@ -31,11 +31,11 @@ $ curl \
 ["of","the","to"]
 ```
 
-## Add or replace stop-words list
+## Update stop-words
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
 
-Add or replace the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
+Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
 
 #### Path Variables
 
@@ -66,11 +66,15 @@ $ curl \
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Delete stop-words list
+## Reset stop-words
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
 
-Delete the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
+Reset the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index to its default value.
+
+#### Default value
+
+Empty array : `[]`
 
 #### Path Variables
 

@@ -42,11 +42,11 @@ Get the list of synonyms of an index.
 }
 ```
 
-## Add or replace synonyms
+## Update synonyms
 
 <RouteHighlighter method="POST" route="/indexes/:uid/settings/synonyms"/>
 
-Add or replace the list of synonyms of an index.
+Update the list of synonyms of an index.
 
 #### Path Variables
 
@@ -78,11 +78,15 @@ An object with every synonym and its associated words.
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
 
-## Delete synonyms
+## Reset synonyms
 
 <RouteHighlighter method="DELETE" route="/indexes/:uid/settings/synonyms"/>
 
-Delete the list of [synonyms][/guides/advanced_guides/synonyms.md] of an index.
+Reset the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index to its default value.
+
+#### Default value
+
+Empty object : `{}`
 
 #### Path Variables
 

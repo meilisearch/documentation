@@ -1,6 +1,6 @@
 # Synonyms
 
-To make your search more relevant you can [create a list of synonyms](/references/synonyms.md#add-or-replace-synonyms).
+To make your search more relevant you can [create a list of synonyms](/references/synonyms.md#update-synonyms).
 
 If your database contains a lot of a word that has on or more popular synonyms, by configuring the synonyms the words can be associated. **This allows the same search results if you write one or the other word**.
 
@@ -26,7 +26,7 @@ By searching `phone` you will get all results containing `iphone` with the same 
 
 #### Example
 
-To create a one-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#add-or-replace-synonyms).
+To create a one-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#update-synonyms).
 
 ``` json
 {
@@ -56,7 +56,7 @@ The "San Fransisco" search will be considered less relevant than the "SF" search
 
 #### Example
 
-To create a multi-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#add-or-replace-synonyms).
+To create a multi-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#update-synonyms).
 
 ``` json
 {
