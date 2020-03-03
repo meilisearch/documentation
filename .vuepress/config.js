@@ -92,7 +92,7 @@ module.exports = {
         {
           title: '🧷 How to\'s',
           path: '/tutorials/howtos/',
-          collapsable: false
+          collapsable: false,
           children: [
             "/tutorials/howtos/quickstart"
           ]
