@@ -132,26 +132,26 @@ module.exports = {
       property: "google-site-verification",
       content: "u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c"
     }],
-    ["meta", { property: "og:title", content: "MeiliSearch Documentation" }],
-    ["meta", { property: "og:type", content: "website" }],
-    ["meta", { property: "og:url", content: "http://docs.meilisearch.com" }],
+    ["meta", { prefix: ogprefix, property: "og:title", content: "MeiliSearch Documentation" }],
+    ["meta", { prefix: ogprefix, property: "og:type", content: "website" }],
+    ["meta", { prefix: ogprefix, property: "og:url", content: "http://docs.meilisearch.com" }],
     ["meta", {
-      property: "og:image",
+      prefix: ogprefix, property: "og:image",
       content:
         "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
     }],
     ["meta", {
-      property: "og:image-secure-url",
+      prefix: ogprefix, property: "og:image-secure-url",
       content:
         "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
     }],
     ["meta", {
-      property: "og:image-image-type",
+      prefix: ogprefix, property: "og:image-image-type",
       content: "image/png"
     }],
-    ["meta", { property: "og:image-height", content: "630" }],
-    ["meta", { property: "og:locale", content: "en_GB" }],
-    ["meta", { property: "og:site-name", content: "MeiliSearch Documentation" }],
+    ["meta", { prefix: ogprefix, property: "og:image-height", content: "630" }],
+    ["meta", { prefix: ogprefix, property: "og:locale", content: "en_GB" }],
+    ["meta", { prefix: ogprefix, property: "og:site-name", content: "MeiliSearch Documentation" }],
     ["meta", { property: "twitter:title", content: "MeiliSearch Documentation" }],
     ["meta", {
       property: "twitter:description",
