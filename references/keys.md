@@ -1,175 +1,33 @@
 # Keys
 
+Each instance of MeiliSearch has three keys: a master, a private, and a public. Each key has a given set of permissions on the API routes.
+
+You must have the master key to access the `keys` route.
+
+[More information about the keys and their rights](/guides/advanced_guides/keys.md).
 ## Get keys
 
 <RouteHighlighter method="GET" route="/keys"/>
 
-Get all API keys information.
-
-
-### Example
-
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/keys'
-```
-
-#### Response: `200 Ok`
-
-```json
-[
-  {
-    "key": "VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF",
-    "description": "search key",
-    "acl": [
-      "documentsRead"
-    ],
-    "indexes": [
-      "movies"
-    ],
-    "createdAt": "2019-11-21T09:59:19.016355Z",
-    "updatedAt": "2019-11-21T09:59:19.016355Z",
-    "expiresAt": "2019-11-21T10:42:08Z",
-    "revoked": false
-  }
-]
-```
-
-## Get one key
-
-<RouteHighlighter method="GET" route="/keys/:key"/>
-
-Get information for a given API key.
-
-
-### Example
-
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/keys/VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF'
-```
-
-#### Response: `200 Ok`
-
-```json
-{
-  "key": "VO6UTDBW5S4YJCL17KAXNZP0HQIG23E9R8MF",
-  "description": "search key",
-  "acl": [
-    "documentsRead"
-  ],
-  "indexes": [
-    "movies"
-  ],
-  "createdAt": "2019-11-21T09:59:19.016355Z",
-  "updatedAt": "2019-11-21T09:59:19.016355Z",
-  "expiresAt": "2019-11-21T10:42:08Z",
-  "revoked": false
-}
-```
-
-## Create Key
-
-<RouteHighlighter method="POST" route="/keys"/>
-
-Create an API key.
-
-### Body
-
-| Variable              | Value         |
-|---------------------|---------------|
-| **description** | description of the key    |
-| **acl** | [List of ACL's](/guides/advanced_guides/keys.md#acl) |
-| **indexes** | [List of indexes with wildcards](/guides/advanced_guides/keys.md#indexes) |
-| **expiresAt** | Timestamp of expire date |
-
-
-### Example
-
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/keys' \
-  --data '{
-      "expiresAt": 1574332928,
-      "description": "search key",
-      "acl": ["documentsRead"],
-      "indexes": ["movies"]
-  }'
-```
-
-#### Response: `201 Created`
-
-```json
-{
-  "key":"0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4",
-  "description":"search key",
-  "acl":["documentsRead"],
-  "indexes":["movies"],
-  "createdAt":"2019-11-21T09:49:00.666009Z",
-  "updatedAt":"2019-11-21T09:49:00.666009Z",
-  "expiresAt":"2019-11-21T10:42:08Z",
-  "revoked":false
-}
-```
-
-## Update Key
-
-<RouteHighlighter method="PUT" route="/keys/:key"/>
-
-Update an API key.
-
-
-### Body
-
-| Variable              | Value         |
-|---------------------|---------------|
-| **description** | description of the key    |
-| **acl** | [List of ACL's](/guides/advanced_guides/keys.md#acl) |
-| **indexes** | [List of indexes with wildcards](/guides/advanced_guides/keys.md#indexes) |
-| **revoked** | [Boolean to revoke API KEY](/guides/advanced_guides/keys.md#revoked) |
+Get the **private** and **public** key.
 
 ::: warning
-`expiresAt` attribute can not be updated. Adding it in the body will result in a bad request error.
+You must have the master key to access this route.
 :::
 
 ### Example
 
 ```bash
 $ curl \
-  -X PUT 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4' \
-  --data '{
-      "description": "Read and write documents",
-      "acl": ["documentsRead", "documentsWrite"]
-  }'
+  -H "X-Meili-API-Key: 123"
+  -X GET 'http://localhost:7700/keys'
 ```
 
 #### Response: `200 Ok`
 
 ```json
 {
-  "key": "0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4",
-  "description": "Read and write documents",
-  "acl": ["documentsRead", "documentsWrite"],
-  "indexes": ["movies"],
-  "createdAt": "2019-11-21T09:49:00.666009Z",
-  "updatedAt": "2019-11-21T10:31:29.492113Z",
-  "expiresAt": "2019-11-21T10:42:08Z",
-  "revoked": false
+  "private":"8c222193c4dff5a19689d637416820bc623375f2ad4c31a2e3a76e8f4c70440d",
+  "public":"948413b6667024a0704c2023916c21eaf0a13485a586c43e4d2df520852a4fb8"
 }
 ```
-
-## Delete Key
-
-<RouteHighlighter method="DELETE" route="/keys/:key"/>
-
-Delete an API key.
-
-
-### Example
-
-```bash
-$ curl \
-  -X DELETE 'http://localhost:7700/keys/0WEJVFD972U6SB3KYRCXINOMHQTP51L8AZG4'
-```
-
-#### Response: `204 No Content`
