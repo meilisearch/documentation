@@ -25,6 +25,7 @@ With this master key: a private key and a public key will be generated. They can
 On each API call, the key must be added in [the header](/references/#authentication). Depending on the provided key you will have different permissions ([see above](/guides/advanced_guides/keys.md)).
 
 #### No master Key
+
 If no master key is given, all routes in MeiliSearch can be accessed without a key.
 
 ### Reset keys
