@@ -18,7 +18,7 @@ When launching an instance of MeiliSearch, you have the possibility to give a ma
 
 You can communicate it as:
 - an environment variable: `MEILI_MASTER_KEY=xxx`
-- a CLI option : `./meilisearch --master-key "xxx"`
+- a CLI option: `./meilisearch --master-key "xxx"`
 
 With this master key: a private key and a public key will be generated. They can be retrieved using the [keys route](/references/keys.md).
 
