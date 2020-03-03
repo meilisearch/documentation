@@ -36,7 +36,7 @@ Let's make a search on this dataset
 
 ```bash
 $ curl -G \
-  -X GET 'http://localhost:7700/indexes/rangemovies/search?limit=3' \
+  -X GET 'http://localhost:7700/indexes/movies_uid/search?limit=3' \
   --data-urlencode "q=the road to "
 ```
 
@@ -79,7 +79,7 @@ The number of occurrences of common words impacts a lot the search results. If w
 
 ```bash
 $ curl \
-  -X PUT 'http://localhost:7700/indexes/rangemovies/stop-words' \
+  -X PUT 'http://localhost:7700/indexes/movies_uid/settings/stop-words' \
   --data '["the", "of", "to"]'
 ```
 

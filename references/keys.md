@@ -1,6 +1,6 @@
 # Keys
 
-Each instance of MeiliSearch has three keys, a master, a private, and a public. Each key has a given set of permissions on the API routes.
+Each instance of MeiliSearch has three keys: a master, a private, and a public. Each key has a given set of permissions on the API routes.
 
 You must have the master key to access the `keys` route.
 
