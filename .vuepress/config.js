@@ -18,13 +18,12 @@ module.exports = {
     sidebar: {
       '/guides/': [
         {
-          title: "🚀 Getting started",
+          title: "🚀 Introduction",
           path: '/guides/getting_started/',
           collapsable: false,
           children: [
             "/guides/getting_started/quick_start_guide",
-            "/guides/getting_started/whats_next",
-            "/guides/getting_started/comparison_to_alternatives"
+            "/guides/getting_started/whats_next"
           ]
         },
         {
@@ -104,7 +103,8 @@ module.exports = {
           path: '/resources/',
           collapsable: false,
           children: [
-            "/resources/sdks"
+            "/resources/sdks",
+            "/resources/comparison_to_alternatives"
           ]
         }
       ]

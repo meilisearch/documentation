@@ -24,6 +24,10 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
 ![crates.io demo gif](/crates-io-demo.gif)
 > Meili helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
 
+## Alternatives
+
+Why should use you MeiliSearch instead of any other existing solution? If it is clear to us, it may not be for you. We try to answer this question in this article on [comparison to alternatives](/resources/comparison_to_alternatives.md).
+
 ## Features
 
 * **Instant Search** (answers < 50ms): Priority on fast answers for smooth search experience.
