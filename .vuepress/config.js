@@ -125,6 +125,60 @@ module.exports = {
     ['vuepress-plugin-container', { type: 'note' }]
   ],
   head: [
+    ["meta", { charset: "utf-8" }],
+    ["meta", { name: "viewport", content: "width=device-width, initial-scale=1" }],
+    ["meta", {
+      hid: "google-site-verification",
+      name: "google-site-verification",
+      content: "u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c"
+    }],
+    ["meta", { hid: "og-title", name: "og:title", content: "MeiliSearch" }],
+    ["meta", { hid: "og-type", name: "og:type", content: "website" }],
+    ["meta", { hid: "og-url", name: "og:url", content: "http://meilisearch.com" }],
+    ["meta", {
+      hid: "og-image",
+      name: "og:image",
+      content:
+        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
+    }],
+    ["meta", {
+      hid: "og-image-secure-url",
+      name: "og:image:secure_url",
+      content:
+        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
+    }],
+    ["meta", {
+      hid: "og-image-image-type",
+      name: "og:image:type",
+      content: "image/png"
+    }],
+    ["meta", { hid: "og-image-height", name: "og:image:height", content: "630" }],
+    ["meta", { hid: "og-locale", name: "og:locale", content: "en_GB" }],
+    ["meta", { hid: "og-site-name", name: "og:site_name", content: "MeiliSearch" }],
+    ["meta", { hid: "twitter-title", name: "twitter:title", content: "MeiliSearch" }],
+    ["meta", {
+      hid: "twitter-description",
+      name: "twitter:description",
+      content:
+        "An open source, blazingly fast and hyper relevant search-engine that will improve your search experience"
+    }],
+    ["meta", {
+      hid: "twitter-image",
+      name: "twitter:image",
+      content:
+        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
+    }],
+    ["meta", {
+      hid: "twitter-card",
+      name: "twitter:card",
+      content: "summary_large_image"
+    }],
+    ["meta", {
+      hid: "twitter-image-alt",
+      name: "twitter:image:alt",
+      content: "Next generation search API"
+    }],
+    ["meta", { hid: "twitter-site", name: "twitter:site", content: "@meilisearch" }],
     [
       "script",
       {},
