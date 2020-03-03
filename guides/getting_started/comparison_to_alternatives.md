@@ -14,7 +14,7 @@ Elasticsearch has been designed as a backend search engine and, although it is n
 Unlike Elasticsearch which is a general search engine, MeiliSearch focuses on delivering a specific kind of features.  
 
 Elasticsearch can handle search through massive amounts of data and perform text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to customize and tailor it to fit your needs.  
-MeiliSearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing large datasets (over 100 M documents) is not possible.  
+MeiliSearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing very large datasets is not possible. 
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the times, it is significantly slower in returning search results compared to MeiliSearch.  
 MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar, that provides a prefix searching capability, makes search intuitive for users and returns them their results instantly with near perfect relevance.  
