@@ -109,6 +109,12 @@ module.exports = {
         }
       ]
     },
+    meilisearch: {
+      hostUrl: 'https://e10b17e6.getmeili.com',
+      indexUid: '9tz3lqoi',
+      apiKey: 'R62XWZPJG794YB5VFOADHTNQEKLCISM01U38',
+    },
+    searchPlaceholder: 'Search as you type...'
   },
   plugins: [
     ["check-md", { pattern: "**/*.md" }],
