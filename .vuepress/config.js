@@ -1,3 +1,4 @@
+let ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
   title: "MeiliSearch Documentation",
   description: "Open source Instant Search Engine",
@@ -128,57 +129,49 @@ module.exports = {
     ["meta", { charset: "utf-8" }],
     ["meta", { name: "viewport", content: "width=device-width, initial-scale=1" }],
     ["meta", {
-      hid: "google-site-verification",
-      name: "google-site-verification",
+      property: "google-site-verification",
       content: "u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c"
     }],
-    ["meta", { hid: "og-title", name: "og:title", content: "MeiliSearch" }],
-    ["meta", { hid: "og-type", name: "og:type", content: "website" }],
-    ["meta", { hid: "og-url", name: "og:url", content: "http://meilisearch.com" }],
+    ["meta", { property: "og:title", content: "MeiliSearch Documentation" }],
+    ["meta", { property: "og:type", content: "website" }],
+    ["meta", { property: "og:url", content: "http://docs.meilisearch.com" }],
     ["meta", {
-      hid: "og-image",
-      name: "og:image",
+      property: "og:image",
       content:
         "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
     }],
     ["meta", {
-      hid: "og-image-secure-url",
-      name: "og:image:secure_url",
+      property: "og:image-secure-url",
       content:
         "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
     }],
     ["meta", {
-      hid: "og-image-image-type",
-      name: "og:image:type",
+      property: "og:image-image-type",
       content: "image/png"
     }],
-    ["meta", { hid: "og-image-height", name: "og:image:height", content: "630" }],
-    ["meta", { hid: "og-locale", name: "og:locale", content: "en_GB" }],
-    ["meta", { hid: "og-site-name", name: "og:site_name", content: "MeiliSearch" }],
-    ["meta", { hid: "twitter-title", name: "twitter:title", content: "MeiliSearch" }],
+    ["meta", { property: "og:image-height", content: "630" }],
+    ["meta", { property: "og:locale", content: "en_GB" }],
+    ["meta", { property: "og:site-name", content: "MeiliSearch Documentation" }],
+    ["meta", { property: "twitter:title", content: "MeiliSearch Documentation" }],
     ["meta", {
-      hid: "twitter-description",
-      name: "twitter:description",
+      property: "twitter:description",
       content:
-        "An open source, blazingly fast and hyper relevant search-engine that will improve your search experience"
+        "The official documentation of MeiliSearch"
     }],
     ["meta", {
-      hid: "twitter-image",
-      name: "twitter:image",
+      property: "twitter:image",
       content:
         "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
     }],
     ["meta", {
-      hid: "twitter-card",
-      name: "twitter:card",
+      property: "twitter:card",
       content: "summary_large_image"
     }],
     ["meta", {
-      hid: "twitter-image-alt",
-      name: "twitter:image:alt",
+      property: "twitter:image:alt",
       content: "Next generation search API"
     }],
-    ["meta", { hid: "twitter-site", name: "twitter:site", content: "@meilisearch" }],
+    ["meta", { property: "twitter:site", content: "@meilisearch" }],
     [
       "script",
       {},
