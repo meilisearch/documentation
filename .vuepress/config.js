@@ -85,16 +85,17 @@ module.exports = {
       ],
       '/tutorials/': [
         {
-          title: '🚀 Quick Start',
-          path: '/tutorials/quickstart/'
-        },
-        {
           title: '🍳 Cookbooks',
-          path: '/tutorials/cookbooks/'
+          path: '/tutorials/cookbooks/',
+          collapsable: false
         },
         {
           title: '🧷 How to\'s',
-          path: '/tutorials/howtos/'
+          path: '/tutorials/howtos/',
+          collapsable: false
+          children: [
+            "/tutorials/howtos/quickstart"
+          ]
         }
       ],
       '/resources/': [
