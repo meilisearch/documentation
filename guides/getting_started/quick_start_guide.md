@@ -1,4 +1,4 @@
-# Quick Start Guide
+# Getting Started
 
 This quick tour will help you get started with MeiliSearch in only a few steps.
 
