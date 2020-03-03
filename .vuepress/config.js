@@ -1,3 +1,4 @@
+let ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
   title: "MeiliSearch Documentation",
   description: "Open source Instant Search Engine",
@@ -125,6 +126,52 @@ module.exports = {
     ['vuepress-plugin-container', { type: 'note' }]
   ],
   head: [
+    ["meta", { charset: "utf-8" }],
+    ["meta", { name: "viewport", content: "width=device-width, initial-scale=1" }],
+    ["meta", {
+      property: "google-site-verification",
+      content: "u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c"
+    }],
+    ["meta", { prefix: ogprefix, property: "og:title", content: "MeiliSearch Documentation" }],
+    ["meta", { prefix: ogprefix, property: "og:type", content: "website" }],
+    ["meta", { prefix: ogprefix, property: "og:url", content: "http://docs.meilisearch.com" }],
+    ["meta", {
+      prefix: ogprefix, property: "og:image",
+      content:
+        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
+    }],
+    ["meta", {
+      prefix: ogprefix, property: "og:image-secure-url",
+      content:
+        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
+    }],
+    ["meta", {
+      prefix: ogprefix, property: "og:image-image-type",
+      content: "image/png"
+    }],
+    ["meta", { prefix: ogprefix, property: "og:image-height", content: "630" }],
+    ["meta", { prefix: ogprefix, property: "og:locale", content: "en_GB" }],
+    ["meta", { prefix: ogprefix, property: "og:site-name", content: "MeiliSearch Documentation" }],
+    ["meta", { property: "twitter:title", content: "MeiliSearch Documentation" }],
+    ["meta", {
+      property: "twitter:description",
+      content:
+        "The official documentation of MeiliSearch"
+    }],
+    ["meta", {
+      property: "twitter:image",
+      content:
+        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
+    }],
+    ["meta", {
+      property: "twitter:card",
+      content: "summary_large_image"
+    }],
+    ["meta", {
+      property: "twitter:image:alt",
+      content: "Next generation search API"
+    }],
+    ["meta", { property: "twitter:site", content: "@meilisearch" }],
     [
       "script",
       {},
