@@ -20,7 +20,7 @@ You can communicate it as:
 - an environment variable: `MEILI_MASTER_KEY=xxx`
 - a CLI option: `./meilisearch --master-key "xxx"`
 
-With this master key, you can retrieve the private key and the public using the [keys route](/references/keys.md).
+With this master key: a private key and a public key will be generated. They can be retrieved using the [keys route](/references/keys.md).
 
 On each API call, the key must be added in [the header](/references/#authentication). Depending on the provided key you will have different permissions ([see above](/guides/advanced_guides/keys.md)).
 
