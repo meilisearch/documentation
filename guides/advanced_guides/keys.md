@@ -30,7 +30,7 @@ If no master key is given, all routes in MeiliSearch can be accessed without a k
 
 ### Reset keys
 
-Since the private and public key are generated based on your master key, to reset the keys, you must change the master key.
+Since the private and public keys are generated based on your master key, you must change the master key to reset these both keys.
 This means that you will have to relaunch the MeiliSearch instance with a new master key.
 
 **All key will be changed**. This means that a single key can not be revoked.
