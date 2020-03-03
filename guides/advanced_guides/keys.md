@@ -1,6 +1,6 @@
 # Keys
 
-In MeiliSearch their are three types of keys :
+In MeiliSearch there are three types of keys:
 
 - **Master** key: Access to all routes
 - **Private** key: Access to all routes except the `/keys` routes.
