@@ -17,7 +17,7 @@ When a master key is given, a MeiliSearch will have one master key and generate 
 When launching an instance of MeiliSearch, you have the possibility to give a master key. By providing a master key, all routes in MeiliSearch will be protected and will require a key to access.
 
 You can communicate it as:
-- an environment variable : `MEILI_MASTER_KEY=xxx`
+- an environment variable: `MEILI_MASTER_KEY=xxx`
 - a CLI option : `./meilisearch --master-key "xxx"`
 
 With this master key: a private key and a public key will be generated. They can be retrieved using the [keys route](/references/keys.md).
