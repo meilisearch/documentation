@@ -93,7 +93,7 @@ $ rustup update
 # Compile the project
 $ cargo build --release
 
-# Executing the server binary
+# Execute the server binary
 $ ./target/release/meilisearch
 ```
 
