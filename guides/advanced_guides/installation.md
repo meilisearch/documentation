@@ -85,16 +85,7 @@ Inside the folder, compile MeiliSearch.
 # Production version
 $ cargo build --release
 
-# Debug version
-$ cargo build
-```
-
-Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
-
-You can find the compiled binary in `target/debug` or `target/release`.
-
-```bash
-# Excuting the server binary
+# Executing the server binary
 $ ./target/release/meilisearch
 ```
 
@@ -107,7 +98,7 @@ $ ./target/release/meilisearch
 
 ## Usage
 
-```bash
+```
 $ ./meilisearch --help
 meilisearch-http 0.9.0
 
@@ -137,7 +128,7 @@ OPTIONS:
 
 Flags can be added on launch.
 
-```bash
+```
 $ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
 Server is listening on: http://127.0.0.1:7700
 ```
@@ -150,3 +141,11 @@ Here is the list of **all Environment variables and Flags** (CLI options).
 | MEILI_HTTP_ADDR      | --http-addr    | Address and port to listen to                                                                                                                                          | "127.0.0.1:7700"   |
 | MEILI_MASTER_KEY     | --master-key   | Default admin API key                                                                                                                                                  |                    |
 | MEILI_NO_ANALYTICS   | --no-analytics | Deactivate analytics. Analytics help us to know how much users are using our project, knowing which versions and which platforms are used. It is completely anonymous. |                    |
+| MEILI_ENV   | --env | Defines the environment in which MeiliSearch is running. Can be `production` or `development` |  development  |
+
+### Environments
+
+By default, MeiliSearch runs in `development` mode.
+
+- `Production`: the [master key](/guides/advanced_guides/keys.md) is **mandatory**.
+- `Development`: the [master key](/guides/advanced_guides/keys.md) is **optional** and logs are output in "info" mode (*console output*).

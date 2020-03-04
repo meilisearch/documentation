@@ -42,7 +42,7 @@ module.exports = {
           collapsable: false,
           children: [
             "/guides/advanced_guides/relevancy",
-            "/guides/advanced_guides/binary",
+            "/guides/advanced_guides/installation",
             "/guides/advanced_guides/typotolerance",
             "/guides/advanced_guides/concat",
             "/guides/advanced_guides/synonyms",

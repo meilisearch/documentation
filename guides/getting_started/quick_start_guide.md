@@ -6,7 +6,7 @@ This quick tour will help you get started with MeiliSearch in only a few steps.
 
 First of all, you must have access to a running instance of MeiliSearch.
 
-There are [several download possibilities](/guides/advanced_guides/binary.md#download-and-launch).
+There are [several download possibilities](/guides/advanced_guides/installation.md#download-and-launch).
 
 :::: tabs
 ::: tab cURL
@@ -107,7 +107,7 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environment variables and flags](/guides/advanced_guides/binary.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
+[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
 
 ### Communicate with MeiliSearch
 
