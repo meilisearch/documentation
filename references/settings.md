@@ -73,7 +73,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
-Add or replace the settings of an index.
+Update the settings of an index.
 
 #### Path Variables
 
@@ -86,12 +86,14 @@ Add or replace the settings of an index.
 | Variable          | Type |  Description | Default value |
 |-------------------|-----------------------| --- | --- |
 | **rankingRules** | [Strings] | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/advanced_guides/relevancy.md#order-of-the-rules) |
-| **rankingDistinct** | String | Returns only distinct (different) values of the given field | *null* |
+| **rankingDistinct** | String | Returns only distinct (different) values of the given field | `null` |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
 | **displayedAttributes** | [Strings] | Fields present in the returned documents | All attributes found in the documents |
-| **stopWords** | [Strings] | Words in the search query that will be ignored | [] |
-| **synonyms** | Object | List of associated words that are considered the same in a search query | {} |
-| **indexNewFields** | Boolean | New fields in newly added document are/aren't added to MeiliSearch | true |
+| **stopWords** | [Strings] | Words in the search query that will be ignored | `[]` |
+| **synonyms** | Object | List of associated words that are considered the same in a search query | `{}` |
+| **indexNewFields** | Boolean | New fields in newly added document are/aren't added to MeiliSearch | `true` |
+
+Any parameters not provided will be left unchanged.
 
 ### Examples
 
