@@ -24,7 +24,7 @@ With this master key, you can retrieve the private key and the public using the 
 
 On each API call, the key must be added in [the header](/references/#authentication). Depending on the provided key you will have different permissions ([see above](/guides/advanced_guides/keys.md)).
 
-#### No master Key
+#### No master key
 
 If no master key is given, all routes in MeiliSearch can be accessed without a key.
 
