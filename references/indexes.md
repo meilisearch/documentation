@@ -131,7 +131,7 @@ Update an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **identifier** | the document <glossary word="attribute" /> of his unique identifier |
+| **identifier** | the document <glossary word="attribute" /> of its unique identifier |
 
 The `uid` of an index cannot be changed. The document identifier `identifier` can be added if it does not already exist (to now if it has ben set, use [the get index route](/references/indexes.md#get-one-index)).
 
