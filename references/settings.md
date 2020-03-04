@@ -85,7 +85,7 @@ Add or replace the settings of an index.
 
 | Variable          | Type |  Description | Default value |
 |-------------------|-----------------------| --- | --- |
-| **rankingRules** | [Strings] | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/advanced_guides/relevancy.md#order-of-the-rules) |
+| **rankingRules** | [Strings] | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
 | **rankingDistinct** | String | Returns only distinct (different) values of the given field | *null* |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
 | **displayedAttributes** | [Strings] | Fields present in the returned documents | All attributes found in the documents |
@@ -160,7 +160,7 @@ All settings will be reset to their default value.
 
 | Variable          |  Description | Default value |
 |-------------------|-----------------------| --- | --- |
-| **rankingRules**  | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/advanced_guides/relevancy.md#order-of-the-rules) |
+| **rankingRules**  | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
 | **rankingDistinct** | Returns only distinct (different) values of the given field | `null` |
 | **searchableAttributes** | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
 | **displayedAttributes** | Fields present in the returned documents | All attributes found in the documents |

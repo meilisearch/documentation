@@ -93,11 +93,11 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules"/>
 
-Reset the [ranking rules](/guides/advanced_guides/relevancy.md#ranking-rules) of an index to its default value.
+Reset the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of an index to its default value.
 
 #### Default value
 
-Array with the [built-in ranking rules](/guides/advanced_guides/relevancy.md#order-of-the-rules) ordered by importance.
+Array with the [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) ordered by importance.
 ```json
 [
     "typo",

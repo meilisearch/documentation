@@ -33,7 +33,8 @@ module.exports = {
           children: [
             "/guides/main_concepts/indexes",
             "/guides/main_concepts/documents",
-            "/guides/main_concepts/search"
+            "/guides/main_concepts/search",
+            "/guides/main_concepts/relevancy"
           ]
         },
         {
@@ -41,7 +42,6 @@ module.exports = {
           path: "/guides/advanced_guides/",
           collapsable: false,
           children: [
-            "/guides/advanced_guides/relevancy",
             "/guides/advanced_guides/binary",
             "/guides/advanced_guides/typotolerance",
             "/guides/advanced_guides/concat",

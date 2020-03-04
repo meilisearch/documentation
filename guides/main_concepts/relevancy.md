@@ -42,7 +42,7 @@ The `_proximity` rule sorts according to the proximity of the query words found 
 
 #### 4. Attribute
 
-The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-importance).
+The `attribute` rule sorts by ascending [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
 
 #### 5. Words position
 The `wordsPosition` rule sorts according to the position of the query words in the attribute. The start is better than the end.
@@ -92,7 +92,7 @@ The `proximity` rule sorts by descending order of distance length between two ma
 
 `It's Tuesday, This must be Belgium` is first because the matched word: Belgium, is found in the `title` attribute and not the `description`.
 
-The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-importance).
+The `attribute` rule sorts by ascending [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
 
 :::
 
