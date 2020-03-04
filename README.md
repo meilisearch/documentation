@@ -32,7 +32,7 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
 * [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, kanji and latin based languages.
 * **Return the whole document**: The entire document is returned upon search.
 * **Highly customizable search and indexation**:
-    - [Custom ranking](/guides/advanced_guides/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
+    - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
     - [Stop-words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of`, `the`, ..
     - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
     - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.

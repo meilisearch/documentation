@@ -49,7 +49,7 @@ For example, if your first document has the following keys in this order: `id, t
 
 On top of that, you can add your own rule to the ranking rules. For example, you could add a rule where a recent movie will be considered more relevant than an old movie. Or a rule where a movie with a higher popularity is more relevant. And so one, depending on your available data and your user's needs.
 
-[More information about ranking rules](/guides/advanced_guides/relevancy.md)
+[More information about ranking rules](/guides/main_concepts/relevancy.md)
 
 ## Synonyms, stop-words, ...
 
