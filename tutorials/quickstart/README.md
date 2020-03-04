@@ -88,10 +88,12 @@ $ cd MeiliSearch
 Inside the folder, compile MeiliSearch.
 
 ```bash
-# Production version
+# Update the rust toolchain to the latest version
+$ rustup update
+# Compile production version
 $ cargo build --release
 
-# Debug version
+# Compile dev version
 $ cargo build
 ```
 
