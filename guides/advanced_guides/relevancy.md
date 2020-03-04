@@ -115,7 +115,7 @@ The `word position` rule orders by ascending matching word's index number.
 
 **Exactness**
 
-`Knight Moves` is displayed before `Knights of Badassdom` because `Knight` is a finished word, exactly the same as the search query. While with `Knights`, the search query is just a prefix.
+`Knight Moves` is displayed before `Knights of Badassdom` because `Knight` is a complete word, exactly the same as the search query. While with `Knights`, the search query is a prefix of the query word.
 
 :::
 
