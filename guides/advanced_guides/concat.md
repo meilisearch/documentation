@@ -1,4 +1,4 @@
-# Concatenate and split queries
+# Concatenate and Split queries
 
 ## Concatenated queries
 
@@ -12,7 +12,6 @@ A search on `The news paper` searches will also search for the following concate
 - `Thenews paper`
 - `the newspaper`
 - `Thenewspaper`
-
 
 ::: warning
 This concatenation is done on a **maximum of 3 words**.
