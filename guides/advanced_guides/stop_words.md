@@ -6,7 +6,7 @@ During a search, the stop-words contained in your search query will be ignored b
 
 I.e. if `the` is a stop word, and your search query contains `the`, MeiliSearch will ignore this word, and be faster to answer.
 
-Stop-words **improves** **the speed** and **relevancy** of a search.
+Stop-words **improves the speed**, and **relevancy** of a search.
 
 ## Language driven
 
