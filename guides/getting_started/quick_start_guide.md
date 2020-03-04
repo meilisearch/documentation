@@ -87,19 +87,13 @@ $ cd MeiliSearch
 Inside the folder, compile MeiliSearch.
 
 ```bash
-# Production version
+# Update the rust toolchain to the latest version
+$ rustup update
+
+# Compile the project
 $ cargo build --release
 
-# Debug version
-$ cargo build
-```
-
-Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
-
-You can find the compiled binary in `target/debug` or `target/release`.
-
-```bash
-# Excuting the server binary
+# Execute the server binary
 $ ./target/release/meilisearch
 ```
 
