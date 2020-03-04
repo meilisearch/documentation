@@ -74,7 +74,7 @@ Reset the list of [stop-words](/guides/advanced_guides/stop_words.md) of an inde
 
 #### Default value
 
-Empty array : `[]`
+Empty array: `[]`
 
 #### Path Variables
 
