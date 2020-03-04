@@ -22,7 +22,7 @@ Here is the list of all the rules that are executed in this specific order by de
 
 The `typo` rule sorts by ascending numbers of typos.
 
-This means that a matched word with fewer typos is more relevant than a matched word with more typos.
+This means that a document that matches a word with fewer typos is more important than a document that matches with more typos.
 
 #### 2. Words
 
