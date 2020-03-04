@@ -78,10 +78,8 @@ This route takes as parameter an unique `uid` and **optionally** the name of the
 
 | Variable  | Description           |
 |-----------|-----------------------|
-| **index_uid** | The index unique identifier |
+| **index_uid** | The index unique identifier (*mandatory*)|
 | **identifier** | The document <glossary word="attribute" /> of its unique identifier |
-
-The body takes at least an index uid. The document identifier is optional.
 
 ```json
 {
