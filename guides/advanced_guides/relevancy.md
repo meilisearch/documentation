@@ -26,7 +26,7 @@ This means that a document that matches a word with fewer typos is more importan
 
 #### 2. Words
 
-The `words` rule sorts by comparing the number of query words in each matching documents.
+The `words` rule sorts by comparing the number of query words in each matching document.
 
 The more words of the search query present in the document, the more relevant it is. Having multiple times the same word does not affect the relevancy.
 
