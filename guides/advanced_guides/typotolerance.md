@@ -1,6 +1,6 @@
 # Typo Tolerance
 
-MeiliSearch **implements [typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance-rules)**. This means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
+MeiliSearch **is [typo tolerant](/guides/advanced_guides/typotolerance.md#typo-tolerance-rules)**. This means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
 
 #### Example
 
