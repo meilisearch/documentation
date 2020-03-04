@@ -13,7 +13,7 @@ To be able to play with these rules and match them to the needs of your dataset,
 MeiliSearch has built-in ranking rules. These rules are essential to the relevance of the search engine.
 
 Each of the rules has a role in finding the right documents for the given search query.
-The order in which the rules are set in the settings affects the importance of the rule. The first rule is the most important, then the second and so on. By default, Meilisearch has these rules in a specific order, thinking it meets the most standard needs. This order can be changed in the settings to fit your needs.
+The order in which the rules are set in the settings affects their importance. The first rule is the most important, then the second and so on. By default, MeiliSearch has these rules in a specific order which meets the most standard needs. This order can be changed in the settings.
 
 
 Here is the list of all the rules that are executed in this specific order by default:
