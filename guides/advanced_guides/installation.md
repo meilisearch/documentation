@@ -133,7 +133,7 @@ $ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
 Server is listening on: http://127.0.0.1:7700
 ```
 
-Here is the list of **all Environment variables and Flags** (CLI options).
+Here is the list of **all Environment variables and Flags** (CLI options).
 
 | Environment Variable | CLI option     | Description                                                                                                                                                            | Default value      |
 |----------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
