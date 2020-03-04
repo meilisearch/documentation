@@ -72,7 +72,7 @@ The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my
 
 MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
 
-If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
+If you have the Rust toolchain installed, you can clone the repository and compile it this way:
 
 ```bash
 $ git clone https://github.com/meilisearch/MeiliSearch
