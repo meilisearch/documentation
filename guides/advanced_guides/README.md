@@ -1,7 +1,7 @@
 # Advanced guides
 
 In the advanced guides you will find how to tune your search API and customize it:
-- [Installation](installation.md)
+- [How to install MeiliSearch](installation.md)
 - [Stop words](stop_words.md)
 - [Search parameters](search_parameters.md)
 - [Synonyms](synonyms.md)
