@@ -29,6 +29,6 @@ Splitted words are not considered as multiple words in a search query because th
 
 #### Example
 
-On a search on `newspaper`, it will splits into `news` and `paper` and not into `new` and `spaper`.
+On a search on `newspaper`, it will split into `news` and `paper` and not into `new` and `spaper`.
 A document containing `news` and `paper` separated by other words will not be relevant to the search.
 
