@@ -104,7 +104,7 @@ The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_
 
 ### Word position
 
-`Gangsta` appears sooner than `Dunkirk` because `Belgium` appears sooner in the attribute.
+`Gangsta` appears before `Dunkirk` because `Belgium` appears sooner in the attribute.
 
 The `word position` rule orders by ascending matching word's index number.
 
