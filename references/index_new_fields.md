@@ -36,7 +36,6 @@ $ curl \
 
 #### Response: `200 Ok`
 
-List the settings.
 
 ```json
 false
