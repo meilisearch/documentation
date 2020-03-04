@@ -38,7 +38,9 @@ As of today, all query words must be present in the returned documents. This rul
 
 #### 3. Proximity
 
-The `_proximity` rule sorts according to the proximity of the query words found in the matching documents.
+The `proximity` rule sorts according to the proximity of the query words found in the matching documents.
+
+The more the query words are near each other, and in the right order in a document the more this document is important.
 
 #### 4. Attribute
 
