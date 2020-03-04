@@ -92,7 +92,7 @@ The `proximity` rule sorts by descending order of distance length between two ma
 
 ### Attribute
 
-`It's Tuesday, This must be Belgium` is first because the matched word: Belgium, is found in the `title` attribute and not the `description`.
+`If It's Tuesday, This must be Belgium` is the first document because the matched word: `Belgium`, is found in the `title` attribute and not the `description`.
 
 The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-importance).
 
