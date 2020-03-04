@@ -4,7 +4,7 @@ In MeiliSearch, the search responses are sorted according to a set of consecutiv
 
 MeiliSearch proposes default ranking rules and has given them a default order as well. **This order can be modified: rules can be deleted and new ones can be added.**
 
-[For some in-depth explanations about the mechanism and about each default sorting rule](https://github.com/meilisearch/MeiliSearch/issues/358).
+You can read a more [in-depth explanation about the algorithm and about the default ranking rules](https://github.com/meilisearch/MeiliSearch/issues/358).
 
 To be able to play with these rules and match them to the needs of your dataset, it is important to understand how each works and how to create new ones.
 
