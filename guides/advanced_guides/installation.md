@@ -84,6 +84,7 @@ Inside the folder, compile MeiliSearch.
 ```bash
 # Update the rust toolchain to the latest version
 $ rustup update
+
 # Compile the project
 $ cargo build --release
 
