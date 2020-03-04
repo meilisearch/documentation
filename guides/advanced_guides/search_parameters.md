@@ -12,7 +12,6 @@ Search parameters let the user customize his search request.
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**            | limit length at which to crop specified attributes | 200           |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      | none          |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**               |  attribute with an exact match                     | none          |
-| **[timeout_ms](/guides/advanced_guides/search_parameters.md#timeout)**            | maximum response time                              | 30 ms         |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**               | whether to return the raw matches or not           | false         |
 
 ## Query (q)
@@ -139,16 +138,6 @@ $ curl -X GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
   "release_date":1536282000
 }
 ```
-
-## Timeout
-
-`timeout_ms=<Integer>`
-
-**Maximum time** before a search request responds.
-
-::: warning
-When it's faster you lose in relevancy
-:::
 
 ## Matches
 
