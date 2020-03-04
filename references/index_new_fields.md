@@ -74,30 +74,3 @@ $ curl \
 }
 ```
 This `updateId` allows you to [track the current update](/references/updates.md).
-
-## Reset accept new fields
-
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/accept-new-fields"/>
-
-Reset the `acceptNewFields` back to its default value of `true`.
-
-#### Path Variables
-
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
-
-#### Example
-```bash
-$ curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings/accept-new-fields'
-```
-
-#### Response: `202 Accepted`
-
-```json
-{
-  "updateId": 1
-}
-```
-This `updateId` allows you to [track the current update](/references/updates.md).
