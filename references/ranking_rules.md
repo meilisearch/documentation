@@ -117,6 +117,7 @@ To remove all ranking rules, which is not recommended for any use-case, you shou
 | **index_uid**         | The index UID |
 
 #### Example
+
 ```bash
 $ curl \
   -X DELETE 'http://localhost:7700/indexes/movies/settings/ranking-rules'
