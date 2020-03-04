@@ -5,7 +5,7 @@ In MeiliSearch there are three types of keys:
 - The **Master** key has access to all routes.
 - The **Private** key has access to all routes except the `/keys` routes.
 - The **Public** key has only access to the following routes:
-    - `GET /indexes/search`
+    - `GET /indexes/:index_uid/search`
     - `GET /indexes/:index_uid/search`
     - `GET /indexes/:index_uid/documents`
     - `GET /indexes/:index_uid/documents/:doc_id`
