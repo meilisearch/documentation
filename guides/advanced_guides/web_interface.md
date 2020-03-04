@@ -2,7 +2,7 @@
 
 After adding documents to your MeiliSearch, it is possible to try out the search engine with the integrated web interface.
 
-The web interface is served on the address, and port specified in the command line argument `--listen`. If not specified, [the default address, and port is used](/guides/advanced_guides/binary.md#environment-variables-and-flags).
+The web interface is served on the address, and port specified in the command line argument `--listen`. If not specified, [the default address, and port is used](/guides/advanced_guides/installation.md#environment-variables-and-flags).
 
 ### Example
 
