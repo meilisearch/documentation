@@ -7,4 +7,4 @@ If you want an even quicker overview we suggest [you look into our quickstart](/
 Content:
 - [🚀 Introduction](/guides/getting_started/): Starting with MeiliSearch!
 - [💡 Main Concepts](/guides/main_concepts/): to understand the basics like indexes, documents and searches.
-- [📚 Advanced Guides](/guides/advanced_guides/): to deep into the advanced but accessible concepts of MeiliSearch.
+- [📚 Advanced Guides](/guides/advanced_guides/): to deep dive into the advanced but accessible concepts of MeiliSearch.
