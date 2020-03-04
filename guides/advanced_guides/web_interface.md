@@ -2,16 +2,16 @@
 
 After adding documents to your MeiliSearch, it is possible to try out the search engine with the integrated web interface.
 
-The web interface is served on **the same port** as MeiliSearch.
+The web interface is served on the address, and port specified in the command line argument `--listen`. If not specified, [the default address, and port is used](/guides/advanced_guides/binary.md#environment-variables-and-flags).
 
-## Example
+### Example
 
-The server is listening on: `http://127.0.0.1:7700`.
+By default the web server can be reached on `http://127.0.0.1:7700`.
 
 Let's add some movies.
 
 ```bash
-curl -X POST  'http://127.0.0.1:8080/indexes/movies_uid/documents'\
+curl -X POST 'http://127.0.0.1:7700/indexes/movies_uid/documents'\
      --data @movies.json
 ```
 

@@ -49,7 +49,7 @@ The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_
 #### 5. Words Position
 The `wordsPosition` rule sorts according to the position of the query words in the attribute. The start is better than the end.
 
-#### 6. Exact
+#### 6. Exactness
 
 The `exactness` rule sorts by the similarity of the matched words with the query words. Words that are exactly the same are better than prefixes.
 
@@ -70,12 +70,6 @@ The `typo` rule sorts the results by ascending typos on matched query words.
 
 :::
 
-<!-- ::: tab Words
-
-
-
-::: -->
-
 ::: tab Proximity
 ![Image from alias](../../public/image/new_road.png)
 
@@ -84,7 +78,7 @@ The `typo` rule sorts the results by ascending typos on matched query words.
 The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule.<br>
 The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
 
-The `proximity` rule sorts by descending order of distance length between two matches.
+The `proximity` rule sorts by ascending order of distance length between two matches.
 :::
 
 ::: tab Attribute
@@ -113,7 +107,7 @@ The `word position` rule orders by ascending matching word's index number.
 ::: tab Exactness
 ![Image from alias](../../public/image/knight.png)
 
-**Exactness**
+### Exactness
 
 `Knight Moves` is displayed before `Knights of Badassdom` because `Knight` is a complete word, exactly the same as the search query. While with `Knights`, the search query is a prefix of the query word.
 
@@ -192,7 +186,7 @@ When a document is added to MeiliSearch, every new attribute inside will be adde
 - [Searchable attributes list](/references/searchable_attributes.md): attributes in which to search for matching query words.
 - [Displayed attributes list](/references/displayed_attributes.md): attributes to send back in each document.
 
-The once that concerns this section is the searchable attributes list.
+The one that concerns this section is the searchable attributes list.
 
 This list is **ordered**. This means that the order in which the attributes appear in the list will determine their relevancy. The earlier they appear in that list, the more important they are.
 
@@ -207,4 +201,4 @@ To change this order, you need to send the sorted-list, in the order you want, u
   "director"
 ]
 ```
-With this new order, the matching words found in `title` will make the document more relevant than once with the same matching word found in `description` or `director`.
+With this new order, the matching words found in `title` will make the document more relevant than one with the same matching words found in `description` or `director`.
