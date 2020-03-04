@@ -1,6 +1,6 @@
 # Relevancy
 
-In MeiliSearch, the search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, matching documents will be compared within each rules needed to compare them.  MeiliSearch uses a [bucket sort](/guides/advanced_guides/bucket_sort.md) to rank documents.
+In MeiliSearch, the search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, MeiliSearch uses a [bucket sort](/guides/advanced_guides/bucket_sort.md) to rank documents, each rule is applied to all documents that are considered equal according to the previous rule to break the tie.
 
 MeiliSearch proposes default ranking rules and has given them a default order as well. **This order can be modified: rules can be deleted and new ones can be added.**
 
