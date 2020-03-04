@@ -141,7 +141,7 @@ Here is the list of **all Environment variables and Flags** (CLI options).
 | MEILI_HTTP_ADDR      | --http-addr    | Address and port to listen to                                                                                                                                          | "127.0.0.1:7700"   |
 | MEILI_MASTER_KEY     | --master-key   | Default admin API key                                                                                                                                                  |                    |
 | MEILI_NO_ANALYTICS   | --no-analytics | Deactivate analytics. Analytics help us to know how much users are using our project, knowing which versions and which platforms are used. It is completely anonymous. |                    |
-| MEILI_ENV   | --env | Defines the environment in which MeiliSearch is running. Can be `production` or `development` |  development  |
+| MEILI_ENV   | --env | Defines the environment in which MeiliSearch is running. Can be `production` or `development` |  "development"  |
 
 ### Environments
 
