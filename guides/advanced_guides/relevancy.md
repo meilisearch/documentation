@@ -136,7 +136,7 @@ By default, the built-in rules are in a specific order that MeiliSearch consider
 ]
 ```
 Depending on your needs, you might want to change the order of the rules.
-In this case, using the [settings route](/references/ranking_rules.md#update-ranking-rules) of your index, you can change the order of the rules.
+You can use the [settings route](/references/ranking_rules.md#update-ranking-rules) of your index to do so.
 
 ## Adding your rules
 
