@@ -9,6 +9,6 @@ Finally, you can find the API references here :
 - [API References](/references/README.md)
 
 And the SDKs links here :
-- [Ressources](/resources/sdks.md)
+- [Resources](/resources/sdks.md)
 
 Tutorials and Cookbooks are being made. They will be available soon.
