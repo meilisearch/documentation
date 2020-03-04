@@ -1,4 +1,4 @@
-# Stop words
+# Stop-words
 
 Stop-words are a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
 
