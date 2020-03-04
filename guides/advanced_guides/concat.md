@@ -8,7 +8,7 @@ When searching for multiple words, a search is also done on the concatenation of
 
 #### Example
 
-A search on `The news paper` searches will also search for the following concatenated queries:
+A search on `The news paper` will also search for the following concatenated queries:
 - `Thenews paper`
 - `the newspaper`
 - `Thenewspaper`
