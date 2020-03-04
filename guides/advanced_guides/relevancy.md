@@ -46,7 +46,7 @@ The more the query words are near each other, and in the right order in a docume
 
 The `attribute` rule sorts by ascending [attribute importance](/guides/advanced_guides/relevancy.md#attributes-importance).
 
-#### 5. Words position
+#### 5. Words Position
 The `wordsPosition` rule sorts according to the position of the query words in the attribute. The start is better than the end.
 
 #### 6. Exact
