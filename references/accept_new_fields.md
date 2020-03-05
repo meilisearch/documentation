@@ -1,13 +1,13 @@
 # Accept new fields
 
-`AcceptNewFields` determines what MeiliSearch should do with new fields found during documents addition.
+`accept-new-fields` determines what MeiliSearch should do with new fields found during documents addition.
 
-When `AcceptNewFields` is set to **true** (*default*), every new field will be added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) list.<br>
-When `AcceptNewFields` set to **false**, they will be stored but neither searchable or displayed on the returned documents.
+When `accept-new-fields` is set to **true** (*default*), every new field will be added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) list.<br>
+When `accept-new-fields` set to **false**, they will be stored but neither searchable or displayed on the returned documents.
 
 ::: tip
 
-When `AcceptNewFields` is false, the fields are still stored. This means you can add them to the [searchable attributes](/references/searchable_attributes.md) list or the [displayed attributes](/references/displayed_attributes.md) list at any time.
+When `accept-new-fields` is false, the fields are still stored. This means you can add them to the [searchable attributes](/references/searchable_attributes.md) list or the [displayed attributes](/references/displayed_attributes.md) list at any time.
 
 :::
 
@@ -15,7 +15,7 @@ Child route of the [settings route](/references/settings.md).
 
 Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
 
-## Get accept new fields
+## Get the accept-new-fields value
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/accept-new-fields" />
 
@@ -41,7 +41,7 @@ $ curl \
 false
 ```
 
-## Update accept new fields
+## Update the accept-new-fields value
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/accept-new-fields" />
 

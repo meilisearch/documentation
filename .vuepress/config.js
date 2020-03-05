@@ -81,7 +81,7 @@ module.exports = {
             "/references/distinct_attribute",
             "/references/searchable_attributes",
             "/references/displayed_attributes",
-            "/references/index_new_fields",
+            "/references/accept_new_fields",
             "/references/stats",
             "/references/health",
             "/references/version",
