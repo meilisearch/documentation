@@ -20,11 +20,11 @@ module.exports = {
       '/guides/': [
         {
           title: "🚀 Introduction",
-          path: '/guides/getting_started/',
+          path: '/guides/introduction/',
           collapsable: false,
           children: [
-            "/guides/getting_started/quick_start_guide",
-            "/guides/getting_started/whats_next"
+            "/guides/introduction/quick_start_guide",
+            "/guides/introduction/whats_next"
           ]
         },
         {
