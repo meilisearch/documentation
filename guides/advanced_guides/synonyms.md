@@ -4,7 +4,7 @@ To make your search more relevant, you can [create a list of synonyms](/referenc
 
 If multiples words have an equivalent meaning in your dataset, you can decide to create a synonym list for these words. The search engine will give the same search results for any search with one of the associated words as a query.
 
-Synonyms are considered to be exactly the same.
+Synonyms are considered to be the same.
 A search on a word or its synonym will return the same search result.
 
 ::: warning
@@ -43,7 +43,7 @@ example:
 shoe <=> boot <=> slipper <=> sneakers
 ```
 
-When a search is made with one of these words all the others will be considered as exactly the same word and will appear in the search results.
+When a search is done with one of these words, all the others will be considered as the same word and will appear in the search results.
 
 However, in the case of word to sentence or sentence to sentence
 

@@ -1,5 +1,5 @@
 <template>
-    <tooltip :text="word" > <span v-html="glossary[word]"></span></tooltip>
+    <tooltip :text="word" ><span v-html="glossary[word]"></span></tooltip>
 </template>
 
 <script>

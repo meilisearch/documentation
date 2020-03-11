@@ -1,4 +1,4 @@
-#  Asynchronous Updates
+# Asynchronous Updates
 
 MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses.
 

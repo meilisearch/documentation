@@ -11,7 +11,7 @@ Search parameters let the user customize his search request.
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**      | which attributes to crop                           | none          |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**            | limit length at which to crop specified attributes | 200           |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      | none          |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**               |  attribute with an exact match                     | none          |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**               | attribute with an exact match                     | none          |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**               | whether to return the raw matches or not           | false         |
 
 ## Query (q)
@@ -46,24 +46,24 @@ Attributes that will appear in the returned documents.
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
-Attributes of which the value will be cropped depending on the `cropLength` and the matches .
+Attributes of which the value will be cropped depending on the `cropLength` and the matches.
 
 ::: tip
 This is useful when you have specific needs for displaying results on the front-end application.
 :::
 
-**Cropping start at the first occurence of the search query**. It only keeps `(croplength - matchLength)/2 ` chars on each side of the first match.
+**Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2 ` chars on each side of the first match.
 
 #### Example
 
 ```bash
-$ curl -X GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
+$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=shifu \
         -d attributesToCrop=overview \
         -d cropLength=100 \
 ```
 
-With a `cropLength` of 100 on `shifu` as a search query  this is the response.
+With a `cropLength` of 100 on `shifu` as a search query this is the response.
 
 Our **cropped version is in the _formatted object**.
 
@@ -94,9 +94,17 @@ Total length of the cropped field. See [attributesToCrop](/guides/advanced_guide
 
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
-Every matching string sequence in the given attribute's field will be wrapped arround an `<em>` tag
+Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag
 
 #### Example
+
+```bash
+$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
+        -d q=shifu \
+        -d attributesToHighlight=overview
+```
+
+Our **highlight version is in the _formatted object**.
 
 ```json
     {
@@ -106,7 +114,11 @@ Every matching string sequence in the given attribute's field will be wrapped ar
       "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
       "release_date": 1290729600,
       "_formatted": {
-        "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>Shifu</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>Shifu</em> and Mr. Ping."
+        "id": "50393",
+        "title": "Kung Fu Panda Holiday",
+        "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+        "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>Shifu</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>Shifu</em> and Mr. Ping.",
+        "release_date": 1290729600,
       }
     }
 ```
@@ -121,10 +133,10 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 Attribute's value must be **equal** to the given string in the documents.
 
-The **equality is case insenstive**.
+The **equality is case insensitive**.
 
 ```bash
-$ curl -X GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
+$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=n \
         -d filters='title:Nightshift'
 ```
@@ -143,16 +155,20 @@ $ curl -X GET  -G 'http://localhost:7700/indexes/nzwlr302/search' \
 
 `matches=<Boolean>`
 
-Returns an array of the search query occurrences in all fields. A search query occurence is given by a `start` position in the field and the `length` of the occurence.
+Returns an array of the search query occurrences in all fields. A search query occurrence is given by a `start` position in the field and the `length` of the occurrence.
 
 ::: tip
-This is useful when you need to highlight the results without the default html highlighter.
+This is useful when you need to highlight the results without the default HTML highlighter.
 :::
 
 
 #### Example
 
-`Shifu` as search query:
+```bash
+$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
+        -d q=shifu \
+        -d attributesToHighlight=overview
+```
 
 ```json
   {

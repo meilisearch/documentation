@@ -83,9 +83,9 @@ Update the settings of an index.
 
 #### Body
 
-| Variable          | Type |  Description | Default value |
+| Variable          | Type | Description | Default value |
 |-------------------|-----------------------| --- | --- |
-| **rankingRules** | [Strings] | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **rankingRules** | [Strings] | Ranking rules in their order of importance | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
 | **rankingDistinct** | String | Returns only distinct (different) values of the given field | `null` |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
 | **displayedAttributes** | [Strings] | Fields present in the returned documents | All attributes found in the documents |

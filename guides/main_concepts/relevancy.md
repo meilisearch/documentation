@@ -51,7 +51,7 @@ The `wordsPosition` rule sorts according to the position of the query words in t
 
 #### 6. Exactness
 
-The `exactness` rule sorts by the similarity of the matched words with the query words. Words that are exactly the same are better than prefixes.
+The `exactness` rule sorts by the similarity of the matched words with the query words. Words that are the same are better than prefixes.
 
 #### Examples
 
@@ -109,7 +109,7 @@ The `word position` rule orders by ascending matching word's index number.
 
 ### Exactness
 
-`Knight Moves` is displayed before `Knights of Badassdom` because `Knight` is a complete word, exactly the same as the search query. While with `Knights`, the search query is a prefix of the query word.
+`Knight Moves` is displayed before `Knights of Badassdom` because `Knight` is a complete word, the same as the search query. While with `Knights`, the search query is a prefix of the query word.
 
 :::
 

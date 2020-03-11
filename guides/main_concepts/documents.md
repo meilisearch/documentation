@@ -84,7 +84,7 @@ If none has been found, no documents will be added.
 
 #### Missing identifier error
 
-❗️ If you get the `missing identifier` error, it means MeiliSearch could not recognize your identifier. This means your identifier does not answer the formatting explained above. To solve this error, you could send the [identifier's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index  to add the identifier's name](/references/indexes.md#create-an-index) as explained in: [setting the identifier](/guides/main_concepts/documents.md#identifier).
+❗️ If you get the `missing identifier` error, it means MeiliSearch could not recognize your identifier. This means your identifier does not answer the formatting explained above. To solve this error, you could send the [identifier's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index to add the identifier's name](/references/indexes.md#create-an-index) as explained in: [setting the identifier](/guides/main_concepts/documents.md#identifier).
 
 ### Identifier value format
 

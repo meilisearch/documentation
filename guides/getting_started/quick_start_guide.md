@@ -105,7 +105,7 @@ $ ./target/release/meilisearch
 
 ### Communicate with MeiliSearch
 
-Now that our meilisearch server is up and running, we will be able to communicate with it.
+Now that our MeiliSearch server is up and running, we will be able to communicate with it.
 
 This is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
@@ -231,9 +231,9 @@ You can [track the state of each action](/guides/advanced_guides/asynchronous_up
 
 ## Searches
 
-Now that our documents have been added to MeiliSearch we are be able to [search](/guides/main_concepts/search.md) in it.
+Now that our documents have been added to MeiliSearch, we are able to [search](/guides/main_concepts/search.md) in it.
 
-MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default the search is already relevant.
+MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
 The search engine is now aware of our documents and can serve those via our HTTP server.
 
