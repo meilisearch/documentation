@@ -66,7 +66,7 @@ For example, on the following search query: `the great gatsby`, if the presence 
 
 ## Rules of fields
 
-In MeiliSearch, by default, every field of the document is `indexed`, `displayed`, and `searchable`. Those rules can be changed.
+In MeiliSearch, by default, every document field is searchable and returned on search queries.
 
 You could give a list of **indexed fields** that will be added by MeiliSearch on document addition — making it easy to ignore some uninteresting field that you have not cleaned out.
 
