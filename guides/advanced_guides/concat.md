@@ -17,7 +17,7 @@ A search on `The news paper` will also search for the following concatenated que
 This concatenation is done on a **maximum of 3 words**.
 :::
 
-## Splitted Queries
+## Split Queries
 
 When you do a search, it **applies the splitting algorithm to every word** (*string separated by a space*).
 
