@@ -20,7 +20,7 @@ You can specify this key by passing the `MEILI_MASTER_KEY` environment variable,
 
 With this master key, you can retrieve the private, and the public keys using the [keys route](/references/keys.md).
 
-On each API call, the key must be added in [the header](/references/#authentication).
+On each API call, the key must be added to [the header](/references/#authentication).
 
 #### No master key
 
