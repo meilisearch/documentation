@@ -1,6 +1,6 @@
 # Keys
 
-In MeiliSearch there are three types of keys:
+In MeiliSearch, there are three types of keys:
 
 - The **Master** key has access to all routes.
 - The **Private** key has access to all routes except the `/keys` routes.
@@ -10,7 +10,7 @@ In MeiliSearch there are three types of keys:
     - `GET /indexes/:index_uid/documents`
     - `GET /indexes/:index_uid/documents/:doc_id`
 
-When a master key is given to MeiliSearch, the engine will also generate one private, and one public key. **You cannot create additional keys**.
+When a master key is given to MeiliSearch, the engine will automatically generate the private and the public key. **You cannot create additional keys**.
 
 ### Master Key
 
@@ -20,7 +20,7 @@ You can specify this key by passing the `MEILI_MASTER_KEY` environment variable,
 
 With this master key, you can retrieve the private, and the public keys using the [keys route](/references/keys.md).
 
-On each API call, the key must be added in [the header](/references/#authentication).
+On each API call, the key must be added to [the header](/references/#authentication).
 
 #### No master key
 

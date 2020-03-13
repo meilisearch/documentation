@@ -143,7 +143,7 @@ Here is the list of **all Environment variables and Flags** (CLI options).
 | MEILI_DB_PATH        | --db-path      | Define the location for the database files                                                                                                                                         | "./data.ms" |
 | MEILI_HTTP_ADDR      | --http-addr    | Address and port to listen to                                                                                                                                          | "127.0.0.1:7700"   |
 | MEILI_MASTER_KEY     | --master-key   | Default admin API key                                                                                                                                                  |                    |
-| MEILI_NO_ANALYTICS   | --no-analytics | Deactivate analytics. Analytics help us to know how much users are using our project, knowing which versions and which platforms are used. It is completely anonymous. |                    |
+| MEILI_NO_ANALYTICS   | --no-analytics | Deactivate analytics. Analytics help us to know how many users are using our project, knowing which versions and which platforms are used. It is entirely anonymous. |                    |
 | MEILI_ENV   | --env | Defines the environment in which MeiliSearch is running. Can be `production` or `development` |  "development"  |
 
 ### Environments
@@ -151,4 +151,4 @@ Here is the list of **all Environment variables and Flags** (CLI options).
 By default, MeiliSearch runs in `development` mode.
 
 - `Production`: the [master key](/guides/advanced_guides/keys.md) is **mandatory**.
-- `Development`: the [master key](/guides/advanced_guides/keys.md) is **optional** and logs are output in "info" mode (*console output*).
+- `Development`: the [master key](/guides/advanced_guides/keys.md) is **optional**, and logs are output in "info" mode (*console output*).

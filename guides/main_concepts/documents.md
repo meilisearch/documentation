@@ -37,8 +37,8 @@ A **document must contain** [the primary key field](/guides/main_concepts/docume
 
 ## Fields
 
-All fields present in a document are automaticly <glossary word="searchable" /> and <glossary word="displayed" />.
-The way MeiliSearch handles a field is customizable in the settings <Badge text="soon" type="warn"/>. You can make a field only searchable, or only displayed, or none, in this case MeiliSearch will completely ignore the field when it is send on document addition.
+All fields present in a document are automatically <glossary word="searchable" /> and <glossary word="displayed" />.
+The way MeiliSearch handles a field is customizable in the settings <Badge text="soon" type="warn"/>. You can make a field only searchable, or only displayed, or none, in this case, MeiliSearch will completely ignore the field when it is sent on document addition.
 
 You can also add <glossary word="ranking rules" /> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
 

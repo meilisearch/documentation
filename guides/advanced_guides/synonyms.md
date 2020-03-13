@@ -1,6 +1,6 @@
 # Synonyms
 
-To make your search more relevant you can [create a list of synonyms](/references/synonyms.md#update-synonyms).
+To make your search more relevant, you can [create a list of synonyms](/references/synonyms.md#update-synonyms).
 
 If your database contains a lot of a word that has one or more popular synonyms, by configuring the synonyms the words can be associated. **This allows the same search results if you write one or the other word**.
 
