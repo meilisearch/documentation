@@ -5,7 +5,7 @@ An index is the collection of a certain type of data.
 It is, like a table in `SQL`, or a collection in `MongoDB`, an entity that collects a set of documents.
 
 An index is defined by an `uid` and contains the following information:
-- One document identifier <glossary word="attribute"/>
+- One <glossary word="primary key"/>
 - A set of relevancy rules (based on presets and customization)
 - A list of synonyms and stop-words
 - Rules for each field of a document
@@ -35,11 +35,11 @@ The `uid` cannot be changed.
   }
 ```
 
-## Document identifier
+## Primary key
 
-The document identifier is a <glossary word="field" /> in a document. This field is composed of an identifier <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same identifier attribute, with each a unique value. The identifier's attribute name **must** be known by the index. There are [multiple ways to set your identifier](/guides/main_concepts/documents.md#setting-the-identifier).
+The document primary key is a <glossary word="field" /> in a document. This field is composed of a primary key <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
 
-[More information about the document identifier](/guides/main_concepts/documents.md#identifier)
+[More information about the document primary key](/guides/main_concepts/documents.md#primary-key)
 
 ## Relevancy rules
 

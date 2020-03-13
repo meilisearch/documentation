@@ -71,7 +71,7 @@ $ curl \
 
 Create an index.
 
-This route takes as parameter an unique `uid` and **optionally** the name of the <glossary word="document identifier"/>.
+This route takes as parameter an unique `uid` and **optionally** the the <glossary word="primaryKey"/>.
 
 #### Body
 
@@ -79,7 +79,7 @@ This route takes as parameter an unique `uid` and **optionally** the name of the
 | Variable  | Description           |
 |-----------|-----------------------|
 | **index_uid** | The index unique identifier (*mandatory*)|
-| **identifier** | The document <glossary word="attribute" /> of its unique identifier |
+| **primaryKey** | The <glossary word="primary key" /> of the documents  |
 
 ```json
 {
@@ -129,7 +129,7 @@ Update an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **identifier** | the document <glossary word="attribute" /> of its unique identifier |
+| **primaryKey** | The <glossary word="primary key" /> of the documents  |
 
 The `uid` of an index cannot be changed. The document identifier `identifier` can be added if it does not already exist (to now if it has ben set, use [the get index route](/references/indexes.md#get-one-index)).
 

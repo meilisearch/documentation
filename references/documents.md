@@ -11,7 +11,7 @@ Get one document using its unique id.
 | Variable          | Description           |
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
-| **document_id**    | [The document id](/guides/main_concepts/documents.md#identifier) |
+| **document_id**    | [The document id](/guides/main_concepts/documents.md#primary-key) |
 
 ### Example
 
@@ -107,9 +107,9 @@ For a partial update of the document see [add or update documents](/references/d
 
 | Query Parameter           | Description                          | Default Value |
 |---------------------------|--------------------------------------|:-------------:|
-| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) | none |
+| **primaryKey**    | [The unique primary key of the document](/guides/main_concepts/documents.md#primary-key) | none |
 
-If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
@@ -156,7 +156,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Add a list of documents and update them if they already.
 
-If you send an already existing document (same [id](/guides/main_concepts/documents.md#identifier)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
+If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
 To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
 
@@ -166,13 +166,14 @@ To completely overwrite a document, check out the [add and replace documents rou
 |-------------------|-----------------------|
 | **index_uid**         | The index UID |
 
-If you want to set the **identifier** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Query Parameters
 
 | Query Parameter           | Description                          | Default Value |
 |---------------------------|--------------------------------------|:-------------:|
-| **identifier**    | [The unique identifier of the document](/guides/main_concepts/documents.md#identifier) | none |
+| **primaryKey**    | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents  | none |
+
 
 #### Body
 
@@ -192,7 +193,7 @@ The body is composed of a **JSON array** of documents.
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/documents' \
-  -d 'identifier=movieskud'
+  -d 'primaryKey=movieskud'
   --data '[{
       "movieskud": 287947,
       "title": "Shazam ⚡️"
@@ -242,7 +243,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:document_id"/>
 
-Delete one document based on its unique identifier.<br/>
+Delete one document based on its unique id.<br/>
 
 #### Path Variables
 
