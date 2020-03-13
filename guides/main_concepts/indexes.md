@@ -64,16 +64,15 @@ For example, on the following search query: `the great gatsby`, if the presence 
 
 [More information about stop-words](/guides/advanced_guides/stop_words.md)
 
-## Rules of fields
+## Fields properties
 
 In MeiliSearch, by default, every document field is searchable and returned on search queries.
 
-You could give a list of **indexed fields** that will be added by MeiliSearch on document addition — making it easy to ignore some uninteresting field that you have not cleaned out.
+The properties of the fields can be changed in the [settings](/references/settings.md).
 
-You could give a list of **searchable fields** that will be used to determine the relevancy of the documents - excluding some fields with non-relevant information.
+You can give a list of **searchable attributes** that will be used to determine the relevancy of the documents - excluding some fields with non-relevant information.
 
-You could give a list of **displayed fields** that will be present in the returned documents after a search — removing some fields that will not be displayed to the end-users and take unnecessary bandwidth.
+You can give a list of **displayed attributes** that will be present in the returned documents after a search — removing some fields that will not be displayed to the end-users and take unnecessary bandwidth.
 
-By default, the three options take all the fields presents in all the documents. Once you have set a list of fields on one option, it will only take the fields present in the list, not applying the option on the fields not present in the list.
+By default, the two options take all the fields presents in all the documents. Once you have set a list of fields on one option, it will only take the fields present in the list, not applying the option on the fields not present in the list.
 
-[More information about fields settings](/guides/main_concepts/indexes.md)<Badge text="soon" type="warn"/>
