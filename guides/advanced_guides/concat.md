@@ -25,7 +25,7 @@ This consists of finding the most interesting place to separate the words and to
 
 This is achieved by finding the best frequency of the separate words in the dictionary of all words in the dataset. It will look out that both words have a minimum of interesting results, and not just one of them.
 
-Splitted words are not considered as multiple words in a search query because they must stay next to each other, this behavior is called **Phrase Queries**.
+Split words are not considered as multiple words in a search query because they must stay next to each other, this behavior is called **Phrase Queries**.
 
 #### Example
 
