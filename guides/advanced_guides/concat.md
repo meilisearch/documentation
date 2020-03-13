@@ -4,7 +4,7 @@
 
 When your search contains several words, MeiliSearch applies a concatenation algorithm to it.
 
-When searching for multiple words, a search is also done on the concatenation of those words. When concatenation is done on a search query containing multiple words, it will concatenate the words following each other. Thus, the first and third word will not be concatenated without the second word.
+When searching for multiple words, a search is also done on the concatenation of those words. When concatenation is done on a search query containing multiple words, it will concatenate the words following each other. Thus, the first and third words will not be concatenated without the second word.
 
 #### Example
 
@@ -31,4 +31,3 @@ Splitted words are not considered as multiple words in a search query because th
 
 On a search on `newspaper`, it will split into `news` and `paper` and not into `new` and `spaper`.
 A document containing `news` and `paper` separated by other words will not be relevant to the search.
-
