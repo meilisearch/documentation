@@ -71,7 +71,7 @@ If the identifier is not found in a document, it will not be added.
 
 MeiliSearch has several ways of knowing which field is the `identifier`.
 
-- MeiliSearch [automaticly infers the identifier](/guides/main_concepts/documents.md#meilisearch-infers-your-identifier) based on your first document.
+- MeiliSearch [automatically infers the identifier](/guides/main_concepts/documents.md#meilisearch-infers-your-identifier) based on your first document.
 - You set it [on index creation](/references/indexes.md#create-an-index)
 - You set it [on document addition](/references/documents.md#add-or-replace-documents)
 
