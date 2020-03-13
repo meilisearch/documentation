@@ -12,4 +12,4 @@ Stop-words **improves the speed**, and **relevancy** of a search.
 
 Stop-words are strongly related to the language in which your data is written. Thus "the" or "of" are words that are very common in the English language and could be less relevant than a more specific word.
 
-However, their recurrence in the data makes them decisive for calculating the relevance of a document, which could be counterproductive. In most cases it is more desirable to ignore any recurrence of these words and to base research results on more relevant distinctions.
+However, their recurrence in the data makes them decisive for calculating the relevance of a document, which could be counterproductive. In most cases, it is more desirable to ignore any recurrence of these words and to base research results on more relevant distinctions.
