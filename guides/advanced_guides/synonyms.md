@@ -2,7 +2,7 @@
 
 To make your search more relevant, you can [create a list of synonyms](/references/synonyms.md#update-synonyms).
 
-If your database contains a lot of a word that has one or more popular synonyms, by configuring the synonyms the words can be associated. **This allows the same search results if you write one or the other word**.
+If multiples words have an equivalent meaning in your dataset, you can decide to create a synonym list for these words. The search engine will give the same search results for any search with one of the associated words as a query.
 
 Synonyms are considered to be exactly the same.
 A search on a word or its synonym will return the same search result.
