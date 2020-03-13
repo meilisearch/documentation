@@ -2,7 +2,7 @@
 
 An index is the collection of a certain type of data.
 
-It is, like a table in `SQL`, or a collection in `MongoDB`, an entity that collects a set of documents.
+It is, as a table in SQL, or a collection in MongoDB, an entity that collects a set of documents.
 
 An index is defined by an `uid` and contains the following information:
 - One document identifier <glossary word="attribute"/>
