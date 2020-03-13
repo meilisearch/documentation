@@ -101,7 +101,7 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. With them, you can among other things add the **master key** or set the **port**.
+[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. With them, you can, among other things, add the **master key** or set the **port**.
 
 ### Communicate with MeiliSearch
 
