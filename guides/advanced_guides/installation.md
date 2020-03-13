@@ -151,4 +151,4 @@ Here is the list of **all Environment variables and Flags** (CLI options).
 By default, MeiliSearch runs in `development` mode.
 
 - `Production`: the [master key](/guides/advanced_guides/keys.md) is **mandatory**.
-- `Development`: the [master key](/guides/advanced_guides/keys.md) is **optional** and logs are output in "info" mode (*console output*).
+- `Development`: the [master key](/guides/advanced_guides/keys.md) is **optional**, and logs are output in "info" mode (*console output*).
