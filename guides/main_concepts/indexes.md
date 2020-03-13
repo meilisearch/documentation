@@ -17,7 +17,7 @@ For example, a `movie` index with documents containing each information about a 
 
 Each of the indexes has information about the fields found in the documents, how MeiliSearch handles them, and their order of importance. An index also has its own synonyms, relevancy rules, and stop-words. The information of one index never acts on another index.
 
-This means, you can create synonyms for a `movie` index and different synonyms for a `clothes` index on the same MeiliSearch server.
+This means you can create synonyms for a `movie` index and different synonyms for a `clothes` index on the same MeiliSearch server.
 
 ## Index UID
 
