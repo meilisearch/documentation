@@ -10,7 +10,7 @@ In MeiliSearch, there are three types of keys:
     - `GET /indexes/:index_uid/documents`
     - `GET /indexes/:index_uid/documents/:doc_id`
 
-When a master key is given to MeiliSearch, the engine will also generate one private, and one public key. **You cannot create additional keys**.
+When a master key is given to MeiliSearch, the engine will automatically generate the private and the public key. **You cannot create additional keys**.
 
 ### Master Key
 
