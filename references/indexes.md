@@ -133,7 +133,7 @@ Update an index.
 
 The `uid` of an index cannot be changed. The document identifier `identifier` can be added if it does not already exist (to now if it has ben set, use [the get index route](/references/indexes.md#get-one-index)).
 
-[There are many ways in MeiliSearch to set the identifier](/guides/main_concepts/documents.md#identifier).
+[There are many ways in MeiliSearch to set the identifier](/guides/main_concepts/documents.md#primary-key).
 
 ### Example
 

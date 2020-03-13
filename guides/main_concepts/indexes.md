@@ -37,7 +37,7 @@ The `uid` cannot be changed.
 
 ## Primary key
 
-The document primary key is a <glossary word="field" /> in a document. This field is composed of a primary key <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
+The primary key is a <glossary word="field" /> present in all documents. This field is composed of a primary key <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
 
 [More information about the document primary key](/guides/main_concepts/documents.md#primary-key)
 
