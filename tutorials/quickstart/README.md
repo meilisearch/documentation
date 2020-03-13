@@ -128,7 +128,7 @@ $ curl -i -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
 ```
 
 ::: warning
-If you have the `missing primary key`  error. [More information about the primary key here](/guides/main_concepts/documents.md#primary-key).
+If you have the `missing primary key` error. [More information about the primary key here](/guides/main_concepts/documents.md#primary-key).
 :::
 
 ### Search for Documents
