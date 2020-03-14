@@ -43,7 +43,7 @@ The document identifier is a <glossary word="field" /> in a document. This field
 
 ## Relevancy rules
 
-Each index has its own relevancy rules. By default, all index starts with the same <glossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
+Each index has its own relevancy rules. By default, all indexes come with the same <glossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
 
 For example, if your first document has the following keys in this order: `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
 
