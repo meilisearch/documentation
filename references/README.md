@@ -18,22 +18,6 @@ All request and response body are in `JSON`. Always specify it in your header.
 
 `Content-Type: application/json`
 
-#### Encoding
-
-You can compress the data you send to your MeiliSearch API. We recommend using it when you add a very large number of documents on the [add documents route](/references/documents.md#add-or-update-documents)
-
-`Content-Encoding: gzip`
-
-We support `gzip`, `brotli` and `deflate`.
-
-#### Decoding
-
-You can request compressed data from MeiliSearch API. We recommend using it on [search route](/references/search.md#search-in-an-index), but only if you have an unusually long response time due to the size of the response.
-
-`Accept-Encoding: gzip, deflate`
-
-We support `gzip`, `brotli` and `deflate`.
-
 #### Authentication
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
