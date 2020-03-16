@@ -12,7 +12,7 @@ When the query input is received, MeiliSearch is building a more complex query t
 
 > It would not be a search engine if there was not a notion of relevancy in the results returned.
 
-When all documents corresponding to the request have been collected, *MeiliSearch sorts the documents* using a bucket sort and a list of built-in rules.
+When all documents corresponding to the request have been collected, *MeiliSearch sorts the documents* using a [bucket sort](/guides/advanced_guides/bucket_sort.md) and a list of built-in [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules).
 
 A bucket sort can be described as an ordered set of sorting rules. All the documents are sorted within the first rule, then documents that can not be distinguished will be sorted using the second rule, and so on. Thus, every document is not sorted for every rule, which induces a reduced compute time.
 Here is the ordered list of the default ranking rules used in MeiliSearch:
@@ -43,4 +43,4 @@ $ curl -X GET 'https://localhost:7700/indexes/4eb345y7/search?q=batman&filters=d
 ```
 
 ### Try out
-Once you have added your data to Meilisearch, simply **try out the search** experience using the available [web interface](/guides/advanced_guides/web_interface.md) at your MeiliSearch address in any browser.
+Once you have added your data to Meilisearch, **try out the search** experience using the available [web interface](/guides/advanced_guides/web_interface.md) at your MeiliSearch address in any browser.
