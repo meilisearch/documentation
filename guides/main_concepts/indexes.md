@@ -70,10 +70,9 @@ In MeiliSearch, by default, every document field is searchable and returned on s
 
 The properties of the fields can be changed in the [settings](/references/settings.md).
 
-Fields can be either :
+Fields can have the following properties:
 - Searchable
 - Displayed
-- Stored
 
 ### Searchable fields
 
@@ -97,6 +96,7 @@ By default, all fields attribute are added to the displayed-attributes list. If 
 
 This list can be restricted to a certain set of attributes that you chose in the settings. That way, you can determine which fields should be not be returned upon search.
 
-### Stored attributes
+
+### Data storing
 
 Every field is stored. This cannot be changed. That way if a field is not in the displayed-attributes list and not in the searchable-attributes list, it is still stored in MeiliSearch and could be added to either list at any time.
