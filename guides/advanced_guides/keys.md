@@ -30,7 +30,7 @@ If no master key is given, all routes in MeiliSearch can be accessed without a k
 
 Since the private and public keys are generated based on your master key, you must change the master key to change the two other ones.
 
-This means that you will have to restart MeiliSearch with the new master key.
+MeiliSearch needs to be restarted with the new master key for the keys to be changed.
 
-**All key will be changed**. This means that a single key can not be changed.
+**All key will be changed**, thus a single key can not be changed.
 
