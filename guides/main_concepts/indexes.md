@@ -92,7 +92,7 @@ Displayed fields are all the fields of which attribute is present in the [displa
 When a fields attribute is present in the displayed-attribute list, the field will be present in the documents returned upon search.
 When a fields attribute is not present in the displayed-attribute list, the field will be absent in the documents.
 
-By default, all fields attribute are added to the displayed-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the displayed-attributes list ([this can be changed](/references/accept_new_fields.md)).
+By default, all fields attributes are added to the displayed-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the displayed-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
 
 This list can be restricted to a certain set of attributes that you chose in the settings. That way, you can determine which fields should be not be returned upon search.
 
