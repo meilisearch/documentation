@@ -51,7 +51,7 @@ On top of that, you can add your own rule to the ranking rules. For example, you
 
 [More information about ranking rules](/guides/main_concepts/relevancy.md)
 
-## Synonyms, stop-words, ...
+## Synonyms and stop-words
 
 An index can contain a set of synonyms. On those words, a document containing the synonym of your search query will be considered as relevant as the same document with the search query in itself. The synonyms are linked to the given index, and they will not apply to any other index on the same MeiliSearch instance.
 
@@ -64,16 +64,38 @@ For example, on the following search query: `the great gatsby`, if the presence 
 
 [More information about stop-words](/guides/advanced_guides/stop_words.md)
 
-## Rules of fields
+## Fields properties
 
 In MeiliSearch, by default, every document field is searchable and returned on search queries.
 
-You could give a list of **indexed fields** that will be added by MeiliSearch on document addition — making it easy to ignore some uninteresting field that you have not cleaned out.
+The properties of the fields can be changed in the [settings](/references/settings.md).
 
-You could give a list of **searchable fields** that will be used to determine the relevancy of the documents - excluding some fields with non-relevant information.
+Fields can have the following properties:
+- Searchable
+- Displayed
 
-You could give a list of **displayed fields** that will be present in the returned documents after a search — removing some fields that will not be displayed to the end-users and take unnecessary bandwidth.
+### Searchable fields
 
-By default, the three options take all the fields presents in all the documents. Once you have set a list of fields on one option, it will only take the fields present in the list, not applying the option on the fields not present in the list.
+Searchable fields are all the fields of which attribute is present in the [searchable-attributes](/references/searchable_attributes.md) list.
 
-[More information about fields settings](/guides/main_concepts/indexes.md)<Badge text="soon" type="warn"/>
+When a fields attribute is present in the searchable-attribute list, the content of the field will be used by MeiliSearch to determine the relevancy of a document.
+When a fields attribute is not present in the searchable-attribute list, while it is still stored, it will be ignored during a search.
+
+By default, all fields attributes are added to the searchable-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the searchable-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
+
+This list can be restricted to a certain set of attributes that you chose in the settings. That way, you can determine which fields should be ignored by MeiliSearch during a search.
+
+### Displayed attributes
+
+Displayed fields are all the fields of which attribute is present in the [displayed-attributes](/references/displayed_attributes.md) list.
+
+When a fields attribute is present in the displayed-attribute list, the field will be present in the documents returned upon search.
+When a fields attribute is not present in the displayed-attribute list, the field will be absent in the documents.
+
+By default, all fields attributes are added to the displayed-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the displayed-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
+
+This list can be restricted to a certain set of attributes that you chose in the settings. That way, you can determine which fields should be not be returned upon search.
+
+### Data storing
+
+Every field is stored. This cannot be changed. That way if a field is not in the displayed-attributes list and not in the searchable-attributes list, it is still stored in MeiliSearch and could be added to either list at any time.
