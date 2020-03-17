@@ -81,7 +81,7 @@ Searchable fields are all the fields of which attribute is present in the [searc
 When a fields attribute is present in the searchable-attribute list, the content of the field will be used by MeiliSearch to determine the relevancy of a document.
 When a fields attribute is not present in the searchable-attribute list, while it is still stored, it will be ignored during a search.
 
-By default, all fields attribute are added to the searchable-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the searchable-attributes list ([this can be changed](/references/accept_new_fields.md)).
+By default, all fields attributes are added to the searchable-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the searchable-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
 
 This list can be restricted to a certain set of attributes that you chose in the settings. That way, you can determine which fields should be ignored by MeiliSearch during a search.
 
