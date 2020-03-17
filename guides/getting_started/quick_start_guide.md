@@ -241,6 +241,8 @@ The search engine is now aware of our documents and can serve those via our HTTP
 $ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 
+MeiliSearch also offers an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search. Go to your MeiliSearch address using a browser. In our case that would be: `http://127.0.0.1:7700`
+
 :::: tabs
 
 ::: tab Curl
