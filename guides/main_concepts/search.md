@@ -24,7 +24,7 @@ Here is the ordered list of the default ranking rules used in MeiliSearch:
 - _Position_ - A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
 - _Exact_ - A document containing the query words in their exact form, not only a prefix of them, is considered better.
 
-You can change the order of these rules, but you should know that these work well for a majority of use-cases. You can also add your own rule for domains specific needs. For example, you could add a date sorting criterion when searching into documents where the date of publication is essential. [Read more about ranking](/guides/main_concepts/relevancy.md) to see how to add custom rules.
+You can change the order of these rules, but you should know that these work well for a majority of use-cases. You can also add your own rules for domains specific needs. For example, you could add a date sorting criterion when searching into documents where the date of publication is essential. [Read more about ranking](/guides/main_concepts/relevancy.md) to see how to add custom rules.
 
 ## Search options
 
