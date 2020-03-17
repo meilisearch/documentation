@@ -30,7 +30,6 @@ If no master key is given, all routes in MeiliSearch can be accessed without a k
 
 Since the private and public keys are generated based on your master key, you must change the master key to change the two other ones.
 
-MeiliSearch needs to be restarted with the new master key for the keys to be changed.
+After changing your master key, you must restart the MeiliSearch server to ensure the other keys renewal.
 
 **All key will be changed**, thus a single key can not be changed.
-
