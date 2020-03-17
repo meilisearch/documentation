@@ -5,7 +5,7 @@
 When the query input is received, MeiliSearch is building a more complex query taking into account *typos*, n-grams, and *synonyms* if configured.
 
 - _Typos_ - For example, if the query string is `botman`, MeiliSearch will return documents containing `batman`. [Read more about the typo rules](/guides/advanced_guides/typotolerance.md).
-- _N-grams_ - MeiliSearch is set to merge multi-words query into a single word. Ex: Searching for `bat mobile` will returns documents containing `batmobile`. Each word of the query will also be split in many ways so MeiliSearch can returns documents containing `new york` when querying for `newyork`. [Read more about Concatenate and Split Queries](/guides/advanced_guides/concat.md)
+- _N-grams_ - MeiliSearch is set to merge multi-words queries into a single word when searching for matching documents. Ex: Searching for `bat mobile` will return documents containing `batmobile`. Each word of the query will also be split in many ways so MeiliSearch can returns documents containing `new york` when querying for `newyork`. [Read more about Concatenate and Split Queries](/guides/advanced_guides/concat.md)
 - _Synonyms_ - MeiliSearch will return documents containing `batman` when searching for `the dark knight`. Synonyms are not set by default because they are domain-specific. [Read more about synonyms](/guides/advanced_guides/synonyms.md).
 
 ## Sorting documents
