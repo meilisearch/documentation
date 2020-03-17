@@ -15,7 +15,7 @@ An index is defined by an `uid` and contains the following information:
 
 For example, a `movie` index with documents containing each information about a movie. On the same server, you could have another index containing all the `movie reviews`, where each document contains information about a review.
 
-Each of the indexes has information about the fields found in the documents, how MeiliSearch handles them, and their order of importance. An index also has its own synonyms, relevancy rules, and stop-words. The information of one index never acts on another index.
+Each of the indexes has information about the fields found in the documents, how MeiliSearch handles them, and their order of importance. An index also has its own synonyms, relevancy rules, and stop words. The information of one index never acts on another index.
 
 This means you can create synonyms for a `movie` index and different synonyms for a `clothes` index on the same MeiliSearch server.
 
@@ -60,9 +60,9 @@ An index can contain a set of synonyms. On those words, a document containing th
 An index can contain a list of stop-words. Those words will be ignored in documents and search queries. Typically those words could be redundant words of your chosen language, like `the` or `of` in English.
 By adding those words in the stop-words list, you avoid having documents considered highly relevant because of the recurrence of one of those words in a document.
 
-For example, on the following search query: `the great gatsby`, if the presence of the word `the` in a film review should not make the review more relevant. By adding `the` to the stop-word list, you avoid searching in documents containing only this stop-word.
+For example, on the following search query: `the great gatsby`, if the presence of the word `the` in a film review should not make the review more relevant. By adding `the` to the stop-word list, you avoid searching in documents containing only this stop word.
 
-[More information about stop-words](/guides/advanced_guides/stop_words.md)
+[More information about stop words](/guides/advanced_guides/stop_words.md)
 
 ## Rules of fields
 
