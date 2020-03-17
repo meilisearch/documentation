@@ -47,7 +47,7 @@ Each index has its own relevancy rules. By default, all indexes come with the sa
 
 For example, if your first document has the following keys in this order: `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
 
-On top of that, you can add your own rule to the ranking rules. For example, you could add a rule where a recent movie will be considered more relevant than an old movie. Or a rule where a movie with a higher popularity is more relevant. And so one, depending on your available data and your user's needs.
+On top of that, you can add your own rule to the ranking rules. For example, you can rank your movies by release date or per popularity. It's also possible to do both. And so on, depending on your available data and your user's needs.
 
 [More information about ranking rules](/guides/main_concepts/relevancy.md)
 
