@@ -43,4 +43,5 @@ $ curl -X GET 'https://localhost:7700/indexes/4eb345y7/search?q=batman&filters=d
 ```
 
 ### Try out
+
 Once you have added your data to Meilisearch, **try out the search** experience using the available [web interface](/guides/advanced_guides/web_interface.md) at your MeiliSearch address in any browser.
