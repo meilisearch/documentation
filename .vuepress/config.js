@@ -73,15 +73,25 @@ module.exports = {
             "/references/documents",
             "/references/search",
             "/references/updates",
-            "/references/synonyms",
-            "/references/stop_words",
             "/references/keys",
-            "/references/settings",
-            "/references/ranking_rules",
-            "/references/distinct_attribute",
-            "/references/searchable_attributes",
-            "/references/displayed_attributes",
-            "/references/accept_new_fields",
+            {
+              title: 'Settings',
+              path: '/references/settings',
+              collapsable: false,
+              children: [
+                {
+                  title: 'All Settings',
+                  path: '/references/settings'
+                },
+                "/references/synonyms",
+                "/references/stop_words",
+                "/references/ranking_rules",
+                "/references/distinct_attribute",
+                "/references/searchable_attributes",
+                "/references/displayed_attributes",
+                "/references/accept_new_fields",
+              ]
+            },
             "/references/stats",
             "/references/health",
             "/references/version",
