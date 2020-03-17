@@ -33,7 +33,7 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
 * **Return the whole document**: The entire document is returned upon search.
 * **Highly customizable search and indexation**:
     - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
-    - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of`, `the`, ..
+    - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
     - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
     - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
 * **RESTful API**
