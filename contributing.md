@@ -1,25 +1,30 @@
 # MeiliSearch documentation
 
+## Requirements
+
+- Yarn
+
 ## Installation
 
 ```bash
-$ npm install -g vuepress
+$ yarn
 ```
 
 ## Launch
 
-### development
+### Development
 ```bash
-$ vuepress dev
+$ yarn dev
 ```
 
-# production
+### Testing
 ```bash
-$ vuepress build
+$ yarn check-links
 ```
+This test will check all links in the documentation. If some dead links are found the tests will fail.
+
 
 ## Changing the documentation
 
-Directory structure can be changed in `.vuepress/config.js`. Every file needs to be addedd manually to the config file in the right parent directory.
-
+Directory structure can be changed in `.vuepress/config.js`. Every file needs to be added manually to the config file in the right parent directory.
 
