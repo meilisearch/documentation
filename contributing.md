@@ -14,6 +14,7 @@ $ yarn
 
 ### Development
 ```bash
+$ cd documentation
 $ yarn dev
 ```
 
