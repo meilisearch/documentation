@@ -7,6 +7,8 @@
 ## Installation
 
 ```bash
+$ git clone git@github.com:meilisearch/documentation.git
+$ cd documentation
 $ yarn
 ```
 
@@ -14,7 +16,6 @@ $ yarn
 
 ### Development
 ```bash
-$ cd documentation
 $ yarn dev
 ```
 
