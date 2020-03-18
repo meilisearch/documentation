@@ -21,6 +21,10 @@ response:
 - `show`
 - `shine`
 
+but not
+- `movies`
+- `musical`
+
 query: `sho`:
 response:
 - `show`
