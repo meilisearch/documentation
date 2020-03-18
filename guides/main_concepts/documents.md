@@ -33,7 +33,7 @@ curl -X POST `http://localhost:7700/indexes/movie/documents` \
 ]'
 ```
 
-A **document must contain** [one identifier field](/guides/main_concepts/documents.md#identifier) to be indexed in MeiliSearch.
+A **document must contain** [the primary key field](/guides/main_concepts/documents.md#primary-key) to be indexed in MeiliSearch.
 
 ## Fields
 
@@ -42,15 +42,15 @@ The way MeiliSearch handles a field is customizable in the settings <Badge text=
 
 You can also add <glossary word="ranking rules" /> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
 
-## Identifier
+## Primary key
 
-An identifier is an <glossary word="attribute" /> with a unique value found in each document of a given index. It is used to store the document in the index.
+A primary key is an <glossary word="attribute" /> with a unique value found in each document of a given index. It is used to store the document in the index.
 
-Each index recognizes **only one** identifier attribute. Once the [identifier is set on the index](/guides/main_concepts/documents.md#setting-the-identifier), it **cannot be changed**.
+Each index recognizes **only one** primary key attribute. Once the [primary key is set on the index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed**.
 
 **Example:**
 
-In an index called `movie` there are 200k `documents`. Each of these 200k documents has an identifier called `movie_id` whose value is unique.
+In an index called `movie` there are 200k `documents`. Each of these 200k documents has a primary key called `movie_id` whose value is unique.
 
 ```json
 [
@@ -65,30 +65,30 @@ In an index called `movie` there are 200k `documents`. Each of these 200k docume
 ]
 ```
 
-If the identifier is not found in a document, it will not be added.
+If the **primary key** is not found in a document, the document will not be added.
 
-### Setting the identifier
+### Setting the primary key
 
-MeiliSearch has several ways of knowing which field is the `identifier`.
+MeiliSearch has several ways of knowing which field is the `primary key`.
 
-- MeiliSearch [automatically infers the identifier](/guides/main_concepts/documents.md#meilisearch-infers-your-identifier) based on your first document.
-- You set it [on index creation](/references/indexes.md#create-an-index)
-- You set it [on document addition](/references/documents.md#add-or-replace-documents)
+- MeiliSearch [automaticly infers the primary key](/guides/main_concepts/documents.md#meilisearch-infers-your-primary-key) based on your first document.
+- Set it [on index creation](/references/indexes.md#create-an-index)
+- Set it [on document addition](/references/documents.md#add-or-replace-documents)
 
-#### MeiliSearch infers your identifier
+#### MeiliSearch infers your primary key
 
-If no identifier has been given through the index creation or through document additions, MeiliSearch will search for the identifier field in the first document sent.
+If no primary key has been given through the index creation or through document additions, MeiliSearch will search for the primary key in the first document sent.
 
 MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).
 If none has been found, no documents will be added.
 
-#### Missing identifier error
+#### Missing primary key error
 
-❗️ If you get the `missing identifier` error, it means MeiliSearch could not recognize your identifier. This means your identifier does not answer the formatting explained above. To solve this error, you could send the [identifier's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index to add the identifier's name](/references/indexes.md#create-an-index) as explained in: [setting the identifier](/guides/main_concepts/documents.md#identifier).
+❗️ If you get the `missing primary key` error, it means MeiliSearch could not recognize your primary key. This means your primary key does not answer the formatting explained above. To solve this error, you could send the [primary-key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in: [setting the primary key](/guides/main_concepts/documents.md#primary-key).
 
-### Identifier value format
+### Primary key value format
 
-The identifier **value** may contain only `A-Z a-z 0-0` and `-_` characters.
+The primary key **value** may contain only `A-Z a-z 0-0` and `-_` characters.
 
 #### Examples
 
@@ -102,4 +102,4 @@ Bad:
 ```
 
 
-The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, if you add 200 documents in one go and if one of the documents has a badly formatted identifier, an error will occur, and none of the documents will be added.
+The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, if you add 200 documents in one go and if one of the documents has a badly formatted primary key, an error will occur, and none of the documents will be added.

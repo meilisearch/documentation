@@ -167,9 +167,9 @@ Once the index has been created, it needs to be filled with [documents](/guides/
 
 Documents are sent to MeiliSearch in JSON format.
 
-To be processed by MeiliSearch, all documents need one common <glossary word="field" /> which will serve as [identifier](/guides/main_concepts/documents.md#identifier) for the document. The value in this field must be **unique**.
+To be processed by MeiliSearch, all documents need one common <glossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. The value in this field must be **unique**.
 
-There are [several ways to let MeiliSearch know what your document identifier](/guides/main_concepts/documents.md#identifier) is, the easiest way is to have an <glossary word="attribute" /> that contains the string `id` case-insensitively.
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <glossary word="attribute" /> that contains the string `id` case-insensitively.
 
 
 Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
@@ -240,6 +240,8 @@ The search engine is now aware of our documents and can serve those via our HTTP
 ```bash
 $ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
+
+MeiliSearch also offers an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search. Go to your MeiliSearch address using a browser. In our case that would be: `http://127.0.0.1:7700`
 
 :::: tabs
 

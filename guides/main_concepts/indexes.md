@@ -5,7 +5,7 @@ An index is the collection of a certain type of data.
 It is, as a table in SQL, or a collection in MongoDB, an entity that collects a set of documents.
 
 An index is defined by an `uid` and contains the following information:
-- One document identifier <glossary word="attribute"/>
+- One <glossary word="primary key"/>
 - A set of relevancy rules (based on presets and customization)
 - A list of synonyms and stop-words
 - Rules for each field of a document
@@ -13,7 +13,7 @@ An index is defined by an `uid` and contains the following information:
 
 #### Example
 
-For example, a `movie` index with documents containing each information about a movie. On the same server, you could have another index containing all the `movie reviews`, where each document contains information about a review.
+In the case of a movie database, you probably have multiples categories. One for movie descriptions, one for actors, and one for reviews. Each one of these categories is represented by an index. 
 
 Each of the indexes has information about the fields found in the documents, how MeiliSearch handles them, and their order of importance. An index also has its own synonyms, relevancy rules, and stop-words. The information of one index never acts on another index.
 
@@ -35,25 +35,25 @@ The `uid` cannot be changed.
   }
 ```
 
-## Document identifier
+## Primary key
 
-The document identifier is a <glossary word="field" /> in a document. This field is composed of an identifier <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same identifier attribute, with each a unique value. The identifier's attribute name **must** be known by the index. There are [multiple ways to set your identifier](/guides/main_concepts/documents.md#setting-the-identifier).
+The primary key is a <glossary word="field" /> present in all documents. This field is composed of a primary key <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
 
-[More information about the document identifier](/guides/main_concepts/documents.md#identifier)
+[More information about the document primary key](/guides/main_concepts/documents.md#primary-key)
 
 ## Relevancy rules
 
-Each index has its own relevancy rules. By default, all index starts with the same <glossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
+Each index has its own relevancy rules. By default, all indexes come with the same <glossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
 
 For example, if your first document has the following keys in this order: `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
 
-On top of that, you can add your own rule to the ranking rules. For example, you could add a rule where a recent movie will be considered more relevant than an old movie. Or a rule where a movie with a higher popularity is more relevant. And so one, depending on your available data and your user's needs.
+On top of that, you can add your own rule to the ranking rules. For example, you can rank your movies by release date or per popularity. It's also possible to do both. And so on, depending on your available data and your user's needs.
 
 [More information about ranking rules](/guides/main_concepts/relevancy.md)
 
-## Synonyms, stop-words, ...
+## Synonyms and stop-words
 
-An index can contain a set of synonyms. On those words, a document containing the synonym of your search query will be considered as relevant as the same document with the search query in itself. The synonyms are linked to the given index, and they will not apply to any other index on the same MeiliSearch instance.
+An index can contain a set of synonyms. If multiples words have an equivalent meaning in your dataset, you can decide to create a synonym for theses words. The search engine will give the same search results for any search with one of the associated words as a search query. The synonyms are linked to the given index, and they will not apply to any other index on the same MeiliSearch instance.
 
 [More information about synonyms](/guides/advanced_guides/synonyms.md)
 
@@ -64,16 +64,38 @@ For example, on the following search query: `the great gatsby`, if the presence 
 
 [More information about stop-words](/guides/advanced_guides/stop_words.md)
 
-## Rules of fields
+## Fields properties
 
 In MeiliSearch, by default, every document field is searchable and returned on search queries.
 
-You could give a list of **indexed fields** that will be added by MeiliSearch on document addition — making it easy to ignore some uninteresting field that you have not cleaned out.
+The properties of the fields can be changed in the [settings](/references/settings.md).
 
-You could give a list of **searchable fields** that will be used to determine the relevancy of the documents - excluding some fields with non-relevant information.
+Fields can have the following properties:
+- Searchable
+- Displayed
 
-You could give a list of **displayed fields** that will be present in the returned documents after a search — removing some fields that will not be displayed to the end-users and take unnecessary bandwidth.
+### Searchable fields
 
-By default, the three options take all the fields presents in all the documents. Once you have set a list of fields on one option, it will only take the fields present in the list, not applying the option on the fields not present in the list.
+Searchable fields are all the fields of which attribute is present in the [searchable-attributes](/references/searchable_attributes.md) list.
 
-[More information about fields settings](/guides/main_concepts/indexes.md)<Badge text="soon" type="warn"/>
+When a fields attribute is present in the searchable-attribute list, the content of the field will be used by MeiliSearch to determine the relevancy of a document.
+When a fields attribute is not present in the searchable-attribute list, while it is still stored, it will be ignored during a search.
+
+By default, all fields attributes are added to the searchable-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the searchable-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
+
+This list can be restricted to a certain set of attributes that you chose in the settings. That way, you can determine which fields should be ignored by MeiliSearch during a search.
+
+### Displayed attributes
+
+Displayed fields are all the fields of which attribute is present in the [displayed-attributes](/references/displayed_attributes.md) list.
+
+When a fields attribute is present in the displayed-attribute list, the field will be present in the documents returned upon search.
+When a fields attribute is not present in the displayed-attribute list, the field will be absent in the documents.
+
+By default, all fields attributes are added to the displayed-attributes list. If a new document is added with a field never present in any other document, it will automatically be added to the displayed-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
+
+This list can be restricted to a certain set of attributes that you chose in the settings. That way, you can determine which fields should be not be returned upon search.
+
+### Data storing
+
+Every field is stored. This cannot be changed. That way if a field is not in the displayed-attributes list and not in the searchable-attributes list, it is still stored in MeiliSearch and could be added to either list at any time.

@@ -183,8 +183,8 @@ If you wish to specify the order of the attributes you can either define them in
 Possibly, you want to change the order after the documents have been added. This is still very possible.
 
 When a document is added to MeiliSearch, every new attribute inside will be added to two lists :
-- [Searchable attributes list](/references/searchable_attributes.md): attributes in which to search for matching query words.
-- [Displayed attributes list](/references/displayed_attributes.md): attributes to send back in each document.
+- The [searchable attributes list](/references/searchable_attributes.md): attributes in which to search for matching query words.
+- The [displayed attributes list](/references/displayed_attributes.md): attributes in a document that are shown to the user.
 
 The one that concerns this section is the searchable attributes list.
 

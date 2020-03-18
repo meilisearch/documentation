@@ -43,17 +43,17 @@ module.exports = {
           collapsable: false,
           children: [
             "/guides/advanced_guides/installation",
-            "/guides/advanced_guides/typotolerance",
-            "/guides/advanced_guides/concat",
-            "/guides/advanced_guides/synonyms",
-            "/guides/advanced_guides/stop_words",
             "/guides/advanced_guides/search_parameters",
             "/guides/advanced_guides/keys",
-            "/guides/advanced_guides/prefix",
-            "/guides/advanced_guides/distinct",
             "/guides/advanced_guides/asynchronous_updates",
-            "/guides/advanced_guides/bucket_sort",
-            "/guides/advanced_guides/web_interface"
+            "/guides/advanced_guides/web_interface",
+            "/guides/advanced_guides/synonyms",
+            "/guides/advanced_guides/stop_words",
+            "/guides/advanced_guides/prefix",
+            "/guides/advanced_guides/typotolerance",
+            "/guides/advanced_guides/concat",
+            "/guides/advanced_guides/distinct",
+            "/guides/advanced_guides/bucket_sort"
           ]
         }
       ],
@@ -73,15 +73,25 @@ module.exports = {
             "/references/documents",
             "/references/search",
             "/references/updates",
-            "/references/synonyms",
-            "/references/stop_words",
             "/references/keys",
-            "/references/settings",
-            "/references/ranking_rules",
-            "/references/distinct_attribute",
-            "/references/searchable_attributes",
-            "/references/displayed_attributes",
-            "/references/accept_new_fields",
+            {
+              title: 'Settings',
+              path: '/references/settings',
+              collapsable: false,
+              children: [
+                {
+                  title: 'All Settings',
+                  path: '/references/settings'
+                },
+                "/references/synonyms",
+                "/references/stop_words",
+                "/references/ranking_rules",
+                "/references/distinct_attribute",
+                "/references/searchable_attributes",
+                "/references/displayed_attributes",
+                "/references/accept_new_fields",
+              ]
+            },
             "/references/stats",
             "/references/health",
             "/references/version",
