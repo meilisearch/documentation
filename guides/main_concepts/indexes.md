@@ -53,7 +53,7 @@ On top of that, you can add your own rule to the ranking rules. For example, you
 
 ## Synonyms and stop-words
 
-An index can contain a set of synonyms. On those words, a document containing the synonym of your search query will be considered as relevant as the same document with the search query in itself. The synonyms are linked to the given index, and they will not apply to any other index on the same MeiliSearch instance.
+An index can contain a set of synonyms. If multiples words have an equivalent meaning in your dataset, you can decide to create a synonym for theses words. The search engine will give the same search results for any search with one of the associated words as a search query. The synonyms are linked to the given index, and they will not apply to any other index on the same MeiliSearch instance.
 
 [More information about synonyms](/guides/advanced_guides/synonyms.md)
 
