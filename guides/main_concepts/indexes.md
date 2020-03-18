@@ -13,7 +13,7 @@ An index is defined by an `uid` and contains the following information:
 
 #### Example
 
-For example, a `movie` index with documents containing each information about a movie. On the same server, you could have another index containing all the `movie reviews`, where each document contains information about a review.
+In the case of a movie database, you probably have multiples categories. One for movie descriptions, one for actors, and one for reviews. Each one of these categories is represented by an index. 
 
 Each of the indexes has information about the fields found in the documents, how MeiliSearch handles them, and their order of importance. An index also has its own synonyms, relevancy rules, and stop-words. The information of one index never acts on another index.
 
