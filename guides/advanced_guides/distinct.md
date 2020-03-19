@@ -2,11 +2,11 @@
 
 A field can be set as `distinct`.
 
-When a field is `distinct`, there will **never be two, or more, occurence of the same value of that attribute** in the different documents that are returned by MeiliSearch.
+When a field is `distinct`, there will **never be two, or more, occurrence of the same value of that attribute** in the different documents that are returned by MeiliSearch.
 
 ### Example
 
-Let's use the following documents sample with 3 jackets of **different `colors`** but **same `skuid`**:
+Let's use the sample of the following documents with 3 jackets of **different `colors`** but **same `skuid`**:
 ```json
 [
   {
@@ -30,8 +30,7 @@ Let's use the following documents sample with 3 jackets of **different `colors`*
 ]
 ```
 
-
-By [setting `skuid` as a distinct field](/references/settings.md#distinct-field):
+By [setting `skuid` as a distinct field](/references/distinct_attribute.md):
 
 ```bash
  $ curl

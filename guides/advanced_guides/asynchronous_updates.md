@@ -1,4 +1,4 @@
-#  Asynchronous Updates
+# Asynchronous Updates
 
 MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses.
 
@@ -28,7 +28,6 @@ sequenceDiagram
 ### Which operations are async?
 
 Every operation which could be compute-expensive is asynchronous. These include:
-- Create/update a schema
 - Update index settings
 - Add/update/delete documents
 
@@ -55,20 +54,6 @@ Adding documents:
   "duration": 12.757581815,
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
   "processedAt": "2019-12-07T21:10:20.511525620Z"
-}
-```
-
-Updating a schema:
-```json
-{
-  "status": "processed",
-  "updateId": 0,
-  "type": {
-    "name": "Schema"
-  },
-  "duration": 0.000041072,
-  "enqueuedAt": "2019-12-07T21:10:07.506281864Z",
-  "processedAt": "2019-12-07T21:10:07.684496732Z"
 }
 ```
 

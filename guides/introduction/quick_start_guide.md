@@ -6,7 +6,7 @@ This quick tour will help you get started with MeiliSearch in only a few steps.
 
 First of all, you must have access to a running instance of MeiliSearch.
 
-There are [several download possibilities](/guides/advanced_guides/binary.md#download-and-launch).
+There are [several download possibilities](/guides/advanced_guides/installation.md#download-and-launch).
 
 :::: tabs
 ::: tab cURL
@@ -87,19 +87,13 @@ $ cd MeiliSearch
 Inside the folder, compile MeiliSearch.
 
 ```bash
-# Production version
+# Update the rust toolchain to the latest version
+$ rustup update
+
+# Compile the project
 $ cargo build --release
 
-# Debug version
-$ cargo build
-```
-
-Compiling in release mode takes more time than in debug mode but the binary process time will be significantly faster. You **must** run a release binary when using MeiliSearch in production.
-
-You can find the compiled binary in `target/debug` or `target/release`.
-
-```bash
-# Excuting the server binary
+# Execute the server binary
 $ ./target/release/meilisearch
 ```
 
@@ -107,19 +101,18 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environment variables and flags](/guides/advanced_guides/binary.md#environment-variables-and-flags) can be set before and on launch. With them you can among other things  add the **master key** or set the **port**.
+[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. With them, you can, among other things, add the **master key** or set the **port**.
 
 ### Communicate with MeiliSearch
 
-Now that our meilisearch server is up and running, we will be able to communicate with it.
+Now that our MeiliSearch server is up and running, we will be able to communicate with it.
 
 This is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
 ## Create your Index
 
 In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
-The indexes can be imagined as SQL tables. But you won't need to define the table, [MeiliSearch does that for you](/guides/main_concepts/indexes.md#inferred-schema).
-
+The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is <glossary word="schemaless"/>.
 In order to be able to store our documents in an index, we have to create one first.
 
 :::: tabs
@@ -131,8 +124,7 @@ In order to be able to store our documents in an index, we have to create one fi
 $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
-  "name": "Movies",
-  "uid" : "movies_uid"
+  "uid" : "movies"
 }'
 ```
 :::
@@ -141,8 +133,7 @@ $ curl \
 
 ```js
 meili.createIndex({
-    name: "Movies",
-    uid: "movies_uid"
+    uid: "movies"
 })
 ```
 :::
@@ -150,21 +141,21 @@ meili.createIndex({
 ::: tab Ruby
 
 ```ruby
-client.create_index(name: 'Movies', uid: 'movies_uid')
+client.create_index(uid: 'movies')
 ```
 :::
 
 ::: tab PHP
 
 ```php
-$client->createIndex('Movies', 'movies_uid');
+$client->createIndex('movies');
 ```
 :::
 
 ::: tab Python
 
 ```python
-client.create_index(name="movies", uid="movies_uid")
+client.create_index(uid="movies")
 ```
 :::
 ::::
@@ -172,11 +163,14 @@ client.create_index(name="movies", uid="movies_uid")
 
 ## Add Documents
 
-Once the index has been created it need to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are made on MeiliSearch.
+Once the index has been created, it needs to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are done on MeiliSearch.
 
 Documents are sent to MeiliSearch in JSON format.
 
-The documents must have at least one field in common. This field contains the identifier of the document.
+To be processed by MeiliSearch, all documents need one common <glossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. The value in this field must be **unique**.
+
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <glossary word="attribute" /> that contains the string `id` case-insensitively.
+
 
 Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
 
@@ -188,7 +182,7 @@ Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliS
 [API references](/references/documents.md)
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movies_uid/documents' \
+  -X POST 'http://localhost:7700/indexes/movies/documents' \
   --data @movies.json
 ```
 :::
@@ -198,7 +192,7 @@ $ curl \
 ```js
 const movies = require('./movies.json')
 meili
-    .Index("movies_uid")
+    .Index("movies")
     .addDocuments(movies)
 ```
 :::
@@ -220,7 +214,7 @@ $index->addOrReplaceDocuments($movies);
 ::: tab Python
 
 ```python
-index = self.client.get_index(uid="movies_uid")
+index = self.client.get_index(uid="movies")
 json_file = open('movies.json')
 data = json.load(json_file)
 response = index.add_documents(data)
@@ -237,15 +231,17 @@ You can [track the state of each action](/guides/advanced_guides/asynchronous_up
 
 ## Searches
 
-Now that our documents have been added to MeiliSearch we are be able to [search](/guides/main_concepts/search.md) in it.
+Now that our documents have been added to MeiliSearch, we are able to [search](/guides/main_concepts/search.md) in it.
 
-MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default the search is already relevant.
+MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
 The search engine is now aware of our documents and can serve those via our HTTP server.
 
 ```bash
 $ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
+
+MeiliSearch also offers an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search. Go to your MeiliSearch address using a browser. In our case that would be: `http://127.0.0.1:7700`
 
 :::: tabs
 
