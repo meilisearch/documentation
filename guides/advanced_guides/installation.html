@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Installation | MeiliSearch Documentation v0.9</title>
+    <meta name="description" content="Open source Instant Search Engine">
+    <meta name="generator" content="VuePress 1.4.0">
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="google-site-verification" content="u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c">
+  <meta prefix="og: http://ogp.me/ns#" property="og:title" content="MeiliSearch Documentation">
+  <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website">
+  <meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://docs.meilisearch.com">
+  <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png">
+  <meta prefix="og: http://ogp.me/ns#" property="og:image-secure-url" content="https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png">
+  <meta prefix="og: http://ogp.me/ns#" property="og:image-image-type" content="image/png">
+  <meta prefix="og: http://ogp.me/ns#" property="og:image-height" content="630">
+  <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_GB">
+  <meta prefix="og: http://ogp.me/ns#" property="og:site-name" content="MeiliSearch Documentation">
+  <meta property="twitter:title" content="MeiliSearch Documentation">
+  <meta property="twitter:description" content="The official documentation of MeiliSearch">
+  <meta property="twitter:image" content="https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:image:alt" content="Next generation search API">
+  <meta property="twitter:site" content="@meilisearch">
+  <script>
+      window.$crisp=[];
+      window.CRISP_WEBSITE_ID="38a71dd2-729c-4970-b061-3e1db1c1eb20";
+      (function() {
+          var d=document;
+          var s=d.createElement("script");
+          s.src="https://client.crisp.chat/l.js";
+          s.async=1;
+          d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+  <script>
+    (function(f, a, t, h, o, m){
+      a[h]=a[h]||function(){
+        (a[h].q=a[h].q||[]).push(arguments)
+      };
+      o=f.createElement('script'),
+      m=f.getElementsByTagName('script')[0];
+      o.async=1; o.src=t; o.id='fathom-script';
+      m.parentNode.insertBefore(o,m)
+    })(document, window, '//analytics.meilisearch.com/tracker.js', 'fathom');
+    fathom('set', 'siteId', 'XQNHD');
+    fathom('trackPageview');
+    </script>
+    <meta property="article:modified_time" content="2020-03-19T17:59:21.000Z"><meta property="og:site_name" content="MeiliSearch Documentation v0.9"><meta property="og:title" content="Installation"><meta property="og:type" content="website"><meta property="og:url" content="/guides/advanced_guides/installation.html"><meta name="twitter:title" content="Installation"><meta name="twitter:url" content="/guides/advanced_guides/installation.html"><meta name="twitter:card" content="summary_large_image">
+    <link rel="preload" href="/assets/css/0.styles.27870461.css" as="style"><link rel="preload" href="/assets/js/app.bad72d06.js" as="script"><link rel="preload" href="/assets/js/3.210f8f0e.js" as="script"><link rel="preload" href="/assets/js/4.4c0b976d.js" as="script"><link rel="preload" href="/assets/js/21.9f162f7e.js" as="script"><link rel="prefetch" href="/assets/js/10.dbd93714.js"><link rel="prefetch" href="/assets/js/11.23e524c2.js"><link rel="prefetch" href="/assets/js/12.8df3c8c1.js"><link rel="prefetch" href="/assets/js/13.13f55ffe.js"><link rel="prefetch" href="/assets/js/14.bea76358.js"><link rel="prefetch" href="/assets/js/15.5dde86cf.js"><link rel="prefetch" href="/assets/js/16.eaacc5f2.js"><link rel="prefetch" href="/assets/js/17.1f4f3072.js"><link rel="prefetch" href="/assets/js/18.2f5149dc.js"><link rel="prefetch" href="/assets/js/19.1365e4b0.js"><link rel="prefetch" href="/assets/js/20.2c2700fa.js"><link rel="prefetch" href="/assets/js/22.ddf109b8.js"><link rel="prefetch" href="/assets/js/23.0f6d0c97.js"><link rel="prefetch" href="/assets/js/24.023ef997.js"><link rel="prefetch" href="/assets/js/25.70432779.js"><link rel="prefetch" href="/assets/js/26.fd5e148b.js"><link rel="prefetch" href="/assets/js/27.44600052.js"><link rel="prefetch" href="/assets/js/28.214c58fc.js"><link rel="prefetch" href="/assets/js/29.6588642a.js"><link rel="prefetch" href="/assets/js/30.f08aee7e.js"><link rel="prefetch" href="/assets/js/31.f128e707.js"><link rel="prefetch" href="/assets/js/32.7831e12b.js"><link rel="prefetch" href="/assets/js/33.5e9d5120.js"><link rel="prefetch" href="/assets/js/34.1d9dbbc5.js"><link rel="prefetch" href="/assets/js/35.208e0a71.js"><link rel="prefetch" href="/assets/js/36.eb6d0459.js"><link rel="prefetch" href="/assets/js/37.9a900077.js"><link rel="prefetch" href="/assets/js/38.1b525b59.js"><link rel="prefetch" href="/assets/js/39.adc94d72.js"><link rel="prefetch" href="/assets/js/40.4ca596e4.js"><link rel="prefetch" href="/assets/js/41.b25d9caa.js"><link rel="prefetch" href="/assets/js/42.1d2212f3.js"><link rel="prefetch" href="/assets/js/43.4bfa5840.js"><link rel="prefetch" href="/assets/js/44.e5de788c.js"><link rel="prefetch" href="/assets/js/45.28d56aad.js"><link rel="prefetch" href="/assets/js/46.b9d7c6c5.js"><link rel="prefetch" href="/assets/js/47.6adf9282.js"><link rel="prefetch" href="/assets/js/48.c3ffc508.js"><link rel="prefetch" href="/assets/js/49.f99d6f0f.js"><link rel="prefetch" href="/assets/js/5.d449cfa1.js"><link rel="prefetch" href="/assets/js/50.400ffd43.js"><link rel="prefetch" href="/assets/js/51.0b220b9d.js"><link rel="prefetch" href="/assets/js/52.d2dd8fca.js"><link rel="prefetch" href="/assets/js/53.2603738d.js"><link rel="prefetch" href="/assets/js/54.7870d5a8.js"><link rel="prefetch" href="/assets/js/55.02b9261a.js"><link rel="prefetch" href="/assets/js/56.6076b342.js"><link rel="prefetch" href="/assets/js/57.d5d2864e.js"><link rel="prefetch" href="/assets/js/58.be61990c.js"><link rel="prefetch" href="/assets/js/59.2188b8e4.js"><link rel="prefetch" href="/assets/js/6.88a20d31.js"><link rel="prefetch" href="/assets/js/60.16564795.js"><link rel="prefetch" href="/assets/js/61.754b6c93.js"><link rel="prefetch" href="/assets/js/62.e6294c12.js"><link rel="prefetch" href="/assets/js/7.73fddae7.js"><link rel="prefetch" href="/assets/js/8.6c5e4a61.js"><link rel="prefetch" href="/assets/js/9.177e9fcb.js"><link rel="prefetch" href="/assets/js/vendors~docs-searchbar.0864b061.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.27870461.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="MeiliSearch Documentation v0.9" class="logo"> <span class="site-name can-hide">MeiliSearch Documentation v0.9</span></a> <div class="links"><form id="search-form" role="search" class="meilisearch-search-wrapper search-box"><input id="meilisearch-search-input" class="search-query"></form> <nav class="nav-links can-hide"><div class="nav-item"><a href="/guides/" class="nav-link router-link-active">
+  Guides
+</a></div><div class="nav-item"><a href="/references/" class="nav-link">
+  API References
+</a></div><div class="nav-item"><a href="/tutorials/" class="nav-link">
+  Tutorials
+</a></div><div class="nav-item"><a href="/resources/" class="nav-link">
+  Resources
+</a></div> <a href="https://github.com/meilisearch/MeiliSearch" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/guides/" class="nav-link router-link-active">
+  Guides
+</a></div><div class="nav-item"><a href="/references/" class="nav-link">
+  API References
+</a></div><div class="nav-item"><a href="/tutorials/" class="nav-link">
+  Tutorials
+</a></div><div class="nav-item"><a href="/resources/" class="nav-link">
+  Resources
+</a></div> <a href="https://github.com/meilisearch/MeiliSearch" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><a href="/guides/introduction/" class="sidebar-heading clickable"><span>🚀 Introduction</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/guides/introduction/quick_start_guide.html" class="sidebar-link">Getting Started</a></li><li><a href="/guides/introduction/whats_next.html" class="sidebar-link">What's next?</a></li></ul></section></li><li><section class="sidebar-group depth-0"><a href="/guides/main_concepts/" class="sidebar-heading clickable"><span>💡 Main concepts</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/guides/main_concepts/indexes.html" class="sidebar-link">Indexes</a></li><li><a href="/guides/main_concepts/documents.html" class="sidebar-link">Documents</a></li><li><a href="/guides/main_concepts/search.html" class="sidebar-link">Search</a></li><li><a href="/guides/main_concepts/relevancy.html" class="sidebar-link">Relevancy</a></li></ul></section></li><li><section class="sidebar-group depth-0"><a href="/guides/advanced_guides/" class="sidebar-heading clickable router-link-active open"><span>📚 Advanced Guides</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/guides/advanced_guides/installation.html" class="active sidebar-link">Installation</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/guides/advanced_guides/installation.html#download-and-launch" class="sidebar-link">Download and launch</a></li><li class="sidebar-sub-header"><a href="/guides/advanced_guides/installation.html#usage" class="sidebar-link">Usage</a></li><li class="sidebar-sub-header"><a href="/guides/advanced_guides/installation.html#environment-variables-and-flags" class="sidebar-link">Environment variables and Flags</a></li></ul></li><li><a href="/guides/advanced_guides/search_parameters.html" class="sidebar-link">Search Parameters</a></li><li><a href="/guides/advanced_guides/keys.html" class="sidebar-link">Keys</a></li><li><a href="/guides/advanced_guides/asynchronous_updates.html" class="sidebar-link">Asynchronous Updates</a></li><li><a href="/guides/advanced_guides/web_interface.html" class="sidebar-link">Web interface</a></li><li><a href="/guides/advanced_guides/synonyms.html" class="sidebar-link">Synonyms</a></li><li><a href="/guides/advanced_guides/stop_words.html" class="sidebar-link">Stop words</a></li><li><a href="/guides/advanced_guides/prefix.html" class="sidebar-link">Prefix Search</a></li><li><a href="/guides/advanced_guides/typotolerance.html" class="sidebar-link">Typo Tolerance</a></li><li><a href="/guides/advanced_guides/concat.html" class="sidebar-link">Concatenate and Split Queries</a></li><li><a href="/guides/advanced_guides/distinct.html" class="sidebar-link">Distinct</a></li><li><a href="/guides/advanced_guides/bucket_sort.html" class="sidebar-link">Bucket sort</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="installation"><a href="#installation" class="header-anchor">#</a> Installation</h1> <h2 id="download-and-launch"><a href="#download-and-launch" class="header-anchor">#</a> Download and launch</h2> <div class="el-tabs el-tabs--top el-tabs--border-card"><div class="el-tabs__header is-top"><div class="el-tabs__nav-wrap is-top"><div class="el-tabs__nav-scroll"><div role="tablist" class="el-tabs__nav is-top" style="transform:translateX(-0px);"></div></div></div></div><div class="el-tabs__content"><div role="tabpanel" aria-hidden="true" id="pane-null" aria-labelledby="tab-null" class="el-tab-pane" style="display:none;"><p>Download the <strong>latest stable release</strong> of MeiliSearch with <strong>curl</strong>.</p> <p>Launch MeiliSearch to start the server.</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">curl</span> -L https://install.meilisearch.com <span class="token operator">|</span> <span class="token function">sh</span>
+$ ./meilisearch
+Server is listening on: http://127.0.0.1:7700
+</code></pre></div></div> <div role="tabpanel" aria-hidden="true" id="pane-null" aria-labelledby="tab-null" class="el-tab-pane" style="display:none;"><p>Download the <strong>latest stable release</strong> of MeiliSearch with <strong>Homebrew</strong>.</p> <p>Launch MeiliSearch to start the server.</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ brew update <span class="token operator">&amp;&amp;</span> brew <span class="token function">install</span> meilisearch
+$ meilisearch
+Server is listening on: http://127.0.0.1:7700
+</code></pre></div></div> <div role="tabpanel" aria-hidden="true" id="pane-null" aria-labelledby="tab-null" class="el-tab-pane" style="display:none;"><p>Using <strong>Docker</strong> you can choose to run <a href="https://hub.docker.com/r/getmeili/meilisearch/tags" target="_blank" rel="noopener noreferrer">any available tags<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p> <p>This command starts the <strong>latest stable release</strong> of MeiliSearch.</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ docker run -it --rm -p <span class="token number">7700</span>:7700 -v <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/data.ms:/data.ms getmeili/meilisearch
+Server is listening on: http://0.0.0.0:7700
+</code></pre></div><div class="custom-block warning"><p class="custom-block-title">WARNING</p> <p>Docker is not persistent. You should share a volume to make your container filesystem persistent. MeiliSearch write its data at <code>/data.ms</code></p></div></div> <div role="tabpanel" aria-hidden="true" id="pane-null" aria-labelledby="tab-null" class="el-tab-pane" style="display:none;"><p>Download the <strong>latest stable release</strong> of MeiliSearch with <strong>APT</strong>.</p> <p>Launch MeiliSearch to start the server.</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token builtin class-name">echo</span> <span class="token string">&quot;deb [trusted=yes] https://apt.fury.io/meilisearch/ /&quot;</span> <span class="token operator">&gt;</span> /etc/apt/sources.list.d/fury.list
+$ <span class="token function">apt</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">apt</span> <span class="token function">install</span> meilisearch-http
+$ meilisearch
+Server is listening on: http://127.0.0.1:7700
+</code></pre></div></div> <div role="tabpanel" aria-hidden="true" id="pane-null" aria-labelledby="tab-null" class="el-tab-pane" style="display:none;"><p>You can deploy the latest stable build of MeiliSearch straight on Heroku.</p> <p align="center"><a href="https://heroku.com/deploy?template=https://github.com/meilisearch/MeiliSearch"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy"></a></p> <p>The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.</p> <div class="custom-block warning"><p class="custom-block-title">WARNING</p> <p>The <a href="https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted" target="_blank" rel="noopener noreferrer">Heroku filesystem is ephemeral<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>, which means you may lose your data on any restart of the Heroku instance. <strong>The Heroku deploy is okay for testing purposes, but it won't work for production.</strong></p></div></div> <div role="tabpanel" aria-hidden="true" id="pane-null" aria-labelledby="tab-null" class="el-tab-pane" style="display:none;"><p>MeiliSearch is made in <code>Rust</code>. Therefore the Rust toolchain must <a href="https://www.rust-lang.org/tools/install" target="_blank" rel="noopener noreferrer">be installed<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> to compile the project.</p> <p>If you have the Rust toolchain installed, you can clone the repository and compile it this way:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>$ <span class="token function">git</span> clone https://github.com/meilisearch/MeiliSearch
+$ <span class="token builtin class-name">cd</span> MeiliSearch
+</code></pre></div><p>Inside the folder, compile MeiliSearch.</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token comment"># Update the rust toolchain to the latest version</span>
+$ rustup update
+
+<span class="token comment"># Compile the project</span>
+$ cargo build --release
+
+<span class="token comment"># Execute the server binary</span>
+$ ./target/release/meilisearch
+</code></pre></div></div></div></div> <h2 id="usage"><a href="#usage" class="header-anchor">#</a> Usage</h2> <div class="language- extra-class"><pre class="language-text"><code>$ ./meilisearch --help
+meilisearch-http 0.9.0
+
+USAGE:
+    meilisearch [OPTIONS]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+        --db-path &lt;db-path&gt;              The destination where the database must be created. [env: MEILI_DB_PATH=]
+                                         [default: ./data.ms]
+        --env &lt;env&gt;                      This environment variable must be set to `production` if your are running in
+                                         production. Could be `production` or `development` - `production`: Force api
+                                         keys - `development`: Show logs in &quot;info&quot; mode + not mendatory to specify the
+                                         api keys [env: MEILI_ENV=]  [default: development]  [possible values:
+                                         development, production]
+        --http-addr &lt;http-addr&gt;          The address on which the http server will listen. [env: MEILI_HTTP_ADDR=]
+                                         [default: 127.0.0.1:7700]
+        --master-key &lt;master-key&gt;        The master key allowing you to do everything on the server. [env:
+                                         MEILI_MASTER_KEY=]
+        --no-analytics &lt;no-analytics&gt;    Do not send analytics to Meili. [env: MEILI_NO_ANALYTICS=]
+</code></pre></div><h2 id="environment-variables-and-flags"><a href="#environment-variables-and-flags" class="header-anchor">#</a> Environment variables and Flags</h2> <p>Flags can be added on launch.</p> <div class="language- extra-class"><pre class="language-text"><code>$ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
+Server is listening on: http://127.0.0.1:7700
+</code></pre></div><p>Here is the list of <strong>all Environment variables and Flags</strong> (CLI options).</p> <table><thead><tr><th>Environment Variable</th> <th>CLI option</th> <th>Description</th> <th>Default value</th></tr></thead> <tbody><tr><td>MEILI_DB_PATH</td> <td>--db-path</td> <td>Define the location for the database files</td> <td>&quot;./data.ms&quot;</td></tr> <tr><td>MEILI_HTTP_ADDR</td> <td>--http-addr</td> <td>Address and port to listen to</td> <td>&quot;127.0.0.1:7700&quot;</td></tr> <tr><td>MEILI_MASTER_KEY</td> <td>--master-key</td> <td>Default admin API key</td> <td></td></tr> <tr><td>MEILI_NO_ANALYTICS</td> <td>--no-analytics</td> <td>Deactivate analytics. Analytics help us to know how many users are using our project, knowing which versions and which platforms are used. It is entirely anonymous.</td> <td></td></tr> <tr><td>MEILI_ENV</td> <td>--env</td> <td>Defines the environment in which MeiliSearch is running. Can be <code>production</code> or <code>development</code></td> <td>&quot;development&quot;</td></tr></tbody></table> <h3 id="environments"><a href="#environments" class="header-anchor">#</a> Environments</h3> <p>By default, MeiliSearch runs in <code>development</code> mode.</p> <ul><li><code>Production</code>: the <a href="/guides/advanced_guides/keys.html">master key</a> is <strong>mandatory</strong>.</li> <li><code>Development</code>: the <a href="/guides/advanced_guides/keys.html">master key</a> is <strong>optional</strong>, and logs are output in &quot;info&quot; mode (<em>console output</em>).</li></ul></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/meilisearch/documentation/edit/master/guides/advanced_guides/installation.md" target="_blank" rel="noopener noreferrer">Edit this page</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">3/19/2020, 5:59:21 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/guides/main_concepts/relevancy.html" class="prev">
+        Relevancy
+      </a></span> <span class="next"><a href="/guides/advanced_guides/search_parameters.html">
+        Search Parameters
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.bad72d06.js" defer></script><script src="/assets/js/3.210f8f0e.js" defer></script><script src="/assets/js/4.4c0b976d.js" defer></script><script src="/assets/js/21.9f162f7e.js" defer></script>
+  </body>
+</html>
