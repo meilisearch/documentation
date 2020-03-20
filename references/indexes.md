@@ -132,7 +132,7 @@ Update an index.
 | **primaryKey** | The <glossary word="primary key" /> of the documents  |
 
 The `uid` of an index cannot be changed.<br>
-The `primaryKey` wichi is the document can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).
+The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).
 
 [There are many ways in MeiliSearch to set the primary key](/guides/main_concepts/documents.md#primary-key).
 

@@ -1,6 +1,6 @@
 # Settings
 
-`Settings` a list of all the **customization** possible for an index.
+`Settings` is a list of all the **customization** possible for an index.
 
 It is possible to update all the settings in one go or individually with the dedicated routes.
 

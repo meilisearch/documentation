@@ -5,7 +5,7 @@ _Child route of the [settings route](/references/settings.md)._
 `accept-new-fields` determines what MeiliSearch should do with new fields found during documents addition.
 
 When `accept-new-fields` is set to **true** (*default*), every new field will be added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) list.<br>
-When `accept-new-fields` set to **false**, they will be stored but neither searchable or displayed on the returned documents.
+When `accept-new-fields` is set to **false**, they will be stored but neither searchable or displayed on the returned documents.
 
 ::: tip
 
