@@ -1,14 +1,18 @@
 # Synonyms
 
+_Child route of the [settings route](/references/settings.md)._
+
 `Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
 
-Child route of the [settings route](/references/settings.md).
+Synonyms can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
-Synonyms can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get synonyms
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings/synonyms"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/synonyms"/>
 
 Get the list of synonyms of an index.
 
@@ -16,7 +20,7 @@ Get the list of synonyms of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**     | The index UID         |
 
 #### Example
 ```bash
@@ -44,7 +48,7 @@ Get the list of synonyms of an index.
 
 ## Update synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings/synonyms"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/synonyms"/>
 
 Update the list of synonyms of an index.
 
@@ -52,7 +56,7 @@ Update the list of synonyms of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**     | The index UID         |
 
 #### Body
 
@@ -80,7 +84,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Reset synonyms
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/settings/synonyms"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/synonyms"/>
 
 Reset the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index to its default value.
 
@@ -92,7 +96,7 @@ Empty object : `{}`
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**     | The index UID         |
 
 #### Example
 ```bash

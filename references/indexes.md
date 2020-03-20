@@ -20,13 +20,13 @@ $ curl \
 [
   {
     "uid": "movies",
-    "identifier": "movie_id",
+    "primaryKey": "movie_id",
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   },
   {
     "uid": "movie_reviews",
-    "identifier": null,
+    "primaryKey": null,
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   }
@@ -59,7 +59,7 @@ $ curl \
 ```json
 {
   "uid": "movies",
-  "identifier": "movie_id",
+  "primaryKey": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
@@ -71,7 +71,7 @@ $ curl \
 
 Create an index.
 
-This route takes as parameter an unique `uid` and **optionally** the the [primary key](/guides/main_concepts/indexes.md#primary-key).
+This route takes as parameter an unique `uid` and **optionally** the [primary key](/guides/main_concepts/indexes.md#primary-key).
 
 #### Body
 
@@ -84,7 +84,7 @@ This route takes as parameter an unique `uid` and **optionally** the the [primar
 ```json
 {
   "uid": "movies",
-  "identifier": "movie_id"
+  "primaryKey": "movie_id"
 }
 ```
 
@@ -95,7 +95,7 @@ $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
   "uid": "movies",
-  "identifier": "movie_id"
+  "primaryKey": "movie_id"
 }'
 ```
 
@@ -103,7 +103,7 @@ $ curl \
 ```json
 {
   "uid": "movies",
-  "identifier": "movie_id",
+  "primaryKey": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711476Z",
   "updatedAt": "2019-11-20T09:40:33.711476Z"
 }
@@ -131,7 +131,8 @@ Update an index.
 |-------------------|-----------------------|
 | **primaryKey** | The <glossary word="primary key" /> of the documents  |
 
-The `uid` of an index cannot be changed. The document identifier `identifier` can be added if it does not already exist (to now if it has ben set, use [the get index route](/references/indexes.md#get-one-index)).
+The `uid` of an index cannot be changed.<br>
+The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).
 
 [There are many ways in MeiliSearch to set the primary key](/guides/main_concepts/documents.md#primary-key).
 
@@ -141,7 +142,7 @@ The `uid` of an index cannot be changed. The document identifier `identifier` ca
 $ curl \
   -X PUT 'http://localhost:7700/indexes/movie_review' \
   --data '{
-  "identifier" : "movie_review_id"
+  "primaryKey" : "movie_review_id"
 }'
 ```
 
@@ -150,19 +151,17 @@ $ curl \
 ```json
 {
   "uid": "movie_review",
-  "identifier" : "movie_review_id",
+  "primaryKey" : "movie_review_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
 ```
-
 
 ## Delete an index
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
 
 Delete an index.
-
 
 #### Path Variables
 

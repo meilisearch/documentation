@@ -1,10 +1,14 @@
 # Ranking rules
 
+_Child route of the [settings route](/references/settings.md)._
+
 Ranking rules is a list of all the rules that contributes to the relevancy of your search. It is possible to add your own and to change the order of the rules based on your needs.
 
-Child route of the [settings route](/references/settings.md).
+Ranking rules can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
-Ranking rules can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get ranking rules
 

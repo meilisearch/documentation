@@ -105,7 +105,7 @@ For a partial update of the document see [add or update documents](/references/d
 
 | Query Parameter           | Description                          | Default Value |
 |---------------------------|--------------------------------------|:-------------:|
-| **primaryKey**    | [The unique primary key of the document](/guides/main_concepts/documents.md#primary-key) | none |
+| **primaryKey**    | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_| none |
 
 If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
@@ -174,7 +174,7 @@ If you want to set the **primary key** of your index through this route, it only
 
 | Query Parameter           | Description                          | Default Value |
 |---------------------------|--------------------------------------|:-------------:|
-| **primaryKey**    | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents  | none |
+| **primaryKey**    | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_| none |
 
 
 #### Body

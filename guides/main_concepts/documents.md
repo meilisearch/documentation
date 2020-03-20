@@ -24,7 +24,7 @@ A document is added to MeiliSearch in `JSON format`.<br/>
 When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents should be sent in an array. And this, even if there is only one document.
 
 ```bash
-curl -X POST `http://localhost:7700/indexes/movie/documents` \
+curl -X POST `http://localhost:7700/indexes/movies/documents` \
 --data '[
   {
     "movie_id": "123sq178",

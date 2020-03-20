@@ -1,6 +1,6 @@
 # Settings
 
-Settings is a list of all the **customization** possible for an index.
+`Settings` is a list of all the **customization** possible for an index.
 
 It is possible to update all the settings in one go or individually with the dedicated routes.
 
@@ -13,9 +13,13 @@ These are the reference pages for the dedicated routes:
 - [Displayed attributes](/references/displayed_attributes.md)
 - [Accept new fields](/references/accept_new_fields.md)
 
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
+
 ## Get settings
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings" />
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
 
 Get the settings of an index.
 
@@ -23,7 +27,7 @@ Get the settings of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index name        |
+| **index_uid**     | The index UID         |
 
 ### Example
 
@@ -71,7 +75,7 @@ List the settings.
 
 ## Update settings
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings" />
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
 Update the settings of an index.
 
@@ -79,7 +83,7 @@ Update the settings of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index name        |
+| **index_uid**     | The index UID         |
 
 #### Body
 

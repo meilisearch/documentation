@@ -1,14 +1,18 @@
 # Stop-words
 
+_Child route of the [settings route](/references/settings.md)._
+
 The stop-words route lets you add a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
 
-Child route of the [settings route](/references/settings.md).
+Stop-words can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
-Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get stop-words
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
 
 Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
@@ -16,7 +20,7 @@ Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**     | The index UID         |
 
 ### Example
 
@@ -33,7 +37,7 @@ $ curl \
 
 ## Update stop-words
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
 
 Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
 
@@ -41,7 +45,7 @@ Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an ind
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**     | The index UID         |
 
 #### Body
 
@@ -80,7 +84,7 @@ Empty array: `[]`
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**     | The index UID         |
 
 ### Example
 

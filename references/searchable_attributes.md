@@ -1,10 +1,14 @@
 # Searchable attributes
 
+_Child route of the [settings route](/references/settings.md)._
+
 Searchable attributes are the fields in which to search for matching query words.
 
-Child route of the [settings route](/references/settings.md).
+Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
-Searchable attributes can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get searchable attributes
 

@@ -1,19 +1,23 @@
 # Accept new fields
 
+_Child route of the [settings route](/references/settings.md)._
+
 `accept-new-fields` determines what MeiliSearch should do with new fields found during documents addition.
 
 When `accept-new-fields` is set to **true** (*default*), every new field will be added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) list.<br>
-When `accept-new-fields` set to **false**, they will be stored but neither searchable or displayed on the returned documents.
+When `accept-new-fields` is set to **false**, they will be stored but neither searchable or displayed on the returned documents.
 
 ::: tip
 
-When `accept-new-fields` is false, the fields are still stored. This means you can add them to the [searchable attributes](/references/searchable_attributes.md) list or the [displayed attributes](/references/displayed_attributes.md) list at any time.
+When `accept-new-fields` is set to **false**, the fields are still stored. This means you can add them to the [searchable attributes](/references/searchable_attributes.md) list or the [displayed attributes](/references/displayed_attributes.md) list at any time.
 
 :::
 
-Child route of the [settings route](/references/settings.md).
+The `accept-new-fields` value can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
-Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get the accept-new-fields value
 
