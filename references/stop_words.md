@@ -1,10 +1,14 @@
 # Stop-words
 
+_Child route of the [settings route](/references/settings.md)._
+
 The stop-words route lets you add a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
 
-Child route of the [settings route](/references/settings.md).
+Stop-words can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
-Stop-words can also be updated directly through the [add settings route](/references/settings.md#add-settings) at the same time than the other settings.
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get stop-words
 

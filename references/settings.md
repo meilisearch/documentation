@@ -1,6 +1,6 @@
 # Settings
 
-Settings is a list of all the **customization** possible for an index.
+`Settings` a list of all the **customization** possible for an index.
 
 It is possible to update all the settings in one go or individually with the dedicated routes.
 
@@ -12,6 +12,10 @@ These are the reference pages for the dedicated routes:
 - [Searchable attributes](/references/searchable_attributes.md)
 - [Displayed attributes](/references/displayed_attributes.md)
 - [Accept new fields](/references/accept_new_fields.md)
+
+::: note
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get settings
 
