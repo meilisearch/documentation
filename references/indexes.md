@@ -20,13 +20,13 @@ $ curl \
 [
   {
     "uid": "movies",
-    "identifier": "movie_id",
+    "primaryKey": "movie_id",
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   },
   {
     "uid": "movie_reviews",
-    "identifier": null,
+    "primaryKey": null,
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   }
@@ -59,7 +59,7 @@ $ curl \
 ```json
 {
   "uid": "movies",
-  "identifier": "movie_id",
+  "primaryKey": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
@@ -84,7 +84,7 @@ This route takes as parameter an unique `uid` and **optionally** the the [primar
 ```json
 {
   "uid": "movies",
-  "identifier": "movie_id"
+  "primaryKey": "movie_id"
 }
 ```
 
@@ -95,7 +95,7 @@ $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
   "uid": "movies",
-  "identifier": "movie_id"
+  "primaryKey": "movie_id"
 }'
 ```
 
@@ -103,7 +103,7 @@ $ curl \
 ```json
 {
   "uid": "movies",
-  "identifier": "movie_id",
+  "primaryKey": "movie_id",
   "createdAt": "2019-11-20T09:40:33.711476Z",
   "updatedAt": "2019-11-20T09:40:33.711476Z"
 }
@@ -141,7 +141,7 @@ The `uid` of an index cannot be changed. The document identifier `identifier` ca
 $ curl \
   -X PUT 'http://localhost:7700/indexes/movie_review' \
   --data '{
-  "identifier" : "movie_review_id"
+  "primaryKey" : "movie_review_id"
 }'
 ```
 
@@ -150,7 +150,7 @@ $ curl \
 ```json
 {
   "uid": "movie_review",
-  "identifier" : "movie_review_id",
+  "primaryKey" : "movie_review_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
