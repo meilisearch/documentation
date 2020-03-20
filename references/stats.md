@@ -2,7 +2,7 @@
 
 ## Get stat of an index
 
-<RouteHighlighter method="GET" route="/indexes/:uid/stats"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
 
 Get stats of an index.
 
@@ -11,7 +11,7 @@ Get stats of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**     | The index UID         |
 
 ### Example
 

@@ -2,7 +2,7 @@
 
 ## Search in an index
 
-<RouteHighlighter method="GET" route="/indexes/:uid/search"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/search"/>
 
 Search for documents matching a specific query in the given index.
 
@@ -10,7 +10,7 @@ Search for documents matching a specific query in the given index.
 
 | Variable  | Description   |
 |-----------|---------------|
-| **index** | The index UID |
+| **index_uid** | The index UID |
 
 #### Query Parameters
 

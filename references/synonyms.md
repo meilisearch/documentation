@@ -8,7 +8,7 @@ Synonyms can also be updated directly through the [add settings route](/referenc
 
 ## Get synonyms
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings/synonyms"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/synonyms"/>
 
 Get the list of synonyms of an index.
 
@@ -16,7 +16,7 @@ Get the list of synonyms of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**     | The index UID         |
 
 #### Example
 ```bash
@@ -44,7 +44,7 @@ Get the list of synonyms of an index.
 
 ## Update synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings/synonyms"/>
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/synonyms"/>
 
 Update the list of synonyms of an index.
 
@@ -52,7 +52,7 @@ Update the list of synonyms of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**     | The index UID         |
 
 #### Body
 
@@ -80,7 +80,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Reset synonyms
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid/settings/synonyms"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/synonyms"/>
 
 Reset the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index to its default value.
 
@@ -92,7 +92,7 @@ Empty object : `{}`
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID |
+| **index_uid**     | The index UID         |
 
 #### Example
 ```bash

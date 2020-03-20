@@ -15,7 +15,7 @@ These are the reference pages for the dedicated routes:
 
 ## Get settings
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings" />
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
 
 Get the settings of an index.
 
@@ -23,7 +23,7 @@ Get the settings of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index name        |
+| **index_uid**     | The index UID         |
 
 ### Example
 
@@ -71,7 +71,7 @@ List the settings.
 
 ## Update settings
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings" />
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
 Update the settings of an index.
 
@@ -79,7 +79,7 @@ Update the settings of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index name        |
+| **index_uid**     | The index UID         |
 
 #### Body
 

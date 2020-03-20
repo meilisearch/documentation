@@ -8,7 +8,7 @@ Stop-words can also be updated directly through the [add settings route](/refere
 
 ## Get stop-words
 
-<RouteHighlighter method="GET" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
 
 Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
@@ -16,7 +16,7 @@ Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**     | The index UID         |
 
 ### Example
 
@@ -33,7 +33,7 @@ $ curl \
 
 ## Update stop-words
 
-<RouteHighlighter method="POST" route="/indexes/:uid/settings/stop-words" />
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
 
 Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
 
@@ -41,7 +41,7 @@ Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an ind
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**     | The index UID         |
 
 #### Body
 
@@ -80,7 +80,7 @@ Empty array: `[]`
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **uid**         | The index UID         |
+| **index_uid**     | The index UID         |
 
 ### Example
 
