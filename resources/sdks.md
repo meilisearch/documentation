@@ -1,6 +1,6 @@
 # Official SDKs / Libraries
 
-You can use MeiliSearch API wrappers in your favorite language. These libraries support the main methods for search and indexation and are tested against MeiliSearch v0.8.4.
+You can use MeiliSearch API wrappers in your favorite language. These libraries support the main methods for search and indexation and are tested against MeiliSearch v0.9.0.
 
 - [JavaScript](https://github.com/meilisearch/meilisearch-js)
 - [Ruby](https://github.com/meilisearch/meilisearch-ruby)
