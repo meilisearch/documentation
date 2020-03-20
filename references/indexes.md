@@ -71,7 +71,7 @@ $ curl \
 
 Create an index.
 
-This route takes as parameter an unique `uid` and **optionally** the the [primary key](/guides/main_concepts/indexes.md#primary-key).
+This route takes as parameter an unique `uid` and **optionally** the [primary key](/guides/main_concepts/indexes.md#primary-key).
 
 #### Body
 
@@ -131,7 +131,8 @@ Update an index.
 |-------------------|-----------------------|
 | **primaryKey** | The <glossary word="primary key" /> of the documents  |
 
-The `uid` of an index cannot be changed. The document identifier `identifier` can be added if it does not already exist (to now if it has ben set, use [the get index route](/references/indexes.md#get-one-index)).
+The `uid` of an index cannot be changed.<br>
+The `primaryKey` wichi is the document can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).
 
 [There are many ways in MeiliSearch to set the primary key](/guides/main_concepts/documents.md#primary-key).
 
@@ -156,13 +157,11 @@ $ curl \
 }
 ```
 
-
 ## Delete an index
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
 
 Delete an index.
-
 
 #### Path Variables
 
