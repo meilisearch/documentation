@@ -32,7 +32,7 @@ X first documents to skip. This is helpful for **pagination**
 
 ## Limit
 
-`offset=<Integer>`.
+`limit=<Integer>`.
 
 X number of documents in the search query response. This is helpful for **pagination**
 
