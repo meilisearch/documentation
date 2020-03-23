@@ -39,7 +39,7 @@ Server is listening on: http://0.0.0.0:7700
 ```
 
 ::: warning
-Docker is not persistent. You should share a volume to make your container filesystem persistent. MeiliSearch write its data at `/data.ms`
+Data written to a Docker container is not persistent and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
 :::
 
 ::: tab APT
