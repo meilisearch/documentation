@@ -3,7 +3,9 @@
 MeiliSearch is a **RESTful search API** that is the **ready-to-go solution** for everyone wanting a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
 
 <br>
+
 [<linkButton text="🚀 GETTING STARTED"/>](/guides/introduction/quick_start_guide.md)
+
 <br>
 
 Efficient search engines are often only accessible to companies with the financial means and resources necessary to develop a search solution adapted to their needs. The majority of other companies that do not have the means or do not realize that the lack of relevance of a search greatly impacts the pleasure of navigation on their application,
