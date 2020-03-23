@@ -7,22 +7,15 @@
 <script>
 export default {
   name: 'linkButton',
-  props: ['text'],
-  data () {
-    return {
-
-    }
-  }
+  props: ['text']
 }
 </script>
 
 <style lang="css" scoped>
 
 div.route {
-  display: inline-block;
+  display: block;
   text-align: center;
-  width:100%;
-  margin: 2em;
 }
 
 .route > div {
