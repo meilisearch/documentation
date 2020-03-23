@@ -65,10 +65,10 @@ You can deploy the latest stable build of MeiliSearch straight on Heroku.
   </a>
 </p>
 
-The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
+Since all the source code from the GitHub repository will be compiled, the deployment process can take up to 20 minutes to complete.
 
 ::: warning
-The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
+The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means data loss may occur on restart. **The Heroku deployment is useful for testing purposes; however, it won't meet the requirements for production deployments.**
 :::
 
 ::: tab Source
