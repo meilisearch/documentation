@@ -4,9 +4,7 @@ This quick tour will help you get started with MeiliSearch in only a few steps.
 
 ## Download and launch
 
-First of all, you must have access to a running instance of MeiliSearch.
-
-There are [several download possibilities](/guides/advanced_guides/installation.md#download-and-launch).
+First of all, let's run MeiliSearch.
 
 :::: tabs
 ::: tab cURL
