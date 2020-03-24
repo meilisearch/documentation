@@ -1,43 +1,28 @@
 <template>
   <div class="route">
-    <a v-bind:href="`${ url }`">
-      <div class="method get" v-if="method.toLowerCase() === 'get'">{{ text }}</div>
-    </a>
+      <div>{{ text }}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'linkButton',
-  props: ['method', 'text', 'url'],
-  data () {
-    return {
-
-    }
-  }
+  props: ['text']
 }
 </script>
 
 <style lang="css" scoped>
 
 div.route {
-  display: inline-block;
+  display: block;
   text-align: center;
-  width: 100%;
+  margin: 3em 0;
 }
 
 .route > div {
   display: inline;
-}
-
-.route > div.method.get {
-  background-color: #3eaf7c;
-  color: white;
-}
-
-.route > a > div {
   line-height: 1.4;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.75rem;
   margin: 0.85rem 0;
   background-color: #3eaf7c;
   border-radius: 6px 6px 6px 6px;
@@ -48,6 +33,5 @@ div.route {
   margin-right: auto;
   width: 200px;
 }
-
 
 </style>
