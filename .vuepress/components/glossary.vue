@@ -78,7 +78,6 @@ export default {
         height: 8px;
         z-index: -1;
     }
-
     #arrow::before {
         content: '';
         transform: rotate(45deg);
@@ -101,4 +100,4 @@ export default {
         z-index: 100;
         max-width: 500px;
     }
- </style>
+</style>
