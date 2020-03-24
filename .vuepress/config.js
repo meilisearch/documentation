@@ -139,8 +139,7 @@ module.exports = {
     ["sitemap", { hostname: "https://docs.meilisearch.com" }],
     ["seo", {}],
     "vuepress-plugin-element-tabs",
-    ['vuepress-plugin-container', { type: 'note' }],
-    ['vue-directive-tooltip']
+    ['vuepress-plugin-container', { type: 'note' }]
   ],
   head: [
     ["meta", { charset: "utf-8" }],
