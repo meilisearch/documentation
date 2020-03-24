@@ -93,7 +93,7 @@ export default {
         font-family: inherit !important;
         background: rgba(0, 0, 0, 0.8);
         color: white;
-        padding: 4px 8px;
+        padding: 15px;
         font-size: 13px;
         border-radius: 4px;
         z-index: 100;
