@@ -38,7 +38,7 @@ export default {
         }
     },
     created () {
-        this.content = glossary[this.word] + "<div id='arrow' data-popper-arrow></div>"
+        this.content = glossary[this.word] + "<div id='arrow' data-popper-arrow></div>";
     },
     methods: {
         showTooltip() {
@@ -51,7 +51,6 @@ export default {
     mounted() {
         const text = this.$el.querySelector('.tooltip-text');
         const tooltip = this.$el.querySelector('.tooltip-content');
-
         createPopper(text, tooltip, {
             placement: 'top',
             modifiers: [
@@ -63,10 +62,11 @@ export default {
                 },
             ],
         });
-        this.hideTooltip()
+        this.hideTooltip();
     }
 }
 </script>
+
 <style>
     .tooltip-hide {
         visibility: hidden;
@@ -88,7 +88,6 @@ export default {
         border-bottom: 1px dotted grey;
         position: relative;
     }
-
     .tooltip-content {
         display: inline-block;
         font-family: inherit !important;
