@@ -1,8 +1,17 @@
 <template>
-    <tooltip :text="word" ><span v-html="glossary[word]"></span></tooltip>
+    <span>
+        <span
+            class="tooltip-text"
+            v-on:mouseover="showTooltip"
+            v-on:mouseleave="hideTooltip"
+        >{{ word }}</span>
+        <div class="tooltip-content" v-html="content">
+        </div>
+    </span>
 </template>
 
 <script>
+import { createPopper } from '@popperjs/core';
 
 const glossary = {
     'field': "A field is composed of an <b>attribute</b> and its associated data. <br><br> Ex: <code>attribute: 'data'</code>",
@@ -25,8 +34,74 @@ export default {
     },
     data: () => {
         return {
-            glossary
+            glossary,
+            content: ""
         }
+    },
+    created () {
+        this.content = glossary[this.word] + "<div id='arrow' data-popper-arrow></div>"
+    },
+    methods: {
+        showTooltip() {
+            console.log(" hello ");
+            this.$el.querySelector('.tooltip-content').classList.remove("tooltip-hide");
+        },
+        hideTooltip() {
+            this.$el.querySelector('.tooltip-content').classList.add("tooltip-hide");
+        }
+    },
+    mounted() {
+        const text = this.$el.querySelector('.tooltip-text');
+        const tooltip = this.$el.querySelector('.tooltip-content');
+
+        console.log(text, tooltip) // I'm text inside the component.
+        createPopper(text, tooltip, {
+            placement: 'top',
+            modifiers: [
+                {
+                name: 'offset',
+                options: {
+                    offset: [0, 8],
+                },
+                },
+            ],
+        });
+        this.hideTooltip()
     }
 }
 </script>
+<style>
+    .tooltip-hide {
+        visibility: hidden;
+    }
+    #arrow,
+    #arrow::before {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        z-index: -1;
+    }
+
+    #arrow::before {
+        content: '';
+        transform: rotate(45deg);
+        background: #333;
+    }
+    .tooltip-text {
+        font-style: italic;
+        border-bottom: 1px dotted grey;
+        position: relative;
+    }
+
+    .tooltip-content {
+        font-family: inherit !important;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 4px 8px;
+        font-size: 13px;
+        border-radius: 4px;
+        z-index: 100;
+        max-width: 500px;
+    }
+
+ </style>
