@@ -5,8 +5,7 @@
             v-on:mouseover="showTooltip"
             v-on:mouseleave="hideTooltip"
         >{{ word }}</span>
-        <div class="tooltip-content" v-html="content">
-        </div>
+        <div class="tooltip-content" v-html="content"></div>
     </span>
 </template>
 
@@ -92,6 +91,7 @@ export default {
     }
 
     .tooltip-content {
+        display: inline-block;
         font-family: inherit !important;
         background: rgba(0, 0, 0, 0.8);
         color: white;
