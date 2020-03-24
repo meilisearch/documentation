@@ -75,7 +75,7 @@ The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my
 
 MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
 
-If the Rust toolchain is already installed, on your local system, clone the repository and change it to your working directory.
+If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
 $ git clone https://github.com/meilisearch/MeiliSearch
@@ -109,9 +109,9 @@ Communication to the server is done through a [RESTFul API](/references/README.m
 
 ## Create your Index
 
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
-The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is <ClientOnly><glossary word="schemaless"/></ClientOnly>.
-In order to be able to store our documents in an index, we have to create one first.
+In MeiliSearch, the information is subdivided into indices. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
+Indices can be imagined as SQL tables. Since MeiliSearch is <ClientOnly><glossary word="schemaless"/></ClientOnly>, there's no need to define any attributes or data type when creating a table.
+In order to be able to store your documents in an index, you have to create one first.
 
 :::: tabs
 
@@ -166,9 +166,9 @@ Once the index has been created, the next step is to fill it with [documents](/g
 
 Documents are sent to MeiliSearch in JSON format.
 
-To be processed by MeiliSearch, all documents need one common <ClientOnly><glossary word="field" /></ClientOnly> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. The value in this field must be **unique**.
+To be processed by MeiliSearch, all documents must share one common <ClientOnly><glossary word="field" /></ClientOnly> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always **unique**.
 
-There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <ClientOnly><glossary word="attribute" /></ClientOnly> that contains the string `id` case-insensitively.
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <ClientOnly><glossary word="attribute" /></ClientOnly> that contains the string `id` case-insensitively.
 
 
 Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
