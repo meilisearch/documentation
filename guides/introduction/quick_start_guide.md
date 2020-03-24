@@ -222,24 +222,24 @@ response = index.add_documents(data)
 
 ### Checking updates
 
-In MeiliSearch, most actions are asynchronous. This lets you stack actions. They will be executed in the order in which they were made.
+Most actions are asynchronous, which allows you to stack actions. All of the actions are executed in the order in which they were specified.
 
 You can [track the state of each action](/guides/advanced_guides/asynchronous_updates.md).
 
 
 ## Searches
 
-Now that our documents have been added to MeiliSearch, we are able to [search](/guides/main_concepts/search.md) in it.
+Now that your documents have been added to MeiliSearch, you are able to [search](/guides/main_concepts/search.md) in it.
 
 MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
-The search engine is now aware of our documents and can serve those via our HTTP server.
+The search engine is now aware of your documents and can serve those via a HTTP server.
 
 ```bash
 $ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 
-MeiliSearch also offers an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search. Go to your MeiliSearch address using a browser. In our case that would be: `http://127.0.0.1:7700`
+MeiliSearch also provides an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search. Go to your MeiliSearch address using a browser. In that case, it would be: `http://127.0.0.1:7700`
 
 :::: tabs
 
