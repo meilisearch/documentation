@@ -13,7 +13,7 @@ An index is defined by an `uid` and contains the following information:
 
 #### Example
 
-In the case of a movie database, you probably have multiples categories. One for movie descriptions, one for actors, and one for reviews. Each one of these categories is represented by an index. 
+In the case of a movie database, you probably have multiples categories. One for movie descriptions, one for actors, and one for reviews. Each one of these categories is represented by an index.
 
 Each of the indexes has information about the fields found in the documents, how MeiliSearch handles them, and their order of importance. An index also has its own synonyms, relevancy rules, and stop words. The information of one index never acts on another index.
 
@@ -37,13 +37,13 @@ The `uid` cannot be changed.
 
 ## Primary key
 
-The primary key is a <glossary word="field" /> present in all documents. This field is composed of a primary key <glossary word="attribute"/> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
+The primary key is a <ClientOnly><glossary word="field"/></ClientOnly> present in all documents. This field is composed of a primary key <ClientOnly><glossary word="attribute"/></ClientOnly> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
 
 [More information about the document primary key](/guides/main_concepts/documents.md#primary-key)
 
 ## Relevancy rules
 
-Each index has its own relevancy rules. By default, all indexes come with the same <glossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
+Each index has its own relevancy rules. By default, all indexes come with the same <ClientOnly><glossary word="ranking rules"/></ClientOnly> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
 
 For example, if your first document has the following keys in this order: `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
 
