@@ -10,7 +10,7 @@ Displayed attributes can also be updated directly through the [global settings r
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-## Get searchable attributes
+## Get displayed attributes
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes" />
 
