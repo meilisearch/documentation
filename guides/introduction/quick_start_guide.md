@@ -109,8 +109,8 @@ Communication to the server is done through a [RESTFul API](/references/README.m
 
 ## Create your Index
 
-In MeiliSearch, the information is subdivided into indices. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
-Indices can be imagined as SQL tables. Since MeiliSearch is <ClientOnly><glossary word="schemaless"/></ClientOnly>, there's no need to define any attributes or data type when creating a table.
+In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
+Indexes can be imagined as SQL tables. Since MeiliSearch is <ClientOnly><glossary word="schemaless"/></ClientOnly>, there's no need to define any attributes or data type when creating a table.
 In order to be able to store your documents in an index, you have to create one first.
 
 :::: tabs
