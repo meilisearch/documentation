@@ -16,12 +16,13 @@ export default {
 div.route {
   display: block;
   text-align: center;
+  margin: 3em 0;
 }
 
 .route > div {
   display: inline;
   line-height: 1.4;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.75rem;
   margin: 0.85rem 0;
   background-color: #3eaf7c;
   border-radius: 6px 6px 6px 6px;
