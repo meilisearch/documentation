@@ -99,19 +99,19 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. With them, you can, among other things, add the **master key** or set the **port**.
+[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. Among other things, you can use them to add the **master key** or set the **port**.
 
 ### Communicate with MeiliSearch
 
-Now that our MeiliSearch server is up and running, we will be able to communicate with it.
+Now that your MeiliSearch server is up and running, you should be able to communicate with it.
 
-This is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
+Communication to the server is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
 ## Create your Index
 
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
-The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is <glossary word="schemaless"/>.
-In order to be able to store our documents in an index, we have to create one first.
+In MeiliSearch, the information is subdivided into indices. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
+Indices can be imagined as SQL tables. Since MeiliSearch is <glossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
+In order to be able to store your documents in an index, you have to create one first.
 
 :::: tabs
 
@@ -161,13 +161,13 @@ client.create_index(uid="movies")
 
 ## Add Documents
 
-Once the index has been created, it needs to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are done on MeiliSearch.
+Once the index has been created, the next step is to fill it with [documents](/guides/main_concepts/documents.md). These documents will be used and returned when search queries will be performed on MeiliSearch.
 
 Documents are sent to MeiliSearch in JSON format.
 
-To be processed by MeiliSearch, all documents need one common <glossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. The value in this field must be **unique**.
+To be processed by MeiliSearch, all documents must share one common <glossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
-There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <glossary word="attribute" /> that contains the string `id` case-insensitively.
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <glossary word="attribute" /> that contains the string `id` case-insensitively.
 
 
 Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
