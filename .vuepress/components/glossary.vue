@@ -101,5 +101,4 @@ export default {
         z-index: 100;
         max-width: 500px;
     }
-
  </style>
