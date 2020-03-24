@@ -166,7 +166,7 @@ Once the index has been created, the next step is to fill it with [documents](/g
 
 Documents are sent to MeiliSearch in JSON format.
 
-To be processed by MeiliSearch, all documents must share one common <ClientOnly><glossary word="field" /></ClientOnly> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always **unique**.
+To be processed by MeiliSearch, all documents must share one common <ClientOnly><glossary word="field" /></ClientOnly> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
 There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <ClientOnly><glossary word="attribute" /></ClientOnly> that contains the string `id` case-insensitively.
 
