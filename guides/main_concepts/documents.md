@@ -37,14 +37,14 @@ A **document must contain** [the primary key field](/guides/main_concepts/docume
 
 ## Fields
 
-All fields present in a document are automatically <glossary word="searchable" /> and <glossary word="displayed" />.
+All fields present in a document are automatically <ClientOnly><glossary word="searchable" /></ClientOnly> and <ClientOnly><glossary word="displayed" /></ClientOnly>.
 The way MeiliSearch handles a field is customizable in the settings <Badge text="soon" type="warn"/>. You can make a field only searchable, or only displayed, or none, in this case, MeiliSearch will completely ignore the field when it is sent on document addition.
 
-You can also add <glossary word="ranking rules" /> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
+You can also add <ClientOnly><glossary word="ranking rules" /></ClientOnly> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
 
 ## Primary key
 
-A primary key is an <glossary word="attribute" /> with a unique value found in each document of a given index. It is used to store the document in the index.
+A primary key is an <ClientOnly><glossary word="attribute" /></ClientOnly> with a unique value found in each document of a given index. It is used to store the document in the index.
 
 Each index recognizes **only one** primary key attribute. Once the [primary key is set on the index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed**.
 

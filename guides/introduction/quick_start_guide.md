@@ -109,9 +109,15 @@ Communication to the server is done through a [RESTFul API](/references/README.m
 
 ## Create your Index
 
+<<<<<<< HEAD
 In MeiliSearch, the information is subdivided into indices. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
 Indices can be imagined as SQL tables. Since MeiliSearch is <glossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
 In order to be able to store your documents in an index, you have to create one first.
+=======
+In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
+The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is <ClientOnly><glossary word="schemaless"/></ClientOnly>.
+In order to be able to store our documents in an index, we have to create one first.
+>>>>>>> 6bc2183d37ea19bd7e57f8993ef32c3c0eec383b
 
 :::: tabs
 
@@ -156,6 +162,7 @@ $client->createIndex('movies');
 client.create_index(uid="movies")
 ```
 :::
+
 ::::
 
 
@@ -165,9 +172,9 @@ Once the index has been created, the next step is to fill it with [documents](/g
 
 Documents are sent to MeiliSearch in JSON format.
 
-To be processed by MeiliSearch, all documents must share one common <glossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+To be processed by MeiliSearch, all documents need one common <ClientOnly><glossary word="field" /></ClientOnly> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. The value in this field must be **unique**.
 
-There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <glossary word="attribute" /> that contains the string `id` case-insensitively.
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <ClientOnly><glossary word="attribute" /></ClientOnly> that contains the string `id` case-insensitively.
 
 
 Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
@@ -218,6 +225,7 @@ data = json.load(json_file)
 response = index.add_documents(data)
 ```
 :::
+
 ::::
 
 ### Checking updates
@@ -288,6 +296,7 @@ index.search({
 })
 ```
 :::
+
 ::::
 
 MeiliSearch **response** :
