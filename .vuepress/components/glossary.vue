@@ -43,7 +43,6 @@ export default {
     },
     methods: {
         showTooltip() {
-            console.log(" hello ");
             this.$el.querySelector('.tooltip-content').classList.remove("tooltip-hide");
         },
         hideTooltip() {
@@ -54,7 +53,6 @@ export default {
         const text = this.$el.querySelector('.tooltip-text');
         const tooltip = this.$el.querySelector('.tooltip-content');
 
-        console.log(text, tooltip) // I'm text inside the component.
         createPopper(text, tooltip, {
             placement: 'top',
             modifiers: [
