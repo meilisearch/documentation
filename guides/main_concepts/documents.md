@@ -21,7 +21,7 @@ Each **field** contains an **attribute** and its associated data.
 ## Structure
 
 Documents are stored in `JSON format`.<br/>
-When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document
+When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document.
 
 ```bash
 curl -X POST `http://localhost:7700/indexes/movies/documents` \
@@ -37,16 +37,16 @@ In order to be indexed, each **document must contain** [the primary key field](/
 
 ## Fields
 
-By default, all fields present in a document are <clientGlossary word="searchable" /> and automatically <clientGlossary word="displayed" />.
-The way MeiliSearch handles a field is customizable in the settings <Badge text="soon" type="warn"/>. You can make a field only searchable, or only displayed, or none, in this case, MeiliSearch will completely ignore the field when it is sent on document addition.
+By default, all fields included in a document are <clientGlossary word="searchable" /> and automatically <clientGlossary word="displayed" />.
+You can adjust how a field get handled by MeiliSearch in the settings <Badge text="soon" type="warn"/>. It can either be searchable or displayed, or none of both. In the latter case, the field will be completely ignored when a document is sent.
 
-You can also add <clientGlossary word="ranking rules" /> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
+You can also apply <clientGlossary word="ranking rules" /> to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
 ## Primary key
 
-A primary key is an <clientGlossary word="attribute" /> with a unique value found in each document of a given index. It is used to store the document in the index.
+A primary key is an <clientGlossary word="attribute" /> which contains a unique value. It uniquely identifes each document of a given index in order to store them.
 
-Each index recognizes **only one** primary key attribute. Once the [primary key is set on the index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed**.
+Each index recognizes **only one** primary key attribute. Once a [primary key has been set for an index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed**.
 
 **Example:**
 
@@ -65,7 +65,7 @@ In an index called `movie` there are 200k `documents`. Each of these 200k docume
 ]
 ```
 
-If the **primary key** is not found in a document, the document will not be added.
+If no **primary key** is found in a document, the document will not be stored.
 
 ### Setting the primary key
 
@@ -84,11 +84,11 @@ If none has been found, no documents will be added.
 
 #### Missing primary key error
 
-❗️ If you get the `missing primary key` error, it means MeiliSearch could not recognize your primary key. This means your primary key does not answer the formatting explained above. To solve this error, you could send the [primary-key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in: [setting the primary key](/guides/main_concepts/documents.md#primary-key).
+❗️ If you get a `missing primary key` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending [primary-key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [updating your index to add the primary key's name](/references/indexes.md#create-an-index) as explained [here](/guides/main_concepts/documents.md#primary-key) should solve this issue.
 
 ### Primary key value format
 
-The primary key **value** may contain only `A-Z a-z 0-0` and `-_` characters.
+Note that the primary key **value** must contain only `A-Z a-z 0-0` and `-_` characters.
 
 #### Examples
 
