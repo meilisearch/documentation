@@ -110,7 +110,7 @@ Communication to the server is done through a [RESTFul API](/references/README.m
 ## Create your Index
 
 In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
-Indexes can be imagined as SQL tables. Since MeiliSearch is <ClientOnly><glossary word="schemaless"/></ClientOnly>, there's no need to define any attributes or data type when creating a table.
+Indexes can be imagined as SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
 In order to be able to store your documents in an index, you have to create one first.
 
 :::: tabs
@@ -166,9 +166,9 @@ Once the index has been created, the next step is to fill it with [documents](/g
 
 Documents are sent to MeiliSearch in JSON format.
 
-To be processed by MeiliSearch, all documents must share one common <ClientOnly><glossary word="field" /></ClientOnly> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+To be processed by MeiliSearch, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
-There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <ClientOnly><glossary word="attribute" /></ClientOnly> that contains the string `id` case-insensitively.
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <clientGlossary word="attribute" /> that contains the string `id` case-insensitively.
 
 
 Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
