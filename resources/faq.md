@@ -149,7 +149,7 @@ All of the ranking rules can be modified via the [dedicated routes in the MeiliS
 
 Yes, as MeiliSearch and its integration tools are opensource, we maintain a [public roadmap](https://github.com/orgs/meilisearch/projects/2) for the general features we plan.
 
-For more accurate features and issues, everything is detailed in the issues of all our GitHub repositories.
+For more accurate features and issues, everything is detailed in the issues of all our [GitHub repositories](https://github.com/meilisearch/MeiliSearch/issues).
 
 ## How can I contact the MeiliSearch team?
 
