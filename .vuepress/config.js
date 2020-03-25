@@ -122,9 +122,9 @@ module.exports = {
             "/resources/sdks",
             "/resources/comparison_to_alternatives",
             "/resources/faq",
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     meilisearch: {
       hostUrl: "https://e10b17e6.getmeili.com",

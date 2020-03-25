@@ -93,11 +93,13 @@ The primary key **value** may contain only `A-Z a-z 0-9` and `-_` characters.
 #### Examples
 
 Good:
+
 ```json
 "id": "_Aabc012_"
 ```
 
 Bad:
+
 ```json
 "id": "@BI+* ^5h2%"
 ```

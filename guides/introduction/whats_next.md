@@ -8,9 +8,11 @@ In MeiliSearch, we have some concepts on which we build our search engine. If yo
 - [Relevancy](/guides/main_concepts/search.md)
 
 Finally, you can find the API references here:
+
 - [API References](/references/README.md)
 
 And the different resources here:
+
 - [SDKs](/resources/sdks.md)
 - [FAQ](/resources/faq.md)
 
