@@ -6,10 +6,11 @@ In MeiliSearch, we have some concepts on which we build our search engine. If yo
 - [Search](/guides/main_concepts/search.md)
 - [Relevancy](/guides/main_concepts/search.md)
 
-Finally, you can find the API references here :
+Finally, you can find the API references here:
 - [API References](/references/README.md)
 
-And the SDKs links here :
-- [Resources](/resources/sdks.md)
+And the different resources here:
+- [SDKs](/resources/sdks.md)
+- [FAQ](/resources/faq.md)
 
-Tutorials and Cookbooks are being made. They will be available soon.
+Tutorials and cookbooks are being made. They will be available soon.

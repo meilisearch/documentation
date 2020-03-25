@@ -11,6 +11,8 @@ That's why we created MeiliSearch, an open-source solution accessible to everyon
 
 Our solution is **instant**; it **accepts typos**; it understands **filters**, **custom rankings**, and a lot of other [features](/#features).
 
+[<linkButton text="💡 FAQ"/>](/resources/faq.md)
+
 ## Open-source
 
 MeiliSearch is open-source. You can **support the project by starring** it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!

@@ -79,27 +79,26 @@ MeiliSearch has several ways of knowing which field is the `primary key`.
 
 If no primary key has been given through the index creation or through document additions, MeiliSearch will search for the primary key in the first document sent.
 
-MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).
+MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).<br>
 If none has been found, no documents will be added.
 
 #### Missing primary key error
 
-❗️ If you get the `missing primary key` error, it means MeiliSearch could not recognize your primary key. This means your primary key does not answer the formatting explained above. To solve this error, you could send the [primary-key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in: [setting the primary key](/guides/main_concepts/documents.md#primary-key).
+❗️ If you get the `document id error`, it means MeiliSearch could not recognize your primary key. This means your primary key does not answer the formatting explained above. To solve this error, you could send the [primary key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in [setting the primary key](/guides/main_concepts/documents.md#primary-key).
 
 ### Primary key value format
 
-The primary key **value** may contain only `A-Z a-z 0-0` and `-_` characters.
+The primary key **value** may contain only `A-Z a-z 0-9` and `-_` characters.
 
 #### Examples
 
 Good:
-```
+```json
 "id": "_Aabc012_"
 ```
 Bad:
-```
+```json
 "id": "@BI+* ^5h2%"
 ```
-
 
 The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, if you add 200 documents in one go and if one of the documents has a badly formatted primary key, an error will occur, and none of the documents will be added.
