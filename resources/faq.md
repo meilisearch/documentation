@@ -104,7 +104,7 @@ Each document is required to contain a unique identifier. This identifier attrib
 
 How do I know the primary key of my index? [Check this route](/references/indexes.md#get-one-index). The `null` value means it has not been defined yet.
 
-By default, the primary key will be inferred in the first document sent. MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`). If none has been found, no documents will be added.
+By default, the primary key will be inferred from the first document received. MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`). If none has been found, no documents will be added.
 
 If you get a `document id is missing` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending primary key's name as a query parameter [when adding documents](/references/documents.md#add-or-replace-documents) should solve this issue.
 
