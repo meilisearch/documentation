@@ -8,6 +8,12 @@ The documentation is written for the latest stable release: [v0.9.0](https://git
 
 :::
 
+::: tip
+
+You might find the answers to some of your questions [in the FAQ](/resources/faq.md) 💡
+
+:::
+
 ## Headers
 
 ### Recommended Headers

@@ -122,7 +122,8 @@ module.exports = {
           collapsable: false,
           children: [
             "/resources/sdks",
-            "/resources/comparison_to_alternatives"
+            "/resources/comparison_to_alternatives",
+            "/resources/faq",
           ]
         }
       ]
