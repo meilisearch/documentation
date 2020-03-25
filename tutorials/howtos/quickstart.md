@@ -1,10 +1,10 @@
 # Quick Start
 
-MeiliSearch is simply to install and deploy. It will be up and running by following these few steps.
-
+MeiliSearch is very simple to install and deploy. It requires very little configuration to be up and running. Follow this step-by-step guide to get started!
+ 
 ### Deploy the Server
 
-You can deploy the server on your own machine. It will listen to HTTP requests on the 7700 port by default.
+You can deploy the server on your own machine. By default, the server will listen to port 7700 for HTTP requests.
 
 :::: tabs
 
@@ -40,7 +40,7 @@ Server is listening on: http://0.0.0.0:7700
 ```
 
 ::: warning
-Docker is not persistent. You should share a volume to make your container filesystem persistent. MeiliSearch write its data at `/data.ms`
+Data written to a Docker container is not persistent and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
 :::
 
 ::: tab APT
@@ -67,25 +67,25 @@ You can deploy the latest stable build of MeiliSearch straight on Heroku.
 </p>
 
 
-The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
+Since all the source code from the GitHub repository will be compiled, the deployment process can take up to 20 minutes to complete.
 
 ::: warning
-The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
+The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means data loss may occur on restart. **The Heroku deployment is useful for testing purposes; however, it won't meet the requirements for production deployments.**
 :::
 
 
 ::: tab Source
 
-MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
+MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
 
-If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
+If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
 $ git clone https://github.com/meilisearch/MeiliSearch
 $ cd MeiliSearch
 ```
 
-Inside the folder, compile MeiliSearch.
+In the cloned repository, compile MeiliSearch.
 
 ```bash
 # Update the rust toolchain to the latest version
@@ -102,7 +102,7 @@ $ ./target/release/meilisearch
 
 ::::
 
-### Create an Index and Upload Some Documents
+### Create an Index and upload documents
 
 MeiliSearch can serve multiple indexes, with different kinds of documents.
 
@@ -117,9 +117,9 @@ $ curl -i -X POST 'http://127.0.0.1:7700/indexes' \
 
 This `uid` is the `:index_uid` identifier used in all `indexes/:index_uid` routes.
 
-Now that the server knows about our brand new index, we can send our data to it.
+Now that the server knows about your brand new index, you're ready to send it some data.
 
-If you have no dataset, [here is a movie dataset](https://www.notion.so/meilisearch/A-movies-dataset-to-test-Meili-1cbf7c9cfa4247249c40edfa22d7ca87#b5ae399b81834705ba5420ac70358a65) you can use.
+If you need a test dataset, use [this sample](https://www.notion.so/meilisearch/A-movies-dataset-to-test-Meili-1cbf7c9cfa4247249c40edfa22d7ca87#b5ae399b81834705ba5420ac70358a65).
 
 
 ```bash
@@ -128,12 +128,12 @@ $ curl -i -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
 ```
 
 ::: warning
-If you have the `missing primary key` error. [More information about the primary key here](/guides/main_concepts/documents.md#primary-key).
+If you get a `missing primary key` error, see detailed information about the primary key [here](/guides/main_concepts/documents.md#primary-key).
 :::
 
 ### Search for Documents
 
-The search engine is now aware of our documents and can serve those via our HTTP server.
+The search engine is now aware of your documents and can serve those via a HTTP server.
 
 ```bash
 $ curl 'http://127.0.0.1:7700/indexes/movies/search?q=botman'
@@ -165,5 +165,5 @@ $ curl 'http://127.0.0.1:7700/indexes/movies/search?q=botman'
 ```
 
 ::: tip
-The [`jq` command line tool](https://stedolan.github.io/jq/) can greatly help you read the server responses.
+The [`jq` command line tool](https://stedolan.github.io/jq/) can be a great help for reading the server responses.
 :::
