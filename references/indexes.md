@@ -79,7 +79,7 @@ This route takes as parameter an unique `uid` and **optionally** the [primary ke
 | Variable  | Description           |
 |-----------|-----------------------|
 | **index_uid** | The index unique identifier (*mandatory*)|
-| **primaryKey** | The <ClientOnly><glossary word="primary key" /></ClientOnly> of the documents  |
+| **primaryKey** | The <clientGlossary word="primary key" /> of the documents  |
 
 ```json
 {
@@ -129,7 +129,7 @@ Update an index.
 
 | Variable          | Description           |
 |-------------------|-----------------------|
-| **primaryKey** | The <ClientOnly><glossary word="primary key" /></ClientOnly> of the documents  |
+| **primaryKey** | The <clientGlossary word="primary key" /> of the documents  |
 
 The `uid` of an index cannot be changed.<br>
 The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).

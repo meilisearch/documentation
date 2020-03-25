@@ -5,7 +5,7 @@ An index is the collection of a certain type of data.
 It is, as a table in SQL, or a collection in MongoDB, an entity that collects a set of documents.
 
 An index is defined by an `uid` and contains the following information:
-- One <glossary word="primary key"/>
+- One <clientGlossary word="primary key"/>
 - A set of relevancy rules (based on presets and customization)
 - A list of synonyms and stop-words
 - Rules for each field of a document
@@ -37,13 +37,13 @@ The `uid` cannot be changed.
 
 ## Primary key
 
-The primary key is a <ClientOnly><glossary word="field"/></ClientOnly> present in all documents. This field is composed of a primary key <ClientOnly><glossary word="attribute"/></ClientOnly> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
+The primary key is a <clientGlossary word="field"/> present in all documents. This field is composed of a primary key <clientGlossary word="attribute"/> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
 
 [More information about the document primary key](/guides/main_concepts/documents.md#primary-key)
 
 ## Relevancy rules
 
-Each index has its own relevancy rules. By default, all indexes come with the same <ClientOnly><glossary word="ranking rules"/></ClientOnly> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
+Each index has its own relevancy rules. By default, all indexes come with the same <clientGlossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
 
 For example, if your first document has the following keys in this order: `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
 
