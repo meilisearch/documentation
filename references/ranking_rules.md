@@ -18,9 +18,9 @@ Get the ranking rules of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -35,13 +35,13 @@ List the settings.
 
 ```json
 [
-    "typo",
-    "words",
-    "proximity",
-    "attribute",
-    "wordsPosition",
-    "exactness",
-    "dsc(release_date)",
+  "typo",
+  "words",
+  "proximity",
+  "attribute",
+  "wordsPosition",
+  "exactness",
+  "dsc(release_date)"
 ]
 ```
 
@@ -53,9 +53,9 @@ Update the ranking rules of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Body
 
@@ -91,6 +91,7 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Reset ranking rules
@@ -102,23 +103,18 @@ Reset the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of a
 #### Default value
 
 Array with the [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) ordered by importance.
+
 ```json
-[
-    "typo",
-    "words",
-    "proximity",
-    "attribute",
-    "wordsPosition",
-    "exactness"
-]
+["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
+
 To remove all ranking rules, which is not recommended for any use-case, you should send an empty array on the [add or replace ranking rules route](/references/ranking_rules.md#update-ranking-rules).
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Example
 
@@ -134,4 +130,5 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

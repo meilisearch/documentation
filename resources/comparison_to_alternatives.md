@@ -43,9 +43,10 @@ MeiliSearch currently delivers a search engine and is not in a position to provi
 Apache Lucene is a free and open-source search library, written in Java, used for the full-text indexing and search of documents. This project was first created in 1999 by Doug Cutting, who had previously written search engines at Xerox's Palo Alto Research Center (PARC) and Apple. Since Lucene has been developed to build web search applications such as Google, you can see that DuckDuckGo still uses it for some specific searches.
 
 Lucene has since been divided into several projects:
-* **Lucene itself**: the full-text search library.
-* **Solr**: an enterprise search server with a powerful REST API.
-* **Nutch**: an extensible and scalable web crawler relying on Apache Hadoop.
+
+- **Lucene itself**: the full-text search library.
+- **Solr**: an enterprise search server with a powerful REST API.
+- **Nutch**: an extensible and scalable web crawler relying on Apache Hadoop.
 
 Since Lucene is the technology behind many open source or closed source search engines, it is considered as the reference search library.
 
@@ -76,7 +77,6 @@ Bleve and Tantivy are search engine projects, respectively written in Golang and
 Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options, called index sharding, gives you the ability to divide indexes into physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing high-volume data streams, analyzing logs, and running complex queries. You can perform operations and analysis (e.g., calculate the average age of all users named "Thomas") on documents that match a specified query.
 
 Today, Lucene and Elasticsearch are dominant players in the open-source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of MeiliSearch or Algolia.
-
 
 ### Closed Source
 

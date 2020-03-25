@@ -5,6 +5,7 @@
 It is possible to update all the settings in one go or individually with the dedicated routes.
 
 These are the reference pages for the dedicated routes:
+
 - [Synonyms](/references/synonyms.md)
 - [Stop-words](/references/stop_words.md)
 - [Ranking rules](/references/ranking_rules.md)
@@ -25,9 +26,9 @@ Get the settings of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -43,31 +44,27 @@ List the settings.
 ```json
 {
   "rankingRules": [
-      "typo",
-      "words",
-      "proximity",
-      "attribute",
-      "wordsPosition",
-      "exactness",
-      "dsc(release_date)",
+    "typo",
+    "words",
+    "proximity",
+    "attribute",
+    "wordsPosition",
+    "exactness",
+    "dsc(release_date)"
   ],
   "rankingDistinct": null,
-  "searchableAttributes": [
-      "title",
-      "description",
-      "uid",
-  ],
+  "searchableAttributes": ["title", "description", "uid"],
   "displayedAttributes": [
-      "title",
-      "description",
-      "release_date",
-      "rank",
-      "poster",
+    "title",
+    "description",
+    "release_date",
+    "rank",
+    "poster"
   ],
   "stopWords": null,
   "synonyms": {
-      "wolverine": ["xmen", "logan"],
-      "logan": ["wolverine", "xmen"],
+    "wolverine": ["xmen", "logan"],
+    "logan": ["wolverine", "xmen"]
   },
   "indexNewFields": false
 }
@@ -81,21 +78,21 @@ Update the settings of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Body
 
-| Variable          | Type | Description | Default value |
-|-------------------|-----------------------| --- | --- |
-| **rankingRules** | [Strings] | Ranking rules in their order of importance | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **rankingDistinct** | String | Returns only distinct (different) values of the given field | `null` |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
-| **displayedAttributes** | [Strings] | Fields present in the returned documents | All attributes found in the documents |
-| **stopWords** | [Strings] | Words in the search query that will be ignored | `[]` |
-| **synonyms** | Object | List of associated words that are considered the same in a search query | `{}` |
-| **indexNewFields** | Boolean | New fields in newly added document are/aren't added to MeiliSearch | `true` |
+| Variable                 | Type      | Description                                                                  | Default value                                                                                 |
+| ------------------------ | --------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **rankingRules**         | [Strings] | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **rankingDistinct**      | String    | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
+| **displayedAttributes**  | [Strings] | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
+| **stopWords**            | [Strings] | Words in the search query that will be ignored                               | `[]`                                                                                          |
+| **synonyms**             | Object    | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
+| **indexNewFields**       | Boolean   | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
 
 Any parameters not provided will be left unchanged.
 
@@ -154,6 +151,7 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Reset settings
@@ -164,24 +162,24 @@ Reset the settings of an index.
 
 All settings will be reset to their default value.
 
-| Variable          |  Description | Default value |
-|-------------------|-----------------------| --- | --- |
-| **rankingRules**  | Ranking rules in their order of importance  | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **rankingDistinct** | Returns only distinct (different) values of the given field | `null` |
-| **searchableAttributes** | Fields in which to search for matching query words (*ordered by importance*) | All attributes found in the documents |
-| **displayedAttributes** | Fields present in the returned documents | All attributes found in the documents |
-| **stopWords** | Words in the search query that will be ignored | `[]` |
-| **synonyms** | List of associated words that are considered the same in a search query | `{}` |
-| **indexNewFields** | New fields in newly added document are/aren't added to MeiliSearch | `true` |
+| Variable                 | Description                                                                  | Default value                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **rankingRules**         | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **rankingDistinct**      | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
+| **searchableAttributes** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
+| **displayedAttributes**  | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
+| **stopWords**            | Words in the search query that will be ignored                               | `[]`                                                                                          |
+| **synonyms**             | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
+| **indexNewFields**       | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
-
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Example
+
 ```bash
 $ curl \
   -X DELETE 'http://localhost:7700/indexes/movies/settings'
@@ -194,4 +192,5 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

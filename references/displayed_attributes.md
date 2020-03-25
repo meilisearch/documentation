@@ -18,9 +18,9 @@ Get the displayed attributes of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -34,13 +34,7 @@ $ curl \
 List the settings.
 
 ```json
-[
-    "title",
-    "description",
-    "release_date",
-    "rank",
-    "poster"
-]
+["title", "description", "release_date", "rank", "poster"]
 ```
 
 ## Update displayed attributes
@@ -51,9 +45,9 @@ Update the displayed attributes of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Body
 
@@ -80,6 +74,7 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Reset displayed attributes
@@ -94,11 +89,12 @@ All attributes found in the documents added to the index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Example
+
 ```bash
 $ curl \
   -X DELETE 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
@@ -111,4 +107,5 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

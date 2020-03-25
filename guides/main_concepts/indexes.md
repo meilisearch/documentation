@@ -5,11 +5,11 @@ An index is the collection of a certain type of data.
 It is, as a table in SQL, or a collection in MongoDB, an entity that collects a set of documents.
 
 An index is defined by an `uid` and contains the following information:
+
 - One <clientGlossary word="primary key"/>
 - A set of relevancy rules (based on presets and customization)
 - A list of synonyms and stop-words
 - Rules for each field of a document
-
 
 #### Example
 
@@ -26,13 +26,12 @@ The `uid` of an index is its **unique** identifier. It is the `:index_uid` param
 The uid is set on [index creation](/references/indexes.md#create-an-index). After which you cannot create another index with the same `uid`.
 The `uid` cannot be changed.
 
-
 ```json
 {
-    "uid": "movie",
-    "createdAt": "2019-11-20T09:40:33.711324Z",
-    "updatedAt": "2019-11-20T10:16:42.761858Z"
-  }
+  "uid": "movie",
+  "createdAt": "2019-11-20T09:40:33.711324Z",
+  "updatedAt": "2019-11-20T10:16:42.761858Z"
+}
 ```
 
 ## Primary key
@@ -71,6 +70,7 @@ In MeiliSearch, by default, every document field is searchable and returned on s
 The properties of the fields can be changed in the [settings](/references/settings.md).
 
 Fields can have the following properties:
+
 - Searchable
 - Displayed
 

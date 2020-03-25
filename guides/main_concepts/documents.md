@@ -55,12 +55,12 @@ In an index called `movie` there are 200k `documents`. Each of these 200k docume
 ```json
 [
   {
-    "movie_id" : "1564saqw12ss",
-    "title" : "Kung fu Panda"
+    "movie_id": "1564saqw12ss",
+    "title": "Kung fu Panda"
   },
   {
-    "movie_id" : "15k1j2kkw223s",
-    "title" : "Batman"
+    "movie_id": "15k1j2kkw223s",
+    "title": "Batman"
   }
 ]
 ```
@@ -93,12 +93,15 @@ The primary key **value** may contain only `A-Z a-z 0-9` and `-_` characters.
 #### Examples
 
 Good:
+
 ```json
 "id": "_Aabc012_"
 ```
+
 Bad:
+
 ```json
 "id": "@BI+* ^5h2%"
 ```
 
-The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, if you add 200 documents in one go and if one of the documents has a badly formatted primary key, an error will occur, and none of the documents will be added.
+The document addition request in MeiliSearch is <!-- prettier-ignore -->[atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, if you add 200 documents in one go and if one of the documents has a badly formatted primary key, an error will occur, and none of the documents will be added.

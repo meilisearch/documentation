@@ -6,8 +6,6 @@
 
 Get version of MeiliSearch.
 
-
-
 ### Example
 
 ```bash

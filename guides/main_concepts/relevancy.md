@@ -15,7 +15,6 @@ MeiliSearch has built-in ranking rules. These rules are essential to the relevan
 Each of the rules has a role in finding the right documents for the given search query.
 The order in which the rules are set in the settings affects their importance. The first rule is the most important, then the second and so on. By default, MeiliSearch has these rules in a specific order which meets the most standard needs. This order can be changed in the settings.
 
-
 Here is the list of all the rules that are executed in this specific order by default:
 
 #### 1. Typo
@@ -47,6 +46,7 @@ The more the query words are near each other, and in the right order in a docume
 The `attribute` rule sorts by ascending [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
 
 #### 5. Words Position
+
 The `wordsPosition` rule sorts according to the position of the query words in the attribute. The start is better than the end.
 
 #### 6. Exactness
@@ -120,15 +120,9 @@ The `word position` rule orders by ascending matching word's index number.
 By default, the built-in rules are in a specific order that MeiliSearch consider the most suitable for common needs.
 
 ```json
-[
-  "typo",
-  "words",
-  "proximity",
-  "attribute",
-  "wordsPosition",
-  "exactness"
-]
+["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
+
 Depending on your needs, you might want to change the order of the rules.
 You can use the [settings route](/references/ranking_rules.md#update-ranking-rules) of your index to do so.
 
@@ -148,11 +142,13 @@ Let's say we have a dataset of movies. The documents contain the fields `release
 ```
 desc(release_date)
 ```
+
 This will create a rule that makes recent movies more relevant than older ones.
 
 ```
 asc(movie_ranking)
 ```
+
 This will create a rule that makes movies with a good rank more relevant than others.
 
 To add this newly created rule to the existing ranking rule, using the [settings route](/references/ranking_rules.md#update-ranking-rules), you need to add the rule in the existing order array.
@@ -183,6 +179,7 @@ If you wish to specify the order of the attributes you can either define them in
 Possibly, you want to change the order after the documents have been added. This is still very possible.
 
 When a document is added to MeiliSearch, every new attribute inside will be added to two lists :
+
 - The [searchable attributes list](/references/searchable_attributes.md): attributes in which to search for matching query words.
 - The [displayed attributes list](/references/displayed_attributes.md): attributes in a document that are shown to the user.
 
@@ -195,10 +192,7 @@ To change this order, you need to send the sorted-list, in the order you want, u
 #### Example
 
 ```json
-[
-  "title",
-  "description",
-  "director"
-]
+["title", "description", "director"]
 ```
+
 With this new order, the matching words found in `title` will make the document more relevant than one with the same matching words found in `description` or `director`.

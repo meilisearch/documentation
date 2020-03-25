@@ -18,12 +18,13 @@ Our solution is **instant**; it **accepts typos**; it understands **filters**, *
 MeiliSearch is open-source. You can **support the project by starring** it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
 
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a>
-<a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+<a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a><!-- prettier-ignore
+--><script async defer src="https://buttons.github.io/buttons.js"></script>
 
 ## Demo
 
 ![crates.io demo gif](/crates-io-demo.gif)
+
 > Meili helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
 
 ## Alternatives
@@ -32,15 +33,15 @@ Why should you use MeiliSearch instead of any other existing solution? If it is 
 
 ## Features
 
-* **Instant Search** (answers < 50ms): Priority on fast answers for smooth search experience.
-* **Search as you type** (*prefix search*): Results are updated on each keystroke. To make this possible, we use a [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
-* [Typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and spelling mistakes.
-* [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, kanji and latin based languages.
-* **Return the whole document**: The entire document is returned upon search.
-* **Highly customizable search and indexation**:
-    - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
-    - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
-    - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
-    - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
-* **RESTful API**
-* **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that lets you try the search engine when developing.
+- **Instant Search** (answers < 50ms): Priority on fast answers for smooth search experience.
+- **Search as you type** (_prefix search_): Results are updated on each keystroke. To make this possible, we use a [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
+- [Typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and spelling mistakes.
+- [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, kanji and latin based languages.
+- **Return the whole document**: The entire document is returned upon search.
+- **Highly customizable search and indexation**:
+  - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
+  - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
+  - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
+  - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
+- **RESTful API**
+- **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that lets you try the search engine when developing.

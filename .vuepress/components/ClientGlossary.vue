@@ -1,14 +1,15 @@
 <template>
-    <ClientOnly><glossary :word="word"/></ClientOnly>
+  <ClientOnly><glossary :word="word" /></ClientOnly>
 </template>
 
 <script>
 export default {
-    name: "clientGlossary",
-    props: {
-        'word': {
-            type: String
-        }
+  name: "ClientGlossary",
+  props: {
+    word: {
+      type: String,
+      default: "",
     },
-}
+  },
+};
 </script>
