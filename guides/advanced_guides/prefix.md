@@ -18,15 +18,18 @@ Given a set of words in a dataset:
 
 query: `s`:
 response:
+
 - `show`
 - `shine`
 
 but not
+
 - `movies`
 - `musical`
 
 query: `sho`:
 response:
+
 - `show`
 
 Notice that a prefix search is only done for the last word of a query, other words must be of the same length but can contain typos.

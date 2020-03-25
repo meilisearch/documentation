@@ -9,7 +9,7 @@ Get the status of an [update](/guides/advanced_guides/asynchronous_updates.md) i
 #### Path Variables
 
 | Variable      | Description           |
-|---------------|-----------------------|
+| ------------- | --------------------- |
 | **index_uid** | The index UID         |
 | **updateId**  | The update identifier |
 
@@ -46,9 +46,9 @@ Get the status of all [updates](/guides/advanced_guides/asynchronous_updates.md)
 
 #### Path Variables
 
-| Variable      | Description           |
-|---------------|-----------------------|
-| **index_uid** | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 

@@ -6,7 +6,7 @@ Some operations are put in a queue and will be executed in turn (asynchronously)
 
 ### Async flow
 
-- When making a write request (*create/update/delete*) against the search engine, it stores the operation received in a queue and returns an `updateId`. With this id, the operation update is trackable.
+- When making a write request (_create/update/delete_) against the search engine, it stores the operation received in a queue and returns an `updateId`. With this id, the operation update is trackable.
 - Each update received is treated following the order it has been received.
 - You can get the update status on the [`/updates`](/references/updates.md) route.
 
@@ -28,21 +28,24 @@ sequenceDiagram
 ### Which operations are async?
 
 Every operation which could be compute-expensive is asynchronous. These include:
+
 - Update index settings
 - Add/update/delete documents
 
 ### Understanding updates
 
 Updates returns the following information:
-* **status**: The state of the operation (enqueued, processed, or failed).
-* **updateId**: The id of the update.
-* **type**: The type of the operation.
-* **enqueuedAt**: The date at which the operation has been added to the queue.
-* **processedAt**: The date at which the operation has been processed.
+
+- **status**: The state of the operation (enqueued, processed, or failed).
+- **updateId**: The id of the update.
+- **type**: The type of the operation.
+- **enqueuedAt**: The date at which the operation has been added to the queue.
+- **processedAt**: The date at which the operation has been processed.
 
 ### Examples
 
 Adding documents:
+
 ```json
 {
   "status": "processed",
@@ -58,6 +61,7 @@ Adding documents:
 ```
 
 Failing to upload document:
+
 ```json
 {
   "status": "failed",

@@ -2,7 +2,7 @@
 
 ## Finding documents
 
-When the query input is received, MeiliSearch is building a more complex query taking into account *typos*, n-grams, and *synonyms* if configured.
+When the query input is received, MeiliSearch is building a more complex query taking into account _typos_, n-grams, and _synonyms_ if configured.
 
 - _Typos_ - For example, if the query string is `botman`, MeiliSearch will return documents containing `batman`. [Read more about the typo rules](/guides/advanced_guides/typotolerance.md).
 - _N-grams_ - MeiliSearch is set to merge multi-words queries into a single word when searching for matching documents. Ex: Searching for `bat mobile` will return documents containing `batmobile`. Each word of the query will also be split in many ways so MeiliSearch can returns documents containing `new york` when querying for `newyork`. [Read more about Concatenate and Split Queries](/guides/advanced_guides/concat.md)
@@ -12,7 +12,7 @@ When the query input is received, MeiliSearch is building a more complex query t
 
 > It would not be a search engine if there was not a notion of relevancy in the results returned.
 
-When all documents corresponding to the request have been collected, *MeiliSearch sorts the documents* using a [bucket sort](/guides/advanced_guides/bucket_sort.md) and a list of built-in [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules).
+When all documents corresponding to the request have been collected, _MeiliSearch sorts the documents_ using a [bucket sort](/guides/advanced_guides/bucket_sort.md) and a list of built-in [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules).
 
 A bucket sort can be described as an ordered set of sorting rules. All the documents are sorted within the first rule, then documents that can not be distinguished will be sorted using the second rule, and so on. Thus, every document is not sorted for every rule, which induces a reduced compute time.
 Here is the ordered list of the default ranking rules used in MeiliSearch:
@@ -28,7 +28,7 @@ You can change the order of these rules, but you should know that these work wel
 
 ## Search options
 
-A lot of configuration can be made at *query-time* using the [search paramaters](/guides/advanced_guides/search_parameters.md). Here are some usage examples:
+A lot of configuration can be made at _query-time_ using the [search paramaters](/guides/advanced_guides/search_parameters.md). Here are some usage examples:
 
 - _Pagination_ - Results can be paginated using the query params `limit` and `offset`
 

@@ -1,4 +1,4 @@
-let ogprefix = 'og: http://ogp.me/ns#'
+const ogprefix = "og: http://ogp.me/ns#";
 module.exports = {
   title: "MeiliSearch Documentation v0.9",
   description: "Open source Instant Search Engine",
@@ -11,21 +11,21 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
-      { text: 'Guides', link: '/guides/' },
-      { text: 'API References', link: '/references/' },
-      { text: 'Tutorials', link: '/tutorials/' },
-      { text: 'Resources', link: '/resources/' }
+      { text: "Guides", link: "/guides/" },
+      { text: "API References", link: "/references/" },
+      { text: "Tutorials", link: "/tutorials/" },
+      { text: "Resources", link: "/resources/" },
     ],
     sidebar: {
-      '/guides/': [
+      "/guides/": [
         {
           title: "🚀 Introduction",
-          path: '/guides/introduction/',
+          path: "/guides/introduction/",
           collapsable: false,
           children: [
             "/guides/introduction/quick_start_guide",
-            "/guides/introduction/whats_next"
-          ]
+            "/guides/introduction/whats_next",
+          ],
         },
         {
           title: "💡 Main concepts",
@@ -35,8 +35,8 @@ module.exports = {
             "/guides/main_concepts/indexes",
             "/guides/main_concepts/documents",
             "/guides/main_concepts/search",
-            "/guides/main_concepts/relevancy"
-          ]
+            "/guides/main_concepts/relevancy",
+          ],
         },
         {
           title: "📚 Advanced Guides",
@@ -54,20 +54,20 @@ module.exports = {
             "/guides/advanced_guides/typotolerance",
             "/guides/advanced_guides/concat",
             "/guides/advanced_guides/distinct",
-            "/guides/advanced_guides/bucket_sort"
-          ]
-        }
+            "/guides/advanced_guides/bucket_sort",
+          ],
+        },
       ],
-      '/download/': [
+      "/download/": [
         {
           title: "Download",
-          path:'/download/'
-        }
+          path: "/download/",
+        },
       ],
-      '/references/': [
+      "/references/": [
         {
-          title: '📒 API References',
-          path: '/references/',
+          title: "📒 API References",
+          path: "/references/",
           collapsable: false,
           children: [
             "/references/indexes",
@@ -76,13 +76,13 @@ module.exports = {
             "/references/updates",
             "/references/keys",
             {
-              title: 'Settings',
-              path: '/references/settings',
+              title: "Settings",
+              path: "/references/settings",
               collapsable: false,
               children: [
                 {
-                  title: 'All Settings',
-                  path: '/references/settings'
+                  title: "All Settings",
+                  path: "/references/settings",
                 },
                 "/references/synonyms",
                 "/references/stop_words",
@@ -91,34 +91,32 @@ module.exports = {
                 "/references/searchable_attributes",
                 "/references/displayed_attributes",
                 "/references/accept_new_fields",
-              ]
+              ],
             },
             "/references/stats",
             "/references/health",
             "/references/version",
-            "/references/sys-info"
-          ]
-        }
+            "/references/sys-info",
+          ],
+        },
       ],
-      '/tutorials/': [
+      "/tutorials/": [
         {
-          title: '🍳 Cookbooks',
-          path: '/tutorials/cookbooks/',
-          collapsable: false
+          title: "🍳 Cookbooks",
+          path: "/tutorials/cookbooks/",
+          collapsable: false,
         },
         {
-          title: '🧷 How to\'s',
-          path: '/tutorials/howtos/',
+          title: "🧷 How to's",
+          path: "/tutorials/howtos/",
           collapsable: false,
-          children: [
-            "/tutorials/howtos/quickstart"
-          ]
-        }
+          children: ["/tutorials/howtos/quickstart"],
+        },
       ],
-      '/resources/': [
+      "/resources/": [
         {
           title: "📦 Resources",
-          path: '/resources/',
+          path: "/resources/",
           collapsable: false,
           children: [
             "/resources/sdks",
@@ -129,65 +127,118 @@ module.exports = {
       ]
     },
     meilisearch: {
-      hostUrl: 'https://e10b17e6.getmeili.com',
-      indexUid: '9tz3lqoi',
-      apiKey: 'R62XWZPJG794YB5VFOADHTNQEKLCISM01U38',
+      hostUrl: "https://e10b17e6.getmeili.com",
+      indexUid: "9tz3lqoi",
+      apiKey: "R62XWZPJG794YB5VFOADHTNQEKLCISM01U38",
     },
-    searchPlaceholder: 'Search as you type...'
+    searchPlaceholder: "Search as you type...",
   },
   plugins: [
     ["check-md", { pattern: "**/*.md" }],
     ["sitemap", { hostname: "https://docs.meilisearch.com" }],
     ["seo", {}],
     "vuepress-plugin-element-tabs",
-    ['vuepress-plugin-container', { type: 'note' }]
+    ["vuepress-plugin-container", { type: "note" }],
   ],
   head: [
     ["meta", { charset: "utf-8" }],
-    ["meta", { name: "viewport", content: "width=device-width, initial-scale=1" }],
-    ["meta", {
-      property: "google-site-verification",
-      content: "u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c"
-    }],
-    ["meta", { prefix: ogprefix, property: "og:title", content: "MeiliSearch Documentation" }],
+    [
+      "meta",
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+    ],
+    [
+      "meta",
+      {
+        property: "google-site-verification",
+        content: "u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c",
+      },
+    ],
+    [
+      "meta",
+      {
+        prefix: ogprefix,
+        property: "og:title",
+        content: "MeiliSearch Documentation",
+      },
+    ],
     ["meta", { prefix: ogprefix, property: "og:type", content: "website" }],
-    ["meta", { prefix: ogprefix, property: "og:url", content: "http://docs.meilisearch.com" }],
-    ["meta", {
-      prefix: ogprefix, property: "og:image",
-      content:
-        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
-    }],
-    ["meta", {
-      prefix: ogprefix, property: "og:image-secure-url",
-      content:
-        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
-    }],
-    ["meta", {
-      prefix: ogprefix, property: "og:image-image-type",
-      content: "image/png"
-    }],
+    [
+      "meta",
+      {
+        prefix: ogprefix,
+        property: "og:url",
+        content: "http://docs.meilisearch.com",
+      },
+    ],
+    [
+      "meta",
+      {
+        prefix: ogprefix,
+        property: "og:image",
+        content:
+          "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png",
+      },
+    ],
+    [
+      "meta",
+      {
+        prefix: ogprefix,
+        property: "og:image-secure-url",
+        content:
+          "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png",
+      },
+    ],
+    [
+      "meta",
+      {
+        prefix: ogprefix,
+        property: "og:image-image-type",
+        content: "image/png",
+      },
+    ],
     ["meta", { prefix: ogprefix, property: "og:image-height", content: "630" }],
     ["meta", { prefix: ogprefix, property: "og:locale", content: "en_GB" }],
-    ["meta", { prefix: ogprefix, property: "og:site-name", content: "MeiliSearch Documentation" }],
-    ["meta", { property: "twitter:title", content: "MeiliSearch Documentation" }],
-    ["meta", {
-      property: "twitter:description",
-      content:
-        "The official documentation of MeiliSearch"
-    }],
-    ["meta", {
-      property: "twitter:image",
-      content:
-        "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png"
-    }],
-    ["meta", {
-      property: "twitter:card",
-      content: "summary_large_image"
-    }],
-    ["meta", {
-      property: "twitter:image:alt",
-      content: "Next generation search API"
-    }],
+    [
+      "meta",
+      {
+        prefix: ogprefix,
+        property: "og:site-name",
+        content: "MeiliSearch Documentation",
+      },
+    ],
+    [
+      "meta",
+      { property: "twitter:title", content: "MeiliSearch Documentation" },
+    ],
+    [
+      "meta",
+      {
+        property: "twitter:description",
+        content: "The official documentation of MeiliSearch",
+      },
+    ],
+    [
+      "meta",
+      {
+        property: "twitter:image",
+        content:
+          "https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png",
+      },
+    ],
+    [
+      "meta",
+      {
+        property: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+    [
+      "meta",
+      {
+        property: "twitter:image:alt",
+        content: "Next generation search API",
+      },
+    ],
     ["meta", { property: "twitter:site", content: "@meilisearch" }],
     [
       "script",
@@ -202,7 +253,7 @@ module.exports = {
           s.async=1;
           d.getElementsByTagName("head")[0].appendChild(s);
       })();
-    `
+    `,
     ],
     [
       "script",
@@ -219,7 +270,7 @@ module.exports = {
     })(document, window, '//analytics.meilisearch.com/tracker.js', 'fathom');
     fathom('set', 'siteId', 'XQNHD');
     fathom('trackPageview');
-    `
-    ]
-  ]
+    `,
+    ],
+  ],
 };

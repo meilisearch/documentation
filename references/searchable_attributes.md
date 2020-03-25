@@ -18,9 +18,9 @@ Get the searchable attributes of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -34,11 +34,7 @@ $ curl \
 List the settings.
 
 ```json
-[
-    "title",
-    "description",
-    "uid",
-]
+["title", "description", "uid"]
 ```
 
 ## Update searchable attributes
@@ -49,9 +45,9 @@ Update the searchable attributes of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Body
 
@@ -80,6 +76,7 @@ A match in title will make a document more relevant than another document with a
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Reset searchable attributes
@@ -94,9 +91,9 @@ All attributes found in the documents added to the index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Example
 
@@ -112,4 +109,5 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

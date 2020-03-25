@@ -18,11 +18,12 @@ Get the list of synonyms of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Example
+
 ```bash
  curl \
   -X GET 'http://localhost:7700/indexes/12345678/settings/synonyms'
@@ -32,17 +33,9 @@ Get the list of synonyms of an index.
 
 ```json
 {
- "wolverine": [
-   "xmen",
-   "logan"
-  ],
-  "logan": [
-    "wolverine",
-    "xmen"
-  ],
-  "wow": [
-    "world of warcraft"
-  ]
+  "wolverine": ["xmen", "logan"],
+  "logan": ["wolverine", "xmen"],
+  "wow": ["world of warcraft"]
 }
 ```
 
@@ -54,15 +47,16 @@ Update the list of synonyms of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Body
 
 An object with every synonym and its associated words.
 
 #### Example
+
 ```bash
  curl \
   -X POST 'http://localhost:7700/indexes/12345678/settings/synonyms' \
@@ -80,6 +74,7 @@ An object with every synonym and its associated words.
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Reset synonyms
@@ -94,11 +89,12 @@ Empty object : `{}`
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Example
+
 ```bash
  curl \
   -X DELETE 'http://localhost:7700/indexes/12345678/settings/synonyms'
@@ -111,4 +107,5 @@ Empty object : `{}`
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

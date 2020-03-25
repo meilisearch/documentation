@@ -9,6 +9,7 @@ When searching for multiple words, a search is also done on the concatenation of
 #### Example
 
 A search on `The news paper` will also search for the following concatenated queries:
+
 - `Thenews paper`
 - `the newspaper`
 - `Thenewspaper`
@@ -19,7 +20,7 @@ This concatenation is done on a **maximum of 3 words**.
 
 ## Split Queries
 
-When you do a search, it **applies the splitting algorithm to every word** (*string separated by a space*).
+When you do a search, it **applies the splitting algorithm to every word** (_string separated by a space_).
 
 This consists of finding the most interesting place to separate the words and to create a parallel search query with this proposition.
 

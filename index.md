@@ -18,8 +18,8 @@ Our solution is **instant**; it **accepts typos**; it understands **filters**, *
 MeiliSearch is open-source. You can **support the project by starring** it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
 
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a>
-<a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+<a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a><!-- prettier-ignore
+--><script async defer src="https://buttons.github.io/buttons.js"></script>
 
 ## Demo
 

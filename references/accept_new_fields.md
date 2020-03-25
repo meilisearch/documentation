@@ -4,7 +4,7 @@ _Child route of the [settings route](/references/settings.md)._
 
 `accept-new-fields` determines what MeiliSearch should do with new fields found during documents addition.
 
-When `accept-new-fields` is set to **true** (*default*), every new field will be added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) list.<br>
+When `accept-new-fields` is set to **true** (_default_), every new field will be added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) list.<br>
 When `accept-new-fields` is set to **false**, they will be stored but neither searchable or displayed on the returned documents.
 
 ::: tip
@@ -27,9 +27,9 @@ Get if MeiliSearch accepts new fields for an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -39,7 +39,6 @@ $ curl \
 ```
 
 #### Response: `200 Ok`
-
 
 ```json
 false
@@ -53,9 +52,9 @@ Update if MeiliSearch should accept new fields for an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Body
 
@@ -76,4 +75,5 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
