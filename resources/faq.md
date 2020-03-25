@@ -131,7 +131,7 @@ To understand what happened, please check this [answer](/resources/faq.md#i-did-
 
 Yes, a web interface is available on the default address and port of your MeiliSearch instance.
 
-All you need to do is open your web browser and enter MeiliSearch’s address to visit it locally. This will lead you to a web page with a search bar that will allow you to search in a selected index.
+All you need to do is open your web browser and enter MeiliSearch’s address to visit it. This leads you to a web page with a search bar that allows you to search in a selected index.
 
 Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/guides/advanced_guides/installation.md#environments).
 
