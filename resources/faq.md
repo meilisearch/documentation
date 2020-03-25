@@ -120,7 +120,7 @@ Good:
 "id": "_Aabc012_"
 ```
 
-See more elaborate [information about the primary key](/guides/main_concepts/documents.md#primary-key).
+See more [information about the primary key](/guides/main_concepts/documents.md#primary-key).
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
