@@ -164,7 +164,7 @@ client.create_index(uid="movies")
 
 Once the index has been created, the next step is to fill it with [documents](/guides/main_concepts/documents.md). These documents will be used and returned when search queries will be performed on MeiliSearch.
 
-Documents are sent to MeiliSearch in JSON format.
+Documents are represented in `JSON format`.
 
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
