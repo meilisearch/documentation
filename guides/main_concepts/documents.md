@@ -84,7 +84,7 @@ If none has been found, no documents will be added.
 
 #### Missing primary key error
 
-❗️ If you get the `document id error`, the primary key was not recognized. This means your primary key is wrongly formatted. Sending the [primary key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [updating your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in [setting the primary key](/guides/main_concepts/documents.md#primary-key) should solve this issue.
+❗️ If you get the `Could not infer a primary key` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending the [primary key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [updating your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in [setting the primary key](/guides/main_concepts/documents.md#primary-key) should solve this issue.
 
 ### Primary key value format
 
