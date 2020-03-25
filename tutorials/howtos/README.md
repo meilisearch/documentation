@@ -1,3 +1,5 @@
-## Coming soon
+# How To's
 
-How to's are being made and will soon overflow this section.
+This section offers step-by-step instructions for specific use cases.
+
+- [Quick Start](/tutorials/howtos/quickstart.md): Get started with MeiliSearch!

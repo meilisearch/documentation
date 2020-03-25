@@ -3,4 +3,4 @@
 This section offers solutions for different concrete use cases of MeiliSearch.
 
 - [Cookbooks](/tutorials/cookbooks/): coming soon.
-- [How to's](/tutorials/howtos/).
+- [How To's](/tutorials/howtos/).
