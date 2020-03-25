@@ -109,7 +109,7 @@ Communication to the server is done through a [RESTFul API](/references/README.m
 
 ## Create your Index
 
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.
+In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and associated documents.
 Indexes can be imagined as SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
 In order to be able to store your documents in an index, you have to create one first.
 
@@ -166,12 +166,12 @@ Once the index has been created, the next step is to fill it with [documents](/g
 
 Documents are sent to MeiliSearch in JSON format.
 
-To be processed by MeiliSearch, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
-There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <clientGlossary word="attribute" /> that contains the string `id` case-insensitively.
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
 
-Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
+Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
 
 :::: tabs
@@ -224,14 +224,14 @@ response = index.add_documents(data)
 
 ### Checking updates
 
-Most actions are asynchronous, which allows you to stack actions. All of the actions are executed in the order in which they were specified.
+Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were specified.
 
 You can [track the state of each action](/guides/advanced_guides/asynchronous_updates.md).
 
 
 ## Searches
 
-Now that your documents have been added to MeiliSearch, you are able to [search](/guides/main_concepts/search.md) in it.
+Now that your documents have been ingested into MeiliSearch, you are able to [search them](/guides/main_concepts/search.md).
 
 MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
@@ -241,7 +241,7 @@ The search engine is now aware of your documents and can serve those via a HTTP 
 $ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 
-MeiliSearch also provides an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search. Go to your MeiliSearch address using a browser. In that case, it would be: `http://127.0.0.1:7700`
+We also provide an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can test MeiliSearch interactively. Put MeiliSearch address into your browser address bar. In that case, it would be: `http://127.0.0.1:7700`
 
 :::: tabs
 
