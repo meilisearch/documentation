@@ -8,10 +8,10 @@ Get one document using its unique id.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
-| **document_id**    | [The document id](/guides/main_concepts/documents.md#primary-key) |
+| Variable        | Description                                                       |
+| --------------- | ----------------------------------------------------------------- |
+| **index_uid**   | The index UID                                                     |
+| **document_id** | [The document id](/guides/main_concepts/documents.md#primary-key) |
 
 ### Example
 
@@ -46,17 +46,17 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Query Parameters
 
-| Query Parameter           | Description                          | Default Value |
-|---------------------------|--------------------------------------|:-------------:|
-| **offset**                | number of documents to skip          | 0             |
-| **limit**                 | number of documents to take          | 20            |
-| **attributesToRetrieve**  | document attributes to show          | *             |
+| Query Parameter          | Description                 | Default Value |
+| ------------------------ | --------------------------- | :-----------: |
+| **offset**               | number of documents to skip |       0       |
+| **limit**                | number of documents to take |      20       |
+| **attributesToRetrieve** | document attributes to show |      \*       |
 
 ### Example
 
@@ -72,7 +72,8 @@ $ curl \
   {
     "id": 25684,
     "release_date": "1993-01-01",
-    "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg","title": "American Ninja 5",
+    "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
+    "title": "American Ninja 5",
     "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja."
   },
   {
@@ -97,15 +98,15 @@ For a partial update of the document see [add or update documents](/references/d
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Query Parameters
 
-| Query Parameter           | Description                          | Default Value |
-|---------------------------|--------------------------------------|:-------------:|
-| **primaryKey**    | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_| none |
+| Query Parameter | Description                                                                                     | Default Value |
+| --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
+| **primaryKey**  | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
 
 If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
@@ -150,6 +151,7 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Add or update documents
@@ -164,18 +166,17 @@ To completely overwrite a document, check out the [add and replace documents rou
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Query Parameters
 
-| Query Parameter           | Description                          | Default Value |
-|---------------------------|--------------------------------------|:-------------:|
-| **primaryKey**    | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_| none |
-
+| Query Parameter | Description                                                                                     | Default Value |
+| --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
+| **primaryKey**  | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
 
 #### Body
 
@@ -209,6 +210,7 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Delete all documents
@@ -217,12 +219,10 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Delete all documents in the specified index.
 
-
-
 #### Path Variables
 
-| Variable  | Description           |
-|-----------|-----------------------|
+| Variable      | Description   |
+| ------------- | ------------- |
 | **index_uid** | The index UID |
 
 ### Example
@@ -239,6 +239,7 @@ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Delete one document
@@ -249,10 +250,10 @@ Delete one document based on its unique id.<br/>
 
 #### Path Variables
 
-| Variable  | Description           |
-|-----------|-----------------------|
-| **index_uid** | The index UID |
-| **document_id**    | [The document id](/guides/main_concepts/documents.md#primary-key) |
+| Variable        | Description                                                       |
+| --------------- | ----------------------------------------------------------------- |
+| **index_uid**   | The index UID                                                     |
+| **document_id** | [The document id](/guides/main_concepts/documents.md#primary-key) |
 
 ### Example
 
@@ -268,8 +269,8 @@ Delete one document based on its unique id.<br/>
   "updateId": 1
 }
 ```
-This `updateId` allows you to [track the current update](/references/updates.md).
 
+This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Delete documents
 
@@ -279,8 +280,8 @@ Delete a selection of documents based on array of document id's.<br/>
 
 #### Path Variables
 
-| Variable  | Description           |
-|-----------|-----------------------|
+| Variable      | Description   |
+| ------------- | ------------- |
 | **index_uid** | The index UID |
 
 #### Body
@@ -311,4 +312,5 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

@@ -11,28 +11,33 @@ First of all, let's run MeiliSearch.
 Download the **latest stable release** of MeiliSearch with **curl**.
 
 Launch MeiliSearch to start the server.
+
 ```bash
 $ curl -L https://install.meilisearch.com | sh
 $ ./meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
+
 :::
 
 ::: tab Brew
 Download the **latest stable release** of MeiliSearch with **Homebrew**.
 
 Launch MeiliSearch to start the server.
+
 ```bash
 $ brew update && brew install meilisearch
 $ meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
+
 :::
 
 ::: tab Docker
 Using **Docker** you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 This command starts the **latest stable release** of MeiliSearch.
+
 ```bash
 $ docker run -it --rm -p 7700:7700 -v $(pwd)/data.ms:/data.ms getmeili/meilisearch
 Server is listening on: http://0.0.0.0:7700
@@ -47,12 +52,14 @@ Data written to a Docker container is not persistent and is deleted along with t
 Download the **latest stable release** of MeiliSearch with **APT**.
 
 Launch MeiliSearch to start the server.
+
 ```bash
 $ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 $ apt update && apt install meilisearch-http
 $ meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
+
 :::
 
 ::: tab Heroku
@@ -118,6 +125,7 @@ In order to be able to store your documents in an index, you have to create one 
 ::: tab cURL
 
 [API references](/references/indexes.md)
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes' \
@@ -125,15 +133,17 @@ $ curl \
   "uid" : "movies"
 }'
 ```
+
 :::
 
 ::: tab JS
 
 ```js
 meili.createIndex({
-    uid: "movies"
-})
+  uid: "movies",
+});
 ```
+
 :::
 
 ::: tab Ruby
@@ -141,6 +151,7 @@ meili.createIndex({
 ```ruby
 client.create_index(uid: 'movies')
 ```
+
 :::
 
 ::: tab PHP
@@ -148,6 +159,7 @@ client.create_index(uid: 'movies')
 ```php
 $client->createIndex('movies');
 ```
+
 :::
 
 ::: tab Python
@@ -155,10 +167,10 @@ $client->createIndex('movies');
 ```python
 client.create_index(uid="movies")
 ```
+
 :::
 
 ::::
-
 
 ## Add Documents
 
@@ -173,27 +185,27 @@ There are [several ways to let MeiliSearch know what the primary key](/guides/ma
 
 Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
-
 :::: tabs
 
 ::: tab Curl
 
 [API references](/references/documents.md)
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/documents' \
   --data @movies.json
 ```
+
 :::
 
 ::: tab JS
 
 ```js
-const movies = require('./movies.json')
-meili
-    .Index("movies")
-    .addDocuments(movies)
+const movies = require("./movies.json");
+meili.Index("movies").addDocuments(movies);
 ```
+
 :::
 
 ::: tab Ruby
@@ -201,6 +213,7 @@ meili
 ```ruby
 index.add_documents(movies)
 ```
+
 :::
 
 ::: tab PHP
@@ -208,6 +221,7 @@ index.add_documents(movies)
 ```php
 $index->addOrReplaceDocuments($movies);
 ```
+
 :::
 
 ::: tab Python
@@ -218,6 +232,7 @@ json_file = open('movies.json')
 data = json.load(json_file)
 response = index.add_documents(data)
 ```
+
 :::
 
 ::::
@@ -227,7 +242,6 @@ response = index.add_documents(data)
 Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were specified.
 
 You can [track the state of each action](/guides/advanced_guides/asynchronous_updates.md).
-
 
 ## Searches
 
@@ -248,24 +262,27 @@ We also provide an out-of-the-box [web interface](/guides/advanced_guides/web_in
 ::: tab Curl
 
 [API references](/references/search.md)
+
 ```bash
 $ curl \
   -X POST 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
+
 :::
 
 ::: tab JS
 
 ```js
 meili
-  .Index('movies')
+  .Index("movies")
   .search({
-    q: 'batman',
+    q: "batman",
   })
   .then((response) => {
-    console.log(response)
-  })
+    console.log(response);
+  });
 ```
+
 :::
 
 ::: tab Ruby
@@ -273,6 +290,7 @@ meili
 ```ruby
 index.search('botman')
 ```
+
 :::
 
 ::: tab PHP
@@ -280,6 +298,7 @@ index.search('botman')
 ```php
 $index->search('botman');
 ```
+
 :::
 
 ::: tab Python
@@ -289,11 +308,13 @@ index.search({
   'q': 'How to Train Your Dragon'
 })
 ```
+
 :::
 
 ::::
 
 MeiliSearch **response** :
+
 ```json
 {
   "hits": [

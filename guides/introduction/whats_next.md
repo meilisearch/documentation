@@ -7,9 +7,11 @@ MeiliSearch was built on a few core concepts. If you haven't already done so, we
 - [Relevancy](/guides/main_concepts/search.md)
 
 Finally, you can find the API references here:
+
 - [API References](/references/README.md)
 
-And the SDKs listed on that page:
+And additional resources here:
+
 - [SDKs](/resources/sdks.md)
 - [FAQ](/resources/faq.md)
 

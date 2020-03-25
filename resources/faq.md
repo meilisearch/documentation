@@ -48,7 +48,7 @@ It means that in many cases (e.g., documents addition), you will receive as serv
 
 ```json
 {
-    "updateId": 2
+  "updateId": 2
 }
 ```
 
@@ -70,35 +70,39 @@ In case of a [document addition](/references/documents.md#add-or-replace-documen
 The `400 - Invalid data` response probably means that your data is not in an expected format.
 
 Most common errors:
+
 - Extraneous comma at the end of a line.
 - Data is not an array of objects: for the [document addition route](/references/documents.md#add-or-replace-documents), MeiliSearch only accepts an array in the body even if there is only one document.
 
 Wrong:
+
 ```json
-{ "id": 123,  "title": "Pride and Prejudice" }
+{ "id": 123, "title": "Pride and Prejudice" }
 ```
 
 Good:
+
 ```json
-[
-    { "id": 123,  "title": "Pride and Prejudice" }
-]
+[{ "id": 123, "title": "Pride and Prejudice" }]
 ```
 
 :::tip
 The [jq](https://github.com/stedolan/jq) command line tool can greatly help you check the format of your data.
+
 ```bash
 $ cat your_file.json | jq
 ```
+
 :::
 
 ## My document upload failed with the `document id is missing` error.
 
 ::: note TLDR;
 Most common reasons:
+
 - A unique identifier in your document is missing.
 - The unique identifier of your document is not well-formatted.
-:::
+  :::
 
 Each document is required to contain a unique identifier. This identifier attribute is the `primary key`.
 
@@ -111,11 +115,13 @@ If you get a `document id is missing` error, the primary key was not recognized.
 Note that the primary key value must contain only `A-Z a-z 0-9` and `-_` characters.
 
 Wrong:
+
 ```json
 "id": "@BI+* ^5h2%"
 ```
 
 Good:
+
 ```json
 "id": "_Aabc012_"
 ```
@@ -154,6 +160,7 @@ For more accurate features and issues, everything is detailed in the issues of a
 ## How can I contact the MeiliSearch team?
 
 There are many ways to contact us:
+
 - At [bonjour@meilisearch.com](mailto:bonjour@meilisearch.com): English or French is welcome! 🇫🇷 🇬🇧
 - Via the chat box at the bottom right of this page which is available on every page of this documentation and on [our landing page](https://www.meilisearch.com/).
 - By opening an issue in the [MeiliSearch repository](https://github.com/meilisearch/MeiliSearch) or in the [documentation repository](https://github.com/meilisearch/documentation/) depending on your need.

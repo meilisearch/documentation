@@ -7,6 +7,7 @@ When a field is `distinct`, there will **never be two, or more, occurrence of th
 ### Example
 
 Let's use the sample of the following documents with 3 jackets of **different `colors`** but **same `skuid`**:
+
 ```json
 [
   {
@@ -26,7 +27,7 @@ Let's use the sample of the following documents with 3 jackets of **different `c
     "skuid": "abcdef",
     "name": "Really nice Jacket",
     "color": "green"
-  },
+  }
 ]
 ```
 

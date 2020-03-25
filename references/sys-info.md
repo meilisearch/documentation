@@ -6,8 +6,6 @@
 
 Get pretty system information.
 
-
-
 ### Example
 
 ```bash

@@ -15,21 +15,22 @@
 <script>
 export default {
   name: 'MeiliSearchBox',
-
-  props: ['options'],
-
+  props: {
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   data () {
     return {
       placeholder: undefined
     }
   },
-
   watch: {
     options (newValue) {
       this.update(newValue)
     }
   },
-
   mounted () {
     this.initialize(this.options)
     this.placeholder = this.$site.themeConfig.searchPlaceholder || ''
@@ -54,8 +55,8 @@ export default {
               this.$router.push(`${routepath}${hash}`)
             }
           }
-        );
-        docsSearchBar(input);
+        )
+        docsSearchBar(input)
       })
     },
 

@@ -8,23 +8,23 @@ Search for documents matching a specific query in the given index.
 
 #### Path Variables
 
-| Variable  | Description   |
-|-----------|---------------|
+| Variable      | Description   |
+| ------------- | ------------- |
 | **index_uid** | The index UID |
 
 #### Query Parameters
 
 | Query Parameter           | Description                                        | Default Value |
-|---------------------------|----------------------------------------------------|:-------------:|
+| ------------------------- | -------------------------------------------------- | :-----------: |
 | **q**                     | query string _(mandatory)_                         |               |
-| **offset**                | number of documents to skip                        | 0             |
-| **limit**                 | number of documents to take                        | 20            |
-| **attributesToRetrieve**  | document attributes to show                        | *             |
-| **attributesToCrop**      | which attributes to crop                           | none          |
-| **cropLength**            | limit length at which to crop specified attributes | 200           |
-| **attributesToHighlight** | which attributes to highlight                      | none          |
-| **filters**               | attribute with an exact match                     | none          |
-| **matches**               | whether to return the raw matches or not           | false         |
+| **offset**                | number of documents to skip                        |       0       |
+| **limit**                 | number of documents to take                        |      20       |
+| **attributesToRetrieve**  | document attributes to show                        |      \*       |
+| **attributesToCrop**      | which attributes to crop                           |     none      |
+| **cropLength**            | limit length at which to crop specified attributes |      200      |
+| **attributesToHighlight** | which attributes to highlight                      |     none      |
+| **filters**               | attribute with an exact match                      |     none      |
+| **matches**               | whether to return the raw matches or not           |     false     |
 
 > `filters` takes `key:value` as parameter, with the key to be the name of the field to filter, and the value the filter to be applied on this field, e.g.: `filters=first_name:John`. Only a single filter is supported in a query.
 

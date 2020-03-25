@@ -2,17 +2,17 @@
 
 Search parameters let the user customize his search request.
 
-| Query Parameter           | Description                                        | Default Value |
-|---------------------------|----------------------------------------------------|:-------------:|
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                     | query string _(mandatory)_                         |               |
-| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                | number of documents to skip                        | 0             |
-| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                 | number of documents returned                       | 20            |
-| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**  | document attributes to show                        | *             |
-| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**      | which attributes to crop                           | none          |
-| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**            | limit length at which to crop specified attributes | 200           |
-| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      | none          |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**               | attribute with an exact match                     | none          |
-| **[matches](/guides/advanced_guides/search_parameters.md#matches)**               | whether to return the raw matches or not           | false         |
+| Query Parameter                                                                                   | Description                                        | Default Value |
+| ------------------------------------------------------------------------------------------------- | -------------------------------------------------- | :-----------: |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | query string _(mandatory)_                         |               |
+| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | number of documents to skip                        |       0       |
+| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | number of documents returned                       |      20       |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | document attributes to show                        |      \*       |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | which attributes to crop                           |     none      |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | limit length at which to crop specified attributes |      200      |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      |     none      |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | attribute with an exact match                      |     none      |
+| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | whether to return the raw matches or not           |     false     |
 
 ## Query (q)
 
@@ -52,7 +52,7 @@ Attributes of which the value will be cropped depending on the `cropLength` and 
 This is useful when you have specific needs for displaying results on the front-end application.
 :::
 
-**Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2 ` chars on each side of the first match.
+**Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2` chars on each side of the first match.
 
 #### Example
 
@@ -65,23 +65,23 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
 
 With a `cropLength` of 100 on `shifu` as a search query this is the response.
 
-Our **cropped version is in the _formatted object**.
+Our **cropped version is in the \_formatted object**.
 
 ```json
-   {
-      "id": "50393",
-      "title": "Kung Fu Panda Holiday",
-      "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
-      "release_date": 1290729600,
-      "_formatted": {
-        "id": "50393",
-        "title": "Kung Fu Panda Holiday",
-        "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-        "overview": "d his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade ",
-        "release_date": 1290729600
-      }
-    }
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "d his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade ",
+    "release_date": 1290729600
+  }
+}
 ```
 
 ## Crop length
@@ -104,26 +104,26 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d attributesToHighlight=overview
 ```
 
-Our **highlight version is in the _formatted object**.
+Our **highlight version is in the \_formatted object**.
 
 ```json
-    {
-      "id": "50393",
-      "title": "Kung Fu Panda Holiday",
-      "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
-      "release_date": 1290729600,
-      "_formatted": {
-        "id": "50393",
-        "title": "Kung Fu Panda Holiday",
-        "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-        "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>Shifu</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>Shifu</em> and Mr. Ping.",
-        "release_date": 1290729600,
-      }
-    }
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>Shifu</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>Shifu</em> and Mr. Ping.",
+    "release_date": 1290729600
+  }
+}
 ```
-The **overview attribute in formatted** looks like this when evaluated in HTML:
 
+The **overview attribute in formatted** looks like this when evaluated in HTML:
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
 
@@ -143,11 +143,11 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
 
 ```json
 {
-  "id":"569367",
-  "title":"Nightshift",
-  "poster":"https://image.tmdb.org/t/p/w1280/peOeFl8ZTBTCERz5XQZAjYbXYsQ.jpg",
-  "overview":"Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
-  "release_date":1536282000
+  "id": "569367",
+  "title": "Nightshift",
+  "poster": "https://image.tmdb.org/t/p/w1280/peOeFl8ZTBTCERz5XQZAjYbXYsQ.jpg",
+  "overview": "Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
+  "release_date": 1536282000
 }
 ```
 
@@ -161,7 +161,6 @@ Returns an array of the search query occurrences in all fields. A search query o
 This is useful when you need to highlight the results without the default HTML highlighter.
 :::
 
-
 #### Example
 
 ```bash
@@ -171,23 +170,23 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
 ```
 
 ```json
-  {
-      "id": "50393",
-      "title": "Kung Fu Panda Holiday",
-      "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
-      "release_date": 1290729600,
-      "_matchesInfo": {
-        "overview": [
-          {
-            "start": 159,
-            "length": 5
-          },
-          {
-            "start": 361,
-            "length": 5
-          }
-        ]
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_matchesInfo": {
+    "overview": [
+      {
+        "start": 159,
+        "length": 5
+      },
+      {
+        "start": 361,
+        "length": 5
       }
-    }
-  ```
+    ]
+  }
+}
+```

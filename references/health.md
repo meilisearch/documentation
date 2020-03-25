@@ -1,6 +1,7 @@
 # Health
 
 ## Get health
+
 <RouteHighlighter method="GET" route="/health"/>
 
 Get health of MeiliSearch server.

@@ -18,9 +18,9 @@ Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -32,7 +32,7 @@ $ curl \
 #### Response: `200 Ok`
 
 ```json
-["of","the","to"]
+["of", "the", "to"]
 ```
 
 ## Update stop-words
@@ -43,15 +43,15 @@ Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an ind
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 #### Body
 
 An array of strings containing the [stop-words](/guides/advanced_guides/stop_words.md).
 
-If a list of stop-words already exists it will be overwritten (*replaced*).
+If a list of stop-words already exists it will be overwritten (_replaced_).
 
 ### Example
 
@@ -65,9 +65,10 @@ $ curl \
 
 ```json
 {
-  "updateId": 1,
+  "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Reset stop-words
@@ -82,9 +83,9 @@ Empty array: `[]`
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -97,7 +98,8 @@ $ curl \
 
 ```json
 {
-  "updateId": 1,
+  "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

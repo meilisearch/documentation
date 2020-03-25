@@ -1,12 +1,21 @@
 <template>
   <div class="route">
     <div>
-      <div class="method get" v-if="method.toLowerCase() === 'get'">GET</div>
-      <div class="method post" v-else-if="method.toLowerCase() === 'post'">POST</div>
-      <div class="method put" v-else-if="method.toLowerCase() === 'put'">PUT</div>
-      <div class="method delete" v-else-if="method.toLowerCase() === 'delete'">DELETE</div>
-      <div class="method" v-else>{{ method }}</div>
-
+      <div v-if="method.toLowerCase() === 'get'" class="method get">
+        GET
+      </div>
+      <div v-else-if="method.toLowerCase() === 'post'" class="method post">
+        POST
+      </div>
+      <div v-else-if="method.toLowerCase() === 'put'" class="method put">
+        PUT
+      </div>
+      <div v-else-if="method.toLowerCase() === 'delete'" class="method delete">
+        DELETE
+      </div>
+      <div v-else class="method">
+        {{ method }}
+      </div>
       <pre><code>{{ route }}</code></pre>
     </div>
   </div>
@@ -14,18 +23,26 @@
 
 <script>
 export default {
-  name: 'RouteHighlighter',
-  props: ['method', 'route'],
-  data () {
-    return {
-
-    }
-  }
-}
+  name: "RouteHighlighter",
+  props: {
+    method: {
+      type: String,
+      default: "",
+      validator: function (x) {
+        return ["get", "post", "put", "patch", "delete"].includes(
+          x.toLowerCase()
+        );
+      },
+      route: {
+        type: String,
+        default: "my/route",
+      },
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>
-
 div.route {
   display: inline-block;
   width: 100%;
@@ -70,5 +87,4 @@ div.route {
 .route > div > pre {
   border-radius: 0px 6px 6px 0px;
 }
-
 </style>

@@ -5,6 +5,7 @@ MeiliSearch **is [typo tolerant](/guides/advanced_guides/typotolerance.md#typo-t
 #### Example
 
 On a movie dataset, let's search for `botman`.
+
 ```json
 {
   "hits": [

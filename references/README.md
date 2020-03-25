@@ -58,6 +58,7 @@ Please read the [advanced part about keys](/guides/advanced_guides/keys.md) and 
 All errors contain a `JSON` body that explains the error.
 
 Response body:
+
 ```json
 {
   "message": "The error message"
@@ -70,7 +71,7 @@ MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you wi
 
 ```json
 {
-    "updateId": 2
+  "updateId": 2
 }
 ```
 

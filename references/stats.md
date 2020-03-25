@@ -6,12 +6,11 @@
 
 Get stats of an index.
 
-
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**     | The index UID         |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -36,15 +35,11 @@ $ curl \
 }
 ```
 
-
-
 ## Get stats of all indexes
 
 <RouteHighlighter method="GET" route="/stats"/>
 
 Get stats of all indexes.
-
-
 
 ### Example
 

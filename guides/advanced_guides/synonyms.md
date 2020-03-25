@@ -18,6 +18,7 @@ There are several ways to associate words with each other.
 This makes it possible to determine that a word will be synonymous with another but not the other way around.
 
 example:
+
 ```
 phone => iphone
 ```
@@ -28,9 +29,9 @@ By searching `phone` you will get all results containing `iphone` with the same 
 
 To create a one-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#update-synonyms).
 
-``` json
+```json
 {
-    "phone": ["iphone"]
+  "phone": ["iphone"]
 }
 ```
 
@@ -39,6 +40,7 @@ To create a one-way synonym list this is the JSON that should be [added to the s
 By associating one or more synonyms with each other, they will be considered the same in both directions.
 
 example:
+
 ```
 shoe <=> boot <=> slipper <=> sneakers
 ```
@@ -48,6 +50,7 @@ When a search is done with one of these words, all the others will be considered
 However, in the case of word to sentence or sentence to sentence
 
 example:
+
 ```
 "San Fransisco" <=> SF
 ```
@@ -58,9 +61,9 @@ The "San Fransisco" search will be considered less relevant than the "SF" search
 
 To create a multi-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#update-synonyms).
 
-``` json
+```json
 {
-    "san francisco": ["sf"],
-    "sf": ["san francisco"]
+  "san francisco": ["sf"],
+  "sf": ["san francisco"]
 }
 ```

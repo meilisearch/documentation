@@ -1,0 +1,25 @@
+---
+name: Check styling
+on: [pull_request]
+jobs:
+  build-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: Cache dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - run: yarn install
+
+    - run: yarn check-style

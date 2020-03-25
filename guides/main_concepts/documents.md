@@ -57,12 +57,12 @@ Suppose we have an index of 200k `documents` called `movie`. Each document is id
 ```json
 [
   {
-    "movie_id" : "1564saqw12ss",
-    "title" : "Kung fu Panda"
+    "movie_id": "1564saqw12ss",
+    "title": "Kung fu Panda"
   },
   {
-    "movie_id" : "15k1j2kkw223s",
-    "title" : "Batman"
+    "movie_id": "15k1j2kkw223s",
+    "title": "Batman"
   }
 ]
 ```
@@ -93,12 +93,15 @@ Note that the primary key **value** must contain only `A-Z a-z 0-9` and `-_` cha
 #### Examples
 
 Good:
+
 ```json
 "id": "_Aabc012_"
 ```
+
 Bad:
+
 ```json
 "id": "@BI+* ^5h2%"
 ```
 
-The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, for example, if you submit 200 documents in one go and it happens one of them contains a wrongly formatted primary key, an error will occur and result in no additions.
+The document addition request in MeiliSearch is <!-- prettier-ignore -->[atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, for example, if you submit 200 documents in one go and it happens one of them contains a wrongly formatted primary key, an error will occur and result in no additions.

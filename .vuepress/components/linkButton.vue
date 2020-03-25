@@ -1,18 +1,22 @@
 <template>
   <div class="route">
-      <div>{{ text }}</div>
+    <div>{{ text }}</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'linkButton',
-  props: ['text']
-}
+  name: "LinkButton",
+  props: {
+    text: {
+      type: String,
+      default: "",
+    },
+  },
+};
 </script>
 
 <style lang="css" scoped>
-
 div.route {
   display: block;
   text-align: center;
@@ -31,7 +35,5 @@ div.route {
   font-weight: bold;
   margin-left: auto;
   margin-right: auto;
-  width: 200px;
 }
-
 </style>

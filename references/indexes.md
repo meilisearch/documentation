@@ -6,7 +6,6 @@
 
 List all indexes.
 
-
 ### Example
 
 ```bash
@@ -30,7 +29,6 @@ $ curl \
     "createdAt": "2019-11-20T09:40:33.711324Z",
     "updatedAt": "2019-11-20T10:16:42.761858Z"
   }
-
 ]
 ```
 
@@ -40,11 +38,10 @@ $ curl \
 
 Get information about an index.
 
-
 #### Path Variables
 
-| Variable  | Description           |
-|-----------|-----------------------|
+| Variable      | Description   |
+| ------------- | ------------- |
 | **index_uid** | The index UID |
 
 ### Example
@@ -75,11 +72,10 @@ This route takes as parameter an unique `uid` and **optionally** the [primary ke
 
 #### Body
 
-
-| Variable  | Description           |
-|-----------|-----------------------|
-| **index_uid** | The index unique identifier (*mandatory*)|
-| **primaryKey** | The <clientGlossary word="primary key" /> of the documents  |
+| Variable       | Description                                                |
+| -------------- | ---------------------------------------------------------- |
+| **index_uid**  | The index unique identifier (_mandatory_)                  |
+| **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
 
 ```json
 {
@@ -100,6 +96,7 @@ $ curl \
 ```
 
 #### Response: `201 created`
+
 ```json
 {
   "uid": "movies",
@@ -117,19 +114,17 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Update an index.
 
-
 #### Path Variables
 
-| Variable  | Description           |
-|-----------|-----------------------|
+| Variable      | Description   |
+| ------------- | ------------- |
 | **index_uid** | The index UID |
-
 
 #### Body
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **primaryKey** | The <clientGlossary word="primary key" /> of the documents  |
+| Variable       | Description                                                |
+| -------------- | ---------------------------------------------------------- |
+| **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
 
 The `uid` of an index cannot be changed.<br>
 The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).
@@ -151,7 +146,7 @@ $ curl \
 ```json
 {
   "uid": "movie_review",
-  "primaryKey" : "movie_review_id",
+  "primaryKey": "movie_review_id",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
@@ -165,9 +160,9 @@ Delete an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID        |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 

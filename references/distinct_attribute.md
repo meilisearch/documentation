@@ -18,9 +18,9 @@ Get the distinct attribute field of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
-| **index_uid**         | The index UID |
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -43,8 +43,8 @@ Update the distinct attribute field of an index.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
+| Variable      | Description   |
+| ------------- | ------------- |
 | **index_uid** | The index UID |
 
 #### Body
@@ -66,6 +66,7 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).
 
 ## Reset distinct attribute
@@ -78,11 +79,12 @@ Reset the distinct attribute field of an index to its default value.
 
 #### Path Variables
 
-| Variable          | Description           |
-|-------------------|-----------------------|
+| Variable      | Description   |
+| ------------- | ------------- |
 | **index_uid** | The index UID |
 
 #### Example
+
 ```bash
 $ curl \
   -X DELETE 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
@@ -95,4 +97,5 @@ $ curl \
   "updateId": 1
 }
 ```
+
 This `updateId` allows you to [track the current update](/references/updates.md).

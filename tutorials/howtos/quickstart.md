@@ -12,28 +12,33 @@ You can deploy the server on your own machine. By default, the server will liste
 Download the **latest stable release** of MeiliSearch with **curl**.
 
 Launch MeiliSearch to start the server.
+
 ```bash
 $ curl -L https://install.meilisearch.com | sh
 $ ./meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
+
 :::
 
 ::: tab Brew
 Download the **latest stable release** of MeiliSearch with **Homebrew**.
 
 Launch MeiliSearch to start the server.
+
 ```bash
 $ brew update && brew install meilisearch
 $ meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
+
 :::
 
 ::: tab Docker
 Using **Docker** you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 This command starts the **latest stable release** of MeiliSearch.
+
 ```bash
 $ docker run -it --rm -p 7700:7700 -v $(pwd)/data.ms:/data.ms getmeili/meilisearch
 Server is listening on: http://0.0.0.0:7700
@@ -48,12 +53,14 @@ Data written to a Docker container is not persistent and is deleted along with t
 Download the **latest stable release** of MeiliSearch with **APT**.
 
 Launch MeiliSearch to start the server.
+
 ```bash
 $ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 $ apt update && apt install meilisearch-http
 $ meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
+
 :::
 
 ::: tab Heroku
@@ -72,7 +79,6 @@ Since all the source code from the GitHub repository will be compiled, the deplo
 ::: warning
 The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means data loss may occur on restart. **The Heroku deployment is useful for testing purposes; however, it won't meet the requirements for production deployments.**
 :::
-
 
 ::: tab Source
 
@@ -120,7 +126,6 @@ This `uid` is the `:index_uid` identifier used in all `indexes/:index_uid` route
 Now that the server knows about your brand new index, you're ready to send it some data.
 
 If you need a test dataset, use [this sample](https://www.notion.so/meilisearch/A-movies-dataset-to-test-Meili-1cbf7c9cfa4247249c40edfa22d7ca87#b5ae399b81834705ba5420ac70358a65).
-
 
 ```bash
 $ curl -i -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
