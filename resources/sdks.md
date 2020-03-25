@@ -7,7 +7,3 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 - [Python](https://github.com/meilisearch/meilisearch-python)
 - [PHP](https://github.com/meilisearch/meilisearch-php)
 - [Golang](https://github.com/meilisearch/meilisearch-go)
-
-::: note
-Because the work on the settings API is still going on, we are not supporting officially these routes in the wrappers.
-:::
