@@ -46,11 +46,13 @@ You can also apply <clientGlossary word="ranking rules" /> to some fields. For e
 
 A primary key is an <clientGlossary word="attribute" /> which contains a unique value. It uniquely identifes each document of a given index in order to store them.
 
-Each index recognizes **only one** primary key attribute. Once a [primary key has been set for an index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed**.
+Each index recognizes **only one** primary key attribute. Once a [primary key has been set for an index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed anymore**.
+
+If no **primary key** is found in a document, the document will not be stored.
 
 **Example:**
 
-In an index called `movie` there are 200k `documents`. Each of these 200k documents has a primary key called `movie_id` whose value is unique.
+Suppose we have an index of 200k `documents` called `movie`. Each document is identified by a primary key named `movie_id` whose value is unique as shown below.
 
 ```json
 [
@@ -65,21 +67,19 @@ In an index called `movie` there are 200k `documents`. Each of these 200k docume
 ]
 ```
 
-If no **primary key** is found in a document, the document will not be stored.
-
 ### Setting the primary key
 
-MeiliSearch has several ways of knowing which field is the `primary key`.
+MeiliSearch can deduce which field is the `primary key` in several ways.
 
-- MeiliSearch [automaticly infers the primary key](/guides/main_concepts/documents.md#meilisearch-infers-your-primary-key) based on your first document.
+- MeiliSearch [automatically infers the primary key](/guides/main_concepts/documents.md#meilisearch-infers-your-primary-key) based on your first document.
 - Set it [on index creation](/references/indexes.md#create-an-index)
 - Set it [on document addition](/references/documents.md#add-or-replace-documents)
 
 #### MeiliSearch infers your primary key
 
-If no primary key has been given through the index creation or through document additions, MeiliSearch will search for the primary key in the first document sent.
+If no primary key has been given either at index creation time or through the addition of document, the primary key will be searched in the first document sent.
 
-MeiliSearch will search for an attribute that contains the string `id` in any way case-insensitively. (i.e, `uid`, `MovieId`, `ID`, `123id123`).<br>
+MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (i.e, `uid`, `MovieId`, `ID`, `123id123`).<br>
 If none has been found, no documents will be added.
 
 #### Missing primary key error
