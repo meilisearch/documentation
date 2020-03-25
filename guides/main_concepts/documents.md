@@ -1,7 +1,7 @@
 # Documents
 
-**Documents** are objects composed of fields containing any type of data.</br>
-A **field** is composed of an **attribute** and its associated data.
+**Documents** are objects composed of fields which can store any type of data.</br>
+Each **field** contains an **attribute** and its associated data.
 
 ```json
 {
@@ -14,14 +14,14 @@ A **field** is composed of an **attribute** and its associated data.
 
 #### Wording
 
-- **Attribute**: `"id"`, `"title"`, `"description"` and `"type"`.
-- **Field**: the combination of attributes and data (i.e, `"title": "Interstellar"`)
-- **Document**: The combination of all the fields between brackets.
+- **Attribute**: An attribute is like a key (`"id"`, `"title"`, `"description"` and `"type"`).
+- **Field**: A field, or a key-value pair, is the link of an attribute to a data item (i.e, `"title": "Interstellar"`).
+- **Document**: A document is an object which contains a list of fields in curly brackets.
 
 ## Structure
 
-A document is added to MeiliSearch in `JSON format`.<br/>
-When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents should be sent in an array. And this, even if there is only one document.
+Documents are stored in `JSON format`.<br/>
+When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document
 
 ```bash
 curl -X POST `http://localhost:7700/indexes/movies/documents` \
@@ -33,11 +33,11 @@ curl -X POST `http://localhost:7700/indexes/movies/documents` \
 ]'
 ```
 
-A **document must contain** [the primary key field](/guides/main_concepts/documents.md#primary-key) to be indexed in MeiliSearch.
+In order to be indexed, each **document must contain** [the primary key field](/guides/main_concepts/documents.md#primary-key).
 
 ## Fields
 
-All fields present in a document are automatically <clientGlossary word="searchable" /> and <clientGlossary word="displayed" />.
+By default, all fields present in a document are <clientGlossary word="searchable" /> and automatically <clientGlossary word="displayed" />.
 The way MeiliSearch handles a field is customizable in the settings <Badge text="soon" type="warn"/>. You can make a field only searchable, or only displayed, or none, in this case, MeiliSearch will completely ignore the field when it is sent on document addition.
 
 You can also add <clientGlossary word="ranking rules" /> on a field, to, for example, add a rule that makes recent movies more relevant than older ones.
