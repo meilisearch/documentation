@@ -58,6 +58,8 @@ $ curl \
   ],
   "offset": 0,
   "limit": 20,
+  "nbHits": 2,
+  "exhaustiveNbHits": false,
   "processingTimeMs": 32,
   "query": "american ninja 5"
 }
