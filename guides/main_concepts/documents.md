@@ -15,7 +15,7 @@ Each **field** contains an **attribute** and its associated data.
 #### Wording
 
 - **Attribute**: An attribute is like a key (`"id"`, `"title"`, `"description"` and `"type"`).
-- **Field**: A field, or a key-value pair, is the link of an attribute to a data item (i.e, `"title": "Interstellar"`).
+- **Field**: A field, or a key-value pair, is a set of two data items linked together. Here, an attribute and its corresponding data (i.e, `"title": "Interstellar"`).
 - **Document**: A document is an object which contains a list of fields in curly brackets.
 
 ## Structure
@@ -44,7 +44,7 @@ You can also apply <clientGlossary word="ranking rules" /> to some fields. For e
 
 ## Primary key
 
-A primary key is an <clientGlossary word="attribute" /> which contains a unique value. It uniquely identifes each document of a given index in order to store them.
+A primary key is an <clientGlossary word="attribute" /> which contains a unique value. It uniquely identifies each of the documents of a given index in order to store them.
 
 Each index recognizes **only one** primary key attribute. Once a [primary key has been set for an index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed anymore**.
 
@@ -101,4 +101,4 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, if you add 200 documents in one go and if one of the documents has a badly formatted primary key, an error will occur, and none of the documents will be added.
+The document addition request in MeiliSearch is [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, for example, if you submit 200 documents in one go and it happens one of them contains a wrongly formatted primary key, an error will occur and result in no additions.
