@@ -21,8 +21,8 @@ MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a t
 
 ### MeiliSearch vs. Typesense
 
-Typesense uses a default_sorting_field on each document, it means that before indexing your documents you need to compute a relevancy score for Typesense to be able to sort them based on your needs (https://typesense.org/docs/0.11.1/guide/#ranking-relevance).
-On the other hand, MeiliSearch uses a bucket sort, which means that there is a default relevancy algorithm based on the proximity of words in the documents, the fields in which the words are found and the number of typos (https://docs.meilisearch.com/guides/advanced_guides/ranking). And you can still add your own custom rules if you want to alter the default search behavior.
+[Typesense uses a default_sorting_field](https://typesense.org/docs/0.11.1/guide/#ranking-relevance) on each document, it means that before indexing your documents you need to compute a relevancy score for Typesense to be able to sort them based on your needs.
+On the other hand, [MeiliSearch uses a bucket sort](/guides/main_concepts/relevancy.md), which means that there is a default relevancy algorithm based on the proximity of words in the documents, the fields in which the words are found and the number of typos. And you can still add your own custom rules if you want to alter the default search behavior.
 
 ### MeiliSearch vs. Algolia
 

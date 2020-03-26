@@ -33,10 +33,10 @@ export default {
           x.toLowerCase()
         );
       },
-      route: {
-        type: String,
-        default: "my/route",
-      },
+    },
+    route: {
+      type: String,
+      default: "my/route",
     },
   },
 };
