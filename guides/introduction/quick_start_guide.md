@@ -343,7 +343,7 @@ This kind of **successful response** indicates that the operation has been taken
 
 You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
 
-Checking the update status is not a mandatory step to search through your documents but could be really useful in case of error.
+Checking the update status is not a mandatory step to search through your documents but could be really useful to understand what is happening in case of errors or unexpected behaviors.
 
 ## Search
 
