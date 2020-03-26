@@ -337,7 +337,7 @@ fmt.Println(updateRes.UpdateID)
 
 ### Checking updates
 
-The document addition returns a simple JSON with only an `updateId`.
+The document addition returns a JSON object with only an `updateId` attribute.
 
 This kind of **successful response** indicates that the operation has been taken into account, but it may not have been executed yet.
 
