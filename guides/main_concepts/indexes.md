@@ -51,11 +51,11 @@ On top of that, you can add your custom rules to the ranking rules. For example,
 
 ## Synonyms and stop-words
 
-An index can contain a set of synonyms. If multiples words have an equivalent meaning in your dataset, you can decide to create a synonym for theses words. The search engine will give the same search results for any search with one of the associated words as a search query. The synonyms are linked to the given index, and they will not apply to any other index on the same MeiliSearch instance.
+A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they look different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed. Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
 
 [More information about synonyms](/guides/advanced_guides/synonyms.md)
 
-An index can contain a list of stop-words. Those words will be ignored in documents and search queries. Typically those words could be redundant words of your chosen language, like `the` or `of` in English.
+A set of stop-words can be defined for an index. Those words will be ignored in documents and search queries. Typically those words could be redundant words of your chosen language, like `the` or `of` in English.
 By adding those words in the stop-words list, you avoid having documents considered highly relevant because of the recurrence of one of those words in a document.
 
 For example, on the following search query: `the great gatsby`, if the presence of the word `the` in a film review should not make the review more relevant. By adding `the` to the stop-word list, you avoid searching in documents containing only this stop word.
