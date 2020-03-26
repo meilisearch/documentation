@@ -115,13 +115,14 @@ $ ./target/release/meilisearch
 
 Now that your MeiliSearch server is up and running, you should be able to communicate with it.
 
-Communication to the server is done through a [RESTFul API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
+Communication to the server is done through a [RESTful API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
 ## Create your Index
 
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and associated documents.
-Indexes can be imagined as SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
-In order to be able to store your documents in an index, you have to create one first.
+In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and associated documents.<br>
+Indexes can be comparable to SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
+
+In order to be able to store your documents in an index, it is required you create one first.
 
 :::: tabs
 
@@ -131,7 +132,7 @@ In order to be able to store your documents in an index, you have to create one 
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes' \
+  -X POST 'http://127.0.0.1:7700/indexes' \
   --data '{
   "uid" : "movies"
 }'
@@ -141,36 +142,101 @@ $ curl \
 
 ::: tab JS
 
-```js
-meili.createIndex({
-  uid: "movies",
-});
+```bash
+npm install meilisearch
+# or
+yarn add meilisearch
 ```
 
+```js
+const MeiliSearch = require("meilisearch");
+
+var client = new MeiliSearch({ host: "http://127.0.0.1:7700" });
+const index = client
+  .createIndex({ uid: "movies" })
+  .then((res) => console.log(res));
+```
+
+[About this package](https://github.com/meilisearch/meilisearch-js/)
 :::
 
 ::: tab Ruby
 
-```ruby
-client.create_index(uid: 'movies')
+```bash
+$ gem install meilisearch
 ```
 
+```ruby
+require 'meilisearch'
+
+client = MeiliSearch::Client.new('http://127.0.0.1:7700')
+index = client.create_index('movies')
+```
+
+[About this package](https://github.com/meilisearch/meilisearch-ruby/)
 :::
 
 ::: tab PHP
 
-```php
-$client->createIndex('movies');
+```bash
+$ composer require meilisearch/meilisearch-php
 ```
 
+```php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use MeiliSearch\Client;
+
+$client = new Client('http://127.0.0.1:7700');
+$index = $client->createIndex('movies');
+```
+
+[About this package](https://github.com/meilisearch/meilisearch-php/)
 :::
 
 ::: tab Python
 
-```python
-client.create_index(uid="movies")
+```bash
+$ pip3 install meilisearch
 ```
 
+```python
+import meilisearch
+
+client = meilisearch.Client('http://127.0.0.1:7700')
+index = client.create_index(uid='movies')
+```
+
+[About this package](https://github.com/meilisearch/meilisearch-python/)
+:::
+
+::: tab Go
+
+```bash
+go get github.com/meilisearch/meilisearch-go
+```
+
+```go
+package main
+
+import (
+    "github.com/meilisearch/meilisearch-go"
+)
+
+func main() {
+    var client = meilisearch.NewClient(meilisearch.Config{
+      Host: "http://127.0.0.1:7700",
+    })
+
+    client.Indexes().Create(meilisearch.CreateIndexRequest{
+        UID: "movies",
+    })
+}
+```
+
+[About this package](https://github.com/meilisearch/meilisearch-go/)
 :::
 
 ::::
@@ -189,9 +255,7 @@ There are [several ways to let MeiliSearch know what the primary key](/guides/ma
 Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
 :::: tabs
-
-::: tab Curl
-
+::: tab cURL
 [API references](/references/documents.md)
 
 ```bash
@@ -206,36 +270,71 @@ $ curl \
 
 ```js
 const movies = require("./movies.json");
-meili.Index("movies").addDocuments(movies);
+index.addDocuments(movies).then((res) => console.log(res));
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-js/)
 :::
 
 ::: tab Ruby
 
 ```ruby
+require 'json'
+
+movies_json = File.read('movies.json')
+movies = JSON.parse(movies_json)
 index.add_documents(movies)
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-ruby/)
 :::
 
 ::: tab PHP
 
 ```php
-$index->addOrReplaceDocuments($movies);
+$movies_json = file_get_contents('movies.json');
+$movies = json_decode($movies_json);
+$index->addDocuments($movies);
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-php/)
 :::
 
 ::: tab Python
 
 ```python
-index = self.client.get_index(uid="movies")
+import json
+
 json_file = open('movies.json')
-data = json.load(json_file)
-response = index.add_documents(data)
+movies = json.load(json_file)
+index.add_documents(movies)
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-python/)
+:::
+
+::: tab Go
+
+```go
+import (
+    "encoding/json"
+    "io/ioutil"
+)
+```
+
+```go
+moviesJSON, _ := os.Open("movies.json")
+defer moviesJSON.Close()
+
+byteValue, _ := ioutil.ReadAll(moviesJSON)
+var movies []map[string]interface{}
+json.Unmarshal(byteValue, &movies)
+
+updateRes, _ := client.Documents("movies").AddOrUpdate(movies)
+fmt.Println(updateRes.UpdateID)
+```
+
+[About this package](https://github.com/meilisearch/meilisearch-go/)
 :::
 
 ::::
@@ -244,9 +343,15 @@ response = index.add_documents(data)
 
 Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were specified.
 
-You can [track the state of each action](/guides/advanced_guides/asynchronous_updates.md).
+The document addition process returns a JSON object containing only an `updateId` attribute.
 
-## Searches
+This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
+
+You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
+
+Checking the update status is not a mandatory step to search through your documents but could prove useful in tracing the origin of errors or unexpected behaviors.
+
+## Search
 
 Now that your documents have been ingested into MeiliSearch, you are able to [search them](/guides/main_concepts/search.md).
 
@@ -254,21 +359,13 @@ MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.m
 
 The search engine is now aware of your documents and can serve those via a HTTP server.
 
-```bash
-$ curl 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
-```
-
-We also provide an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) in which you can test MeiliSearch interactively. To do so, open your web browser and enter MeiliSearch address into the browser address bar. In that case, it would be: `http://127.0.0.1:7700`
-
 :::: tabs
-
-::: tab Curl
-
+::: tab cURL
 [API references](/references/search.md)
 
 ```bash
 $ curl \
-  -X POST 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
+  -X GET 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
 ```
 
 :::
@@ -276,16 +373,10 @@ $ curl \
 ::: tab JS
 
 ```js
-meili
-  .Index("movies")
-  .search({
-    q: "batman",
-  })
-  .then((response) => {
-    console.log(response);
-  });
+index.search("botman").then((res) => console.log(res));
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-js/)
 :::
 
 ::: tab Ruby
@@ -294,6 +385,7 @@ meili
 index.search('botman')
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-ruby/)
 :::
 
 ::: tab PHP
@@ -302,21 +394,34 @@ index.search('botman')
 $index->search('botman');
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-php/)
 :::
 
 ::: tab Python
 
 ```python
-index.search({
-  'q': 'How to Train Your Dragon'
-})
+index.search('botman')
 ```
 
+[About this package](https://github.com/meilisearch/meilisearch-python/)
+:::
+
+::: tab Go
+
+```go
+searchRes, _ := client.Search("movies").Search(meilisearch.SearchRequest{
+    Query: "botman",
+    Limit: 20,
+})
+fmt.Println(searchRes.Hits)
+```
+
+[About this package](https://github.com/meilisearch/meilisearch-go/)
 :::
 
 ::::
 
-MeiliSearch **response** :
+MeiliSearch **response**:
 
 ```json
 {
@@ -335,10 +440,24 @@ MeiliSearch **response** :
       "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
       "release_date": "2018-01-12"
     }
+    ...
   ],
   "offset": 0,
-  "limit": 2,
-  "processingTimeMs": 1,
+  "limit": 20,
+  "processingTimeMs": 2,
   "query": "botman"
 }
 ```
+
+### Web Interface
+
+We also deliver an an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) in which you can test MeiliSearch interactively.
+
+To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.<br>
+This will lead you to a web page with a search bar that will allow you to search in the selected index.
+
+![movies demo gif](/movies-web-demo.gif)
+
+::: warning
+Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/guides/advanced_guides/installation.md#environments).
+:::
