@@ -447,7 +447,7 @@ MeiliSearch **response**:
 
 MeiliSearch also offers an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search.
 
-All you need to do is open your web browser and enter MeiliSearch’s address to visit it locally (in our case: `http://127.0.0.1:7700`).<br>
+All you need to do is open your web browser and enter MeiliSearch’s address to visit it (in our case: `http://127.0.0.1:7700`).<br>
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
 ![movies demo gif](/movies-web-demo.gif)
