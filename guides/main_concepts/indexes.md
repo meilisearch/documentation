@@ -55,10 +55,10 @@ A set of synonyms can be defined for an index. In your dataset, you may decide t
 
 [Learn more about synonyms](/guides/advanced_guides/synonyms.md)
 
-A set of stop-words can be defined for an index. Those words will be ignored in documents and search queries. Typically those words could be redundant words of your chosen language, like `the` or `of` in English.
-By adding those words in the stop-words list, you avoid having documents considered highly relevant because of the recurrence of one of those words in a document.
+Sometimes you may want to ignore certain words in documents and search queries. To do so, a set of stop words can be defined for an index. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e. `the` or `of` in English).
+By adding words to a stop words list, these specific terms will be excluded from your search. It will avoid documents being considered highly relevant because of the high frequency of some words in a corpus.
 
-For example, on the following search query: `the great gatsby`, if the presence of the word `the` in a film review should not make the review more relevant. By adding `the` to the stop-word list, you avoid searching in documents containing only this stop word.
+For example, suppose you would perform the following search query: `the great gatsby`. Having the word `the` in a film review wouldn't make the review more relevant. By adding `the` to the stop word list, performance would be increased and search results more relevant.
 
 [Learn more about stop words](/guides/advanced_guides/stop_words.md)
 
