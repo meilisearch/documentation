@@ -55,7 +55,7 @@ It means that in many cases (e.g., documents addition), you will receive as serv
 This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.<br>
 
 ::: tip
-You can check the status of the operation using this `updateId` and the [get update status route](/references/updates.md#get-an-update-status).<br>
+You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md#get-an-update-status).<br>
 In addition, MeiliSearch delivers a global route to [track all your update status](/references/updates.md#get-all-update-status).<br>
 **This way, you will be informed if your action was processed or not, and <u>why</u>**.
 :::
