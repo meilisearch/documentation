@@ -17,13 +17,13 @@ Suppose you manage a database that contains information about movies. You would 
 
 Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. The information of one index doesn't impact other indexes.
 
-For example, it means you could create on the same server synonyms for a `movie` index and other synonyms for a `clothes` index which would be different.
+For example, it means you could create on the same server synonyms for a `movie` index and other synonyms which would be different for a `clothing` index.
 
 ## Index UID
 
 The `uid` is the **unique** identifier of a given index. It can be found on every `indexes/:index_uid` route as `:index_uid` parameter.
 
-The uid is set on [index creation](/references/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
+The uid is set at [index creation time](/references/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
 {
@@ -37,30 +37,30 @@ The uid is set on [index creation](/references/indexes.md#create-an-index). Once
 
 The primary key is a <clientGlossary word="field"/> present in all documents. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value. The primary key's attribute name **must** be known by the index. You can [set a primary key for an index](/guides/main_concepts/documents.md#setting-the-primary-key) in several ways.
 
-For detailed information about the document primary key, see [this section.](/guides/main_concepts/documents.md#primary-key)
+[Learn more about document primary key](/guides/main_concepts/documents.md#primary-key)
 
 ## Relevancy rules
 
-Each index applies its own relevancy rules. All indexes are created configured with the same default <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will be able to record how it should sort the keys. Their order of importance will be deduced from how the keys were listed in the document.
+Each index applies its own relevancy rules. All indexes are created configured with the same default <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will record how the keys must be sorted. Their order of importance will be deduced from how they were listed in the document.
 
 For example, if in your first document keys are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
 On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or popularity, or both and so on. Rules are customizable so the results meet your user's needs as close as possible.
 
-[More information about ranking rules](/guides/main_concepts/relevancy.md)
+[Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
 ## Synonyms and stop-words
 
 A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they look different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed. Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
 
-[More information about synonyms](/guides/advanced_guides/synonyms.md)
+[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
 
 A set of stop-words can be defined for an index. Those words will be ignored in documents and search queries. Typically those words could be redundant words of your chosen language, like `the` or `of` in English.
 By adding those words in the stop-words list, you avoid having documents considered highly relevant because of the recurrence of one of those words in a document.
 
 For example, on the following search query: `the great gatsby`, if the presence of the word `the` in a film review should not make the review more relevant. By adding `the` to the stop-word list, you avoid searching in documents containing only this stop word.
 
-[More information about stop words](/guides/advanced_guides/stop_words.md)
+[Learn more about stop words](/guides/advanced_guides/stop_words.md)
 
 ## Fields properties
 
