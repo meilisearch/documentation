@@ -41,11 +41,11 @@ For detailed information about the document primary key, see [this section.](/gu
 
 ## Relevancy rules
 
-Each index applies its own relevancy rules. All indexes are configured with the same default <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will be able to record how to sort the keys. This order of importance will be deduced from how the keys were listed in the document.
+Each index applies its own relevancy rules. All indexes are created configured with the same default <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will be able to record how it should sort the keys. Their order of importance will be deduced from how the keys were listed in the document.
 
-For example, if yin your first document keys are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
+For example, if in your first document keys are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
-On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or per popularity, or both. And so on, depending on your available data and your user's needs.
+On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or popularity, or both and so on. Rules are customizable so the results meet your user's needs as close as possible.
 
 [More information about ranking rules](/guides/main_concepts/relevancy.md)
 
