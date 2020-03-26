@@ -186,7 +186,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use MeiliSearch\Client;
 
-$client = new Client('http://localhost:7700');
+$client = new Client('http://127.0.0.1:7700');
 $index = $client->createIndex('movies');
 ```
 
