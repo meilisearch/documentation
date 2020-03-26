@@ -224,7 +224,7 @@ import (
 
 func main() {
     var client = meilisearch.NewClient(meilisearch.Config{
-      Host: "http://localhost:7700",
+      Host: "http://127.0.0.1:7700",
     })
 
     client.Indexes().Create(meilisearch.CreateIndexRequest{
