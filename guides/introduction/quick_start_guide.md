@@ -356,7 +356,7 @@ Now that your documents have been ingested into MeiliSearch, you are able to [se
 
 MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
-The search engine is now aware of your documents and can serve those via a HTTP server.
+The search engine is now aware of your documents and can serve those via an HTTP server.
 
 :::: tabs
 ::: tab cURL

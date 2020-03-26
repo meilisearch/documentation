@@ -140,7 +140,7 @@ If you get a `Could not infer a primary key` error, see detailed information abo
 
 ### Search for Documents
 
-The search engine is now aware of your documents and can serve those via a HTTP server.
+The search engine is now aware of your documents and can serve those via an HTTP server.
 
 ```bash
 $ curl 'http://127.0.0.1:7700/indexes/movies/search?q=botman'
