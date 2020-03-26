@@ -150,7 +150,7 @@ const MeiliSearch = require("meilisearch");
 
 var client = new MeiliSearch({ host: "http://127.0.0.1:7700" });
 const index = client
-  .createIndex({ uid: "indexUID" })
+  .createIndex({ uid: "movies" })
   .then((res) => console.log(res));
 ```
 
@@ -186,7 +186,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use MeiliSearch\Client;
 
-$client = new Client('http://localhost:7700');
+$client = new Client('http://127.0.0.1:7700');
 $index = $client->createIndex('movies');
 ```
 
@@ -224,7 +224,7 @@ import (
 
 func main() {
     var client = meilisearch.NewClient(meilisearch.Config{
-      Host: "http://localhost:7700",
+      Host: "http://127.0.0.1:7700",
     })
 
     client.Indexes().Create(meilisearch.CreateIndexRequest{
@@ -337,13 +337,13 @@ fmt.Println(updateRes.UpdateID)
 
 ### Checking updates
 
-The document addition returns a simple JSON with only an `updateId`.
+The document addition returns a JSON object with only an `updateId` attribute.
 
 This kind of **successful response** indicates that the operation has been taken into account, but it may not have been executed yet.
 
 You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
 
-Checking the update status is not a mandatory step to search through your documents but could be really useful in case of error.
+Checking the update status is not a mandatory step to search through your documents but could be really useful to understand what is happening in case of errors or unexpected behaviors.
 
 ## Search
 
@@ -447,8 +447,8 @@ MeiliSearch **response**:
 
 MeiliSearch also offers an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search.
 
-All you need to do is open your web browser and enter MeiliSearch’s address to visit it locally (in our case: `http://127.0.0.1:7700`).<br>
-This will lead you to a web page with a search bar that will allow you to search in a selected index.
+All you need to do is open your web browser and enter MeiliSearch’s address to visit it (in our case: `http://127.0.0.1:7700`).<br>
+This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
 ![movies demo gif](/movies-web-demo.gif)
 
