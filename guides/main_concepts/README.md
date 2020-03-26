@@ -10,5 +10,5 @@ MeiliSearch is an **asynchronous** API. This means that, unlike a synchronous AP
 
 The following key terms are used in this documentation. Before going any further, it is recommended to become familiar with them.
 
-* **[Index](indexes.md)**: An index is the entity that gathers all the documents of a given structure. It can be comparable to a table in `SQL`.
-* **[Document](documents.md)**: A document is an object which contains defined attributes and their associated data.
+- **[Index](indexes.md)**: An index is the entity that gathers all the documents of a given structure. It can be comparable to a table in `SQL`.
+- **[Document](documents.md)**: A document is an object which contains defined attributes and their associated data.

@@ -1,6 +1,7 @@
 # What's next?
 
 MeiliSearch was built on a few core concepts. If you haven't already done so, we invite you to explore the following pages that will give you an essential insight into our search engine:
+
 - [Indexes](/guides/main_concepts/indexes.md)
 - [Documents](/guides/main_concepts/documents.md)
 - [Search](/guides/main_concepts/search.md)

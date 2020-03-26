@@ -1,7 +1,7 @@
 # Quick Start
 
 MeiliSearch is very simple to install and deploy. It requires very little configuration to be up and running. Follow this step-by-step guide to get started!
- 
+
 ### Deploy the Server
 
 You can deploy the server on your own machine. By default, the server will listen to port 7700 for HTTP requests.
@@ -75,7 +75,6 @@ You can deploy the latest stable build of MeiliSearch straight on Heroku.
     <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
   </a>
 </p>
-
 
 Since all the source code from the GitHub repository will be compiled, the deployment process can take up to 20 minutes to complete.
 
