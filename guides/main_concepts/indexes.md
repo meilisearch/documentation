@@ -1,8 +1,8 @@
 # Indexes
 
-An index is the collection of a certain type of data.
+An index is the collection of a certain type of data, an entity that gathers a set of documents.
 
-It is, as a table in SQL, or a collection in MongoDB, an entity that collects a set of documents.
+It can be comparable to a table in `SQL`, or a collection in MongoDB.
 
 An index is defined by an `uid` and contains the following information:
 
@@ -13,18 +13,17 @@ An index is defined by an `uid` and contains the following information:
 
 #### Example
 
-In the case of a movie database, you probably have multiples categories. One for movie descriptions, one for actors, and one for reviews. Each one of these categories is represented by an index.
+Suppose you manage a database that contains information about movies. You would probably want to have multiple categories: one for movie descriptions, one for actors, and one for reviews. Each of these categories would be represented by an index in MeiliSearch.
 
-Each of the indexes has information about the fields found in the documents, how MeiliSearch handles them, and their order of importance. An index also has its own synonyms, relevancy rules, and stop words. The information of one index never acts on another index.
+Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. The information of one index doesn't impact other indexes.
 
-This means you can create synonyms for a `movie` index and different synonyms for a `clothes` index on the same MeiliSearch server.
+For example, it means you could create on the same server synonyms for a `movie` index and other synonyms for a `clothes` index which would be different.
 
 ## Index UID
 
-The `uid` of an index is its **unique** identifier. It is the `:index_uid` parameter found on every `indexes/:index_uid` route.
+The `uid` is the **unique** identifier of a given index. It can be found on every `indexes/:index_uid` route as `:index_uid` parameter.
 
-The uid is set on [index creation](/references/indexes.md#create-an-index). After which you cannot create another index with the same `uid`.
-The `uid` cannot be changed.
+The uid is set on [index creation](/references/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
 {
@@ -36,17 +35,17 @@ The `uid` cannot be changed.
 
 ## Primary key
 
-The primary key is a <clientGlossary word="field"/> present in all documents. This field is composed of a primary key <clientGlossary word="attribute"/> name and it's unique value. All documents in a given index have the same primary key attribute, with each a unique value. The primary key's attribute name **must** be known by the index. There are [multiple ways to set your primary key](/guides/main_concepts/documents.md#setting-the-primary-key).
+The primary key is a <clientGlossary word="field"/> present in all documents. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value. The primary key's attribute name **must** be known by the index. You can [set a primary key for an index](/guides/main_concepts/documents.md#setting-the-primary-key) in several ways.
 
-[More information about the document primary key](/guides/main_concepts/documents.md#primary-key)
+For detailed information about the document primary key, see [this section.](/guides/main_concepts/documents.md#primary-key)
 
 ## Relevancy rules
 
-Each index has its own relevancy rules. By default, all indexes come with the same <clientGlossary word="ranking rules"/> applied in the same order. Once you add your first document, from the order of the keys in this document, the index will be able to record which key is more important than another.
+Each index applies its own relevancy rules. All indexes are configured with the same default <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will be able to record how to sort the keys. This order of importance will be deduced from how the keys were listed in the document.
 
-For example, if your first document has the following keys in this order: `id, title, description, release_date`. A document containing the matching query in the `title` will be considered more relevant than a document where it is in `description`.
+For example, if yin your first document keys are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
-On top of that, you can add your own rule to the ranking rules. For example, you can rank your movies by release date or per popularity. It's also possible to do both. And so on, depending on your available data and your user's needs.
+On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or per popularity, or both. And so on, depending on your available data and your user's needs.
 
 [More information about ranking rules](/guides/main_concepts/relevancy.md)
 
