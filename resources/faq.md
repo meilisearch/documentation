@@ -39,7 +39,7 @@ If you have any hesitation about your language handling, please contact us.
 
 ## Do you provide a real dataset to test MeiliSearch?
 
-For now, we provide this [movies dataset](https://www.notion.so/meilisearch/A-movies-dataset-to-test-Meili-1cbf7c9cfa4247249c40edfa22d7ca87#b5ae399b81834705ba5420ac70358a65). More datasets are coming soon!
+For now, we provide this [movies dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json). More datasets are coming soon!
 
 ## I did a call to an API route, and I only got an `updateId` as a response. What does it mean?
 

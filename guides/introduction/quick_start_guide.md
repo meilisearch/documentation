@@ -143,9 +143,9 @@ $ curl \
 ::: tab JS
 
 ```bash
-npm install meilisearch
+$ npm install meilisearch
 # or
-yarn add meilisearch
+$ yarn add meilisearch
 ```
 
 ```js
@@ -215,7 +215,7 @@ index = client.create_index(uid='movies')
 ::: tab Go
 
 ```bash
-go get github.com/meilisearch/meilisearch-go
+$ go get github.com/meilisearch/meilisearch-go
 ```
 
 ```go
