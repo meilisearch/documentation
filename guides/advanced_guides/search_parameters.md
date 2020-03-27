@@ -133,7 +133,7 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 Attribute's value must be **equal** to the given string in the documents.
 
-The **comparision is case insensitive**.
+The **comparison is done in a case-insensitive manner**.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
