@@ -102,7 +102,7 @@ Any parameters not provided will be left unchanged.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings' \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
    "rankingRules": [
             "typo",
