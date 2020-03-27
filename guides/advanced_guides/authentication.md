@@ -17,7 +17,7 @@ When launching an instance, you have the option of giving a master key. By doing
 
 You can specify it by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
 
-Thanks to the master key, you can retrieve both the private and the public keys using the [keys route](/references/keys.md).
+You can retrieve both the private and the public keys using the master key on the [keys route](/references/keys.md).
 
 On each API call, the master key must be added to [the header](/references/#authentication).
 
