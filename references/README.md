@@ -27,7 +27,7 @@ All request and response body are in `JSON`. Always specify it in your header.
 #### Authentication
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
-Please read the [advanced part about keys](/guides/advanced_guides/keys.md) and [how to manage them](/references/keys.md) for more information.
+Please read the [advanced part about keys](/guides/advanced_guides/authentication.md) and [how to manage them](/references/keys.md) for more information.
 
 `X-Meili-API-Key: $API_KEY`
 
