@@ -3,20 +3,21 @@
 **Documents** are objects composed of fields which can store any type of data.</br>
 Each **field** contains an **attribute** and its associated data.
 
-```json
-{
-  "id": 3205,
-  "title": "Interstellar",
-  "description": "This is a great movie.",
-  "type": ["sci fi", "space"]
-}
-```
+![document structure](/document_structure.svg)
 
 #### Wording
 
+<<<<<<< HEAD
+
 - **Attribute**: An attribute is like a key (`"id"`, `"title"`, `"description"` and `"type"`).
 - **Field**: A field, or a key-value pair, is a set of two data items linked together. Here, an attribute and its corresponding data (i.e, `"title": "Interstellar"`).
-- **Document**: A document is an object which contains a list of fields in curly brackets.
+- # **Document**: A document is an object which contains a list of fields in curly brackets.
+- **Attribute**: An attribute is the name of a field, like a key.
+- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together: an attribute and its corresponding data
+- **Document**: A document is an object which collects a list of fields between curly brackets.
+- **[Primary key](/guides/main_concepts/documents.md#primary-key)**: The attribute of the field which contains the unique identifier of the documents.
+- **[Document id](/guides/main_concepts/documents.md#document-id)**: The unique value of a document.
+  > > > > > > > cf20813fb99994943b619a3e29426e08e8bd2c71
 
 ## Structure
 
@@ -86,9 +87,11 @@ If none has been found, no documents will be added.
 
 ❗️ If you get the `Could not infer a primary key` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending the [primary key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [updating your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in [setting the primary key](/guides/main_concepts/documents.md#primary-key) should solve this issue.
 
-### Primary key value format
+### Document Id
 
-Note that the primary key **value** must contain only `A-Z a-z 0-9` and `-_` characters.
+The document id is the value associated to the primary key.
+
+The document id must contain only `A-Z a-z 0-9` and `-_` characters.
 
 #### Examples
 
