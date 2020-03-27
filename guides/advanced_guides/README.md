@@ -4,7 +4,7 @@ These advanced guides cover how to tune your search API and customize it:
 
 - [How to install MeiliSearch](installation.md)
 - [Search parameters](search_parameters.md)
-- [Keys](keys.md)
+- [Authentication](authentication.md)
 - [Synonyms](synonyms.md)
 - [Stop words](stop_words.md)
 - [Distinct](distinct.md)
