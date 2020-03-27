@@ -4,7 +4,7 @@ Each instance of MeiliSearch has three keys: a master, a private, and a public. 
 
 You must have the master key to access the `keys` route.
 
-[More information about the keys and their rights](/guides/advanced_guides/keys.md).
+[More information about the keys and their rights](/guides/advanced_guides/authentication.md).
 
 ## Get keys
 
