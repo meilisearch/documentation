@@ -133,7 +133,7 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 Attribute's value must be **equal** to the given string in the documents.
 
-The **equality is case insensitive**.
+The **comparision is case insensitive**.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
@@ -149,6 +149,15 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
   "overview": "Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
   "release_date": 1536282000
 }
+```
+
+Filters only accept one parameter that should be url encoded.
+
+```bash
+$ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
+        -d q=shifu \
+        -d filters='title:Kung%20Fu%20Panda' \
+        -i
 ```
 
 ## Matches
