@@ -324,7 +324,7 @@ fmt.Println(updateRes.UpdateID)
 
 ### Checking updates
 
-Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were specified.
+Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were sent.
 
 The document addition process returns a JSON object containing only an `updateId` attribute.
 
