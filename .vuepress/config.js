@@ -1,6 +1,6 @@
 const ogprefix = "og: http://ogp.me/ns#";
 module.exports = {
-  title: "MeiliSearch Documentation v0.9",
+  title: "MeiliSearch Documentation v0.9.1",
   description: "Open source Instant Search Engine",
   themeConfig: {
     repo: "meilisearch/MeiliSearch",
