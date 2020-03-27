@@ -3,20 +3,15 @@
 **Documents** are objects composed of fields containing any type of data.</br>
 A **field** is composed of an **attribute** and its associated data.
 
-```json
-{
-  "id": 3205,
-  "title": "Interstellar",
-  "description": "This is a great movie.",
-  "type": ["sci fi", "space"]
-}
-```
+![document structure](/document_structure.svg)
 
 #### Wording
 
-- **Attribute**: `"id"`, `"title"`, `"description"` and `"type"`.
-- **Field**: the combination of attributes and data (i.e, `"title": "Interstellar"`)
-- **Document**: The combination of all the fields between brackets.
+- **Attribute**: An attribute is the name of a field, like a key.
+- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together: an attribute and its corresponding data
+- **Document**: A document is an object which collects a list of fields between curly brackets.
+- **[Primary key](/guides/main_concepts/documents.md#primary-key)**: The attribute of the field which contains the unique identifier of the documents.
+- **[Document id](/guides/main_concepts/documents.md#document-id)**: The unique value of a document.
 
 ## Structure
 
@@ -86,9 +81,11 @@ If none has been found, no documents will be added.
 
 ❗️ If you get the `document id error`, it means MeiliSearch could not recognize your primary key. This means your primary key does not answer the formatting explained above. To solve this error, you could send the [primary key's name as a query parameter](/references/documents.md#add-or-replace-documents) or [update your index to add the primary key's name](/references/indexes.md#create-an-index) as explained in [setting the primary key](/guides/main_concepts/documents.md#primary-key).
 
-### Primary key value format
+### Document Id
 
-The primary key **value** may contain only `A-Z a-z 0-9` and `-_` characters.
+The document id is the value associated to the primary key.
+
+The document id must contain only `A-Z a-z 0-9` and `-_` characters.
 
 #### Examples
 
