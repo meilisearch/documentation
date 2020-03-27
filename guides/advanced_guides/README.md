@@ -1,6 +1,6 @@
 # Advanced guides
 
-The advanced guides cover how to tune your search API and customize it:
+These advanced guides cover how to tune your search API and customize it:
 
 - [How to install MeiliSearch](installation.md)
 - [Search parameters](search_parameters.md)
