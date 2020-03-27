@@ -4,7 +4,9 @@ This repository is the documentation for the **open-source search engine API [Me
 
 ## Contributing
 
-Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you! First, clone this repository, commit your changes and open a pull request. If you think something is missing or could be improved, issues are highly appreciated.
+Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you! If you think something is missing or could be improved, issues are highly appreciated.
+
+To contribute, clone this repository, commit your changes and open a pull request.
 
 Thank you for considering helping out!
 
