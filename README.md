@@ -29,7 +29,7 @@ A complete test can be done using the following command:
 $ yarn test
 ```
 
-This will also trigger `yarn build` on any pull request to master.
+The tests are triggered on build and on any pull request to master.
 
 #### Checking dead links
 
