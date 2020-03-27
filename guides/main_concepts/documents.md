@@ -7,8 +7,6 @@ Each **field** contains an **attribute** and its associated data.
 
 #### Wording
 
-<<<<<<< HEAD
-
 - **Attribute**: An attribute is like a key (`"id"`, `"title"`, `"description"` and `"type"`).
 - **Field**: A field, or a key-value pair, is a set of two data items linked together. Here, an attribute and its corresponding data (i.e, `"title": "Interstellar"`).
 - # **Document**: A document is an object which contains a list of fields in curly brackets.
