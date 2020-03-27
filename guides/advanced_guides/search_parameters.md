@@ -131,7 +131,7 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 `filters=<Attribute>:<String>`
 
-Attribute's value must be **equal** to the given string in the documents.
+The given attribute's value must be **equal** to the value of the attribute in the documents. Filters accept **only one** parameter.
 
 The **comparison is done in a case-insensitive manner**.
 
