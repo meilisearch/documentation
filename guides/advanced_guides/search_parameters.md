@@ -151,7 +151,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
 }
 ```
 
-Filters only accept one parameter that should be url encoded.
+Filters only accept one parameter that should be URL-encoded.
 
 ```bash
 $ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
