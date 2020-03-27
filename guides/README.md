@@ -2,7 +2,7 @@
 
 This guide is made to give you an overview of MeiliSearch. Every bit of information is linked to useful parts of the documentation.
 
-If you want an even quicker overview we suggest [you look into our quickstart](/tutorials/howtos/quickstart).
+If you want an even quicker overview we suggest [you look into our quickstart](/tutorials/howtos/quickstart.md).
 
 Content:
 
