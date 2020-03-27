@@ -39,7 +39,10 @@ Using **Docker** you can choose to run [any available tags](https://hub.docker.c
 This command starts the **latest stable release** of MeiliSearch.
 
 ```bash
-$ docker run -it --rm -p 7700:7700 -v $(pwd)/data.ms:/data.ms getmeili/meilisearch
+$ docker run -it --rm \
+    -p 7700:7700 \
+    -v $(pwd)/data.ms:/data.ms \
+    getmeili/meilisearch
 Server is listening on: http://0.0.0.0:7700
 ```
 
