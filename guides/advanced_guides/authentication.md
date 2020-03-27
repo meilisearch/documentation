@@ -29,6 +29,6 @@ If no master key is provided, all routes can be accessed without requiring any k
 
 Since both the private and the public keys are generated based on your master key, changing the master key will result in the modification of the two other keys.
 
-After having changing reset master key, it is mandatory to restart the MeiliSearch server to ensure the renewal of the private and the public keys.
+After having changed your master key, it is mandatory to restart the MeiliSearch server to ensure the renewal of the private and the public keys.
 
 **All keys will be changed**. Therefore, it is not possible to change only one of the keys.
