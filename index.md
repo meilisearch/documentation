@@ -44,4 +44,4 @@ Why should you use MeiliSearch instead of any other existing solution? If it is 
   - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
   - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
 - **RESTful API**
-- **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that allows try the search engine out during development.
+- **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that allows to try the search engine out during development.
