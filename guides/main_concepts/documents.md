@@ -104,4 +104,4 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-The document addition request in MeiliSearch is <!-- prettier-ignore -->[atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, for example, if you submit 200 documents in one go and it happens one of them contains a wrongly formatted primary key, an error will occur and result in no additions.
+The document addition request in MeiliSearch is <!-- prettier-ignore -->[atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). Thus, for example, if you submit 200 documents in one go and it happens one of them contains a wrongly formatted document id, an error will occur and result in no additions.
