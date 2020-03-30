@@ -36,7 +36,7 @@ In order to be indexed, each **document must contain** [the primary key field](/
 ## Fields
 
 By default, all fields included in a document are <clientGlossary word="searchable" /> and <clientGlossary word="displayed" />.
-You can adjust how a field get handled by MeiliSearch in the settings <Badge text="soon" type="warn"/>. It can either be searchable or displayed, or none of both. In the latter case, the field will be completely ignored when a document is sent.
+You can adjust how a field get handled by MeiliSearch in the settings <Badge text="soon" type="warn"/>. It can either be searchable or displayed, both, or none of both. In the latter case, the field will be completely ignored when a document is sent.
 
 You can also apply <clientGlossary word="ranking rules" /> to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
