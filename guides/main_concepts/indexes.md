@@ -49,11 +49,13 @@ On top of that, you can add your custom rules to the ranking rules. For example,
 
 [Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
-## Synonyms and stop-words
+## Synonyms
 
 A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they look different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed. Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
 
 [Learn more about synonyms](/guides/advanced_guides/synonyms.md)
+
+## Stop words
 
 Sometimes you may want to ignore certain words in documents and search queries. To do so, a set of stop words can be defined for an index. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e. `the` or `of` in English).
 By adding words to a stop words list, these specific terms will be excluded from your search. It will avoid documents being considered highly relevant because of the high frequency of some words in a corpus.
