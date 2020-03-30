@@ -42,13 +42,8 @@ Results are sorted by the similarity of the matched words with the query words: 
 
 ## Distinct attribute
 
-
 ## Searchable attributes
-
 
 ## Displayed attributes
 
-
 ## Accept new fields
-
-
