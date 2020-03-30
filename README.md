@@ -8,7 +8,6 @@ Hey, thank you so much for wanting to contribute! If you'd like to help improve 
 
 To contribute, clone this repository, commit your changes and open a pull request.
 
-
 ### Installing & Running
 
 ```bash
