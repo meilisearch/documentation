@@ -15,6 +15,7 @@ module.exports = {
       { text: "API References", link: "/references/" },
       { text: "Tutorials", link: "/tutorials/" },
       { text: "Resources", link: "/resources/" },
+      { text: "Slack", link: "https://slack.meilisearch.com" },
     ],
     sidebar: {
       "/guides/": [
