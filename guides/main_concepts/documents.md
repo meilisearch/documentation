@@ -1,7 +1,7 @@
 # Documents
 
 **Documents** are objects composed of fields which can store any type of data.</br>
-Each **field** contains an **attribute** and its associated data.
+Each **field** contains an **attribute** and its associated value.
 
 ![document structure](/document_structure.svg)
 
