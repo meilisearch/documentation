@@ -78,7 +78,7 @@ MeiliSearch can deduce which field is the `primary key` in several ways.
 If no primary key has been given either when the index was created or as a parameter of the add documents route, the primary key will be searched in the first document sent.
 
 MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (i.e, `uid`, `MovieId`, `ID`, `123id123`).<br>
-If none has been found, no documents will be added.
+If no corresponding attribute has been found, the index will have no known primary key, and therefore, no documents will be added.
 
 #### Missing primary key error
 
