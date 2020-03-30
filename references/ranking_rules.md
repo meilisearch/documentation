@@ -71,7 +71,7 @@ For descending it would be: `dsc(release_date)`
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
+  -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
   --data '[
             "typo",
             "words",
@@ -80,7 +80,7 @@ $ curl \
             "wordsPosition",
             "exactness",
             "dsc(release_date)",
-            "dsc(rank)",
+            "dsc(rank)"
         ]'
 ```
 
