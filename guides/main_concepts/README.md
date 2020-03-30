@@ -3,7 +3,7 @@
 This section defines the main concepts of MeiliSearch.
 
 ::: tip Important
-MeiliSearch is an **asynchronous** API. This means that, unlike a synchronous API, it doesn't wait for a return as calls are placed in a queue for processing. For further information please read [the advanced guide](/guides/advanced_guides/asynchronous_updates.md).
+MeiliSearch is an **asynchronous** API. This means that, unlike a synchronous API, it doesn't wait for the call to be done as calls are placed in a queue for processing. For further information please read [the advanced guide](/guides/advanced_guides/asynchronous_updates.md).
 :::
 
 ## Glossary
