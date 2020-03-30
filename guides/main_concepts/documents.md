@@ -18,7 +18,7 @@ Each **field** contains an **attribute** and its associated value.
 
 ## Structure
 
-Documents are stored in `JSON format`.<br/>
+Documents are sent to MeiliSearch in `JSON format`.<br/>
 When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document.
 
 ```bash
