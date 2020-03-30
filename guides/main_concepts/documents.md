@@ -67,7 +67,7 @@ Suppose we have an index of 200k `documents` called `movie`. Each document is id
 
 ### Setting the primary key
 
-MeiliSearch can deduce which field is the `primary key` in several ways.
+There are several ways for MeiliSearch to know which field is the `primary key` in several ways.
 
 - MeiliSearch [automatically infers the primary key](/guides/main_concepts/documents.md#meilisearch-infers-your-primary-key) based on your first document.
 - Set it [on index creation](/references/indexes.md#create-an-index)
