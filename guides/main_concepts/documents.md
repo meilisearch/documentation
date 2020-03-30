@@ -15,7 +15,6 @@ Each **field** contains an **attribute** and its associated value.
 - **Document**: A document is an object which collects a list of fields between curly brackets.
 - **[Primary key](/guides/main_concepts/documents.md#primary-key)**: The attribute of the field which contains the unique identifier of the documents.
 - **[Document id](/guides/main_concepts/documents.md#document-id)**: The unique value of a document.
-  > > > > > > > cf20813fb99994943b619a3e29426e08e8bd2c71
 
 ## Structure
 
