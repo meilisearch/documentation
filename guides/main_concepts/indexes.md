@@ -7,9 +7,7 @@ It can be comparable to a table in `SQL`, or a collection in MongoDB.
 An index is defined by an `uid` and contains the following information:
 
 - One <clientGlossary word="primary key"/>
-- A set of relevancy rules (based on presets and customization)
-- A list of synonyms and stop-words
-- Rules for each field of a document
+- Default settings that can be configured as needed: relevancy rules, synonyms, stop words, and field properties.
 
 #### Example
 
