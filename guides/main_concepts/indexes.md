@@ -63,7 +63,7 @@ For example, suppose you would perform the following search query: `the great ga
 
 [Learn more about stop words](/guides/advanced_guides/stop_words.md)
 
-## Fields properties
+## Field properties
 
 By default, every document field is searchable and returned on search queries.
 
