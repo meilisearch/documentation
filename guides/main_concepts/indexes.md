@@ -21,7 +21,7 @@ For example, it means you could create on the same server synonyms for a `movie`
 
 ## Index UID
 
-The `uid` is the **unique** identifier of a given index. It can be found on every `indexes/:index_uid` route as `:index_uid` parameter.
+The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
 The uid is set at [index creation time](/references/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
