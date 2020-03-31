@@ -17,7 +17,7 @@ Suppose you manage a database that contains information about movies. You would 
 
 Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. The information of one index doesn't impact other indexes.
 
-For example, it means you could create on the same server synonyms for a `movie` index and other synonyms which would be different for a `clothing` index.
+For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `clothing` index.
 
 ## Index UID
 
