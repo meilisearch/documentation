@@ -41,7 +41,7 @@ The primary key is a <clientGlossary word="field"/> present in all documents. Th
 
 ## Relevancy rules
 
-Each index applies its own relevancy rules. All indexes are created configured with the same default <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will record how the keys must be sorted. Their order of importance will be deduced from how they were listed in the document.
+Each index applies its own relevancy rules. All indexes are created with the same built-in <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance will be deduced from their order of appearance in the document.
 
 For example, if in your first document attributes are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
