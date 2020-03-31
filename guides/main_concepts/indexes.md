@@ -13,7 +13,7 @@ An index is defined by an `uid` and contains the following information:
 
 Suppose you manage a database that contains information about movies. You would probably want to have multiple categories: one for movie descriptions, one for actors, and one for reviews. Each of these categories would be represented by an index in MeiliSearch.
 
-Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. The information of one index doesn't impact other indexes.
+Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. **The information of one index doesn't impact other indexes.**
 
 For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `clothing` index.
 
@@ -43,21 +43,23 @@ Each index applies its own relevancy rules. All indexes are created with the sam
 
 For example, if in your first document attributes are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
-On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or popularity, or both and so on. Rules are customizable so the results meet your user's needs as close as possible.
+On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or popularity, or both and so on. **Rules are customizable** so the results meet your user's needs as close as possible.
 
 [Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
 ## Synonyms
 
-A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed. Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
+A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed.
+
+Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
 
 [Learn more about synonyms](/guides/advanced_guides/synonyms.md)
 
 ## Stop words
 
 Sometimes you may want to ignore certain words in documents and search queries. To do so, a set of stop words can be defined for an index. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e. `the` or `of` in English).
-By adding words to a stop words list, these specific terms will be excluded from your search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/guides/main_concepts/relevancy.md#_4-attribute) or in a good [position](/guides/main_concepts/relevancy.md#ranking-rules).
-This will also greatly improve the search time because all the documents containing only those words will not be used in the sorting of documents.
+
+By adding words to a stop words list, these specific terms will be excluded from your search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/guides/main_concepts/relevancy.md#_4-attribute) or in a good [position](/guides/main_concepts/relevancy.md#ranking-rules). This will also greatly improve the search time because all the documents containing only those words will not be used in the sorting of documents.
 
 For example, suppose you would perform the following search query: `the great gatsby`. Having the word `the` in a film review wouldn't make the review more relevant. By adding `the` to the stop word list, performance would be increased and search results more relevant.
 
@@ -65,9 +67,7 @@ For example, suppose you would perform the following search query: `the great ga
 
 ## Field properties
 
-By default, every document field is searchable and returned on search queries.
-
-The properties of the fields can be modified in the [settings](/references/settings.md).
+By default, every document field is searchable and returned on search queries. Each field is also stored and this behavior cannot be changed.
 
 Fields can have either or both or none of the following properties:
 
@@ -76,5 +76,7 @@ Fields can have either or both or none of the following properties:
 
 The content of searchable fields is used by MeiliSearch to assess the relevancy of a document.
 Documents returned upon search contain only displayed fields.
+
+Field properties can be modified in the [settings](/references/settings.md).
 
 [Learn more about field properties](/guides/advanced_guides/field_properties.md)
