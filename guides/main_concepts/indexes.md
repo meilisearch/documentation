@@ -35,7 +35,7 @@ The uid is set at [index creation time](/references/indexes.md#create-an-index).
 
 ## Primary key
 
-The primary key is a <clientGlossary word="field"/> present in all documents. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value. The primary key's attribute name **must** be known by the index. You can [set a primary key for an index](/guides/main_concepts/documents.md#setting-the-primary-key) in several ways.
+The primary key is a <clientGlossary word="field"/> present in all documents. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value. The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/guides/main_concepts/documents.md#setting-the-primary-key).
 
 [Learn more about document primary key](/guides/main_concepts/documents.md#primary-key)
 
