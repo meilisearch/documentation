@@ -1,6 +1,6 @@
 # Indexes
 
-An index is the collection of a certain type of data, an entity that gathers a set of documents.
+An index is an entity that gathers a set of documents with its own settings.
 
 It can be comparable to a table in `SQL`, or a collection in MongoDB.
 
