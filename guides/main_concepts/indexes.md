@@ -51,7 +51,7 @@ On top of that, you can add your custom rules to the ranking rules. For example,
 
 ## Synonyms
 
-A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they look different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed. Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
+A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed. Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
 
 [Learn more about synonyms](/guides/advanced_guides/synonyms.md)
 
