@@ -1,6 +1,6 @@
 # Field properties
 
-Every document field can have either or both or none of the following properties (which can be modified in the [settings](/references/settings.md)):
+Every document field can have either or both or none of the following properties that can be modified in the [settings](/references/settings.md):
 
 - Searchable
 - Displayed

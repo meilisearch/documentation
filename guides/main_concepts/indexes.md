@@ -67,13 +67,13 @@ For example, suppose you would perform the following search query: `the great ga
 
 ## Field properties
 
-By default, every document field is searchable and returned on search queries. Each field is also stored and this behavior cannot be changed.
+By default, every document field is searchable and returned on search queries.
 
-Fields can have either or both or none of the following properties:
+Fields can have either or both or none of the following properties that can be modified in the [settings](/references/settings.md):
 
 - **Searchable**: The content of searchable fields is used by MeiliSearch to assess the relevancy of a document.
 - **Displayed**: Documents returned upon search contain only displayed fields.
 
-Field properties can be modified in the [settings](/references/settings.md).
+By default, each field is stored and this behavior cannot be changed.
 
 [Learn more about field properties](/guides/advanced_guides/field_properties.md)
