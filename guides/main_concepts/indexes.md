@@ -75,5 +75,6 @@ Fields can have either or both or none of the following properties:
 - Displayed
 
 The content of searchable fields is used by MeiliSearch to assess the relevancy of a document.
+Documents returned upon search contain only displayed fields.
 
 [Learn more about field properties](/guides/advanced_guides/field_properties.md)
