@@ -71,11 +71,8 @@ By default, every document field is searchable and returned on search queries. E
 
 Fields can have either or both or none of the following properties:
 
-- Searchable
-- Displayed
-
-The content of searchable fields is used by MeiliSearch to assess the relevancy of a document.
-Documents returned upon search contain only displayed fields.
+- **Searchable**: The content of searchable fields is used by MeiliSearch to assess the relevancy of a document.
+- **Displayed**: Documents returned upon search contain only displayed fields.
 
 Field properties can be modified in the [settings](/references/settings.md).
 
