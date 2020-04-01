@@ -66,22 +66,6 @@ Server is listening on: http://127.0.0.1:7700
 
 :::
 
-::: tab Heroku
-
-You can deploy the latest stable build of MeiliSearch straight on Heroku.
-
-<p align="center">
-  <a href="https://heroku.com/deploy?template=https://github.com/meilisearch/MeiliSearch">
-    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-  </a>
-</p>
-
-Since all the source code from the GitHub repository will be compiled, the deployment process can take up to 20 minutes to complete.
-
-::: warning
-The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means data loss may occur on restart. **The Heroku deployment is useful for testing purposes; however, it won't meet the requirements for production deployments.**
-:::
-
 ::: tab Source
 
 MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
