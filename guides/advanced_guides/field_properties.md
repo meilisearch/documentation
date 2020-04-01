@@ -7,7 +7,7 @@ Every field in a document is by default searchable and displayed. These properti
 
 ## Searchable fields
 
-Searchable fields are fields whose attribute is stored in the [searchable-attributes](/references/searchable_attributes.md) list.
+Searchable fields are fields whose attribute is present in the [searchable-attributes](/references/searchable_attributes.md) list.
 
 The content of a searchable field is used by MeiliSearch to **assess the relevancy of a document**.
 
