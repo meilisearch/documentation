@@ -1,6 +1,6 @@
 # Field properties
 
-Every document field can have either or both or none of the following properties that can be modified in the [settings](/references/settings.md):
+Every field in a document is by default searchable and displayed. These properties can be modified in the [settings](/references/settings.md):
 
 - Searchable
 - Displayed
