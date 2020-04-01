@@ -19,7 +19,7 @@ This list can be restricted to a specific set of attributes that you can select 
 
 ## Displayed attributes
 
-Displayed fields are fields whose attribute is stored in the [displayed-attributes](/references/displayed_attributes.md) list.
+Displayed fields are fields whose attribute is present in the [displayed-attributes](/references/displayed_attributes.md) list.
 
 Documents returned upon search **contain only displayed fields**.
 
