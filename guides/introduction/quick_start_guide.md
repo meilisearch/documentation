@@ -348,7 +348,7 @@ The search engine is now aware of your documents and can serve those via an HTTP
 
 ```bash
 $ curl \
-  -X GET 'http://127.0.0.1:7700/indexes/12345678/search?q=botman'
+  -X GET 'http://127.0.0.1:7700/indexes/movies/search?q=botman'
 ```
 
 :::
