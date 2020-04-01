@@ -26,7 +26,7 @@ Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings/stop-words'
+  -X GET 'http://localhost:7700/indexes/movies/settings/stop-words'
 ```
 
 #### Response: `200 Ok`
@@ -57,7 +57,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/12345678/settings/stop-words' \
+  -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
   --data '["the", "of", "to"]'
 ```
 
@@ -91,7 +91,7 @@ Empty array: `[]`
 
 ```bash
 $ curl \
-  -X DELETE 'http://localhost:7700/indexes/12345678/settings/stop-words' \
+  -X DELETE 'http://localhost:7700/indexes/movies/settings/stop-words' \
 ```
 
 #### Response: `202 Accepted`
