@@ -26,19 +26,19 @@ Although the API will send back documents even if the query is only one characte
 
 ## Offset
 
-`offset=<Integer>`.
+`offset=<Integer>`
 
 X first documents to skip. This is helpful for **pagination**
 
 ## Limit
 
-`limit=<Integer>`.
+`limit=<Integer>`
 
 X number of documents in the search query response. This is helpful for **pagination**
 
 ## Attributes to retrieve
 
-`attributesToRetrieve=<Attribute>,<Attribute>,...`.
+`attributesToRetrieve=<Attribute>,<Attribute>,...`
 
 Attributes that will appear in the returned documents.
 
