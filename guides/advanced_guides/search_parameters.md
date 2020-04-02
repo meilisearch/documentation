@@ -221,7 +221,7 @@ This is useful when you need to highlight the results without the default HTML h
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=shifu \
-        -d attributesToHighlight=overview
+        -d attributesToHighlight=overview \
         -d matches=true
 ```
 
