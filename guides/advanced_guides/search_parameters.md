@@ -28,7 +28,7 @@ Search parameters let the user customize their search request.
 Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API responds.
 :::
 
-## Query parameters
+### Query parameters
 
 ## Offset
 
