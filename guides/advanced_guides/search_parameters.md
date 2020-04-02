@@ -62,6 +62,14 @@ This is useful when you have specific needs for displaying results on the front-
 
 **Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2` chars on each side of the first match.
 
+## Crop length
+
+`cropLength=<Integer>`
+
+- `<Integer>` (Optional, positive integer)
+
+  If the value of the parameter `cropLength` is _n_, _n_ is the total length of the cropped field.
+
 #### Example
 
 If you input `shifu` as a search query and set the value of the parameter `cropLength` to 100 as below:
@@ -93,14 +101,6 @@ You would get this response:
   }
 }
 ```
-
-## Crop length
-
-`cropLength=<Integer>`
-
-- `<Integer>` (Optional, positive integer)
-
-  If the value of the parameter `cropLength` is _n_, _n_ is the total length of the cropped field. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
 
 ## Attributes to highlight
 
