@@ -52,7 +52,7 @@ Since Lucene is the technology behind many open source or closed source search e
 
 #### Sonic
 
-Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution and, compared to MeiliSearch, it does not ensure relevancy ranking. Indeed, it does not store any documents but is comprised of an inverted index with a Levenshtein automaton, which means an application querying Sonic has to retrieve the search results from an external database using the IDs that are returned and then apply some relevancy ranking.
+Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution and, compared to MeiliSearch, it does not ensure relevancy ranking. Indeed, it does not store any documents but is comprised of an inverted index with a Levenshtein automaton, which means any application querying Sonic has to retrieve the search results from an external database using the IDs that are returned and then apply some relevancy ranking.
 Its ability to run on a few MBs of RAM makes it a minimalist and resource-efficient alternative to database tools that can be too heavyweight to scale.
 
 #### Typesense
@@ -83,7 +83,7 @@ Today, Lucene and Elasticsearch are dominant players in the open-source search e
 #### Algolia
 
 Algolia is a company providing a search engine on a SaaS model. Its software is closed source. In its early stages, Algolia offered mobile search engines that could be embedded in apps, facing the challenge of implementing the search algorithms from scratch. From the very beginning, the decision was made to build a search engine directly dedicated to the end-users, i.e., implementing search within mobile apps or websites.
-Algolia successfully demonstrated over the past few years how critical tolerating typos are in order to improve the users' experience, and in the same way, its impact on reducing bounce rate and increasing conversion.
+Algolia successfully demonstrated over the past few years how critical tolerating typos was in order to improve the users' experience, and in the same way, its impact on reducing bounce rate and increasing conversion.
 
 Apart from Algolia, a wide choice of SaaS products are available on the Search Engine Market. Most of them use Elasticsearch and fine-tune its settings in order to have a custom and personalized solution.
 
@@ -103,7 +103,8 @@ We cannot, therefore, compare ourselves with Lucene-based or other search engine
 
 In the particular use case we cover, the most similar solutions to MeiliSearch are Algolia and Typesense. The three of them are search-as-you-type relevant search engines.
 
-Typesense is a great tool but is not recommended for achieving a lot of operations with minimal configuration. <br>
+Typesense is a great tool but is not recommended for achieving a lot of operations with minimal configuration.
+
 While Algolia offers the most advanced and powerful search features, this efficiency comes with an expensive pricing. Moreover, their service is marketed to big companies.
 
 MeiliSearch is dedicated to all types of developers. Our goal is to deliver a developer-friendly tool, easy to install, and to deploy. Because providing an out-of-the-box awesome search experience for the end-users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.
