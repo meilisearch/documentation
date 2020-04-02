@@ -28,7 +28,9 @@ Although the API will send back documents even if the query is only one characte
 
 `offset=<Integer>`
 
-X first documents to skip. This is helpful for **pagination**
+- `<Integer>` (Optional, positive integer)
+
+  If the value of the parameter `offset` is _n_, _n_ first documents to skip. This is helpful for **pagination**.
 
 ## Limit
 
