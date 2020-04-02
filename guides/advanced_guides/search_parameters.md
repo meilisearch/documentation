@@ -37,6 +37,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Integer>` (Optional, positive integer)
 
   If the value of the parameter `offset` is _n_, _n_ first documents to skip. This is helpful for **pagination**.
+
   Defaults to `0`.
 
 ## Limit
@@ -46,6 +47,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Integer>` (Optional, positive integer)
 
   If the value of the parameter `limit` is _n_, there will be _n_ documents in the search query response. This is helpful for **pagination**.
+
   Defaults to `20`.
 
 ## Attributes to retrieve
@@ -55,6 +57,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Attribute>` (Optional, string)
 
   Comma-separated list of attributes that will appear in the returned documents.
+
   Defaults to `*`.
 
 ## Attributes to crop
@@ -64,6 +67,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Attribute>` (Optional, string)
 
   Comma-separated list of attributes whose values will be cropped depending on the `cropLength` and the matches.
+
   Defaults to `none`.
 
 ::: tip
@@ -79,6 +83,7 @@ This is useful when you have specific needs for displaying results on the front-
 - `<Integer>` (Optional, positive integer)
 
   If the value of the parameter `cropLength` is _n_, _n_ is the total length of the cropped field.
+
   Defaults to `200`.
 
 #### Example
@@ -119,7 +124,8 @@ You would get this response:
 
 - `<Attribute>` (Optional, string)
 
-  Comma-separated list of attributes. Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag
+  Comma-separated list of attributes. Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
+
   Defaults to `none`.
 
 #### Example
@@ -160,6 +166,7 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 - `<Attribute>:<Value>` (Optional, string)
 
   Two strings separated by a colon.
+
   Defaults to `none`.
 
   - `<Attribute>`: An attribute name.
@@ -202,6 +209,7 @@ $ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
 - `<Boolean>` (Optional, boolean)
 
   If `true`, returns an array of the search query occurrences in all fields. A search query occurrence is given by a `start` position in the field and the `length` of the occurrence.
+
   Defaults to `false`.
 
 ::: tip
