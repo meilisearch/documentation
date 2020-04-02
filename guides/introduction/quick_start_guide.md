@@ -47,7 +47,7 @@ Server is listening on: http://0.0.0.0:7700
 ```
 
 ::: warning
-Docker is not persistent. You should share a volume to make your container filesystem persistent. MeiliSearch write its data at `/data.ms`
+Data written to a Docker container is not persistent and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
 :::
 
 ::: tab APT
@@ -65,34 +65,18 @@ Server is listening on: http://127.0.0.1:7700
 
 :::
 
-::: tab Heroku
-
-You can deploy the latest stable build of MeiliSearch straight on Heroku.
-
-<p align="center">
-  <a href="https://heroku.com/deploy?template=https://github.com/meilisearch/MeiliSearch">
-    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-  </a>
-</p>
-
-The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
-
-::: warning
-The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
-:::
-
 ::: tab Source
 
-MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
+MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
 
-If you have the Rust toolchain already installed, you need to clone the repository and go to the cloned directory.
+If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
 $ git clone https://github.com/meilisearch/MeiliSearch
 $ cd MeiliSearch
 ```
 
-Inside the folder, compile MeiliSearch.
+In the cloned repository, compile MeiliSearch.
 
 ```bash
 # Update the rust toolchain to the latest version
@@ -109,20 +93,20 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. With them, you can, among other things, add the **master key** or set the **port**.
+[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. Amongst all the flags, you can use the **master key** and the **port** flags.
 
 ### Communicate with MeiliSearch
 
-Now that our MeiliSearch server is up and running, we will be able to communicate with it.
+Now that your MeiliSearch server is up and running, you should be able to communicate with it.
 
-This is done through a [RESTful API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
+Communication to the server is done through a [RESTful API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
 ## Create your Index
 
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and the associated documents.<br>
-The indexes can be imagined as SQL tables. But you won't need to define the table because MeiliSearch is <clientGlossary word="schemaless"/>.
+In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and associated documents.<br>
+Indexes can be comparable to SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
 
-In order to be able to store our documents in an index, we have to create one first.
+In order to be able to store your documents in an index, it is required you create one first.
 
 :::: tabs
 
@@ -243,15 +227,15 @@ func main() {
 
 ## Add Documents
 
-Once the index has been created, it needs to be filled with [documents](/guides/main_concepts/documents.md). It is these documents that will be used and returned when searches are done on MeiliSearch.
+Once the index has been created, the next step is to fill it with [documents](/guides/main_concepts/documents.md). These documents will be used and returned when search queries will be performed on MeiliSearch.
 
-Documents are sent to MeiliSearch in JSON format.
+Documents are represented in `JSON format`.
 
-To be processed by MeiliSearch, all documents need one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. The value in this field must be **unique**.
+To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
-There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is, the easiest way is to have an <clientGlossary word="attribute" /> that contains the string `id` case-insensitively.
+There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Let's use an example [movies.json dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) to showcase how to add documents.
+Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
 :::: tabs
 ::: tab cURL
@@ -340,21 +324,23 @@ fmt.Println(updateRes.UpdateID)
 
 ### Checking updates
 
-The document addition returns a JSON object with only an `updateId` attribute.
+Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were sent.
 
-This kind of **successful response** indicates that the operation has been taken into account, but it may not have been executed yet.
+The document addition process returns a JSON object containing only an `updateId` attribute.
+
+This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
 
 You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
 
-Checking the update status is not a mandatory step to search through your documents but could be really useful to understand what is happening in case of errors or unexpected behaviors.
+Checking the update status is not a mandatory step to search through your documents but could prove useful in tracing the origin of errors or unexpected behaviors.
 
 ## Search
 
-Now that our documents have been added to MeiliSearch, we are able to [search](/guides/main_concepts/search.md) in it.
+Now that your documents have been ingested into MeiliSearch, you are able to [search them](/guides/main_concepts/search.md).
 
 MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
-The search engine is now aware of our documents and can serve those via our HTTP server.
+The search engine is now aware of your documents and can serve those via an HTTP server.
 
 :::: tabs
 ::: tab cURL
@@ -448,9 +434,9 @@ MeiliSearch **response**:
 
 ### Web Interface
 
-MeiliSearch also offers an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) on which you can try the search.
+We also deliver an an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) in which you can test MeiliSearch interactively.
 
-All you need to do is open your web browser and enter MeiliSearch’s address to visit it (in our case: `http://127.0.0.1:7700`).<br>
+To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.<br>
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
 ![movies demo gif](/movies-web-demo.gif)

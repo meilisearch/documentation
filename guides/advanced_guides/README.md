@@ -1,6 +1,6 @@
 # Advanced guides
 
-In the advanced guides you will find how to tune your search API and customize it:
+These advanced guides cover how to tune your search API and customize it:
 
 - [How to install MeiliSearch](installation.md)
 - [Search parameters](search_parameters.md)
@@ -9,7 +9,7 @@ In the advanced guides you will find how to tune your search API and customize i
 - [Stop words](stop_words.md)
 - [Distinct](distinct.md)
 
-You can also read the following articles to understand how MeiliSearch works under the hood and better understand the algorithms used:
+To learn how MeiliSearch works under the hood and better understand the algorithms behind it, you can read the following advanced guides:
 
 - [Asynchronous updates](asynchronous_updates.md)
 - [Prefix search](prefix.md)

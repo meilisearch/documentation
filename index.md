@@ -1,21 +1,20 @@
 # MeiliSearch Documentation
 
-MeiliSearch is a **RESTful search API** that is the **ready-to-go solution** for everyone wanting a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
+MeiliSearch is a **RESTful search API**. It aims to be the reference **ready-to-go solution** for everyone who wants a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
 
 [<linkButton text="🚀 GETTING STARTED"/>](/guides/introduction/quick_start_guide.md)
 
-Efficient search engines are often only accessible to companies with the financial means and resources necessary to develop a search solution adapted to their needs. The majority of other companies that do not have the means or do not realize that the lack of relevance of a search greatly impacts the pleasure of navigation on their application,
-end up with poor solutions that are more frustrating than effective, for both the developer and the user.
+Efficient search engines often require a significant investment of money. Therefore, they are only accessible to companies which have huge financial resources and the means necessary to develop a search solution that fits their needs. Other businesses that lack financial means or do not realize how much the irrelevancy of a search integrated into their application can negatively impact the user experience, end up with poor solutions that are more frustrating than effective, for both the developer and the user.
 
-That's why we created MeiliSearch, an open-source solution accessible to everyone, meeting the vast majority of needs, even specific ones. Installable very easily with little or no configuration required but with a high capacity for customization.
+That's the reason why we created MeiliSearch: an open-source solution accessible to everyone, designed to meet a vast majority of needs, even specific ones. Requiring very little or no configuration to be installed, however highly customizable.
 
-Our solution is **instant**; it **accepts typos**; it understands **filters**, **custom rankings**, and a lot of other [features](#features).
+Our solution delivers an **instant search experience**; it handles **typos**; it understands **filters**, **custom rankings**, and many other [features](#features).
 
 [<linkButton text="💡 FAQ"/>](/resources/faq.md)
 
 ## Open-source
 
-MeiliSearch is open-source. You can **support the project by starring** it on [our GitHub](https://github.com/meilisearch/MeiliSearch)!
+MeiliSearch is open-source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
 
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a>
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a><!-- prettier-ignore
@@ -29,14 +28,14 @@ MeiliSearch is open-source. You can **support the project by starring** it on [o
 
 ## Alternatives
 
-Why should you use MeiliSearch instead of any other existing solution? If it is clear to us, it may not be for you. We try to answer this question in this article on [comparison to alternatives](/resources/comparison_to_alternatives.md).
+Why should you use MeiliSearch instead of any other existing solution? If it is clear to us, it may not be for you. We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md).
 
 ## Features
 
-- **Instant Search** (answers < 50ms): Priority on fast answers for smooth search experience.
+- **Instant Search** (answers < 50 milliseconds): Priority is given to fast answers for smooth search experience.
 - **Search as you type** (_prefix search_): Results are updated on each keystroke. To make this possible, we use a [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
-- [Typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and spelling mistakes.
-- [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, kanji and latin based languages.
+- [Typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and miss-spelling.
+- [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, Kanji and Latin based languages.
 - **Return the whole document**: The entire document is returned upon search.
 - **Highly customizable search and indexation**:
   - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
@@ -44,4 +43,4 @@ Why should you use MeiliSearch instead of any other existing solution? If it is 
   - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
   - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
 - **RESTful API**
-- **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that lets you try the search engine when developing.
+- **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface) in MeiliSearch that allows to try the search engine out during development.

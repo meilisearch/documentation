@@ -1,14 +1,14 @@
-# MeiliSearch documentation
+# MeiliSearch Documentation
 
-This repository contains the documentation for [MeiliSearch](https://github.com/meilisearch/meilisearch), an open-source search engine API.
+This repository is the documentation for the **open-source search engine API [MeiliSearch](https://github.com/meilisearch/meilisearch)**.
 
 ## Contributing
 
-Want to contribute to the documentation of MeiliSearch? You can do so by cloning this repository, making your change and submitting your pull request.
+Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you! If you think something is missing or could be improved, issues are highly appreciated.
 
-Thank you for considering helping out!
+To contribute, clone this repository, commit your changes and open a pull request.
 
-### Install & Run
+### Installing & Running
 
 ```bash
 # Clone the repository
@@ -21,25 +21,25 @@ $ yarn dev
 
 ### Testing
 
-A complete test can be done using this command:
+A complete test can be done using the following command:
 
 ```
 $ yarn test
 ```
 
-This will also trigger on `yarn build` and on any pull request to master.
+The tests are triggered on build and on any pull request to master.
 
-#### Check dead links
+#### Checking dead links
 
-It can be tough to make changes to the documentation without creating any dead links. You can check the dead links before making any pull request.
+Making changes to the documentation without creating any dead links can be a tedious task. Before submitting any pull request, you can check the dead links.
 
 ```bash
 $ yarn check-links
 ```
 
-#### Check Styling
+#### Checking Styling
 
-The documentation follows styling rules. All the following files will be checked: `*.vue`, `*.js`, and `*.md`.
+The documentation follows styling rules. The following files will be checked: `*.vue`, `*.js`, and `*.md`.
 
 You can check out and fix the styling errors.
 
@@ -47,7 +47,7 @@ You can check out and fix the styling errors.
 $ yarn style:fix
 ```
 
-You can test if the code is well-formatted without fixing.
+You can test if the code is well-formatted without fixing it.
 
 ```bash
 $ yarn check-style
@@ -55,11 +55,22 @@ $ yarn check-style
 
 ### Deployment
 
-The documentation is deployed as a static website. Master branch is automatically deployed to [https://docs.meilisearch.com](https://docs.meilisearch.com).
+The documentation is deployed as a static website. The master branch is automatically deployed at [https://docs.meilisearch.com](https://docs.meilisearch.com).
 
-You can build the static website using the following command
+You can build the static website using the following command:
 
 ```bash
 $ yarn build
 # The website is now available in .vuepress/dist and you can serve it using any webserver.
 ```
+
+## Contact
+
+Feel free to contact us about any questions you may have:
+
+- At [bonjour@meilisearch.com](mailto:bonjour@meilisearch.com): English or French is welcome! 🇬🇧 🇫🇷
+- Via the chat box available on every page of [our documentation](https://docs.meilisearch.com/) and on [our landing page](https://www.meilisearch.com/).
+- Join our [Slack community](https://slack.meilisearch.com/).
+- By opening an issue.
+
+Any suggestion or feedback is highly appreciated. Thank you for your support!

@@ -1,3 +1,7 @@
+# Resources
+
+This section offers resources to expand your knowledge of MeiliSearch.
+
 Content:
 
 - [SDKs](/resources/sdks.md)
