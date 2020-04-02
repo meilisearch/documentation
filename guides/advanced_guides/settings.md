@@ -42,8 +42,24 @@ Results are sorted by **the similarity of the matched words with the query words
 
 ## Distinct attribute
 
+A field whose value will always be **unique** in the returned documents.
+
 ## Searchable attributes
+
+Fields in which to **search for matching query words**.
 
 ## Displayed attributes
 
+Displayed attributes are the **fields contained in each matching document**.
+
+Documents returned upon search contain only displayed fields.
+
 ## Accept new fields
+
+`accept-new-fields` defines if new fields should be added to the searchable-attributes and the displayed-attributes lists.
+
+This attribute can take the value of **true** or **false** and defaults to **true**.
+
+- If set to **true**, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
+
+- If set to **false**, fields are stored but neither searchable nor displayed in returned documents.
