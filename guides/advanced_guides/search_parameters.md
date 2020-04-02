@@ -162,6 +162,10 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
   Two strings separated by a colon.
   Defaults to `none`.
 
+  - `<Attribute>`: An attribute name.
+
+  - `<Value>`: Its corresponding value.
+
   The given attribute's value must be **equal** to the value of the attribute in the documents. Filters accept **only one** parameter.
 
   The **comparison is done in a case-insensitive manner**.
