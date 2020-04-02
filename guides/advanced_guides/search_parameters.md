@@ -4,15 +4,15 @@ Search parameters let the user customize their search request.
 
 | Query Parameter                                                                                   | Description                                        | Default Value |
 | ------------------------------------------------------------------------------------------------- | -------------------------------------------------- | :-----------: |
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | query string _(mandatory)_                         |               |
-| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | number of documents to skip                        |       0       |
-| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | number of documents returned                       |      20       |
-| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | document attributes to show                        |      \*       |
-| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | which attributes to crop                           |     none      |
-| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | limit length at which to crop specified attributes |      200      |
-| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | which attributes to highlight                      |     none      |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | attribute with an exact match                      |     none      |
-| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | whether to return the raw matches or not           |     false     |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                         |               |
+| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                        |      `0`      |
+| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Number of documents returned                       |     `20`      |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Document attributes to show                        |     `\*`      |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Which attributes to crop                           |    `none`     |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Limit length at which to crop specified attributes |     `200`     |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Which attributes to highlight                      |    `none`     |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Attribute with an exact match                      |    `none`     |
+| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Whether to return the raw matches or not           |    `false`    |
 
 ## Query (q)
 
@@ -31,6 +31,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Integer>` (Optional, positive integer)
 
   If the value of the parameter `offset` is _n_, _n_ first documents to skip. This is helpful for **pagination**.
+  Defaults to `0`.
 
 ## Limit
 
@@ -39,6 +40,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Integer>` (Optional, positive integer)
 
   If the value of the parameter `limit` is _n_, there will be _n_ documents in the search query response. This is helpful for **pagination**.
+  Defaults to `20`.
 
 ## Attributes to retrieve
 
@@ -47,6 +49,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Attribute>` (Optional, string)
 
   Comma-separated list of attributes that will appear in the returned documents.
+  Defaults to `*`.
 
 ## Attributes to crop
 
@@ -55,6 +58,7 @@ Although the API will send back documents even if the query is only one characte
 - `<Attribute>` (Optional, string)
 
   Comma-separated list of attributes whose values will be cropped depending on the `cropLength` and the matches.
+  Defaults to `none`.
 
 ::: tip
 This is useful when you have specific needs for displaying results on the front-end application.
@@ -69,6 +73,7 @@ This is useful when you have specific needs for displaying results on the front-
 - `<Integer>` (Optional, positive integer)
 
   If the value of the parameter `cropLength` is _n_, _n_ is the total length of the cropped field.
+  Defaults to `200`.
 
 #### Example
 
@@ -109,6 +114,7 @@ You would get this response:
 - `<Attribute>` (Optional, string)
 
   Comma-separated list of attributes. Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag
+  Defaults to `none`.
 
 #### Example
 
@@ -148,6 +154,7 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 - `<Attribute>:<Value>` (Optional, string)
 
   Two strings separated by a colon.
+  Defaults to `none`.
 
   The given attribute's value must be **equal** to the value of the attribute in the documents. Filters accept **only one** parameter.
 
