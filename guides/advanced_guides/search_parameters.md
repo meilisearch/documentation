@@ -36,19 +36,25 @@ Although the API will send back documents even if the query is only one characte
 
 `limit=<Integer>`
 
-X number of documents in the search query response. This is helpful for **pagination**
+- `<Integer>` (Optional, positive integer)
+
+  If the value of the parameter `limit` is _n_, there will be _n_ documents in the search query response. This is helpful for **pagination**.
 
 ## Attributes to retrieve
 
 `attributesToRetrieve=<Attribute>,<Attribute>,...`
 
-Attributes that will appear in the returned documents.
+- `<Attribute>` (Optional, string)
+
+  Comma-separated list of attributes that will appear in the returned documents.
 
 ## Attributes to crop
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
-Attributes of which the value will be cropped depending on the `cropLength` and the matches.
+- `<Attribute>` (Optional, string)
+
+  Comma-separated list of attributes whose values will be cropped depending on the `cropLength` and the matches.
 
 ::: tip
 This is useful when you have specific needs for displaying results on the front-end application.
@@ -58,6 +64,8 @@ This is useful when you have specific needs for displaying results on the front-
 
 #### Example
 
+If you input `shifu` as a search query and set the value of the parameter `cropLength` to 100 as below:
+
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=shifu \
@@ -65,9 +73,9 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d cropLength=100 \
 ```
 
-With a `cropLength` of 100 on `shifu` as a search query this is the response.
-
 Our **cropped version is in the \_formatted object**.
+
+You would get this response:
 
 ```json
 {
@@ -90,13 +98,17 @@ Our **cropped version is in the \_formatted object**.
 
 `cropLength=<Integer>`
 
-Total length of the cropped field. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
+- `<Integer>` (Optional, positive integer)
+
+  If the value of the parameter `cropLength` is _n_, _n_ is the total length of the cropped field. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
 
 ## Attributes to highlight
 
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
-Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag
+- `<Attribute>` (Optional, string)
+
+  Comma-separated list of attributes. Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag
 
 #### Example
 
@@ -131,11 +143,15 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 ## Filters
 
-`filters=<Attribute>:<String>`
+`filters=<Attribute>:<Value>`
 
-The given attribute's value must be **equal** to the value of the attribute in the documents. Filters accept **only one** parameter.
+- `<Attribute>:<Value>` (Optional, string)
 
-The **comparison is done in a case-insensitive manner**.
+  Two strings separated by a colon.
+
+  The given attribute's value must be **equal** to the value of the attribute in the documents. Filters accept **only one** parameter.
+
+  The **comparison is done in a case-insensitive manner**.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
