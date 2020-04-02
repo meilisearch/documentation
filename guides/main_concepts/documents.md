@@ -7,12 +7,9 @@ Each **field** contains an **attribute** and its associated value.
 
 #### Wording
 
-- **Attribute**: An attribute is like a key (`"id"`, `"title"`, `"description"` and `"type"`).
-- **Field**: A field, or a key-value pair, is a set of two data items linked together. Here, an attribute and its corresponding data (i.e, `"title": "Interstellar"`).
-- # **Document**: A document is an object which contains a list of fields in curly brackets.
-- **Attribute**: An attribute is the name of a field, like a key.
-- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together: an attribute and its corresponding data
-- **Document**: A document is an object which collects a list of fields between curly brackets.
+- **Attribute**: An attribute is the name of a field, like a key (`"id"`, `"title"`, `"description"` and `"type"`).
+- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together. Here, an attribute and its corresponding data (i.e, `"title": "Interstellar"`).
+- **Document**: A document is an object which contains a list of fields in curly brackets.
 - **[Primary key](/guides/main_concepts/documents.md#primary-key)**: The attribute of the field which contains the unique identifier of the documents.
 - **[Document id](/guides/main_concepts/documents.md#document-id)**: The unique value of a document.
 
