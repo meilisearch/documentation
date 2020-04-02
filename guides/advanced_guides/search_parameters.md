@@ -1,6 +1,6 @@
 # Search Parameters
 
-Search parameters let the user customize his search request.
+Search parameters let the user customize their search request.
 
 | Query Parameter                                                                                   | Description                                        | Default Value |
 | ------------------------------------------------------------------------------------------------- | -------------------------------------------------- | :-----------: |
