@@ -1,8 +1,8 @@
 # Guides
 
-This guide is made to give you an overview of MeiliSearch. Every bit of information is linked to useful parts of the documentation.
+The aim of these guides is to provide an overview of MeiliSearch. For each important notion, pages to detailed and expanded explanations have been linked.
 
-If you want an even quicker overview we suggest [you look into our quickstart](/tutorials/howtos/quickstart.md).
+For an even quicker start, you can have a look to the [Quick start guide](/tutorials/howtos/quickstart).
 
 Content:
 

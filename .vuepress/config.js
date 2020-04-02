@@ -52,6 +52,7 @@ module.exports = {
             "/guides/advanced_guides/settings",
             "/guides/advanced_guides/synonyms",
             "/guides/advanced_guides/stop_words",
+            "/guides/advanced_guides/field_properties",
             "/guides/advanced_guides/prefix",
             "/guides/advanced_guides/typotolerance",
             "/guides/advanced_guides/concat",
@@ -130,8 +131,9 @@ module.exports = {
     },
     meilisearch: {
       hostUrl: "https://e10b17e6.getmeili.com",
-      indexUid: "9tz3lqoi",
-      apiKey: "R62XWZPJG794YB5VFOADHTNQEKLCISM01U38",
+      indexUid: "docs",
+      apiKey:
+        "b4ff9313299e65ce4e259d3aa59730d2829c9a6805aa15b83cdbd63b20563155",
     },
     searchPlaceholder: "Search as you type...",
   },

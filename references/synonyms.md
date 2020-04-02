@@ -26,7 +26,7 @@ Get the list of synonyms of an index.
 
 ```bash
  curl \
-  -X GET 'http://localhost:7700/indexes/12345678/settings/synonyms'
+  -X GET 'http://localhost:7700/indexes/movies/settings/synonyms'
 ```
 
 #### Response: `200 OK`
@@ -59,7 +59,7 @@ An object with every synonym and its associated words.
 
 ```bash
  curl \
-  -X POST 'http://localhost:7700/indexes/12345678/settings/synonyms' \
+  -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
   --data '{
     "wolverine": ["xmen", "logan"],
     "logan": ["wolverine", "xmen"],
@@ -97,7 +97,7 @@ Empty object : `{}`
 
 ```bash
  curl \
-  -X DELETE 'http://localhost:7700/indexes/12345678/settings/synonyms'
+  -X DELETE 'http://localhost:7700/indexes/movies/settings/synonyms'
 ```
 
 #### Response: `202 Accepted`

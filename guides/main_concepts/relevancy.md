@@ -43,7 +43,7 @@ The more the query words are near each other, and in the right order in a docume
 
 #### 4. Attribute
 
-The `attribute` rule sorts by ascending [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
+The `attribute` rule sorts by [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
 
 #### 5. Words Position
 

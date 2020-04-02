@@ -16,7 +16,7 @@ Get stats of an index.
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/12345678/stats'
+  -X GET 'http://localhost:7700/indexes/movies/stats'
 ```
 
 #### Response: `200 Ok`
