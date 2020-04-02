@@ -7,7 +7,7 @@ Search parameters let the user customize their search request.
 | **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                         |               |
 | **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                        |      `0`      |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Number of documents returned                       |     `20`      |
-| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Document attributes to show                        |     `\*`      |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Document attributes to show                        |     `*`      |
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Which attributes to crop                           |    `none`     |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Limit length at which to crop specified attributes |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Which attributes to highlight                      |    `none`     |
@@ -23,6 +23,8 @@ It is the string used by the search engine to find relevant documents.
 ::: tip
 Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API responds.
 :::
+
+## Query parameters
 
 ## Offset
 
