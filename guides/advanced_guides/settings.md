@@ -2,15 +2,15 @@
 
 This section describes all **configuration settings** available in MeiliSearch.
 
-| Variable                                                                              | Description                                                                  | Default value                                                                                 |
-| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | Words in the search query that will be ignored                               | `[]`                                                                                          |
-| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | Ranking rules sorted by order of importance                                   | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
-| **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
-| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
-| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines if new fields should be searchable and displayed or not           | `true`                                                                                        |
+| Variable                                                                              | Description                                                                  | Default value                                                                                     |
+| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words that are considered the same in a search query      | `{}`                                                                                              |
+| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | Words in the search query that will be ignored                               | `[]`                                                                                              |
+| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | Ranking rules sorted by order of importance                                  | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Returns only distinct (different) values of the given field                  | `null`                                                                                            |
+| **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                             |
+| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields present in the returned documents                                     | All attributes found in the documents                                                             |
+| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines if new fields should be searchable and displayed or not              | `true`                                                                                            |
 
 ## Synonyms
 
