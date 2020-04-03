@@ -105,6 +105,8 @@ Results are sorted by **the position of the query words in the attributes**. Mei
 
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
+#### Example
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -134,6 +136,8 @@ A field whose value will always be **unique** in the returned documents.
 
   The field name.
 
+#### Example
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -151,6 +155,8 @@ Fields in which to **search for matching query words**.
 - `[<String>, <String>, ...]` (Array of strings, defaults to all attributes found in the documents)
 
   An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
+
+#### Example
 
 ```bash
 $ curl \
@@ -182,6 +188,8 @@ Documents returned upon search contain only displayed fields.
 
   An array of strings that contains attributes of an index to display.
 
+#### Example
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -211,6 +219,8 @@ It can take the value of **true** or **false** and defaults to **true**.
   If set to `true`, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
 
   If set to `false`, fields are stored but neither searchable nor displayed in returned documents.
+
+#### Example
 
 ```bash
 $ curl \
