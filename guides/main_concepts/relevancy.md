@@ -129,7 +129,7 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 - To apply an **ascending sort**: `asc(attribute_name)`
 
-- To apply a **descending sort**: `desc(attribute_name)`
+- To apply a **descending sort**: `dsc(attribute_name)`
 
 Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
 
@@ -137,16 +137,16 @@ Add this rule to the existing list of ranking rules using the [settings route](/
 
 Let's say you have a dataset of movies. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
 
-The following example will create a rule that makes recent movies more relevant than older ones.
+The following example will create a rule that makes older movies more relevant than older ones. A movie released in 1999 will appear before a movie released in 2020.
 
 ```
-desc(release_date)
+asc(release_date)
 ```
 
-The following example will create a rule that makes movies with a good rank more relevant than others.
+The following example will create a rule that makes movies with a good rank more relevant than others. Movies with a higher ranking will appear first.
 
 ```
-asc(movie_ranking)
+dsc(movie_ranking)
 ```
 
 To add a newly created rule to the existing ranking rule using the [settings route](/references/ranking_rules.md#update-ranking-rules), you have to add the rule to the existing order array.
@@ -159,8 +159,8 @@ To add a newly created rule to the existing ranking rule using the [settings rou
   "words",
   "wordsPosition",
   "exactness",
-  "desc(release_date)",
-  "asc(movie_ranking)"
+  "asc(release_date)",
+  "dsc(movie_ranking)"
 ]
 ```
 
