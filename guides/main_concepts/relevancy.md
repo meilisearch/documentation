@@ -25,7 +25,7 @@ Results are sorted by **descending number of occurrences of the query terms** in
 
 ::: warning
 
-As of today, all query words must be in the returned documents. This rule does not impact search results yet. <Badge text="soon" type="warn"/>
+It is now mandatory that all query words are in the returned documents. This rule does not impact search results yet. <Badge text="soon" type="warn"/>
 
 :::
 
