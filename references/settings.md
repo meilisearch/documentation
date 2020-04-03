@@ -52,7 +52,7 @@ List the settings.
     "exactness",
     "dsc(release_date)"
   ],
-  "rankingDistinct": null,
+  "distinctAttribute": null,
   "searchableAttributes": ["title", "description", "uid"],
   "displayedAttributes": [
     "title",
@@ -66,7 +66,7 @@ List the settings.
     "wolverine": ["xmen", "logan"],
     "logan": ["wolverine", "xmen"]
   },
-  "indexNewFields": false
+  "acceptNewFields": false
 }
 ```
 
@@ -87,12 +87,12 @@ Update the settings of an index.
 | Variable                 | Type      | Description                                                                  | Default value                                                                                 |
 | ------------------------ | --------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | **rankingRules**         | [Strings] | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **rankingDistinct**      | String    | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
+| **distinctAttribute**      | String    | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
 | **displayedAttributes**  | [Strings] | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
 | **stopWords**            | [Strings] | Words in the search query that will be ignored                               | `[]`                                                                                          |
 | **synonyms**             | Object    | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **indexNewFields**       | Boolean   | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+| **acceptNewFields**       | Boolean   | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
 
 Any parameters not provided will be left unchanged.
 
@@ -114,7 +114,7 @@ $ curl \
             "dsc(release_date)",
             "dsc(rank)",
         ],
-        "rankingDistinct": "movie_id",
+        "distinctAttribute": "movie_id",
         "searchableAttributes": [
             "uid",
             "movie_id",
@@ -140,7 +140,7 @@ $ curl \
             "wolverine": ["xmen", "logan"],
             "logan": ["wolverine"],
         },
-        "indexNewFields": false,
+        "acceptNewFields": false,
     }'
 ```
 
@@ -165,12 +165,12 @@ All settings will be reset to their default value.
 | Variable                 | Description                                                                  | Default value                                                                                 |
 | ------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | **rankingRules**         | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **rankingDistinct**      | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
+| **distinctAttribute**      | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
 | **searchableAttributes** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
 | **displayedAttributes**  | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
 | **stopWords**            | Words in the search query that will be ignored                               | `[]`                                                                                          |
 | **synonyms**             | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **indexNewFields**       | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+| **acceptNewFields**       | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
 
 #### Path Variables
 
