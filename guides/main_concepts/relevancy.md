@@ -125,11 +125,11 @@ New rules can be added to the existing list at any time and placed anywhere in t
 
 A custom rule allows you to create an ascending or descending sorting rule on a given attribute.
 
-To add your own ranking rule, you have to communicate either `asc` for ascending order or `dsc` for descending order with the field name in brackets.
+To add your own ranking rule, you have to communicate either `asc` for ascending order or `dsc` for descending order followed by the field name in brackets.
 
-To apply an ascending sort: `asc(attribute_name)`
+- To apply an **ascending sort**: `asc(attribute_name)`
 
-To apply a descending sort: `desc(attribute_name)`
+- To apply a **descending sort**: `desc(attribute_name)`
 
 Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
 
@@ -164,7 +164,7 @@ To add a newly created rule to the existing ranking rule using the [settings rou
 ]
 ```
 
-## Attributes importance
+## Importance of the attributes
 
 In a dataset, some fields are more relevant to the search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `director` name.
 
