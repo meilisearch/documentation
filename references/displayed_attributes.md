@@ -51,7 +51,7 @@ Update the displayed attributes of an index.
 
 #### Body
 
-List of displayed attributes of an index.
+An array of strings that contains attributes of an index to display.
 
 ### Examples
 

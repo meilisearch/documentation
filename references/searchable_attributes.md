@@ -51,7 +51,7 @@ Update the searchable attributes of an index.
 
 #### Body
 
-List of searchable attributes in order of importance.
+An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
