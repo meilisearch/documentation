@@ -91,7 +91,7 @@ Results are sorted by **descending number of occurrences of the query terms** in
 
 #### 3. Proximity
 
-Results are sorted by **descending proximity of the query words** found in the matching documents: find documents that contain more query words near each other and placed in the correct order first.
+Results are sorted by **ascending order of distance length between two matches**: find documents that contain more query words near each other (smaller distances between the matching word) and placed in the correct order first.
 
 #### 4. Attribute
 
