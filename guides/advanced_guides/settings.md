@@ -2,15 +2,15 @@
 
 This section describes all **configuration settings** available in MeiliSearch.
 
-| Variable                                                                              | Description                                                                  | Default value                                                                                     |
-| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words that are considered the same in a search query      | `{}`                                                                                              |
-| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | Words in the search query that will be ignored                               | `[]`                                                                                              |
-| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | Ranking rules sorted by order of importance                                  | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Returns only distinct (different) values of the given field                  | `null`                                                                                            |
-| **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                             |
-| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields present in the returned documents                                     | All attributes found in the documents                                                             |
-| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines if new fields should be searchable and displayed or not              | `true`                                                                                            |
+| Variable                                                                              | Description                                                                      | Default value                                                                                     |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words that should be treated similarly in a search query      | `{}`                                                                                              |
+| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | List of words that should be excluded from search queries                        | `[]`                                                                                              |
+| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Returns only distinct (different) values of a given field                        | `null`                                                                                            |
+| **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
+| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
+| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines if new fields should be searchable and displayed or not                  | `true`                                                                                            |
 
 ## Synonyms
 
@@ -35,6 +35,18 @@ A set of words defined for an index. Because some words neither add semantic val
 ## Ranking rules
 
 Built-in ranking rules to **ensure relevancy in search results**. They are customizable so the results meet your user's needs as close as possible. Ranking rules are applied in a default order which can be changed in the settings.
+
+`rankingRules=[<String>, <String>, ...]`
+
+- `[<String>, <String>, ...]` (Array of strings, see default value below)
+
+  An array of strings that contains the ranking rules sorted by order of importance (arranged from the most important rule to the least important rule).
+
+Default value:
+
+```json
+["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+```
 
 By default, rules are executed in the following order:
 
@@ -61,18 +73,6 @@ Results are sorted by **the position of the query words in the attributes**. Mei
 #### 6. Exactness
 
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
-
-`rankingRules=[<String>, <String>, ...]`
-
-- `[<String>, <String>, ...]` (Array of strings, see default value below)
-
-  An array of strings that contains the ranking rules sorted by order of importance (arranged from the most important rule to the least important rule).
-
-Default value:
-
-```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
-```
 
 ## Distinct attribute
 
