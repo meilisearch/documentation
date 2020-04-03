@@ -22,6 +22,19 @@ A set of words defined for an index. Synonyms are **different words that have th
 
   An object that contains all synonyms and their associated words.
 
+#### Example
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+        "synonyms": {
+            "wolverine": ["xmen", "logan"],
+            "logan": ["wolverine"]
+        }
+    }'
+```
+
 [Learn more about synonyms](/guides/advanced_guides/synonyms.md)
 
 ## Stop words
@@ -33,6 +46,20 @@ A set of words defined for an index. Because some words neither add semantic val
 - `[<String>, <String>, ...]` (Array of strings, defaults to `[]`)
 
   An array of strings that contains the stop words.
+
+#### Example
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+        "stopWords": [
+            "the",
+            "a",
+            "an"
+        ]
+    }'
+```
 
 [Learn more about stop words](/guides/advanced_guides/stop_words.md)
 
@@ -78,6 +105,23 @@ Results are sorted by **the position of the query words in the attributes**. Mei
 
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+        "rankingRules": [
+            "typo",
+            "words",
+            "proximity",
+            "attribute",
+            "wordsPosition",
+            "exactness",
+            "dsc(release_date)",
+            "dsc(rank)"
+        ]
+    }'
+```
+
 [Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
 ## Distinct attribute
@@ -90,6 +134,14 @@ A field whose value will always be **unique** in the returned documents.
 
   The field name.
 
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+        "distinctAttribute": "movie_id"
+    }'
+```
+
 ## Searchable attributes
 
 Fields in which to **search for matching query words**.
@@ -99,6 +151,22 @@ Fields in which to **search for matching query words**.
 - `[<String>, <String>, ...]` (Array of strings, defaults to all attributes found in the documents)
 
   An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+        "searchableAttributes": [
+            "uid",
+            "movie_id",
+            "title",
+            "description",
+            "poster",
+            "release_date",
+            "rank"
+        ]
+    }'
+```
 
 [Learn more about searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields)
 
@@ -113,6 +181,20 @@ Documents returned upon search contain only displayed fields.
 - `[<String>, <String>, ...]` (Array of strings, defaults to all attributes found in the documents)
 
   An array of strings that contains attributes of an index to display.
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+        "displayedAttributes": [
+            "title",
+            "description",
+            "poster",
+            "release_date",
+            "rank"
+        ]
+    }'
+```
 
 [Learn more about displayed attributes](/guides/advanced_guides/field_properties.md#displayed-attributes)
 
@@ -129,5 +211,13 @@ It can take the value of **true** or **false** and defaults to **true**.
   If set to `true`, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
 
   If set to `false`, fields are stored but neither searchable nor displayed in returned documents.
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+        "acceptNewFields": false
+    }'
+```
 
 [Learn more about field properties](/guides/advanced_guides/field_properties.md)
