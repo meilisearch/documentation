@@ -65,7 +65,7 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 - To apply an **ascending sort**: `asc(attribute_name)`
 
-- To apply a **descending sort**: `desc(attribute_name)`
+- To apply a **descending sort**: `dsc(attribute_name)`
 
 ### Examples
 
@@ -79,7 +79,7 @@ $ curl \
       "attribute",
       "wordsPosition",
       "exactness",
-      "dsc(release_date)",
+      "asc(release_date)",
       "dsc(rank)"
   ]'
 ```
