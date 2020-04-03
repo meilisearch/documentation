@@ -104,44 +104,44 @@ Any parameters not provided will be left unchanged.
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-   "rankingRules": [
-            "typo",
-            "words",
-            "proximity",
-            "attribute",
-            "wordsPosition",
-            "exactness",
-            "dsc(release_date)",
-            "dsc(rank)",
-        ],
-        "distinctAttribute": "movie_id",
-        "searchableAttributes": [
-            "uid",
-            "movie_id",
-            "title",
-            "description",
-            "poster",
-            "release_date",
-            "rank",
-        ],
-        "displayedAttributes": [
-            "title",
-            "description",
-            "poster",
-            "release_date",
-            "rank",
-        ],
-        "stopWords": [
-            "the",
-            "a",
-            "an",
-        ],
-        "synonyms": {
-            "wolverine": ["xmen", "logan"],
-            "logan": ["wolverine"],
-        },
-        "acceptNewFields": false,
-    }'
+      "rankingRules": [
+          "typo",
+          "words",
+          "proximity",
+          "attribute",
+          "wordsPosition",
+          "exactness",
+          "dsc(release_date)",
+          "dsc(rank)"
+      ],
+      "distinctAttribute": "movie_id",
+      "searchableAttributes": [
+          "uid",
+          "movie_id",
+          "title",
+          "description",
+          "poster",
+          "release_date",
+          "rank"
+      ],
+      "displayedAttributes": [
+          "title",
+          "description",
+          "poster",
+          "release_date",
+          "rank"
+      ],
+      "stopWords": [
+          "the",
+          "a",
+          "an"
+      ],
+      "synonyms": {
+          "wolverine": ["xmen", "logan"],
+          "logan": ["wolverine"]
+      },
+      "acceptNewFields": false
+  }'
 ```
 
 #### Response: `202 Accepted`

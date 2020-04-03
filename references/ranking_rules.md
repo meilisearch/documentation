@@ -73,15 +73,15 @@ For descending it would be: `dsc(release_date)`
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
   --data '[
-            "typo",
-            "words",
-            "proximity",
-            "attribute",
-            "wordsPosition",
-            "exactness",
-            "dsc(release_date)",
-            "dsc(rank)"
-        ]'
+      "typo",
+      "words",
+      "proximity",
+      "attribute",
+      "wordsPosition",
+      "exactness",
+      "dsc(release_date)",
+      "dsc(rank)"
+  ]'
 ```
 
 #### Response: `202 Accepted`

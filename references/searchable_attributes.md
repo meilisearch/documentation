@@ -61,10 +61,10 @@ This means that a document with a match in an attribute at the start of the arra
 $ curl \
   -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
   --data '[
-  "title",
-  "description",
-  "uid",
-]'
+      "title",
+      "description",
+      "uid"
+  ]'
 ```
 
 A match in title will make a document more relevant than another document with a match in description.
