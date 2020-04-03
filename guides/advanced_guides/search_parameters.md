@@ -83,9 +83,12 @@ Attributes to **display** in the returned documents.
 
 `attributesToRetrieve=<Attribute>,<Attribute>,...`
 
+The default value is all the attributes in the [displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes) list present in the [settings](/guides/advanced_guides/settings.md) (which by default contains all the attributes found in every document).
+
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
   Comma-separated list of attributes whose fields will be present in the returned documents.
+
 
 #### Example
 
@@ -101,13 +104,24 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 
 Attributes whose values will be cropped if they contain a matched query word.
 
-`attributesToCrop=<Attribute>,<Attribute>,...`
+`attributesToCrop=<Attribute:Croplength>,<Attribute:Croplength>,...`
 
-- `<Attribute>` (Optional, string, defaults to empty)
+- `<Attribute:Croplength>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes whose values will be cropped if they contain a matched query word.
+  Each attribute can be joined with a optional croplength.
 
-In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see below).
+- `"*"`
+  The attribute can also be `*`. In that case, `*` will be replaced by all attributes present in `attributesToRetrieve`.
+
+
+In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) to change this value).
+
+Some working examples:
+
+- `attributesToCrop=overview`
+- `attributesToCrop=overview:20`
+- `attributesToCrop=*,overview:20,title:0`
 
 ::: tip
 This is especially useful when you have to display content on the front-end in a specific way.
@@ -149,7 +163,9 @@ You will get the following response with the **cropped version in the \_formatte
 
 `cropLength=<Integer>`
 
-Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
+The default value is 200.
+
+Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop).
 
 ## Attributes to Highlight
 
@@ -160,6 +176,17 @@ Attributes whose values will contain **highlighted matching query words**.
 - `<Attribute>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes. Every matching query words in the given attribute field will be wrapped around an `<em>` tag.
+
+- `"*"`
+
+  The attribute can also be `*`. In that case, `*` will be replaced by all attributes present in `attributesToRetrieve`.
+
+Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
+
+Some working examples:
+
+- `attributesToHighlight=overview`
+- `attributesToHighlight=*,overview`
 
 #### Example
 
