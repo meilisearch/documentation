@@ -35,7 +35,7 @@ Results are sorted by **ascending order of distance length between two matches**
 
 #### 4. Attribute
 
-Results are sorted by **[attribute importance](/guides/main_concepts/relevancy.md#attributes-importance)**.
+Results are sorted by **[attribute importance](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**.
 
 #### 5. Words Position
 
@@ -82,7 +82,7 @@ The `proximity` rule sorts the results by ascending order of distance length bet
 
 `If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `description`.
 
-The `attribute` rule sorts the results by [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
+The `attribute` rule sorts the results by [attribute importance](/guides/main_concepts/relevancy.md#importance-of-the-attributes).
 
 :::
 
