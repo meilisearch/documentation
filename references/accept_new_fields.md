@@ -2,10 +2,11 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-`accept-new-fields` determines what MeiliSearch should do with new fields found during documents addition.
+This setting takes a Boolean value and defines whether new fields should be added to the searchable-attributes and the displayed-attributes lists. It can take the value of **true** or **false** and defaults to **true**.
 
-When `accept-new-fields` is set to **true** (_default_), every new field will be added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) list.<br>
-When `accept-new-fields` is set to **false**, they will be stored but neither searchable or displayed on the returned documents.
+- If set to `true`, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
+
+- If set to `false`, fields are stored but neither searchable nor displayed in returned documents.
 
 ::: tip
 
@@ -58,7 +59,11 @@ Update if MeiliSearch should accept new fields for an index.
 
 #### Body
 
-**Boolean** when set to `true`, each field found in the newly added documents will be [searchable](/references/searchable_attributes.md) and [displayed](/references/displayed_attributes.md). When set to `false`, they will only be stored.
+This field takes a **boolean value**, `true` or `false`, and defaults to `true`.
+
+If `true`, each field found in the newly added documents will be [searchable](/references/searchable_attributes.md) and [displayed](/references/displayed_attributes.md).
+
+Otherwise, if `false`, fields will only be stored.
 
 ### Examples
 
