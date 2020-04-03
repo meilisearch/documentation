@@ -10,7 +10,7 @@ This section describes all **configuration settings** available in MeiliSearch.
 | **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Returns only distinct (different) values of a given field                        | `null`                                                                                            |
 | **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
-| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines if new fields should be searchable and displayed or not                  | `true`                                                                                            |
+| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
 ## Synonyms
 
@@ -208,9 +208,7 @@ $ curl \
 
 ## Accept new fields
 
-This setting takes a **Boolean** value and defines whether new fields should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
-
-It can take the value of `true` or `false` and defaults to `true`.
+This setting takes a **Boolean value** (`true` or `false`) and defines whether new fields should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
 
 `acceptNewFields=<Boolean>`
 
