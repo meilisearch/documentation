@@ -84,15 +84,15 @@ Update the settings of an index.
 
 #### Body
 
-| Variable                 | Type      | Description                                                                  | Default value                                                                                 |
-| ------------------------ | --------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **rankingRules**         | [Strings] | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **distinctAttribute**      | String    | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
-| **displayedAttributes**  | [Strings] | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
-| **stopWords**            | [Strings] | Words in the search query that will be ignored                               | `[]`                                                                                          |
-| **synonyms**             | Object    | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **acceptNewFields**       | Boolean   | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+| Variable                 | Type      | Description                                                                      | Default value                                                                                     |
+| ------------------------ | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**             | Object    | List of associated words that should be treated similarly in a search query      | `{}`                                                                                              |
+| **stopWords**            | [Strings] | List of words that should be excluded from search queries                        | `[]`                                                                                              |
+| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **distinctAttribute**    | String    | Returns only distinct (different) values of the given field                      | `null`                                                                                            |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
+| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
+| **acceptNewFields**      | Boolean   | Defines if new fields should be searchable and displayed or not                  | `true`                                                                                            |
 
 Any parameters not provided will be left unchanged.
 
@@ -162,15 +162,15 @@ Reset the settings of an index.
 
 All settings will be reset to their default value.
 
-| Variable                 | Description                                                                  | Default value                                                                                 |
-| ------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **rankingRules**         | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **distinctAttribute**      | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
-| **searchableAttributes** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
-| **displayedAttributes**  | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
-| **stopWords**            | Words in the search query that will be ignored                               | `[]`                                                                                          |
-| **synonyms**             | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **acceptNewFields**       | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+| Variable                 | Description                                                                      | Default value                                                                                     |
+| ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**             | List of associated words that should be treated similarly in a search query      | `{}`                                                                                              |
+| **stopWords**            | List of words that should be excluded from search queries ignored                | `[]`                                                                                              |
+| **rankingRules**         | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **distinctAttribute**    | Returns only distinct (different) values of a given field                        | `null`                                                                                            |
+| **searchableAttributes** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
+| **displayedAttributes**  | Fields displayed in the returned documents documents                             | All attributes found in the documents                                                             |
+| **acceptNewFields**      | Defines if new fields should be searchable and displayed or not                  | `true`                                                                                            |
 
 #### Path Variables
 
