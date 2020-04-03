@@ -58,7 +58,7 @@ Although the API will send back documents even if the query is only one characte
 
 - `<Attribute>` (Optional, string, defaults to `none`)
 
-  Comma-separated list of attributes whose values will be cropped depending on the `cropLength` and the matches.
+  Comma-separated list of attributes whose values will be cropped according to the `cropLength` value and the matches.
 
 ::: tip
 This is useful when you have specific needs for displaying results on the front-end application.
