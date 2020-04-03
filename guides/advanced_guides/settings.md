@@ -2,23 +2,35 @@
 
 This section describes all **configuration settings** available in MeiliSearch.
 
-| Variable                 | Description                                                                  | Default value                                                                                 |
-| ------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**             | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**            | Words in the search query that will be ignored                               | `[]`                                                                                          |
-| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**         | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **[rankingDistinct](/guides/advanced_guides/settings.md#distinct-attribute)**      | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
+| Variable                                                                              | Description                                                                  | Default value                                                                                 |
+| ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
+| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | Words in the search query that will be ignored                               | `[]`                                                                                          |
+| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
 | **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
-| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**  | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
-| **[indexNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**       | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
+| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
 
 ## Synonyms
 
 A set of words defined for an index. Synonyms are **different words that have the same meaning**, and thus are be treated similarly. If either of the associated words is searched, the same results shall be displayed.
 
+`synonyms=<Object>`
+
+- `<Object>` (Object, defaults to `{}`)
+
+  An object that contains all synonyms and their associated words.
+
 ## Stop words
 
 A set of words defined for an index. Because some words neither add semantic value nor context, you may want to ignore them from your search. Stop words are **excluded from search queries**.
+
+`stopWords=[<String>, <String>, ...]`
+
+- `[<String>, <String>, ...]` (Array of strings, defaults to `[]`)
+
+  An array of strings that contains the stop words.
 
 ## Ranking rules
 
@@ -50,13 +62,37 @@ Results are sorted by **the position of the query words in the attributes**. Mei
 
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
+`rankingRules=[<String>, <String>, ...]`
+
+- `[<String>, <String>, ...]` (Array of strings, see default value below)
+
+  An array of strings that contains the ranking rules sorted by order of importance (arranged from the most important rule to the least important rule).
+
+Default value:
+
+```json
+["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+```
+
 ## Distinct attribute
 
 A field whose value will always be **unique** in the returned documents.
 
+`distinctAttribute=<String>`
+
+- `<String>` (String, defaults to `null`)
+
+  The field name.
+
 ## Searchable attributes
 
 Fields in which to **search for matching query words**.
+
+`searchableAttributes=[<String>, <String>, ...]`
+
+- `[<String>, <String>, ...]` (Array of strings, defaults to all attributes found in the documents)
+
+  An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
 
 ## Displayed attributes
 
@@ -64,12 +100,22 @@ Displayed attributes are the **fields contained in each matching document**.
 
 Documents returned upon search contain only displayed fields.
 
+`displayedAttributes=[<String>, <String>, ...]`
+
+- `[<String>, <String>, ...]` (Array of strings, defaults to all attributes found in the documents)
+
+  An array of strings that contains attributes of an index to display.
+
 ## Accept new fields
 
-`accept-new-fields` defines if new fields should be added to the searchable-attributes and the displayed-attributes lists.
+This setting defines if new fields should be added to the searchable-attributes and the displayed-attributes lists.
 
-This attribute can take the value of **true** or **false** and defaults to **true**.
+It can take the value of **true** or **false** and defaults to **true**.
 
-- If set to **true**, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
+`acceptNewFields=<Boolean>`
 
-- If set to **false**, fields are stored but neither searchable nor displayed in returned documents.
+- `<Boolean>` (Boolean, defaults to `true`)
+
+  If set to `true`, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
+
+  If set to `false`, fields are stored but neither searchable nor displayed in returned documents.
