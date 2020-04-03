@@ -33,7 +33,9 @@ The uid is set at [index creation time](/references/indexes.md#create-an-index).
 
 ## Primary key
 
-The primary key is a <clientGlossary word="field"/> present in all documents. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value. The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/guides/main_concepts/documents.md#setting-the-primary-key).
+An index is a collection of documents. All documents have a primary key, which is a mandatory <clientGlossary word="field"/>. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value.
+
+The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/guides/main_concepts/documents.md#setting-the-primary-key).
 
 [Learn more about document primary key](/guides/main_concepts/documents.md#primary-key)
 
@@ -49,7 +51,7 @@ On top of that, you can add your custom rules to the ranking rules. For example,
 
 ## Synonyms
 
-A set of synonyms can be defined for an index. In your dataset, you may decide to create synonyms for words which have the same meaning. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed.
+In your dataset, you may decide to create synonyms for words which have the same meaning. To do so, **a set of synonyms can be defined for an index**. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed.
 
 Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
 
@@ -57,7 +59,7 @@ Since synonyms are linked to a given index, they won't apply to any other index 
 
 ## Stop words
 
-Sometimes you may want to ignore certain words in documents and search queries. To do so, a set of stop words can be defined for an index. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e. `the` or `of` in English).
+Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e., `the` or `of` in English).
 
 By adding words to a stop words list, these specific terms will be excluded from your search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/guides/main_concepts/relevancy.md#_4-attribute) or in a good [position](/guides/main_concepts/relevancy.md#ranking-rules). This will also greatly improve the search time because all the documents containing only those words will not be used in the sorting of documents.
 
