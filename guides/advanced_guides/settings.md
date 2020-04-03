@@ -208,15 +208,15 @@ $ curl \
 
 ## Accept new fields
 
-This setting defines if new fields should be added to the searchable-attributes and the displayed-attributes lists.
+This setting takes a **Boolean** value and defines whether new fields should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
 
-It can take the value of **true** or **false** and defaults to **true**.
+It can take the value of `true` or `false` and defaults to `true`.
 
 `acceptNewFields=<Boolean>`
 
 - `<Boolean>` (Boolean, defaults to `true`)
 
-  If set to `true`, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
+  If set to `true`, which is the _default_ value, all new fields are searchable and displayed in returned documents.
 
   If set to `false`, fields are stored but neither searchable nor displayed in returned documents.
 
