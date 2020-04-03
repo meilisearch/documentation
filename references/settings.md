@@ -170,7 +170,7 @@ All settings will be reset to their default value.
 | **distinctAttribute**    | Returns only distinct (different) values of a given field                        | `null`                                                                                            |
 | **searchableAttributes** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **displayedAttributes**  | Fields displayed in the returned documents documents                             | All attributes found in the documents                                                             |
-| **acceptNewFields**      | Defines if new fields should be searchable and displayed or not                  | `true`                                                                                            |
+| **acceptNewFields**      | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
 #### Path Variables
 
