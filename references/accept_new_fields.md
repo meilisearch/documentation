@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-This setting takes a Boolean value and defines whether new fields should be added to the searchable-attributes and the displayed-attributes lists. It can take the value of **true** or **false** and defaults to **true**.
+This setting takes a **Boolean value** (`true` or `false`) and defines whether new fields should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md).
 
 - If set to `true`, which is the _default_ value, all new fields are automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
 
@@ -59,11 +59,11 @@ Update if MeiliSearch should accept new fields for an index.
 
 #### Body
 
-This field takes a **boolean value**, `true` or `false`, and defaults to `true`.
+This setting takes a **Boolean value**, `true` or `false`, and defaults to `true`.
 
-If `true`, each field found in the newly added documents will be [searchable](/references/searchable_attributes.md) and [displayed](/references/displayed_attributes.md).
+If `true`, each field found in the newly added documents are searchable and displayed in returned documents.
 
-Otherwise, if `false`, fields will only be stored.
+Otherwise, if `false`, fields are stored but neither searchable nor displayed in returned documents.
 
 ### Examples
 
