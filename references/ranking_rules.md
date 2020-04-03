@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-Ranking rules is a list of all the rules that contributes to the relevancy of your search. It is possible to add your own and to change the order of the rules based on your needs.
+Ranking rules are predefined rules applied to the search results in order to improve their relevance. They are customizable so the results meet your user's needs as close as possible. Ranking rules are applied in a default order which can be changed in the settings.
 
 Ranking rules can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
@@ -59,13 +59,13 @@ Update the ranking rules of an index.
 
 #### Body
 
-List of ranking rules in order of importance.
+An array that contain ranking rules sorted by order of importance.
 
-To add your own ranking rule you need to communicate the field and if its value is descending or ascending.
+To add your own ranking rule, you have to communicate either `asc` for ascending order or `dsc` for descending order with the field name in brackets.
 
-For ascending it would be: `asc(price)`
+To apply an ascending sort on `price`: `asc(price)`
 
-For descending it would be: `dsc(release_date)`
+To apply a descending sort on `release_date`: `dsc(release_date)`
 
 ### Examples
 
@@ -102,13 +102,13 @@ Reset the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of a
 
 #### Default value
 
-Array with the [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) ordered by importance.
+An array that contain [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) sorted by order of importance.
 
 ```json
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
-To remove all ranking rules, which is not recommended for any use-case, you should send an empty array on the [add or replace ranking rules route](/references/ranking_rules.md#update-ranking-rules).
+To remove all ranking rules, which is not recommended in any case, you would send an empty array to the [add or replace ranking rules route](/references/ranking_rules.md#update-ranking-rules).
 
 #### Path Variables
 
