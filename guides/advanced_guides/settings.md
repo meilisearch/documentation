@@ -99,7 +99,9 @@ Results are sorted by **[attribute importance](/guides/main_concepts/relevancy.m
 
 #### 5. Words Position
 
-Results are sorted by **the position of the query words in the attributes**. MeiliSearch determines the order of importance of the attributes based on the order in which they appear in the first document added. The first found attribute in the document is considered as the most relevant term whereas the last one found in the document is considered as the last relevant term.
+Results are sorted by **the position of the query words in the attributes**: find words that appear sooner in the attribute order first.
+
+MeiliSearch determines the order of importance of the attributes based on the order in which they appear in the first document added. The first found attribute in the document is considered as the most relevant term whereas the last one found in the document is considered as the last relevant term.
 
 #### 6. Exactness
 
