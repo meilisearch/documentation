@@ -11,11 +11,11 @@ An index is defined by an `uid` and contains the following information:
 
 #### Example
 
-Suppose you manage a database that contains information about movies. You would probably want to have multiple categories: one for movie descriptions, one for actors, and one for reviews. Each of these categories would be represented by an index in MeiliSearch.
+Suppose you manage a database that contains information about movies. You would probably want to have multiple categories: one for movie descriptions, one for actors, one for costumes and one for reviews. Each of these categories would be represented by an index in MeiliSearch.
 
 Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. **The information of one index doesn't impact other indexes.**
 
-For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `clothing` index.
+For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
 
 ## Index UID
 
