@@ -28,11 +28,11 @@ A set of words defined for an index. Synonyms are **different words that have th
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-        "synonyms": {
-            "wolverine": ["xmen", "logan"],
-            "logan": ["wolverine"]
-        }
-    }'
+      "synonyms": {
+          "wolverine": ["xmen", "logan"],
+          "logan": ["wolverine"]
+      }
+  }'
 ```
 
 [Learn more about synonyms](/guides/advanced_guides/synonyms.md)
@@ -53,12 +53,12 @@ A set of words defined for an index. Because some words neither add semantic val
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-        "stopWords": [
-            "the",
-            "a",
-            "an"
-        ]
-    }'
+      "stopWords": [
+          "the",
+          "a",
+          "an"
+      ]
+  }'
 ```
 
 [Learn more about stop words](/guides/advanced_guides/stop_words.md)
@@ -111,17 +111,17 @@ Results are sorted by **the similarity of the matched words with the query words
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-        "rankingRules": [
-            "typo",
-            "words",
-            "proximity",
-            "attribute",
-            "wordsPosition",
-            "exactness",
-            "dsc(release_date)",
-            "dsc(rank)"
-        ]
-    }'
+      "rankingRules": [
+          "typo",
+          "words",
+          "proximity",
+          "attribute",
+          "wordsPosition",
+          "exactness",
+          "dsc(release_date)",
+          "dsc(rank)"
+      ]
+  }'
 ```
 
 [Learn more about ranking rules](/guides/main_concepts/relevancy.md)
@@ -142,8 +142,8 @@ A field whose value will always be **unique** in the returned documents.
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-        "distinctAttribute": "movie_id"
-    }'
+      "distinctAttribute": "movie_id"
+  }'
 ```
 
 ## Searchable attributes
@@ -162,16 +162,16 @@ Fields in which to **search for matching query words**.
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-        "searchableAttributes": [
-            "uid",
-            "movie_id",
-            "title",
-            "description",
-            "poster",
-            "release_date",
-            "rank"
-        ]
-    }'
+      "searchableAttributes": [
+          "uid",
+          "movie_id",
+          "title",
+          "description",
+          "poster",
+          "release_date",
+          "rank"
+      ]
+  }'
 ```
 
 [Learn more about searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields)
@@ -194,14 +194,14 @@ Documents returned upon search contain only displayed fields.
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-        "displayedAttributes": [
-            "title",
-            "description",
-            "poster",
-            "release_date",
-            "rank"
-        ]
-    }'
+      "displayedAttributes": [
+          "title",
+          "description",
+          "poster",
+          "release_date",
+          "rank"
+      ]
+  }'
 ```
 
 [Learn more about displayed attributes](/guides/advanced_guides/field_properties.md#displayed-attributes)
@@ -226,8 +226,8 @@ It can take the value of **true** or **false** and defaults to **true**.
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-        "acceptNewFields": false
-    }'
+      "acceptNewFields": false
+  }'
 ```
 
 [Learn more about field properties](/guides/advanced_guides/field_properties.md)
