@@ -63,9 +63,9 @@ An array that contain ranking rules sorted by order of importance.
 
 To add your own ranking rule, you have to communicate either `asc` for ascending order or `dsc` for descending order with the field name in brackets.
 
-To apply an ascending sort on `price`: `asc(price)`
+To apply an ascending sort: `asc(attribute_name)`
 
-To apply a descending sort on `release_date`: `dsc(release_date)`
+To apply a descending sort: `desc(attribute_name)`
 
 ### Examples
 
