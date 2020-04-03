@@ -2,6 +2,16 @@
 
 This section describes all **configuration settings** available in MeiliSearch.
 
+| Variable                 | Description                                                                  | Default value                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**             | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
+| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**            | Words in the search query that will be ignored                               | `[]`                                                                                          |
+| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**         | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **[rankingDistinct](/guides/advanced_guides/settings.md#distinct-attribute)**      | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
+| **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
+| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**  | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
+| **[indexNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**       | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+
 ## Synonyms
 
 A set of words defined for an index. Synonyms are **different words that have the same meaning**, and thus are be treated similarly. If either of the associated words is searched, the same results shall be displayed.
