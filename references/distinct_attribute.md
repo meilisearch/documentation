@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-[Distinct attribute](/guides/advanced_guides/distinct.md) is a field where its value will always be unique in the returned documents.
+[Distinct attribute](/guides/advanced_guides/distinct.md) is a field whose value will always be unique in the returned documents.
 
 Distinct attribute can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
