@@ -15,7 +15,7 @@ Each **field** contains an **attribute** and its associated value.
 
 #### Example
 
-Suppose you manage a database that contains information about movies. For an index that would collect movie descriptions, you would create the following attributes:`"id"`, `"title"`, `"description"` and `"type"`, and a field would look like as follows: `"title": "Interstellar"`.
+Suppose you manage a database that contains information about movies. For an index that would collect movie descriptions, you would create the following attributes:`"id"`, `"title"`, `"description"` and `"type"`, and a field would look like as follows: `"title": "Kung fu Panda"`.
 
 ## Structure
 
