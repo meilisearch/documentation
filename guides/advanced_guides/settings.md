@@ -24,6 +24,8 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 #### Example
 
+Add settings:
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -48,6 +50,8 @@ A set of words defined for an index. Because some words neither add semantic val
   An array of strings that contains the stop words.
 
 #### Example
+
+Add settings:
 
 ```bash
 $ curl \
@@ -83,31 +87,31 @@ By default, rules are executed in the following order:
 
 #### 1. Typo
 
-Results are sorted by **ascending number of typos**: find documents that match query terms with fewer typos first.
+Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
 
 #### 2. Words
 
-Results are sorted by **descending number of occurrences of the query terms** in each matching document: find documents that contain more occurrences of the query terms first.
+Results are sorted by **decreasing number of matched query terms** in each matching document: find documents that contain more occurrences of the query terms first.
 
 #### 3. Proximity
 
-Results are sorted by **ascending order of distance length between two matches**: find documents that contain more query words near each other (smaller distances between the matching word) and placed in the correct order first.
+Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
 
 #### 4. Attribute
 
-Results are sorted by **[attribute importance](/guides/main_concepts/relevancy.md#attributes-importance)**.
+Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#attributes-importance)**: find documents that contain query terms in more important attributes first.
 
 #### 5. Words Position
 
-Results are sorted by **the position of the query words in the attributes**: find words that appear sooner in the attribute order first.
-
-MeiliSearch determines the order of importance of the attributes based on the order in which they appear in the first document added. The first found attribute in the document is considered as the most relevant term whereas the last one found in the document is considered as the last relevant term.
+Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
 
 #### 6. Exactness
 
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
 #### Example
+
+Add settings:
 
 ```bash
 $ curl \
@@ -140,6 +144,8 @@ A field whose value will always be **unique** in the returned documents.
 
 #### Example
 
+Add settings:
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -159,6 +165,8 @@ Fields in which to **search for matching query words**.
   An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
 
 #### Example
+
+Add settings:
 
 ```bash
 $ curl \
@@ -192,6 +200,8 @@ Documents returned upon search contain only displayed fields.
 
 #### Example
 
+Add settings:
+
 ```bash
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -221,6 +231,8 @@ This setting takes a **Boolean value** (`true` or `false`) and defines whether n
   If set to `false`, fields are stored but neither searchable nor displayed in returned documents.
 
 #### Example
+
+Add settings:
 
 ```bash
 $ curl \
