@@ -17,31 +17,29 @@ By default, ranking rules are executed in the following order:
 
 #### 1. Typo
 
-Results are sorted by **ascending number of typos**: find documents that match query terms with fewer typos first.
+Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
 
 #### 2. Words
 
-Results are sorted by **descending number of occurrences of the query terms** in each matching document: find documents that contain more occurrences of the query terms first.
+Results are sorted by **decreasing number of matched query terms** in each matching document: find documents that contain more occurrences of the query terms first.
 
 ::: warning
 
-It is now mandatory that all query words are in the returned documents. This rule does not impact search results yet. <Badge text="soon" type="warn"/>
+It is now mandatory that all query terms are present in the returned documents. This rule does not impact search results yet. <Badge text="soon" type="warn"/>
 
 :::
 
 #### 3. Proximity
 
-Results are sorted by **ascending order of distance length between two matches**: find documents that contain more query words near each other (smaller distances between the matching word) and placed in the correct order first.
+Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
 
 #### 4. Attribute
 
-Results are sorted by **[attribute importance](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**.
+Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**: find documents that contain query terms in more important attributes first.
 
 #### 5. Words Position
 
-Results are sorted by **the position of the query words in the attributes**.
-
-MeiliSearch determines the order of importance of the attributes based on the order in which they appear in the first document added. The first found attribute in the document is considered as the most relevant term whereas the last one found in the document is considered as the last relevant term.
+Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
 
 #### 6. Exactness
 
@@ -60,7 +58,7 @@ Results are sorted by **the similarity of the matched words with the query words
 - `vogli`: 0 typo
 - `volli`: 1 typo
 
-The `typo` rule sorts the results by ascending number of typos on matched query words.
+The `typo` rule sorts the results by increasing number of typos on matched query words.
 
 :::
 
@@ -72,7 +70,7 @@ The `typo` rule sorts the results by ascending number of typos on matched query 
 The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule.<br>
 The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
 
-The `proximity` rule sorts the results by ascending order of distance length between two matches.
+The `proximity` rule sorts the results by increasing distance between matched query terms.
 :::
 
 ::: tab Attribute
@@ -94,7 +92,7 @@ The `attribute` rule sorts the results by [attribute importance](/guides/main_co
 
 `Gangsta` appears before `Dunkirk` because `Belgium` appears sooner in the attribute.
 
-The `word position` rule sorts the results by ascending matching word's index number.
+The `word position` rule sorts the results by increasing matching word's index number.
 
 :::
 
@@ -127,9 +125,9 @@ A custom rule allows you to create an ascending or descending sorting rule on a 
 
 To add your own ranking rule, you have to communicate either `asc` for ascending order or `dsc` for descending order followed by the field name in brackets.
 
-- To apply an **ascending sort**: `asc(attribute_name)`
+- To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
 
-- To apply a **descending sort**: `dsc(attribute_name)`
+- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `dsc(attribute_name)`
 
 Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
 
