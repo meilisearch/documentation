@@ -36,12 +36,15 @@ Using **Docker** you can choose to run [any available tags](https://hub.docker.c
 This command starts the **latest stable release** of MeiliSearch.
 
 ```bash
-$ docker run -it --rm -p 7700:7700 -v $(pwd)/data.ms:/data.ms getmeili/meilisearch
+$ docker run -it --rm \
+    -p 7700:7700 \
+    -v $(pwd)/data.ms:/data.ms \
+    getmeili/meilisearch
 Server is listening on: http://0.0.0.0:7700
 ```
 
 ::: warning
-Docker is not persistent. You should share a volume to make your container filesystem persistent. MeiliSearch write its data at `/data.ms`
+Data written to a Docker container is not persistent and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
 :::
 
 ::: tab APT
@@ -59,34 +62,18 @@ Server is listening on: http://127.0.0.1:7700
 
 :::
 
-::: tab Heroku
-
-You can deploy the latest stable build of MeiliSearch straight on Heroku.
-
-<p align="center">
-  <a href="https://heroku.com/deploy?template=https://github.com/meilisearch/MeiliSearch">
-    <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-  </a>
-</p>
-
-The deploy can take up to 20 minutes because it will compile the whole project from the GitHub repository.
-
-::: warning
-The [Heroku filesystem is ephemeral](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted), which means you may lose your data on any restart of the Heroku instance. **The Heroku deploy is okay for testing purposes, but it won't work for production.**
-:::
-
 ::: tab Source
 
-MeiliSearch is made in `Rust`. Therefore the Rust toolchain must [be installed](https://www.rust-lang.org/tools/install) to compile the project.
+MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
 
-If you have the Rust toolchain installed, you can clone the repository and compile it this way:
+If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
 $ git clone https://github.com/meilisearch/MeiliSearch
 $ cd MeiliSearch
 ```
 
-Inside the folder, compile MeiliSearch.
+In the cloned repository, compile MeiliSearch.
 
 ```bash
 # Update the rust toolchain to the latest version
@@ -142,13 +129,13 @@ Server is listening on: http://127.0.0.1:7700
 
 Here is the list of **all Environment variables and Flags** (CLI options).
 
-| Environment Variable | CLI option     | Description                                                                                                                                                          | Default value    |
-| -------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| MEILI_DB_PATH        | --db-path      | Define the location for the database files                                                                                                                           | "./data.ms"      |
-| MEILI_HTTP_ADDR      | --http-addr    | Address and port to listen to                                                                                                                                        | "127.0.0.1:7700" |
-| MEILI_MASTER_KEY     | --master-key   | Default admin API key                                                                                                                                                |                  |
-| MEILI_NO_ANALYTICS   | --no-analytics | Deactivate analytics. Analytics help us to know how many users are using our project, knowing which versions and which platforms are used. It is entirely anonymous. |                  |
-| MEILI_ENV            | --env          | Defines the environment in which MeiliSearch is running. Can be `production` or `development`                                                                        | "development"    |
+| Environment Variable | CLI option     | Description                                                                                                                                                              | Default value    |
+| -------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
+| `MEILI_DB_PATH`      | --db-path      | Defines the location for the database files                                                                                                                              | "./data.ms"      |
+| `MEILI_HTTP_ADDR`    | --http-addr    | Address and port to listen to                                                                                                                                            | "127.0.0.1:7700" |
+| `MEILI_MASTER_KEY`   | --master-key   | Default admin API key                                                                                                                                                    |                  |
+| `MEILI_NO_ANALYTICS` | --no-analytics | Deactivates analytics. Analytics allow us to know how many users are using MeiliSearch, which versions and which platforms are used. This process is entirely anonymous. |                  |
+| `MEILI_ENV`          | --env          | Defines the running environment of MeiliSearch. Can be set to `production` or `development`.                                                                             | "development"    |
 
 ### Environments
 
