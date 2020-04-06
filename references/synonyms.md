@@ -53,7 +53,7 @@ Update the list of synonyms of an index.
 
 #### Body
 
-An object with every synonym and its associated words.
+An object that contains all synonyms and their associated words.
 
 #### Example
 
