@@ -103,7 +103,7 @@ Results are sorted by **increasing distance between matched query terms**: find 
 
 #### 4. Attribute
 
-Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#attributes-importance)**: find documents that contain query terms in more important attributes first.
+Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**: find documents that contain query terms in more important attributes first.
 
 #### 5. Words Position
 
