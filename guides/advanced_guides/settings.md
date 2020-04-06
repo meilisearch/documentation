@@ -130,7 +130,6 @@ $ curl \
   }'
 ```
 
-[Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
 ## Distinct attribute
 
