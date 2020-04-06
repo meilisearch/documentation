@@ -26,11 +26,11 @@ MeiliSearch is open source. You can **support the project by starring** [our Git
 
 ![crates.io demo gif](/crates-io-demo.gif)
 
-> Meili helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
+> Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
 
 ## Alternatives
 
-Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md). In short, Meilisearch most closely compares with Algolia. Meili stands out by being open source (while commercial) and aims to be simpler to deploy and maintain.
+Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md). In short, Meilisearch most closely compares with Algolia. Meilisearch stands out by being open source (while commercial) and aims to be simpler to deploy and maintain.
 
 ## Features
 
