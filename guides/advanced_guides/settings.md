@@ -156,7 +156,7 @@ The **value of a field** whose attribute is set as a distinct attribute will alw
 
 Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations (color or size).
 
-As shown below, you have 2 documents that contain the same jacket. One of the jackets is brown and the other one is black. You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
+As shown below, you have 2 documents that contain information about the same jacket. One of the jackets is brown and the other one is black.
 
 ```json
 [
@@ -172,12 +172,12 @@ As shown below, you have 2 documents that contain the same jacket. One of the ja
     "description": "Leather jacket",
     "brand": "Lee jeans",
     "color": "black",
-    "product_id": "7891011"
+    "product_id": "123456"
   }
 ]
 ```
 
-Add settings:
+You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`. Add settings:
 
 ```bash
 $ curl \
