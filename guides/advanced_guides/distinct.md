@@ -6,37 +6,44 @@ In such a case, there will **never be two, or more, occurrences of the same valu
 
 ### Example
 
-Suppose you have 3 documents, each with a different jacket. Each jacket has a **unique `color`** but **same `skuid`**:
+Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations (color or size).
+
+As shown below, you have 3 documents that contain information about the same jacket. One of the jackets is brown, one is black, and the last one is blue.
 
 ```json
 [
   {
     "id": 1,
-    "skuid": "abcdef",
-    "name": "Really nice Jacket",
-    "color": "blue"
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "brown",
+    "product_id": "123456"
   },
   {
     "id": 2,
-    "skuid": "abcdef",
-    "name": "Really nice Jacket",
-    "color": "red"
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "black",
+    "product_id": "123456"
   },
   {
-    "id": 3,
-    "skuid": "abcdef",
-    "name": "Really nice Jacket",
-    "color": "green"
+    "id": 2,
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "blue",
+    "product_id": "123456"
   }
 ]
 ```
 
-By [setting `skuid` as a distinct field](/references/distinct_attribute.md), search requests **will never return two or more jackets with the same `skuid`**.
+You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
+
+By [setting `product_id` as a distinct attribute](/references/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
 
 ```bash
  $ curl
   -X POST 'http://localhost:7700/indexes/jackets/settings' \
-  --data '{ "distinctAttribute": "skuid" }'
+  --data '{ "distinctAttribute": "product_id" }'
 ```
 
 ::: warning
