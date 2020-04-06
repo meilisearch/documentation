@@ -138,7 +138,7 @@ $ curl \
 
 ## Distinct attribute
 
-A field whose value will always be **unique** in the returned documents.
+The **value of a field** whose attribute is set as a distinct attribute will always be **unique** in the returned documents.
 
 `distinctAttribute=<String>`
 
@@ -146,7 +146,7 @@ A field whose value will always be **unique** in the returned documents.
 
   The field name.
 
-[Learn more about distinct attribute](/guides/advanced_guides/distinct.md)
+[Learn more about the distinct attribute](/guides/advanced_guides/distinct.md)
 
 #### Example
 
