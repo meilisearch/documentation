@@ -131,7 +131,7 @@ $ curl \
           "wordsPosition",
           "exactness",
           "asc(release_date)",
-          "dsc(rank)"
+          "desc(rank)"
       ]
   }'
 ```
