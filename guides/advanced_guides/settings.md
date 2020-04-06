@@ -1,6 +1,6 @@
 # Settings Configuration
 
-This section describes all **configuration settings** available in MeiliSearch.
+This page describes all **configuration settings** available in MeiliSearch.
 
 | Variable                                                                              | Description                                                                      | Default value                                                                                     |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -41,7 +41,7 @@ $ curl \
 
 ## Stop words
 
-A set of words defined for an index. Because some words neither add semantic value nor context, you may want to ignore them from your search. Stop words are **excluded during search**.
+A set of words defined for an index. Because some words neither add semantic value nor context, you may want to ignore them from your search. Stop words are **ignored during search**.
 
 `stopWords=[<String>, <String>, ...]`
 
@@ -66,6 +66,10 @@ $ curl \
       ]
   }'
 ```
+
+In the example above, `the`, `a` and `an` are ignored by the sorting algorithm if they are present in search queries.
+
+Suppose you would like to search `the mask` in a movie database. Since `the` is ignored during search, MeiliSearch will look for every movie containing `mask` and not the millions ones containing `the`. `the` is a less relevant term than `mask` and also a very frequent word in English. By adding `the` to the stop words list, MeiliSearch will ignore this word, and thus be faster to answer without losing in relevancy.
 
 ## Ranking rules
 
@@ -126,7 +130,7 @@ $ curl \
           "attribute",
           "wordsPosition",
           "exactness",
-          "dsc(release_date)",
+          "asc(release_date)",
           "dsc(rank)"
       ]
   }'
