@@ -67,7 +67,7 @@ $ curl \
   }'
 ```
 
-In the example above, `the`, `a` and `an` are ignored by the sorting algorithm if they are present in search queries.
+With the settings in the example above, `the`, `a` and `an` are now ignored by the sorting algorithm if they are present in search queries.
 
 Suppose you would like to search `the mask` in a movie database. Since `the` is ignored during search, MeiliSearch will look for every movie containing `mask` and not the millions ones containing `the`. `the` is a less relevant term than `mask` and also a very frequent word in English. By adding `the` to the stop words list, MeiliSearch will ignore this word, and thus be faster to answer without losing in relevancy.
 
