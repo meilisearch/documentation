@@ -15,7 +15,7 @@ Each **field** contains an **attribute** and its associated value.
 
 #### Example
 
-Suppose you manage a database that contains information about movies. For an index that would collect movie descriptions, you would create the following attributes:`"id"`, `"title"`, `"description"` and `"type"`, and a field would look like as follows: `"title": "Kung fu Panda"`.
+Given an **index** that contains information about movies. There would be **documents** with the following **attributes**:`"id"`, `"title"`, `"description"` and `"type"`, a **field** is the association of an attribute and its **value**: `"title": "Kung fu Panda"`. Each document contains at least the **primary key** attribute : `id` with its associated value, the **document id**: `"id": "123456"`
 
 ## Structure
 
