@@ -123,11 +123,11 @@ New rules can be added to the existing list at any time and placed anywhere in t
 
 A custom rule allows you to create an ascending or descending sorting rule on a given attribute.
 
-To add your own ranking rule, you have to communicate either `asc` for ascending order or `dsc` for descending order followed by the field name in brackets.
+To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name in brackets.
 
 - To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
 
-- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `dsc(attribute_name)`
+- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
 Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
 
@@ -144,7 +144,7 @@ asc(release_date)
 The following example will create a rule that makes movies with a good rank more relevant than others. Movies with a higher ranking will appear first.
 
 ```
-dsc(movie_ranking)
+desc(movie_ranking)
 ```
 
 To add a newly created rule to the existing ranking rule using the [settings route](/references/ranking_rules.md#update-ranking-rules), you have to add the rule to the existing order array.
@@ -158,7 +158,7 @@ To add a newly created rule to the existing ranking rule using the [settings rou
   "wordsPosition",
   "exactness",
   "asc(release_date)",
-  "dsc(movie_ranking)"
+  "desc(movie_ranking)"
 ]
 ```
 
