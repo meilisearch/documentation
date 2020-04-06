@@ -51,7 +51,7 @@ Update the displayed attributes of an index.
 
 #### Body
 
-List of displayed attributes of an index.
+An array of strings that contains attributes of an index to display.
 
 ### Examples
 
@@ -59,12 +59,12 @@ List of displayed attributes of an index.
 $ curl \
   -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
   --data '[
-    "title",
-    "description",
-    "release_date",
-    "rank",
-    "poster"
-]'
+      "title",
+      "description",
+      "release_date",
+      "rank",
+      "poster"
+  ]'
 ```
 
 #### Response: `202 Accepted`

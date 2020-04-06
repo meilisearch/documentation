@@ -37,8 +37,8 @@ The body accepts a boolean to define the MeiliSearch health.
 $ curl \
   -X PUT 'http://localhost:7700/health' \
   --data '{
-  "health": false
-}'
+      "health": false
+  }'
 ```
 
 #### Response: `204 No Content`
