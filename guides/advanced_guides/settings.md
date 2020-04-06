@@ -30,14 +30,16 @@ Add settings:
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  -X POST 'http://localhost:7700/indexes/shoes/settings' \
   --data '{
       "synonyms": {
-          "wolverine": ["xmen", "logan"],
-          "logan": ["wolverine"]
+          "black sneakers": ["black tennis shoes"],
+          "black tennis shoes": ["black sneakers"]
       }
   }'
 ```
+
+Suppose you have an e-commerce dataset. For an index that contains information about shoes, you decide to create synonyms for `black sneakers` and `black tennis shoes`. By doing so, if you search either one or the other terms, the same results will be displayed.
 
 ## Stop words
 
