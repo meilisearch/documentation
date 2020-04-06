@@ -191,7 +191,7 @@ With the settings in the example above, only one of the two documents will be re
 
 ## Searchable attributes
 
-Fields in which to **search for matching query words**.
+The content of the fields whose attributes are added to the [searchable-attributes list](/references/searchable_attributes.md) are **searched for matching query words**.
 
 `searchableAttributes=[<String>, <String>, ...]`
 
@@ -221,9 +221,11 @@ $ curl \
   }'
 ```
 
+With the settings in the example above, the fields `uid`, `movie_id`, `title`, `description`, `poster`, `release_date` and `rank` will be searched.
+
 ## Displayed attributes
 
-Displayed attributes are the **fields contained in each matching document**.
+The fields whose attributes are added to the [displayed-attributes list](/references/displayed_attributes.md) are **contained in each matching document**.
 
 Documents returned upon search contain only displayed fields.
 
@@ -253,6 +255,8 @@ $ curl \
   }'
 ```
 
+With the settings in the example above, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
+
 ## Accept new fields
 
 This setting takes a **Boolean value** (`true` or `false`) and defines whether new fields should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
@@ -278,3 +282,5 @@ $ curl \
       "acceptNewFields": false
   }'
 ```
+
+With the settings in the example above, new fields will be stored but neither searchable nor displayed in returned documents.
