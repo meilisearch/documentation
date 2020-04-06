@@ -92,7 +92,7 @@ Update the settings of an index.
 | **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
-| **acceptNewFields**      | Boolean   | Defines if new fields should be searchable and displayed or not                  | `true`                                                                                            |
+| **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
 Any parameters not provided will be left unchanged.
 
