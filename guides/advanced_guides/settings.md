@@ -136,6 +136,8 @@ $ curl \
   }'
 ```
 
+With the settings in the example above, documents will be sorted by number of typos first. If too many documents have the same number of typos, the `words` rule will be applied. This operation is repeated with the next rules until the number of documents is limited to the requested number of documents (default: 20).
+
 ## Distinct attribute
 
 The **value of a field** whose attribute is set as a distinct attribute will always be **unique** in the returned documents.
