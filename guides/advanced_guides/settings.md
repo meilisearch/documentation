@@ -109,6 +109,8 @@ Results are sorted by **the position of the query words in the attributes**: fin
 
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
+[Learn more about ranking rules](/guides/main_concepts/relevancy.md)
+
 #### Example
 
 Add settings:
