@@ -151,7 +151,7 @@ The following example will create a rule that makes movies with a good rank more
 desc(movie_ranking)
 ```
 
-To add a newly created rule to the existing ranking rule using the [settings route](/references/ranking_rules.md#update-ranking-rules), you have to add the rule to the existing order array.
+To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/references/ranking_rules.md#update-ranking-rules),
 
 ```json
 [
