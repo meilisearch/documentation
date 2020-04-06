@@ -167,7 +167,7 @@ All settings will be reset to their default value.
 | **synonyms**             | List of associated words that should be treated similarly in a search query      | `{}`                                                                                              |
 | **stopWords**            | List of words that should be excluded from search queries ignored                | `[]`                                                                                              |
 | **rankingRules**         | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **distinctAttribute**    | Returns only distinct (different) values of a given field                        | `null`                                                                                            |
+| **distinctAttribute**    | Search returns documents with distinct (different) values of a given field                        | `null`                                                                                            |
 | **searchableAttributes** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **displayedAttributes**  | Fields displayed in the returned documents documents                             | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
