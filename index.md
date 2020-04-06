@@ -1,12 +1,14 @@
 # MeiliSearch Documentation
 
-MeiliSearch is a **RESTful search API**. It aims to be the reference **ready-to-go solution** for everyone who wants a **powerful, fast, and relevant search experience** for their end-users ⚡️🔎
+MeiliSearch is a **RESTful search API**. It aims to be a **ready-to-go solution** for everyone who wants a **fast and relevant search experience** for their end-users ⚡️🔎
 
 [<linkButton text="🚀 GETTING STARTED"/>](/guides/introduction/quick_start_guide.md)
 
-Efficient search engines often require a significant investment of money. Therefore, they are only accessible to companies which have huge financial resources and the means necessary to develop a search solution that fits their needs. Other businesses that lack financial means or do not realize how much the irrelevancy of a search integrated into their application can negatively impact the user experience, end up with poor solutions that are more frustrating than effective, for both the developer and the user.
+Efficient search engines often require a significant investment of resources. They are only accessible to companies with the means necessary to develop a bespoke search solution that fits their needs.
 
-That's the reason why we created MeiliSearch: an open-source solution accessible to everyone, designed to meet a vast majority of needs, even specific ones. Requiring very little or no configuration to be installed, however highly customizable.
+Small to medium sized businesses commonly resort to subpar search engines that incur invisible costs on their user experience and retention due to poor search fulfillment.
+
+That's why we created MeiliSearch: An open source solution accessible to everyone, designed to meet a vast majority of needs. Requiring very little configuration to be installed, yet highly customizable.
 
 Our solution delivers an **instant search experience**; it handles **typos**; it understands **filters**, **custom rankings**, and many other [features](#features).
 
@@ -14,7 +16,7 @@ Our solution delivers an **instant search experience**; it handles **typos**; it
 
 ## Open-source
 
-MeiliSearch is open-source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
+MeiliSearch is open source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
 
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a>
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a><!-- prettier-ignore
@@ -28,7 +30,7 @@ MeiliSearch is open-source. You can **support the project by starring** [our Git
 
 ## Alternatives
 
-Why should you use MeiliSearch instead of any other existing solution? If it is clear to us, it may not be for you. We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md).
+Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md). In short, Meili most closely compares with Algolia. Meili stands out by being open source (while commercial) and aims to be simpler to deploy and maintain.
 
 ## Features
 
