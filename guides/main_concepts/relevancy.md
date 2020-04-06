@@ -176,7 +176,7 @@ If you wish to specify the order of the attributes you can either define them in
 
 ### Changing the order of the attributes
 
-You may want to change the order once the documents have been ingested. This is still very possible using the searchable attributes list.
+You may want to change the order once the documents have been ingested. This is still very possible using the [searchable attributes list](/guides/advanced_guides/field_properties.md#searchable-fields).
 
 Whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
 
