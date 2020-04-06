@@ -65,7 +65,7 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 - To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
 
-- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `dsc(attribute_name)`
+- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
 ### Examples
 
