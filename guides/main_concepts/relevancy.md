@@ -2,7 +2,7 @@
 
 Search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, MeiliSearch uses a [bucket sort](/guides/advanced_guides/bucket_sort.md) to rank documents. Each rule is applied to all documents that are considered equal according to the previous rule to break the tie.
 
-Ranking rules are **predefined rules applied to the search results** in order to improve their relevance. In order to benefit from the ranking rules and make them meet your dataset and needs, it is important to understand how each of them works and how to create new ones.
+Ranking rules are **predefined rules applied to the search results** in order to improve their relevancy. To benefit from the ranking rules and make them meet your dataset and needs, it is important to understand how each of them works and how to create new ones.
 
 For a more in-depth explanation of the algorithm and the default ranking rules, [see this issue](https://github.com/meilisearch/MeiliSearch/issues/358).
 
