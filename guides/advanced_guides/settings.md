@@ -154,13 +154,36 @@ The **value of a field** whose attribute is set as a distinct attribute will alw
 
 #### Example
 
+Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations (color or size).
+
+In the following example, you have 2 documents that contain the same jacket. One of the jackets is brown and the other one is black. You may want to ignore the different colors of an item. If you set `product_id` as a `distinctAttribute` and search `Lee leather jacket`, only one of the two documents will be returned.
+
+```json
+[
+  {
+    "id": 1,
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "brown",
+    "product_id": "123456"
+  },
+  {
+    "id": 2,
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "black",
+    "product_id": "7891011"
+  }
+]
+```
+
 Add settings:
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  -X POST 'http://localhost:7700/indexes/jackets/settings' \
   --data '{
-      "distinctAttribute": "movie_id"
+      "distinctAttribute": "product_id"
   }'
 ```
 
