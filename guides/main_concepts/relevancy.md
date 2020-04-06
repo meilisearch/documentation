@@ -139,7 +139,7 @@ Add this rule to the existing list of ranking rules using the [settings route](/
 
 Let's say you have a dataset of movies. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
 
-The following example will create a rule that makes older movies more relevant than older ones. A movie released in 1999 will appear before a movie released in 2020.
+The following example will create a rule that makes older movies more relevant than more recent ones. A movie released in 1999 will appear before a movie released in 2020.
 
 ```
 asc(release_date)
