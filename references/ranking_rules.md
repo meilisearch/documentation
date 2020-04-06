@@ -102,7 +102,7 @@ Reset the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of a
 
 #### Default value
 
-An array that contain [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) sorted by order of importance.
+An array that contains [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) sorted by order of importance.
 
 ```json
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
