@@ -156,7 +156,7 @@ The **value of a field** whose attribute is set as a distinct attribute will alw
 
 Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations (color or size).
 
-In the following example, you have 2 documents that contain the same jacket. One of the jackets is brown and the other one is black. You may want to ignore the different colors of an item. If you set `product_id` as a `distinctAttribute` and search `Lee leather jacket`, only one of the two documents will be returned.
+As shown below, you have 2 documents that contain the same jacket. One of the jackets is brown and the other one is black. You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
 
 ```json
 [
@@ -186,6 +186,8 @@ $ curl \
       "distinctAttribute": "product_id"
   }'
 ```
+
+With the settings in the example above, only one of the two documents will be returned if you search `Lee leather jacket`.
 
 ## Searchable attributes
 
