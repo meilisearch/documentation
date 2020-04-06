@@ -1,4 +1,4 @@
-# Settings Configuration
+# Settings configuration
 
 This page describes all **configuration settings** available in MeiliSearch.
 
