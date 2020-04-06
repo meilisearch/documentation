@@ -41,7 +41,7 @@ $ curl \
 
 ## Stop words
 
-A set of words defined for an index. Because some words neither add semantic value nor context, you may want to ignore them from your search. Stop words are **excluded from search queries**.
+A set of words defined for an index. Because some words neither add semantic value nor context, you may want to ignore them from your search. Stop words are **excluded during search**.
 
 `stopWords=[<String>, <String>, ...]`
 
