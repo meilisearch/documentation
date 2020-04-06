@@ -145,7 +145,7 @@ The following example will create a rule that makes older movies more relevant t
 asc(release_date)
 ```
 
-The following example will create a rule that makes movies with a good rank more relevant than others. Movies with a higher ranking will appear first.
+The following example will create a rule that makes movies with a good rank more relevant than movies with a lower rank. Movies with a higher ranking will appear first.
 
 ```
 desc(movie_ranking)
