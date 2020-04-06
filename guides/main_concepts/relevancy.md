@@ -15,7 +15,7 @@ The order in which these rules are applied has a big impact on the results. The 
 The ranking rules are **customizable** which means **existing rules can be deleted and new ones can be added.**
 
 Each of the rules has a special use in finding the right documents for a given search query.
-The order in which the rules are set affects their importance. They are arranged from the most important rule to the least important rule.
+The order in which the rules are set affects their importance. They are arranged from the most impactful rule to the least impactful rule.
 
 By default, ranking rules are executed in the following order:
 
