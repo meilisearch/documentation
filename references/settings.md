@@ -86,7 +86,7 @@ Update the settings of an index.
 
 | Variable                 | Type      | Description                                                                      | Default value                                                                                     |
 | ------------------------ | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **synonyms**             | Object    | List of associated words that should be treated similarly in a search query      | `{}`                                                                                              |
+| **synonyms**             | Object    | List of associated words treated similarly      | `{}`                                                                                              |
 | **stopWords**            | [Strings] | List of words that should be excluded from search queries                        | `[]`                                                                                              |
 | **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
 | **distinctAttribute**    | String    | Returns only distinct (different) values of the given field                      | `null`                                                                                            |
