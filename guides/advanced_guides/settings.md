@@ -20,7 +20,7 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 - `<Object>` (Object, defaults to `{}`)
 
-  An object that contains all synonyms and their associated words.
+  An object that contains words with a list of their associated synonyms.
 
 #### Example
 
