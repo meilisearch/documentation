@@ -165,7 +165,7 @@ All settings will be reset to their default value.
 | Variable                 | Description                                                                      | Default value                                                                                     |
 | ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **synonyms**             | List of associated words treated similarly  | `{}`                                                                                              |
-| **stopWords**            | List of words that should be excluded from search queries ignored                | `[]`                                                                                              |
+| **stopWords**            | List of words ignored by MeiliSearch when present in search queries                | `[]`                                                                                              |
 | **rankingRules**         | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
 | **distinctAttribute**    | Search returns documents with distinct (different) values of a given field                        | `null`                                                                                            |
 | **searchableAttributes** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
