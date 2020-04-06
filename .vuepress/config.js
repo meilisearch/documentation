@@ -122,6 +122,7 @@ module.exports = {
           path: "/resources/",
           collapsable: false,
           children: [
+            "/resources/about_storage",
             "/resources/sdks",
             "/resources/comparison_to_alternatives",
             "/resources/faq",
