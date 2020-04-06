@@ -30,7 +30,7 @@ MeiliSearch is open source. You can **support the project by starring** [our Git
 
 ## Alternatives
 
-Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md). In short, Meili most closely compares with Algolia. Meili stands out by being open source (while commercial) and aims to be simpler to deploy and maintain.
+Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md). In short, Meilisearch most closely compares with Algolia. Meili stands out by being open source (while commercial) and aims to be simpler to deploy and maintain.
 
 ## Features
 

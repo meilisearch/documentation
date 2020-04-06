@@ -7,11 +7,15 @@ Each **field** contains an **attribute** and its associated value.
 
 #### Wording
 
-- **Attribute**: An attribute is the name of a field, like a key (`"id"`, `"title"`, `"description"` and `"type"`).
-- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together. Here, an attribute and its corresponding data (i.e, `"title": "Interstellar"`).
 - **Document**: A document is an object which contains a list of fields in curly brackets.
+- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together: an attribute and its corresponding data.
+- **Attribute**: An attribute is the name of a field, like a key.
 - **[Primary key](/guides/main_concepts/documents.md#primary-key)**: The attribute of the field which contains the unique identifier of the documents.
-- **[Document id](/guides/main_concepts/documents.md#document-id)**: The unique value of a document.
+- **[Document id](/guides/main_concepts/documents.md#document-id)**: A document id is the value associated to the primary key attribute. Values in that field must always be **unique**.
+
+#### Example
+
+Given an **index** that contains information about movies. There would be **documents** with the following **attributes**:`"id"`, `"title"`, `"description"` and `"type"`, a **field** is the association of an attribute and its **value**: `"title": "Kung fu Panda"`. Each document contains at least the **primary key** attribute : `id` with its associated value, the **document id**: `"id": "123456"`
 
 ## Structure
 
@@ -39,7 +43,7 @@ You can also apply <clientGlossary word="ranking rules" /> to some fields. For e
 
 ## Primary key
 
-A primary key is an <clientGlossary word="attribute" /> which contains a unique value. It uniquely identifies each of the documents of a given index in order to store them.
+A primary key is an <clientGlossary word="attribute" /> which contains a unique value. It uniquely identifies each of the documents of a given index in order to store them. Therefore, values in that field must always be **unique**.
 
 Each index recognizes **only one** primary key attribute. Once a [primary key has been set for an index](/guides/main_concepts/documents.md#setting-the-primary-key), it **cannot be changed anymore**.
 
