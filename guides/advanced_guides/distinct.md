@@ -1,12 +1,12 @@
-# Distinct
+# Distinct attribute
 
-A field can be set as `distinct`.
+The value of a field whose **attribute is set as a distinct attribute** will always be unique in the returned documents.
 
-When a field is `distinct`, there will **never be two, or more, occurrence of the same value of that attribute** in the different documents that are returned by MeiliSearch.
+When a field is `distinct`, there will **never be two, or more, occurrences of the same value of that attribute** in the different documents returned by MeiliSearch.
 
 ### Example
 
-Let's use the sample of the following documents with 3 jackets of **different `colors`** but **same `skuid`**:
+Suppose you have 3 documents, each with a different jacket. Each jacket has a **unique `color`** but **same `skuid`**:
 
 ```json
 [
@@ -31,15 +31,13 @@ Let's use the sample of the following documents with 3 jackets of **different `c
 ]
 ```
 
-By [setting `skuid` as a distinct field](/references/distinct_attribute.md):
+By [setting `skuid` as a distinct field](/references/distinct_attribute.md), search requests **will never return two or more jackets with the same `skuid`**.
 
 ```bash
  $ curl
   -X POST 'http://localhost:7700/indexes/jackets/settings' \
-  --data '{ "distinctField": "skuid" }'
+  --data '{ "distinctAttribute": "skuid" }'
 ```
-
-With this setting, search requests **will never return two or more jackets with the same `skuid`**.
 
 ::: warning
 If the field does not exist, no error will be thrown.
