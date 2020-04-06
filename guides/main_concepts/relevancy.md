@@ -127,7 +127,7 @@ New rules can be added to the existing list at any time and placed anywhere in t
 
 A custom rule allows you to create an ascending or descending sorting rule on a given attribute.
 
-To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name in brackets.
+To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name between round brackets.
 
 - To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
 
