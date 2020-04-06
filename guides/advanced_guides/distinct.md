@@ -38,13 +38,13 @@ As shown below, you have 3 documents that contain information about the same jac
 
 You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
 
-By [setting `product_id` as a distinct attribute](/references/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
-
 ```bash
  $ curl
   -X POST 'http://localhost:7700/indexes/jackets/settings' \
   --data '{ "distinctAttribute": "product_id" }'
 ```
+
+By [setting `product_id` as a distinct attribute](/references/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
 
 ::: warning
 If the field does not exist, no error will be thrown.
