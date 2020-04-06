@@ -16,18 +16,18 @@ import { createPopper } from "@popperjs/core";
 
 const glossary = {
   field:
-    "A field is composed of an <b>attribute</b> and its associated data. <br><br> Ex: <code>attribute: 'data'</code>",
+    "A field, or a key-value pair, is a set of two data items linked together: an <b>attribute</b> and its associated data. <br><br> Ex: <code>attribute: 'data'</code>",
   attribute:
-    "The key associated to some data in a field. <br><br> Ex:  <code>title: 'batman'</code> <br> title is the attribute in this example.",
+    "An attribute is the name of a field, like a key. <br><br> Ex:  <code>title: 'Batman'</code> <br> In the example above, title is the attribute.",
   "ranking rules":
-    "Rules that are used by MeiliSearch to determine the relevancy of a document. <br><br> For example, the number of typos or the number of times the matching query is found in a document.",
+    "A set of consecutive rules applied to ensure relevancy in search results. <br><br> For example, to sort results by number of typos or number of matched query terms in each matching document.",
   "primary key":
-    "The attribute in a document of its unique identifier field. <br><br> Used by MeiliSearch to store the document. <br><br> Example: <code>movie_id</code> is the primary key of a movie document.",
+    "The attribute of the field which contains the unique identifier of the documents. <br><br> It is used by MeiliSearch to store the document. <br><br> Example: <code>movie_id</code> is the primary key of a movie document.",
   schemaless:
-    "This means you don't need to define or describe the structure of your data before adding data to an index. <br><br> For example, SQL's tables need schemas but mongodb's collections does not require it.",
+    "This means data can be indexed without providing a fixed data structure. <br><br> For example, SQL's tables require schema definition whereas MongoDB's collections don't.",
   searchable:
     "The data is used to determine the relevancy of a document when doing a search query.",
-  displayed: "The field is present in the document returned upon search.",
+  displayed: "The field is present in the documents returned upon search.",
 };
 
 export default {
