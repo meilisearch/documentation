@@ -18,7 +18,7 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 `synonyms=<Object>`
 
-- `<Object>` (Object, defaults to `{}`)
+- `<Object>` (Object, defaults to `{}`) : `{ <String>: [<String>, <String>, ...], ... }`
 
   An object that contains words with a list of their associated synonyms.
 
