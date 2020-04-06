@@ -61,7 +61,7 @@ Update the ranking rules of an index.
 
 An array that contain ranking rules sorted by order of importance.
 
-To add your own ranking rule, you have to communicate either `asc` for ascending order or `dsc` for descending order followed by the field name in brackets.
+To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name in brackets.
 
 - To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
 
