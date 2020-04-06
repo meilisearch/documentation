@@ -90,9 +90,9 @@ This route takes as parameter an unique `uid` and **optionally** the [primary ke
 $ curl \
   -X POST 'http://localhost:7700/indexes' \
   --data '{
-  "uid": "movies",
-  "primaryKey": "movie_id"
-}'
+    "uid": "movies",
+    "primaryKey": "movie_id"
+  }'
 ```
 
 #### Response: `201 created`
@@ -137,8 +137,8 @@ The `primaryKey` can be added if it does not already exist (to know if it has be
 $ curl \
   -X PUT 'http://localhost:7700/indexes/movie_review' \
   --data '{
-  "primaryKey" : "movie_review_id"
-}'
+      "primaryKey" : "movie_review_id"
+  }'
 ```
 
 #### Response: `200 Ok`

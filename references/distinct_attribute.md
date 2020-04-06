@@ -49,7 +49,7 @@ Update the distinct attribute field of an index.
 
 #### Body
 
-String of the field's name.
+A String: the field name.
 
 ### Examples
 

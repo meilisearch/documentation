@@ -52,7 +52,7 @@ List the settings.
     "exactness",
     "dsc(release_date)"
   ],
-  "rankingDistinct": null,
+  "distinctAttribute": null,
   "searchableAttributes": ["title", "description", "uid"],
   "displayedAttributes": [
     "title",
@@ -66,7 +66,7 @@ List the settings.
     "wolverine": ["xmen", "logan"],
     "logan": ["wolverine", "xmen"]
   },
-  "indexNewFields": false
+  "acceptNewFields": false
 }
 ```
 
@@ -84,15 +84,15 @@ Update the settings of an index.
 
 #### Body
 
-| Variable                 | Type      | Description                                                                  | Default value                                                                                 |
-| ------------------------ | --------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **rankingRules**         | [Strings] | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **rankingDistinct**      | String    | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
-| **displayedAttributes**  | [Strings] | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
-| **stopWords**            | [Strings] | Words in the search query that will be ignored                               | `[]`                                                                                          |
-| **synonyms**             | Object    | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **indexNewFields**       | Boolean   | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+| Variable                 | Type      | Description                                                                      | Default value                                                                                     |
+| ------------------------ | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**             | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **stopWords**            | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
+| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
+| **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
 Any parameters not provided will be left unchanged.
 
@@ -104,44 +104,44 @@ Any parameters not provided will be left unchanged.
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings' \
   --data '{
-   "rankingRules": [
-            "typo",
-            "words",
-            "proximity",
-            "attribute",
-            "wordsPosition",
-            "exactness",
-            "dsc(release_date)",
-            "dsc(rank)",
-        ],
-        "rankingDistinct": "movie_id",
-        "searchableAttributes": [
-            "uid",
-            "movie_id",
-            "title",
-            "description",
-            "poster",
-            "release_date",
-            "rank",
-        ],
-        "displayedAttributes": [
-            "title",
-            "description",
-            "poster",
-            "release_date",
-            "rank",
-        ],
-        "stopWords": [
-            "the",
-            "a",
-            "an",
-        ],
-        "synonyms": {
-            "wolverine": ["xmen", "logan"],
-            "logan": ["wolverine"],
-        },
-        "indexNewFields": false,
-    }'
+      "rankingRules": [
+          "typo",
+          "words",
+          "proximity",
+          "attribute",
+          "wordsPosition",
+          "exactness",
+          "dsc(release_date)",
+          "dsc(rank)"
+      ],
+      "distinctAttribute": "movie_id",
+      "searchableAttributes": [
+          "uid",
+          "movie_id",
+          "title",
+          "description",
+          "poster",
+          "release_date",
+          "rank"
+      ],
+      "displayedAttributes": [
+          "title",
+          "description",
+          "poster",
+          "release_date",
+          "rank"
+      ],
+      "stopWords": [
+          "the",
+          "a",
+          "an"
+      ],
+      "synonyms": {
+          "wolverine": ["xmen", "logan"],
+          "logan": ["wolverine"]
+      },
+      "acceptNewFields": false
+  }'
 ```
 
 #### Response: `202 Accepted`
@@ -162,15 +162,15 @@ Reset the settings of an index.
 
 All settings will be reset to their default value.
 
-| Variable                 | Description                                                                  | Default value                                                                                 |
-| ------------------------ | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| **rankingRules**         | Ranking rules in their order of importance                                   | [built-in ranking rules list in order](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **rankingDistinct**      | Returns only distinct (different) values of the given field                  | `null`                                                                                        |
-| **searchableAttributes** | Fields in which to search for matching query words (_ordered by importance_) | All attributes found in the documents                                                         |
-| **displayedAttributes**  | Fields present in the returned documents                                     | All attributes found in the documents                                                         |
-| **stopWords**            | Words in the search query that will be ignored                               | `[]`                                                                                          |
-| **synonyms**             | List of associated words that are considered the same in a search query      | `{}`                                                                                          |
-| **indexNewFields**       | New fields in newly added document are/aren't added to MeiliSearch           | `true`                                                                                        |
+| Variable                 | Description                                                                      | Default value                                                                                     |
+| ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**             | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **stopWords**            | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **rankingRules**         | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **distinctAttribute**    | Search returns documents with distinct (different) values of a given field       | `null`                                                                                            |
+| **searchableAttributes** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
+| **displayedAttributes**  | Fields displayed in the returned documents documents                             | All attributes found in the documents                                                             |
+| **acceptNewFields**      | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
 #### Path Variables
 
