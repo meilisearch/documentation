@@ -1,8 +1,8 @@
 # Distinct attribute
 
-The value of a field whose **attribute is set as a distinct attribute** will always be unique in the returned documents.
+The **value** of a field whose attribute is set as a distinct attribute will always be **unique** in the returned documents.
 
-When a field is `distinct`, there will **never be two, or more, occurrences of the same value of that attribute** in the different documents returned by MeiliSearch.
+In such a case, there will **never be two, or more, occurrences of the same value** of that field in the different documents returned by MeiliSearch.
 
 ### Example
 
