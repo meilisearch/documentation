@@ -4,8 +4,8 @@ This section describes all **configuration settings** available in MeiliSearch.
 
 | Variable                                                                              | Description                                                                      | Default value                                                                                     |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words that should be treated similarly during a search      | `{}`                                                                                              |
-| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | List of words ignored in search queries                        | `[]`                                                                                              |
+| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words that should be treated similarly during a search        | `{}`                                                                                              |
+| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | List of words ignored in search queries                                          | `[]`                                                                                              |
 | **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
 | **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Returns only distinct (different) values of a given field                        | `null`                                                                                            |
 | **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
@@ -131,7 +131,6 @@ $ curl \
       ]
   }'
 ```
-
 
 ## Distinct attribute
 
