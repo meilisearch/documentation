@@ -69,7 +69,7 @@ $ curl \
 
 ## Ranking rules
 
-Built-in ranking rules to **ensure relevancy in search results**. They are customizable so the results meet your user's needs as close as possible. Ranking rules are applied in a default order which can be changed in the settings.
+Built-in ranking rules that **ensure relevancy in search results**. Ranking rules are applied in a default order which can be changed in the settings. You can add or remove rules and change their order of importance.
 
 `rankingRules=[<String>, <String>, ...]`
 
