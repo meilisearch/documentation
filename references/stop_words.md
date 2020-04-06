@@ -49,7 +49,7 @@ Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an ind
 
 #### Body
 
-An array of strings containing the [stop-words](/guides/advanced_guides/stop_words.md).
+An array of strings that contains the [stop-words](/guides/advanced_guides/stop_words.md).
 
 If a list of stop-words already exists it will be overwritten (_replaced_).
 

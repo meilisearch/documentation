@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-Ranking rules is a list of all the rules that contributes to the relevancy of your search. It is possible to add your own and to change the order of the rules based on your needs.
+Ranking rules are built-in rules that **ensure relevancy in search results**. Ranking rules are applied in a default order which can be changed in the settings. You can add or remove rules and change their order of importance.
 
 Ranking rules can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
@@ -59,13 +59,13 @@ Update the ranking rules of an index.
 
 #### Body
 
-List of ranking rules in order of importance.
+An array that contain ranking rules sorted by order of importance.
 
-To add your own ranking rule you need to communicate the field and if its value is descending or ascending.
+To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name in brackets.
 
-For ascending it would be: `asc(price)`
+- To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
 
-For descending it would be: `dsc(release_date)`
+- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
 ### Examples
 
@@ -73,15 +73,15 @@ For descending it would be: `dsc(release_date)`
 $ curl \
   -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
   --data '[
-            "typo",
-            "words",
-            "proximity",
-            "attribute",
-            "wordsPosition",
-            "exactness",
-            "dsc(release_date)",
-            "dsc(rank)"
-        ]'
+      "typo",
+      "words",
+      "proximity",
+      "attribute",
+      "wordsPosition",
+      "exactness",
+      "asc(release_date)",
+      "desc(rank)"
+  ]'
 ```
 
 #### Response: `202 Accepted`
@@ -102,13 +102,13 @@ Reset the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of a
 
 #### Default value
 
-Array with the [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) ordered by importance.
+An array that contains [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) sorted by order of importance.
 
 ```json
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
-To remove all ranking rules, which is not recommended for any use-case, you should send an empty array on the [add or replace ranking rules route](/references/ranking_rules.md#update-ranking-rules).
+To remove all ranking rules, which is not recommended in any case, you would send an empty array to the [add or replace ranking rules route](/references/ranking_rules.md#update-ranking-rules).
 
 #### Path Variables
 
