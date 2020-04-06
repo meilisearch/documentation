@@ -8,7 +8,11 @@ For a more in-depth explanation of the algorithm and the default ranking rules, 
 
 ## Ranking rules
 
-Ranking rules are built-in rules applied in a default order to the search results to meet most standard needs. **This order can be changed in the settings**. The ranking rules are **customizable** which means **existing rules can be deleted and new ones can be added.**
+Ranking rules are built-in rules applied in a certain order during search. These rules determine which documents are returned upon a search query. 
+
+The order in which these rules are applied has a big impact on the results. The first rules being the most impactful and the last one the least. The default order has been chosen because it meet most standard needs. **This order can be changed in the settings**. 
+
+The ranking rules are **customizable** which means **existing rules can be deleted and new ones can be added.**
 
 Each of the rules has a special use in finding the right documents for a given search query.
 The order in which the rules are set affects their importance. They are arranged from the most important rule to the least important rule.
