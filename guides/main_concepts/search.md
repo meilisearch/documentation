@@ -28,37 +28,15 @@ MeiliSearch will return documents containing `batman` when searching for `the da
 
 When all documents matching the request have been collected, MeiliSearch sorts them using a **bucket sort** and a list of **built-in [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules)**.
 
+#### Bucket sort
+
 A **bucket sort** can be described as an ordered set of sorting rules. All documents are sorted within the first rule, then documents that can not be distinguished will be sorted using the second rule, and so on. Thus, every document is not sorted for every rule, which induces a reduced compute time.
 
 [Learn more about the bucket sort](/guides/advanced_guides/bucket_sort.md)
 
-By default, ranking rules are executed in the following order:
+#### Ranking rules
 
-#### 1. Typo
-
-The fewer typos there are between the query words and the document words, the better is the document.
-
-#### 2. Words
-
-A document containing more of the query words will be more important than one that contains less.
-
-#### 3. Proximity
-
-The closer the query words are in the document, the better is the document.
-
-#### 4. Attribute
-
-A document containing the query words in a more important attribute than another document is considered better.
-
-#### 5. Words Position
-
-A document containing the query words at the start of an attribute is considered better than a document that contains them at the end.
-
-#### 6. Exactness
-
-A document containing the query words in their exact form, not only a prefix of them, is considered better.
-
-The ranking rules are arranged from the most impactful rule to the least impactful rule to get the best results in most standard situations. You can change this order of importance. You can also add your own rules to meet more specific needs.
+Search responses are sorted according to a set of consecutive built-in rules called **ranking rules**. The ranking rules are applied to the search results from the most impactful rule to the least impactful rule. **This order can be changed in the settings**. The ranking rules are also **customizable** which means **existing rules can be deleted and new ones can be added**.
 
 [Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
