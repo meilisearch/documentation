@@ -50,7 +50,7 @@ List the settings.
     "attribute",
     "wordsPosition",
     "exactness",
-    "dsc(release_date)"
+    "desc(release_date)"
   ],
   "distinctAttribute": null,
   "searchableAttributes": ["title", "description", "uid"],
@@ -111,8 +111,8 @@ $ curl \
           "attribute",
           "wordsPosition",
           "exactness",
-          "dsc(release_date)",
-          "dsc(rank)"
+          "desc(release_date)",
+          "desc(rank)"
       ],
       "distinctAttribute": "movie_id",
       "searchableAttributes": [
