@@ -8,19 +8,19 @@ When a query input is received, MeiliSearch constructs a more complex query by t
 
 MeiliSearch handles spelling errors and return the correct results to users. For example, if the query string is `botman`, documents containing `batman` will be returned.
 
-[Learn more about typo tolerance](/guides/advanced_guides/typotolerance.md).
+[Learn more about typo tolerance](/guides/advanced_guides/typotolerance.md)
 
 #### N-grams
 
 MeiliSearch is set to merge multi-words queries into a single word when searching for matching documents. For example, if the query string is `bat mobile` documents containing `batmobile` will be returned. Each word of the query will be split in the same way.
 
-[Learn more about concatenating and splitting queries](/guides/advanced_guides/concat.md).
+[Learn more about concatenating and splitting queries](/guides/advanced_guides/concat.md)
 
 #### Synonyms
 
 MeiliSearch will return documents containing `batman` when searching for `the dark knight`. Synonyms are not set by default since they are domain-specific.
 
-[Learn more about synonyms](/guides/advanced_guides/synonyms.md).
+[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
 
 ## Sorting documents
 
@@ -62,7 +62,7 @@ To learn how to add custom rules, see [this page about ranking rules](/guides/ma
 
 ## Search options
 
-A lot of configuration can be made at _query-time_ using the [search paramaters](/guides/advanced_guides/search_parameters.md). Here are some usage examples:
+A lot of configuration can be made at _query-time_ using the [search parameters](/guides/advanced_guides/search_parameters.md). Here are some usage examples:
 
 #### Pagination
 
@@ -82,4 +82,4 @@ $ curl -X GET 'https://localhost:7700/indexes/4eb345y7/search?q=batman&filters=d
 
 ### Try it out!
 
-Once you have added your data to Meilisearch, **give it a try**! Visit the [web interface](/guides/advanced_guides/web_interface.md) available at your MeiliSearch address in any browser.
+Once you have added your data to Meilisearch, **give it a try**! Open your web browser and enter MeiliSearch address to visit the [web interface](/guides/advanced_guides/web_interface.md).
