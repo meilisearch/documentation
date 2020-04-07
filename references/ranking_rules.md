@@ -41,7 +41,7 @@ List the settings.
   "attribute",
   "wordsPosition",
   "exactness",
-  "dsc(release_date)"
+  "desc(release_date)"
 ]
 ```
 
