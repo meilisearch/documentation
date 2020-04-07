@@ -64,13 +64,17 @@ To learn how to add custom rules, see [this page about ranking rules](/guides/ma
 
 A lot of configuration can be made at _query-time_ using the [search paramaters](/guides/advanced_guides/search_parameters.md). Here are some usage examples:
 
-- _Pagination_ - Results can be paginated using the query params `limit` and `offset`
+#### Pagination
+
+Results can be paginated using the query params `limit` and `offset`.
 
 ```bash
 $ curl -X GET 'http://localhost:7700/indexes/4eb345y7/search?q=batman&limit=5&offset=10'
 ```
 
-- _Filters_ - You can build a faceted search using the query param `filter`. It will only return the specific filtered documents.
+#### Filters
+
+You can build a faceted search using the query param `filter`. It will only return the specific filtered documents.
 
 ```bash
 $ curl -X GET 'https://localhost:7700/indexes/4eb345y7/search?q=batman&filters=director:Christopher%20Nolan'
