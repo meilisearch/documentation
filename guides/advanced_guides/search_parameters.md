@@ -9,7 +9,7 @@ Search parameters let the user customize their search request.
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                            |     `20`      |
 | **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                 |      `*`      |
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                      |    `none`     |
-| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Maximum length of field values                                  |     `200`     |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms |    `none`     |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                            |    `none`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether the raw matches should be returned or not       |    `false`    |
@@ -66,7 +66,7 @@ Attributes whose values have to be cropped.
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
-  Comma-separated list of attributes whose values shall be cropped according to the `cropLength` value and the matches.
+  Comma-separated list of attributes whose values shall be cropped according to the `cropLength` value.
 
 ::: tip
 This is especially useful when you have to display content on the front-end in a specific way.
@@ -80,11 +80,11 @@ Set a limit on the length of field values.
 
 - `<Integer>` (Optional, positive integer, defaults to `200`)
 
-  If the value of the parameter `cropLength` is _n_, _n_ is the length used to crop field values.
+  The length used to crop field values.
 
 Cropping start at the **first occurrence of the search query**.
 
-If the value of the parameter `cropLength` is _n_, the returned field value will consist of **_n_ characters before the query word** and **_n_ characters from the first character of the query word**.
+If the value of the parameter `cropLength` is _n_, the returned field value will consist of **_n_ characters before the query word** and **_n_ characters from the first character of the query word**. Below is a simple representation:
 
 ```json
 _n_ characters + _n_ characters including the query word
@@ -120,7 +120,7 @@ You will get the following response with the **cropped version in the \_formatte
 }
 ```
 
-In the example above, the cropped version of overview is 200 characters longs. There are 100 characters before `shifu`, the first match, and 100 characters again from the first letter of `shifu`.
+In the example above, the cropped version of `overview` is 200 characters longs. There are 100 characters before `shifu` (the first match) and 100 more characters from the first letter of `shifu`.
 
 ## Attributes to highlight
 
@@ -130,7 +130,7 @@ Attributes whose values will contain highlighted matching terms.
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
-  Comma-separated list of attributes. Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
+  Comma-separated list of attributes. Every matching string sequence in the given attribute field will be wrapped around an `<em>` tag.
 
 #### Example
 
