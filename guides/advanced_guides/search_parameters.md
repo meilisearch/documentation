@@ -25,7 +25,7 @@ The query parameter is the **only mandatory** parameter. This is the string used
   The query string.
 
 ::: tip
-Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API responds.
+Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API will respond.
 :::
 
 ## Offset
@@ -72,7 +72,7 @@ Attributes whose values have to be cropped.
 This is especially useful when you have to display content on the front-end in a specific way.
 :::
 
-**Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2` chars on each side of the first match.
+**Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2` characters on each side of the first match.
 
 ## Crop length
 
@@ -82,22 +82,20 @@ Set a limit on the length of field values.
 
 - `<Integer>` (Optional, positive integer, defaults to `200`)
 
-  If the value of the parameter `cropLength` is _n_, _n_ is the total length of cropped fields.
+  If the value of the parameter `cropLength` is _n_, _n_ is the total length of cropped field values.
 
 #### Example
 
-If you input `shifu` as a search query and set the value of the parameter `cropLength` to 100 as below:
+If you input `shifu` as a search query and set the value of the parameter `cropLength` to `100` as below:
 
 ```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
-        -d q=shifu \
-        -d attributesToCrop=overview \
-        -d cropLength=100 \
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+      -d attributesToCrop=overview \
+      -d cropLength=100
 ```
 
-Our **cropped version is in the \_formatted object**.
-
-You would get this response:
+You will get the following response with the **cropped version in the \_formatted object**:
 
 ```json
 {
@@ -129,9 +127,9 @@ Attributes whose values will contain highlighted matching terms.
 #### Example
 
 ```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
-        -d q=shifu \
-        -d attributesToHighlight=overview
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+      -d attributesToHighlight=overview
 ```
 
 Our **highlight version is in the \_formatted object**.
@@ -177,8 +175,8 @@ This setting allows to **filter queries by an attribute value**.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
-        -d q=n \
-        -d filters='title:Nightshift'
+      -d q=n \
+      -d filters='title:Nightshift'
 ```
 
 With the settings in the example above, only documents that contain the value `Nightshift` in their `title` attribute will be returned upon search.
@@ -196,10 +194,9 @@ With the settings in the example above, only documents that contain the value `N
 The parameter shall be **URL-encoded**.
 
 ```bash
-$ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
-        -d q=shifu \
-        -d filters='title:Kung%20Fu%20Panda' \
-        -i
+$ curl --request GET  -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+      -d filters='title:Kung%20Fu%20Panda'
 ```
 
 ## Matches
@@ -219,10 +216,10 @@ This is useful when you need to highlight the results without the default HTML h
 #### Example
 
 ```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
-        -d q=shifu \
-        -d attributesToHighlight=overview \
-        -d matches=true
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+      -d attributesToHighlight=overview \
+      -d matches=true
 ```
 
 ```json
