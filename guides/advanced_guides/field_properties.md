@@ -32,7 +32,7 @@ $ curl \
   }'
 ```
 
-## Displayed attributes
+## Displayed fields
 
 The fields whose attributes are added to the [displayed-attributes list](/references/displayed_attributes.md) are **displayed in each matching document**.
 
