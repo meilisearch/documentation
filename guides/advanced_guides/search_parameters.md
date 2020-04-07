@@ -39,7 +39,7 @@ Although the API will send back documents even if the query is only one characte
 
 ## Offset
 
-A number of documents to skip.
+A number of **documents to skip**.
 
 `offset=<Integer>`
 
@@ -59,7 +59,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 
 ## Limit
 
-Set a limit to the number of documents returned by search queries.
+Set a **limit to the number of documents returned** by search queries.
 
 `limit=<Integer>`
 
@@ -79,7 +79,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 
 ## Attributes to retrieve
 
-Attributes to display in the returned documents.
+Attributes to **display** in the returned documents.
 
 `attributesToRetrieve=<Attribute>,<Attribute>,...`
 
@@ -113,7 +113,7 @@ This is especially useful when you have to display content on the front-end in a
 
 ## Crop length
 
-Set a limit on the length of field values.
+Set a **limit on the length** of field values.
 
 `cropLength=<Integer>`
 
@@ -163,7 +163,7 @@ In the example above, the cropped version of `overview` is 200 characters longs.
 
 ## Attributes to highlight
 
-Attributes whose values will contain highlighted matching terms.
+Attributes whose values will contain **highlighted matching terms**.
 
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
@@ -208,6 +208,8 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 This setting allows to **filter queries by an attribute value**.
 
+Filters accept **only one** parameter.
+
 `filters=<Attribute>:<Value>`
 
 - `<Attribute>:<Value>` (Optional, string, defaults to empty)
@@ -218,9 +220,7 @@ This setting allows to **filter queries by an attribute value**.
 
   - `<Value>`: The value which will be used to filter documents.
 
-  The attribute value used for filtering must be **equal to** the existing attribute value in the documents. Filters accept **only one** parameter.
-
-  The **comparison is done in a case-insensitive manner**.
+The attribute value used for filtering must be **equal to** the existing attribute value in the documents. The **comparison is done in a case-insensitive manner**.
 
 #### Example
 
