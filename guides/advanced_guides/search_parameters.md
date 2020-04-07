@@ -118,6 +118,8 @@ You would get this response:
 
 ## Attributes to highlight
 
+Attributes whose values will contain highlighted matching terms.
+
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
 - `<Attribute>` (Optional, string, defaults to empty)
@@ -201,6 +203,8 @@ $ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
 ```
 
 ## Matches
+
+This setting takes a **Boolean value** (`true` or `false`) and defines whether to return raw matches or not.
 
 `matches=<Boolean>`
 
