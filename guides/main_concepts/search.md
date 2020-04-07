@@ -28,7 +28,7 @@ MeiliSearch will return documents containing `batman` when searching for `the da
 
 When all documents matching the request have been collected, MeiliSearch sorts them using a **bucket sort** and a list of **built-in [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules)**.
 
-A bucket sort can be described as an ordered set of sorting rules. All the documents are sorted within the first rule, then documents that can not be distinguished will be sorted using the second rule, and so on. Thus, every document is not sorted for every rule, which induces a reduced compute time.
+A **bucket sort** can be described as an ordered set of sorting rules. All documents are sorted within the first rule, then documents that can not be distinguished will be sorted using the second rule, and so on. Thus, every document is not sorted for every rule, which induces a reduced compute time.
 
 [Learn more about the bucket sort](/guides/advanced_guides/bucket_sort.md)
 
@@ -58,7 +58,7 @@ A document containing the query words at the start of an attribute is considered
 
 A document containing the query words in their exact form, not only a prefix of them, is considered better.
 
-You can change the order of these rules, but you should know that these work well for a majority of use-cases. You can also add your own rules for domains specific needs. For example, you could add a date sorting criterion when searching into documents where the date of publication is essential.
+The ranking rules are arranged from the most impactful rule to the least impactful rule to get the best results in most standard situations. You can change this order of importance. You can also add your own rules to meet more specific needs.
 
 [Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
