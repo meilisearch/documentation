@@ -89,24 +89,12 @@ Attributes to display in the returned documents.
 
 #### Example
 
-If you input `shifu` as a search query and want to retrieve only the `overview` field values (in the following example, the limit to the number of documents returned is set to 2):
+If you want to get only the `overview` field values, set `attributesToRetrieve` to `overview`.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d q=shifu \
-      -d attributesToRetrieve=overview \
-      -d limit=2
-```
-
-You will get the following response:
-
-```json
-{
-  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping."
-},
-{
-  "overview": "When the Valley of Peace is threatened, lazy Po the panda discovers his destiny as the 'chosen one' and trains to become a kung fu hero, but transforming the unsleek slacker into a brave warrior won't be easy. It's up to Master Shifu and the Furious Five -- Tigress, Crane, Mantis, Viper and Monkey -- to give it a try."
-}
+      -d attributesToRetrieve=overview
 ```
 
 ## Attributes to crop
