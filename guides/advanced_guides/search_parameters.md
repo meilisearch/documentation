@@ -2,17 +2,17 @@
 
 Search parameters let the user customize their search request.
 
-| Query Parameter                                                                                   | Description                                        | Default Value |
-| ------------------------------------------------------------------------------------------------- | -------------------------------------------------- | :-----------: |
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                         |               |
-| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                        |      `0`      |
-| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Number of documents returned                       |     `20`      |
-| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Document attributes to show                        |      `*`      |
-| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Which attributes to crop                           |    `none`     |
-| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Limit length at which to crop specified attributes |     `200`     |
-| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Which attributes to highlight                      |    `none`     |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Attribute with an exact match                      |    `none`     |
-| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Whether to return the raw matches or not           |    `false`    |
+| Query Parameter                                                                                   | Description                                                     | Default Value |
+| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | :-----------: |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                                      |               |
+| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                     |      `0`      |
+| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                            |     `20`      |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                 |      `*`      |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                      |    `none`     |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Maximum length of field values                                  |     `200`     |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms |    `none`     |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                            |    `none`     |
+| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether the raw matches should be returned or not       |    `false`    |
 
 ## Query (q)
 
@@ -201,7 +201,7 @@ $ curl --request GET  -G 'http://localhost:7700/indexes/movies/search' \
 
 ## Matches
 
-This setting takes a **Boolean value** (`true` or `false`) and defines whether to return raw matches or not.
+This setting takes a **Boolean value** (`true` or `false`) and defines whether the raw matches should be returned or not.
 
 `matches=<Boolean>`
 
