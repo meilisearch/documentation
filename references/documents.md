@@ -141,7 +141,7 @@ $ curl \
       "poster": "https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
       "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
       "release_date": "2019-03-23"
-    }]'
+  }]'
 ```
 
 #### Response: `202 Accepted`
@@ -200,7 +200,7 @@ $ curl \
   --data '[{
       "movieskud": 287947,
       "title": "Shazam ⚡️"
-    }]'
+  }]'
 ```
 
 #### Response: `202 Accepted`
@@ -302,7 +302,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
       153738,
       437035,
       363869
-    ]'
+  ]'
 ```
 
 #### Response: `202 Accepted`

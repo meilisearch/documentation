@@ -1,57 +1,50 @@
 # Relevancy
 
-In MeiliSearch, the search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, MeiliSearch uses a [bucket sort](/guides/advanced_guides/bucket_sort.md) to rank documents, each rule is applied to all documents that are considered equal according to the previous rule to break the tie.
+Search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, MeiliSearch uses a [bucket sort](/guides/advanced_guides/bucket_sort.md) to rank documents. Each rule is applied to all documents that are considered equal according to the previous rule to break the tie.
 
-MeiliSearch proposes default ranking rules and has given them a default order as well. **This order can be modified: rules can be deleted and new ones can be added.**
+Ranking rules are **built-in rules applied to the search results** in order to improve their relevancy. To benefit from the ranking rules and make them meet your dataset and needs, it is important to understand how each of them works and how to create new ones.
 
-You can read a more [in-depth explanation about the algorithm and about the default ranking rules](https://github.com/meilisearch/MeiliSearch/issues/358).
-
-To be able to play with these rules and match them to the needs of your dataset, it is important to understand how each works and how to create new ones.
+For a more in-depth explanation of the algorithm and the default ranking rules, [see this issue](https://github.com/meilisearch/MeiliSearch/issues/358).
 
 ## Ranking rules
 
-MeiliSearch has built-in ranking rules. These rules are essential to the relevance of the search engine.
+Ranking rules determine which documents are returned upon a search query. Each of them has a special use in finding the right results for a given search query.
 
-Each of the rules has a role in finding the right documents for the given search query.
-The order in which the rules are set in the settings affects their importance. The first rule is the most important, then the second and so on. By default, MeiliSearch has these rules in a specific order which meets the most standard needs. This order can be changed in the settings.
+The ranking rules are **customizable** which means **existing rules can be deleted and new ones can be added**.
 
-Here is the list of all the rules that are executed in this specific order by default:
+The order in which they are applied has a significant impact on the search results. The first rules being the most impactful and the last one the least. The default order has been chosen because it meet most standard needs. **This order can be changed in the settings**.
+
+By default, ranking rules are executed in the following order:
 
 #### 1. Typo
 
-The `typo` rule sorts by ascending numbers of typos.
-
-This means that a document that matches a word with fewer typos is more important than a document that matches with more typos.
+Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
 
 #### 2. Words
 
-The `words` rule sorts by comparing the number of query words in each matching document.
-
-The more words of the search query present in a document, the more important it is. Having multiple times the same word doesn't means a document is more important.
+Results are sorted by **decreasing number of matched query terms** in each matching document: find documents that contain more occurrences of the query terms first.
 
 ::: warning
 
-As of today, all query words must be present in the returned documents. This rule does not impact the search results yet. <Badge text="soon" type="warn"/>
+It is now mandatory that all query terms are present in the returned documents. This rule does not impact search results yet. <Badge text="soon" type="warn"/>
 
 :::
 
 #### 3. Proximity
 
-The `proximity` rule sorts according to the proximity of the query words found in the matching documents.
-
-The more the query words are near each other, and in the right order in a document the more this document is important.
+Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
 
 #### 4. Attribute
 
-The `attribute` rule sorts by [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
+Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**: find documents that contain query terms in more important attributes first.
 
 #### 5. Words Position
 
-The `wordsPosition` rule sorts according to the position of the query words in the attribute. The start is better than the end.
+Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
 
 #### 6. Exactness
 
-The `exactness` rule sorts by the similarity of the matched words with the query words. Words that are the same are better than prefixes.
+Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
 #### Examples
 
@@ -66,7 +59,7 @@ The `exactness` rule sorts by the similarity of the matched words with the query
 - `vogli`: 0 typo
 - `volli`: 1 typo
 
-The `typo` rule sorts the results by ascending typos on matched query words.
+The `typo` rule sorts the results by increasing number of typos on matched query words.
 
 :::
 
@@ -78,7 +71,7 @@ The `typo` rule sorts the results by ascending typos on matched query words.
 The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule.<br>
 The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
 
-The `proximity` rule sorts by ascending order of distance length between two matches.
+The `proximity` rule sorts the results by increasing distance between matched query terms.
 :::
 
 ::: tab Attribute
@@ -86,9 +79,9 @@ The `proximity` rule sorts by ascending order of distance length between two mat
 
 ### Attribute
 
-`If It's Tuesday, This must be Belgium` is the first document because the matched word: `Belgium`, is found in the `title` attribute and not the `description`.
+`If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `description`.
 
-The `attribute` rule sorts by ascending [attribute importance](/guides/main_concepts/relevancy.md#attributes-importance).
+The `attribute` rule sorts the results by [attribute importance](/guides/main_concepts/relevancy.md#importance-of-the-attributes).
 
 :::
 
@@ -100,7 +93,7 @@ The `attribute` rule sorts by ascending [attribute importance](/guides/main_conc
 
 `Gangsta` appears before `Dunkirk` because `Belgium` appears sooner in the attribute.
 
-The `word position` rule orders by ascending matching word's index number.
+The `word position` rule sorts the results by increasing matching word's index number.
 
 :::
 
@@ -109,7 +102,7 @@ The `word position` rule orders by ascending matching word's index number.
 
 ### Exactness
 
-`Knight Moves` is displayed before `Knights of Badassdom` because `Knight` is a complete word, the same as the search query. While with `Knights`, the search query is a prefix of the query word.
+`Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas there is a letter of difference between `Knights` and the search query `Knight`.
 
 :::
 
@@ -117,41 +110,45 @@ The `word position` rule orders by ascending matching word's index number.
 
 ## Order of the rules
 
-By default, the built-in rules are in a specific order that MeiliSearch consider the most suitable for common needs.
+By default, the built-in rules are executed in the following order to meet most standard needs.
 
 ```json
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
-Depending on your needs, you might want to change the order of the rules.
-You can use the [settings route](/references/ranking_rules.md#update-ranking-rules) of your index to do so.
+Depending on your needs, you might want to change this order of importance. To do so, you can use the [settings route](/references/ranking_rules.md#update-ranking-rules) of your index.
 
 ## Adding your rules
 
-New rules can be added to the existing list at any time and anywhere in the existing order.
+New rules can be added to the existing list at any time and placed anywhere in the sequence.
 
-A custom rule lets you create a descending or ascending sorting rule on a given attribute.<br>
-To create a rule, you need to communicate the attribute on which the rule is created and the order in which it will be sorted: `asc(attribute_name)` or `desc(attribute_name)`.
+A custom rule allows you to create an ascending or descending sorting rule on a given attribute.
 
-This rule must be added to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
+To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name between round brackets.
+
+- To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
+
+- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
+
+Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
 
 #### Example
 
-Let's say we have a dataset of movies. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
+Let's say you have a movie dataset. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
+
+The following example will create a rule that makes older movies more relevant than more recent ones. A movie released in 1999 will appear before a movie released in 2020.
 
 ```
-desc(release_date)
+asc(release_date)
 ```
 
-This will create a rule that makes recent movies more relevant than older ones.
+The following example will create a rule that makes movies with a good rank more relevant than movies with a lower rank. Movies with a higher ranking will appear first.
 
 ```
-asc(movie_ranking)
+desc(movie_ranking)
 ```
 
-This will create a rule that makes movies with a good rank more relevant than others.
-
-To add this newly created rule to the existing ranking rule, using the [settings route](/references/ranking_rules.md#update-ranking-rules), you need to add the rule in the existing order array.
+To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/references/ranking_rules.md#update-ranking-rules),
 
 ```json
 [
@@ -161,33 +158,31 @@ To add this newly created rule to the existing ranking rule, using the [settings
   "words",
   "wordsPosition",
   "exactness",
-  "desc(release_date)",
-  "asc(movie_ranking)"
+  "asc(release_date)",
+  "desc(movie_ranking)"
 ]
 ```
 
-## Attributes importance
+## Importance of the attributes
 
 In a dataset, some fields are more relevant to the search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `director` name.
 
-By default, MeiliSearch will determine the order of importance of the attributes based on the order in which they appear in the first document added. Then, each new attribute present in new documents will be added at the end of this ordered list.
+By default, the order of importance of the attributes is based on their order of appearance in the first document added. Then, each new attribute found in new documents will be added at the end of this ordered list.
 
-If you wish to specify the order of the attributes you can either define them in the settings, or set the correct order on the first document indexed in MeiliSearch.
+If you wish to specify the order of the attributes you can either define them in the settings or set the correct order in the first document indexed.
 
-### Changing the attributes order
+### Changing the order of the attributes
 
-Possibly, you want to change the order after the documents have been added. This is still very possible.
+You may want to change the order once the documents have been ingested. This is still very possible using the [searchable attributes list](/guides/advanced_guides/field_properties.md#searchable-fields).
 
-When a document is added to MeiliSearch, every new attribute inside will be added to two lists :
+Whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
 
-- The [searchable attributes list](/references/searchable_attributes.md): attributes in which to search for matching query words.
-- The [displayed attributes list](/references/displayed_attributes.md): attributes in a document that are shown to the user.
+- **The [searchable attributes list](/references/searchable_attributes.md)**: Attributes of the fields in which to search for matching query words.
+- **The [displayed attributes list](/references/displayed_attributes.md)**: Attributes of the fields displayed in documents.
 
-The one that concerns this section is the searchable attributes list.
+This searchable attributes list is **ordered**, which means the order in which the attributes appear in the list determines their relevancy. Attributes are arranged from the most important attribute to the least important attribute.
 
-This list is **ordered**. This means that the order in which the attributes appear in the list will determine their relevancy. The earlier they appear in that list, the more important they are.
-
-To change this order, you need to send the sorted-list, in the order you want, using the settings route.
+Place the attributes in the desired order and send this updated list using the [settings routes](/references/settings.md). Attributes will be re-ordered.
 
 #### Example
 
@@ -195,4 +190,4 @@ To change this order, you need to send the sorted-list, in the order you want, u
 ["title", "description", "director"]
 ```
 
-With this new order, the matching words found in `title` will make the document more relevant than one with the same matching words found in `description` or `director`.
+If you take a look at the above order, the matching words found in `title` will make the document more relevant than one with the same matching words found in `description` or `director`.

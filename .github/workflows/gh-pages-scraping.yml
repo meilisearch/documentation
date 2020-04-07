@@ -1,4 +1,4 @@
-name: github pages
+name: GitHub pages and scraping
 
 on:
   push:
@@ -10,12 +10,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@master
-
-    - name: Setup Node
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-
     - name: Cache dependencies
       uses: actions/cache@v1
       with:
@@ -36,3 +30,20 @@ jobs:
         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: .vuepress/dist
+
+  run-scraper:
+    needs: build-deploy
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@master
+    - name: Run scraper
+      env:
+        HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+        API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
+        CONFIG_FILE_PATH: ${{ github.workspace }}/.vuepress/scraper/config.json
+      run: |
+        docker run -t --rm \
+          -e MEILISEARCH_HOST_URL=$HOST_URL \
+          -e MEILISEARCH_API_KEY=$API_KEY \
+          -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
+          getmeili/docs-scraper:v0.9.0 pipenv run ./docs_scraper config.json
