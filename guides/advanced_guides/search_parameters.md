@@ -72,8 +72,6 @@ Attributes whose values have to be cropped.
 This is especially useful when you have to display content on the front-end in a specific way.
 :::
 
-**Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2` characters on each side of the first match.
-
 ## Crop length
 
 Set a limit on the length of field values.
@@ -82,7 +80,15 @@ Set a limit on the length of field values.
 
 - `<Integer>` (Optional, positive integer, defaults to `200`)
 
-  If the value of the parameter `cropLength` is _n_, _n_ is the total length of cropped field values.
+  If the value of the parameter `cropLength` is _n_, _n_ is the length used to crop field values.
+
+Cropping start at the **first occurrence of the search query**.
+
+If the value of the parameter `cropLength` is _n_, the returned field value will consist of **_n_ characters before the query word** and **_n_ characters from the first character of the query word**.
+
+```json
+_n_ characters + _n_ characters including the query word
+```
 
 #### Example
 
@@ -113,6 +119,8 @@ You will get the following response with the **cropped version in the \_formatte
   }
 }
 ```
+
+In the example above, the cropped version of overview is 200 characters longs. There are 100 characters before `shifu`, the first match, and 100 characters again from the first letter of `shifu`.
 
 ## Attributes to highlight
 
