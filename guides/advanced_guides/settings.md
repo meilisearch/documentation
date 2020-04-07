@@ -26,20 +26,20 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 #### Example
 
-Suppose you have an e-commerce dataset. For an index that contains information about shoes, you decide to create synonyms for `black sneakers` and `black tennis shoes`.
+Suppose you have an e-commerce dataset. For an index that contains information about tops, you decide to create synonyms for `sweater` and `jumper` since these two items are very similar.
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/shoes/settings' \
+  -X POST 'http://localhost:7700/indexes/tops/settings' \
   --data '{
       "synonyms": {
-          "black sneakers": ["black tennis shoes"],
-          "black tennis shoes": ["black sneakers"]
+          "sweater": ["jumper"],
+          "jumper": ["sweater"]
       }
   }'
 ```
 
-By doing so, if you search either one or the other terms, the **same results** will be displayed.
+By doing so, if you search either `black sweater` or `black jumper` for example, the **same results** will be displayed.
 
 ## Stop words
 
