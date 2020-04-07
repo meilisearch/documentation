@@ -8,14 +8,11 @@ For a more in-depth explanation of the algorithm and the default ranking rules, 
 
 ## Ranking rules
 
-Ranking rules determine which documents are returned upon a search query.
+Ranking rules determine which documents are returned upon a search query. Each of them has a special use in finding the right results for a given search query.
 
-The order in which these rules are applied has a significant impact on the search results. The first rules being the most impactful and the last one the least. The default order has been chosen because it meet most standard needs. **This order can be changed in the settings**.
+The ranking rules are **customizable** which means **existing rules can be deleted and new ones can be added**.
 
-The ranking rules are **customizable** which means **existing rules can be deleted and new ones can be added.**
-
-Each of the rules has a special use in finding the right documents for a given search query.
-The order in which the rules are set affects their importance. They are arranged from the most impactful rule to the least impactful rule.
+The order in which they are applied has a significant impact on the search results. The first rules being the most impactful and the last one the least. The default order has been chosen because it meet most standard needs. **This order can be changed in the settings**.
 
 By default, ranking rules are executed in the following order:
 
@@ -137,7 +134,7 @@ Add this rule to the existing list of ranking rules using the [settings route](/
 
 #### Example
 
-Let's say you have a dataset of movies. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
+Let's say you have a movie dataset. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
 
 The following example will create a rule that makes older movies more relevant than more recent ones. A movie released in 1999 will appear before a movie released in 2020.
 
