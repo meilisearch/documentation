@@ -39,7 +39,7 @@ $ curl \
   }'
 ```
 
-By doing so, if you search either `black sweater` or `black jumper` for example, the **same results** will be displayed.
+By doing so, when searching for `black sweater`, results for `black jumper` will also be returned.
 
 ## Stop words
 
