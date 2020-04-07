@@ -141,11 +141,13 @@ Our **highlight version is in the \_formatted object**.
 }
 ```
 
-The **overview attribute in formatted** looks like this when evaluated in HTML:
+When evaluated in HTML, the **overview attribute in \_formatted** will look like as follows:
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
 
 ## Filters
+
+This setting allows to **filter queries by an attribute value**.
 
 `filters=<Attribute>:<Value>`
 
@@ -153,11 +155,11 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
   Two strings separated by a colon.
 
-  - `<Attribute>`: An attribute name.
+  - `<Attribute>`: The attribute name.
 
-  - `<Value>`: Its corresponding value.
+  - `<Value>`: The value which will be used to filter documents.
 
-  The given attribute's value must be **equal** to the value of the attribute in the documents. Filters accept **only one** parameter.
+  The attribute value used for filtering must be **equal** to the existing attribute value in the documents. Filters accept **only one** parameter.
 
   The **comparison is done in a case-insensitive manner**.
 
@@ -166,6 +168,8 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=n \
         -d filters='title:Nightshift'
 ```
+
+With the settings in the example above, only documents that contain the value `Nightshift` in their `title` attribute will be returned upon search.
 
 ```json
 {
@@ -177,7 +181,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
 }
 ```
 
-The parameter should be **URL-encoded**.
+The parameter shall be **URL-encoded**.
 
 ```bash
 $ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
