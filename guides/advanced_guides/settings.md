@@ -197,7 +197,7 @@ The content of the fields whose attributes are added to the [searchable-attribut
 
 - `[<String>, <String>, ...]` (Array of strings, defaults to all attributes found in the documents)
 
-  An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
+  An array of strings that contains searchable attributes ordered by importance (arranged from the most important attribute to the least important attribute).
 
 [Learn more about searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields)
 
