@@ -1,45 +1,50 @@
-# Distinct
+# Distinct Attribute
 
-A field can be set as `distinct`.
+The **value** of a field whose attribute is set as a distinct attribute will always be **unique** in the returned documents.
 
-When a field is `distinct`, there will **never be two, or more, occurrence of the same value of that attribute** in the different documents that are returned by MeiliSearch.
+In such a case, there will **never be two, or more, occurrences of the same value** of that field in the different documents returned by MeiliSearch.
 
 ### Example
 
-Let's use the sample of the following documents with 3 jackets of **different `colors`** but **same `skuid`**:
+Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations (color or size).
+
+As shown below, you have 3 documents that contain information about the same jacket. One of the jackets is brown, one is black, and the last one is blue.
 
 ```json
 [
   {
     "id": 1,
-    "skuid": "abcdef",
-    "name": "Really nice Jacket",
-    "color": "blue"
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "brown",
+    "product_id": "123456"
   },
   {
     "id": 2,
-    "skuid": "abcdef",
-    "name": "Really nice Jacket",
-    "color": "red"
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "black",
+    "product_id": "123456"
   },
   {
-    "id": 3,
-    "skuid": "abcdef",
-    "name": "Really nice Jacket",
-    "color": "green"
+    "id": 2,
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "blue",
+    "product_id": "123456"
   }
 ]
 ```
 
-By [setting `skuid` as a distinct field](/references/distinct_attribute.md):
+You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
 
 ```bash
  $ curl
   -X POST 'http://localhost:7700/indexes/jackets/settings' \
-  --data '{ "distinctField": "skuid" }'
+  --data '{ "distinctAttribute": "product_id" }'
 ```
 
-With this setting, search requests **will never return two or more jackets with the same `skuid`**.
+By [setting `product_id` as a distinct attribute](/references/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
 
 ::: warning
 If the field does not exist, no error will be thrown.
