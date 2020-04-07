@@ -16,13 +16,13 @@ Search parameters let the user customize their search request.
 
 ## Query (q)
 
+The query parameter is the **only mandatory** parameter. This is the string used by the search engine to find relevant documents.
+
 `q=<String>`
 
 - `<String>` (Mandatory, string)
 
-  The query parameter is the **only mandatory** parameter.
-
-  It is the string used by the search engine to find relevant documents.
+  The query string.
 
 ::: tip
 Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API responds.
