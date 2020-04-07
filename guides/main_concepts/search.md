@@ -26,11 +26,13 @@ MeiliSearch will return documents containing `batman` when searching for `the da
 
 > It would not be a search engine if there was not a notion of relevancy in the results returned.
 
-When all documents matching the request have been collected, _MeiliSearch sorts them_ using a [bucket sort](/guides/advanced_guides/bucket_sort.md) and a list of built-in [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules).
+When all documents matching the request have been collected, MeiliSearch sorts them using a **bucket sort** and a list of **built-in [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules)**.
 
 A bucket sort can be described as an ordered set of sorting rules. All the documents are sorted within the first rule, then documents that can not be distinguished will be sorted using the second rule, and so on. Thus, every document is not sorted for every rule, which induces a reduced compute time.
 
-Here is the ordered list of the default ranking rules used in MeiliSearch:
+[Learn more about the bucket sort](/guides/advanced_guides/bucket_sort.md)
+
+By default, ranking rules are executed in the following order:
 
 #### 1. Typo
 
@@ -58,11 +60,13 @@ A document containing the query words in their exact form, not only a prefix of 
 
 You can change the order of these rules, but you should know that these work well for a majority of use-cases. You can also add your own rules for domains specific needs. For example, you could add a date sorting criterion when searching into documents where the date of publication is essential.
 
-To learn how to add custom rules, see [this page about ranking rules](/guides/main_concepts/relevancy.md).
+[Learn more about ranking rules](/guides/main_concepts/relevancy.md)
 
-## Search options
+## Search parameters
 
-A lot of configuration can be made at _query-time_ using the [search parameters](/guides/advanced_guides/search_parameters.md). Here are some usage examples:
+A lot of configuration can be made at _query-time_.
+
+Here are some usage examples:
 
 #### Pagination
 
@@ -79,6 +83,8 @@ You can build a faceted search using the query param `filter`. It will only retu
 ```bash
 $ curl -X GET 'https://localhost:7700/indexes/4eb345y7/search?q=batman&filters=director:Christopher%20Nolan'
 ```
+
+[Learn more about search parameters](/guides/advanced_guides/search_parameters.md).
 
 ### Try it out!
 
