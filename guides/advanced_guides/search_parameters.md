@@ -30,6 +30,8 @@ Although the API will send back documents even if the query is only one characte
 
 ## Offset
 
+A number of documents to skip.
+
 `offset=<Integer>`
 
 - `<Integer>` (Optional, positive integer, defaults to `0`)
@@ -37,6 +39,8 @@ Although the API will send back documents even if the query is only one characte
   If the value of the parameter `offset` is _n_, _n_ first documents to skip. This is helpful for **pagination**.
 
 ## Limit
+
+Set a limit to the number of documents returned by search queries.
 
 `limit=<Integer>`
 
@@ -46,33 +50,39 @@ Although the API will send back documents even if the query is only one characte
 
 ## Attributes to retrieve
 
+Attributes to display in the returned documents.
+
 `attributesToRetrieve=<Attribute>,<Attribute>,...`
 
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
-  Comma-separated list of attributes that will appear in the returned documents.
+  Comma-separated list of attributes that shall be in the returned documents.
 
 ## Attributes to crop
+
+Attributes whose values have to be cropped.
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
-  Comma-separated list of attributes whose values will be cropped according to the `cropLength` value and the matches.
+  Comma-separated list of attributes whose values shall be cropped according to the `cropLength` value and the matches.
 
 ::: tip
-This is useful when you have specific needs for displaying results on the front-end application.
+This is especially useful when you have to display content on the front-end in a specific way.
 :::
 
 **Cropping start at the first occurrence of the search query**. It only keeps `(cropLength - matchLength)/2` chars on each side of the first match.
 
 ## Crop length
 
+Set a limit on the length of field values.
+
 `cropLength=<Integer>`
 
 - `<Integer>` (Optional, positive integer, defaults to `200`)
 
-  If the value of the parameter `cropLength` is _n_, _n_ is the total length of the cropped field.
+  If the value of the parameter `cropLength` is _n_, _n_ is the total length of cropped fields.
 
 #### Example
 
