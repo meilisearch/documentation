@@ -7,13 +7,14 @@ These advanced guides cover how to tune your search API and customize it:
 - [Authentication](authentication.md)
 - [Synonyms](synonyms.md)
 - [Stop words](stop_words.md)
-- [Distinct](distinct.md)
+- [Distinct Attribute](distinct.md)
+- [Field properties](field_properties.md)
 
 To learn how MeiliSearch works under the hood and better understand the algorithms behind it, you can read the following advanced guides:
 
 - [Asynchronous updates](asynchronous_updates.md)
-- [Prefix search](prefix.md)
 - [Web interface](web_interface.md)
 - [Typo Tolerance](typotolerance.md)
-- [Concatenate and split queries](concat.md)
+- [Prefix Search](prefix.md)
+- [Concatenate and Split Queries](concat.md)
 - [Bucket sort](bucket_sort.md)
