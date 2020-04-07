@@ -47,6 +47,16 @@ A number of documents to skip.
 
   If the value of the parameter `offset` is _n_, _n_ first documents to skip. This is helpful for **pagination**.
 
+#### Example
+
+If you want to skip the **first** document, set `offset` to `1`.
+
+```bash
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+      -d offset=1
+```
+
 ## Limit
 
 Set a limit to the number of documents returned by search queries.
@@ -59,31 +69,12 @@ Set a limit to the number of documents returned by search queries.
 
 #### Example
 
-If you set limit to the number of documents returned to `2`:
+If you want to get only **two** documents, set `limit` to `2`.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d q=shifu \
       -d limit=2
-```
-
-You will get two documents:
-
-```json
-({
-  "id": "50393",
-  "title": "Kung Fu Panda Holiday",
-  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
-  "release_date": 1290729600
-},
-{
-  "id": "9502",
-  "title": "Kung Fu Panda",
-  "poster": "https://image.tmdb.org/t/p/w1280/2Paj1nufT0jeSY0G4u3RC31HIGT.jpg",
-  "overview": "When the Valley of Peace is threatened, lazy Po the panda discovers his destiny as the 'chosen one' and trains to become a kung fu hero, but transforming the unsleek slacker into a brave warrior won't be easy. It's up to Master Shifu and the Furious Five -- Tigress, Crane, Mantis, Viper and Monkey -- to give it a try.",
-  "release_date": 1212541200
-})
 ```
 
 ## Attributes to retrieve
@@ -110,12 +101,12 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 You will get the following response:
 
 ```json
-({
+{
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping."
 },
 {
   "overview": "When the Valley of Peace is threatened, lazy Po the panda discovers his destiny as the 'chosen one' and trains to become a kung fu hero, but transforming the unsleek slacker into a brave warrior won't be easy. It's up to Master Shifu and the Furious Five -- Tigress, Crane, Mantis, Viper and Monkey -- to give it a try."
-})
+}
 ```
 
 ## Attributes to crop
