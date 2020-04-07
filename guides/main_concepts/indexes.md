@@ -13,7 +13,7 @@ An index is defined by an `uid` and contains the following information:
 
 Suppose you manage a database that contains information about movies. You would probably want to have multiple categories: one for movie descriptions, one for actors, one for costumes and one for reviews. Each of these categories would be represented by an index in MeiliSearch.
 
-Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. **The information of one index doesn't impact other indexes.**
+Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
 
 For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
 
@@ -61,7 +61,7 @@ Since synonyms are linked to a given index, they won't apply to any other index 
 
 Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e., `the` or `of` in English).
 
-By adding words to a stop words list, these specific terms will be excluded from your search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/guides/main_concepts/relevancy.md#_4-attribute) or in a good [position](/guides/main_concepts/relevancy.md#ranking-rules). This will also greatly improve the search time because all the documents containing only those words will not be used in the sorting of documents.
+By adding words to a stop words list, these specific terms will ignored during search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/guides/main_concepts/relevancy.md#_4-attribute) or in a good [position](/guides/main_concepts/relevancy.md#ranking-rules). This will also greatly improve the response time because all the documents that contain only those words will not be used for sorting of documents.
 
 For example, suppose you would perform the following search query: `the great gatsby`. Having the word `the` in a film review wouldn't make the review more relevant. By adding `the` to the stop word list, performance would be increased and search results more relevant.
 
