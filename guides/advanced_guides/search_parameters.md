@@ -24,6 +24,15 @@ The query parameter is the **only mandatory** parameter. This is the string used
 
   The query string.
 
+#### Example
+
+Suppose you would like to search `shifu` in a movie database, you would send:
+
+```bash
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu
+```
+
 ::: tip
 Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API will respond.
 :::
@@ -48,6 +57,35 @@ Set a limit to the number of documents returned by search queries.
 
   If the value of the parameter `limit` is _n_, there will be _n_ documents in the search query response. This is helpful for **pagination**.
 
+#### Example
+
+If you set limit to the number of documents returned to `2`:
+
+```bash
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+      -d limit=2
+```
+
+You will get two documents:
+
+```json
+({
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600
+},
+{
+  "id": "9502",
+  "title": "Kung Fu Panda",
+  "poster": "https://image.tmdb.org/t/p/w1280/2Paj1nufT0jeSY0G4u3RC31HIGT.jpg",
+  "overview": "When the Valley of Peace is threatened, lazy Po the panda discovers his destiny as the 'chosen one' and trains to become a kung fu hero, but transforming the unsleek slacker into a brave warrior won't be easy. It's up to Master Shifu and the Furious Five -- Tigress, Crane, Mantis, Viper and Monkey -- to give it a try.",
+  "release_date": 1212541200
+})
+```
+
 ## Attributes to retrieve
 
 Attributes to display in the returned documents.
@@ -57,6 +95,28 @@ Attributes to display in the returned documents.
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
   Comma-separated list of attributes that shall be in the returned documents.
+
+#### Example
+
+If you input `shifu` as a search query and want to retrieve only the `overview` field values (in the following example, the limit to the number of documents returned is set to 2):
+
+```bash
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+      -d attributesToRetrieve=overview \
+      -d limit=2
+```
+
+You will get the following response:
+
+```json
+({
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping."
+},
+{
+  "overview": "When the Valley of Peace is threatened, lazy Po the panda discovers his destiny as the 'chosen one' and trains to become a kung fu hero, but transforming the unsleek slacker into a brave warrior won't be easy. It's up to Master Shifu and the Furious Five -- Tigress, Crane, Mantis, Viper and Monkey -- to give it a try."
+})
+```
 
 ## Attributes to crop
 
