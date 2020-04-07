@@ -26,7 +26,7 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 #### Example
 
-Add settings:
+Suppose you have an e-commerce dataset. For an index that contains information about shoes, you decide to create synonyms for `black sneakers` and `black tennis shoes`.
 
 ```bash
 $ curl \
@@ -39,7 +39,7 @@ $ curl \
   }'
 ```
 
-Suppose you have an e-commerce dataset. For an index that contains information about shoes, you decide to create synonyms for `black sneakers` and `black tennis shoes`. By doing so, if you search either one or the other terms, the same results will be displayed.
+By doing so, if you search either one or the other terms, the **same results** will be displayed.
 
 ## Stop words
 
@@ -55,7 +55,7 @@ A set of words defined for an index. Because some words neither add semantic val
 
 #### Example
 
-Add settings:
+To add `the`, `a` and `an` to the stop words list, send:
 
 ```bash
 $ curl \
@@ -119,7 +119,7 @@ Results are sorted by **the similarity of the matched words with the query words
 
 #### Example
 
-Add settings:
+To add your ranking rules to the settings, send:
 
 ```bash
 $ curl \
@@ -138,7 +138,7 @@ $ curl \
   }'
 ```
 
-With the settings in the example above, documents will be sorted by number of typos first. If too many documents have the same number of typos, the `words` rule will be applied. This operation is repeated with the next rules until the number of documents is limited to the requested number of documents (default: 20).
+With the settings in the example above, documents will be sorted by number of typos first. If too many documents have the same number of typos, the `words` rule will be applied. This operation will be repeated with the next rules until the number of documents is limited to the requested number of documents (default: 20).
 
 ## Distinct attribute
 
@@ -177,7 +177,7 @@ As shown below, you have 2 documents that contain information about the same jac
 ]
 ```
 
-You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`. Add settings:
+You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
 
 ```bash
 $ curl \
@@ -203,7 +203,7 @@ The content of the fields whose attributes are added to the [searchable-attribut
 
 #### Example
 
-Add settings:
+By adding the following settings, the fields `uid`, `movie_id`, `title`, `description`, `poster`, `release_date` and `rank` will be searched.
 
 ```bash
 $ curl \
@@ -221,8 +221,6 @@ $ curl \
   }'
 ```
 
-With the settings in the example above, the fields `uid`, `movie_id`, `title`, `description`, `poster`, `release_date` and `rank` will be searched.
-
 ## Displayed attributes
 
 The fields whose attributes are added to the [displayed-attributes list](/references/displayed_attributes.md) are **contained in each matching document**.
@@ -239,7 +237,7 @@ Documents returned upon search contain only displayed fields.
 
 #### Example
 
-Add settings:
+By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
 
 ```bash
 $ curl \
@@ -254,8 +252,6 @@ $ curl \
       ]
   }'
 ```
-
-With the settings in the example above, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
 
 ## Accept new fields
 
@@ -273,7 +269,7 @@ This setting takes a **Boolean value** (`true` or `false`) and defines whether n
 
 #### Example
 
-Add settings:
+If you set `acceptNewFields` to `false`, new fields will be stored but neither searchable nor displayed in returned documents.
 
 ```bash
 $ curl \
@@ -282,5 +278,3 @@ $ curl \
       "acceptNewFields": false
   }'
 ```
-
-With the settings in the example above, new fields will be stored but neither searchable nor displayed in returned documents.
