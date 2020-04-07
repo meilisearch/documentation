@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-Searchable attributes are the fields in which to search for matching query words.
+The values of the fields whose attributes are added to the [searchable-attributes list](/guides/advanced_guides/field_properties.md#searchable-attributes) are **searched for matching query words**.
 
 Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
