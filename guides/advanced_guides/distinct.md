@@ -1,4 +1,4 @@
-# Distinct attribute
+# Distinct Attribute
 
 The **value** of a field whose attribute is set as a distinct attribute will always be **unique** in the returned documents.
 
