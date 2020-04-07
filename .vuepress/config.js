@@ -80,7 +80,7 @@ module.exports = {
             "/references/keys",
             {
               title: "Settings",
-              path: "/references/settings",
+              path: "/references/settings/",
               collapsable: false,
               children: [
                 {
