@@ -92,7 +92,7 @@ _n_ characters + _n_ characters including the query word
 
 #### Example
 
-If you input `shifu` as a search query and set the value of the parameter `cropLength` to `100` as below:
+If you input `shifu` as a search query and set the value of the parameter `cropLength` to `100`:
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
@@ -134,13 +134,15 @@ Attributes whose values will contain highlighted matching terms.
 
 #### Example
 
+If you choose to highlight the content of `overview`:
+
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d q=shifu \
       -d attributesToHighlight=overview
 ```
 
-Our **highlight version is in the \_formatted object**.
+You will get the following response with the **highlighted version in the \_formatted object**:
 
 ```json
 {
@@ -177,9 +179,13 @@ This setting allows to **filter queries by an attribute value**.
 
   - `<Value>`: The value which will be used to filter documents.
 
-  The attribute value used for filtering must be **equal** to the existing attribute value in the documents. Filters accept **only one** parameter.
+  The attribute value used for filtering must be **equal to** the existing attribute value in the documents. Filters accept **only one** parameter.
 
   The **comparison is done in a case-insensitive manner**.
+
+#### Example
+
+If you add this filter:
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
@@ -187,7 +193,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
       -d filters='title:Nightshift'
 ```
 
-With the settings in the example above, only documents that contain the value `Nightshift` in their `title` attribute will be returned upon search.
+Only documents that contain the value `Nightshift` in their `title` attribute will be returned upon search.
 
 ```json
 {
@@ -223,12 +229,16 @@ This is useful when you need to highlight the results without the default HTML h
 
 #### Example
 
+If you set `matches` to `true`:
+
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d q=shifu \
       -d attributesToHighlight=overview \
       -d matches=true
 ```
+
+You will get the following response with the **raw matches in the \_matchesInfo object**:
 
 ```json
 {
