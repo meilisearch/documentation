@@ -434,7 +434,7 @@ MeiliSearch **response**:
 
 ### Web Interface
 
-We also deliver an an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) in which you can test MeiliSearch interactively.
+We also deliver an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) in which you can test MeiliSearch interactively.
 
 To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.<br>
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
