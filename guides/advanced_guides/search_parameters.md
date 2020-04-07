@@ -56,7 +56,7 @@ Although the API will send back documents even if the query is only one characte
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
-- `<Attribute>` (Optional, string, defaults to `none`)
+- `<Attribute>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes whose values will be cropped according to the `cropLength` value and the matches.
 
@@ -110,7 +110,7 @@ You would get this response:
 
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
-- `<Attribute>` (Optional, string, defaults to `none`)
+- `<Attribute>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes. Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
 
@@ -151,7 +151,7 @@ This setting allows to **filter queries by an attribute value**.
 
 `filters=<Attribute>:<Value>`
 
-- `<Attribute>:<Value>` (Optional, string, defaults to `none`)
+- `<Attribute>:<Value>` (Optional, string, defaults to empty)
 
   Two strings separated by a colon.
 
