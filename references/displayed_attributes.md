@@ -2,13 +2,15 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-The fields whose attributes are added to the [displayed-attributes list](/guides/advanced_guides/field_properties.md#displayed-attributes) are **displayed in each matching document**.
+The fields whose attributes are added to the displayed-attributes list are **displayed in each matching document**.
 
 Displayed attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
+
+[Learn more about displayed fields](/guides/advanced_guides/field_properties.md#displayed-attributes)
 
 ## Get displayed attributes
 
