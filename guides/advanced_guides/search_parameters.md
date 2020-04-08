@@ -105,7 +105,9 @@ Attributes whose values will be cropped if they contain a matched query word.
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
-  Comma-separated list of attributes whose values shall be cropped according to the `cropLength` value.
+  Comma-separated list of attributes whose values will be cropped if they contain a matched query word. 
+  
+In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see below).
 
 ::: tip
 This is especially useful when you have to display content on the front-end in a specific way.
