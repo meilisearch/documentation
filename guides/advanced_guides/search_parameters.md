@@ -85,7 +85,7 @@ Attributes to **display** in the returned documents.
 
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
-  Comma-separated list of attributes that will be in the returned documents.
+  Comma-separated list of attributes whose fields will be present in the returned documents.
 
 #### Example
 
