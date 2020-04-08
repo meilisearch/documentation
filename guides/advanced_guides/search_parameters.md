@@ -99,7 +99,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 
 ## Attributes to crop
 
-Attributes whose values have to be cropped.
+Attributes whose values will be cropped if they contain a matched query word.
 
 `attributesToCrop=<Attribute>,<Attribute>,...`
 
