@@ -10,7 +10,7 @@ Displayed attributes can also be updated directly through the [global settings r
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-[Learn more about displayed fields](/guides/advanced_guides/field_properties.md#displayed-attributes)
+[Learn more about displayed fields](/guides/advanced_guides/field_properties.md#displayed-fields)
 
 ## Get displayed attributes
 
