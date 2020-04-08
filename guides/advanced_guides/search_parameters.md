@@ -121,7 +121,7 @@ Set a **limit on the length** of field values.
 
   The length used to crop field values around the first matched query word if the field's attribute is in the `attributedToCrop` list.
 
-Cropping start at the **first occurrence of the search query**.
+Cropping start at the **first occurrence of the matched query word**.
 
 If the value of the parameter `cropLength` is _n_, the returned field value will consist of **_n_ characters before the query word** and **_n_ characters from the first character of the query word**. Below is a simple representation:
 
