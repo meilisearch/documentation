@@ -89,7 +89,7 @@ Attributes to **display** in the returned documents.
 
 #### Example
 
-If you want to get only the `overview` field values, set `attributesToRetrieve` to `overview`.
+If you want to get only the `overview` and `title` field and not the other fields, set `attributesToRetrieve` to `overview,title`.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
