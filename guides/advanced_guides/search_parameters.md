@@ -159,7 +159,7 @@ You will get the following response with the **cropped version in the \_formatte
 }
 ```
 
-In the example above, the cropped version of `overview` is 200 characters longs. There are 100 characters before `shifu` (the first match) and 100 more characters from the first letter of `shifu`.
+In the example above, the cropped version of `overview` is 200 characters longs. There are 100 characters before `shifu` (the first match) and 100 more characters starting at the first letter of `shifu`.
 
 ## Attributes to highlight
 
