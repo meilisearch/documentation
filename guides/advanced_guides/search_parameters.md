@@ -254,7 +254,7 @@ $ curl --request GET  -G 'http://localhost:7700/indexes/movies/search' \
 
 ## Matches
 
-This setting takes a **Boolean value** (`true` or `false`) and defines whether the raw matches should be returned or not.
+This setting takes a **Boolean value** (`true` or `false`) and defines whether an object that contains information about the matches should be returned or not.
 
 `matches=<Boolean>`
 
