@@ -163,7 +163,7 @@ In the example above, the cropped version of `overview` is 200 characters longs.
 
 ## Attributes to highlight
 
-Attributes whose values will contain **highlighted matching terms**.
+Attributes whose values will contain **highlighted matching query words**.
 
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
