@@ -38,7 +38,7 @@ The fields whose attributes are added to the [displayed-attributes list](/refere
 
 Documents returned upon search contain only displayed fields.
 
-**By default, all field attributes are added to the displayed-attributes list**. If a new document is ingested and one of its fields is missing from other documents, the latter will be automatically added to the displayed-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
+**By default, all field attributes are added to the displayed-attributes list**. If a new document is ingested and one of its fields was never present in any other document, the latter will be automatically added to the displayed-attributes list. [This behavior can be changed](/references/accept_new_fields.md).
 
 Therefore, if a field attribute is not in the displayed-attribute list, the field won't be added to the documents but will remain stored in the server. This list can be restricted to a selected set of attributes in the settings.
 
