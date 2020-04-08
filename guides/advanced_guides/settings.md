@@ -207,7 +207,7 @@ Documents returned upon search contain only displayed fields.
 
   An array of strings that contains attributes of an index to display.
 
-[Learn more about displayed attributes](/guides/advanced_guides/field_properties.md#displayed-attributes)
+[Learn more about displayed attributes](/guides/advanced_guides/field_properties.md#displayed-fields)
 
 #### Example
 
