@@ -119,7 +119,7 @@ Set a **limit on the length** of field values.
 
 - `<Integer>` (Optional, positive integer, defaults to `200`)
 
-  The length used to crop field values.
+  The length used to crop field values around the first matched query word if the field's attribute is in the `attributedToCrop` list.
 
 Cropping start at the **first occurrence of the search query**.
 
