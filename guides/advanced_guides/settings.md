@@ -14,7 +14,7 @@ This page describes all **configuration settings** available in MeiliSearch.
 
 ## Synonyms
 
-A set of words defined for an index. Synonyms are **different words that have the same meaning**, and thus are treated similarly. If either of the associated words is searched, the same results shall be displayed.
+A set of words defined for an index. Synonyms are **different words that have the same meaning**, and thus are treated similarly. If either of the associated words is searched, the same results will be displayed.
 
 `synonyms=<Object>`
 
