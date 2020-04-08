@@ -2,17 +2,17 @@
 
 Search parameters let the user customize their search request.
 
-| Query Parameter                                                                                   | Description                                                     | Default Value |
-| ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | :-----------: |
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                                      |               |
-| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                     |      `0`      |
-| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                            |     `20`      |
-| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                 |      `*`      |
-| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                      |    `none`     |
-| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                |     `200`     |
-| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms |    `none`     |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                            |    `none`     |
-| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether the raw matches should be returned or not       |    `false`    |
+| Query Parameter                                                                                   | Description                                                                                     | Default Value |
+| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                                                                      |               |
+| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
+| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `*`      |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
+| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 ## Query (q)
 

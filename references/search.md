@@ -14,17 +14,17 @@ Search for documents matching a specific query in the given index.
 
 #### Query Parameters
 
-| Query Parameter           | Description                                                     | Default Value |
-| ------------------------- | --------------------------------------------------------------- | :-----------: |
-| **q**                     | Query string \_(mandatory)                                      |               |
-| **offset**                | Number of documents to skip                                     |      `0`      |
-| **limit**                 | Maximum number of documents returned                            |     `20`      |
-| **attributesToRetrieve**  | Attributes to display in the returned documents                 |      `*`      |
-| **attributesToCrop**      | Attributes whose values have to be cropped                      |    `none`     |
-| **cropLength**            | Length used to crop field values                                |     `200`     |
-| **attributesToHighlight** | Attributes whose values will contain highlighted matching terms |    `none`     |
-| **filters**               | Filter queries by an attribute value                            |    `none`     |
-| **matches**               | Defines whether the raw matches should be returned or not       |    `false`    |
+| Query Parameter           | Description                                                                                     | Default Value |
+| ------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
+| **q**                     | Query string \_(mandatory)                                                                      |               |
+| **offset**                | Number of documents to skip                                                                     |      `0`      |
+| **limit**                 | Maximum number of documents returned                                                            |     `20`      |
+| **attributesToRetrieve**  | Attributes to display in the returned documents                                                 |      `*`      |
+| **attributesToCrop**      | Attributes whose values have to be cropped                                                      |    `none`     |
+| **cropLength**            | Length used to crop field values                                                                |     `200`     |
+| **attributesToHighlight** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
+| **filters**               | Filter queries by an attribute value                                                            |    `none`     |
+| **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 > `filters` takes `key:value` as parameter, with the key to be the name of the field to filter, and the value the filter to be applied on this field, e.g.: `filters=first_name:John`. Only a single filter is supported in a query.
 
