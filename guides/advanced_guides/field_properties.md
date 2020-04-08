@@ -1,8 +1,8 @@
-# Field properties
+# Field Properties
 
 By default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/references/settings.md).
 
-## Searchable fields
+## Searchable Fields
 
 The **values** of the fields whose attributes are added to the [searchable-attributes list](/references/searchable_attributes.md) are **searched for matching query words**.
 
@@ -32,7 +32,7 @@ $ curl \
   }'
 ```
 
-## Displayed fields
+## Displayed Fields
 
 The fields whose attributes are added to the [displayed-attributes list](/references/displayed_attributes.md) are **displayed in each matching document**.
 
