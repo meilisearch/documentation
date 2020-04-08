@@ -138,7 +138,7 @@ $ curl \
   }'
 ```
 
-With the settings in the example above, documents will be sorted by number of typos first. If too many documents have the same number of typos, the `words` rule will be applied. This operation will be repeated with the next rules until the number of documents is limited to the requested number of documents (default: 20).
+With the settings in the example above, documents will be sorted by number of typos first. If too many documents have the same number of typos, the `words` rule will be applied. This operation will be repeated with the next rules until the requested number of documents has been reached (default: 20).
 
 ## Distinct attribute
 
