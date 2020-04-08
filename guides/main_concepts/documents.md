@@ -1,21 +1,23 @@
 # Documents
 
 **Documents** are objects composed of fields which can store any type of data.</br>
-Each **field** contains an **attribute** and its associated value.
+Each **field** contains an **attribute** and its associated **value**.
 
 ![document structure](/document_structure.svg)
 
 #### Wording
 
 - **Document**: A document is an object which contains a list of fields in curly brackets.
-- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together: an attribute and its corresponding data.
+- **[Field](/guides/main_concepts/documents.md#fields)**: A field, or a key-value pair, is a set of two data items linked together: an attribute and its corresponding value.
 - **Attribute**: An attribute is the name of a field, like a key.
 - **[Primary key](/guides/main_concepts/documents.md#primary-key)**: The attribute of the field which contains the unique identifier of the documents.
 - **[Document id](/guides/main_concepts/documents.md#document-id)**: A document id is the value associated to the primary key attribute. Values in that field must always be **unique**.
 
 #### Example
 
-Given an **index** that contains information about movies. There would be **documents** with the following **attributes**:`"id"`, `"title"`, `"description"` and `"type"`, a **field** is the association of an attribute and its **value**: `"title": "Kung fu Panda"`. Each document contains at least the **primary key** attribute : `id` with its associated value, the **document id**: `"id": "123456"`
+Given an **index** that contains information about movies. There would be **documents** with the following **attributes**:`"id"`, `"title"`, `"description"` and `"type"`, a **field** is the association of an attribute and its **value**: `"title": "Kung fu Panda"`.
+
+Each document contains at least the **primary key** attribute : `id` with its associated value, the **document id**: `"id": "123456"`
 
 ## Structure
 
@@ -87,7 +89,7 @@ If no corresponding attribute has been found, the index will have no known prima
 
 ### Document Id
 
-The document id is the value associated to the primary key.
+The document id is the **value** associated to the <clientGlossary word="primary key"/>.
 
 The document id must contain only `A-Z a-z 0-9` and `-_` characters.
 

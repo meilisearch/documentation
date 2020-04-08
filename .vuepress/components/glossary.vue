@@ -16,7 +16,7 @@ import { createPopper } from "@popperjs/core";
 
 const glossary = {
   field:
-    "A field, or a key-value pair, is a set of two data items linked together: an <b>attribute</b> and its associated <b>value</b>. <br><br> Ex: <code>attribute: 'data'</code>",
+    "A field, or a key-value pair, is a set of two data items linked together: an <b>attribute</b> and its associated <b>value</b>. <br><br> Ex: <code>attribute: 'value'</code>",
   attribute:
     "An attribute is the name of a field, like a key. <br><br> Ex:  <code>title: 'Batman'</code> <br> In the example above, title is the attribute.",
   "ranking rules":
