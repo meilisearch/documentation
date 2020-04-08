@@ -169,7 +169,7 @@ Attributes whose values will contain **highlighted matching terms**.
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
-  Comma-separated list of attributes. Every matching string sequence in the given attribute field will be wrapped around an `<em>` tag.
+  Comma-separated list of attributes. Every matching query words in the given attribute field will be wrapped around an `<em>` tag.
 
 #### Example
 
