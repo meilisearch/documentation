@@ -113,7 +113,7 @@ This is especially useful when you have to display content on the front-end in a
 
 ## Crop length
 
-Set a **limit on the length** of field values.
+Set a length for the cropping around the matching query words (see attributesToCrop).
 
 `cropLength=<Integer>`
 
