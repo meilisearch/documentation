@@ -89,7 +89,7 @@ Default value (the ranking rules in the default order):
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
-[Read guide to know more about what each ranking rules does](/guides/main_concepts/relevancy.md)
+[Read this guide to know more about what each ranking rules does](/guides/main_concepts/relevancy.md)
 
 #### Example
 
