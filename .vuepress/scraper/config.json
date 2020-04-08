@@ -1,8 +1,6 @@
 {
   "index_uid": "docs",
-  "start_urls": [
-    "https://docs.meilisearch.com"
-  ],
+  "start_urls": ["https://docs.meilisearch.com"],
   "stop_urls": [],
   "selectors": {
     "lvl0": {
@@ -22,9 +20,7 @@
       "global": true
     }
   },
-  "selectors_exclude": [
-    ".table-of-contents"
-  ],
+  "selectors_exclude": [".table-of-contents"],
   "strip_chars": " .,;:#",
   "scrap_start_urls": true,
   "nb_hits": 1185

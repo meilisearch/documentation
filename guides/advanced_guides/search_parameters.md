@@ -208,33 +208,17 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 ## Filters
 
-This setting allows to **filter queries by an attribute value**.
+`filters=<String>`
 
-Filters accept **only one** parameter.
-
-`filters=<Attribute>:<Value>`
-
-- `<Attribute>:<Value>` (Optional, string, defaults to empty)
-
-  Two strings separated by a colon.
-
-  - `<Attribute>`: The attribute name.
-
-  - `<Value>`: The value which will be used to filter documents.
-
-The attribute value used for filtering must be **equal to** the existing attribute value in the documents. The **comparison is done in a case-insensitive manner**.
-
-#### Example
-
-If you add this filter:
+Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering).
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
-      -d q=n \
-      -d filters='title:Nightshift'
+        -d q=n \
+        -d filters='filters=title%3DNightshift'
 ```
 
-Only documents that contain the value `Nightshift` in their `title` attribute will be returned upon search.
+(`%3D` is URL-encoded for `=`)
 
 ```json
 {
@@ -246,12 +230,13 @@ Only documents that contain the value `Nightshift` in their `title` attribute wi
 }
 ```
 
-The parameter must be **URL-encoded**.
+The parameter should be **URL-encoded**.
 
 ```bash
-$ curl --request GET  -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-      -d filters='title:Kung%20Fu%20Panda'
+$ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
+        -d q=shifu \
+        -d filters='title%3D%22Kung%20Fu%20Panda%22' \
+        -i
 ```
 
 ## Matches

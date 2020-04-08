@@ -8,64 +8,65 @@
       id="meilisearch-search-input"
       class="search-query"
       :placeholder="placeholder"
-    >
+    />
   </form>
 </template>
 
 <script>
 export default {
-  name: 'MeiliSearchBox',
+  name: "MeiliSearchBox",
   props: {
     options: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
-  data () {
+  data() {
     return {
-      placeholder: undefined
-    }
+      placeholder: undefined,
+    };
   },
   watch: {
-    options (newValue) {
-      this.update(newValue)
-    }
+    options(newValue) {
+      this.update(newValue);
+    },
   },
-  mounted () {
-    this.initialize(this.options)
-    this.placeholder = this.$site.themeConfig.searchPlaceholder || ''
+  mounted() {
+    this.initialize(this.options);
+    this.placeholder = this.$site.themeConfig.searchPlaceholder || "";
   },
 
   methods: {
-    initialize (userOptions) {
+    initialize(userOptions) {
       Promise.all([
-        import(/* webpackChunkName: "docs-searchbar" */ 'docs-searchbar.js/dist/cdn/docs-searchbar.min.js'),
-        import(/* webpackChunkName: "docs-searchbar" */ 'docs-searchbar.js/dist/cdn/docs-searchbar.min.css')
+        import(
+          /* webpackChunkName: "docs-searchbar" */ "docs-searchbar.js/dist/cdn/docs-searchbar.min.js"
+        ),
+        import(
+          /* webpackChunkName: "docs-searchbar" */ "docs-searchbar.js/dist/cdn/docs-searchbar.min.css"
+        ),
       ]).then(([docsSearchBar]) => {
-        docsSearchBar = docsSearchBar.default
-        const input = Object.assign(
-          {},
-          userOptions,
-          {
-            inputSelector: '#meilisearch-search-input',
-            meilisearchOptions: { cropLength: 40 },
-            handleSelected: (input, event, suggestion) => {
-              const { pathname, hash } = new URL(suggestion.url)
-              const routepath = pathname.replace(this.$site.base, '/')
-              this.$router.push(`${routepath}${hash}`)
-            }
-          }
-        )
-        docsSearchBar(input)
-      })
+        docsSearchBar = docsSearchBar.default;
+        const input = Object.assign({}, userOptions, {
+          inputSelector: "#meilisearch-search-input",
+          meilisearchOptions: { cropLength: 40 },
+          handleSelected: (input, event, suggestion) => {
+            const { pathname, hash } = new URL(suggestion.url);
+            const routepath = pathname.replace(this.$site.base, "/");
+            this.$router.push(`${routepath}${hash}`);
+          },
+        });
+        docsSearchBar(input);
+      });
     },
 
-    update (options) {
-      this.$el.innerHTML = '<input id="meilisearch-search-input" class="search-query">'
-      this.initialize(options)
-    }
-  }
-}
+    update(options) {
+      this.$el.innerHTML =
+        '<input id="meilisearch-search-input" class="search-query">';
+      this.initialize(options);
+    },
+  },
+};
 </script>
 
 <style lang="stylus">

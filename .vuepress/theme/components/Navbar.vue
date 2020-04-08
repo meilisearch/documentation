@@ -2,83 +2,86 @@
   <header class="navbar">
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')" />
 
-    <RouterLink
-      :to="$localePath"
-      class="home-link"
-    >
+    <RouterLink :to="$localePath" class="home-link">
       <img
         v-if="$site.themeConfig.logo"
         class="logo"
         :src="$withBase($site.themeConfig.logo)"
         :alt="$siteTitle"
-      >
+      />
       <span
         v-if="$siteTitle"
         ref="siteName"
         class="site-name"
         :class="{ 'can-hide': $site.themeConfig.logo }"
-      >{{ $siteTitle }}</span>
+        >{{ $siteTitle }}</span
+      >
     </RouterLink>
 
     <div class="links">
-      <MeiliSearchBox
-        :options="meilisearchOptions"
-      />
+      <MeiliSearchBox :options="meilisearchOptions" />
       <NavLinks class="can-hide" />
     </div>
   </header>
 </template>
 
 <script>
-import MeiliSearchBox from '@theme/components/MeiliSearchBox'
-import SearchBox from '@SearchBox' // for CSS
-import SidebarButton from '@parent-theme/components/SidebarButton.vue'
-import NavLinks from '@parent-theme/components/NavLinks.vue'
+import MeiliSearchBox from "@theme/components/MeiliSearchBox";
+import SearchBox from "@SearchBox"; // for CSS
+import SidebarButton from "@parent-theme/components/SidebarButton.vue";
+import NavLinks from "@parent-theme/components/NavLinks.vue";
 
 export default {
-  name: 'Navbar',
+  name: "Navbar",
 
   components: {
     SidebarButton,
     NavLinks,
     SearchBox,
-    MeiliSearchBox
+    MeiliSearchBox,
   },
 
-  data () {
+  data() {
     return {
-      linksWrapMaxWidth: null
-    }
+      linksWrapMaxWidth: null,
+    };
   },
 
   computed: {
-    meilisearchOptions () {
-      return this.$themeLocaleConfig.meilisearch || this.$site.themeConfig.meilisearch || {}
-    }
-
+    meilisearchOptions() {
+      return (
+        this.$themeLocaleConfig.meilisearch ||
+        this.$site.themeConfig.meilisearch ||
+        {}
+      );
+    },
   },
 
-  mounted () {
-    const MOBILE_DESKTOP_BREAKPOINT = 719 // refer to config.styl
-    const NAVBAR_VERTICAL_PADDING = parseInt(css(this.$el, 'paddingLeft')) + parseInt(css(this.$el, 'paddingRight'))
+  mounted() {
+    const MOBILE_DESKTOP_BREAKPOINT = 719; // refer to config.styl
+    const NAVBAR_VERTICAL_PADDING =
+      parseInt(css(this.$el, "paddingLeft")) +
+      parseInt(css(this.$el, "paddingRight"));
     const handleLinksWrapWidth = () => {
       if (document.documentElement.clientWidth < MOBILE_DESKTOP_BREAKPOINT) {
-        this.linksWrapMaxWidth = null
+        this.linksWrapMaxWidth = null;
       } else {
-        this.linksWrapMaxWidth = this.$el.offsetWidth - NAVBAR_VERTICAL_PADDING -
-          (this.$refs.siteName && this.$refs.siteName.offsetWidth || 0)
+        this.linksWrapMaxWidth =
+          this.$el.offsetWidth -
+          NAVBAR_VERTICAL_PADDING -
+          ((this.$refs.siteName && this.$refs.siteName.offsetWidth) || 0);
       }
-    }
-    handleLinksWrapWidth()
-    window.addEventListener('resize', handleLinksWrapWidth, false)
-  }
-}
+    };
+    handleLinksWrapWidth();
+    window.addEventListener("resize", handleLinksWrapWidth, false);
+  },
+};
 
-function css (el, property) {
+function css(el, property) {
   // NOTE: Known bug, will return 'auto' if style value is 'auto'
-  const win = el.ownerDocument.defaultView
+  const win = el.ownerDocument.defaultView;
   // null means not to return pseudo styles
-  return win.getComputedStyle(el, null)[property]
+  return win.getComputedStyle(el, null)[property];
 }
 </script>
 
