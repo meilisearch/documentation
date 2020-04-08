@@ -94,7 +94,7 @@ If you want to get only the `overview` field values, set `attributesToRetrieve` 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d q=shifu \
-      -d attributesToRetrieve=overview
+      -d attributesToRetrieve=overview,title
 ```
 
 ## Attributes to crop
