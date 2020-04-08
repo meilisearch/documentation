@@ -244,7 +244,7 @@ Only documents that contain the value `Nightshift` in their `title` attribute wi
 }
 ```
 
-The parameter shall be **URL-encoded**.
+The parameter must be **URL-encoded**.
 
 ```bash
 $ curl --request GET  -G 'http://localhost:7700/indexes/movies/search' \
