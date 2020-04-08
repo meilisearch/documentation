@@ -83,39 +83,13 @@ Built-in ranking rules that **ensure relevancy in search results**. Ranking rule
 
   An array of strings that contains the ranking rules sorted by order of importance (arranged from the most important rule to the least important rule).
 
-Default value:
+Default value (the ranking rules in the default order):
 
 ```json
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
-By default, rules are executed in the following order:
-
-#### 1. Typo
-
-Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
-
-#### 2. Words
-
-Results are sorted by **decreasing number of matched query terms** in each matching document: find documents that contain more occurrences of the query terms first.
-
-#### 3. Proximity
-
-Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
-
-#### 4. Attribute
-
-Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**: find documents that contain query terms in more important attributes first.
-
-#### 5. Words Position
-
-Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
-
-#### 6. Exactness
-
-Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
-
-[Learn more about ranking rules](/guides/main_concepts/relevancy.md)
+[Read guide to know more about what each ranking rules does](/guides/main_concepts/relevancy.md)
 
 #### Example
 
