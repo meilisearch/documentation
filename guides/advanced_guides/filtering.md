@@ -13,7 +13,7 @@ In itself the query language is very simple, and allows you to filter results on
 Conditions are the primitives of query filters. They are composed of three mandatory parameters `field OP value` where:
 
 - `field` refers to the document **attribute** to filter on. (_e.g_ id, title...). It is either a single alphanumeric word or a quoted string: `"movie title"`, and `release_date` are both valid `field`.
-- `OP` is the comparison operator, it can be one of `=`, `!=`, `>`, `>=`, `<`, or `<=`.  `value` is the test condition for which the filter shall filter upon.
+- `OP` is the comparison operator, it can be one of `=`, `!=`, `>`, `>=`, `<`, or `<=`. `value` is the test condition for which the filter shall filter upon.
 
 The `=` and `!=` operators check for equality and difference. For strings, they are both **case insensitive**:
 
@@ -31,7 +31,8 @@ The `>`, `>=`, `<`, and `<=` apply **only to numerical values**, and behave the 
 As no specific schema is enforced at indexing, the filtering engine will try to coerce the type of `value`. This can lead to undefined behaviour when big floats are coerced into integers and reciprocally. For this reason, it is best to have homogeneous typing across fields, especially if numbers tend to become large.
 :::
 
-### Expressions 
+### Expressions
+
 The simplest form of expressions are conditions. New expressions are created either by connecting other expressions together with logical connectives, or by grouping expressions with parentheses, _e.g_:
 
 ```SQL
