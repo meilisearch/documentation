@@ -1,5 +1,9 @@
 # Search
 
+Once your documents have been ingested into MeiliSearch, you can search them.
+
+Searching is highly customizable. You can configure the [search parameters](/guides/advanced_guides/search_parameters.md) to refine your search even further.
+
 ## Finding documents
 
 When a query input is received, MeiliSearch constructs a more complex query by taking into account configured settings: _typo_, n-grams, and _synonyms_.
@@ -32,6 +36,8 @@ Here are some usage examples:
 
 Results can be paginated using the query params `limit` and `offset`.
 
-### Try it out!
+### Give it a try!
 
-Once you have added your data to Meilisearch, **give it a try**! Open your web browser and enter MeiliSearch address to visit the [web interface](/guides/advanced_guides/web_interface.md).
+We also deliver an **out-of-the-box web interface** in which you can test MeiliSearch interactively.
+
+Follow [this guide](/guides/advanced_guides/web_interface.md) to give the search engine a try!
