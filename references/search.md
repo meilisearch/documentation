@@ -26,7 +26,7 @@ Search for documents matching a specific query in the given index.
 | **filters**               | Filter queries by an attribute value                                                            |    `none`     |
 | **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
-> `filters` takes `key:value` as parameter, with the key to be the name of the field to filter, and the value the filter to be applied on this field, e.g.: `filters=first_name:John`. Only a single filter is supported in a query.
+> `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering).
 
 ### Example
 
