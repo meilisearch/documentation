@@ -14,6 +14,7 @@ Conditions are the primitives of query filters. They are composed of three manda
 
 - `field` refers to the document **attribute** to filter on. (_e.g_ id, title...). It is either a single alphanumeric word or a quoted string: `"movie title"`, and `release_date` are both valid `field`.
 - `OP` is the comparison operator, it can be one of `=`, `!=`, `>`, `>=`, `<`, or `<=`. `value` is the test condition for which the filter shall filter upon.
+- `value` is the test condition for which the filter shall filter upon.
 
 The `=` and `!=` operators check for equality and difference. For strings, they are both **case insensitive**:
 
