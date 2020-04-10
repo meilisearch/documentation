@@ -198,7 +198,7 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 
 `filters=<String>`
 
-Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering).
+Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \

@@ -26,7 +26,7 @@ Search for documents matching a specific query in the given index.
 | **filters**               | Add fitler expression                                                                           |    `none`     |
 | **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
-> `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering).
+> `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
 > `cropLength` is automatically rounded to match word boundaries.
 
 ### Response
