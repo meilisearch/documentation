@@ -9,36 +9,36 @@ Search for documents matching a specific query in the given index.
 #### Path Variables
 
 | Variable      | Description   |
-|---------------|---------------|
+| ------------- | ------------- |
 | **index_uid** | The index UID |
 
 #### Query Parameters
 
 | Query Parameter           | Description                                        | Default Value |
-|---------------------------|----------------------------------------------------|:-------------:|
+| ------------------------- | -------------------------------------------------- | :-----------: |
 | **q**                     | query string _(mandatory)_                         |               |
-| **offset**                | number of documents to skip                        | 0             |
-| **limit**                 | number of documents to take                        | 20            |
-| **attributesToRetrieve**  | document attributes to show                        | *             |
-| **attributesToCrop**      | which attributes to crop                           | none          |
-| **cropLength**            | limit length at which to crop specified attributes | 200           |
-| **attributesToHighlight** | which attributes to highlight                      | none          |
-| **filters**               | attribute with an exact match                      | none          |
-| **matches**               | whether to return the raw matches or not           | false         |
+| **offset**                | number of documents to skip                        |       0       |
+| **limit**                 | number of documents to take                        |      20       |
+| **attributesToRetrieve**  | document attributes to show                        |      \*       |
+| **attributesToCrop**      | which attributes to crop                           |     none      |
+| **cropLength**            | limit length at which to crop specified attributes |      200      |
+| **attributesToHighlight** | which attributes to highlight                      |     none      |
+| **filters**               | attribute with an exact match                      |     none      |
+| **matches**               | whether to return the raw matches or not           |     false     |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering).
 
-
 ### Response
-| field                     | Description                                        | type          |
-|---------------------------|----------------------------------------------------|:-------------:|
-| **hits**                  | results of the query                               | `[result]`    |
-| **offset**                | number of documents skipped                        | `number`      |
-| **limit**                 | number of documents to take                        | `number`      |
-| **nbHits**                | total number of matches                            | `number`      |
-| **exhaustiveNbHits**      | whether `nbHits` is exhaustive                     | `boolean`     |
-| **processingTimeMs**      | processing time of the query                       | `number`      |
-| **query**                 | query originating the response                     | `string`      |
+
+| field                | Description                    |    type    |
+| -------------------- | ------------------------------ | :--------: |
+| **hits**             | results of the query           | `[result]` |
+| **offset**           | number of documents skipped    |  `number`  |
+| **limit**            | number of documents to take    |  `number`  |
+| **nbHits**           | total number of matches        |  `number`  |
+| **exhaustiveNbHits** | whether `nbHits` is exhaustive | `boolean`  |
+| **processingTimeMs** | processing time of the query   |  `number`  |
+| **query**            | query originating the response |  `string`  |
 
 ### Example
 
@@ -46,6 +46,7 @@ Search for documents matching a specific query in the given index.
 $ curl \
   -X GET 'http://localhost:7700/indexes/4eb345y7/search?q=american%20ninja%205'
 ```
+
 #### Response: `200 Ok`
 
 ```json
@@ -57,7 +58,7 @@ $ curl \
       "poster": "https://image.tmdb.org/t/p/w1280/q4LNgUnRfltxzp3gf1MAGiK5LhV.jpg",
       "overview": "The whole gang are back and as close as ever. They decide to
       get even closer by spending the summer together at a beach house. They
-      decide to hold the biggest...", 
+      decide to hold the biggest...",
       "release_date": 997405200
     },
     {
