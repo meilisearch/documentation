@@ -23,11 +23,23 @@ Search for documents matching a specific query in the given index.
 | **attributesToCrop**      | Attributes whose values have to be cropped                                                      |    `none`     |
 | **cropLength**            | Length used to crop field values                                                                |     `200`     |
 | **attributesToHighlight** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
-| **filters**               | Filter queries by an attribute value                                                            |    `none`     |
+| **filters**               | Add fitler expression                                                                           |    `none`     |
 | **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering).
 > `cropLength` is automatically rounded to match word boundaries.
+
+### Response
+
+| field                | Description                    |    type    |
+| -------------------- | ------------------------------ | :--------: |
+| **hits**             | results of the query           | `[result]` |
+| **offset**           | number of documents skipped    |  `number`  |
+| **limit**            | number of documents to take    |  `number`  |
+| **nbHits**           | total number of matches        |  `number`  |
+| **exhaustiveNbHits** | whether `nbHits` is exhaustive | `boolean`  |
+| **processingTimeMs** | processing time of the query   |  `number`  |
+| **query**            | query originating the response |  `string`  |
 
 ### Example
 
@@ -42,24 +54,31 @@ $ curl \
 {
   "hits": [
     {
-      "id": "25684",
-      "title": "American Ninja 5",
-      "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
-      "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.",
-      "release_date": "1993-01-01"
+      "id": "2770",
+      "title": "American Pie 2",
+      "poster": "https://image.tmdb.org/t/p/w1280/q4LNgUnRfltxzp3gf1MAGiK5LhV.jpg",
+      "overview": "The whole gang are back and as close as ever. They decide to
+      get even closer by spending the summer together at a beach house. They
+      decide to hold the biggest...",
+      "release_date": 997405200
     },
     {
-      "id": "25682",
-      "title": "American Ninja 3: Blood Hunt",
-      "poster": "https://image.tmdb.org/t/p/w1280/c7oNrk8bRg0BlmtvidhVD8ivPYT.jpg",
-      "overview": "Jackson is back, and now he has a new partner, karate champion Sean, as they must face a deadly terrorist known as 'The Cobra', who has infected Sean with a virus. Sean and Jackson have no choice but to fight the Cobra and his bands of ninjas.",
-      "release_date": "1989-02-24"
+      "id": "190859",
+      "title": "American Sniper",
+      "poster": "https://image.tmdb.org/t/p/w1280/svPHnYE7N5NAGO49dBmRhq0vDQ3.jpg",
+      "overview": "U.S. Navy SEAL Chris Kyle takes his sole mission—protect his
+      comrades—to heart and becomes one of the most lethal snipers in American
+      history. His pinpoint accuracy not only saves countless lives but also
+      makes him a prime...",
+      "release_date": 1418256000
     },
     ...
   ],
   "offset": 0,
   "limit": 20,
-  "processingTimeMs": 32,
-  "query": "american ninja 5"
+  "nbHits": 976,
+  "exhaustiveNbHits": false,
+  "processingTimeMs": 35,
+  "query": "american "
 }
 ```
