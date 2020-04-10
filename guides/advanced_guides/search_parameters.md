@@ -113,23 +113,7 @@ In the case a matched query word is found, the field's value will be cropped aro
 This is especially useful when you have to display content on the front-end in a specific way.
 :::
 
-## Crop length
-
-Set a length for the cropping around the matching query words (see attributesToCrop).
-
-`cropLength=<Integer>`
-
-- `<Integer>` (Optional, positive integer, defaults to `200`)
-
-  The length used to crop field values around the first matched query word if the field's attribute is in the `attributedToCrop` list.
-
-Cropping start at the **first occurrence of the matched query word**.
-
-If the value of the parameter `cropLength` is _n_, the returned field value will consist of **_n_ characters before the query word** and **_n_ characters from the first character of the query word**. Below is a simple representation:
-
-```json
-_n_ characters + _n_ characters including the query word
-```
+**Cropping start at the first occurrence of the search query**. It only keeps `cropLength` chars on each side of the first match, rounded to match word boundaries.
 
 #### Example
 
@@ -155,13 +139,17 @@ You will get the following response with the **cropped version in the \_formatte
     "id": "50393",
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "d his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade ",
+    "overview": "his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade",
     "release_date": 1290729600
   }
 }
 ```
 
-In the example above, the cropped version of `overview` is 200 characters longs. There are 100 characters before `shifu` (the first match) and 100 more characters starting at the first letter of `shifu`.
+## Crop length
+
+`cropLength=<Integer>`
+
+Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
 
 ## Attributes to highlight
 

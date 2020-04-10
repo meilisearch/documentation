@@ -27,6 +27,7 @@ Search for documents matching a specific query in the given index.
 | **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering).
+> `cropLength` is automatically rounded to match word boundaries.
 
 ### Example
 
