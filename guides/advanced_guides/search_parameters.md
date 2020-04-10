@@ -113,9 +113,7 @@ In the case a matched query word is found, the field's value will be cropped aro
 This is especially useful when you have to display content on the front-end in a specific way.
 :::
 
-**Cropping start at the first occurrence of the search query**. It only keeps
-`(cropLength - matchLength)/2` chars on each side of the first match, rounded
-to match word boundaries.
+**Cropping start at the first occurrence of the search query**. It only keeps `cropLength` chars on each side of the first match, rounded to match word boundaries.
 
 #### Example
 
@@ -151,7 +149,7 @@ You will get the following response with the **cropped version in the \_formatte
 
 `cropLength=<Integer>`
 
-Total length of the cropped field. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
+Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
 
 ## Attributes to highlight
 
