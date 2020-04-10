@@ -14,17 +14,17 @@ Search for documents matching a specific query in the given index.
 
 #### Query Parameters
 
-| Query Parameter           | Description                                        | Default Value |
-| ------------------------- | -------------------------------------------------- | :-----------: |
-| **q**                     | query string _(mandatory)_                         |               |
-| **offset**                | number of documents to skip                        |       0       |
-| **limit**                 | number of documents to take                        |      20       |
-| **attributesToRetrieve**  | document attributes to show                        |      \*       |
-| **attributesToCrop**      | which attributes to crop                           |     none      |
-| **cropLength**            | limit length at which to crop specified attributes |      200      |
-| **attributesToHighlight** | which attributes to highlight                      |     none      |
-| **filters**               | adds a fitler expression  		                 |     none      |
-| **matches**               | whether to return the raw matches or not           |     false     |
+| Query Parameter           | Description                                                                                     | Default Value |
+| ------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
+| **q**                     | Query string \_(mandatory)                                                                      |               |
+| **offset**                | Number of documents to skip                                                                     |      `0`      |
+| **limit**                 | Maximum number of documents returned                                                            |     `20`      |
+| **attributesToRetrieve**  | Attributes to display in the returned documents                                                 |      `*`      |
+| **attributesToCrop**      | Attributes whose values have to be cropped                                                      |    `none`     |
+| **cropLength**            | Length used to crop field values                                                                |     `200`     |
+| **attributesToHighlight** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
+| **filters**               | Add fitler expressions                                                           |    `none`     |
+| **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering).
 
