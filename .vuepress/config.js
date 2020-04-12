@@ -140,7 +140,7 @@ module.exports = {
     searchPlaceholder: "Search as you type...",
   },
   plugins: [
-    ["check-md", { pattern: "**/*.md" }],
+    ["check-md", { pattern: "**/*.md", strictExt: true }],
     ["sitemap", { hostname: "https://docs.meilisearch.com" }],
     ["seo", {}],
     "vuepress-plugin-element-tabs",
