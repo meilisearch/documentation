@@ -20,11 +20,13 @@ The `accept-new-fields` value can also be updated directly through the [global s
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
+[Learn more about accept new fields](/guides/advanced_guides/settings.md#accept-new-fields)
+
 ## Get the accept-new-fields value
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/accept-new-fields" />
 
-Get if MeiliSearch accepts new fields for an index.
+Get if MeiliSearch [accepts new fields](/guides/advanced_guides/settings.md#accept-new-fields) for an index.
 
 #### Path Variables
 
@@ -49,7 +51,7 @@ false
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/accept-new-fields" />
 
-Update if MeiliSearch should accept new fields for an index.
+Update if MeiliSearch should [accepts new fields](/guides/advanced_guides/settings.md#accept-new-fields) for an index.
 
 #### Path Variables
 

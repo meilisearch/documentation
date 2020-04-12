@@ -9,8 +9,10 @@
     "prebuild": "yarn test",
     "build": "vuepress build .",
     "dev": "vuepress dev",
-    "check-links": "vuepress check-md .",
+    "check-links": "yarn check-md && yarn check-config-paths",
+    "check-md": "vuepress check-md .",
     "check-style": "yarn lint && yarn prettier-md-check",
+    "check-config-paths": "vuepress check-config-paths .",
     "style:fix": "yarn lint:fix && yarn prettier:fix",
     "lint": "npx eslint . --ext .js,.vue",
     "lint:fix": "npx eslint . --ext .js,.vue --fix",
@@ -37,6 +39,9 @@
     "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-seo": "^0.1.2",
     "vuepress-plugin-sitemap": "^2.3.1"
+  },
+  "resolutions": {
+    "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#no_missing_md_extension"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

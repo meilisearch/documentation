@@ -1,5 +1,7 @@
 # Stats
 
+`Stats` gives extended information and metrics about indexes and the MeiliSearch database.
+
 ## Get stat of an index
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
