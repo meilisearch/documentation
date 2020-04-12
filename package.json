@@ -38,6 +38,9 @@
     "vuepress-plugin-seo": "^0.1.2",
     "vuepress-plugin-sitemap": "^2.3.1"
   },
+  "resolutions": {
+    "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#no_missing_md_extension"
+  },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
