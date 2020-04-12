@@ -6,6 +6,8 @@ Ranking rules are built-in rules that **ensure relevancy in search results**. Ra
 
 Ranking rules can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
 
+[Learn more about ranking rules and their relevancy](/guides/main_concepts/relevancy.md).
+
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
@@ -14,13 +16,17 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/ranking-rules" />
 
-Get the ranking rules of an index.
+Get the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of an index.
 
 #### Path Variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
 | **index_uid** | The index UID |
+
+#### Default value
+
+An array that contains [built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) sorted by order of importance.
 
 ### Example
 
@@ -49,7 +55,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/ranking-rules" />
 
-Update the ranking rules of an index.
+Update the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of an index.
 
 #### Path Variables
 

@@ -1,5 +1,7 @@
 # Updates
 
+The `update` route gives information about the progress of the [asynchronous processes](/guides/advanced_guides/asynchronous_updates.md).
+
 ## Get an update status
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/updates/:updateId"/>

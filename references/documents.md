@@ -1,10 +1,15 @@
 # Documents
 
+Documents are objects composed of fields which can store any type of data.
+Each field contains an attribute and its associated value.
+
+[Learn more about documents](/guides/main_concepts/documents.md).
+
 ## Get one document
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:document_id"/>
 
-Get one document using its unique id.
+Get one [documents](/guides/main_concepts/documents.md) using its unique id.
 
 #### Path Variables
 
@@ -36,7 +41,7 @@ $ curl \
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
 
-Get documents by batch.
+Get [documents](/guides/main_concepts/documents.md) by batch.
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
@@ -90,7 +95,7 @@ $ curl \
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
 
-Add a list of documents or replace them if they already exist.
+Add a list of [documents](/guides/main_concepts/documents.md) or replace them if they already exist.
 
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
 

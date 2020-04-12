@@ -1,5 +1,7 @@
 # Health
 
+The `health` route handles the healthyness of your MeiliSearch instance.
+
 ## Get health
 
 <RouteHighlighter method="GET" route="/health"/>

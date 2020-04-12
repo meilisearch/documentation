@@ -26,6 +26,8 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the settings of an index.
 
+[Learn more about the settings](/guides/advanced_guides/settings.md).
+
 #### Path Variables
 
 | Variable      | Description   |
@@ -92,7 +94,7 @@ List the settings.
 
 Update the settings of an index.
 
-[Learn more about the settings in this guide](/guides/advanced_guides/settings.md)
+[Learn more about the settings](/guides/advanced_guides/settings.md).
 
 #### Path Variables
 
@@ -190,7 +192,7 @@ All settings will be reset to their default value.
 | **displayedAttributes**  | Fields displayed in the returned documents documents                             | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
-[Learn more about the settings in this guide](/guides/advanced_guides/settings.md)
+[Learn more about the settings](/guides/advanced_guides/settings.md).
 
 #### Path Variables
 

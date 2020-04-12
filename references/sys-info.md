@@ -1,5 +1,7 @@
 # System information
 
+System information offers extended information about hardware usage by MeiliSearch (i.e, _processor_, _memory_).
+
 ## Get pretty system information
 
 <RouteHighlighter method="GET" route="/sys-info/pretty"/>
