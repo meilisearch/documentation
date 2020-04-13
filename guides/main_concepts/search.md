@@ -4,9 +4,9 @@ MeiliSearch has been designed to improve your search experience.
 
 ## Simple and Intuitive
 
-For developers, it requires very little configuration to be up and running.
+For developers, it requires very little configuration to be up and running. Communication to the server is done through a [RESTful API](/references/README.md).
 
-For users, the search experience aims to feel simple and intuitive so they can focus on the results. MeiliSearch delivers an intuitive search-as-you-type experience that can answer under 50 milliseconds.
+For users, the search experience aims to feel simple so they can focus on the results. MeiliSearch delivers an intuitive search-as-you-type experience; which means a response time lower than 50 milliseconds.
 
 ## Highly Customizable
 
@@ -19,6 +19,24 @@ However, searching is highly customizable.
 The returned results are **sorted according to a set of consecutive rules called [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules)**. You can delete existing rules, add new ones, or even change the order in which they are executed.
 
 You can also **configure the [search parameters](/guides/advanced_guides/search_parameters.md)** to refine your search even further.
+
+## Features
+
+### Search as you type
+
+Also called instant search, results are displayed while you are still inputting your query. Showed results are changed in real-time whenever you type additional text in the search box.
+
+### Typo tolerance
+
+Instead of letting typos ruin your search experience, MeiliSearch will find the results you expect.
+
+### Synonyms
+
+Search should not be limited by some specific words.
+
+### Languages support
+
+MeiliSearch supports Latin-based languages, English, and Kanji characters.
 
 ### Give it a try!
 
