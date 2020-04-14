@@ -151,7 +151,7 @@ You will get the following response with the **cropped version in the \_formatte
 
 Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
 
-## Attributes to highlight
+## Attributes to Highlight
 
 Attributes whose values will contain **highlighted matching query words**.
 
@@ -203,7 +203,7 @@ Specify a filter to be used with the query. See our [dedicated guide](/guides/ad
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
         -d q=n \
-        -d filters='filters=title%3DNightshift'
+        -d filters='title%3DNightshift'
 ```
 
 (`%3D` is URL-encoded for `=`)
