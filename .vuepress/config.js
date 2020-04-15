@@ -80,7 +80,7 @@ module.exports = {
               children: [
                 {
                   title: 'All Settings',
-                  path: '/references/settings',
+                  path: '/references/settings/',
                 },
                 '/references/synonyms',
                 '/references/stop_words',
@@ -139,6 +139,7 @@ module.exports = {
     ['seo', {}],
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
+    [require('./config-path-checker')],
   ],
   head: [
     ['meta', { charset: 'utf-8' }],
