@@ -4,6 +4,10 @@ When searching for documents, it is sometimes desired to filter through the resu
 
 Meilisearch allows you to define filters thanks to a **very simple query language**. Once defined, you can pass your filter to your search query, as a parameter.
 
+### Using Filters
+
+In order to apply filtering to a search, simply add a filter expression to the `filter` query parameter of your search. More on search query parameters [here](https://docs.meilisearch.com/references/search.html#query-parameters)
+
 ### The Query Language
 
 In itself the query language is very simple, and allows you to filter results on any document field. For now it only allows you to query on fields that are either `number`, `boolean`, or `string`
