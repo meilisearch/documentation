@@ -25,7 +25,7 @@ Search for documents matching a specific query in the given index.
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Add fitler expression                                                            |    `none`     |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Add fitler expression                                                                           |    `none`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).

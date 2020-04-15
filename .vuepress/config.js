@@ -1,12 +1,7 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-<<<<<<< HEAD
-  title: "MeiliSearch Documentation v0.10",
-  description: "Open source Instant Search Engine",
-=======
-  title: 'MeiliSearch Documentation v0.9',
+  title: 'MeiliSearch Documentation v0.10',
   description: 'Open source Instant Search Engine',
->>>>>>> 01a8ee7... New linting rule for javascript
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
     docsRepo: 'meilisearch/documentation',
@@ -49,21 +44,21 @@ module.exports = {
           path: '/guides/advanced_guides/',
           collapsable: false,
           children: [
-            "/guides/advanced_guides/installation",
-            "/guides/advanced_guides/search_parameters",
-            "/guides/advanced_guides/authentication",
-            "/guides/advanced_guides/filtering",
-            "/guides/advanced_guides/asynchronous_updates",
-            "/guides/advanced_guides/web_interface",
-            "/guides/advanced_guides/settings",
-            "/guides/advanced_guides/synonyms",
-            "/guides/advanced_guides/stop_words",
-            "/guides/advanced_guides/distinct",
-            "/guides/advanced_guides/field_properties",
-            "/guides/advanced_guides/typotolerance",
-            "/guides/advanced_guides/prefix",
-            "/guides/advanced_guides/concat",
-            "/guides/advanced_guides/bucket_sort",
+            '/guides/advanced_guides/installation',
+            '/guides/advanced_guides/search_parameters',
+            '/guides/advanced_guides/authentication',
+            '/guides/advanced_guides/filtering',
+            '/guides/advanced_guides/asynchronous_updates',
+            '/guides/advanced_guides/web_interface',
+            '/guides/advanced_guides/settings',
+            '/guides/advanced_guides/synonyms',
+            '/guides/advanced_guides/stop_words',
+            '/guides/advanced_guides/distinct',
+            '/guides/advanced_guides/field_properties',
+            '/guides/advanced_guides/typotolerance',
+            '/guides/advanced_guides/prefix',
+            '/guides/advanced_guides/concat',
+            '/guides/advanced_guides/bucket_sort',
           ],
         },
       ],
@@ -122,16 +117,10 @@ module.exports = {
           path: '/resources/',
           collapsable: false,
           children: [
-<<<<<<< HEAD
-            "/resources/about_storage",
-            "/resources/sdks",
-            "/resources/comparison_to_alternatives",
-            "/resources/faq",
-=======
+            '/resources/about_storage',
             '/resources/sdks',
             '/resources/comparison_to_alternatives',
             '/resources/faq',
->>>>>>> 01a8ee7... New linting rule for javascript
           ],
         },
       ],
