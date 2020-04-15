@@ -1,4 +1,4 @@
-const { isObject, isArray } = require('./utils')
+const { isObject } = require('./utils')
 const { addError } = require('./result-report')
 
 function checkPath(path) {
@@ -25,7 +25,7 @@ function searchForPath(element) {
 }
 
 function SearchForChilds(element) {
-  if (isArray(element)) {
+  if (Array.isArray(element)) {
     element.map((child) => searchForPath.call(this, child))
   } else if (isObject(element)) {
     searchForPath.call(this, element)
