@@ -1,6 +1,12 @@
 const chalk = require('chalk')
 const fs = require('fs')
 const configFile = fs.readFileSync('./.vuepress/config.js', 'utf-8').split('\n')
+const LOG_LEVELS = {
+  none: 0,
+  info: 1,
+  warn: 2,
+  error: 3,
+}
 
 function createReportResult({ type, msgFn }) {
   return {
@@ -12,38 +18,29 @@ function createReportResult({ type, msgFn }) {
   }
 }
 
+function convertErrMsg(obj) {
+  return (
+    `\n${
+      obj.type === 'error'
+        ? chalk.red(obj.msg)
+        : obj.type === 'warn'
+        ? chalk.yellow(obj.msg)
+        : obj.msg
+    }\n\n` +
+    obj.list
+      .map(
+        (item) =>
+          `  ${chalk.red(item.errMsg)}: ${item.fullText} ${chalk.gray(
+            `(${item.fileUrl}:${item.line}:${item.column})`
+          )}`
+      )
+      .join('\n') +
+    '\n'
+  )
+}
+
 function displayReport(result, options) {
   const errorLevels = []
-  const LOG_LEVELS = {
-    none: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  }
-
-  /**
-   * @param {ReportResult} obj
-   */
-  function convertErrMsg(obj) {
-    return (
-      `\n${
-        obj.type === 'error'
-          ? chalk.red(obj.msg)
-          : obj.type === 'warn'
-          ? chalk.yellow(obj.msg)
-          : obj.msg
-      }\n\n` +
-      obj.list
-        .map(
-          (item) =>
-            `  ${chalk.red(item.errMsg)}: ${item.fullText} ${chalk.gray(
-              `(${item.fileUrl}:${item.line}:${item.column})`
-            )}`
-        )
-        .join('\n') +
-      '\n'
-    )
-  }
 
   Object.keys(result).forEach((k) => {
     /** @type {ReportResult} */
