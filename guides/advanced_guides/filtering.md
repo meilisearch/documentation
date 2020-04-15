@@ -6,7 +6,7 @@ Meilisearch allows you to define filters thanks to a **very simple query languag
 
 ### Using Filters
 
-In order to apply filtering to a search, simply add a filter expression to the `filter` query parameter of your search. More on search query parameters [here](https://docs.meilisearch.com/references/search.html#query-parameters)
+In order to apply filtering to a search, simply add a filter expression to the `filter` query parameter of your search. More on search query parameters [here](https://docs.meilisearch.com/references/search.html#query-parameters).
 
 ### The Query Language
 
@@ -114,10 +114,13 @@ Say you want to only show to your user movies that were released after a certain
 release_date > 795484800 // march 18, 1995
 ```
 
-Querying on `Avengers`, the above example results in the following URL:
+Querying on `Avengers`, the above example results in the following CURL command:
 
-```curl
-/indexes/movies/search?q=Avengers&filters=release_date%20%3E%20795484800
+```bash
+curl \
+  -X GET 'http://localhost:7700/indexes/movies/search?' \
+    -d 'q=Avengers' \
+    -d 'filters=release_date > 795484800'
 ```
 
 Now imagine that we want only the movies released after the 18 of march 1995, and directed by either Jordan Peel or Tim Burton, then you would use this filter:
