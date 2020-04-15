@@ -117,7 +117,7 @@ release_date > 795484800 // march 18, 1995
 Querying on `Avengers`, the above example results in the following CURL command:
 
 ```bash
-curl \
+$ curl \
   -X GET 'http://localhost:7700/indexes/movies/search?' \
     -d 'q=Avengers' \
     -d 'filters=release_date > 795484800'
