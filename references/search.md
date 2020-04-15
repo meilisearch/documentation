@@ -23,7 +23,7 @@ Search for documents matching a specific query in the given index.
 | **attributesToCrop**      | Attributes whose values have to be cropped                                                      |    `none`     |
 | **cropLength**            | Length used to crop field values                                                                |     `200`     |
 | **attributesToHighlight** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
-| **filters**               | Add fitler expression                                                                           |    `none`     |
+| **filters**               | Add filter expression                                                                           |    `none`     |
 | **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
