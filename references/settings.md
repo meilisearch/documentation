@@ -96,7 +96,6 @@ Update the settings of an index.
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
-
 ### Examples
 
 #### Add settings
