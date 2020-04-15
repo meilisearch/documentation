@@ -22,6 +22,12 @@ You can also **configure the [search parameters](/guides/advanced_guides/search_
 
 ## Features
 
+![search demo gif](/search-synonyms-typo.gif)
+
+> MeiliSearch in action with `batman` and `joker` being defined as synonyms.
+
+All of MeiliSearch's features are provided out-of-the-box and can be easily configured.
+
 ### Search as you type
 
 Also called instant search, results are displayed while you are still inputting your query. Showed results are changed in real-time whenever you type additional text in the search box.
@@ -38,9 +44,11 @@ Search should not be limited by some specific words.
 
 MeiliSearch supports Latin-based languages, English, and Kanji characters.
 
-![search demo gif](/search-synonyms-typo.gif)
+### Highlighting
 
-> MeiliSearch in action with `batman` and `joker` being defined as synonyms.
+Search results contain highlighted queried terms to further enhance usability. Users don't need to read the entire text. The terms are highlighted and thus catch their eye.
+
+There are more features to come such as... faceting!
 
 ## Give it a try!
 
