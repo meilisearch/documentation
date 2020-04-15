@@ -38,7 +38,7 @@ Search should not be limited by some specific words.
 
 MeiliSearch supports Latin-based languages, English, and Kanji characters.
 
-### Give it a try!
+## Give it a try!
 
 We also deliver an **out-of-the-box web interface** in which you can test MeiliSearch interactively.
 
