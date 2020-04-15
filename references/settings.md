@@ -18,6 +18,8 @@ These are the reference pages for the dedicated routes:
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
+It is also possible to partially update your settings using a POST request to `Settings`, containing only the parameters that you want to modify. Parameters that are not present in the request body will keep their current configuration and WONT be modified.
+
 ## Get settings
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
@@ -94,7 +96,6 @@ Update the settings of an index.
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
-Any parameters not provided will be left unchanged.
 
 ### Examples
 
