@@ -252,7 +252,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d matches=true
 ```
 
-You will get the following response with the **raw matches in the \_matchesInfo object**:
+You will get the following response with the **information about the matches in the \_matchesInfo object**:
 
 ```json
 {
