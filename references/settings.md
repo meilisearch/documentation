@@ -1,4 +1,4 @@
-# Settings
+# All Settings
 
 `Settings` is a list of all the **customization** possible for an index.
 
