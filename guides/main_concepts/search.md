@@ -38,6 +38,10 @@ Search should not be limited by some specific words.
 
 MeiliSearch supports Latin-based languages, English, and Kanji characters.
 
+![search demo gif](/search-synonyms-typo.gif)
+
+> MeiliSearch in action with `batman` and `joker` being defined as synonyms.
+
 ## Give it a try!
 
 We also deliver an **out-of-the-box web interface** in which you can test MeiliSearch interactively.
