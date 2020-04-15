@@ -22,11 +22,12 @@ You can also **configure the [search parameters](/guides/advanced_guides/search_
 
 ## Features
 
+All of MeiliSearch's features are provided out-of-the-box and can be easily configured.
+<br>
+
 ![search demo gif](/search-synonyms-typo.gif)
 
 > MeiliSearch in action with `batman` and `joker` being defined as synonyms.
-
-All of MeiliSearch's features are provided out-of-the-box and can be easily configured.
 
 ### Search as you type
 
