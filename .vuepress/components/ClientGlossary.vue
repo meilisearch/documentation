@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  name: "ClientGlossary",
+  name: 'ClientGlossary',
   props: {
     word: {
       type: String,
-      default: "",
+      default: '',
     },
   },
-};
+}
 </script>

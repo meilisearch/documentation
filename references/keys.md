@@ -10,7 +10,7 @@ You must have the master key to access the `keys` route.
 
 <RouteHighlighter method="GET" route="/keys"/>
 
-Get the **private** and **public** key.
+Get the **private** and **public** [key](/guides/advanced_guides/authentication.md).
 
 ::: warning
 You must have the master key to access this route.

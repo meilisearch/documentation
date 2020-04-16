@@ -10,11 +10,13 @@ Synonyms can also be updated directly through the [global settings route](/refer
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
+[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
+
 ## Get synonyms
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/synonyms"/>
 
-Get the list of synonyms of an index.
+Get the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
 
 #### Path Variables
 
@@ -43,7 +45,7 @@ Get the list of synonyms of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/synonyms"/>
 
-Update the list of synonyms of an index.
+Update the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
 
 #### Path Variables
 
@@ -54,6 +56,8 @@ Update the list of synonyms of an index.
 #### Body
 
 An object that contains all synonyms and their associated words.
+
+[Learn more about how to add your synonyms](/guides/advanced_guides/synonyms.md).
 
 #### Example
 
