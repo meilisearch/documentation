@@ -6,6 +6,8 @@
 
 Search for documents matching a specific query in the given index.
 
+[Learn more about how the search works](/guides/main_concepts/search.md).
+
 #### Path Variables
 
 | Variable      | Description   |
@@ -14,20 +16,22 @@ Search for documents matching a specific query in the given index.
 
 #### Query Parameters
 
-| Query Parameter           | Description                                                                                     | Default Value |
-| ------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **q**                     | Query string \_(mandatory)                                                                      |               |
-| **offset**                | Number of documents to skip                                                                     |      `0`      |
-| **limit**                 | Maximum number of documents returned                                                            |     `20`      |
-| **attributesToRetrieve**  | Attributes to display in the returned documents                                                 |      `*`      |
-| **attributesToCrop**      | Attributes whose values have to be cropped                                                      |    `none`     |
-| **cropLength**            | Length used to crop field values                                                                |     `200`     |
-| **attributesToHighlight** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
-| **filters**               | Add filter expression                                                                           |    `none`     |
-| **matches**               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
+| Query Parameter                                                                                   | Description                                                                                     | Default Value |
+| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string \_(mandatory)                                                                      |               |
+| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
+| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `*`      |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
+| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
 > `cropLength` is automatically rounded to match word boundaries.
+
+[Learn more about how to use the search parameters](/guides/advanced_guides/search_parameters.md).
 
 ### Response
 

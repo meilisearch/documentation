@@ -10,13 +10,13 @@ Searchable attributes can also be updated directly through the [global settings 
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-[Learn more about searchable fields](/guides/advanced_guides/field_properties.md#searchable-fields)
+[Learn more about searchable fields](/guides/advanced_guides/field_properties.md#searchable-fields).
 
 ## Get searchable attributes
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/searchable-attributes" />
 
-Get the searchable attributes of an index.
+Get the [searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields) of an index.
 
 #### Path Variables
 
@@ -43,7 +43,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/searchable-attributes" />
 
-Update the searchable attributes of an index.
+Update the [searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields) of an index.
 
 #### Path Variables
 
@@ -85,7 +85,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/searchable-attributes"/>
 
-Reset the searchable attributes of the index to the default value.
+Reset the [searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields) of the index to the default value.
 
 #### Default value
 

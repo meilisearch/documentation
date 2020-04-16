@@ -5,7 +5,8 @@ module.exports = {
     node: true,
   },
   extends: [
-    "standard",
+    "eslint:recommended",
+    "eslint-config-standard",
     "plugin:vue/recommended",
     "plugin:prettier/recommended",
   ],
@@ -32,6 +33,6 @@ module.exports = {
           allowFirstLine: false,
         },
       },
-    ],
+    ]
   },
 };

@@ -6,14 +6,14 @@
 
 <script>
 export default {
-  name: "LinkButton",
+  name: 'LinkButton',
   props: {
     text: {
       type: String,
-      default: "",
+      default: '',
     },
   },
-};
+}
 </script>
 
 <style lang="css" scoped>

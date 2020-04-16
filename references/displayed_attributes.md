@@ -10,13 +10,13 @@ Displayed attributes can also be updated directly through the [global settings r
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-[Learn more about displayed fields](/guides/advanced_guides/field_properties.md#displayed-fields)
+[Learn more about displayed fields](/guides/advanced_guides/field_properties.md#displayed-fields).
 
 ## Get displayed attributes
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes" />
 
-Get the displayed attributes of an index.
+Get the [displayed attributes](/guides/advanced_guides/settings.md#displayed-attributes) of an index.
 
 #### Path Variables
 
@@ -43,7 +43,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/displayed-attributes" />
 
-Update the displayed attributes of an index.
+Update the [displayed attributes](/guides/advanced_guides/settings.md#displayed-attributes) of an index.
 
 #### Path Variables
 
@@ -83,7 +83,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
 
-Reset the displayed attributes of the index to the default value.
+Reset the [displayed attributes](/guides/advanced_guides/settings.md#displayed-attributes) of the index to the default value.
 
 #### Default value
 

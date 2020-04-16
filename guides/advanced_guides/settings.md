@@ -1,6 +1,6 @@
 # Settings Configuration
 
-This page describes all **configuration settings** available in MeiliSearch.
+This page describes all the **settings** available in MeiliSearch and how to **configure** them.
 
 | Variable                                                                              | Description                                                                      | Default value                                                                                     |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |

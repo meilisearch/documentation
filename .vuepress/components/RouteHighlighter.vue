@@ -23,23 +23,23 @@
 
 <script>
 export default {
-  name: "RouteHighlighter",
+  name: 'RouteHighlighter',
   props: {
     method: {
       type: String,
-      default: "",
+      default: '',
       validator: function (x) {
-        return ["get", "post", "put", "patch", "delete"].includes(
+        return ['get', 'post', 'put', 'patch', 'delete'].includes(
           x.toLowerCase()
-        );
+        )
       },
     },
     route: {
       type: String,
-      default: "my/route",
+      default: 'my/route',
     },
   },
-};
+}
 </script>
 
 <style lang="css" scoped>

@@ -1,8 +1,8 @@
-# Settings
+# All Settings
 
 `Settings` is a list of all the **customization** possible for an index.
 
-It is possible to update all the settings in one go or individually with the dedicated routes.
+It is possible to update all the settings in one go or individually with the dedicated routes. Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
 
 These are the reference pages for the dedicated routes:
 
@@ -14,6 +14,8 @@ These are the reference pages for the dedicated routes:
 - [Displayed attributes](/references/displayed_attributes.md)
 - [Accept new fields](/references/accept_new_fields.md)
 
+[Learn more about the settings in this guide](/guides/advanced_guides/settings.md)
+
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
@@ -24,11 +26,27 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the settings of an index.
 
+[Learn more about the settings](/guides/advanced_guides/settings.md).
+
 #### Path Variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
 | **index_uid** | The index UID |
+
+### Response Body
+
+| Variable                 | Type      | Description                                                                      | Default value                                                                                     |
+| ------------------------ | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**             | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **stopWords**            | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
+| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
+| **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
+
+[Learn more about the settings in this guide](/guides/advanced_guides/settings.md)
 
 ### Example
 
@@ -76,6 +94,9 @@ List the settings.
 
 Update the settings of an index.
 
+Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
+[Learn more about the settings in this guide](/guides/advanced_guides/settings.md).
+
 #### Path Variables
 
 | Variable      | Description   |
@@ -93,8 +114,6 @@ Update the settings of an index.
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
-
-Any parameters not provided will be left unchanged.
 
 ### Examples
 
@@ -171,6 +190,8 @@ All settings will be reset to their default value.
 | **searchableAttributes** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **displayedAttributes**  | Fields displayed in the returned documents documents                             | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
+
+[Learn more about the settings](/guides/advanced_guides/settings.md).
 
 #### Path Variables
 
