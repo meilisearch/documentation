@@ -3314,10 +3314,10 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docs-searchbar.js@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-1.1.0.tgz#6a527e1ab3533f5df3df46fb8018617ca986e869"
-  integrity sha512-R2vZxXNKj2QUN+3AuRh9QAjtdFIRVrDIKOSD2B5inhBJfv8nsZDliwDH4s8vpWx82XINRu+ZZIYFbbTlsiqHcw==
+docs-searchbar.js@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-1.1.1.tgz#e540dba99e2a45090ffad2aa3c500dafc69bae7c"
+  integrity sha512-7YctIE4PX583Rk5+zWglnx/UfNARqTrZYlVoCQpCJgErtCcWw/wY17p61/iZ8MHkbXA+UqI8LIVbTLLxGhmwug==
   dependencies:
     autocomplete.js "0.36.0"
     concurrently "^5.1.0"
