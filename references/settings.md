@@ -2,7 +2,7 @@
 
 `Settings` is a list of all the **customization** possible for an index.
 
-It is possible to update all the settings in one go or individually with the dedicated routes.
+It is possible to update all the settings in one go or individually with the dedicated routes. Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
 
 These are the reference pages for the dedicated routes:
 
@@ -76,6 +76,8 @@ List the settings.
 
 Update the settings of an index.
 
+Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
+
 #### Path Variables
 
 | Variable      | Description   |
@@ -93,8 +95,6 @@ Update the settings of an index.
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
-
-Any parameters not provided will be left unchanged.
 
 ### Examples
 
