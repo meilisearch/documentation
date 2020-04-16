@@ -201,12 +201,10 @@ The Winter Feast is Po's favorite holiday. Every year he and his father hang dec
 Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
 
 ```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
         -d q=n \
-        -d filters='title%3DNightshift'
+        --data-urlencode filters='title = Nightshift'
 ```
-
-(`%3D` is URL-encoded for `=`)
 
 ```json
 {
@@ -221,10 +219,9 @@ $ curl -X GET -G 'http://localhost:7700/indexes/nzwlr302/search' \
 The parameter should be **URL-encoded**.
 
 ```bash
-$ curl --request GET  -G 'http://localhost:8080/indexes/nzwlr302/search' \
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
         -d q=shifu \
-        -d filters='title%3D%22Kung%20Fu%20Panda%22' \
-        -i
+        --data-urlencode filters='title="Kung Fu Panda"'
 ```
 
 ## Matches
