@@ -117,10 +117,9 @@ release_date > 795484800 // march 18, 1995
 Querying on `Avengers`, the above example results in the following CURL command:
 
 ```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/search?' \
-    -d 'q=Avengers' \
-    -d 'filters=release_date > 795484800'
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Avengers' \
+    --data-urlencode 'filters=release_date > 795484800'
 ```
 
 Now imagine that we want only the movies released after the 18 of march 1995, and directed by either Jordan Peel or Tim Burton, then you would use this filter:
