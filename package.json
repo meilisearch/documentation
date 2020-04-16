@@ -9,8 +9,10 @@
     "prebuild": "yarn test",
     "build": "vuepress build .",
     "dev": "vuepress dev",
-    "check-links": "vuepress check-md .",
+    "check-links": "yarn check-md && yarn check-config-paths",
+    "check-md": "vuepress check-md .",
     "check-style": "yarn lint && yarn prettier-md-check",
+    "check-config-paths": "vuepress check-config-paths .",
     "style:fix": "yarn lint:fix && yarn prettier:fix",
     "lint": "npx eslint . --ext .js,.vue",
     "lint:fix": "npx eslint . --ext .js,.vue --fix",
@@ -29,14 +31,17 @@
   "author": "tpayet",
   "license": "MIT",
   "dependencies": {
-    "@popperjs/core": "^2.2.1",
-    "docs-searchbar.js": "^1.0.0",
+    "@popperjs/core": "^2.3.3",
+    "docs-searchbar.js": "^1.1.1",
     "mermaid": "^8.4.8",
     "vue-eslint-parser": "^7.0.0",
     "vuepress": "^1.3.1",
     "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-seo": "^0.1.2",
     "vuepress-plugin-sitemap": "^2.3.1"
+  },
+  "resolutions": {
+    "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#no_missing_md_extension"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

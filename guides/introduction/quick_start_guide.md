@@ -133,12 +133,12 @@ $ yarn add meilisearch
 ```
 
 ```js
-const MeiliSearch = require("meilisearch");
+const MeiliSearch = require('meilisearch')
 
-var client = new MeiliSearch({ host: "http://127.0.0.1:7700" });
+var client = new MeiliSearch({ host: 'http://127.0.0.1:7700' })
 const index = client
-  .createIndex({ uid: "movies" })
-  .then((res) => console.log(res));
+  .createIndex({ uid: 'movies' })
+  .then((res) => console.log(res))
 ```
 
 [About this package](https://github.com/meilisearch/meilisearch-js/)
@@ -252,8 +252,8 @@ $ curl \
 ::: tab JS
 
 ```js
-const movies = require("./movies.json");
-index.addDocuments(movies).then((res) => console.log(res));
+const movies = require('./movies.json')
+index.addDocuments(movies).then((res) => console.log(res))
 ```
 
 [About this package](https://github.com/meilisearch/meilisearch-js/)
@@ -356,7 +356,7 @@ $ curl \
 ::: tab JS
 
 ```js
-index.search("botman").then((res) => console.log(res));
+index.search('botman').then((res) => console.log(res))
 ```
 
 [About this package](https://github.com/meilisearch/meilisearch-js/)
