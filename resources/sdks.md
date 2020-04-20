@@ -7,3 +7,4 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 - [Python](https://github.com/meilisearch/meilisearch-python)
 - [PHP](https://github.com/meilisearch/meilisearch-php)
 - [Golang](https://github.com/meilisearch/meilisearch-go)
+- [Swift](https://github.com/meilisearch/meilisearch-swift)

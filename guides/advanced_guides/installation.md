@@ -94,7 +94,7 @@ $ ./target/release/meilisearch
 
 ```
 $ ./meilisearch --help
-meilisearch-http 0.9.0
+meilisearch-http 0.10.0
 
 USAGE:
     meilisearch [OPTIONS]
