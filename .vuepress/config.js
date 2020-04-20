@@ -125,13 +125,6 @@ module.exports = {
         },
       ],
     },
-    meilisearch: {
-      hostUrl: 'https://e10b17e6.getmeili.com',
-      indexUid: 'docs',
-      apiKey:
-        'b4ff9313299e65ce4e259d3aa59730d2829c9a6805aa15b83cdbd63b20563155',
-    },
-    searchPlaceholder: 'Search as you type...',
   },
   plugins: [
     ['check-md', { pattern: '**/*.md', strictExt: true }],
@@ -140,6 +133,16 @@ module.exports = {
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
+    [
+      'vuepress-plugin-meilisearch',
+      {
+        hostUrl: 'https://e10b17e6.getmeili.com',
+        apiKey:
+          'b4ff9313299e65ce4e259d3aa59730d2829c9a6805aa15b83cdbd63b20563155',
+        indexUid: 'docs',
+        placeholder: 'Search as you type...',
+      },
+    ],
   ],
   head: [
     ['meta', { charset: 'utf-8' }],
