@@ -243,7 +243,7 @@ Below is an example to showcase how to add documents using the following test da
 
 ```bash
 $ curl \
-  -X POST 'http://localhost:7700/indexes/movies/documents' \
+  -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
   --data @movies.json
 ```
 
