@@ -109,6 +109,7 @@ module.exports = {
             '/resources/comparison_to_alternatives',
             '/resources/postman_collection',
             '/resources/contact',
+            '/resources/cookbooks/running_production',
           ],
         },
         {
