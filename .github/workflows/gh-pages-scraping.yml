@@ -31,16 +31,16 @@ jobs:
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: .vuepress/dist
 
-  run-scraper:
+  scrap-docs:
     needs: build-deploy
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@master
-    - name: Run scraper
+    - name: Run docs-scraper
       env:
         HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
         API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
-        CONFIG_FILE_PATH: ${{ github.workspace }}/.vuepress/scraper/config.json
+        CONFIG_FILE_PATH: ${{ github.workspace }}/.vuepress/docs-scraper/docs-scraper.config.json
       run: |
         docker run -t --rm \
           -e MEILISEARCH_HOST_URL=$HOST_URL \
