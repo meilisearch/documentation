@@ -9253,6 +9253,13 @@ vuepress-plugin-element-tabs@^0.2.8:
     resize-observer-polyfill "^1.5.1"
     sass-loader "^7.1.0"
 
+vuepress-plugin-meilisearch@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.0.1.tgz#8ee29c1929d4a00e1f91f60723d1ecd021a613c2"
+  integrity sha512-DFWUUtU3SCZ6lxe+mAPFgBE0NZ03te1R/REGvU3b9wDWc3PCeyRlhtFs2f33tA7Z9Gq6NgBFOmfNoB5phWGP7w==
+  dependencies:
+    docs-searchbar.js "^1.1.1"
+
 vuepress-plugin-seo@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/vuepress-plugin-seo/-/vuepress-plugin-seo-0.1.2.tgz#132e656274bfaffce72e816fb8450951f3f6cc13"
