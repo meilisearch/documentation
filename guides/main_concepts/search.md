@@ -60,3 +60,5 @@ There are more features to come such as... faceting!
 We also deliver an **out-of-the-box web interface** in which you can test MeiliSearch interactively.
 
 There's no need to write a single line of front-end code. All you need to do is follow [this guide](/guides/advanced_guides/web_interface.md) to give the search engine a try!
+
+![web interface](/web-interface.png)
