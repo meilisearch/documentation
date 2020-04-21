@@ -37,13 +37,17 @@ There are many features available in MeiliSearch. Here is a few of them that you
 
 Also called instant search, results are displayed while you are still inputting your query. Showed results are changed in real-time whenever you type additional text in the search box.
 
-### [Typo tolerance](/guides/advanced_guides/typotolerance.md)
+### Typo tolerance
 
 Instead of letting typos ruin your search experience, MeiliSearch will find the results you expect.
 
-### [Synonyms](/guides/advanced_guides/synonyms.md)
+[Learn more about typo tolerance](/guides/advanced_guides/typotolerance.md)
+
+### Synonyms
 
 Search should not be limited by some specific words.
+
+[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
 
 ### Languages support
 
