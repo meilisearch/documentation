@@ -1,4 +1,2 @@
 !.vuepress
 .vuepress/dist/
-.vuepress/theme/components/Navbar.vue
-.vuepress/theme/components/MeiliSearchBox.vue
