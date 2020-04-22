@@ -120,6 +120,7 @@ module.exports = {
             '/resources/about_storage',
             '/resources/sdks',
             '/resources/comparison_to_alternatives',
+            '/resources/postman_collection',
             '/resources/faq',
           ],
         },

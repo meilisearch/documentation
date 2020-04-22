@@ -15,5 +15,6 @@ And additional resources here:
 
 - [SDKs](/resources/sdks.md)
 - [FAQ](/resources/faq.md)
+- [Postman collection](/resources/postman_collection.md): it can be tedious to re-write every route when wanting to try out an API. Try out MeiliSearch with our collection in Postman
 
 Tutorials and Cookbooks are currently being prepared. They will be available soon.
