@@ -122,10 +122,10 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'filters=release_date > 795484800'
 ```
 
-Now imagine that we want only the movies released after the 18 of march 1995, and directed by either Jordan Peel or Tim Burton, then you would use this filter:
+Now imagine that we want only the movies released after the 18 of march 1995, and directed by either Jordan Peele or Tim Burton, then you would use this filter:
 
 ```SQL
-release_date > 795484800 AND (director = "Tim Burton" OR director = "Jordan Peel")
+release_date > 795484800 AND (director = "Tim Burton" OR director = "Jordan Peele")
 ```
 
 Note that filtering on string is case insensitive. Here, the parentheses are mandatory, as `AND` has a higher precedence.
