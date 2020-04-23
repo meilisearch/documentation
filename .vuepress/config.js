@@ -98,11 +98,12 @@ module.exports = {
           ],
         },
       ],
-      '/FAQ/': [
+      '/faq/': [
         {
           title: '💡 FAQ',
-          path: '/faq/faq.md',
+          path: '/faq/',
           collapsable: false,
+          children: ['/faq/faq.md'],
         },
       ],
       '/resources/': [
