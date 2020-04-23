@@ -98,19 +98,6 @@ module.exports = {
           ],
         },
       ],
-      '/tutorials/': [
-        {
-          title: '🍳 Cookbooks',
-          path: '/tutorials/cookbooks/',
-          collapsable: false,
-        },
-        {
-          title: "🧷 How to's",
-          path: '/tutorials/howtos/',
-          collapsable: false,
-          children: ['/tutorials/howtos/quickstart'],
-        },
-      ],
       '/resources/': [
         {
           title: '📦 Resources',
@@ -123,6 +110,17 @@ module.exports = {
             '/resources/postman_collection',
             '/resources/faq',
           ],
+        },
+        {
+          title: '🍳 Cookbooks',
+          path: '/tutorials/cookbooks/',
+          collapsable: false,
+        },
+        {
+          title: "🧷 How to's",
+          path: '/tutorials/howtos/',
+          collapsable: false,
+          children: ['/resources/howtos/quickstart'],
         },
       ],
     },

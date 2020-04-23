@@ -2,7 +2,7 @@
 
 The aim of these guides is to provide an overview of MeiliSearch. For each important notion, pages to detailed and expanded explanations have been linked.
 
-For an even quicker start, you can have a look to the [Quick start guide](/tutorials/howtos/quickstart.md).
+For an even quicker start, you can have a look to the [Quick start guide](/resources/howtos/quickstart.md).
 
 Content:
 
