@@ -70,7 +70,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d offset=10
 ```
 
-You can filter results using the `filters` query parameter of your search.
+You can filter results using the `filters` query parameter.
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
