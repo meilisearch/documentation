@@ -13,7 +13,7 @@ module.exports = {
     nav: [
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
-      { text: 'FAQ', link: '/faq/' },
+      { text: 'FAQ', link: '/faq/faq.md' },
       { text: 'Resources', link: '/resources/' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
