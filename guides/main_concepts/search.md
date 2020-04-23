@@ -24,14 +24,12 @@ You can also **configure the [search parameters](/guides/advanced_guides/search_
 
 ## Features
 
-All of MeiliSearch's features are provided out-of-the-box and can be easily configured.
-<br>
-
 ![search demo gif](/search-synonyms-typo.gif)
 
 > MeiliSearch in action with `batman` and `joker` being defined as synonyms.
 
-There are many features available in MeiliSearch. Here is a few of them that you should try out:
+<br>
+All of MeiliSearch's features are provided out-of-the-box and can be easily configured. Here is a few of them that you should try out:
 
 ### Search as you type
 
@@ -58,6 +56,8 @@ MeiliSearch supports Latin-based languages, English, and Kanji characters.
 Search results contain highlighted queried terms to further enhance usability. Users don't need to read the entire text. The terms are highlighted and thus catch their eye.
 
 There are more features to come such as... **faceting**!
+
+#### Example
 
 Here are a few examples of what can be achieved with the [search parameters](/guides/advanced_guides/search_parameters.md):
 
