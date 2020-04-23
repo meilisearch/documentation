@@ -13,7 +13,7 @@ module.exports = {
     nav: [
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
-      { text: 'Tutorials', link: '/tutorials/' },
+      { text: 'FAQ', link: '/faq/' },
       { text: 'Resources', link: '/resources/' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
@@ -108,7 +108,6 @@ module.exports = {
             '/resources/sdks',
             '/resources/comparison_to_alternatives',
             '/resources/postman_collection',
-            '/resources/faq',
           ],
         },
         {

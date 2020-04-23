@@ -12,7 +12,7 @@ That's why we created MeiliSearch: An open source solution accessible to everyon
 
 Our solution delivers an **instant search experience**; it handles **typos**; it understands **filters**, **custom rankings**, and many other [features](#features).
 
-[<linkButton text="💡 FAQ"/>](/resources/faq.md)
+[<linkButton text="💡 FAQ"/>](/faq/faq.md)
 
 ## Open-source
 
