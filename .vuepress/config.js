@@ -101,7 +101,7 @@ module.exports = {
       '/faq/': [
         {
           title: '💡 FAQ',
-          path: '/faq/faq.md',
+          path: '/faq/faq.md/',
           collapsable: false,
           children: ['/faq/faq.md'],
         },
