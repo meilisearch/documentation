@@ -6,7 +6,7 @@ Meilisearch allows you to define filters thanks to a **very simple query languag
 
 ### Using Filters
 
-In order to apply filtering to a search, simply add a filter expression to the `filter` query parameter of your search. More on search query parameters [here](https://docs.meilisearch.com/references/search.html#query-parameters).
+In order to apply filtering to a search, simply add a filter expression to the `filters` query parameter of your search. More on search query parameters [here](https://docs.meilisearch.com/references/search.html#query-parameters).
 
 ### The Query Language
 
