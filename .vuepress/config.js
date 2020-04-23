@@ -119,12 +119,12 @@ module.exports = {
         },
         {
           title: '🍳 Cookbooks',
-          path: '/tutorials/cookbooks/',
+          path: '/resources/cookbooks/',
           collapsable: false,
         },
         {
           title: "🧷 How to's",
-          path: '/tutorials/howtos/',
+          path: '/resources/howtos/',
           collapsable: false,
           children: ['/resources/howtos/quickstart'],
         },
