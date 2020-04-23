@@ -98,6 +98,13 @@ module.exports = {
           ],
         },
       ],
+      '/FAQ/': [
+        {
+          title: '💡 FAQ',
+          path: '/faq/faq.md',
+          collapsable: false,
+        },
+      ],
       '/resources/': [
         {
           title: '📦 Resources',
