@@ -46,8 +46,8 @@ module.exports = {
           children: [
             '/guides/advanced_guides/installation',
             '/guides/advanced_guides/search_parameters',
-            '/guides/advanced_guides/authentication',
             '/guides/advanced_guides/filtering',
+            '/guides/advanced_guides/authentication',
             '/guides/advanced_guides/asynchronous_updates',
             '/guides/advanced_guides/web_interface',
             '/guides/advanced_guides/settings',
