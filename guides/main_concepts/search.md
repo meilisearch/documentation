@@ -57,11 +57,30 @@ MeiliSearch supports Latin-based languages, English, and Kanji characters.
 
 Search results contain highlighted queried terms to further enhance usability. Users don't need to read the entire text. The terms are highlighted and thus catch their eye.
 
-There are more features to come such as... faceting!
+There are more features to come such as... **faceting**!
+
+Here are a few examples of what can be achieved with the [search parameters](/guides/advanced_guides/search_parameters.md):
+
+Results can be paginated using the `limit` and `offset` query parameters.
+
+```bash
+$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
+      -d q=shifu \
+	  -d limit=5 \
+      -d offset=10
+```
+
+You can filter results using the `filters` query parameter of your search.
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Avengers' \
+    --data-urlencode 'filters=release_date > 795484800'
+```
 
 ## Give it a try!
 
-We also deliver an **out-of-the-box web interface** in which you can test MeiliSearch interactively.
+Instead of showing you examples, why not just invite you to test MeiliSearch interactively in the **out-of-the-box web interface** we deliver?
 
 There's no need to write a single line of front-end code. All you need to do is follow [this guide](/guides/advanced_guides/web_interface.md) to give the search engine a try!
 
