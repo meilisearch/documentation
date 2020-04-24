@@ -13,7 +13,7 @@ module.exports = {
     nav: [
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
-      { text: 'FAQ', link: '/faq/faq.md' },
+      { text: 'FAQ', link: '/faq/README.md' },
       { text: 'Resources', link: '/resources/' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
@@ -103,7 +103,6 @@ module.exports = {
           title: '💡 FAQ',
           path: '/faq/',
           collapsable: false,
-          children: ['/faq/faq.md'],
         },
       ],
       '/resources/': [
