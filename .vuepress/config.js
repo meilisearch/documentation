@@ -14,7 +14,7 @@ module.exports = {
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
       { text: 'Resources', link: '/resources/' },
-      { text: 'FAQ', link: '/faq/' },
+      { text: 'FAQ', link: '/faq/faq.md' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
@@ -96,13 +96,6 @@ module.exports = {
             '/references/version',
             '/references/sys-info',
           ],
-        },
-      ],
-      '/faq/': [
-        {
-          title: '💡 FAQ',
-          path: '/faq/',
-          collapsable: false,
         },
       ],
       '/resources/': [

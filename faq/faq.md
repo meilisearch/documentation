@@ -13,7 +13,7 @@ MeiliSearch is really **easy to use** and thus accessible to all kinds of develo
 
 We also provide a lot of tools, including [SDKs](/resources/sdks.md), to help you integrate easily MeiliSearch in your project. We're adding new tools every day!
 
-Plus, you can [contact us](/faq/README.md#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
+Plus, you can [contact us](/faq/faq.md#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
 
 ## Do I need to configure MeiliSearch to get it working?
 
@@ -131,7 +131,7 @@ See more [information about the primary key](/guides/main_concepts/documents.md#
 ## I have uploaded my documents, but I get no result when I search in my index.
 
 Your documents upload probably failed.<br>
-To understand what happened, please check this [answer](/faq/README.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
+To understand what happened, please check this [answer](/faq/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
 
 ## Does MeiliSearch deliver an interface to search in my documents?
 

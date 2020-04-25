@@ -10,7 +10,7 @@ The documentation is written for the latest stable release: [v0.10.0](https://gi
 
 ::: tip
 
-You might find the answers to some of your questions [in the FAQ](/faq/README.md) 💡
+You might find the answers to some of your questions [in the FAQ](/faq/faq.md) 💡
 
 :::
 
