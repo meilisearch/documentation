@@ -55,7 +55,7 @@ MeiliSearch supports Latin-based languages, English, and Kanji characters.
 
 ### Highlighting
 
-Search results contain highlighted queried terms to further enhance usability. Users don't need to read the entire text. The terms are highlighted and thus catch their eye.
+Search results can contain [highlighted](/guides/advanced_guides/search_parameters.md#attributes-to-highlight) queried terms to further enhance usability. Users don't need to read the entire text. The terms are highlighted and thus catch their eye.
 
 There are more features to come such as... **faceting**!
 
