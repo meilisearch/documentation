@@ -2,7 +2,7 @@
 
 MeiliSearch has been designed to improve your search experience.
 
-Today, finding a high-quality search engine may be complicated. Because we realized there was a lack of both powerful and simple solutions, we decided to create MeiliSearch. The **simplicity of use** is our philosophy and it keeps driving the development of MeiliSearch since the beginning of our adventure.
+Today, finding a high-quality search engine may be complicated. Because we realized there was a lack of both powerful and simple solutions, we decided to create MeiliSearch. The **simplicity of use** is our philosophy and it keeps driving the development of MeiliSearch.
 
 ## Simple and Intuitive
 
