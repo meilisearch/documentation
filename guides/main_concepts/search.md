@@ -67,9 +67,9 @@ Results can be paginated using the `limit` and `offset` query parameters.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-	  -d limit=5 \
-      -d offset=10
+    -d q=shifu \
+    -d limit=5 \
+    -d offset=10
 ```
 
 You can filter results using the `filters` query parameter.
