@@ -31,7 +31,7 @@ You can also **configure the [search parameters](/guides/advanced_guides/search_
 > MeiliSearch in action with `batman` and `joker` being defined as synonyms.
 
 <br>
-All of MeiliSearch's features are provided out-of-the-box and can be easily configured. Here is a few of them that you should try out:
+All of MeiliSearch's features are provided out-of-the-box and can be easily [configured](/guides/advanced_guides/search_parameters.md). Here is a few of them that you should try out:
 
 ### Search as you type
 
