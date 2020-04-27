@@ -126,13 +126,49 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'filters=release_date > 795484800'
 ```
 
-Now imagine that we want only the movies released after the 18 of march 1995, and directed by either Jordan Peele or Tim Burton, then you would use this filter:
+Now imagine that we want only the movies released after the 18 of march 1995, and directed by either Tim Burton or Christopher Nolan, then you would use this filter:
 
 ```SQL
-release_date > 795484800 AND (director = "Tim Burton" OR director = "Jordan Peele")
+release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")
+```
+
+Querying on `Batman`, the above example results in the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Batman' \
+    --data-urlencode 'filters=release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan"'
 ```
 
 Note that filtering on string is case insensitive. Here, the parentheses are mandatory, as `AND` has a higher precedence.
+
+If we want to select only a specific movie of our favorite director, for example `The Twilight Zone`:
+
+```SQL
+director = "Jordan Peele" AND (NOT director = "Catherine Hardwicke")
+```
+
+Querying on `Twilight`, the above example results in the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Twilight' \
+    --data-urlencode 'filters=director = "Jordan Peele" AND (NOT director = "Catherine Hardwicke")'
+```
+
+If we want to find dance movies which have been well rated but we want to ignore some of them:
+
+```SQL
+rating >= 3 AND (NOT (title = Barbie OR title = "Dirty Dancing"))
+```
+
+Querying on `dancing`, the above example results in the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=dancing' \
+    --data-urlencode 'filters=rating >= 3 AND (NOT (title = Barbie OR title = "Dirty Dancing"))'
+```
 
 Finally, imagine that you want to filter on "id". You would probably do this:
 
