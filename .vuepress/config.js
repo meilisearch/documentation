@@ -108,6 +108,7 @@ module.exports = {
             '/resources/sdks',
             '/resources/comparison_to_alternatives',
             '/resources/postman_collection',
+            '/resources/contact',
           ],
         },
         {
