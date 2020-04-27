@@ -123,7 +123,7 @@ If you input `shifu` as a search query and set the value of the parameter `cropL
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d q=shifu \
       -d attributesToCrop=overview \
-      -d cropLength=100
+      -d cropLength=5
 ```
 
 You will get the following response with the **cropped version in the \_formatted object**:
@@ -139,7 +139,7 @@ You will get the following response with the **cropped version in the \_formatte
     "id": "50393",
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade",
+    "overview": "year Shifu",
     "release_date": 1290729600
   }
 }
