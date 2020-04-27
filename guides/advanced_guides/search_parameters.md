@@ -117,13 +117,13 @@ This is especially useful when you have to display content on the front-end in a
 
 #### Example
 
-If you input `shifu` as a search query and set the value of the parameter `cropLength` to `100`:
+If you input `shifu` as a search query and set the value of the parameter `cropLength` to `10`:
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d q=shifu \
       -d attributesToCrop=overview \
-      -d cropLength=5
+      -d cropLength=10
 ```
 
 You will get the following response with the **cropped version in the \_formatted object**:
@@ -139,7 +139,7 @@ You will get the following response with the **cropped version in the \_formatte
     "id": "50393",
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "year Shifu",
+    "overview": "this year Shifu info",
     "release_date": 1290729600
   }
 }
