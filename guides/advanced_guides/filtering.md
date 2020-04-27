@@ -57,7 +57,11 @@ An arbitrary number of expressions can be connected together thanks to logical c
 - `AND` performs a logical 'and' between two expressions, _e.g._ `title = Dumbo AND title = "Tim Burton"`
 
 ::: note
-`NOT` has the highest precedence, this means that `NOT title = Scream OR title = "The Avengers"` is effectively evaluated `(NOT title = Scream) OR title = "The Avengers"`. `AND` precedence is lower than `NOT` and higher than `OR`.
+`NOT` has the highest precedence.<br/>
+`NOT` precedence is higher than `AND`.<br/>
+`AND` precedence is higher than `OR`.<br/>
+`OR` has the lowest precedence.<br/>
+This means that `NOT title = Scream OR title = "The Avengers"` is effectively evaluated `(NOT title = Scream) OR title = "The Avengers"`.
 :::
 
 ### A Note on Performance
