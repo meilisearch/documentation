@@ -16,8 +16,8 @@ In itself the query language is very simple, and allows you to filter results on
 
 Conditions are the primitives of query filters. They are composed of three mandatory parameters `field OP value` where:
 
-- `field` refers to the document **attribute** to filter on. (_e.g_ id, title...). It is either a single alphanumeric word or a quoted string: `"movie title"`, and `release_date` are both valid `field`.
-- `OP` is the comparison operator, it can be one of `=`, `!=`, `>`, `>=`, `<`, or `<=`. `value` is the test condition for which the filter shall filter upon.
+- `field` refers to the document **attribute** to filter on (_e.g_ id, title...). It is either a single alphanumeric word or a quoted string: `"movie title"`, and `release_date` are both valid `field`.
+- `OP` is the comparison operator, it can be one of `=`, `!=`, `>`, `>=`, `<`, or `<=`.
 - `value` is the test condition for which the filter shall filter upon.
 
 The `=` and `!=` operators check for equality and difference. For strings, they are both **case insensitive**:
