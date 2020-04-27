@@ -105,12 +105,13 @@ Attributes whose values will be cropped if they contain a matched query word.
 
 `attributesToCrop=<Attribute:Croplength>,<Attribute:Croplength>,...`
 
-- `<Attribute:Croplength>` (Optional, string, defaults to empty)
+- `<Attribute:Croplength>` OR `<Attribute>` (Optional, string, defaults to empty)
 
-  Comma-separated list of attributes whose values will be cropped if they contain a matched query word.
-  Each attribute can be joined with a optional croplength.
+  Comma-separated list of attributes whose values will be cropped if they contain a matched query word.<br>
+  Each attribute can be joined by an optional croplength.
 
 - `"*"`
+
   The attribute can also be `*`. In that case, `*` will be replaced by all attributes present in `attributesToRetrieve`.
 
 In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) to change this value).
