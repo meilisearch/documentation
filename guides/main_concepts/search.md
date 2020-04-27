@@ -6,6 +6,8 @@ Today, finding a high-quality search engine may be complicated. Because we reali
 
 ## Simple and Intuitive
 
+We aimed for a simple and intuitive experience for both developers and end-users.
+
 For developers, it requires very little configuration to be up and running. Communication to the server is done through a [RESTful API](/references/README.md).
 
 For users, the search experience aims to feel simple so they can focus on the results. MeiliSearch delivers an intuitive search-as-you-type experience; which means a response time lower than 50 milliseconds.
