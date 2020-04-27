@@ -126,7 +126,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'filters=release_date > 795484800'
 ```
 
-Now imagine that we want only the movies released after the 18 of march 1995, and directed by either Tim Burton or Christopher Nolan, then you would use this filter:
+Now imagine that we want only the Batman movies released after the 18 of march 1995, and directed by either Tim Burton or Christopher Nolan, then you would use this filter:
 
 ```SQL
 release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")
