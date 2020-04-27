@@ -122,6 +122,7 @@ module.exports = {
             '/resources/comparison_to_alternatives',
             '/resources/postman_collection',
             '/resources/faq',
+            '/resources/contact',
           ],
         },
       ],
