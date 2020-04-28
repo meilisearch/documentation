@@ -177,7 +177,7 @@ Attributes whose values will contain **highlighted matching query words**.
 
 - `"*"`
 
-  The attribute can also be `*`. In that case, `*` will be replaced by all attributes present in `attributesToRetrieve`.
+ The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
 Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
 
