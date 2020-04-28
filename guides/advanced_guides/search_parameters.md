@@ -108,7 +108,7 @@ Attributes whose values will be cropped if they contain a matched query word.
 - `<Attribute:Croplength>` OR `<Attribute>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes whose values will be cropped if they contain a matched query word.<br>
-  Each attribute can be joined by an optional croplength.
+  Each attribute can be joined by an optional `cropLength`.
 
 - `"*"`
 
