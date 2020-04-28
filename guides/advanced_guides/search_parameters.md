@@ -112,7 +112,7 @@ Attributes whose values will be cropped if they contain a matched query word.
 
 - `"*"`
 
-  The attribute can also be `*`. In that case, `*` will be replaced by all attributes present in `attributesToRetrieve`.
+  The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
 
 In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) to change this value).
 
