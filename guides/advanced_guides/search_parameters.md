@@ -83,7 +83,6 @@ Attributes to **display** in the returned documents.
 
 `attributesToRetrieve=<Attribute>,<Attribute>,...`
 
-
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
   Comma-separated list of attributes whose fields will be present in the returned documents.
@@ -167,7 +166,6 @@ You will get the following response with the **cropped version in the \_formatte
 
 `cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
 
-
 Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop).
 
 ## Attributes to Highlight
@@ -182,7 +180,7 @@ Attributes whose values will contain **highlighted matching query words**.
 
 - `"*"`
 
- The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
 Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
 
