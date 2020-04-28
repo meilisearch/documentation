@@ -1,3 +1,7 @@
+---
+permalink: /faq
+---
+
 # FAQ
 
 This FAQ is still a work in progress.<br>
