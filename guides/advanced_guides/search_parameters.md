@@ -103,6 +103,8 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 
 Attributes whose values will be cropped if they contain a matched query word.
 
+You have two options:
+
 `attributesToCrop=<Attribute:Croplength>,<Attribute:Croplength>,...`
 
 - `<Attribute:Croplength>` OR `<Attribute>` (Optional, string, defaults to empty)
