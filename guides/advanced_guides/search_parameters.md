@@ -160,7 +160,7 @@ You will get the following response with the **cropped version in the \_formatte
 
 ## Crop length
 
-`cropLength=<Integer>`
+`cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
 
 The default value is 200.
 
