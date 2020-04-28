@@ -77,7 +77,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d limit=2
 ```
 
-## Attributes to retrieve
+## Attributes to Retrieve
 
 Attributes to **display** in the returned documents.
 
@@ -86,6 +86,8 @@ Attributes to **display** in the returned documents.
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
   Comma-separated list of attributes whose fields will be present in the returned documents.
+
+  Defaults to the attributes added to the [displayedAttributes list](/guides/advanced_guides/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
 
 #### Example
 
@@ -97,17 +99,32 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d attributesToRetrieve=overview,title
 ```
 
-## Attributes to crop
+## Attributes to Crop
 
 Attributes whose values will be cropped if they contain a matched query word.
 
-`attributesToCrop=<Attribute>,<Attribute>,...`
+You have two options:
 
-- `<Attribute>` (Optional, string, defaults to empty)
+`attributesToCrop=<Attribute:Croplength>,<Attribute:Croplength>,...`
 
-  Comma-separated list of attributes whose values will be cropped if they contain a matched query word.
+- `<Attribute:Croplength>` OR `<Attribute>` (Optional, string, defaults to empty)
 
-In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see below).
+  Comma-separated list of attributes whose values will be cropped if they contain a matched query word.<br>
+  Each attribute can be joined by an optional `cropLength`.
+
+`attributesToCrop=*`
+
+- `*`
+
+  The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
+
+In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) to change this value).
+
+Some working examples:
+
+- `attributesToCrop=overview`
+- `attributesToCrop=overview:20`
+- `attributesToCrop=*,overview:20,title:0`
 
 ::: tip
 This is especially useful when you have to display content on the front-end in a specific way.
@@ -145,21 +162,36 @@ You will get the following response with the **cropped version in the \_formatte
 }
 ```
 
-## Crop length
+## Crop Length
 
-`cropLength=<Integer>`
+`cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
 
-Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)
+Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop).
 
 ## Attributes to Highlight
 
 Attributes whose values will contain **highlighted matching query words**.
+
+You have two options:
 
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes. Every matching query words in the given attribute field will be wrapped around an `<em>` tag.
+
+`attributesToHighlight=*`
+
+- `*`
+
+The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+
+Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
+
+Some working examples:
+
+- `attributesToHighlight=overview`
+- `attributesToHighlight=*,overview`
 
 #### Example
 
