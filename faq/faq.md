@@ -3,7 +3,23 @@
 This FAQ is still a work in progress.<br>
 If you have any questions we want to hear from you. Your feedback will help us improve this page!
 
-## I have never used a search engine before. Can I use MeiliSearch anyway?
+## Table of contents
+
+- [I have never used a search engine before. Can I use MeiliSearch anyway?](/resources/faq.md#i-have-never-used-a-search-engine-before-can-i-use-meilisearch-anyway)
+- [Do I need to configure MeiliSearch to get it working?](/resources/faq.md#do-i-need-to-configure-meilisearch-to-get-it-working)
+- [How to know if MeiliSearch perfectly fits my use cases?](/resources/faq.md#how-to-know-if-meilisearch-perfectly-fits-my-use-cases)
+- [Which languages can MeiliSearch handle?](/resources/faq.md#which-languages-can-meilisearch-handle)
+- [Do you provide a real dataset to test MeiliSearch?](/resources/faq.md#do-you-provide-a-real-dataset-to-test-meilisearch)
+- [I did a call to an API route, and I only got an `updateId` as a response. What does it mean?](/resources/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean)
+- [I am trying to add my documents but I keep receiving a `400 - Invalid data` response.](/resources/faq.md#i-am-trying-to-add-my-documents-but-i-keep-receiving-a-400-invalid-data-response)
+- [My document upload failed with the `document id is missing` error.](/resources/faq.md#my-document-upload-failed-with-the-document-id-is-missing-error)
+- [I have uploaded my documents, but I get no result when I search in my index.](/resources/faq.md#i-have-uploaded-my-documents-but-i-get-no-result-when-i-search-in-my-index)
+- [Does MeiliSearch deliver an interface to search in my documents?](/resources/faq.md#does-meilisearch-deliver-an-interface-to-search-in-my-documents)
+- [I do not understand the relevancy of my search results.](/resources/faq.md#i-do-not-understand-the-relevancy-of-my-search-results)
+- [Do you provide a public roadmap for MeiliSearch and its integration tools?](/resources/faq.md#do-you-provide-a-public-roadmap-for-meilisearch-and-its-integration-tools)
+- [How can I contact the MeiliSearch team?](/resources/faq.md#how-can-i-contact-the-meilisearch-team)
+
+### I have never used a search engine before. Can I use MeiliSearch anyway?
 
 Of course! No knowledge of ElasticSearch or Solr is required to use MeiliSearch.
 
@@ -15,7 +31,7 @@ We also provide a lot of tools, including [SDKs](/resources/sdks.md), to help yo
 
 Plus, you can [contact us](/faq/faq.md#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
 
-## Do I need to configure MeiliSearch to get it working?
+### Do I need to configure MeiliSearch to get it working?
 
 MeiliSearch configuration works out-of-the-box. It means, by default, MeiliSearch configures necessary settings for providing a powerful and relevant search.
 
@@ -26,22 +42,22 @@ To find out more about the relevancy of MeiliSearch, take a look at this detaile
 
 However, MeiliSearch is of course [highly customizable](/references/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
 
-## How to know if MeiliSearch perfectly fits my use cases?
+### How to know if MeiliSearch perfectly fits my use cases?
 
 Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/guides/introduction/quick_start_guide.md) to get a quick start!
 
 Besides, we published a [comparison between MeiliSearch and other search engines](/resources/comparison_to_alternatives.md) with the goal of providing an overview of MeiliSearch alternatives.
 
-## Which languages can MeiliSearch handle?
+### Which languages can MeiliSearch handle?
 
 MeiliSearch works perfectly with English, kanji, and Romance languages.<br>
 If you have any hesitation about your language handling, please contact us.
 
-## Do you provide a real dataset to test MeiliSearch?
+### Do you provide a real dataset to test MeiliSearch?
 
 For now, we provide this [movies dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json). More datasets are coming soon!
 
-## I did a call to an API route, and I only got an `updateId` as a response. What does it mean?
+### I did a call to an API route, and I only got an `updateId` as a response. What does it mean?
 
 MeiliSearch is an **asynchronous API**.<br>
 It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only an `updateId` attribute. For example:
@@ -62,7 +78,7 @@ In addition, MeiliSearch delivers a global route to [track all your update statu
 
 If you are curious about how the asynchronous part of MeiliSearch works, you can find more information [here](/guides/advanced_guides/asynchronous_updates.md).
 
-## I am trying to add my documents but I keep receiving a `400 - Invalid data` response.
+### I am trying to add my documents but I keep receiving a `400 - Invalid data` response.
 
 MeiliSearch API only accepts JSON format.<br>
 In case of a [document addition](/references/documents.md#add-or-replace-documents), only an array of objects is expected.
@@ -95,7 +111,7 @@ $ cat your_file.json | jq
 
 :::
 
-## My document upload failed with the `document id is missing` error.
+### My document upload failed with the `document id is missing` error.
 
 ::: note TLDR;
 Most common reasons:
@@ -128,12 +144,12 @@ Good:
 
 See more [information about the primary key](/guides/main_concepts/documents.md#primary-key).
 
-## I have uploaded my documents, but I get no result when I search in my index.
+### I have uploaded my documents, but I get no result when I search in my index.
 
 Your documents upload probably failed.<br>
 To understand what happened, please check this [answer](/faq/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
 
-## Does MeiliSearch deliver an interface to search in my documents?
+### Does MeiliSearch deliver an interface to search in my documents?
 
 Yes, a web interface is available on the default address and port of your MeiliSearch instance.
 
@@ -143,7 +159,7 @@ Since the production environment requires an API-key for searching, the web inte
 
 Here is more information about the [MeiliSearch web interface](/guides/advanced_guides/web_interface.md).
 
-## I do not understand the relevancy of my search results.
+### I do not understand the relevancy of my search results.
 
 The search responses are sorted according to a set of consecutive rules called ranking rules.<br>
 Here is more information about the [relevancy of MeiliSearch](/guides/main_concepts/relevancy.md).
@@ -151,13 +167,13 @@ Here is more information about the [relevancy of MeiliSearch](/guides/main_conce
 MeiliSearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.<br>
 All of the ranking rules can be modified via the [dedicated routes in the MeiliSearch API](/references/ranking_rules.md).
 
-## Do you provide a public roadmap for MeiliSearch and its integration tools?
+### Do you provide a public roadmap for MeiliSearch and its integration tools?
 
 Yes, as MeiliSearch and its integration tools are opensource, we maintain a [public roadmap](https://github.com/orgs/meilisearch/projects/2) for the general features we plan to do.
 
 For more accurate features and issues, everything is detailed in the issues of all our [GitHub repositories](https://github.com/meilisearch/MeiliSearch/issues).
 
-## How can I contact the MeiliSearch team?
+### How can I contact the MeiliSearch team?
 
 There are many ways to contact us:
 
