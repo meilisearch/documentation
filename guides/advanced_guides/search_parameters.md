@@ -162,7 +162,6 @@ You will get the following response with the **cropped version in the \_formatte
 
 `cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
 
-The default value is 200.
 
 Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop).
 
