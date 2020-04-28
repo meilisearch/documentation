@@ -172,13 +172,17 @@ Number of characters to keep on each side of the start of the matching word. See
 
 Attributes whose values will contain **highlighted matching query words**.
 
+You have two options:
+
 `attributesToHighlight=<Attribute>,<Attribute>,...`
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes. Every matching query words in the given attribute field will be wrapped around an `<em>` tag.
 
-- `"*"`
+`attributesToHighlight=*`
+
+- `*`
 
 The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
