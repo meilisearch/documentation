@@ -87,6 +87,8 @@ Attributes to **display** in the returned documents.
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
   Comma-separated list of attributes whose fields will be present in the returned documents.
+  
+  Defaults to the attributes added to the [displayedAttributes list](/guides/advanced_guides/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
 
 #### Example
 
