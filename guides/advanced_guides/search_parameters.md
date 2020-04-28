@@ -112,6 +112,8 @@ You have two options:
   Comma-separated list of attributes whose values will be cropped if they contain a matched query word.<br>
   Each attribute can be joined by an optional `cropLength`.
 
+`attributesToCrop=*`
+
 - `"*"`
 
   The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
