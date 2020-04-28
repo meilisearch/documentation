@@ -83,7 +83,6 @@ Attributes to **display** in the returned documents.
 
 `attributesToRetrieve=<Attribute>,<Attribute>,...`
 
-The default value is all the attributes in the [displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes) list present in the [settings](/guides/advanced_guides/settings.md) (which by default contains all the attributes found in every document).
 
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
