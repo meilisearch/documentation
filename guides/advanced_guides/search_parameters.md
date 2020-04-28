@@ -114,7 +114,7 @@ You have two options:
 
 `attributesToCrop=*`
 
-- `"*"`
+- `*`
 
   The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
 
