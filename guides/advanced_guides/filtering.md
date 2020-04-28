@@ -142,32 +142,32 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 Note that filtering on string is case insensitive. Here, the parentheses are mandatory, as `AND` has a higher precedence.
 
-If we want to select only a specific movie of our favorite director, for example `The Twilight Zone`:
+If we want to select only horror movies of our favorite director:
 
 ```SQL
-director = "Jordan Peele" AND (NOT director = "Catherine Hardwicke")
+director = "Jordan Peele"
 ```
 
-Querying on `Twilight`, the above example results in the following CURL command:
+Querying on `horror`, the above example results in the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Twilight' \
-    --data-urlencode 'filters=director = "Jordan Peele" AND (NOT director = "Catherine Hardwicke")'
+    --data-urlencode 'q=horror' \
+    --data-urlencode 'filters=director = "Jordan Peele"'
 ```
 
-If we want to find dance movies which have been well rated but we want to ignore some of them:
+If we want to find Planet of the Apes movies which have been well rated but we want to ignore the one directed by Tim Burton:
 
 ```SQL
-rating >= 3 AND (NOT (title = Barbie OR title = "Dirty Dancing"))
+rating >= 3 AND (NOT director = "Tim Burton")
 ```
 
-Querying on `dancing`, the above example results in the following CURL command:
+Querying on `Planet of the Apes`, the above example results in the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=dancing' \
-    --data-urlencode 'filters=rating >= 3 AND (NOT (title = Barbie OR title = "Dirty Dancing"))'
+    --data-urlencode 'q=Planet of the Apes' \
+    --data-urlencode 'filters=rating >= 3 AND (NOT director = "Tim Burton")'
 ```
 
 Finally, imagine that you want to filter on "id". You would probably do this:
