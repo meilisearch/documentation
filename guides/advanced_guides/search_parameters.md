@@ -77,7 +77,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d limit=2
 ```
 
-## Attributes to retrieve
+## Attributes to Retrieve
 
 Attributes to **display** in the returned documents.
 
@@ -87,7 +87,7 @@ Attributes to **display** in the returned documents.
 - `<Attribute>` (Optional, string, Defaults to `*`)
 
   Comma-separated list of attributes whose fields will be present in the returned documents.
-  
+
   Defaults to the attributes added to the [displayedAttributes list](/guides/advanced_guides/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
 
 #### Example
@@ -100,7 +100,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
       -d attributesToRetrieve=overview,title
 ```
 
-## Attributes to crop
+## Attributes to Crop
 
 Attributes whose values will be cropped if they contain a matched query word.
 
@@ -163,7 +163,7 @@ You will get the following response with the **cropped version in the \_formatte
 }
 ```
 
-## Crop length
+## Crop Length
 
 `cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
 
