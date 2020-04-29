@@ -1,5 +1,6 @@
 {
   "index_uid": "docs",
+  "sitemap_urls": ["https://docs.meilisearch.com/sitemap.xml"],
   "start_urls": ["https://docs.meilisearch.com"],
   "stop_urls": [],
   "selectors": {

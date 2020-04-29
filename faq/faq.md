@@ -1,7 +1,27 @@
+---
+permalink: /faq
+---
+
 # FAQ
 
 This FAQ is still a work in progress.<br>
 If you have any questions we want to hear from you. Your feedback will help us improve this page!
+
+## Table of contents
+
+- [I have never used a search engine before. Can I use MeiliSearch anyway?](/faq/faq.md#i-have-never-used-a-search-engine-before-can-i-use-meilisearch-anyway)
+- [Do I need to configure MeiliSearch to get it working?](/faq/faq.md#do-i-need-to-configure-meilisearch-to-get-it-working)
+- [How to know if MeiliSearch perfectly fits my use cases?](/faq/faq.md#how-to-know-if-meilisearch-perfectly-fits-my-use-cases)
+- [Which languages can MeiliSearch handle?](/faq/faq.md#which-languages-can-meilisearch-handle)
+- [Do you provide a real dataset to test MeiliSearch?](/faq/faq.md#do-you-provide-a-real-dataset-to-test-meilisearch)
+- [I did a call to an API route, and I only got an `updateId` as a response. What does it mean?](/faq/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean)
+- [I am trying to add my documents but I keep receiving a `400 - Invalid data` response.](/faq/faq.md#i-am-trying-to-add-my-documents-but-i-keep-receiving-a-400-invalid-data-response)
+- [My document upload failed with the `document id is missing` error.](/faq/faq.md#my-document-upload-failed-with-the-document-id-is-missing-error)
+- [I have uploaded my documents, but I get no result when I search in my index.](/faq/faq.md#i-have-uploaded-my-documents-but-i-get-no-result-when-i-search-in-my-index)
+- [Does MeiliSearch deliver an interface to search in my documents?](/faq/faq.md#does-meilisearch-deliver-an-interface-to-search-in-my-documents)
+- [I do not understand the relevancy of my search results.](/faq/faq.md#i-do-not-understand-the-relevancy-of-my-search-results)
+- [Do you provide a public roadmap for MeiliSearch and its integration tools?](/faq/faq.md#do-you-provide-a-public-roadmap-for-meilisearch-and-its-integration-tools)
+- [How can I contact the MeiliSearch team?](/faq/faq.md#how-can-i-contact-the-meilisearch-team)
 
 ## I have never used a search engine before. Can I use MeiliSearch anyway?
 
@@ -13,7 +33,7 @@ MeiliSearch is really **easy to use** and thus accessible to all kinds of develo
 
 We also provide a lot of tools, including [SDKs](/resources/sdks.md), to help you integrate easily MeiliSearch in your project. We're adding new tools every day!
 
-Plus, you can [contact us](/resources/faq.md#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
+Plus, you can [contact us](/faq/faq.md#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
 
 ## Do I need to configure MeiliSearch to get it working?
 
@@ -131,7 +151,7 @@ See more [information about the primary key](/guides/main_concepts/documents.md#
 ## I have uploaded my documents, but I get no result when I search in my index.
 
 Your documents upload probably failed.<br>
-To understand what happened, please check this [answer](/resources/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
+To understand what happened, please check this [answer](/faq/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
 
 ## Does MeiliSearch deliver an interface to search in my documents?
 

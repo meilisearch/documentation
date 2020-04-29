@@ -113,5 +113,7 @@ dist/
 npm-debug.log
 yarn-error.log
 
+.externallinkchecksrc
+
 # End of https://www.gitignore.io/api/vue,node,vuejs
 
