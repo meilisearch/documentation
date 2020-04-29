@@ -2,7 +2,7 @@
   
 ## A quick introduction
   
-As you hopefully know already, [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerfull and fast search engine built in [Rust](https://www.rust-lang.org) as an Open Source tool. It was designed to provide users with very useful and customizable search experience including features like typo-tolerance, filtering or synonyms out of the box. Running a Meilisearch for testing purposes is incredibly easy, as [many alternatives](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html) are porposed: Docker, brew, aptitude, binaries, a simple curl or even the source code. If you are new to MeiliSearch, we suggest that you make a tour arround our [Documentation](https://docs.meilisearch.com/)  
+Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerfull and fast search engine built in [Rust](https://www.rust-lang.org) as an Open Source tool. It was designed to provide users with very useful and customizable search experience including features like typo-tolerance, filtering or synonyms out of the box, for any kind of project. Running a Meilisearch for testing purposes is incredibly easy and straight-forward, as [many alternatives](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html) are porposed: Docker, brew, aptitude, binaries, a simple curl or even the source code. If you are new to MeiliSearch, we suggest that you make a tour arround our [Documentation](https://docs.meilisearch.com/)  
   
   
 Running a Meilisearch in your own machine for your weekend project is fun, let's agree on that. But we are here to **take you to the next step**. You probably want to go live, and deploy a project in production, take it to the real word. What are the steps and details you need to **deploy a MeiliSearch in production** and being sure that it is **safe and ready to use**?  
@@ -57,7 +57,7 @@ We will compile MeiliSearch from the source code available on Github. We suggest
 
 [Latest MeiliSearch Stable Version](https://github.com/meilisearch/MeiliSearch/releases/latest)  
 
-> At the time this article was written, latest stable version is v0.10.1
+> At the time this article was written, latest stable version was v0.10.1
 
 ```bash
 # Get a fresh copy of MeiliSearch source code
@@ -146,16 +146,61 @@ MeiliSearch is installed and running. It is protected from eventual crashes, sys
 
 But you probably want to open your MeiliSearch to the outside world, and for now, it is isolated. Let's fix that in a safe way.
 
-## Step 3: Secure your installation. Using a Reverse Proxy and SSL
+## Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS
 
 Now, we want to make our brand new MeiliSearch available to be requested from the outside world. But we want to do it safely. For this purpose we are going to use two of the main technologies available on the web: a Reverse Proxy and SSL
 
-### 3.1. Creating a Reverse Proxy with Nginx
+### 3.1. Creating a Reverse Proxy with [Nginx](https://www.nginx.com/)
 
-A reverse proxy is basically a server that will handle communcations betweent the outside world and your internal applications. 
+A reverse proxy is basically an application that will handle every communcation between the outside world and your internal applications. In our case, we want to use Nginx to recieve the HTTP requests coming from the outside world, and redirect them to MeiliSearch itself, but internally. When MeiliSearch has done it's amazing job, it will communicate his response to Nginx, which will then transfer this response to the user who sent the request. This is a common way to isolate and protect any application by adding a gate-keeper as robust, secure and fast as Nginx, one of the most safe and efficient tools available online, and of course, Open Source!  
+
+> Reverse proxies are very useful for security, performance, scalability and logging reasons. If you are new to Reverse proxies, you may enjoy this article explaining the why and the how of [reverse proxies](https://www.keycdn.com/support/nginx-reverse-proxy)  
+
+Making Nginx work as a proxy server is really simple. First of all we need to install it in our machine.
+
+```bash
+# Install Nginx on Debian
+$ apt-get install nginx
+```
+
+Now we need to delete it's default configuration file in order to add ours. This is important because the default port for HTTP, the `port 80` is used by nginx by default and if we try to use it for MeiliSearch we will create a conflict. We will replace it's default file by our own. You can also make MeiliSearch listen to another port by specifying it in the nginx configuration file, but we will not cover this option in this article.
+
+```bash
+# Delete the default configuration file for Nginx
+$ rm -f /etc/nginx/sites-enabled/default
+
+# Add our configuration file, specifyind the Reverse Proxy settings
+$ cat << EOF > /etc/nginx/sites-enabled/meilisearch
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    location / {
+        proxy_pass  http://127.0.0.1:7700;
+    }
+}
+EOF
+```
+
+finally we need to enable and start nginx service as we did before, to make sure it is allways available
+
+```bash
+# Reload the operating system daemons / services
+$ systemctl daemon-reload
+
+# Enable and start nginx service
+$ systemctl enable nginx
+$ systemctl start nginx
+```
+
+Our MeiliSearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. We should be able now to do requests to our server from the outside world by doing any HTTP request MeiliSearch accepts at our own IP address (http://<your-ip-address>).
+
+> If you want to learn more about using Nginx as a Reverse Proxy, see it's dedicated documentation [Nginx as a Reverse Proxy](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
+
+
 
 ### 3.2. Activating SSL (HTTPS) on your MeiliSearch
 
-### Where to run MeiliSearch
+### Final notes
 
 MeiliSearch is a database, that means that it needs a file system it can write to and which must be persistent.
