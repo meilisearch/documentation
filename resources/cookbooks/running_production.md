@@ -77,14 +77,26 @@ $ ./target/release/meilisearch
 
 ```
 
-## Step 2: Set MeiliSearch as a service
+MeiliSearch is finally compiled and ready to use. If you want to make it accessible from anywhere in your system, you should move this binary into your system binaries folder, with the following command:
 
-A service is a process that is launched when the operating system is booting.
-On Debian, Systemd allows you to create and manage service so you can ensure your MeiliSearch service will always be on when the server is on. If any crash occur during the running of MeiliSearch, systemd automatically restart the service.
-We first have to move MeiliSearch binary to
 ```bash
+# Move the MeiliSearch binary to your system binaries
 $ mv target/release/meilisearch /usr/bin/
 ```
+
+## Step 2: Run MeiliSearch as a service
+
+In Linux environments, a `service` is a process that can be launched when the operating system is booting, and keeps running in the background. One of its biggest advantages is that it can make your program available at any moment, in a stable and consistent way. 
+
+This means that the operating system will make sure that your program is running at any time. Even if it finds some execution problem or crashes, this service will be restarted and your program will be run again.
+
+> This is not required, but if you are new to services and systemd, you can learn the [basics of Linux services](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/)
+
+On Debian (and Linux distributions in general), systemd allows you to create and manage your own custom services. We want to make sure that MeiliSearch is always responding to your requests, so let's build our own service. This way, we will make sure that your MeiliSearch service will always be available and running when the server is on. If any crash occurs during the running of MeiliSearch, systemd automatically restart it for you. 
+
+### 2.1 Create a service file
+
+Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them when it boots. In this case we will use a very simple service file that will run MeiliSearch at the port `7700`. 
 
 ```bash
 $ cat << EOF >/etc/systemd/system/meilisearch.service
@@ -94,11 +106,21 @@ After=systend-user-sessions.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/meilisearch --http-addr 0.0.0.0:7700
+ExecStart=/usr/bin/meilisearch --http-addr 127.0.0.1:7700
 
 [Install]
 WantedBy=default.target
 EOF
+
+```
+
+We don't want to expose your MeiliSearch to the external world (we will use a proxy server in the next steps) so we will make it available only locally, by telling him to run in the local backloop IP adress `127.0.0.1`. This means that only programs running in your machine ar allowed to make requests to your MeiliSearch instance.
+
+### 2.2. Enable and start service
+
+The service file we just built is all we need for creating our service. Now we must `enable` the service to tell the operating system that we want him to run MeiliSearch at every boot. We can finally `start` the service to make it run inmediately. We can check everything is working by checking the service `status`.
+
+```bash
 # Set the service meilisearch
 $ systemctl enable meilisearch
 
@@ -113,6 +135,7 @@ $ systemtl status meilisearch
  Main PID: 14960 (meilisearch)
 ```
 
+MeiliSearch is installed and running. It is protected from eventual crashes, system restarts, and most of the problems he could find while running. But it is still hidden inside your machine, and unreachable from the outside world. Let's fix that in a safe and stabe way.
 
 ## Step 3: Secure your installation
 
