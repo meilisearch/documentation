@@ -156,7 +156,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'filters=director = "Jordan Peele"'
 ```
 
-If we want to find Planet of the Apes movies which have been well rated but we want to ignore the one directed by Tim Burton:
+If we want to find the `Planet of the Apes` movies that have been well rated but we want to ignore the one directed by Tim Burton:
 
 ```SQL
 rating >= 3 AND (NOT director = "Tim Burton")
