@@ -61,7 +61,7 @@ An arbitrary number of expressions can be connected together thanks to logical c
 `NOT` precedence is higher than `AND`.<br/>
 `AND` precedence is higher than `OR`.<br/>
 `OR` has the lowest precedence.<br/>
-This means that `NOT title = Scream OR title = "The Avengers"` is effectively evaluated `(NOT title = Scream) OR title = "The Avengers"`.
+This means that `NOT title = Scream OR title = "The Avengers"` is effectively evaluated `(NOT title = Scream) OR title = "The Avengers"`, and `title = Scream OR title = "The Avengers" AND release_date > 795484800` is effectively evaluated `title = Scream OR (title = "The Avengers" AND release_date > 795484800)`
 :::
 
 ### A Note on Performance
