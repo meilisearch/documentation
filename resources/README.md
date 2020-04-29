@@ -8,4 +8,3 @@ Content:
 - [About storage](/resources/about_storage.md)
 - [Comparison to alternatives](/resources/comparison_to_alternatives.md)
 - [Postman collection for MeiliSearch API](/resources/postman_collection.md)
-- [FAQ](/resources/faq.md)
