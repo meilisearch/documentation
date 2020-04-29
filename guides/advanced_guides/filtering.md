@@ -142,7 +142,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 Note that filtering on string is case insensitive. Here, the parentheses are mandatory, as `AND` has a higher precedence.
 
-If we want to select only horror movies of our favorite director:
+If we want to select only horror movies from our favorite director:
 
 ```SQL
 director = "Jordan Peele"
