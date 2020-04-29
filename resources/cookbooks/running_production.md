@@ -1,62 +1,78 @@
-# Runnning MeiliSearch in production
-
-Running MeiliSearch in production on a distant server is different than running MeiliSearch on your own machine.
-This guide aims to drive you through the different steps to have a production-ready MeiliSearch.<br/>
-<br/>
-
-For this tutorial, I am using a Debian (9.12) server from Digital Ocean. You can get yours starting from 5$ per month. If you are not already registered on Digital Ocean, you can get 100$ in credit using [our referral link](https://m.do.co/c/7c67bd97e101).
-
+# MeiliSearch in production: taking it to the next level
+  
+## A quick introduction
+  
+As you hopefully know already, [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerfull and fast search engine built in [Rust](https://www.rust-lang.org) as an Open Source tool. It was designed to provide users with very useful and customizable search experience including features like typo-tolerance, filtering or synonyms out of the box. Running a Meilisearch for testing purposes is incredibly easy, as [many alternatives](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html) are porposed: Docker, brew, aptitude, binaries, a simple curl or even the source code. If you are new to MeiliSearch, we suggest that you make a tour arround our [Documentation](https://docs.meilisearch.com/)
+  
+  
+Running a Meilisearch in your own machine for your weekend project is fun, let's agree on that. But we are here to **take you to the next step**. You probably want to go live, and deploy a project in production, take it to the real word. What are the steps and details you need to **deploy a MeiliSearch in production** and being sure that it is **safe and ready to use**?
+  
+  
 [[TOC]]
+  
+  
+## Get your MeiliSearch ready for production
+  
+For this tutorial, we will be using a Debian 10 server, running on Digital Ocean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your MeiliSearch and are not already registered on Digital Ocean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).
+
+
 
 ## Prerequisites
 
-- A up-to-date server that runs Debian
-- An ssh keypair to connect to that machine ([learn how to ssh into your machine](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/))
+- An up-to-date server that runs Debian 10
+- An ssh keypair to connect to that machine
+
+> *TIPS:* learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
 
 ## Step 1: Install MeiliSearch
 
-There are differents ways to get a running MeiliSearch on your machine. Here we will compile the latest stable release of MeiliSearch from the source to ensure the binary uses your achitecture best.
+There are different ways to get a running MeiliSearch on your Debian machine. For this example, we will compile the latest stable release of MeiliSearch from the source to ensure the binary uses your achitecture in the best possible way.
 
-### a. Install and update system dependencies
+### 1.1. Install and update the system dependencies
 
 First let's ensure that our system and its dependencies are up-to-date and install some dependencies we will need to compile MeiliSearch from source.
 ```bash
-# Update dependencies
+# Update references to the dependencies on Debian
 $ apt update
 # Install git, curl, gcc & make to compile MeiliSearch
 $ apt install git curl make gcc
 ```
 
-### b.Install Rust toolchain
+### 1.2. Install the Rust toolchain
 
 Then, we can install the Rust toolchain. You can find the command line on [the official Rust website](https://www.rust-lang.org/tools/install).
-You will be prompted to select how do you want to install Rustup, I suggest you use the default installation.
+You will be prompted to select how do you want to install Rustup, we suggest you use the default installation.
 
 ```bash
-$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # The Rustup toolchain consists of many tools used by developers for the Rust ecosystem. Among them, you can find cargo, the package manager & rustc, the rust compiler.
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Now configure you current shell to have cargo's bin directory into your $PATH
 $ source $HOME/.cargo/env
 ```
 
-### c. Install MeiliSearch
+### 1.3. Install MeiliSearch
 
-We will compile MeiliSearch from the soure code available on Github.
+We will compile MeiliSearch from the source code available on Github. We suggest you use the latest stable version wich can be found here:
+
+[Latest MeiliSearch Stable Version](https://github.com/meilisearch/MeiliSearch/releases/latest)
+
+> At the time this article was written, latest stable version is v0.10.1
+
 ```bash
+# Get a fresh copy of MeiliSearch source code
 $ git clone https://github.com/meilisearch/MeiliSearch && cd MeiliSearch
 
-# We use the latest stable release which you can find on Github:
-# https://github.com/meilisearch/MeiliSearch/releases/latest
-$ git checkout v0.9.0
+# v0.10.1 can be replaced by the latest stable version
+$ git checkout v0.10.1
 
 # Compile MeiliSearch in release mode
 $ cargo build --release
-...
-Finished release [optimized + debuginfo] target(s) in 11m 41s
 
 # You should now be able to run MeiliSearch
 $ ./target/release/meilisearch
-...
+
+# --- Expected output ---
+
 [2020-04-10T11:29:18Z INFO  tide::server] Server is listening on: http://127.0.0.1:7700
 
 ```
