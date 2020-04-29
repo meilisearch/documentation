@@ -179,12 +179,4 @@ For more accurate features and issues, everything is detailed in the issues of a
 
 ## How can I contact the MeiliSearch team?
 
-There are many ways to contact us:
-
-- At [bonjour@meilisearch.com](mailto:bonjour@meilisearch.com): English or French is welcome! 🇬🇧 🇫🇷
-- Via the chat box at the bottom right of this page which is available on every page of this documentation and on [our landing page](https://www.meilisearch.com/).
-- Join our [Slack community](https://slack.meilisearch.com/).
-- By opening an issue in the [MeiliSearch repository](https://github.com/meilisearch/MeiliSearch) or in the [documentation repository](https://github.com/meilisearch/documentation/) depending on your need.
-
-All the MeiliSearch team is available to answer all your questions.<br>
-Every feedback is appreciated. We really thank you for your contribution!
+See our [contact page](/resources/contact.md).
