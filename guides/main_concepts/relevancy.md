@@ -16,12 +16,10 @@ The order in which they are applied has a significant impact on the search resul
 
 By default, ranking rules are executed in the following order:
 
-#### 1. Typo
-
+**1. Typo**
 Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
 
-#### 2. Words
-
+**2. Words**
 Results are sorted by **decreasing number of matched query terms** in each matching document: find documents that contain more occurrences of the query terms first.
 
 ::: warning
@@ -30,20 +28,16 @@ It is now mandatory that all query terms are present in the returned documents. 
 
 :::
 
-#### 3. Proximity
-
+**3. Proximity**
 Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
 
-#### 4. Attribute
-
+**4. Attribute**
 Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**: find documents that contain query terms in more important attributes first.
 
-#### 5. Words Position
-
+**5. Words Position**
 Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
 
-#### 6. Exactness
-
+**6. Exactness**
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
 #### Examples
@@ -68,7 +62,7 @@ The `typo` rule sorts the results by increasing number of typos on matched query
 
 ### Proximity
 
-The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule.<br>
+The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule.
 The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
 
 The `proximity` rule sorts the results by increasing distance between matched query terms.

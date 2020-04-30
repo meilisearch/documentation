@@ -1,0 +1,9 @@
+{
+  "MD013": false, // line-length Line length [Expected: 80; Actual: 119]
+  "MD001": false, // heading-increment/header-increment Heading levels should only increment by one level at a time
+  "MD026": false, // no-trailing-punctuation Trailing punctuation in heading 
+  "MD014": false, // commands-show-output Dollar signs used before commands without showing output
+  "MD024": false, //no-duplicate-heading/no-duplicate-header
+  "MD040": false, // fenced-code-language Fenced code blocks should have a language specified
+  "MD033": false ///no-inline-html Inline HTML
+}

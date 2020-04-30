@@ -21,7 +21,7 @@ Each document contains at least the **primary key** attribute : `id` with its as
 
 ## Structure
 
-Documents are sent to MeiliSearch in `JSON format`.<br/>
+Documents are sent to MeiliSearch in `JSON format`.
 When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 
 ```bash
@@ -80,7 +80,7 @@ There are several ways for MeiliSearch to know which field is the `primary key` 
 
 If no primary key has been given either when the index was created or as a parameter of the add documents route, the primary key will be searched in the first document sent.
 
-MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (i.e, `uid`, `MovieId`, `ID`, `123id123`).<br>
+MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (i.e, `uid`, `MovieId`, `ID`, `123id123`).
 If no corresponding attribute has been found, the index will have no known primary key, and therefore, no documents will be added.
 
 #### Missing primary key error

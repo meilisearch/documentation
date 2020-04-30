@@ -23,7 +23,7 @@ $ yarn dev
 
 A complete test can be done using the following command:
 
-```
+```bash
 $ yarn test
 ```
 
