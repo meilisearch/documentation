@@ -50,7 +50,7 @@ $ yarn style:fix
 You can test if the code is well-formatted without fixing it.
 
 ```bash
-$ yarn check-style
+$ yarn style
 ```
 
 ### Deployment
