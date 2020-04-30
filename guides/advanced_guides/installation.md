@@ -122,8 +122,8 @@ OPTIONS:
 
 Flags can be added on launch.
 
-```
-$ ./meilisearch --db-path ./meilifiles --http-addr 127.0.0.1:7700
+```bash
+$ ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 Server is listening on: http://127.0.0.1:7700
 ```
 

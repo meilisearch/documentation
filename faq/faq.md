@@ -4,7 +4,7 @@ permalink: /faq
 
 # FAQ
 
-This FAQ is still a work in progress.<br>
+This FAQ is still a work in progress.
 If you have any questions we want to hear from you. Your feedback will help us improve this page!
 
 ## Table of contents
@@ -39,7 +39,7 @@ Plus, you can [contact us](/faq/faq.md#how-can-i-contact-the-meilisearch-team) i
 
 MeiliSearch configuration works out-of-the-box. It means, by default, MeiliSearch configures necessary settings for providing a powerful and relevant search.
 
-For example, without requiring any configuration, MeiliSearch is typo tolerant.<br>
+For example, without requiring any configuration, MeiliSearch is typo tolerant.
 Type `craete an inedx` in the search bar of this documentation to experience the typo tolerance of our search engine.
 
 To find out more about the relevancy of MeiliSearch, take a look at this detailed [explanation](/guides/main_concepts/relevancy.md#ranking-rules).
@@ -54,7 +54,7 @@ Besides, we published a [comparison between MeiliSearch and other search engines
 
 ## Which languages can MeiliSearch handle?
 
-MeiliSearch works perfectly with English, kanji, and Romance languages.<br>
+MeiliSearch works perfectly with English, kanji, and Romance languages.
 If you have any hesitation about your language handling, please contact us.
 
 ## Do you provide a real dataset to test MeiliSearch?
@@ -63,7 +63,7 @@ For now, we provide this [movies dataset](https://github.com/meilisearch/MeiliSe
 
 ## I did a call to an API route, and I only got an `updateId` as a response. What does it mean?
 
-MeiliSearch is an **asynchronous API**.<br>
+MeiliSearch is an **asynchronous API**.
 It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only an `updateId` attribute. For example:
 
 ```json
@@ -72,11 +72,11 @@ It means that in many cases (e.g., documents addition), you will receive as serv
 }
 ```
 
-This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.<br>
+This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
 
 ::: tip
-You can check the status of the operation using the `updateId` via the [get update status route](/references/updates.md#get-an-update-status).<br>
-In addition, MeiliSearch delivers a global route to [track all your update status](/references/updates.md#get-all-update-status).<br>
+You can check the status of the operation using the `updateId` via the [get update status route](/references/updates.md#get-an-update-status).
+In addition, MeiliSearch delivers a global route to [track all your update status](/references/updates.md#get-all-update-status).
 **This way, you will be informed if your action was processed or not, and <u>why</u>**.
 :::
 
@@ -84,7 +84,7 @@ If you are curious about how the asynchronous part of MeiliSearch works, you can
 
 ## I am trying to add my documents but I keep receiving a `400 - Invalid data` response.
 
-MeiliSearch API only accepts JSON format.<br>
+MeiliSearch API only accepts JSON format.
 In case of a [document addition](/references/documents.md#add-or-replace-documents), only an array of objects is expected.
 
 The `400 - Invalid data` response probably means that your data is not in an expected format.
@@ -150,7 +150,7 @@ See more [information about the primary key](/guides/main_concepts/documents.md#
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
-Your documents upload probably failed.<br>
+Your documents upload probably failed.
 To understand what happened, please check this [answer](/faq/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
 
 ## Does MeiliSearch deliver an interface to search in my documents?
@@ -165,10 +165,10 @@ Here is more information about the [MeiliSearch web interface](/guides/advanced_
 
 ## I do not understand the relevancy of my search results.
 
-The search responses are sorted according to a set of consecutive rules called ranking rules.<br>
+The search responses are sorted according to a set of consecutive rules called ranking rules.
 Here is more information about the [relevancy of MeiliSearch](/guides/main_concepts/relevancy.md).
 
-MeiliSearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.<br>
+MeiliSearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.
 All of the ranking rules can be modified via the [dedicated routes in the MeiliSearch API](/references/ranking_rules.md).
 
 ## Do you provide a public roadmap for MeiliSearch and its integration tools?

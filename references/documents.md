@@ -1,6 +1,6 @@
 # Documents
 
-Documents are objects composed of fields that can store any type of data.<br>
+Documents are objects composed of fields that can store any type of data.
 Each field contains an attribute and its associated value.
 
 [Learn more about documents](/guides/main_concepts/documents.md).
@@ -251,7 +251,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:document_id"/>
 
-Delete one document based on its unique id.<br/>
+Delete one document based on its unique id.
 
 #### Path Variables
 
@@ -281,7 +281,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete-batch"/>
 
-Delete a selection of documents based on array of document id's.<br/>
+Delete a selection of documents based on array of document id's.
 
 #### Path Variables
 

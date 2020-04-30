@@ -120,7 +120,6 @@ module.exports = {
           title: "🧷 How to's",
           path: '/resources/howtos/',
           collapsable: false,
-          children: ['/resources/howtos/quickstart'],
         },
       ],
     },
@@ -139,6 +138,7 @@ module.exports = {
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
+    [require('./custom-markdown-rules')],
   ],
   head: [
     ['meta', { charset: 'utf-8' }],

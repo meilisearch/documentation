@@ -12,8 +12,8 @@ Writing a database is hard, and we do not want to reinvent the wheel, so MeiliSe
 
 ## LMDB
 
-The storage engine of MeiliSearch is [LMDB](http://www.lmdb.tech/doc/). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.<br/>
-<br/>
+The storage engine of MeiliSearch is [LMDB](http://www.lmdb.tech/doc/). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
+
 We chose LMDB after we successfully (or not) tried MeiliSearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for Meilisearch.
 
 ### Memory mapping
@@ -31,19 +31,19 @@ The choice of LMDB comes with certain pros and cons. In order to understand this
 #### Database size
 
 When freeing entries from the database (in our case, removing documents from MeiliSearch), one can observe that no space disk is released. The space previously used by the entry is marked as free for LMDB but not made available for the operating system.
-Unlike other storage engines, LMDB chooses this design for performance issues as there is no need for a compaction phase.<br/>
-<br/>
+Unlike other storage engines, LMDB chooses this design for performance issues as there is no need for a compaction phase.
+
 As a result, you may see that the disk occupied by LMDB and therefore by MeiliSearch keeps growing even if you are deleting indexes or documents. This is normal behavior, and you can note that the database will not grow again if you write some data after deleting indexes or documents.
 
 #### Memory usage
 
-Since LMDB is memory mapped, it is the operating system who will manage the real memory allocated or not to MeiliSearch.<br/>
-<br/>
+Since LMDB is memory mapped, it is the operating system who will manage the real memory allocated or not to MeiliSearch.
+
 Thus, if you run MeiliSearch as a standalone program on a server, LMDB will use the maximum RAM it can use.
 If you run MeiliSearch along with other programs, the OS will manage memory based on everyone's need making MeiliSearch quite flexible when used in development.
 
 ::: tip
-**Virtual memory != Real memory**<br/>
+**Virtual memory != Real memory**
 Virtual memory is the memory asked by a program to the OS. This is not the memory that the program will actually use.
 
 In this case, MeiliSearch will always ask for a memory map of 200Gb. This refers to the virtual memory requested to the OS by MeiliSearch, but as you can see, the amount of real memory in RAM used will be smaller.
@@ -51,8 +51,8 @@ In this case, MeiliSearch will always ask for a memory map of 200Gb. This refers
 
 ## Measured disk usage
 
-We did some measurements on the default [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) dataset that you can find in the [getting started guide](/guides/introduction/quick_start_guide.md#add-documents).<br/>
-This dataset is a JSON file of 8.6 Mb.<br/>
+We did some measurements on the default [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) dataset that you can find in the [getting started guide](/guides/introduction/quick_start_guide.md#add-documents).
+This dataset is a JSON file of 8.6 Mb.
 When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122Mb.
 
 | Raw JSON | MeiliSearch database size on disk | Real memory size | Private memory size     | Virtual memory size |

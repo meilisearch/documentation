@@ -4,20 +4,20 @@
   "description": "Documentation for MeiliSearch",
   "main": "index.js",
   "scripts": {
-    "pretest": "yarn check-style",
+    "pretest": "yarn style",
     "test": "yarn check-links",
     "prebuild": "yarn test",
     "build": "vuepress build .",
     "dev": "vuepress dev",
     "check-links": "yarn check-md && yarn check-config-paths",
     "check-md": "vuepress check-md .",
-    "check-style": "yarn lint && yarn prettier-md-check",
+    "style": "yarn lint && yarn marklint",
     "check-config-paths": "vuepress check-config-paths .",
-    "style:fix": "yarn lint:fix && yarn prettier:fix",
+    "style:fix": "yarn lint:fix && yarn marklint:fix",
     "lint": "npx eslint . --ext .js,.vue",
     "lint:fix": "npx eslint . --ext .js,.vue --fix",
-    "prettier:fix": "prettier *.md **/*.md **/**/*.md --write",
-    "prettier-md-check": "prettier *.md **/*.md **/**/*.md --check"
+    "marklint:fix": "markdownlint '**/*.md' --config .markdownlintrc.jsonc --fix",
+    "marklint": "markdownlint '**/*.md' --config .markdownlintrc.jsonc"
   },
   "repository": {
     "type": "git",
@@ -54,7 +54,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.2.2",
-    "prettier": "2.0.5",
+    "markdownlint-cli": "^0.22.0",
     "vuepress-plugin-check-md": "^0.0.2"
   }
 }
