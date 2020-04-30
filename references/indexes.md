@@ -130,7 +130,7 @@ Update an [index](/guides/main_concepts/indexes.md).
 | -------------- | ---------------------------------------------------------- |
 | **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
 
-The `uid` of an index cannot be changed.<br>
+The `uid` of an index cannot be changed.
 The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).
 
 [There are many ways in MeiliSearch to set the primary key](/guides/main_concepts/documents.md#primary-key).

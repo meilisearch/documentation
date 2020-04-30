@@ -1,4 +1,5 @@
 <template>
+  <!-- prettier-ignore-->
   <ClientOnly><glossary :word="word" /></ClientOnly>
 </template>
 

@@ -2,11 +2,11 @@
 
 Are you tired to use the `curl` command in your terminal to test MeiliSearch? It can be tedious to re-write every route when wanting to try out an API.
 
-Postman is a platform that lets you create HTTP requests that you can reuse easily and share with everyone.<br>
+Postman is a platform that lets you create HTTP requests that you can reuse easily and share with everyone.
 We provide a [Postman collection](/postman/meilisearch-collection.json) containing all the routes of the MeiliSearch API! 🚀
 
 ::: note
-If you don't use Postman yet, you can [download it here](https://www.postman.com/downloads/).<br>
+If you don't use Postman yet, you can [download it here](https://www.postman.com/downloads/).
 It's free and available on many OS distributions.
 :::
 

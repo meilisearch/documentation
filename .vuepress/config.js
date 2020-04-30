@@ -13,8 +13,8 @@ module.exports = {
     nav: [
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
-      { text: 'Tutorials', link: '/tutorials/' },
       { text: 'Resources', link: '/resources/' },
+      { text: 'FAQ', link: '/faq/faq.md' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
@@ -46,8 +46,8 @@ module.exports = {
           children: [
             '/guides/advanced_guides/installation',
             '/guides/advanced_guides/search_parameters',
-            '/guides/advanced_guides/authentication',
             '/guides/advanced_guides/filtering',
+            '/guides/advanced_guides/authentication',
             '/guides/advanced_guides/asynchronous_updates',
             '/guides/advanced_guides/web_interface',
             '/guides/advanced_guides/settings',
@@ -98,19 +98,6 @@ module.exports = {
           ],
         },
       ],
-      '/tutorials/': [
-        {
-          title: '🍳 Cookbooks',
-          path: '/tutorials/cookbooks/',
-          collapsable: false,
-        },
-        {
-          title: "🧷 How to's",
-          path: '/tutorials/howtos/',
-          collapsable: false,
-          children: ['/tutorials/howtos/quickstart'],
-        },
-      ],
       '/resources/': [
         {
           title: '📦 Resources',
@@ -121,8 +108,18 @@ module.exports = {
             '/resources/sdks',
             '/resources/comparison_to_alternatives',
             '/resources/postman_collection',
-            '/resources/faq',
+            '/resources/contact',
           ],
+        },
+        {
+          title: '🍳 Cookbooks',
+          path: '/resources/cookbooks/',
+          collapsable: false,
+        },
+        {
+          title: "🧷 How to's",
+          path: '/resources/howtos/',
+          collapsable: false,
         },
       ],
     },
@@ -141,6 +138,7 @@ module.exports = {
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
+    [require('./custom-markdown-rules')],
   ],
   head: [
     ['meta', { charset: 'utf-8' }],
