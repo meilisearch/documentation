@@ -103,18 +103,16 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 
 Attributes whose values will be cropped if they contain a matched query word.
 
-You have two options:
-
 `attributesToCrop=<Attribute:Croplength>,<Attribute:Croplength>,...`
 
-- `<Attribute:Croplength>` OR `<Attribute>` (Optional, string, defaults to empty)
+Attribute can have two values:
+
+- `<Attribute>` OR `<Attribute:Croplength>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes whose values will be cropped if they contain a matched query word.<br>
-  Each attribute can be joined by an optional `cropLength`.
+  Each attribute can be joined by an optional `cropLength` that overwrites the [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) parameter.
 
-`attributesToCrop=*`
-
-- `*`
+- `"*"`
 
   The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
 
@@ -172,19 +170,17 @@ Number of characters to keep on each side of the start of the matching word. See
 
 Attributes whose values will contain **highlighted matching query words**.
 
-You have two options:
+- `attributesToHighlight=<Attribute>,<Attribute>,...`
 
-`attributesToHighlight=<Attribute>,<Attribute>,...`
+Attribute can have two values:
 
 - `<Attribute>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes. Every matching query words in the given attribute field will be wrapped around an `<em>` tag.
 
-`attributesToHighlight=*`
+- `"*"`
 
-- `*`
-
-The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+  The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
 Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
 
