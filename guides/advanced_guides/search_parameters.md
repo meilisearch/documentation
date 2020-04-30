@@ -110,7 +110,7 @@ Attribute can have two values:
 - `<Attribute>` OR `<Attribute:Croplength>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes whose values will be cropped if they contain a matched query word.<br>
-  Each attribute can be joined by an optional `cropLength` that overwrite the [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) parameter.
+  Each attribute can be joined by an optional `cropLength` that overwrites the [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) parameter.
 
 - `"*"`
 
