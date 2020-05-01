@@ -167,7 +167,7 @@ Add a list of documents and update them if they already.
 
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
-To completely overwrite a document, check out the [add and replace documents route](/references/documents.md#add-or-replace-documents).
+To completely overwrite a document, check out the [add or replace documents route](/references/documents.md#add-or-replace-documents).
 
 #### Path Variables
 
