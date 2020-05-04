@@ -13,7 +13,7 @@ Running MeiliSearch on your own machine for your weekend project is fun, let's a
   
 ## Get your MeiliSearch ready for production
   
-For this tutorial, we will be using a Debian 10 server, running on Digital Ocean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your MeiliSearch and are not already registered on DigitalOcean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).  
+For this tutorial, we will be using a Debian 10 server, running on DigitalOcean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your MeiliSearch and are not already registered on DigitalOcean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).  
 
 
 
