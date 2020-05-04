@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.4.0",
-    "docs-searchbar.js": "^1.1.4",
+    "docs-searchbar.js": "^1.1.5",
     "mermaid": "8.4.8",
     "vue-eslint-parser": "^7.0.0",
     "vuepress": "^1.4.1",
