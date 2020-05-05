@@ -116,7 +116,7 @@ Depending on your needs, you might want to change this order of importance. To d
 
 New rules can be added to the existing list at any time and placed anywhere in the sequence.
 
-A custom rule allows you to create an ascending or descending sorting rule on a given attribute.
+A custom rule allows you to create an ascending or descending sorting rule on a given attribute. The attribute **must** have a numeric value in the documents. If any value is not a numeric type, the sorting rule won't be applied. Only numbers can be arranged in ascending or descending order.
 
 To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name between round brackets.
 
@@ -125,12 +125,6 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 - To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
 Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
-
-::: warning
-
-If you apply an ascending or descending sorting rule on an attribute, the values of the latter **must be numbers**. If any value is a string, it won't be converted into a numeric type.
-
-:::
 
 #### Example
 
