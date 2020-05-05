@@ -91,6 +91,10 @@ Default value (the ranking rules in the default order):
 
 [Read this guide to know more about what each ranking rules does](/guides/main_concepts/relevancy.md)
 
+### Custom ranking rule
+
+You can add a custom ranking rule anywhere in the list of ranking rules. A custom ranking rule is composed of an attribute and an ascending or descending order. The attribute **must have a numeric value** in the documents.
+
 #### Example
 
 To add your ranking rules to the settings, send:
