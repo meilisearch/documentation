@@ -17,7 +17,7 @@ Running MeiliSearch on your own machine for your weekend project is fun, let's a
 
 [Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](#Step-3-Secure-and-finish-your-setup-Using-a-Reverse-Proxy-domain-name-and-HTTPS)
 + [3.1. Creating a Reverse Proxy with Nginx](#31-Creating-a-Reverse-Proxy-with-Nginx)
-+ [3.2. Activating SSL (HTTPS) on your MeiliSearch](#32-Activating-SSL-HTTPS-on-your-MeiliSearch)
++ [3.2. Set up SSL/TLS for your MeiliSearch](#32-Set-up-SSLTLS-for-your-MeiliSearch)
 
 [Conclusion](#Conclusion)
   
