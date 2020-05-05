@@ -93,7 +93,7 @@ Default value (the ranking rules in the default order):
 
 ### Custom ranking rule
 
-You can add a custom ranking rule anywhere in the list of ranking rules. A custom ranking rule is composed of an attribute and an ascending or descending order. The attribute **must** have a numeric value in the documents.
+You can add a custom ranking rule anywhere in the list of ranking rules. A custom ranking rule is composed of an attribute and an ascending or descending order. The attribute **must have a numeric value** in the documents.
 
 #### Example
 
