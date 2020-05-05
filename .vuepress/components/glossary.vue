@@ -35,7 +35,7 @@ export default {
     word: {
       type: String,
       default: 'field',
-      validator: function(x) {
+      validator: function (x) {
         return glossary[x]
       },
     },
