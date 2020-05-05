@@ -2,10 +2,10 @@
   
 ## A quick introduction
   
-Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast search engine built in [Rust](https://www.rust-lang.org) as an Open Source tool. It was designed to provide users with a very useful and customizable search experience including features like typo-tolerance, filtering and synonyms out of the box, for any kind of project. Running a Meilisearch for testing purposes is incredibly easy, as [many alternatives](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html) are available: Docker, brew, aptitude, binaries, a simple curl or even the source code. If you are new to MeiliSearch, we suggest that you make a tour arround our [Documentation](https://docs.meilisearch.com/)  
+Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project. Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html): using Docker, brew, aptitude, binaries, a simple curl, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
   
   
-Running MeiliSearch on your own machine for your weekend project is fun, let's agree on that. But we are here to **take you to the next step**. You probably want to go live, and deploy a project in production, take it to the real word. What are the steps and details you need to **deploy MeiliSearch in production** and be sure that it is **safe and ready to use**?  
+Running MeiliSearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy MeiliSearch in production** and ensure it is **safe and ready to use**?
 
 ## Content of this article
 
@@ -36,19 +36,19 @@ For this tutorial, we will be using a Debian 10 server, running on DigitalOcean.
 
 ## Step 1: Install MeiliSearch
 
-Installing and running MeiliSearch is an easy and straightforward process. In order to keep this tutorial as simple as possible, we are going to use a MeiliSearch installation script that will take care of the process for you. It will get a copy of a MeiliSearch binary in your machine and let you use it inmediatley.
+Installing and running MeiliSearch is easy and straightforward. In order to keep this tutorial as simple as possible, let's use a script that will carry out the installation process. It will copy a binary of MeiliSearch to your machine and enable you to use it immediately.
 
-Once we are logged in into our machine via SSH, we only need to be sure that our system and its dependencies are up-to-date and install MeiliSearch.
+Once you are logged in into your machine via SSH, ensure your system and its dependencies are up-to-date before proceeding with the installation.
 ```bash
-# Update references to the dependencies on Debian
+# Update the list of available packages and their versions
 $ apt update
-# Install curl, that we need to install MeiliSearch in the next step
+# Install curl which is required to install MeiliSearch in the next step
 $ apt install curl -y
 # Install MeiliSearch latest version from the script
 $ curl -L https://install.meilisearch.com | sh
 ```
 
-> The diferent options to achieve a MeiliSearch install are detailed in our **[Installation Docs](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**
+> The different options to achieve a MeiliSearch installation are detailed in **[this guide](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**.
 
 > It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your achitecture in the best possible way.  
 
@@ -56,14 +56,14 @@ You can always check the latest MeiliSearch stable version, and get MeiliSearch 
 
 **[Latest MeiliSearch Stable Version](https://github.com/meilisearch/MeiliSearch/releases/latest)**  
 
-MeiliSearch is finally installed and ready to use. If you want to make it accessible from everywhere in your system, you should move this binary into your system binaries folder, with the following command:  
+MeiliSearch is finally installed and ready to use. To make it accessible from everywhere in your system, move the binary file into your system binaries folder:  
 
 ```bash
 # Move the MeiliSearch binary to your system binaries
 $ mv ./meilisearch /usr/bin/
 ```
 
-Now you can test your new installation by running `meilisearch` as a command in your terminal (use ctrl-c or command-c to stop execution):
+You can now start using MeiliSearch! In your terminal, run:
 
 ```bash
 $ meilisearch
@@ -84,17 +84,17 @@ $ meilisearch
 
 ## Step 2: Run MeiliSearch as a service
 
-In Linux environments, a `service` is a process that can be launched when the operating system is booting, and it will keep running in the background. One of its biggest advantages is that it can make your program available at any moment, in a stable and consistent way. Even if it finds some execution problem or crashes, the service will be restarted and your program will be run again.  
+In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
 
-> This is not required, but if you are new to services and systemd, you can learn the [basics of Linux services](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/) here.  
+> If you are new to services and `systemd`, you can learn more about the basics of Linux services [here](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/).  
 
-On Debian (and Linux distributions in general), `systemd` allows you to create and manage your own custom services. We want to make sure that MeiliSearch is always responding to your requests. And for that, we are going to build our own service. This way, we will make sure that your MeiliSearch service will always be available and running when the server is on. If any crash occurs during the running of MeiliSearch, or the system reboots for any reason, systemd automatically restarts MeiliSearch for you.  
+In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that MeiliSearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart MeiliSearch.  
 
 ### 2.1 Create a service file
 
-Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them when it boots. In this case we will use a very simple service file that will run MeiliSearch at the port `7700`.  
+Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run MeiliSearch on port `7700`.  
 
-We are also using the `--env` flag to run MeiliSearch in a production environment, and `--master-key` to have a key that will let MeiliSearch create reading and writing keys. With this generated keys, you can easily control who can access or create new documents, indexes, or change the configuration. You can change this `Master Key` to any value you want in the following command, but you should choose a safe and random key for security purposes, never share it and, just, **keep it safe**.
+To run MeiliSearch in a production environment, use the `--env` flag. To generate a master key that will let MeiliSearch create reading and writing keys, use the `--master-key` flag. With those keys, you can easily control who can access or create new documents, indexes, or change the configuration. You can change the `Master Key` to any value in the following command. However, for security concerns, it's better to choose a safe and random key, never share it and, just, **keep it safe**.
 
 ```bash
 $ cat << EOF >/etc/systemd/system/meilisearch.service
@@ -114,11 +114,11 @@ EOF
 
 > For more information on MeiliSearch authentication and API keys see the **[Authentication Docs](https://docs.meilisearch.com/guides/advanced_guides/authentication.html)**. For more information on MeiliSearch options and flags see the **[Installation Docs](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**  
 
-As for now, we don't want to expose your MeiliSearch to the external world. We want it to run safely inside your own environment. So we will make it available only locally, by telling it to be available in the local backloop IP adress `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your MeiliSearch instance. We will use a proxy server in step 3 to make it available to the outside world.
+As for now, it is not time yet to expose your MeiliSearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your MeiliSearch instance.
 
 ### 2.2. Enable and start service
 
-The service file we just built is all we need for creating our service. Now we must `enable` the service to tell the operating system that we want it to run MeiliSearch at every boot. We can finally `start` the service to make it run inmediately. We can check everything is working smoothly by checking the service `status`.
+The service file you just built is all you need for creating your service. Now you must `enable` it to tell the operating system that we want it to run MeiliSearch at every boot. You can then `start` the service to make it run immediately. Ensure everything is working smoothly by checking the service `status`.
 
 ```bash
 # Set the service meilisearch
@@ -143,28 +143,28 @@ But you probably want to open your MeiliSearch to the outside world, and for now
 
 ## Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS
 
-Now, we want to make our brand new MeiliSearch available to be requested from the outside world. But we want to do it safely. For this purpose we are going to use two of the main technologies available on the web: a Reverse Proxy and SSL
+It's time to safely make your brand new MeiliSearch available to be requested from the outside world. For this purpose, you will use two of the main technologies available on the web: a Reverse Proxy and SSL/TLS.
 
 ### 3.1. Creating a Reverse Proxy with [Nginx](https://www.nginx.com/)
 
-A reverse proxy is basically an application that will handle every communcation between the outside world and your internal applications. In our case, we want to use Nginx to recieve the HTTP requests coming from the outside world, and redirect them to MeiliSearch itself, but internally. When MeiliSearch has done its amazing job, it will communicate its response to Nginx, which will then transfer this response to the user who sent the request. This is a common way to isolate and protect any application by adding a gate-keeper as robust, secure and fast as Nginx, one of the most safe and efficient tools available online, and of course, Open Source!  
+A reverse proxy is basically an application that will handle every communication between the outside world and your internal applications. Nginx will receive external HTTP requests and redirect them to MeiliSearch. When MeiliSearch has done its amazing job, it will communicate its response to Nginx, which will then transfer the latter to the user who originally sent the request. This is a common way to isolate and protect any application by adding a robust, secure, and fast gate-keeper such as Nginx, one of the safest and most efficient tools available online, and of course, open-source!
 
-> Reverse proxies are very useful for security, performance, scalability and logging reasons. If you are new to Reverse proxies, you may enjoy this article explaining the why and the how of [reverse proxies](https://www.keycdn.com/support/nginx-reverse-proxy)  
+> Reverse proxies are very useful regarding security, performance, scalability, and logging concerns. If you are new to Reverse proxies, you may enjoy this article explaining the why and the how of [reverse proxies](https://www.keycdn.com/support/nginx-reverse-proxy).
 
-Making Nginx work as a proxy server is really simple. First of all we need to install it in our machine.
+Configuring Nginx as a proxy server is really simple. First of all, install it on your machine.
 
 ```bash
 # Install Nginx on Debian
 $ apt-get install nginx -y
 ```
 
-Now we need to delete its default configuration file in order to add our own. This is important because the default port for HTTP, the `port 80` is used by nginx by default and if we try to use it for MeiliSearch we will create a conflict. We will replace its default file by our own. You can also make MeiliSearch listen to another port by specifying it in the nginx configuration file, but we will not cover this option in this article.
+First, deleting the default configuration file is important as the default port for HTTP, the `port 80`, is used by Nginx by default. Thus, trying to use it for MeiliSearch will create a conflict. Replace the default file by your own configuration file. You can also make MeiliSearch listen to another port by specifying it in the Nginx configuration file, but we will not cover this option in this tutorial.
 
 ```bash
 # Delete the default configuration file for Nginx
 $ rm -f /etc/nginx/sites-enabled/default
 
-# Add our configuration file, specifyind the Reverse Proxy settings
+# Add your configuration file specifying the Reverse Proxy settings
 $ cat << EOF > /etc/nginx/sites-enabled/meilisearch
 server {
     listen 80 default_server;
@@ -177,53 +177,53 @@ server {
 EOF
 ```
 
-finally we need to enable and start the nginx service as we did before, to make sure it is always available
+Finally, enable and start the Nginx service again to make sure it is still available.
 
 ```bash
 # Reload the operating system daemons / services
 $ systemctl daemon-reload
 
-# Enable and start nginx service
+# Enable and start Nginx service
 $ systemctl enable nginx
 $ systemctl restart nginx
 ```
 
-Our MeiliSearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. We should now be able to do requests to our server from the outside world by doing any HTTP request MeiliSearch accepts at our own IP address (http://<your-ip-address>). The IP address is the same you used to connect to your machine via SSH in Step 1.
+MeiliSearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. You should now be able to send requests to your server from the outside world. Open your web browser and visit: (http://<your-ip-address>). The IP address is the same you used to connect to your machine via SSH in Step 1.
 
 
-> If you want to learn more about using Nginx as a Reverse Proxy, see its dedicated documentation [Nginx as a Reverse Proxy](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
+> If you want to learn more about using Nginx as a Reverse Proxy, see [this dedicated documentation](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/).
 
-Our only problem now is that we are using MeiliSearch under HTTP, without any additional security. This is an important issue, as the content that is being passed via HTTP can easily be read or modified by attackers, and someone could get full or partial acces to your data. In order to prevent this, it's important to use the SSL protocol, which will let us use HTTPS, a verification and encrypted way of transmitting data.
+The only remaining problem is that MeiliSearch processes requests via HTTP without any additional security. The content that is being transmitted over HTTP could easily be read or modified by attackers, and someone could get full or partial access to your data. In order to prevent this to happen, it's important to use the HTTPS, which will enable you to use a SSL/TLS certificate, and securely transmit data.
 
-### 3.2. Activating SSL (HTTPS) on your MeiliSearch
+### 3.2. Set up SSL/TLS for your MeiliSearch
 
-SSL will let the user or client establish an authenticated connection to your MeiliSearch. In this way, a user can verify MeiliSearch's identity before sending sensitive data or making any request. After the identity is verified, data is sent in an encrypted way that only MeiliSearch server will be able to decrypt, giving you a fast, reliable and automatic layer of security.
+SSL will let the user or client establish an authenticated connection to MeiliSearch. In this way, a user can verify server's identity before sending sensitive data or making any request to it. Then, data is sent in an encrypted way that only MeiliSearch server will be able to decrypt, providing you a fast, reliable, and automatic layer of security.
 
-Genrally, in order to activate SSL, you want to use your own domain name (or a sub-domain). The first step you need to follow is to register your own domain name, and change the DNS records. To make your domain name point to your newly installed MeiliSearch server, you just need to add an `A record` pointing to the IP address that you used to connect to your own server. This process is simple and fast, but can vary for every domain name provider, so we will not cover that process in this article.
+In most cases, when enabling SSL, you may want to use your own domain name (or a sub-domain). The first step you need to follow is to register your own domain name and change the DNS records. To make your domain name point to your newly installed MeiliSearch server, you just need to add an `A record` pointing to the IP address used to connect to your own server. This process is simple and fast but can vary for every domain name provider. Thus, we will not cover that process in this article.
 
-> When you register a domain name, and add an `A record`, you should be automaticaly able to request MeiliSearch directly by using that domain name.
+> When you register a domain name and add an `A record`, you should be automatically able to request MeiliSearch directly by using that domain name.
 
-> It means, for illustration purposes, that if you registered your domain name `example.com`, requests for your MeiliSearch indexes can be be done at http://example.com/indexes
+> To illustrate this, if you had registered your domain name `example.com`, requesting indexes would be done at http://example.com/indexes
 
-Now that your domain name is setup, you are ready to set SSL and use HTTPS. We will present two different options to accomplish this goal. The first option is using [Certbot](https://certbot.eff.org/), an amazing, free and very easy to use tool. In the second option, we will cover the steps you need to follow if you already have some SSL certificates issued from a `Certificate Authority or CA` for your domain name. After adding SSL, you will be ready to use MeiliSearch safely in production.
+Once your domain name has been set up, you are ready to configure SSL/TLS and use HTTPS. You have two different options to achieve this goal. The first one is using [Certbot](https://certbot.eff.org/), an amazing, free, and very easy to use tool. If you already have SSL certificates issued from a `Certificate Authority or CA` for your domain name, the second option covers the steps you need to follow. Then, you will be ready to use MeiliSearch safely in production!
 
 #### 3.2. Option A: Certbot
 
-Using certbot in your Linux server is very easy and straightforward. This tool will create a free SSL certificate for your domain name, and handle the installation on your server automatically. Its documentation contains detailed instructions for diferent operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/lets-encrypt/debianbuster-nginx)
+Using certbot in your Linux server is very easy and straightforward. This tool will generate a free SSL/TLS certificate for your domain name, and automatically handle its installation on your server. The certbot documentation contains detailed instructions for many operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/lets-encrypt/debianbuster-nginx).
 
-First of all, we need to install the packages in our system:
+First of all, install the packages on your system:
 
 ```bash
 $ sudo apt-get install certbot python-certbot-nginx -y
 ```
 
-Now let's run the Certbot script that will guide us through the installation:
+Let's run the Certbot script to be guided through the installation process:
 
 ```bash
 certbot --nginx
 ```
 
-Enter your email address, agree to the Terms and Conditions, and write your domain name. Finally you will be prompted with these options:
+Enter your email address, agree to the Terms and Conditions, and input your domain name. You will then be prompted with these options:
 
 ```bash
 Please choose whether or not to redirect HTTP traffic to HTTPS, removing HTTP access.
@@ -236,18 +236,18 @@ change by editing your web server's configuration.
 
 We recommend that you choose option 2, to redirect HTTP to HTTPS and always use a secure connection. You should be able to request your domain name with SSL as in `https://example.com` or `https://example.com/indexes`.
 
-#### 3.2. Option B: Custom SSL Certificates
+#### 3.2. Option B: Custom SSL/TLS Certificates
 
-When your `Certificate Authority` issues a SSL certificate for you, you normally receive at least two files with encrypted keys: 
+When a `Certificate Authority` issues a SSL certificate for you, you receive at least two files with encrypted keys: 
 
-- Your **certificate** (normally as in `your_domain_name.pem` or `example.pem`)
-- Your **key** (normally as in `your_domain_name.key` or `example.key`)
+- Your **certificate** (commonly named `your_domain_name.pem` or `example.pem`)
+- Your **key** (commonly named `your_domain_name.key` or `example.key`)
 
-> for the command examples, we will use example.pem and example.key. Make sure to change them to match the name of your own certificate files
+> `example.pem` and `example.key` will be used in the following examples. Make sure to replace `example` by the names of your own certificate files.
 
-All we need to do is to put the certificate files somewhere safe, and modify Nginx configuration to give instructions on where to find them. Also, we recommend to do a redirection of HTTP traffic to HTTPS (port 80 to 443).
+All you need to do is store the certificate files in a secure location and use appropriate file system security permissions. Then, set the location of the certificates in Nginx configuration. It is also strongly recommended to redirect all HTTP requests to HTTPS (port 80 to 443).
 
-First, let's copy your certificate files in their conventional directory where the server can find them
+First, let's copy your certificate files in their conventional directory so the server can find them:
 
 ```bash
 # Create a directory /etc/ssl/example to store the certificate files
@@ -301,8 +301,8 @@ Your SSL certificates should be working and Nginx should be able to find them. E
 
 ## Conclusion
 
-We have followed here the main steps to provide a safe and stable service. Your MeiliSearch should be up and running, in a safe environment and ready to stay available even when the most common issues occur. It is protected by a reverse proxy, with your own domain name and your API key, so your data and configuration will be accessible only for those who you trust with your keys. Communication with your server will be encrypted and its identity will be verified before sending sensitive data, and the process will be fast and automated.
+You have followed the main steps to provide a safe and stable service. Your MeiliSearch instance should be up and running, in a safe environment and ready to stay available even when the most common issues occur. In addition, it is protected by a reverse proxy with your own domain name and API key, so your data and configuration are accessible only to trusted clients. Communication with your server is now encrypted. Furthermore, its identity will be verified every time before sending sensitive data in a fast and automated manner.
 
 You are now ready to start using your **Production-ready MeiliSearch**!
 
-> MeiliSearch is a database: that means that it needs a file system it can write to, and which must be persistent.
+> MeiliSearch is a database which means that it needs a file system it can write to, and which must be persistent.
