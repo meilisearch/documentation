@@ -110,7 +110,6 @@ ExecStart=/usr/bin/meilisearch --http-addr 127.0.0.1:7700 --env production --mas
 [Install]
 WantedBy=default.target
 EOF
-
 ```
 
 > For more information on MeiliSearch authentication and API keys see the **[Authentication Docs](https://docs.meilisearch.com/guides/advanced_guides/authentication.html)**. For more information on MeiliSearch options and flags see the **[Installation Docs](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**  
