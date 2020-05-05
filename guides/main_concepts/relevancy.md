@@ -126,6 +126,12 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
 
+::: warning
+
+If you apply an ascending or descending sorting rule on an attribute, the values of the latter **must be numbers**. If any value is a string, it won't be converted into a numeric type.
+
+:::
+
 #### Example
 
 Let's say you have a movie dataset. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
