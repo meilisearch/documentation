@@ -24,12 +24,14 @@ For Latin-based languages, the words are separated by space.
 For Kanji characters, the words are separated by character.
 
 There are two kinds of separators:
+
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
 
 ```
 "Bruce Willis,Vin Diesel"
 ```
+
 For example, the distance between `Bruce` and `Willis` is one. The distance between `Vin` and `Diesel` is also one. But, the distance between `Bruce` and `Vin` is 8. The same goes for `Willis`and `Diesel`.
 
 ### Numeric types
