@@ -27,6 +27,8 @@ There are two kinds of separators:
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
 
+#### Example
+
 ```
 "Bruce Willis,Vin Diesel"
 ```
@@ -46,6 +48,8 @@ A Boolean value, which is either `true` or `false`, is received and converted to
 
 An array represents a collection of elements that can be string or arrays for instance. An array is recursively broken into separate string tokens.
 
+#### Example
+
 The following input:
 
 ```json
@@ -58,11 +62,13 @@ Will be processed as if all elements were arranged at the same level:
 "Bruce Willis", "Vin Diesel", "Kung Fu Panda"
 ```
 
-The input above will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#string).
+The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#example).
 
 ### Object
 
-JSON objects are written in key/value pairs and surrounded by curly braces.
+JSON objects are written in key/value pairs and surrounded by curly braces. An object is broken into separate string tokens.
+
+#### Example
 
 ```json
 {
@@ -73,7 +79,7 @@ JSON objects are written in key/value pairs and surrounded by curly braces.
 
 In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as words. The colon `:` and comma `,` characters are used as separators.
 
-Words will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#string).
+These words will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#example).
 
 ### null type
 
@@ -90,4 +96,4 @@ Even if it behaves exactly as expected, the tokenization process may make less s
 ```
 
 For the two strings above, the full stops `.` will be considered as hard spaces.
-`10,3` will be broken into two string `10` and `3` instead of being processed as a numeric type.
+`10,3` will be broken into two strings `10` and `3` instead of being processed as a numeric type.

@@ -38,7 +38,7 @@ In order to be indexed, each **document must contain** [the primary key field](/
 
 ## Fields
 
-- **[Data Type](/guides/advanced_guides/datatypes.md)**: A field's data type determines what kind of data can be stored in that field.
+- **[Data type](/guides/advanced_guides/datatypes.md)**: A field's data type determines what kind of data can be stored in that field.
 - **[Field properties](/guides/advanced_guides/field_properties.md)**: Field properties determines the characteristics and behavior of the data added to that field.
 
 By default, all fields included in a document are <clientGlossary word="searchable" /> and <clientGlossary word="displayed" />.
