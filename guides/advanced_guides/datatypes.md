@@ -46,4 +46,10 @@ A Boolean value, which is either `true` or `false`, is received and converted to
 
 JSON objects are written in key/value pairs and surrounded by curly braces.
 
+```json
+"title": "Interstellar"
+```
+
+In the example above, `title` and `Interstellar` are both considered as words. The colon `:` is used as a separator.
+
 ### null type
