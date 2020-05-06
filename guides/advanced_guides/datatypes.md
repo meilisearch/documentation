@@ -53,3 +53,5 @@ JSON objects are written in key/value pairs and surrounded by curly braces.
 In the example above, `title` and `Interstellar` are both considered as words. The colon `:` is used as a separator.
 
 ### null type
+
+The `null` type can be pushed into MeiliSearch but it won't be taken into account for indexation.
