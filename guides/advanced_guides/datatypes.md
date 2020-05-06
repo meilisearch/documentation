@@ -31,7 +31,7 @@ There are two kinds of separators:
 "Bruce Willis,Vin Diesel"
 ```
 
-For example, the distance between `Bruce` and `Willis` is equal to one. The distance between `Vin` and `Diesel` is also equal to one.
+For example, the distance between `Bruce` and `Willis` is equal to 1. The distance between `Vin` and `Diesel` is equal to one 1.
 
 But, the distance between `Bruce` and `Vin` is equal to 8. The same goes for `Willis`and `Diesel`.
 
@@ -44,6 +44,22 @@ A numeric type (`integer`, `float`) is converted to a human-readable decimal num
 A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text.
 
 ### Array
+
+An array represents a collection of elements that can be string or arrays for instance. An array is recursively broken into separate string tokens.
+
+The following input:
+
+```json
+[["Bruce Willis", "Vin Diesel"], "Kung Fu Panda"]
+```
+
+Will be processed as if all elements were arranged at the same level:
+
+```json
+"Bruce Willis", "Vin Diesel", "Kung Fu Panda"
+```
+
+The input above will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#string).
 
 ### Object
 
