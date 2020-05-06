@@ -79,3 +79,16 @@ Words will be separated by soft and hard spaces exactly as explained in the [str
 ### null type
 
 The `null` type can be pushed into MeiliSearch but it won't be taken into account for indexation.
+
+## Possible Tokenization Issues
+
+Even if it behaves exactly as expected, the tokenization process may make less sense in some cases such as:
+
+```
+"S.O.S"
+"George R. R. Martin"
+10,3
+```
+For the two strings above, the full stops `.` will be considered as hard spaces.
+
+`10,3` will be broken into two string `10` and `3` instead of being processed as a numeric type.
