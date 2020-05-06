@@ -89,6 +89,7 @@ Even if it behaves exactly as expected, the tokenization process may make less s
 "George R. R. Martin"
 10,3
 ```
+
 For the two strings above, the full stops `.` will be considered as hard spaces.
 
 `10,3` will be broken into two string `10` and `3` instead of being processed as a numeric type.
