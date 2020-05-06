@@ -66,10 +66,15 @@ The input above will be separated by soft and hard spaces exactly as explained i
 JSON objects are written in key/value pairs and surrounded by curly braces.
 
 ```json
-"title": "Interstellar"
+{
+"movie_id": "1564saqw12ss",
+"title": "Kung fu Panda"
+}
 ```
 
-In the example above, `title` and `Interstellar` are both considered as words. The colon `:` is used as a separator.
+In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as words. The colon `:` and comma `,` characters are used as separators.
+
+Words will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#string).
 
 ### null type
 
