@@ -31,9 +31,9 @@ There are two kinds of separators:
 "Bruce Willis,Vin Diesel"
 ```
 
-For example, the distance between `Bruce` and `Willis` is equal to **1**. The distance between `Vin` and `Diesel` is equal to one **1**.
+In the example above, the distance between `Bruce` and `Willis` is equal to **1**. The distance between `Vin` and `Diesel` is equal to **1** too.
 
-But, the distance between `Bruce` and `Vin` is equal to **8**. The same goes for `Willis`and `Diesel`.
+But, the distance between `Bruce` and `Vin` is equal to **8**. The same goes for `Bruce` and `Diesel`, or `Vin` and `Willis`, or also `Willis` and `Diesel`.
 
 ### Numeric types
 
