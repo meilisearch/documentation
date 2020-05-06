@@ -19,9 +19,8 @@ If a field is [searchable](/guides/advanced_guides/field_properties.md#searchabl
 
 A string is passed to a tokenizer and is then broken into separate string tokens. Each word (token) is indexed and stored in the global dictionary of the corresponding index.
 
-For Latin-based languages, the words are separated by space.
-
-For Kanji characters, the words are separated by character.
+- For Latin-based languages, the words are separated by space.
+- For Kanji characters, the words are separated by character.
 
 There are two kinds of separators:
 
@@ -32,7 +31,9 @@ There are two kinds of separators:
 "Bruce Willis,Vin Diesel"
 ```
 
-For example, the distance between `Bruce` and `Willis` is one. The distance between `Vin` and `Diesel` is also one. But, the distance between `Bruce` and `Vin` is 8. The same goes for `Willis`and `Diesel`.
+For example, the distance between `Bruce` and `Willis` is equal to one. The distance between `Vin` and `Diesel` is also equal to one.
+
+But, the distance between `Bruce` and `Vin` is equal to 8. The same goes for `Willis`and `Diesel`.
 
 ### Numeric types
 
