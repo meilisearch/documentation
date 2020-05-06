@@ -19,21 +19,26 @@ If a field is [searchable](/guides/advanced_guides/field_properties.md#searchabl
 
 A string is passed to a tokenizer and is then broken into separate string tokens. Each word (token) is indexed and stored in the global dictionary of the corresponding index.
 
-For latin-base languages, the words are separated by space.
-For Kanji characters, the words are separated by Kanji character.
+For Latin-based languages, the words are separated by space.
+
+For Kanji characters, the words are separated by character.
 
 There are two kinds of separators:
-- Soft spaces (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
-- Hard spaces (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
+- **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
+- **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
 
 ```
 "Bruce Willis,Vin Diesel"
 ```
-For example, the distance between `Bruce` and `Willis` is one. The distance between `Vin` and `Diesel` is also one. But, the distance between `Bruce` and `Vin` is 8. Same goes for `Willis`and `Diesel`.
+For example, the distance between `Bruce` and `Willis` is one. The distance between `Vin` and `Diesel` is also one. But, the distance between `Bruce` and `Vin` is 8. The same goes for `Willis`and `Diesel`.
 
 ### Numeric types
 
+A numeric type (`integer`, `float`) is converted to a human-readable decimal number string representation.
+
 ### Boolean
+
+A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text.
 
 ### Array
 
