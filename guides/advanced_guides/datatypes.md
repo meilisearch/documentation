@@ -32,7 +32,6 @@ There are two kinds of separators:
 ```
 
 In the example above, the distance between `Bruce` and `Willis` is equal to **1**. The distance between `Vin` and `Diesel` is equal to **1** too.
-
 But, the distance between `Bruce` and `Vin` is equal to **8**. The same goes for `Bruce` and `Diesel`, or `Vin` and `Willis`, or also `Willis` and `Diesel`.
 
 ### Numeric types
@@ -91,5 +90,4 @@ Even if it behaves exactly as expected, the tokenization process may make less s
 ```
 
 For the two strings above, the full stops `.` will be considered as hard spaces.
-
 `10,3` will be broken into two string `10` and `3` instead of being processed as a numeric type.
