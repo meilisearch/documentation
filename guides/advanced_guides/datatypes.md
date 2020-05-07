@@ -22,7 +22,7 @@ A string is passed to a tokenizer and is then broken into separate string tokens
 - For Latin-based languages, the words are separated by space.
 - For Kanji characters, the words are separated by character.
 
-There are two kinds of separators:
+There are two kinds of space separators:
 
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
@@ -46,7 +46,7 @@ A Boolean value, which is either `true` or `false`, is received and converted to
 
 ### Array
 
-An array represents a collection of elements that can be string or arrays for instance. An array is recursively broken into separate string tokens.
+An array represents a collection of elements that can be strings or arrays for instance. An array is recursively broken into separate string tokens.
 
 #### Example
 
@@ -77,13 +77,13 @@ JSON objects are written in key/value pairs and surrounded by curly braces. An o
 }
 ```
 
-In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as words. The colon `:` and comma `,` characters are used as separators.
+In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as sentences. The colon `:` and comma `,` characters are used as separators.
 
-These words will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#example).
+These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#example).
 
 ### null type
 
-The `null` type can be pushed into MeiliSearch but it won't be taken into account for indexation.
+The `null` type can be pushed into MeiliSearch but it won't be taken into account for indexing.
 
 ## Possible Tokenization Issues
 
