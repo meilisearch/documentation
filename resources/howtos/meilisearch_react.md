@@ -2,10 +2,10 @@
 permalink: /instant-search-react-app
 ---
 # How to implement Instant Search within 5 minutes in your React App
+
 _The following is a guest post by Riccardo Giorato._
 
 ![Decathlon front page](../../public/image/decatlon.png)
-
 
 ## Introduction
 
@@ -15,14 +15,13 @@ In this quick tutorial, you'll learn how to easily create a search page with ins
 
 We will cover the basic steps to get the search running and move on to more advanced topics at the end.
 
-For the example, let's recreate a fast and beautiful search experience for a Sport brand. 
+For the example, let's recreate a fast and beautiful search experience for a Sport brand.
 
 Here is a **video preview** of what you will be building:
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=PA5LI1xldMA
-" target="_blank"><img src="http://img.youtube.com/vi/PA5LI1xldMA/0.jpg" 
+" target="_blank"><img src="http://img.youtube.com/vi/PA5LI1xldMA/0.jpg"
 alt="Video preview of decatlon demo of MeiliSearch" width="100%" height="auto" border="9" /></a>
-
 
 Have a look at a live demo here: [https://meili-react-demo.netlify.app/](https://meili-react-demo.netlify.app/)
 
@@ -44,6 +43,7 @@ cd meili_react_demo
 ```
 
 ### Run a new Docker image
+
 If you cloned the repository, to set up the MeiliSearch instance just execute inside the main folder:
 
 ```bash
@@ -144,7 +144,7 @@ const MeiliSearch = require("meilisearch");
 })();
 ```
 
-::: warning 
+::: warning
 
 Remember to change the path to your JSON file before running this script!
 
@@ -175,12 +175,13 @@ To speed up the styling process, add Tailwind CSS style directly to index.html:
 ```
 
 ### Configure App.js State
+
 Then, modify the App.js file using this code to set up a simple Search form and a few State variables to handle every aspect of the search.
 
 ```javascript
 import React, { useState, useEffect } from "react";
 
-// TODO configure the MeiliSearch Client 
+// TODO configure the MeiliSearch Client
 
 function App() {
   const [searchedWord, setSearch] = useState("dumbell");
@@ -244,6 +245,7 @@ This code should output this beautiful header with a search form.
 Connecting to MeiliSearch from React using the MeiliSearch Javascript SDK is a simple operation that can be done in just a few steps.
 
 ### MeiliSearch Client
+
 Install the MeiliSearch SDK:
 
 ```bash
@@ -269,6 +271,7 @@ const index = client.getIndex("decathlon");
 ```
 
 ### Send the Search Query
+
 Use an `useEffect` to execute the search of the typed words into MeiliSearch. All the results hits will be set to a simple state variable called “resultsSearch”.
 
 Replace this comment in App.js by the code snippet below:
@@ -293,7 +296,7 @@ Inside a second `useEffect`, you will search through the JSON objects returned b
 Then, it's time to create a list of cards linking to the products pages.
 
 Replace this comment in App.js by the code snippet below:
-`// TODO add function to parse the JSON object `
+`// TODO add function to parse the JSON object`
 
 ```javascript
 useEffect(() => {
@@ -334,7 +337,6 @@ useEffect(() => {
 You can have a look at the full [App.js](https://github.com/Giorat/meili_react_demo/blob/master/src/App.js) code here:
 
 - [https://github.com/Giorat/meili_react_demo/blob/master/src/App.js](https://github.com/Giorat/meili_react_demo/blob/master/src/App.js)
-
 
 You can visit the live application here: [https://meili-react-demo.netlify.app/](https://meili-react-demo.netlify.app/)
 
