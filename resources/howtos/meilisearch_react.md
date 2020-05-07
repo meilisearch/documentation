@@ -19,9 +19,7 @@ For the example, let's recreate a fast and beautiful search experience for a Spo
 
 Here is a **video preview** of what you will be building:
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=PA5LI1xldMA
-" target="_blank"><img src="http://img.youtube.com/vi/PA5LI1xldMA/0.jpg"
-alt="Video preview of decatlon demo of MeiliSearch" width="100%" height="auto" border="9" /></a>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PA5LI1xldMA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Have a look at a live demo here: [https://meili-react-demo.netlify.app/](https://meili-react-demo.netlify.app/)
 
