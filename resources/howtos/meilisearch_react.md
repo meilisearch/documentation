@@ -30,7 +30,7 @@ Have a look at a live demo here: [https://meili-react-demo.netlify.app/](https:/
 
 Before getting started, ensure that you have [Node](https://nodejs.org/en/) already installed on your machine.
 
-You will create the boilerplate code for your React app using the custom project we created for you : (https://github.com/Giorat/meili_react_demo)(https://github.com/Giorat/meili_react_demo)
+You will create the boilerplate code for your React app using the custom project we created for you : [https://github.com/Giorat/meili_react_demo](https://github.com/Giorat/meili_react_demo)
 
 Finally, this tutorial assumes that you are already familiar with [React](https://reactjs.org/docs/getting-started.html). If that is not the case, you can check the React Documentation to learn more.
 
