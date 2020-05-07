@@ -407,7 +407,7 @@ const MeiliSearch = require("meilisearch");
 })();
 ```
 
-### Conclusion
+## Conclusion
 
 This quick search wouldn’t be possible without an incredible team that is working on this great project night and day! If you might enjoy contributing to the MeiliSearch family you can jump on these repositories to bring some help, issues or tips and tricks:
 
