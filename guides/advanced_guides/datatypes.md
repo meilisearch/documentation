@@ -72,8 +72,8 @@ JSON objects are written in key/value pairs and surrounded by curly braces. An o
 
 ```json
 {
-"movie_id": "1564saqw12ss",
-"title": "Kung fu Panda"
+  "movie_id": "1564saqw12ss",
+  "title": "Kung fu Panda"
 }
 ```
 
