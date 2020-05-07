@@ -1,3 +1,6 @@
+---
+permalink: /running-production
+---
 # MeiliSearch in production: taking it to the next level
   
 ## A quick introduction
@@ -10,19 +13,19 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 
 ## Content of this article
 
-[Step 1: Install MeiliSearch](/resources/cookbooks/running_production.md#step-1-install-meilisearch)
+[Step 1: Install MeiliSearch](/resources/tutorials/running_production.md#step-1-install-meilisearch)
 
-[Step 2: Run MeiliSearch as a service](/resources/cookbooks/running_production.md#step-2-run-meilisearch-as-a-service)
+[Step 2: Run MeiliSearch as a service](/resources/tutorials/running_production.md#step-2-run-meilisearch-as-a-service)
 
-+ [2.1 Create a service file](/resources/cookbooks/running_production.md#_2-1-create-a-service-file)
-+ [2.2. Enable and start service](/resources/cookbooks/running_production.md#_2-2-enable-and-start-service)
++ [2.1 Create a service file](/resources/tutorials/running_production.md#_2-1-create-a-service-file)
++ [2.2. Enable and start service](/resources/tutorials/running_production.md#_2-2-enable-and-start-service)
 
-[Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](/resources/cookbooks/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](/resources/tutorials/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
 
-+ [3.1. Creating a Reverse Proxy with Nginx](/resources/cookbooks/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
-+ [3.2. Set up SSL/TLS for your MeiliSearch](/resources/cookbooks/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
++ [3.1. Creating a Reverse Proxy with Nginx](/resources/tutorials/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
++ [3.2. Set up SSL/TLS for your MeiliSearch](/resources/tutorials/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
 
-[Conclusion](/resources/cookbooks/running_production.md#conclusion)
+[Conclusion](/resources/tutorials/running_production.md#conclusion)
   
 ## Get your MeiliSearch ready for production
   
