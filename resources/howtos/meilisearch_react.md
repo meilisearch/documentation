@@ -1,3 +1,6 @@
+---
+permalink: /instant-search-react-app
+---
 # How to implement Instant Search within 5 minutes in your React App
 _The following is a guest post by Riccardo Giorato._
 
