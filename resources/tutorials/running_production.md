@@ -104,7 +104,7 @@ To run MeiliSearch in a production environment, use the `--env` flag. To generat
 $ cat << EOF >/etc/systemd/system/meilisearch.service
 [Unit]
 Description=MeiliSearch
-After=systend-user-sessions.service
+After=systemd-user-sessions.service
 
 [Service]
 Type=simple
