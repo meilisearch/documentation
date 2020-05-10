@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[11],{363:function(t,n,e){"use strict";e.r(n);var r={name:"ClientGlossary",props:{word:{type:String,default:""}}},s=e(6),l=Object(s.a)(r,(function(){var t=this.$createElement,n=this._self._c||t;return n("ClientOnly",[n("glossary",{attrs:{word:this.word}})],1)}),[],!1,null,null,null);n.default=l.exports}}]);
