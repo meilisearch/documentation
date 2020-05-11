@@ -16,7 +16,6 @@ Types:
 - [Object](/guides/advanced_guides/datatypes.md#object)
 - [`null` type](/guides/advanced_guides/datatypes.md#null-type)
 
-When documents are returned upon search, they contain [displayed fields](/guides/advanced_guides/field_properties.md#displayed-fields). The displayed values are always **returned unchanged**.
 
 ### String
 
