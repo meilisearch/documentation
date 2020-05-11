@@ -16,7 +16,6 @@ Types:
 - [Object](/guides/advanced_guides/datatypes.md#object)
 - [`null` type](/guides/advanced_guides/datatypes.md#null-type)
 
-
 ### String
 
 > String tokenization is the process of splitting a string into a list of individual terms that are called tokens.
