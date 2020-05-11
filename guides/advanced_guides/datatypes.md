@@ -18,7 +18,6 @@ Types:
 
 When documents are returned upon search, they contain [displayed fields](/guides/advanced_guides/field_properties.md#displayed-fields). The displayed values are always **returned unchanged**.
 
-When a field is [searchable](/guides/advanced_guides/field_properties.md#searchable-fields), each data type is handled in a different way.
 
 ### String
 
