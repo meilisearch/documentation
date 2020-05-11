@@ -1,6 +1,6 @@
 # Updates
 
-The `update` route gives information about the progress of the [asynchronous processes](/guides/advanced_guides/asynchronous_updates.md).
+The `updates` route gives information about the progress of the [asynchronous processes](/guides/advanced_guides/asynchronous_updates.md).
 
 ## Get an update status
 
