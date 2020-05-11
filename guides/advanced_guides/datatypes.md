@@ -2,8 +2,8 @@
 
 This guide describes the different data types supported for the fields in a document and how MeiliSearch handles them.
 
-No matter the type, the value of a field will remain unchanged in the returned documents upon search. 
-For example, if you have a complex field with nested objects, this field will be returned with the same complexity upon search. 
+No matter the type, the value of a field will remain unchanged in the returned documents upon search.
+For example, if you have a complex field with nested objects, this field will be returned with the same complexity upon search.
 
 Based on their type, however, the fields will be handled and used in different way by MeiliSearch. **The type affect how a field is used for search results**.
 
@@ -17,7 +17,6 @@ Types:
 - [`null` type](/guides/advanced_guides/datatypes.md#null-type)
 
 When documents are returned upon search, they contain [displayed fields](/guides/advanced_guides/field_properties.md#displayed-fields). The displayed values are always **returned unchanged**.
-
 
 ### String
 
