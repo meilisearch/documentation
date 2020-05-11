@@ -3326,7 +3326,7 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docs-searchbar.js@^1.1.5:
+docs-searchbar.js@^1.1:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-1.1.5.tgz#9c16ad7e2968514deb06254948cdbd1400a29cce"
   integrity sha512-P9br2cGsQ8PhyaZrD9vedE3U3Jymedp5FuIkp5HABLwOEDTYgL4/Nk1vdYgpBWpASMm0XAazNNxnsE4NufJ6rQ==
@@ -9325,6 +9325,13 @@ vuepress-plugin-element-tabs@^0.2.8:
     node-sass "^4.11.0"
     resize-observer-polyfill "^1.5.1"
     sass-loader "^7.1.0"
+
+vuepress-plugin-meilisearch@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.1.tgz#13d1eb4f77e5d594dc4c1e5073762eba7e60f305"
+  integrity sha512-h/TTZ/AuBWB0sO1MhyEWoJNkq7B41O3+des6lsJJz+R644Oda/W9sRUdcG9vQ+O5BGvHH7AinLZ/y/KoY40Glw==
+  dependencies:
+    docs-searchbar.js "^1.1"
 
 vuepress-plugin-seo@^0.1.2:
   version "0.1.2"

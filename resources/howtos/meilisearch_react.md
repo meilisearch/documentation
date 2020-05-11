@@ -21,8 +21,6 @@ Here is a **video preview** of what you will be building:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PA5LI1xldMA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Have a look at a live demo here: [https://meili-react-demo.netlify.app/](https://meili-react-demo.netlify.app/)
-
 ## Prerequisites
 
 Before getting started, ensure that you have [Node](https://nodejs.org/en/) already installed on your machine.
