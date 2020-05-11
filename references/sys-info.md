@@ -10,10 +10,7 @@ Get pretty system information.
 
 ### Example
 
-```bash
-curl \
-  -X GET 'http://localhost:7700/sys-info'
-```
+<code-samples id="get_pretty_sys_info_1" />
 
 #### Response: `200 Ok`
 
@@ -54,10 +51,7 @@ Get system information.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/sys-info'
-```
+<code-samples id="get_sys_info_1" />
 
 #### Response: `200 Ok`
 

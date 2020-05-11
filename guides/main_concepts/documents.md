@@ -24,15 +24,7 @@ Each document contains at least the **primary key** attribute : `id` with its as
 Documents are sent to MeiliSearch in `JSON format`.
 When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 
-```bash
-curl -X POST `http://localhost:7700/indexes/movies/documents` \
---data '[
-  {
-    "movie_id": "123sq178",
-    "title": "Amelie Poulain"
-  }
-]'
-```
+<code-samples id="documents_guide_add_movie_1" />
 
 In order to be indexed, each **document must contain** [the primary key field](/guides/main_concepts/documents.md#primary-key).
 

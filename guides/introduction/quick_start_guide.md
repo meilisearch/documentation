@@ -112,8 +112,6 @@ In order to be able to store your documents in an index, it is required you crea
 
 ::: tab cURL
 
-[API references](/references/indexes.md)
-
 ```bash
 $ curl \
   -X POST 'http://127.0.0.1:7700/indexes' \
@@ -225,6 +223,8 @@ func main() {
 
 ::::
 
+[API references](/references/indexes.md)
+
 ## Add Documents
 
 Once the index has been created, the next step is to fill it with [documents](/guides/main_concepts/documents.md). These documents will be used and returned when search queries will be performed on MeiliSearch.
@@ -239,7 +239,6 @@ Below is an example to showcase how to add documents using the following test da
 
 :::: tabs
 ::: tab cURL
-[API references](/references/documents.md)
 
 ```bash
 $ curl \
@@ -322,6 +321,8 @@ fmt.Println(updateRes.UpdateID)
 
 ::::
 
+[API references](/references/documents.md)
+
 ### Checking updates
 
 Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were sent.
@@ -344,7 +345,6 @@ The search engine is now aware of your documents and can serve those via an HTTP
 
 :::: tabs
 ::: tab cURL
-[API references](/references/search.md)
 
 ```bash
 $ curl \
@@ -431,6 +431,8 @@ MeiliSearch **response**:
   "query": "botman"
 }
 ```
+
+[API references](/references/search.md)
 
 ### Web Interface
 

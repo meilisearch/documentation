@@ -18,11 +18,7 @@ You must have the master key to access this route.
 
 ### Example
 
-```bash
-$ curl \
-  -H "X-Meili-API-Key: 123"
-  -X GET 'http://localhost:7700/keys'
-```
+<code-samples id="get_keys_1" />
 
 #### Response: `200 Ok`
 
