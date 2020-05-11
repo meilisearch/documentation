@@ -26,7 +26,7 @@ get_one_document_1: |-
 get_documents_1: |-
   $ curl \
     -X GET 'http://localhost:7700/indexes/movies/documents?limit=2'
-add_or_replace_documents_1: |-  
+add_or_replace_documents_1: |-
   $ curl \
     -X POST 'http://localhost:7700/indexes/movies/documents' \
     --data '[{

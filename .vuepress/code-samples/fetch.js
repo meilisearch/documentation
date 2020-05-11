@@ -62,7 +62,7 @@ async function fetchRemoteSamples(options, ctx) {
     const samples = (await requestSamples()).filter((sample) => sample)
     log('Fetched sample files of')
     samplesToFiles(samples)
-    log(`File created with the following SDK's samples: 
+    log(`File created with the following SDK's samples:
     ${samples.map((sample) => sample.label).join('\n    ')}\n`)
   }
 }

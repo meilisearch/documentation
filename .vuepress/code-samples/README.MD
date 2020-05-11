@@ -7,8 +7,8 @@ Each sample of the file is added to the right place in the documentation, depend
 
 ## Sample files
 
-The sample file is a yaml file at the root of each MeiliSearch SDK. 
-Sample files are created based on the `sample-template.yaml` file. 
+The sample file is a yaml file at the root of each MeiliSearch SDK.
+Sample files are created based on the `sample-template.yaml` file.
 
 `sample-template` file:
 ```yaml
@@ -23,7 +23,7 @@ This file is accessible publicly [here](docs.meilisearch.com/sample-template.yam
 Each official MeiliSearch SDK should have a sample file at its root with filled with samples in their respective language.
 The name of the file should be `.code-samples.meilisearch.yaml`.
 
-JavaScript example: 
+JavaScript example:
 ```yaml
 get_one_index_1: |-
   client.getIndex('movies').show()
@@ -43,8 +43,8 @@ By the name of the `sampleId`, you should know where that code sample will be ad
 
 Each sample is expected to be **written in the respective SDK language**.
 
-There is **one exception** to this rule. 
-When the sampleId finishes with `_md`, it means it is expected to be written in markdown format. 
+There is **one exception** to this rule.
+When the sampleId finishes with `_md`, it means it is expected to be written in markdown format.
 
 ### Example
 
@@ -61,7 +61,7 @@ JavaScript sample id with _md extension:
 Access the following file
 `.vuepress/code-samples/sdks.json`
 
-And add your sample file to the list: 
+And add your sample file to the list:
 ```json
 [
   ...
