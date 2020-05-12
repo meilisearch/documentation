@@ -45,7 +45,10 @@ But, the distance between `Bruce` and `Vin` is equal to **8**. The same goes for
 
 ### Numeric types
 
-A numeric type (`integer`, `float`) is converted to a human-readable decimal number string representation.
+A numeric type (`integer`, `float`) is converted to a human-readable decimal number string representation. Numeric types can be searched as they are converted to strings.
+
+You can [add custom ranking rules](/guides/main_concepts/relevancy.md#adding-your-rules) to create an ascending or descending sorting rule on a given attribute that has a numeric value in the documents.
+You can also create [filters](/guides/advanced_guides/filtering.md). The `>`, `>=`, `<`, and `<=` relational operators apply only to numerical values.
 
 ### Boolean
 
@@ -90,7 +93,7 @@ These sentences will be separated by soft and hard spaces exactly as explained i
 
 ### null type
 
-The `null` type can be pushed into MeiliSearch but it won't be taken into account for indexing.
+The `null` type can be pushed into MeiliSearch but it **won't be taken into account for indexing**.
 
 ## Possible Tokenization Issues
 
