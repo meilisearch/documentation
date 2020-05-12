@@ -110,8 +110,6 @@ $ curl \
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
-
 ## Update an index
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
