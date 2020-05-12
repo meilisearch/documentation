@@ -5,7 +5,7 @@ This guide describes the different data types supported for the fields in a docu
 No matter the type, the value of a field will remain unchanged in the returned documents upon search.
 For example, if you have a complex field with nested objects, this field will be returned with the same complexity upon search.
 
-Based on their type, however, the fields will be handled and used in different way by MeiliSearch. **The type affect how a field is used for search results**.
+Based on their type, however, the fields will be handled and used in different ways by MeiliSearch. **The type affects how a field is used for search results**.
 
 Types:
 
@@ -20,17 +20,21 @@ Types:
 
 > String tokenization is the process of splitting a string into a list of individual terms that are called tokens.
 
-A string is passed to a tokenizer and is then broken into separate string tokens. Each word (token) is indexed and stored in the global dictionary of the corresponding index.
+A string is passed to a tokenizer and is then broken into separate string tokens. A token is a **word**.
 
-- For Latin-based languages, the words are separated by space.
-- For Kanji characters, the words are separated by character.
+- For Latin-based languages, the words are separated by **space**.
+- For Kanji characters, the words are separated by **character**.
 
-There are two kinds of space separators:
+For Latin-based languages, there are two kinds of **space separators**:
 
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
 
+After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
+
 #### Example
+
+To demonstrate how a string is split by space, let's say you have the following string as an input:
 
 ```
 "Bruce Willis,Vin Diesel"
