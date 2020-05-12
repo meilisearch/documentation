@@ -52,7 +52,7 @@ You can also create [filters](/guides/advanced_guides/filtering.md). The `>`, `>
 
 ### Boolean
 
-A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text.
+A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text. Booleans can be searched as they are converted to strings.
 
 ### Array
 
