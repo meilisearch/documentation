@@ -56,7 +56,9 @@ A Boolean value, which is either `true` or `false`, is received and converted to
 
 ### Array
 
-An array represents a collection of elements that can be strings or arrays for instance. An array is recursively broken into separate string tokens.
+An array represents a collection of elements that can be strings or arrays for instance. An array is recursively broken into separate string tokens, which means separate words.
+
+After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
 #### Example
 
@@ -76,7 +78,9 @@ The strings above will be separated by soft and hard spaces exactly as explained
 
 ### Object
 
-JSON objects are written in key/value pairs and surrounded by curly braces. An object is broken into separate string tokens.
+JSON objects are written in key/value pairs and surrounded by curly braces. An object is broken into separate string tokens, which means separate words.
+
+After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
 #### Example
 
