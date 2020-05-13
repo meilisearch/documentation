@@ -18,6 +18,8 @@ Types:
 
 ### String
 
+String is the primary type for indexing data in MeiliSearch. It enables to create the content in which to search. Strings are processed as detailed below.
+
 > String tokenization is the process of splitting a string into a list of individual terms that are called tokens.
 
 A string is passed to a tokenizer and is then broken into separate string tokens. A token is a **word**.
@@ -30,9 +32,11 @@ For Latin-based languages, there are two kinds of **space separators**:
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
 
+Distance plays an essential role in in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/guides/main_concepts/relevancy.md). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
+
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
-#### Example
+#### Examples
 
 To demonstrate how a string is split by space, let's say you have the following string as an input:
 
@@ -42,6 +46,24 @@ To demonstrate how a string is split by space, let's say you have the following 
 
 In the example above, the distance between `Bruce` and `Willis` is equal to **1**. The distance between `Vin` and `Diesel` is equal to **1** too.
 But, the distance between `Bruce` and `Vin` is equal to **8**. The same goes for `Bruce` and `Diesel`, or `Vin` and `Willis`, or also `Willis` and `Diesel`.
+
+Let's see another example. Given two documents:
+
+```json
+[
+  {
+    "movie_id": "001",
+    "description": "Bruce.Willis"
+  },
+  {
+    "movie_id": "002",
+    "description": "Bruce super Willis"
+  }
+]
+```
+
+When making a query on `Bruce Willis`, `002` will be the first document returned and `001` will be the second one.
+This will happen because the proximity distance between `Bruce` and `Willis` is equal to **7** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
 
 ### Numeric types
 
@@ -74,7 +96,7 @@ Will be processed as if all elements were arranged at the same level:
 "Bruce Willis", "Vin Diesel", "Kung Fu Panda"
 ```
 
-The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#example).
+The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#examples).
 
 ### Object
 
@@ -93,7 +115,7 @@ After the tokenizing process, each word is indexed and stored in the global dict
 
 In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as sentences. The colon `:` and comma `,` characters are used as separators.
 
-These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#example).
+These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#examples).
 
 ### null type
 
