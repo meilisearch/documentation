@@ -6,25 +6,25 @@
 
 In any DigitalOcean page, when you are logged in, you will find a menu in the upper-right corner. Click on Create -> Droplets
 
-![img](../../public/image/digitalocean/01.create.png "Create droplet")  
+![Create droplet](../../public/image/digitalocean/01.create.png)  
 
 ### 2. Select MeiliSearch snapshot
 
 By default DigitalOcean will show you the "distributions" tab. Select the "Marketplace" tab and search for "meili". Select it.
 
-![img](../../public/image/digitalocean/02.marketplace.png "Marketplace")  
+![Marketplace](../../public/image/digitalocean/02.marketplace.png)  
 
 ### 3. Select your plan
 
 Select your plan, starting at $5 (click on 'See all plans for more options). Memory optimized options will give you better results for a production environment on big datasets.
 
-![img](../../public/image/digitalocean/03.select-plan.png "Select plan")  
+![Select plan](../../public/image/digitalocean/03.select-plan.png)  
 
 ### 4. Select a region for your droplet
 
 Select the region where you want to deploy your droplet. Remember, the closer you are to your users or customers, the better it will be their search experience with MeiliSearch.
 
-![img](../../public/image/digitalocean/04.select-region.png "Select region")  
+![Select region](../../public/image/digitalocean/04.select-region.png)  
 
 ### 5. Add your ssh key
 
@@ -34,41 +34,41 @@ If you need help with this, visit [this link](https://www.digitalocean.com/docs/
 
 You can also set a password for `root` user if you prefer this authentication method.
 
-![img](../../public/image/digitalocean/05.add-ssh-key.png "Add ssh key")  
+![Add ssh key](../../public/image/digitalocean/05.add-ssh-key.png)  
 
 ### 6. Choose your droplet name and tags
 
 Here you can select the name that will be visible everywhere in your DigitalOcean account. Choose wisely!
 
-![img](../../public/image/digitalocean/06.droplet-name.png "Droplet name")  
+![Droplet name](../../public/image/digitalocean/06.droplet-name.png)  
 
 Tags are a very good method to know who created ressources, and for organizing resources or projects. Try to always add some tags to make clear what are the server  purposes.
 
-![img](../../public/image/digitalocean/06.add-tags.png "Add tags")  
+![Add tags](../../public/image/digitalocean/06.add-tags.png)  
 
 ### 7. Finally click on Create Droplet
 
-![img](../../public/image/digitalocean/07.create-droplet.png "Create droplet")  
+![Create droplet](../../public/image/digitalocean/07.create-droplet.png)  
 
 ### 8. Your MeiliSearch is running (with no config).  
 
  While creating...  
 
-![img](../../public/image/digitalocean/08.creating.png "Creating")  
+![Creating](../../public/image/digitalocean/08.creating.png)  
 
 When it's done...  
 
-![img](../../public/image/digitalocean/08.created-ip.png "Created")  
+![Created](../../public/image/digitalocean/08.created-ip.png)  
 
 ### 9. Test MeiliSearch.
 
 Copy the public IP address
 
-![img](../../public/image/digitalocean/09.copy-ip.png "Copy IP")  
+![Copy IP](../../public/image/digitalocean/09.copy-ip.png)  
 
 Paste it in your browser. If this screen is shown, your MeiliSearch is now ready!
 
-![img](../../public/image/digitalocean/09.test-meili.png "Test MeiliSearch")  
+![Test MeiliSearch](../../public/image/digitalocean/09.test-meili.png)  
 
 ## Configure production settings in your MeiliSearch Droplet
 
@@ -78,11 +78,11 @@ Configuring your MeiliSearch from a DigitalOcean droplet is very straigthforward
 
 If you want to use your own domain name (or sub-domain), add an `A record` in your domain name provider account
 
-![img](../../public/image/digitalocean/11.domain-a-record.png "Domain to  MeiliSearch")  
+![Domain to  MeiliSearch](../../public/image/digitalocean/11.domain-a-record.png)  
 
 This should work out of the box. Your domain should be usable for your MeiliSearch
 
-![img](../../public/image/digitalocean/11.working-domain.png "Domain to  MeiliSearch")  
+![Domain to  MeiliSearch](../../public/image/digitalocean/11.working-domain.png)  
 
 ### 2. Set API KEY and SSL (HTTPS)
 
@@ -94,7 +94,7 @@ Open a terminal and start a new SSH connection with the IP you got from DigitalO
 
 Write in your terminal `ssh root@<your-ip-address>` and press Enter to establish connection
 
-![img](../../public/image/digitalocean/12.open-terminal-ssh.png "Terminal ssh")  
+![Terminal ssh](../../public/image/digitalocean/12.open-terminal-ssh.png)  
 
 Write `yes` and press Enter to accept the authentication process  
 
@@ -104,6 +104,6 @@ A script will run automatically, asking for your settings and desired configurat
 
 ### 3. Enjoy your ready-to-use MeiliSearch droplet
 
-![img](../../public/image/digitalocean/13.finish.png "Enjoy")  
+![Enjoy](../../public/image/digitalocean/13.finish.png)  
 
 **Enjoy**!
