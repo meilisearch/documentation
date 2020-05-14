@@ -114,7 +114,9 @@ After the tokenizing process, each word is indexed and stored in the global dict
 ```
 
 In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as sentences. The colon `:` and comma `,` characters are used as separators.
-
+    ```json
+    "movie_id. 1564saqw12ss. title. Kung fu Panda."
+    ```
 These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#examples).
 
 ### null type
