@@ -93,7 +93,7 @@ The following input:
 Will be processed as if all elements were arranged at the same level:
 
 ```json
-"Bruce Willis", "Vin Diesel", "Kung Fu Panda"
+"Bruce Willis. Vin Diesel. Kung Fu Panda."
 ```
 
 The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#examples).
