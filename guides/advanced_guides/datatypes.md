@@ -10,7 +10,7 @@ Based on their type, however, the fields will be handled and used in different w
 Types:
 
 - [String](/guides/advanced_guides/datatypes.md#string)
-- [Numeric types](/guides/advanced_guides/datatypes.md#numeric-types): `integer`, `float`
+- [Numeric types](/guides/advanced_guides/datatypes.md#numeric-type): `integer`, `float`
 - [Boolean](/guides/advanced_guides/datatypes.md#boolean)
 - [Array](/guides/advanced_guides/datatypes.md#array)
 - [Object](/guides/advanced_guides/datatypes.md#object)
@@ -114,9 +114,11 @@ After the tokenizing process, each word is indexed and stored in the global dict
 ```
 
 In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as sentences. The colon `:` and comma `,` characters are used as separators.
-    ```json
-    "movie_id. 1564saqw12ss. title. Kung fu Panda."
-    ```
+
+```json
+"movie_id. 1564saqw12ss. title. Kung fu Panda."
+```
+
 These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#examples).
 
 ### null type
