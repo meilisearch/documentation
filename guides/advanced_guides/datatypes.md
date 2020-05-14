@@ -82,7 +82,7 @@ An array represents a collection of elements that can be strings or arrays for i
 
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
-#### Example
+#### Examples
 
 The following input:
 
