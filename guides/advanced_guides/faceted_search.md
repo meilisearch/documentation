@@ -1,6 +1,14 @@
-# Faceting
+# Faceted Search
 
-While filtering output has been a general approach, facets differ from basic filtering as they are aimed at restricting the document to be filtered on the up stream. To achieve this, facets are declared at indexing. In other words it can be said that, Facets are document attributes that indicate which category a document belongs to. The ultimate goal of faceting is to be complimentary with filtering.
+Faceting is a feature provided out-of-the-box by MeiliSearch. It allows to classify search results into categories that are called **facets**.
+
+> For a movie, its title, director, and its release date can be used as facets.
+
+The user can then narrow down search results by selecting facets, which is similar to applying filters to refine the results.
+
+However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
+
+While filtering output has been a general approach, facets differ from basic filtering as they are aimed at restricting the document to be filtered on the upstream. To achieve this, facets are declared at indexing. In other words, it can be said that Facets are document attributes that indicate which category a document belongs to. The ultimate goal of faceting is to be complimentary with filtering.
 
 ## Using Facets
 
@@ -11,16 +19,16 @@ A call to [POST]/indexes/:index_uid/settings should list the currently set facet
 
 ## Using Search Query
 
-When doing a search query, a user can specify:
+When doing a search query, you can specify:
 
-  1. The facets to filter on with the facet syntax (explained below), thanks to the optional parameter facetFilters.  
-  2. the facets for which to retrieve the matching count for, with the facets optional parameter.
+1. The facets to filter on with the facet syntax (explained below), thanks to the optional parameter facetFilters.
+2. the facets for which to retrieve the matching count for, with the facets optional parameter.
 
 ## Syntax
 
 The syntax for passing arguements through facetFilters is `["facetName:facetValue"] or [["FacetName:FacetValue"]]`
 
-### EXAMPLE
+### Example
 
 `[["color:red", "color:blue"], "kind:t-shirt"] <=> ("color:red" OR "color:blue") AND "kind:t-shirt"`
 inner arrays elements are `OR`ed together, outer array elements are `AND`ed together.
