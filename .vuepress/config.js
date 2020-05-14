@@ -121,7 +121,10 @@ module.exports = {
           title: "🧷 How to's",
           path: '/resources/howtos/',
           collapsable: false,
-          children: ['/resources/howtos/meilisearch_react'],
+          children: [
+            '/resources/howtos/meilisearch_react',
+            '/resources/howtos/digitalocean_droplet',
+          ],
         },
       ],
     },
