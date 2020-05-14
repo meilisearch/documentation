@@ -5,7 +5,7 @@ permalink: /instant-search-react-app
 
 _The following is a guest post by Riccardo Giorato._
 
-![Decathlon front page](../../public/image/decatlon.png)
+![Decathlon front page](/react-guide/decatlon.png)
 
 ## Introduction
 
@@ -234,7 +234,7 @@ export default App;
 
 This code should output this beautiful header with a search form.
 
-![Decathlon front page](../../public/image/decat_before.png)
+![Decathlon front page](/react-guide/decat_before.png)
 
 ## Search Results in React
 
@@ -336,7 +336,7 @@ You can have a look at the full [App.js](https://github.com/Giorat/meili_react_d
 
 You can visit the live application here: [https://meili-react-demo.netlify.app/](https://meili-react-demo.netlify.app/)
 
-![Decathlon front page](../../public/image/decatlon.png)
+![Decathlon front page](/react-guide/decatlon.png)
 
 ## Configure the Search even more!
 
