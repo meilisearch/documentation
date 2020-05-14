@@ -32,7 +32,7 @@ For Latin-based languages, there are two kinds of **space separators**:
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
 
-Distance plays an essential role in in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/guides/main_concepts/relevancy.md). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
+Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/guides/main_concepts/relevancy.md). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
 
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
