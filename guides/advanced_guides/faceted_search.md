@@ -1,14 +1,14 @@
 # Faceted Search
 
-Faceting is a feature provided out-of-the-box by MeiliSearch. It allows to classify search results into categories that are called **facets**.
+Faceted search is a feature provided out-of-the-box by MeiliSearch. Faceting allows to classify search results into categories that are called **facets**.
 
 > For a movie, its title, director, and its release date can be used as facets.
 
 The user can then narrow down search results by selecting facets, which is similar to applying filters to refine the results.
 
-However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
+Both faceting and filtering help narrow down the search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
 
-While filtering output has been a general approach, facets differ from basic filtering as they are aimed at restricting the document to be filtered on the upstream. To achieve this, facets are declared at indexing. In other words, it can be said that Facets are document attributes that indicate which category a document belongs to. The ultimate goal of faceting is to be complimentary with filtering.
+Faceted attributes **must be declared at indexing time**.
 
 ## Using Facets
 
