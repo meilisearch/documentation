@@ -65,7 +65,7 @@ Let's see another example. Given two documents:
 When making a query on `Bruce Willis`, `002` will be the first document returned and `001` will be the second one.
 This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
 
-### Numeric types
+### Numeric type
 
 A numeric type (`integer`, `float`) is converted to a human-readable decimal number string representation. Numeric types can be searched as they are converted to strings.
 
