@@ -46,7 +46,7 @@ Results are sorted by **the similarity of the matched words with the query words
 
 ::: tab Typo
 
-![Image from alias](/image/vogli3.png)
+![Image from alias](/ranking-rules/vogli3.png)
 
 ### Typo
 
@@ -58,7 +58,7 @@ The `typo` rule sorts the results by increasing number of typos on matched query
 :::
 
 ::: tab Proximity
-![Image from alias](/image/new_road.png)
+![Image from alias](/ranking-rules/new_road.png)
 
 ### Proximity
 
@@ -69,7 +69,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 :::
 
 ::: tab Attribute
-![Image from alias](/image/belgium.png)
+![Image from alias](/ranking-rules/belgium.png)
 
 ### Attribute
 
@@ -81,7 +81,7 @@ The `attribute` rule sorts the results by [attribute importance](/guides/main_co
 
 ::: tab Words position
 
-![Image from alias](/image/belgium.png)
+![Image from alias](/ranking-rules/belgium.png)
 
 ### Word position
 
@@ -92,7 +92,7 @@ The `word position` rule sorts the results by increasing matching word's index n
 :::
 
 ::: tab Exactness
-![Image from alias](/image/knight.png)
+![Image from alias](/ranking-rules/knight.png)
 
 ### Exactness
 
