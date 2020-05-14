@@ -7,7 +7,7 @@
 A "droplet" is a set of resources, as a Virtual Machine, or a Server, in which you can run your own applications.
 In any DigitalOcean page, when you are logged in, you will find a menu in the upper-right corner. Click on "Create" -> "Droplets".
 
-![Create droplet](/digitalocean/01.create.png "Create droplet")
+![Create droplet](/digitalocean/01.create.png)
 
 ### 2. Select MeiliSearch snapshot
 
