@@ -9,6 +9,7 @@ Some operations are put in a queue and will be executed in turn (asynchronously)
 - When making a write request (_create/update/delete_) against the search engine, it stores the operation received in a queue and returns an `updateId`. With this id, the operation update is trackable.
 - Each update received is treated following the order it has been received.
 - You can get the update status on the [`/updates`](/references/updates.md) route.
+- Processed updates are marked as processed and kept in the operation list (available at `/indexes/:index_uid/updates`). They won't be deleted.
 
 <mermaid>
 sequenceDiagram
