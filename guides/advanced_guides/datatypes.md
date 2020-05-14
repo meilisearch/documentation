@@ -63,7 +63,7 @@ Let's see another example. Given two documents:
 ```
 
 When making a query on `Bruce Willis`, `002` will be the first document returned and `001` will be the second one.
-This will happen because the proximity distance between `Bruce` and `Willis` is equal to **7** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
+This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
 
 ### Numeric types
 
