@@ -1,4 +1,4 @@
-# Facets
+# Faceting
 
 While filtering output has been a general approach, facets differ from basic filtering as they are aimed at restricting the document to be filtered on the up stream. To achieve this, facets are declared at indexing. In other words it can be said that, Facets are document attributes that indicate which category a document belongs to. The ultimate goal of faceting is to be complimentary with filtering.
 
