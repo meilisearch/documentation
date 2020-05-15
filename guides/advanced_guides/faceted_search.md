@@ -1,24 +1,25 @@
 # Faceted Search
 
-Faceted search is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories that are called **facets**.
+**Faceted search** is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories that are called **facets**.
 
 > For a movie, its title, director, and its release date can be used as facets.
 
-A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is **an intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
+A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is an **intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
 When the users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
 
 TODO: add a picture
 
 ### How does it work?
 
-TODO
+Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. This is a powerful feature that allows building an intuitive navigation interface.
 
-Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
-
-Faceted attributes **must be declared at indexing time**.
-TODO
+Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**. Facets are document fields and provide grouping capabilities. They allow searching for specific fields rather than every field whereas iltering is used to filter the returned results by adding constraints.
 
 ### Using Facets
+
+TODO
+
+To use an attribute as a facet, it **must be declared at indexing time as a faceted attribute**.
 
 In order to implement the all new facets, we at meilisearch have added a new attribute `attributesForFaceting`. With the default value of `Null` it accepts `[String]`.
 It should be noted that passing an empty array will recet all faceting attribute in other words any call to settings with a value for the attribute attributesForFaceting overwrites the currently set faceting attributes.
