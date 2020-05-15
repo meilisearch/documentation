@@ -6,11 +6,11 @@ Meilisearch allows you to define filters thanks to a **very simple query languag
 
 ### Using Filters
 
-In order to apply filtering to a search, simply add a filter expression to the `filters` query parameter of your search. More on search query parameters [here](https://docs.meilisearch.com/references/search.html#query-parameters).
+In order to apply filtering to a search, simply add a filter expression to the `filters` query parameter of your search. Find out more on search query parameters in our [API reference](https://docs.meilisearch.com/references/search.html#query-parameters).
 
 ### The Query Language
 
-In itself the query language is very simple, and allows you to filter results on any document field. For now it only allows you to query on fields that are either `number`, `boolean`, or `string`
+In itself, the query language is very simple and allows you to filter results on any document field. For now, it only allows you to query on fields that are either `number`, `boolean`,  `string`, or an array of the aforementioned. Filtering on nested arrays or objects isn't permitted.
 
 ### Conditions
 

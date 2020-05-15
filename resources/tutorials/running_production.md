@@ -2,12 +2,12 @@
 permalink: /running-production
 ---
 # MeiliSearch in production: taking it to the next level
-  
+
 ## A quick introduction
-  
+
 Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
 
-Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html): using Docker, brew, aptitude, binaries, a simple curl, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
+Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html): using Docker, Brew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
 
 Using MeiliSearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy MeiliSearch in production** and ensure it is **safe and ready to use**?
 
@@ -26,10 +26,10 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 + [3.2. Set up SSL/TLS for your MeiliSearch](/resources/tutorials/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
 
 [Conclusion](/resources/tutorials/running_production.md#conclusion)
-  
+
 ## Get your MeiliSearch ready for production
-  
-For this tutorial, we will be using a Debian 10 server, running on DigitalOcean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your MeiliSearch and are not already registered on DigitalOcean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).  
+
+For this tutorial, we will be using a Debian 10 server, running on DigitalOcean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your MeiliSearch and are not already registered on DigitalOcean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).
 
 ## Prerequisites
 
@@ -54,13 +54,13 @@ $ curl -L https://install.meilisearch.com | sh
 ```
 
 > The different options to achieve a MeiliSearch installation are detailed in **[this guide](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**.
-> It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your achitecture in the best possible way.  
+> It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your achitecture in the best possible way.
 
-You can always check the latest MeiliSearch stable version, and get MeiliSearch for the Operating System of your choice, by visiting the following link:  
+You can always check the latest MeiliSearch stable version, and get MeiliSearch for the Operating System of your choice, by visiting the following link:
 
-**[Latest MeiliSearch Stable Version](https://github.com/meilisearch/MeiliSearch/releases/latest)**  
+**[Latest MeiliSearch Stable Version](https://github.com/meilisearch/MeiliSearch/releases/latest)**
 
-MeiliSearch is finally installed and ready to use. To make it accessible from everywhere in your system, move the binary file into your system binaries folder:  
+MeiliSearch is finally installed and ready to use. To make it accessible from everywhere in your system, move the binary file into your system binaries folder:
 
 ```bash
 # Move the MeiliSearch binary to your system binaries
@@ -90,13 +90,13 @@ $ meilisearch
 
 In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
 
-> If you are new to services and `systemd`, you can learn more about the basics of Linux services [here](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/).  
+> If you are new to services and `systemd`, you can learn more about the basics of Linux services [here](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/).
 
-In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that MeiliSearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart MeiliSearch.  
+In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that MeiliSearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart MeiliSearch.
 
 ### 2.1 Create a service file
 
-Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run MeiliSearch on port `7700`.  
+Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run MeiliSearch on port `7700`.
 
 To run MeiliSearch in a production environment, use the `--env` flag. To generate a master key that will let MeiliSearch create reading and writing keys, use the `--master-key` flag. With those keys, you can easily control who can access or create new documents, indexes, or change the configuration. You can change the `Master Key` to any value in the following command. However, for security concerns, it's better to choose a safe and random key, never share it and, just, **keep it safe**.
 
@@ -115,7 +115,7 @@ WantedBy=default.target
 EOF
 ```
 
-> For more information on MeiliSearch authentication and API keys see the **[Authentication Docs](https://docs.meilisearch.com/guides/advanced_guides/authentication.html)**. For more information on MeiliSearch options and flags see the **[Installation Docs](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**  
+> For more information on MeiliSearch authentication and API keys see the **[Authentication Docs](https://docs.meilisearch.com/guides/advanced_guides/authentication.html)**. For more information on MeiliSearch options and flags see the **[Installation Docs](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**
 
 As for now, it is not time yet to expose your MeiliSearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your MeiliSearch instance.
 
