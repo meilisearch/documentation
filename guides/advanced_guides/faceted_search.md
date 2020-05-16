@@ -28,7 +28,7 @@ A call to [POST]/indexes/:index_uid/settings lists the currently set facets.
 
 ### Querying On Faceted Attributes
 
-When doing a search query, you can specify:
+When performing a search, you can specify:
 
 1. The facets to filter on with the facet syntax (explained below), thanks to the optional parameter `facetFilters`.
 2. the facets for which to retrieve the matching count for, with the facets optional parameter.
