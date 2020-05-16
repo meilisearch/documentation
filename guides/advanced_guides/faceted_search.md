@@ -5,24 +5,26 @@
 > For a movie, its title or its director can be used as facets.
 
 A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is an **intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
-When the users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
+When users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
 
 ![Amazon UI](/amazon-facets.png)
-> Faceted navigation on Amazon where facets are placed on the left side.
+> Faceted navigation on Amazon: facets are displayed on the left column.
 
 ### How does it work?
 
-Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. This is a powerful feature that enables to build an intuitive navigation interface.
+Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. Facets describe the properties of the documents. They are document fields used as categories such as title, author, director, language, description, and so forth.
+Faceting is a powerful feature that enables to build an intuitive navigation interface.
 
-Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**. Facets are document fields and provide grouping capabilities. They allow searching for specific fields rather than every field whereas filtering is used to filter the returned results by adding constraints.
+Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
 
-Field attributes can be used as facets. However, only fields of data type `string` or `array of strings` can be set up as facets.
+- **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints. 
+- **Facets** are a subset of filtering. They are more specific filters that pertain to the returned documents. Facets are document fields used as categories and thus provide grouping capabilities to search for specific fields rather than every field. They allow users to narrow down a set of documents by multiple dimensions.
 
 ### Setting Up Facets
 
-TODO
-
 To use an attribute as a facet, it **must be declared at indexing time as a faceted attribute**.
+
+Only fields of data type `string` or `array of strings` can be set up as facets.
 
 In order to use faceting, facet attributes must be declared at indexing. The `attributesForFaceting` field in the [settings](/references/settings.md) accepts a `[String]` that specifies which attributes to do faceting on. It defaults to `Null`.
 It should be noted that passing an empty array will reset all faceting attributes. In other words, any call to settings with a value for the attribute `attributesForFaceting` will overwrite the currently set faceting attributes.
