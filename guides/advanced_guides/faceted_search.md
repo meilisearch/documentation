@@ -13,7 +13,7 @@ When users perform a search, they are presented with a list of results and a lis
 ## How does it work?
 
 Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. Document fields are used as categories such as title, author, director, language, description, release date, and so forth.
-Faceting is a powerful feature that enables to build an intuitive navigation interface.
+Besides, faceting is a powerful feature that enables to build an intuitive navigation interface.
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
 
@@ -36,6 +36,8 @@ Only fields of data type **string** or **array of strings** can be set up as fac
 :::
 
 Any POST request on the `settings` route with a value set to `attributesForFaceting` will overwrite the current faceted attributes. Then, passing an empty array will reset all defined faceted attributes.
+
+You can't do faceting on already existing facets.
 
 ### Example
 
@@ -70,6 +72,10 @@ If the `facets` parameter has been set, the returned results will contain two ad
 
 2. `exhaustiveFacetsCount`: Whether the above count is **exhaustive** or **approximative**.
 
+### Example
+
+TODO
+
 ### The facets to filter on
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
@@ -78,14 +84,60 @@ If the `facets` parameter has been set, the returned results will contain two ad
 
   An array of strings that contains the facet names and values to filter on.
 
+  The **array's depth** must be at least equal to **1** and musn't be greater than **2**.
+
   - `facetName`: The attribute (the name) of a field used as a facet.
   - `facetValue`: The value of this facet to filter results on.
 
+TODO
+
 `[["color:red", "color:blue"], "kind:t-shirt"] <=> ("color:red" OR "color:blue") AND "kind:t-shirt"`
 inner arrays elements are `OR`ed together, outer array elements are `AND`ed together.
-> Array depth must not be greater than 2, and be at least 1.
 
-Errors are sent to the user on:
+### Example
 
-1. Incorrect syntax usage`[["color:red"]]` and `["color:red"]` are examples correct syntax while `"color:red"` is incorrect.
-2. Faceting on existing facets. It is asked of the user to do faceting on an unregistered or not existing facet. (we could send the list of existing facets to the user).
+Suppose that you have a collection of movies in the following JSON format:
+
+```json
+[
+    {
+        "id": "495925",
+        "title": "Doraemon the Movie:Nobita's Treasure Island",
+        "director": "Fujiko Fujio",
+        "genre": "Science fiction",
+        "poster": "https://image.tmdb.org/t/p/w1280/cmJ71gdZxCqkMUvGwWgSg3MK7pC.jpg",
+        "overview": "The story is based on Robert Louis Stevenson's Treasure Island novel.",
+        "release_date": 1520035200
+    },
+    {
+        "id": "329996",
+        "title": "Dumbo",
+        "director": "Tim Burton",
+        "genre": "Science fiction",
+        "poster": "https://image.tmdb.org/t/p/w1280/279PwJAcelI4VuBtdzrZASqDPQr.jpg",
+        "overview": "A young elephant, whose oversized ears enable him to fly, helps...",
+        "release_date": 1553644800
+    },
+    {
+        "id": "299536",
+        "title": "Avengers:Infinity War",
+        "director": "Joe Russo",
+        "genre": "Action and Adventure",
+        "poster": "https://image.tmdb.org/t/p/w1280/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+        "overview": "As the Avengers and their allies have continued to protect...",
+        "release_date": 1524618000
+    },
+    {
+        "id": "458723",
+        "title": "Us",
+        "director": "Jordan Peele",
+        "genre": "Horror",
+        "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
+        "overview": "Husband and wife Gabe and Adelaide Wilson take their...",
+        "release_date": 1552521600
+    },
+    ...
+]
+```
+
+TODO
