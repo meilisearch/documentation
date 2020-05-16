@@ -10,7 +10,7 @@ When users perform a search, they are presented with a list of results and a lis
 ![Amazon UI](/amazon-facets.png)
 > Faceted navigation on Amazon: facets are displayed on the left column.
 
-### How does it work?
+## How does it work?
 
 Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. Document fields are used as categories such as title, author, director, language, description, release date, and so forth.
 Faceting is a powerful feature that enables to build an intuitive navigation interface.
@@ -20,11 +20,12 @@ Both faceting and filtering help drill down into a subset of search results. How
 - **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints.
 - **Facets** are a subset of filtering. Facets are document fields used as categories and thus provide grouping capabilities to search for specific fields rather than every field. They allow users to narrow down a set of documents by multiple dimensions.
 
-### Setting Up Facets
+## Setting Up Facets
 
-Document Attributes to use as facets **must be declared at indexing time**.
+Document attributes to use as facets **must be declared at indexing time**.
 
-You need to add the desired attributes to the `attributesForFaceting` list. This attribute accepts a `[String]` that specifies which attributes are used as facets and defaults to `null`. You can set up facets [through the API](/references/settings.md) via the [global settings route](/references/settings.md#update-settings).
+You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
+You need to add the desired attributes to `attributesForFaceting` list. This attribute accepts a `[String]` that specifies which attributes are used as facets, and defaults to `null`.
 
 ::: warning
 
@@ -32,7 +33,7 @@ Only fields of data type **string** or **array of strings** can be set up as fac
 
 :::
 
-Any POST request on the `settings`route with a value set to `attributesForFaceting` will overwrite the current faceted attributes. Then, passing an empty array will reset all defined faceted attributes.
+Any POST request on the `settings` route with a value set to `attributesForFaceting` will overwrite the current faceted attributes. Then, passing an empty array will reset all defined faceted attributes.
 
 ### Example
 
@@ -43,14 +44,14 @@ $ curl \
   -X GET 'http://localhost:7700/indexes/movies/settings'
 ```
 
-### Querying On Faceted Attributes
+## Querying On Faceted Attributes
 
 When performing a search, you can specify:
 
 1. The facets to filter on with the facet syntax (explained below), thanks to the optional parameter `facetFilters`.
 2. the facets for which to retrieve the matching count for, with the `facets` optional parameter.
 
-### Additional fields
+## Additional fields
 
 The result of the search query contains two additional fields if the `facets` parameter has been set:
 
@@ -59,7 +60,7 @@ The result of the search query contains two additional fields if the `facets` pa
 
 The syntax for passing arguements through facetFilters is `["facetName:facetValue"] or [["FacetName:FacetValue"]]`
 
-#### Example
+### Example
 
 `[["color:red", "color:blue"], "kind:t-shirt"] <=> ("color:red" OR "color:blue") AND "kind:t-shirt"`
 inner arrays elements are `OR`ed together, outer array elements are `AND`ed together.
