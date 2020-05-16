@@ -29,6 +29,12 @@ Document attributes to use as facets **must be declared at indexing time**.
 You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
 You need to add the desired attributes to the `attributesForFaceting` list. This attribute accepts a `[String]` that specifies which attributes must be used as facets, and defaults to `null`.
 
+`attributesForFaceting=[<Attribute>, ...]`
+
+- `[<Attribute>, ...]` (Array of strings, defaults to `null`)
+
+  An array of strings that contains the attributes to use as facets.
+
 ::: warning
 
 Only fields of data type **string** or **array of strings** can be set up as facets.
@@ -41,11 +47,52 @@ You can't do faceting on already existing facets.
 
 ### Example
 
-Given an index that contains information about movies, you can list the settings as follows:
+Suppose that you have a collection of movies in the following JSON format:
+
+```json
+[
+  {
+      "id": "495925",
+      "title": "Doraemon the Movie:Nobita's Treasure Island",
+      "director": "Fujiko Fujio",
+      "genre": "Science fiction",
+      "poster": "https://image.tmdb.org/t/p/w1280/cmJ71gdZxCqkMUvGwWgSg3MK7pC.jpg",
+      "overview": "The story is based on Robert Louis Stevenson's Treasure Island novel.",
+      "release_date": 1520035200
+  },
+  {
+      "id": "329996",
+      "title": "Dumbo",
+      "director": "Tim Burton",
+      "genre": "Science fiction",
+      "poster": "https://image.tmdb.org/t/p/w1280/279PwJAcelI4VuBtdzrZASqDPQr.jpg",
+      "overview": "A young elephant, whose oversized ears enable him to fly, helps...",
+      "release_date": 1553644800
+  },
+  {
+      "id": "458723",
+      "title": "Us",
+      "director": "Jordan Peele",
+      "genre": "Horror",
+      "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
+      "overview": "Husband and wife Gabe and Adelaide Wilson take their...",
+      "release_date": 1552521600
+  },
+  ...
+]
+```
+
+You would declare faceted attributes as follows:
 
 ```bash
 $ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings'
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+      "attributesForFaceting": [
+          "director",
+          "genre"
+      ]
+  }'
 ```
 
 ## Querying On Faceted Attributes
@@ -60,7 +107,7 @@ This attribute can take two values:
 
 - `[<facetName>, <facetName>, ...]` (Optional, array of strings, defaults to `null`)
 
-  Comma-separated list of facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
+  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
 
 - `["*"]`
 
@@ -93,51 +140,3 @@ TODO
 
 `[["color:red", "color:blue"], "kind:t-shirt"] <=> ("color:red" OR "color:blue") AND "kind:t-shirt"`
 inner arrays elements are `OR`ed together, outer array elements are `AND`ed together.
-
-### Example
-
-Suppose that you have a collection of movies in the following JSON format:
-
-```json
-[
-    {
-        "id": "495925",
-        "title": "Doraemon the Movie:Nobita's Treasure Island",
-        "director": "Fujiko Fujio",
-        "genre": "Science fiction",
-        "poster": "https://image.tmdb.org/t/p/w1280/cmJ71gdZxCqkMUvGwWgSg3MK7pC.jpg",
-        "overview": "The story is based on Robert Louis Stevenson's Treasure Island novel.",
-        "release_date": 1520035200
-    },
-    {
-        "id": "329996",
-        "title": "Dumbo",
-        "director": "Tim Burton",
-        "genre": "Science fiction",
-        "poster": "https://image.tmdb.org/t/p/w1280/279PwJAcelI4VuBtdzrZASqDPQr.jpg",
-        "overview": "A young elephant, whose oversized ears enable him to fly, helps...",
-        "release_date": 1553644800
-    },
-    {
-        "id": "299536",
-        "title": "Avengers:Infinity War",
-        "director": "Joe Russo",
-        "genre": "Action and Adventure",
-        "poster": "https://image.tmdb.org/t/p/w1280/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
-        "overview": "As the Avengers and their allies have continued to protect...",
-        "release_date": 1524618000
-    },
-    {
-        "id": "458723",
-        "title": "Us",
-        "director": "Jordan Peele",
-        "genre": "Horror",
-        "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
-        "overview": "Husband and wife Gabe and Adelaide Wilson take their...",
-        "release_date": 1552521600
-    },
-    ...
-]
-```
-
-TODO
