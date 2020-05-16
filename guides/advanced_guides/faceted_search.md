@@ -97,7 +97,7 @@ $ curl \
 
 When performing a search, you can specify:
 
-### The facets for which to retrieve the matching count
+### 1. The facets for which to retrieve the matching count
 
 `facets=[<facetName>, <facetName>, ...]`
 
@@ -121,9 +121,15 @@ If the `facets` parameter has been set, the returned results will contain two ad
 
 ### Example
 
-TODO
+Given a movie database, suppose that you want to know how many Batman movies are classified as `Action and Adventure`, how many of them are classified as `Animation` and what the number of Batman movies per director is. You would use the following CURL command:
 
-### The facets to filter on
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Batman' \
+    --data-urlencode 'facets=["genre, "director]'
+```
+
+### 2. The facets to filter on
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 
@@ -135,7 +141,7 @@ This attribute can take two types of array:
   - `facetName`: The name (the attribute) of a field used as a facet.
   - `facetValue`: The value of this facet to filter results on.
 
-  Both contain the facet names and values to filter on.
+  Both types of array contain the facet names and values to filter on.
   The **array's depth** must be at least equal to **1** and musn't be greater than **2**.
 
 Using a double dimensional array allows using **logical connectives**.
@@ -157,4 +163,10 @@ Can be translated as:
 
 ### Example
 
-TODO
+Say you want to get movies directed by Jordan Peele and classified as either comedy or horror, then you would use:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=thriller' \
+    --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
+```
