@@ -16,6 +16,8 @@ Faceted search, also known as faceted navigation, is a technique that combines t
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**. Facets are document fields and provide grouping capabilities. They allow searching for specific fields rather than every field whereas filtering is used to filter the returned results by adding constraints.
 
+Field attributes can be used as facets. However, only fields of data type `string` or `array of strings` can be set up as facets.
+
 ### Setting Up Facets
 
 TODO
