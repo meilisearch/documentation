@@ -15,13 +15,13 @@ Faceted search, also known as faceted navigation, is a technique that combines t
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**. Facets are document fields and provide grouping capabilities. They allow searching for specific fields rather than every field whereas iltering is used to filter the returned results by adding constraints.
 
-### Using Facets
+### Setting Up Facets
 
 TODO
 
 To use an attribute as a facet, it **must be declared at indexing time as a faceted attribute**.
 
-In order to use faceting, facet attributes must be declared at indexing. The `attributesForFaceting` field in the [settings](link_to_setting_api_ref) accepts a `[String]` that specifies which attributes to do faceting on. It defaults to `Null`.
+In order to use faceting, facet attributes must be declared at indexing. The `attributesForFaceting` field in the [settings](/references/settings.md) accepts a `[String]` that specifies which attributes to do faceting on. It defaults to `Null`.
 It should be noted that passing an empty array will reset all faceting attributes. In other words, any call to settings with a value for the attribute `attributesForFaceting` will overwrite the currently set faceting attributes.
 
 A call to [POST]/indexes/:index_uid/settings lists the currently set facets.
