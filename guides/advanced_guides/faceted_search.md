@@ -21,7 +21,7 @@ TODO
 
 To use an attribute as a facet, it **must be declared at indexing time as a faceted attribute**.
 
-In order to implement the all new facets, we at meilisearch have added a new attribute `attributesForFaceting`. With the default value of `Null` it accepts `[String]`.
+In order to use faceting, facet attributes must be declared at indexing. The `attributesForFaceting` field in the [settings](link_to_setting_api_ref) accepts a `[String]` that specifies which attributes to do faceting on. It defaults to `Null`.
 It should be noted that passing an empty array will reset all faceting attributes. In other words, any call to settings with a value for the attribute `attributesForFaceting` will overwrite the currently set faceting attributes.
 
 A call to [POST]/indexes/:index_uid/settings should list the currently set facets.
