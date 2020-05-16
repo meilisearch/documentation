@@ -7,7 +7,8 @@
 A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is an **intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
 When the users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
 
-TODO: add a picture
+![Amazon UI](/amazon-facets.png)
+> Faceted navigation on Amazon.
 
 ### How does it work?
 
