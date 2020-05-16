@@ -43,8 +43,6 @@ Only fields of data type **string** or **array of strings** can be set up as fac
 
 Any POST request on the `settings` route with a value set to `attributesForFaceting` will overwrite the current faceted attributes. Then, passing an empty array will reset all defined faceted attributes.
 
-You can't do faceting on already existing facets.
-
 ### Example
 
 Suppose that you have a collection of movies in the following JSON format:
@@ -117,7 +115,7 @@ If the `facets` parameter has been set, the returned results will contain two ad
 
 1. `facets`: The number of remaining candidates for each specified facet.
 
-2. `exhaustiveFacetsCount`: Whether the above count is **exhaustive** or **approximative**.
+2. `exhaustiveFacetsCount`: Returns `true` if the above count is **exhaustive**. Otherwise, returns `false` if the above count is **approximative**.
 
 ### Example
 
