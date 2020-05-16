@@ -27,7 +27,7 @@ Faceting and filtering aim at being complementary.
 Document attributes to use as facets **must be declared at indexing time**.
 
 You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
-You need to add the desired attributes to the `attributesForFaceting` list. This attribute accepts a `[String]` that specifies which attributes must be used as facets, and defaults to `null`.
+You need to add the desired attributes to the `attributesForFaceting` list. This attribute accepts an array of strings that specifies which attributes must be used as facets, and defaults to `null`.
 
 `attributesForFaceting=[<Attribute>, ...]`
 
@@ -138,13 +138,13 @@ This attribute can take two types of array:
 - `["facetName:facetValue"]` (Optional, array of strings)
 - `[["facetName:facetValue"]]` (Optional, array of arrays of strings)
 
-  - `facetName`: The name (the attribute) of a field used as a facet.
-  - `facetValue`: The value of this facet to filter results on.
-
   Both types of array contain the facet names and values to filter on.
   The **array's depth** must be at least equal to **1** and musn't be greater than **2**.
 
-Using a double dimensional array allows using **logical connectives**.
+  - `facetName`: The name (the attribute) of a field used as a facet.
+  - `facetValue`: The value of this facet to filter results on.
+
+Inputting a double dimensional array allows you to use **logical connectives**.
 
 - **Inner arrays elements** are connected by an `OR` operator.
 - **Outer arrays elements** are connected by an `AND` operator.
@@ -163,7 +163,7 @@ Can be translated as:
 
 ### Example
 
-Say you want to get movies directed by Jordan Peele and classified as either comedy or horror, then you would use:
+Say you want to get movies directed by Jordan Peele and classified as either comedy or horror, you would use:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
