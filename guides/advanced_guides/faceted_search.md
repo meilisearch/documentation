@@ -17,19 +17,33 @@ Faceting is a powerful feature that enables to build an intuitive navigation int
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
 
-- **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints. 
+- **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints.
 - **Facets** are a subset of filtering. They are more specific filters that pertain to the returned documents. Facets are document fields used as categories and thus provide grouping capabilities to search for specific fields rather than every field. They allow users to narrow down a set of documents by multiple dimensions.
 
 ### Setting Up Facets
 
-To use an attribute as a facet, it **must be declared at indexing time as a faceted attribute**.
+Document Attributes to use as facets **must be declared at indexing time**.
+
+You need to add the desired attributes to the `attributesForFaceting` list. This attribute accepts a `[String]` that specifies which attributes are used as facets and defaults to `null`. You can set up facets [through the API](/references/settings.md) via the [global settings route](/references/settings.md#update-settings).
+
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings"/>
+
+::: warning
 
 Only fields of data type `string` or `array of strings` can be set up as facets.
 
-In order to use faceting, facet attributes must be declared at indexing. The `attributesForFaceting` field in the [settings](/references/settings.md) accepts a `[String]` that specifies which attributes to do faceting on. It defaults to `Null`.
-It should be noted that passing an empty array will reset all faceting attributes. In other words, any call to settings with a value for the attribute `attributesForFaceting` will overwrite the currently set faceting attributes.
+:::
 
-A call to [POST]/indexes/:index_uid/settings lists the currently set facets.
+Any POST request on the `settings`route with a value set to `attributesForFaceting` will overwrite the current faceted attributes. Then, passing an empty array will reset all defined faceted attributes.
+
+### Example
+
+Given an index that contains information about movies, you can list the settings as follows:
+
+```bash
+$ curl \
+  -X GET 'http://localhost:7700/indexes/movies/settings'
+```
 
 ### Querying On Faceted Attributes
 
