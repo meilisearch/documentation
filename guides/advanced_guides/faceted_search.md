@@ -2,19 +2,19 @@
 
 **Faceted search** is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories that are called **facets**.
 
-> For a movie, its title, director, and its release date can be used as facets.
+> For a movie, its title or its director can be used as facets.
 
 A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is an **intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
 When the users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
 
 ![Amazon UI](/amazon-facets.png)
-> Faceted navigation on Amazon.
+> Faceted navigation on Amazon where facets are placed on the left side.
 
 ### How does it work?
 
-Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. This is a powerful feature that allows building an intuitive navigation interface.
+Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. This is a powerful feature that enables to build an intuitive navigation interface.
 
-Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**. Facets are document fields and provide grouping capabilities. They allow searching for specific fields rather than every field whereas iltering is used to filter the returned results by adding constraints.
+Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**. Facets are document fields and provide grouping capabilities. They allow searching for specific fields rather than every field whereas filtering is used to filter the returned results by adding constraints.
 
 ### Setting Up Facets
 
