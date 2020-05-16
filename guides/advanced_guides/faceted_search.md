@@ -113,9 +113,11 @@ This attribute can take two values:
 
 If the `facets` parameter has been set, the returned results will contain two additional fields:
 
-1. `facets`: The number of remaining candidates for each specified facet.
+- `facets`: The number of remaining candidates for each specified facet.
 
-2. `exhaustiveFacetsCount`: Returns `true` if the above count is **exhaustive**. Otherwise, returns `false` if the above count is **approximative**.
+- `exhaustiveFacetsCount`:
+  Returns `true` if the above count is **exhaustive**.
+  Otherwise, returns `false` if the above count is **approximative**.
 
 ### Example
 
@@ -125,16 +127,34 @@ TODO
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 
+This attribute can take two types of array:
+
 - `["facetName:facetValue"]` (Optional, array of strings)
+- `[["facetName:facetValue"]]` (Optional, array of arrays of strings)
 
-  An array of strings that contains the facet names and values to filter on.
-
-  The **array's depth** must be at least equal to **1** and musn't be greater than **2**.
-
-  - `facetName`: The attribute (the name) of a field used as a facet.
+  - `facetName`: The name (the attribute) of a field used as a facet.
   - `facetValue`: The value of this facet to filter results on.
 
-TODO
+  Both contain the facet names and values to filter on.
+  The **array's depth** must be at least equal to **1** and musn't be greater than **2**.
 
-`[["color:red", "color:blue"], "kind:t-shirt"] <=> ("color:red" OR "color:blue") AND "kind:t-shirt"`
-inner arrays elements are `OR`ed together, outer array elements are `AND`ed together.
+Using a double dimensional array allows using **logical connectives**.
+
+- **Inner arrays elements** are connected by an `OR` operator.
+- **Outer arrays elements** are connected by an `AND` operator.
+
+For instance, the following array:
+
+```json
+[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]
+```
+
+Can be translated as:
+
+```SQL
+("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
+```
+
+### Example
+
+TODO
