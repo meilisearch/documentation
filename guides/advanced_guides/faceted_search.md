@@ -131,7 +131,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 ### 2. The facets to filter on
 
-`facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
+`facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
 
 This attribute can take two types of array:
 
