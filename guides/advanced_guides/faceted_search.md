@@ -139,7 +139,7 @@ This attribute can take two types of array:
 - `[["facetName:facetValue"]]` (Optional, array of arrays of strings)
 
   Both types of array contain the facet names and values to filter on.
-  The **array's depth** must be at least equal to **1** and musn't be greater than **2**.
+  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
 
   - `facetName`: The name (the attribute) of a field used as a facet.
   - `facetValue`: The value of this facet to filter results on.
