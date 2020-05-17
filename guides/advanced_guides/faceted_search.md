@@ -149,7 +149,7 @@ Inputting a double dimensional array allows you to use **logical connectives**.
 - **Inner arrays elements** are connected by an `OR` operator.
 - **Outer arrays elements** are connected by an `AND` operator.
 
-For instance, the following array:
+You can mix connectives, for instance, the following array:
 
 ```json
 [["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]
