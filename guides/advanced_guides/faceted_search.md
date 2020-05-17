@@ -143,7 +143,7 @@ This attribute can take two types of array:
   A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
 
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `color`, `kind`).
-  - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pant`).
+  - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pants`).
 
 Inputting a double dimensional array allows you to use **logical connectives**.
 
