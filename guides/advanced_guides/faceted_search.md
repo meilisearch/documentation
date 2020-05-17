@@ -137,6 +137,7 @@ This attribute can take two types of array:
 
 - `["facetName:facetValue"]` (Optional, array of strings)
 - `[["facetName:facetValue"]]` (Optional, array of arrays of strings)
+- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Optional, array of strings or arrays of strings)
 
   Both types of array contain the facet names and values to filter on.
   A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
