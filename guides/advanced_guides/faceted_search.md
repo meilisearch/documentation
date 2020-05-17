@@ -126,7 +126,7 @@ Given a movie database, suppose that you want to know how many Batman movies are
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'q=Batman' \
-    --data-urlencode 'facets=["genre, "director]'
+    --data-urlencode 'facets=["genre", "director"]'
 ```
 
 ### 2. The facets to filter on
