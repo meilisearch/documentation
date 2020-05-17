@@ -116,8 +116,8 @@ If the `facets` parameter has been set, the returned results will contain two ad
 - `facets`: The number of remaining candidates for each specified facet.
 
 - `exhaustiveFacetsCount`:
-  Returns `true` if the above count is **exhaustive**.
-  Otherwise, returns `false` if the above count is **approximative**.
+  Returns `true` if this count is **exhaustive**.
+  Otherwise, returns `false` if this count is **approximative**.
 
 ### Example
 
