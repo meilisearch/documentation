@@ -147,8 +147,8 @@ This attribute can take two types of array:
 
 Inputting a double dimensional array allows you to use **logical connectives**.
 
-- **Inner arrays elements** are connected by an `OR` operator.
-- **Outer arrays elements** are connected by an `AND` operator.
+- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["color:red", "color:green"]]`).
+- **Outer arrays elements** are connected by an `AND` operator (e.g. `["color:red", "kind:t-shirt"]`).
 
 You can mix connectives, for instance, the following array:
 
