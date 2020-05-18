@@ -6,7 +6,7 @@ You might have noticed the search bar in this documentation.
 
 And you are probably wanting the same for your own documentation!
 
-This tutorial will guide you through the step of building a relevant and powerful search bar for your documentation 🚀
+This tutorial will guide you through the steps of building a relevant and powerful search bar for your documentation 🚀
 
 1. [Run a MeiliSearch Instance](#run-a-meilisearch-instance)
 2. [Scrap your content](#scrap-your-content)
@@ -79,7 +79,7 @@ The `docs-content` class is the main container of the textual content in this ex
 
 Every searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
 
-If you use Vuepress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/master/.vuepress/docs-scraper/docs-scraper.config.json) we use in production.
+If you use VuePress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/master/.vuepress/docs-scraper/docs-scraper.config.json) we use in production.
 In our case, the main container is `theme-default-content` and the selector the titles and sub-titles are `h1`, `h2`...
 
 ### Run the Scraper
@@ -114,15 +114,15 @@ We recommend running the scraper at each new deployment of your documentation, [
 
 ## Integrate the Search Bar
 
-If your documentation is not a Vuepress application, you can directly go to [this section](#for-all-kinds-of-documentation).
+If your documentation is not a VuePress application, you can directly go to [this section](#for-all-kinds-of-documentation).
 
-### For a Vuepress Documentation
+### For a VuePress Documentation
 
-If you use Vuepress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the MeiliSearch documentation.
+If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the MeiliSearch documentation.
 
-![Vuepress plugin example](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
+![VuePress plugin example](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
 
-In your Vuepress project:
+In your VuePress project:
 
 ```bash
 $ yarn add vuepress-plugin-meilisearch
@@ -161,7 +161,7 @@ Read more about [MeiliSearch authentication](/guides/advanced_guides/authenticat
 
 ### For All Kinds of Documentation
 
-If you don't use Vuepress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
+If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
 
 ![docs-searchbar.js example](/tuto-searchbar-for-docs/docs-searchbar-example.png)
 
