@@ -18,4 +18,4 @@ We are proud that some of our libraries were developed and are still maintained 
 
 We recommend to follow [these guidelines](https://github.com/meilisearch/integrations-guides) so that it will be easier to integrate your work.
 
-Feel free to [contact us](https://docs.meilisearch.com/resources/faq.html#how-can-i-contact-the-meilisearch-team)! 🙂
+Feel free to [contact us](https://docs.meilisearch.com/faq/#how-can-i-contact-the-meilisearch-team)! 🙂
