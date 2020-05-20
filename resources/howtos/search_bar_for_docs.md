@@ -9,7 +9,7 @@ And you are probably wanting the same for your own documentation!
 This tutorial will guide you through the steps of building a relevant and powerful search bar for your documentation 🚀
 
 1. [Run a MeiliSearch Instance](#run-a-meilisearch-instance)
-2. [Scrap your content](#scrap-your-content)
+2. [Scrape your content](#scrape-your-content)
 3. [Integrate the Search Bar](#integrate-the-search-bar)
 
 ## Run a MeiliSearch Instance
@@ -34,7 +34,7 @@ In the example above, the host URL is `http://localhost:7700` and the API key is
 
 :::
 
-## Scrap your Content
+## Scrape your Content
 
 The Meili team provides and maintains a [scraper tool](https://github.com/meilisearch/docs-scraper) to automatically read the content of your website and store it into an index in MeiliSearch.
 
