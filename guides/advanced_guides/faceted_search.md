@@ -28,7 +28,7 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 Document attributes to use as facets **must be declared at indexing time**.
 
 You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
-You need to add the desired attributes to the `attributesForFaceting` list. This attribute accepts an array of strings that specifies which attributes must be used as facets, and defaults to `null`.
+Attributes for which to enable faceting are defined in the `attributesForFaceting` parameter. This parameter accepts an array of strings that specifies which attributes must be used as facets, defaulting to `null`:
 
 `attributesForFaceting=[<Attribute>, ...]`
 
