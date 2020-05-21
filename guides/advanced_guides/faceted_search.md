@@ -12,7 +12,8 @@ When users perform a search, they are presented with a list of results and a lis
 
 ## How does it work?
 
-Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. Data is classified across multiple dimensions, called facets, so it can be accessed and ordered in multiple ways at a time. Document fields are used as categories such as title, author, director, language, description, release date, and so forth.
+Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. 
+Setting categorical document attributes as "facet" enable efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language. 
 Besides, faceting is a powerful feature that enables to build an intuitive navigation interface.
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
