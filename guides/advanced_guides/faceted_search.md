@@ -96,9 +96,11 @@ $ curl \
 
 ## Querying On Faceted Attributes
 
-When performing a search, you can specify:
+When performing a search, you can pass parameter to your query:
 
 ### 1. The facets to filter on
+
+You can filter on facets to narrow down your results based on criteria.
 
 `facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
 
@@ -110,6 +112,18 @@ When performing a search, you can specify:
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `color`, `kind`).
   - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pants`).
 
+### Example
+
+Given a clothing dataset, suppose you want to retrieve all t-shirts with a nautical pattern. You would then use:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/clothing/search' \
+    --data-urlencode 'q=nautical' \
+    --data-urlencode 'facetFilters=["kind:t-shirt"]'
+```
+
+### Logical Connectives
+
 Inputting a double dimensional array allows you to use **logical connectives**.
 
 - **Inner arrays elements** are connected by an `OR` operator (e.g. `[["color:red", "color:green"]]`).
@@ -118,18 +132,24 @@ Inputting a double dimensional array allows you to use **logical connectives**.
 You can mix connectives, for instance, the following array:
 
 ```json
-[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]
+["kind:t-shirt", ["color:red", "color:green"]]
 ```
 
 Can be translated as:
 
 ```SQL
-("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
+"kind:t-shirt" AND ("color:red" OR "color:green")
 ```
 
 ### Example
 
-Say you want to get movies matching "thriller" directed by Jordan Peele and classified as either comedy or horror, you would use:
+Say you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
+
+```SQL
+("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
+```
+
+Querying on `thriller`, the above example results in the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
@@ -138,6 +158,8 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 ```
 
 ### 2. The facets for which to retrieve the matching count
+
+You can retrieve the count of matching terms for each facet.
 
 `facets=[<facetName>, <facetName>, ...]`
 
