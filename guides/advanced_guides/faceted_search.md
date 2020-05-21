@@ -13,13 +13,13 @@ When users perform a search, they are presented with a list of results and a lis
 ## How does it work?
 
 Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**.
-Setting categorical document attributes as "facet" enable efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language.
+Setting categorical document attributes as "facet" enables efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language.
 Besides, faceting is a powerful feature that enables to build an intuitive navigation interface.
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
 
 - **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints.
-- **Facets**, on the other hand, are used to categorize the data into subsets that will be search upon: they reduce the number of documents to process.
+- **Facets**, on the other hand, are used to categorize the data into subsets that will be searched upon: they reduce the number of documents to process.
 
 Faceting and filtering aim at being complementary;  facets narrows down the set of documents to be searched upon, while filters reduce the number of documents coming out of a search.
 
@@ -42,7 +42,7 @@ Only fields of data type **string** or **array of strings** can be set up as fac
 
 :::
 
-Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting` : passing an empty array will reset all defined faceted attributes.
+Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will reset all defined faceted attributes.
 
 ### Example
 
