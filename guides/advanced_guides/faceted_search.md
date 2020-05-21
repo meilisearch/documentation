@@ -161,7 +161,7 @@ Can be translated as:
 
 ### Example
 
-Say you want to get movies directed by Jordan Peele and classified as either comedy or horror, you would use:
+Say you want to get movies matching "thriller" directed by Jordan Peele and classified as either comedy or horror, you would use:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
