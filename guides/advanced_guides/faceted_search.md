@@ -19,7 +19,7 @@ Besides, faceting is a powerful feature that enables to build an intuitive navig
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
 
 - **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints.
-- **Facets** are a subset of filtering. Facets are document fields used as categories and thus provide grouping capabilities to search for specific fields rather than every field. They allow users to narrow down a set of documents by multiple dimensions at a time.
+- **Facets**, on the other hand, are used to categorize the data into subsets that will be search upon: they reduce the number of documents to process.
 
 Faceting and filtering aim at being complementary.
 
