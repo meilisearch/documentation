@@ -12,8 +12,8 @@ When users perform a search, they are presented with a list of results and a lis
 
 ## How does it work?
 
-Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**. 
-Setting categorical document attributes as "facet" enable efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language. 
+Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**.
+Setting categorical document attributes as "facet" enable efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language.
 Besides, faceting is a powerful feature that enables to build an intuitive navigation interface.
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
@@ -21,7 +21,7 @@ Both faceting and filtering help drill down into a subset of search results. How
 - **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints.
 - **Facets**, on the other hand, are used to categorize the data into subsets that will be search upon: they reduce the number of documents to process.
 
-Faceting and filtering aim at being complementary;  facets narrows down the set of documents to be  searched upon, while filters reduce the number of documents coming out of a search. 
+Faceting and filtering aim at being complementary;  facets narrows down the set of documents to be  searched upon, while filters reduce the number of documents coming out of a search.
 
 ## Setting Up Facets
 
@@ -98,39 +98,7 @@ $ curl \
 
 When performing a search, you can specify:
 
-### 1. The facets for which to retrieve the matching count
-
-`facets=[<facetName>, <facetName>, ...]`
-
-This attribute can take two values:
-
-- `[<facetName>, <facetName>, ...]` (Array of strings, defaults to `null`)
-
-  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
-
-- `["*"]`
-
-  The `*` character can also be used. In that case, a count for all facets is returned.
-
-If the `facets` parameter has been set, the returned results will contain two additional fields:
-
-- `facets`: The number of remaining candidates for each specified facet.
-
-- `exhaustiveFacetsCount`:
-  Returns `true` if this count is **exhaustive**.
-  Otherwise, returns `false` if this count is **approximative**.
-
-### Example
-
-Given a movie database, suppose that you want to know how many Batman movies are classified as `Action and Adventure`, how many of them are classified as `Animation` and what the number of Batman movies per director is. You would use the following CURL command:
-
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Batman' \
-    --data-urlencode 'facets=["genre", "director"]'
-```
-
-### 2. The facets to filter on
+### 1. The facets to filter on
 
 `facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
 
@@ -167,4 +135,36 @@ Say you want to get movies matching "thriller" directed by Jordan Peele and clas
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'q=thriller' \
     --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
+```
+
+### 2. The facets for which to retrieve the matching count
+
+`facets=[<facetName>, <facetName>, ...]`
+
+This attribute can take two values:
+
+- `[<facetName>, <facetName>, ...]` (Array of strings, defaults to `null`)
+
+  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
+
+- `["*"]`
+
+  The `*` character can also be used. In that case, a count for all facets is returned.
+
+If the `facets` parameter has been set, the returned results will contain two additional fields:
+
+- `facets`: The number of remaining candidates for each specified facet.
+
+- `exhaustiveFacetsCount`:
+  Returns `true` if this count is **exhaustive**.
+  Otherwise, returns `false` if this count is **approximative**.
+
+### Example
+
+Given a movie database, suppose that you want to know how many Batman movies are classified as `Action and Adventure`, how many of them are classified as `Animation` and what the number of Batman movies per director is. You would use the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Batman' \
+    --data-urlencode 'facets=["genre", "director"]'
 ```
