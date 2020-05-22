@@ -125,6 +125,7 @@ module.exports = {
           children: [
             '/resources/howtos/meilisearch_react',
             '/resources/howtos/digitalocean_droplet',
+            '/resources/howtos/search_bar_for_docs',
           ],
         },
       ],
@@ -141,9 +142,9 @@ module.exports = {
     [
       'meilisearch',
       {
-        hostUrl: 'https://e10b17e6.getmeili.com',
+        hostUrl: 'https://docs-search-bar.meilisearch.com',
         apiKey:
-          'b4ff9313299e65ce4e259d3aa59730d2829c9a6805aa15b83cdbd63b20563155',
+          'd79226ae89f29d4dadba8d0c30c240e435f584fb83a7ae573b13eb62edec35cd',
         indexUid: 'docs',
         placeholder: 'Search as you type...',
       },
