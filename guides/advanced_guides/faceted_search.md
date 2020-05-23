@@ -165,7 +165,7 @@ You can retrieve the count of matching terms for each facet.
 
 This attribute can take two values:
 
-- `[<facetName>, <facetName>, ...]` (Array of strings, defaults to `null`)
+- `[<facetName>, <facetName>, ...]` (Array of strings)
 
   An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
 
