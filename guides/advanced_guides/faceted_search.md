@@ -38,7 +38,7 @@ Attributes for which to enable faceting are defined in the `attributesForFacetin
 
 ::: warning
 
-Only fields of data type **string** or **array of strings** used for faceting.
+Only fields of data type **string** or **array of strings** can be used for faceting.
 
 :::
 
