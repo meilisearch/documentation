@@ -149,7 +149,7 @@ Say you want to get movies matching "thriller" classified as either comedy or ho
 ("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
 ```
 
-Querying on `thriller`, the above example results in the following CURL command:
+Querying on "thriller", the above example results in the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
