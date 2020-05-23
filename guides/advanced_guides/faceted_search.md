@@ -104,7 +104,7 @@ You can filter on facets to narrow down your results based on criteria.
 
 `facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
 
-- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of strings or arrays of strings, defaults to `null`)
+- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
 
   Both types of array contain the facet names and values to filter on.
   A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
