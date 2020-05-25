@@ -160,7 +160,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
 ```
 
-### 2. The facets for which to retrieve the matching count
+### 2. The facets distribution
 
 You can retrieve the count of matching terms for each facet.
 
