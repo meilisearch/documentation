@@ -51,6 +51,7 @@ module.exports = {
             '/guides/advanced_guides/authentication',
             '/guides/advanced_guides/asynchronous_updates',
             '/guides/advanced_guides/web_interface',
+            '/guides/advanced_guides/datatypes',
             '/guides/advanced_guides/settings',
             '/guides/advanced_guides/synonyms',
             '/guides/advanced_guides/stop_words',
