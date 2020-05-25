@@ -94,7 +94,7 @@ $ curl \
   }'
 ```
 
-## Querying On Faceted Attributes
+## Using facets
 
 When performing a search, you can pass parameter to your query:
 
