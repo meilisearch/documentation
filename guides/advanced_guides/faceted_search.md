@@ -81,7 +81,7 @@ Suppose that you have a collection of movies in the following JSON format:
 ]
 ```
 
-You would declare faceted attributes as follows:
+To be able to facet search on `director` and `genre`, you would declare faceted attributes as follows:
 
 ```bash
 $ curl \
