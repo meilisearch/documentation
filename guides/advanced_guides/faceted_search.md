@@ -98,7 +98,7 @@ $ curl \
 
 When performing a search, you can pass parameter to your query:
 
-### 1. The facets to filter on
+### 1. The facet filters
 
 You can filter on facets to narrow down your results based on criteria.
 
