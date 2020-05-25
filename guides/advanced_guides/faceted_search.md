@@ -10,7 +10,7 @@ When users perform a search, they are presented with a list of results and a lis
 ![Amazon UI](/amazon-facets.png)
 > Faceted navigation on Amazon: facets are displayed on the left column.
 
-## How does it work?
+## Filters or Facets?
 
 Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**.
 Setting categorical document attributes as "facet" enables efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language.
