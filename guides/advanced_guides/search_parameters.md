@@ -12,6 +12,9 @@ Search parameters let the user customize their search request.
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
+| **[attributesForFaceting](/guides/advanced_guides/search_parameters.md#faceted-attributes)** | Attributes to use as facets                                 |    `null`     |
+| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `null`     |
+| **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 ## Query (q)
@@ -30,7 +33,7 @@ Suppose you would like to search `shifu` in a movie database, you would send:
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu
+    -d q=shifu
 ```
 
 ::: tip
@@ -53,8 +56,8 @@ If you want to skip the **first** document, set `offset` to `1`.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-      -d offset=1
+    -d q=shifu \
+    -d offset=1
 ```
 
 ## Limit
@@ -73,8 +76,8 @@ If you want to get only **two** documents, set `limit` to `2`.
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-      -d limit=2
+    -d q=shifu \
+    -d limit=2
 ```
 
 ## Attributes to Retrieve
@@ -95,8 +98,8 @@ If you want to get only the `overview` and `title` field and not the other field
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-      -d attributesToRetrieve=overview,title
+    -d q=shifu \
+    -d attributesToRetrieve=overview,title
 ```
 
 ## Attributes to Crop
@@ -136,9 +139,9 @@ If you input `shifu` as a search query and set the value of the parameter `cropL
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-      -d attributesToCrop=overview \
-      -d cropLength=10
+    -d q=shifu \
+    -d attributesToCrop=overview \
+    -d cropLength=10
 ```
 
 You will get the following response with the **cropped version in the \_formatted object**:
@@ -195,8 +198,8 @@ If you choose to highlight the content of `overview`:
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-      -d attributesToHighlight=overview
+    -d q=shifu \
+    -d attributesToHighlight=overview
 ```
 
 You will get the following response with the **highlighted version in the \_formatted object**:
@@ -222,6 +225,75 @@ When evaluated in HTML, the **overview attribute in \_formatted** will look like
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
 
+## Faceted attributes
+
+Attributes used as facets. They **must be declared at indexing time**.
+
+`attributesForFaceting=[<Attribute>, ...]`
+
+- `[<Attribute>, ...]` (Array of strings, defaults to `null`)
+
+  An array of strings that contains the attributes to use as facets.
+
+::: warning
+
+Only fields of data type **string** or **array of strings** can be used for faceting.
+
+:::
+
+#### Example
+
+To be able to facet search on `director` and `genre` in a movie database, you would declare faceted attributes as follows:
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+      "attributesForFaceting": [
+          "director",
+          "genre"
+      ]
+  }'
+```
+
+## Facet filters
+
+Filter on facets to narrow down your results based on criteria.
+
+`facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
+
+- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
+
+  Both types of array contain the facet names and values to filter on.
+  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
+
+  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `color`, `kind`).
+  - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pants`).
+
+## The facets distribution
+
+Retrieve the count of matching terms for each facet.
+
+`facets=[<facetName>, <facetName>, ...]`
+
+This attribute can take two values:
+
+- `[<facetName>, <facetName>, ...]` (Array of strings)
+
+  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
+
+- `"*"`
+
+  The `*` character can also be used. In that case, a count for all facets is returned.
+
+If the `facets` parameter has been set, the returned results will contain two additional fields:
+
+- `facets`: The number of remaining candidates for each specified facet.
+
+- `exhaustiveFacetsCount`:
+  Returns `true` if this count is **exhaustive**.
+  Otherwise, returns `false` if this count is **approximative**.
+
 ## Filters
 
 `filters=<String>`
@@ -230,8 +302,8 @@ Specify a filter to be used with the query. See our [dedicated guide](/guides/ad
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
-        -d q=n \
-        --data-urlencode filters='title = Nightshift'
+    -d q=n \
+    --data-urlencode filters='title = Nightshift'
 ```
 
 ```json
@@ -248,8 +320,8 @@ The parameter should be **URL-encoded**.
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
-        -d q=shifu \
-        --data-urlencode filters='title="Kung Fu Panda"'
+    -d q=shifu \
+    --data-urlencode filters='title="Kung Fu Panda"'
 ```
 
 ## Matches
@@ -272,9 +344,9 @@ If you set `matches` to `true`:
 
 ```bash
 $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-      -d q=shifu \
-      -d attributesToHighlight=overview \
-      -d matches=true
+    -d q=shifu \
+    -d attributesToHighlight=overview \
+    -d matches=true
 ```
 
 You will get the following response with the **information about the matches in the \_matchesInfo object**:

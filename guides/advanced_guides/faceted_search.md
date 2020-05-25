@@ -28,21 +28,11 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 Attributes that could be used as facets **must be declared at indexing time**.
 
 You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
-Attributes for which to enable faceting are defined in the `attributesForFaceting` parameter. This parameter accepts an array of strings that specifies which attributes must be used as facets, defaulting to `null`:
-
-`attributesForFaceting=[<Attribute>, ...]`
-
-- `[<Attribute>, ...]` (Array of strings, defaults to `null`)
-
-  An array of strings that contains the attributes to use as facets.
-
-::: warning
-
-Only fields of data type **string** or **array of strings** can be used for faceting.
-
-:::
+Attributes for which to enable faceting are defined in the `attributesForFaceting` parameter. This parameter accepts an array of strings that specifies which attributes must be used as facets, defaulting to `null`.
 
 Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
+
+Learn more about **[`attributesForFaceting` in the search parameters](/guides/advanced_guides/search_parameters.md#faceted-attributes)**.
 
 ### Example
 
@@ -103,17 +93,9 @@ By introducing facets to MeiliSearch we introduced to new query parameters durin
 
 ### 1. The facet filters
 
-You can filter on facets to narrow down your results based on criteria.
+You can filter on facets to narrow down your results based on criteria with the `facetFilters` attribute.
 
-`facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
-
-- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
-
-  Both types of array contain the facet names and values to filter on.
-  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
-
-  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `color`, `kind`).
-  - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pants`).
+Learn more about **[`facetFilters` in the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
 
 ### Example
 
@@ -162,27 +144,9 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 ### 2. The facets distribution
 
-You can retrieve the count of matching terms for each facet.
+You can retrieve the count of matching terms for each facet with the `facets` attribute.
 
-`facets=[<facetName>, <facetName>, ...]`
-
-This attribute can take two values:
-
-- `[<facetName>, <facetName>, ...]` (Array of strings)
-
-  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
-
-- `["*"]`
-
-  The `*` character can also be used. In that case, a count for all facets is returned.
-
-If the `facets` parameter has been set, the returned results will contain two additional fields:
-
-- `facets`: The number of remaining candidates for each specified facet.
-
-- `exhaustiveFacetsCount`:
-  Returns `true` if this count is **exhaustive**.
-  Otherwise, returns `false` if this count is **approximative**.
+Learn more about **[`facets` in the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
 
 ### Example
 
