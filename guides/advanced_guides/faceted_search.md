@@ -42,7 +42,7 @@ Only fields of data type **string** or **array of strings** can be used for face
 
 :::
 
-Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will reset all defined faceted attributes.
+Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
 
 ### Example
 
