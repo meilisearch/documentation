@@ -96,9 +96,10 @@ $ curl \
 
 ## Using facets
 
-By introducing facets to MeiliSearch we introduced to new query parameters during search: 
+By introducing facets to MeiliSearch we introduced to new query parameters during search:
+
 - `facetFilters`:  Narrows the selection on which to search.
-- `facets`: Distribution of documents amongst a certain facet filter. 
+- `facets`: Distribution of documents amongst a certain facet filter.
 
 ### 1. The facet filters
 
