@@ -111,14 +111,14 @@ $ curl --get 'http://localhost:7700/indexes/clothing/search' \
 
 Since the users can have a visual clue about the range of categories available in the UI, they can easily know how many search results are found for each category.
 
-<img src="/faceted-search/facets-dist-boot.png" width="100" >
+<img src="/faceted-search/facets-dist-boot.png" alt="snowleader boot" width="250" >
 
-![snowleader boot](/faceted-search/facets-dist-boot.png)
 > On the [snowleader.co.uk website](https://www.snowleader.co.uk), the number in parentheses matches how many search results each facet relates to.
 
 When searching for "Boot", 791 outdoor boots have been found. If the user wants to buy outdoor boots, they can narrow down their search results by clicking the Outdoor category.
 
-![snowleader ski pants](/faceted-search/facets-dist-pants.png)
+<img src="/faceted-search/facets-dist-pants.png" alt="snowleader ski pants" width="250" >
+
 > From [snowleader.co.uk website](https://www.snowleader.co.uk).
 
 If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying.
