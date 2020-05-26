@@ -12,9 +12,9 @@ Search parameters let the user customize their search request.
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
-| **[attributesForFaceting](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `null`     |
-| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `null`     |
-| **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
+| **[attributesForFaceting](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `none`     |
+| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `none`     |
+| **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `none`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 ## Query (q)
@@ -231,7 +231,7 @@ Attributes used as facets. They **must be declared at indexing time**. See our [
 
 `attributesForFaceting=[<Attribute>, ...]`
 
-- `[<Attribute>, ...]` (Array of strings, defaults to `null`)
+- `[<Attribute>, ...]` (Array of strings, defaults to `none`)
 
   An array of strings that contains the attributes to use as facets.
 
@@ -262,7 +262,7 @@ Filter on facets to narrow down your results based on criteria.
 
 `facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
 
-- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
+- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `none`)
 
   Both types of array contain the facet names and values to filter on.
   A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
