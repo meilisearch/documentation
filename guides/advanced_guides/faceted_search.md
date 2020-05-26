@@ -34,7 +34,7 @@ Any POST request on the `settings` route with the `attributesForFaceting` parame
 
 Learn more about **[`attributesForFaceting` in the search parameters](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)**.
 
-### Example
+#### Example
 
 Suppose that you have a collection of movies in the following JSON format:
 
@@ -97,7 +97,7 @@ You can filter on facets to narrow down your results based on criteria with the 
 
 Learn more about **[`facetFilters` in the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
 
-### Example
+#### Example
 
 Given a clothing dataset, suppose you want to retrieve all t-shirts with a nautical pattern. You would then use:
 
@@ -126,7 +126,7 @@ Can be translated as:
 "kind:t-shirt" AND ("color:red" OR "color:green")
 ```
 
-### Example
+#### Example
 
 Say you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
 
@@ -148,7 +148,7 @@ You can retrieve the count of matching terms for each facet with the `facets` at
 
 Learn more about **[`facets` in the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
 
-### Example
+#### Example
 
 Given a movie database, suppose that you want to know how many Batman movies are classified as `Action and Adventure`, how many of them are classified as `Animation` and what the number of Batman movies per director is. You would use the following CURL command:
 
