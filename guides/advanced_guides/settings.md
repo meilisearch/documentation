@@ -15,7 +15,7 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 
 ## Attributes For Faceting
 
-Attributes used as facets. They **must be declared at indexing time**. See our [dedicated guide](/guides/advanced_guides/faceted_search.md).
+Attributes used as facets. They **must be declared at indexing time**.
 
 `attributesForFaceting=[<Attribute>, ...]`
 
@@ -28,6 +28,8 @@ Attributes used as facets. They **must be declared at indexing time**. See our [
 Only fields of data type **string** or **array of strings** can be used for faceting.
 
 :::
+
+[Learn more about faceted attributes](/guides/advanced_guides/faceted_search.md)
 
 #### Example
 
