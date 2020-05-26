@@ -12,7 +12,6 @@ Search parameters let the user customize their search request.
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
-| **[attributesForFaceting](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `none`     |
 | **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `none`     |
 | **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `none`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
@@ -225,40 +224,9 @@ When evaluated in HTML, the **overview attribute in \_formatted** will look like
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
 
-## Attributes For Faceting
-
-Attributes used as facets. They **must be declared at indexing time**. See our [dedicated guide](/guides/advanced_guides/faceted_search.md).
-
-`attributesForFaceting=[<Attribute>, ...]`
-
-- `[<Attribute>, ...]` (Array of strings, defaults to `none`)
-
-  An array of strings that contains the attributes to use as facets.
-
-::: warning
-
-Only fields of data type **string** or **array of strings** can be used for faceting.
-
-:::
-
-#### Example
-
-To be able to facet search on `director` and `genre` in a movie database, you would declare faceted attributes as follows:
-
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "attributesForFaceting": [
-          "director",
-          "genre"
-      ]
-  }'
-```
-
 ## Facet filters
 
-Filter on facets to narrow down your results based on criteria.
+If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can filter on [facets](/guides/advanced_guides/faceted_search.md) to narrow down your results based on criteria.
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
@@ -292,7 +260,7 @@ Can be translated as:
 
 #### Example
 
-Suppose you have declared `director` and `genre` as faceted attributes, and you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
+Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
 
 ```SQL
 ("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
@@ -308,7 +276,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 ## The facets distribution
 
-Retrieve the count of matching terms for each facet.
+If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
 
 `facets=[<facetName>, <facetName>, ...]`
 

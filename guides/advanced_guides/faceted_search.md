@@ -30,9 +30,9 @@ Attributes that could be used as facets **must be declared at indexing time**.
 You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
 Attributes for which to enable faceting are defined in the `attributesForFaceting` parameter. This parameter accepts an array of strings that specifies which attributes must be used as facets, defaulting to `none`.
 
-Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
+Learn more about `attributesForFaceting` in **[the settings](/guides/advanced_guides/settings.md#attributes-for-faceting)**.
 
-Learn more about `attributesForFaceting` in **[the search parameters](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)**.
+Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
 
 #### Example
 

@@ -4,6 +4,7 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 
 | Variable                                                                              | Description                                                                      | Default value                                                                                     |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **[attributesForFaceting](/guides/advanced_guides/settings.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `none`     |
 | **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
 | **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
@@ -11,6 +12,37 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 | **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 | **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
+
+## Attributes For Faceting
+
+Attributes used as facets. They **must be declared at indexing time**. See our [dedicated guide](/guides/advanced_guides/faceted_search.md).
+
+`attributesForFaceting=[<Attribute>, ...]`
+
+- `[<Attribute>, ...]` (Array of strings, defaults to `none`)
+
+  An array of strings that contains the attributes to use as facets.
+
+::: warning
+
+Only fields of data type **string** or **array of strings** can be used for faceting.
+
+:::
+
+#### Example
+
+To be able to facet search on `director` and `genre` in a movie database, you would declare faceted attributes as follows:
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+      "attributesForFaceting": [
+          "director",
+          "genre"
+      ]
+  }'
+```
 
 ## Synonyms
 
