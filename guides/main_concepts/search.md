@@ -22,7 +22,7 @@ However, searching is highly customizable.
 
 The returned results are **sorted according to a set of consecutive rules called [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules)**. You can delete existing rules, add new ones, or even change the order in which they are executed.
 
-You can also **configure the [search parameters](/guides/advanced_guides/search_parameters.md)** to refine your search even further. We support filters and <Badge text="soon" type="warn"/> faceting.
+You can also **configure the [search parameters](/guides/advanced_guides/search_parameters.md)** to refine your search even further. We support [filters](/guides/advanced_guides/filtering.md) and [faceting](/guides/advanced_guides/faceted_search.md).
 
 ## Features
 
@@ -39,14 +39,12 @@ Also called instant search, results are displayed while you are still inputting 
 ### Typo tolerance
 
 Instead of letting typos ruin your search experience, MeiliSearch will find the results you expect.
-
-[Learn more about typo tolerance](/guides/advanced_guides/typotolerance.md)
+Read more about [typo tolerance in this dedicated guide](/guides/advanced_guides/typotolerance.md).
 
 ### Synonyms
 
 Search should not be limited by some specific words.
-
-[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
+Read more about [synonyms in this dedicated guide](/guides/advanced_guides/synonyms.md).
 
 ### Languages support
 
@@ -56,7 +54,13 @@ MeiliSearch supports Latin-based languages, English, and Kanji characters.
 
 Search results can contain [highlighted](/guides/advanced_guides/search_parameters.md#attributes-to-highlight) queried terms to further enhance usability. Users don't need to read the entire text. The terms are highlighted and thus catch their eye.
 
-There are more features to come such as... **faceting**!
+### Filters
+
+Meilisearch allows you to define [filters](/guides/advanced_guides/filtering.md) so you can filter through the results based on criteria.
+
+### Faceting
+
+[Faceted search](/guides/advanced_guides/faceted_search.md) is a feature provided out-of-the-box by MeiliSearch. It allows you to classify search results into categories and to build intuitive navigation interfaces.
 
 #### Example
 
