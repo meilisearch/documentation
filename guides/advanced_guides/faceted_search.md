@@ -28,7 +28,7 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 Attributes that could be used as facets **must be declared at indexing time**.
 
 You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
-Attributes for which to enable faceting are defined in the `attributesForFaceting` parameter. This parameter accepts an array of strings that specifies which attributes must be used as facets, defaulting to `none`.
+Attributes for which to enable faceting are defined in the `attributesForFaceting` list. This parameter accepts an array of strings that specifies which attributes must be used as facets, defaulting to `none`.
 
 Learn more about `attributesForFaceting` in **[the settings](/guides/advanced_guides/settings.md#attributes-for-faceting)**.
 

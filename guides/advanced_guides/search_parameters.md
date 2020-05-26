@@ -7,13 +7,13 @@ Search parameters let the user customize their search request.
 | **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                                                                      |               |
 | **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
+| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `none`     |
+| **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `none`     |
 | **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `*`      |
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
-| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `none`     |
-| **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `none`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 ## Query (q)
@@ -78,6 +78,113 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
     -d q=shifu \
     -d limit=2
 ```
+
+## Filters
+
+`filters=<String>`
+
+Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    -d q=n \
+    --data-urlencode filters='title = Nightshift'
+```
+
+```json
+{
+  "id": "569367",
+  "title": "Nightshift",
+  "poster": "https://image.tmdb.org/t/p/w1280/peOeFl8ZTBTCERz5XQZAjYbXYsQ.jpg",
+  "overview": "Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
+  "release_date": 1536282000
+}
+```
+
+The parameter should be **URL-encoded**.
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    -d q=shifu \
+    --data-urlencode filters='title="Kung Fu Panda"'
+```
+
+## Facet filters
+
+If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can filter on [facets](/guides/advanced_guides/faceted_search.md) to narrow down your results based on criteria.
+
+`facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
+or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
+
+- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `none`)
+
+  Both types of array contain the facet names and values to filter on.
+  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
+
+  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
+  - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
+
+### Logical Connectives
+
+Inputting a double dimensional array allows you to use **logical connectives**.
+
+- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["genre:Comedy", "genre:Romance"]]`).
+- **Outer arrays elements** are connected by an `AND` operator (e.g. `["genre:Romance", "director:Mati Diop"]`).
+
+You can mix connectives, for instance, the following array:
+
+```json
+[["genre:Comedy", "genre:Romance"], "director:Mati Diop"]
+```
+
+Can be translated as:
+
+```SQL
+("genre:Comedy" OR "genre:Romance") AND "director:Mati Diop"
+```
+
+#### Example
+
+Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
+
+```SQL
+("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
+```
+
+Querying on "thriller", the above example results in the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=thriller' \
+    --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
+```
+
+## The facets distribution
+
+If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
+
+`facets=[<facetName>, <facetName>, ...]`
+
+This attribute can take two values:
+
+- `[<facetName>, <facetName>, ...]` (Array of strings)
+
+  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned.
+  If a facet name doesn't exist, it will be ignored.
+
+- `"*"`
+
+  The `*` character can also be used. In that case, a count for all facets is returned.
+
+### Returned fields
+
+If the `facets` parameter has been set, the returned results will contain **two additional fields**:
+
+- `facets`: The number of remaining candidates for each specified facet.
+
+- `exhaustiveFacetsCount`:
+  Returns `true` if this count is **exhaustive**.
+  Otherwise, returns `false` if this count is **approximative**.
 
 ## Attributes to Retrieve
 
@@ -223,113 +330,6 @@ You will get the following response with the **highlighted version in the \_form
 When evaluated in HTML, the **overview attribute in \_formatted** will look like as follows:
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
-
-## Facet filters
-
-If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can filter on [facets](/guides/advanced_guides/faceted_search.md) to narrow down your results based on criteria.
-
-`facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
-or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
-
-- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `none`)
-
-  Both types of array contain the facet names and values to filter on.
-  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
-
-  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
-  - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
-
-### Logical Connectives
-
-Inputting a double dimensional array allows you to use **logical connectives**.
-
-- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["genre:Comedy", "genre:Romance"]]`).
-- **Outer arrays elements** are connected by an `AND` operator (e.g. `["genre:Romance", "director:Mati Diop"]`).
-
-You can mix connectives, for instance, the following array:
-
-```json
-[["genre:Comedy", "genre:Romance"], "director:Mati Diop"]
-```
-
-Can be translated as:
-
-```SQL
-("genre:Comedy" OR "genre:Romance") AND "director:Mati Diop"
-```
-
-#### Example
-
-Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
-
-```SQL
-("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
-```
-
-Querying on "thriller", the above example results in the following CURL command:
-
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=thriller' \
-    --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
-```
-
-## The facets distribution
-
-If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
-
-`facets=[<facetName>, <facetName>, ...]`
-
-This attribute can take two values:
-
-- `[<facetName>, <facetName>, ...]` (Array of strings)
-
-  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned.
-  If a facet name doesn't exist, it will be ignored.
-
-- `"*"`
-
-  The `*` character can also be used. In that case, a count for all facets is returned.
-
-### Returned fields
-
-If the `facets` parameter has been set, the returned results will contain **two additional fields**:
-
-- `facets`: The number of remaining candidates for each specified facet.
-
-- `exhaustiveFacetsCount`:
-  Returns `true` if this count is **exhaustive**.
-  Otherwise, returns `false` if this count is **approximative**.
-
-## Filters
-
-`filters=<String>`
-
-Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
-
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    -d q=n \
-    --data-urlencode filters='title = Nightshift'
-```
-
-```json
-{
-  "id": "569367",
-  "title": "Nightshift",
-  "poster": "https://image.tmdb.org/t/p/w1280/peOeFl8ZTBTCERz5XQZAjYbXYsQ.jpg",
-  "overview": "Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
-  "release_date": 1536282000
-}
-```
-
-The parameter should be **URL-encoded**.
-
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    --data-urlencode filters='title="Kung Fu Panda"'
-```
 
 ## Matches
 
