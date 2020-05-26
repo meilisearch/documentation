@@ -292,7 +292,7 @@ Can be translated as:
 
 #### Example
 
-Say you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
+Suppose you have declared `director` and `genre` as faceted attributes, and you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
 
 ```SQL
 ("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
