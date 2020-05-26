@@ -260,33 +260,34 @@ $ curl \
 
 Filter on facets to narrow down your results based on criteria.
 
-`facetFilters=["facetName:facetValue"]`, `facetFilters=[["facetName:facetValue"]]` or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
+`facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
+or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
 
 - `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `none`)
 
   Both types of array contain the facet names and values to filter on.
-  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["kind:t-shirt", ["color:red", "color:green"]]`).
+  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
 
-  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `color`, `kind`).
-  - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pants`).
+  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
+  - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
 ### Logical Connectives
 
 Inputting a double dimensional array allows you to use **logical connectives**.
 
-- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["color:red", "color:green"]]`).
-- **Outer arrays elements** are connected by an `AND` operator (e.g. `["color:red", "kind:t-shirt"]`).
+- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["genre:Comedy", "genre:Romance"]]`).
+- **Outer arrays elements** are connected by an `AND` operator (e.g. `["genre:Romance", "director:Mati Diop"]`).
 
 You can mix connectives, for instance, the following array:
 
 ```json
-["kind:t-shirt", ["color:red", "color:green"]]
+[["genre:Comedy", "genre:Romance"], "director:Mati Diop"]
 ```
 
 Can be translated as:
 
 ```SQL
-"kind:t-shirt" AND ("color:red" OR "color:green")
+("genre:Comedy" OR "genre:Romance") AND "director:Mati Diop"
 ```
 
 #### Example
