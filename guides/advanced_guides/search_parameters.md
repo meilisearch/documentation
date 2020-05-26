@@ -270,7 +270,40 @@ Filter on facets to narrow down your results based on criteria.
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `color`, `kind`).
   - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pants`).
 
-[Learn more about the facet filters](/guides/advanced_guides/faceted_search.md#_1-the-facet-filters)
+### Logical Connectives
+
+Inputting a double dimensional array allows you to use **logical connectives**.
+
+- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["color:red", "color:green"]]`).
+- **Outer arrays elements** are connected by an `AND` operator (e.g. `["color:red", "kind:t-shirt"]`).
+
+You can mix connectives, for instance, the following array:
+
+```json
+["kind:t-shirt", ["color:red", "color:green"]]
+```
+
+Can be translated as:
+
+```SQL
+"kind:t-shirt" AND ("color:red" OR "color:green")
+```
+
+#### Example
+
+Say you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
+
+```SQL
+("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
+```
+
+Querying on "thriller", the above example results in the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=thriller' \
+    --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
+```
 
 ## The facets distribution
 
@@ -282,21 +315,22 @@ This attribute can take two values:
 
 - `[<facetName>, <facetName>, ...]` (Array of strings)
 
-  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned. If a facet name doesn't exist, it will be ignored.
+  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned.
+  If a facet name doesn't exist, it will be ignored.
 
 - `"*"`
 
   The `*` character can also be used. In that case, a count for all facets is returned.
 
-If the `facets` parameter has been set, the returned results will contain two additional fields:
+### Returned fields
+
+If the `facets` parameter has been set, the returned results will contain **two additional fields**:
 
 - `facets`: The number of remaining candidates for each specified facet.
 
 - `exhaustiveFacetsCount`:
   Returns `true` if this count is **exhaustive**.
   Otherwise, returns `false` if this count is **approximative**.
-
-[Learn more about the facets distribution](/guides/advanced_guides/faceted_search.md#_2-the-facets-distribution)
 
 ## Filters
 

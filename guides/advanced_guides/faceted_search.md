@@ -32,7 +32,7 @@ Attributes for which to enable faceting are defined in the `attributesForFacetin
 
 Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
 
-Learn more about **[`attributesForFaceting` in the search parameters](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)**.
+**[Learn more about `attributesForFaceting` in the search parameters](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)**
 
 #### Example
 
@@ -105,41 +105,6 @@ Given a clothing dataset, suppose you want to retrieve all t-shirts with a nauti
 $ curl --get 'http://localhost:7700/indexes/clothing/search' \
     --data-urlencode 'q=nautical' \
     --data-urlencode 'facetFilters=["kind:t-shirt"]'
-```
-
-### Logical Connectives
-
-Inputting a double dimensional array allows you to use **logical connectives**.
-
-- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["color:red", "color:green"]]`).
-- **Outer arrays elements** are connected by an `AND` operator (e.g. `["color:red", "kind:t-shirt"]`).
-
-You can mix connectives, for instance, the following array:
-
-```json
-["kind:t-shirt", ["color:red", "color:green"]]
-```
-
-Can be translated as:
-
-```SQL
-"kind:t-shirt" AND ("color:red" OR "color:green")
-```
-
-#### Example
-
-Say you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
-
-```SQL
-("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
-```
-
-Querying on "thriller", the above example results in the following CURL command:
-
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=thriller' \
-    --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
 ```
 
 ### 2. The facets distribution
