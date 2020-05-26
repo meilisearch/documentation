@@ -15,7 +15,7 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 
 ## Attributes For Faceting
 
-Attributes used as facets. They **must be declared at indexing time**.
+Faceted attributes are the attributes used as facets. They **must be declared at indexing time**.
 
 `attributesForFaceting=[<Attribute>, ...]`
 

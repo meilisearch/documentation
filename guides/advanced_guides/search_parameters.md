@@ -111,7 +111,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 ## Facet filters
 
-If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can filter on [facets](/guides/advanced_guides/faceted_search.md) to narrow down your results based on criteria.
+If you have [set up faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), you can filter on [facets](/guides/advanced_guides/faceted_search.md) to narrow down your results based on criteria.
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
@@ -145,7 +145,7 @@ Can be translated as:
 
 #### Example
 
-Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either comedy or horror and directed by Jordan Peele.
+Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either comedy **or** horror **and** directed by Jordan Peele.
 
 ```SQL
 ("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
@@ -161,7 +161,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 ## The facets distribution
 
-If you have [set up facets](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
+If you have [set up faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
 
 `facets=[<facetName>, <facetName>, ...]`
 
