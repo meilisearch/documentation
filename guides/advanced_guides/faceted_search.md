@@ -4,10 +4,12 @@
 
 > For a movie, its director, or its genre can be used as facets.
 
+Because facets relate specifically to a set of documents, they give an overview of the records and help to understand what kind of information can be searched.
+
 A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is an **intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
 When users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
 
-![Amazon UI](/amazon-facets.png)
+![Amazon UI](/faceted-search/amazon-facets.png)
 > Faceted navigation on Amazon: facets are displayed on the left column.
 
 ## Filters or Facets?
@@ -28,8 +30,7 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 Attributes that could be used as facets **must be declared at indexing time**.
 
 You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
-Attributes for which to enable faceting are defined in the `attributesForFaceting` list. This parameter accepts an array of strings that specifies which attributes must be used as facets, defaulting to `none`.
-
+Attributes for which to enable faceting are defined in the `attributesForFaceting` list.
 Learn more about `attributesForFaceting` in **[the settings](/guides/advanced_guides/settings.md#attributes-for-faceting)**.
 
 Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
@@ -91,10 +92,9 @@ By introducing facets to MeiliSearch, new search query parameters were also adde
 - `facetFilters`:  Narrows the selection on which to search.
 - `facets`: Returns the number of matching documents distributed amongst all the values of a given facet.
 
-### 1. The facet filters
+### The facet filters
 
 You can filter on facets to narrow down your results based on criteria with the `facetFilters` attribute.
-
 Learn more about `facetFilters` in **[the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
 
 #### Example
@@ -107,10 +107,21 @@ $ curl --get 'http://localhost:7700/indexes/clothing/search' \
     --data-urlencode 'facetFilters=["kind:t-shirt"]'
 ```
 
-### 2. The facets distribution
+### The facets distribution
 
-You can retrieve the count of matching terms for each facet with the `facets` attribute.
+Since the users can have a visual clue about the range of categories available in the UI, they can easily know how many search results are found for each category.
 
+![snowleader boot](/faceted-search/facets-dist-boot.png)
+> On the [snowleader.co.uk website](https://www.snowleader.co.uk), the number in parentheses matches how many search results each facet relates to.
+
+When searching for "Boot", 791 outdoor boots have been found. If the user wants to buy outdoor boots, they can narrow down their search results by clicking the Outdoor category.
+
+![snowleader ski pants](/faceted-search/facets-dist-pants.png)
+> From [snowleader.co.uk website](https://www.snowleader.co.uk).
+
+If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying.
+
+To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facets` attribute.
 Learn more about `facets` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
 
 #### Example
