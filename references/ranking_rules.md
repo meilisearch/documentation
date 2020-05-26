@@ -72,7 +72,7 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 ### Example
 
-<code-samples id="update_ranking_rules_1"> /s
+<code-samples id="update_ranking_rules_1" />
 
 #### Response: `202 Accepted`
 
@@ -86,7 +86,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Reset ranking rules
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules" />
 
 Reset the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of an index to its default value.
 

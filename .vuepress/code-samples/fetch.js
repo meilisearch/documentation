@@ -64,7 +64,6 @@ async function fetchRemoteSamples(options, ctx) {
     samplesToFiles(samples)
     log(`File created with the following SDK's samples:
     ${samples.map((sample) => sample.label).join('\n    ')}\n`)
-  }
 }
 
 module.exports = {
