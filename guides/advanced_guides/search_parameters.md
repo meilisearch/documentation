@@ -298,7 +298,7 @@ If the `facets` parameter has been set, the returned results will contain two ad
   Returns `true` if this count is **exhaustive**.
   Otherwise, returns `false` if this count is **approximative**.
 
-[Learn more about the facet filters](/guides/advanced_guides/faceted_search.md#_2-the-facets-distribution)
+[Learn more about the facets distribution](/guides/advanced_guides/faceted_search.md#_2-the-facets-distribution)
 
 ## Filters
 
