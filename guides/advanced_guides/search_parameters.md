@@ -12,7 +12,7 @@ Search parameters let the user customize their search request.
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
 | **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
-| **[attributesForFaceting](/guides/advanced_guides/search_parameters.md#faceted-attributes)** | Attributes to use as facets                                 |    `null`     |
+| **[attributesForFaceting](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `null`     |
 | **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `null`     |
 | **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
@@ -225,7 +225,7 @@ When evaluated in HTML, the **overview attribute in \_formatted** will look like
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
 
-## Faceted attributes
+## Attributes For Faceting
 
 Attributes used as facets. They **must be declared at indexing time**.
 

@@ -32,7 +32,7 @@ Attributes for which to enable faceting are defined in the `attributesForFacetin
 
 Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
 
-Learn more about **[`attributesForFaceting` in the search parameters](/guides/advanced_guides/search_parameters.md#faceted-attributes)**.
+Learn more about **[`attributesForFaceting` in the search parameters](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)**.
 
 ### Example
 
