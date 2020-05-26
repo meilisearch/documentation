@@ -32,7 +32,7 @@ Attributes for which to enable faceting are defined in the `attributesForFacetin
 
 Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
 
-**[Learn more about `attributesForFaceting` in the search parameters](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)**
+Learn more about `attributesForFaceting` in **[the search parameters](/guides/advanced_guides/search_parameters.md#attributes-for-faceting)**.
 
 #### Example
 
@@ -95,7 +95,7 @@ By introducing facets to MeiliSearch we introduced to new query parameters durin
 
 You can filter on facets to narrow down your results based on criteria with the `facetFilters` attribute.
 
-Learn more about **[`facetFilters` in the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
+Learn more about `facetFilters` in **[the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
 
 #### Example
 
@@ -111,7 +111,7 @@ $ curl --get 'http://localhost:7700/indexes/clothing/search' \
 
 You can retrieve the count of matching terms for each facet with the `facets` attribute.
 
-Learn more about **[`facets` in the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
+Learn more about `facets` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
 
 #### Example
 
