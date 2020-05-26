@@ -241,6 +241,8 @@ Only fields of data type **string** or **array of strings** can be used for face
 
 :::
 
+[Learn more about faceted attributes](/guides/advanced_guides/faceted_search.md)
+
 #### Example
 
 To be able to facet search on `director` and `genre` in a movie database, you would declare faceted attributes as follows:
@@ -270,6 +272,8 @@ Filter on facets to narrow down your results based on criteria.
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `color`, `kind`).
   - `facetValue`: The value of this facet to filter results on (e.g. `red`, `green`, `t-shirt`, `pants`).
 
+[Learn more about the facet filters](/guides/advanced_guides/faceted_search.md#_1-the-facet-filters)
+
 ## The facets distribution
 
 Retrieve the count of matching terms for each facet.
@@ -293,6 +297,8 @@ If the `facets` parameter has been set, the returned results will contain two ad
 - `exhaustiveFacetsCount`:
   Returns `true` if this count is **exhaustive**.
   Otherwise, returns `false` if this count is **approximative**.
+
+[Learn more about the facet filters](/guides/advanced_guides/faceted_search.md#_2-the-facets-distribution)
 
 ## Filters
 
