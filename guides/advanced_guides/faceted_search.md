@@ -115,7 +115,7 @@ To get the facets distribution, you have to specify a list of facets for which t
 
 Follow these steps to get started with faceting.
 
-Suppose that you manage a movie database. The first thing to do is to declare faceted attributes. In the example below, `director`, `producer`, `genres` and `production_companies` will be used as facets.
+Suppose that you manage a movie database. The first thing to do is to declare faceted attributes as follows:
 
 ```bash
 $ curl \
@@ -130,9 +130,11 @@ $ curl \
   }'
 ```
 
-You can now search your documents.
+In the above example, `director`, `producer`, `genres` and `production_companies` will be used as facets.
 
-Say you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele. You would use the following CURL command:
+You can now search your documents and use query parameters.
+
+You can filter on facets. For instance, say you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele. You have to use the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
@@ -140,7 +142,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
 ```
 
-And you would get the following response:
+You will get the following response:
 
 ```json
 [
@@ -203,7 +205,7 @@ And you would get the following response:
 "query": "thriller"
 ```
 
-If you want to know what the number of Batman movies per genre is. You would use the following CURL command:
+Now, if you want to know what the number of Batman movies per genre is, you have to use the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
@@ -211,7 +213,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'facetsDistribution=["genres"]'
 ```
 
-And you would get the following response:
+You will get the following response:
 
 ```json
 [
@@ -283,3 +285,5 @@ And you would get the following response:
   }
 }
 ```
+
+In the above response, you can see a returned object `facetsDistribution` that contains the count of matching documents for each value of the `genres` attribute.
