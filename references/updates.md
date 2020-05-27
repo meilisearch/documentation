@@ -17,10 +17,7 @@ Get the status of an [update](/guides/advanced_guides/asynchronous_updates.md) i
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/updates/1'
-```
+<code-samples id="get_update_1" />
 
 #### Response: `200 Ok`
 
@@ -54,10 +51,7 @@ Get the status of all [updates](/guides/advanced_guides/asynchronous_updates.md)
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/updates'
-```
+<code-samples id="get_all_updates_1" />
 
 #### Response: `200 Ok`
 

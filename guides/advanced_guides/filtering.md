@@ -118,13 +118,9 @@ Say you want to only show to your user movies that were released after a certain
 release_date > 795484800 // march 18, 1995
 ```
 
-Querying on `Avengers`, the above example results in the following CURL command:
+Querying on `Avengers`, the above example results in the following command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Avengers' \
-    --data-urlencode 'filters=release_date > 795484800'
-```
+<code-samples id="filtering_guide_1" />
 
 Now imagine that we only want Batman movies released after the 18 of march 1995, and directed by either Tim Burton or Christopher Nolan, then you would use this filter:
 
@@ -132,13 +128,9 @@ Now imagine that we only want Batman movies released after the 18 of march 1995,
 release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")
 ```
 
-Querying on `Batman`, the above example results in the following CURL command:
+Querying on `Batman`, the above example results in the following command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Batman' \
-    --data-urlencode 'filters=release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan"'
-```
+<code-samples id="filtering_guide_2" />
 
 Note that filtering on string is case insensitive. Here, the parentheses are mandatory, as `AND` has a higher precedence.
 
@@ -148,13 +140,9 @@ If we want to select only horror movies from our favorite director:
 director = "Jordan Peele"
 ```
 
-Querying on `horror`, the above example results in the following CURL command:
+Querying on `horror`, the above example results in the following command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=horror' \
-    --data-urlencode 'filters=director = "Jordan Peele"'
-```
+<code-samples id="filtering_guide_3" />
 
 If we want to find the `Planet of the Apes` movies that have been well rated but we want to ignore the one directed by Tim Burton:
 
@@ -162,13 +150,9 @@ If we want to find the `Planet of the Apes` movies that have been well rated but
 rating >= 3 AND (NOT director = "Tim Burton")
 ```
 
-Querying on `Planet of the Apes`, the above example results in the following CURL command:
+Querying on `Planet of the Apes`, the above example results in the following command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Planet of the Apes' \
-    --data-urlencode 'filters=rating >= 3 AND (NOT director = "Tim Burton")'
-```
+<code-samples id="filtering_guide_4" />
 
 Finally, imagine that you want to filter on "id". You would probably do this:
 

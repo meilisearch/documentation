@@ -26,10 +26,7 @@ Get the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attrib
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
-```
+<code-samples id="get_distinct_attribute_1" />
 
 #### Response: `200 Ok`
 
@@ -53,13 +50,9 @@ Update the [distinct attribute](/guides/advanced_guides/settings.md#distinct-att
 
 A String: the field name.
 
-### Examples
+### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/distinct-attribute' \
-  --data 'movie_id'
-```
+<code-samples id="update_distinct_attribute_1" />
 
 #### Response: `202 Accepted`
 
@@ -87,10 +80,7 @@ Reset the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attr
 
 #### Example
 
-```bash
-$ curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
-```
+<code-samples id="reset_distinct_attribute_1" />
 
 #### Response: `202 Accepted`
 

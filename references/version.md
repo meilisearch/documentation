@@ -8,10 +8,7 @@ Get version of MeiliSearch.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/version'
-```
+<code-samples id="get_version_1" />
 
 #### Response: `200 Ok`
 

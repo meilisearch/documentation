@@ -10,10 +10,7 @@ Get health of MeiliSearch server.
 
 ### Example
 
-```bash
-curl \
-  -X GET 'http://localhost:7700/health'
-```
+<code-samples id="get_health_1" />
 
 #### Response: `204 No Content`
 
@@ -35,12 +32,6 @@ The body accepts a boolean to define the MeiliSearch health.
 
 ### Example
 
-```bash
-$ curl \
-  -X PUT 'http://localhost:7700/health' \
-  --data '{
-      "health": false
-  }'
-```
+<code-samples id="update_health_1" />
 
 #### Response: `204 No Content`
