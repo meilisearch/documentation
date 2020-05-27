@@ -24,12 +24,9 @@ Get the [displayed attributes](/guides/advanced_guides/settings.md#displayed-att
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-### Example
+#### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
-```
+<code-samples id="get_displayed_attributes_1"/>
 
 #### Response: `200 Ok`
 
@@ -55,19 +52,9 @@ Update the [displayed attributes](/guides/advanced_guides/settings.md#displayed-
 
 An array of strings that contains attributes of an index to display.
 
-### Examples
+#### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
-  --data '[
-      "title",
-      "description",
-      "release_date",
-      "rank",
-      "poster"
-  ]'
-```
+<code-samples id="update_displayed_attributes_1"/>
 
 #### Response: `202 Accepted`
 
@@ -97,10 +84,7 @@ All attributes found in the documents added to the index.
 
 #### Example
 
-```bash
-$ curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
-```
+<code-samples id="reset_displayed_attributes_1"/>
 
 #### Response: `202 Accepted`
 

@@ -16,10 +16,7 @@ Get stats of an index.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/stats'
-```
+<code-samples id="get_index_stats_1" />
 
 #### Response: `200 Ok`
 
@@ -45,10 +42,7 @@ Get stats of all indexes.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/stats'
-```
+<code-samples id="get_indexes_stats_1" />
 
 #### Response: `200 Ok`
 

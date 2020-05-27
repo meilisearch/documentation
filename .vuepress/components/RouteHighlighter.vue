@@ -28,7 +28,7 @@ export default {
     method: {
       type: String,
       default: '',
-      validator: function(x) {
+      validator: function (x) {
         return ['get', 'post', 'put', 'patch', 'delete'].includes(
           x.toLowerCase()
         )

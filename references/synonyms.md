@@ -26,10 +26,7 @@ Get the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
 
 #### Example
 
-```bash
- curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/synonyms'
-```
+<code-samples id="get_synonyms_1" />
 
 #### Response: `200 OK`
 
@@ -61,15 +58,7 @@ An object that contains all synonyms and their associated words.
 
 #### Example
 
-```bash
- curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
-  --data '{
-    "wolverine": ["xmen", "logan"],
-    "logan": ["wolverine", "xmen"],
-    "wow": ["world of warcraft"]
-  }'
-```
+<code-samples id="update_synonyms_1" />
 
 #### Response: `202 Accepted`
 
@@ -99,10 +88,7 @@ Empty object : `{}`
 
 #### Example
 
-```bash
- curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings/synonyms'
-```
+<code-samples id="reset_synonyms_1" />
 
 #### Response: `202 Accepted`
 

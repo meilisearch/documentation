@@ -62,16 +62,7 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 Suppose you have an e-commerce dataset. For an index that contains information about tops, you decide to create synonyms for `sweater` and `jumper` since these two items are very similar.
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/tops/settings' \
-  --data '{
-      "synonyms": {
-          "sweater": ["jumper"],
-          "jumper": ["sweater"]
-      }
-  }'
-```
+<code-samples id="settings_guide_synonyms_1" />
 
 By doing so, when searching for `black sweater`, results for `black jumper` will also be returned.
 
@@ -91,17 +82,7 @@ A set of words defined for an index. Because some words neither add semantic val
 
 To add `the`, `a` and `an` to the stop words list, send:
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "stopWords": [
-          "the",
-          "a",
-          "an"
-      ]
-  }'
-```
+<code-samples id="settings_guide_stop_words_1" />
 
 With the settings in the example above, `the`, `a` and `an` are now ignored by the sorting algorithm if they are present in search queries.
 
@@ -133,22 +114,7 @@ You can add a custom ranking rule anywhere in the list of ranking rules. A custo
 
 To add your ranking rules to the settings, send:
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "rankingRules": [
-          "typo",
-          "words",
-          "proximity",
-          "attribute",
-          "wordsPosition",
-          "exactness",
-          "asc(release_date)",
-          "desc(rank)"
-      ]
-  }'
-```
+<code-samples id="settings_guide_ranking_rules_1" />
 
 With the settings in the example above, documents will be sorted by number of typos first. If too many documents have the same number of typos, the `words` rule will be applied. This operation will be repeated with the next rules until the requested number of documents has been reached (default: 20).
 
@@ -191,13 +157,7 @@ As shown below, you have 2 documents that contain information about the same jac
 
 You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/jackets/settings' \
-  --data '{
-      "distinctAttribute": "product_id"
-  }'
-```
+<code-samples id="settings_guide_distinct_1" />
 
 With the settings in the example above, only one of the two documents will be returned if you search `Lee leather jacket`.
 
@@ -217,21 +177,7 @@ The content of the fields whose attributes are added to the [searchable-attribut
 
 By adding the following settings, the fields `uid`, `movie_id`, `title`, `description`, `poster`, `release_date` and `rank` will be searched.
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "searchableAttributes": [
-          "uid",
-          "movie_id",
-          "title",
-          "description",
-          "poster",
-          "release_date",
-          "rank"
-      ]
-  }'
-```
+<code-samples id="settings_guide_searchable_1" />
 
 ## Displayed attributes
 
@@ -251,19 +197,7 @@ Documents returned upon search contain only displayed fields.
 
 By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "displayedAttributes": [
-          "title",
-          "description",
-          "poster",
-          "release_date",
-          "rank"
-      ]
-  }'
-```
+<code-samples id="settings_guide_displayed_1" />
 
 ## Accept new fields
 
@@ -283,10 +217,4 @@ This setting takes a **Boolean value** (`true` or `false`) and defines whether n
 
 If you set `acceptNewFields` to `false`, new fields will be stored but neither searchable nor displayed in returned documents.
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "acceptNewFields": false
-  }'
-```
+<code-samples id="settings_guide_accept_new_fields_1" />

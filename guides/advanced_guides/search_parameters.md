@@ -30,10 +30,7 @@ The query parameter is the **only mandatory** parameter. This is the string used
 
 Suppose you would like to search `shifu` in a movie database, you would send:
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu
-```
+<code-samples id="search_parameter_guide_query_1" />
 
 ::: tip
 Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API will respond.
@@ -53,11 +50,7 @@ A number of **documents to skip**.
 
 If you want to skip the **first** document, set `offset` to `1`.
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    -d offset=1
-```
+<code-samples id="search_parameter_guide_offset_1" />
 
 ## Limit
 
@@ -73,11 +66,7 @@ Set a **limit to the number of documents returned** by search queries.
 
 If you want to get only **two** documents, set `limit` to `2`.
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    -d limit=2
-```
+<code-samples id="search_parameter_guide_limit_1" />
 
 ## Filters
 
@@ -85,11 +74,7 @@ $ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
 
 Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    -d q=n \
-    --data-urlencode filters='title = Nightshift'
-```
+<code-samples id="search_parameter_guide_filter_1" />
 
 ```json
 {
@@ -103,11 +88,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 The parameter should be **URL-encoded**.
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    --data-urlencode filters='title="Kung Fu Panda"'
-```
+<code-samples id="search_parameter_guide_filter_2" />
 
 ## Facet filters
 
@@ -202,11 +183,7 @@ Attributes to **display** in the returned documents.
 
 If you want to get only the `overview` and `title` field and not the other fields, set `attributesToRetrieve` to `overview,title`.
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    -d attributesToRetrieve=overview,title
-```
+<code-samples id="search_parameter_guide_retrieve_1" />
 
 ## Attributes to Crop
 
@@ -243,12 +220,7 @@ This is especially useful when you have to display content on the front-end in a
 
 If you input `shifu` as a search query and set the value of the parameter `cropLength` to `10`:
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    -d attributesToCrop=overview \
-    -d cropLength=10
-```
+<code-samples id="search_parameter_guide_crop_1" />
 
 You will get the following response with the **cropped version in the \_formatted object**:
 
@@ -302,11 +274,7 @@ Some working examples:
 
 If you choose to highlight the content of `overview`:
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    -d attributesToHighlight=overview
-```
+<code-samples id="search_parameter_guide_highlight_1" />
 
 You will get the following response with the **highlighted version in the \_formatted object**:
 
@@ -349,12 +317,7 @@ This is useful when you need to highlight the results without the default HTML h
 
 If you set `matches` to `true`:
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    -d attributesToHighlight=overview \
-    -d matches=true
-```
+<code-samples id="search_parameter_guide_matches_1" />
 
 You will get the following response with the **information about the matches in the \_matchesInfo object**:
 

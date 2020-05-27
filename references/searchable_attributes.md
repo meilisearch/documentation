@@ -26,10 +26,7 @@ Get the [searchable attributes](/guides/advanced_guides/field_properties.md#sear
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
-```
+<code-samples id="get_searchable_attributes_1" />
 
 #### Response: `200 Ok`
 
@@ -57,17 +54,9 @@ An array of strings that contains searchable attributes sorted by order of impor
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
-### Examples
+### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
-  --data '[
-      "title",
-      "description",
-      "uid"
-  ]'
-```
+<code-samples id="update_searchable_attributes_1" />
 
 A match in title will make a document more relevant than another document with a match in description.
 
@@ -99,10 +88,7 @@ All attributes found in the documents added to the index.
 
 #### Example
 
-```bash
-$ curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
-```
+<code-samples id="reset_searchable_attributes_1" />
 
 #### Response: `202 Accepted`
 

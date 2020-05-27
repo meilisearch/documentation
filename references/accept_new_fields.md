@@ -36,10 +36,7 @@ Get if MeiliSearch [accepts new fields](/guides/advanced_guides/settings.md#acce
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/accept-new-fields'
-```
+<code-samples id="get_accept_new_fields_1"/>
 
 #### Response: `200 Ok`
 
@@ -67,13 +64,9 @@ If `true`, each field found in the newly added documents are searchable and disp
 
 Otherwise, if `false`, fields are stored but neither searchable nor displayed in returned documents.
 
-### Examples
+### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/accept-new-fields' \
-  --data 'false'
-```
+<code-samples id="update_accept_new_fields_1"/>
 
 #### Response: `202 Accepted`
 

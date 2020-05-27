@@ -30,10 +30,7 @@ An array that contains [built-in ranking rules](/guides/main_concepts/relevancy.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings/ranking-rules'
-```
+<code-samples id="get_ranking_rules_1" />
 
 #### Response: `200 Ok`
 
@@ -73,22 +70,9 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 - To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
-### Examples
+### Example
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
-  --data '[
-      "typo",
-      "words",
-      "proximity",
-      "attribute",
-      "wordsPosition",
-      "exactness",
-      "asc(release_date)",
-      "desc(rank)"
-  ]'
-```
+<code-samples id="update_ranking_rules_1" />
 
 #### Response: `202 Accepted`
 
@@ -102,7 +86,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 ## Reset ranking rules
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules"/>
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules" />
 
 Reset the [ranking rules](/guides/main_concepts/relevancy.md#ranking-rules) of an index to its default value.
 
@@ -124,10 +108,7 @@ To remove all ranking rules, which is not recommended in any case, you would sen
 
 #### Example
 
-```bash
-$ curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings/ranking-rules'
-```
+<code-samples id="reset_ranking_rules_1" />
 
 #### Response: `202 Accepted`
 

@@ -50,10 +50,7 @@ Get the settings of an index.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/settings'
-```
+<code-samples id="get_settings_1" />
 
 #### Response: `200 Ok`
 
@@ -115,53 +112,9 @@ Updates in the settings route are **partial**. This means that any parameters no
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 | **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
-### Examples
+### Example
 
-#### Add settings
-
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "rankingRules": [
-          "typo",
-          "words",
-          "proximity",
-          "attribute",
-          "wordsPosition",
-          "exactness",
-          "desc(release_date)",
-          "desc(rank)"
-      ],
-      "distinctAttribute": "movie_id",
-      "searchableAttributes": [
-          "uid",
-          "movie_id",
-          "title",
-          "description",
-          "poster",
-          "release_date",
-          "rank"
-      ],
-      "displayedAttributes": [
-          "title",
-          "description",
-          "poster",
-          "release_date",
-          "rank"
-      ],
-      "stopWords": [
-          "the",
-          "a",
-          "an"
-      ],
-      "synonyms": {
-          "wolverine": ["xmen", "logan"],
-          "logan": ["wolverine"]
-      },
-      "acceptNewFields": false
-  }'
-```
+<code-samples id="update_settings_1" />
 
 #### Response: `202 Accepted`
 
@@ -201,10 +154,7 @@ All settings will be reset to their default value.
 
 #### Example
 
-```bash
-$ curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/settings'
-```
+<code-samples id="reset_settings_1" />
 
 #### Response: `202 Accepted`
 

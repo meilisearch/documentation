@@ -68,20 +68,11 @@ Here are a few examples of what can be achieved with the [search parameters](/gu
 
 Results can be paginated using the `limit` and `offset` query parameters.
 
-```bash
-$ curl -X GET -G 'http://localhost:7700/indexes/movies/search' \
-    -d q=shifu \
-    -d limit=5 \
-    -d offset=10
-```
+<code-samples id="search_guide_1" />
 
 You can filter results using the `filters` query parameter.
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Avengers' \
-    --data-urlencode 'filters=release_date > 795484800'
-```
+<code-samples id="search_guide_2" />
 
 ## Give it a try!
 

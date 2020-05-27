@@ -20,10 +20,7 @@ Get one [document](/guides/main_concepts/documents.md) using its unique id.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/documents/25684'
-```
+<code-samples id="get_one_document_1" />
 
 #### Response: `200 Ok`
 
@@ -65,10 +62,7 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 ### Example
 
-```bash
-$ curl \
-  -X GET 'http://localhost:7700/indexes/movies/documents?limit=2'
-```
+<code-samples id="get_documents_1" />
 
 #### Response: `200 Ok`
 
@@ -137,17 +131,7 @@ Documents fields which are not known to the index schema will be ignored.
 
 ### Example
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/documents' \
-  --data '[{
-      "id": 287947,
-      "title": "Shazam",
-      "poster": "https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
-      "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
-      "release_date": "2019-03-23"
-  }]'
-```
+<code-samples id="add_or_replace_documents_1" />
 
 #### Response: `202 Accepted`
 
@@ -198,15 +182,7 @@ The body is composed of a **JSON array** of documents.
 
 ### Example
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/documents' \
-  -d 'primaryKey=movieskud'
-  --data '[{
-      "movieskud": 287947,
-      "title": "Shazam ⚡️"
-  }]'
-```
+<code-samples id="add_or_update_documents_1" />
 
 #### Response: `202 Accepted`
 
@@ -232,10 +208,7 @@ Delete all documents in the specified index.
 
 ### Example
 
-```bash
-curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/documents'
-```
+<code-samples id="delete_all_documents_1" />
 
 #### Response: `202 Accepted`
 
@@ -262,10 +235,7 @@ Delete one document based on its unique id.
 
 ### Example
 
-```bash
-  curl \
-  -X DELETE 'http://localhost:7700/indexes/movies/documents/25684'
-```
+<code-samples id="delete_one_document_1" />
 
 #### Response: `202 Accepted`
 
@@ -299,16 +269,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 
 ### Example
 
-```bash
-  curl \
-  -X POST 'http://localhost:7700/indexes/movies/delete-batch' \
-  --data '[
-      23488,
-      153738,
-      437035,
-      363869
-  ]'
-```
+<code-samples id="delete_documents_1" />
 
 #### Response: `202 Accepted`
 
