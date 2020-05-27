@@ -9,7 +9,7 @@ Search parameters let the user customize their search request.
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
 | **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on.                                 |    `none`     |
-| **[facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `none`     |
+| **[facetsDistribution](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `none`     |
 | **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `*`      |
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
@@ -144,7 +144,7 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 
 If you have [set up faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
 
-`facets=[<facetName>, <facetName>, ...]`
+`facetsDistribution=[<facetName>, <facetName>, ...]`
 
 This attribute can take two values:
 
@@ -159,7 +159,7 @@ This attribute can take two values:
 
 ### Returned fields
 
-If the `facets` parameter has been set, the returned results will contain **two additional fields**:
+If the `facetsDistribution` parameter has been set, the returned results will contain **two additional fields**:
 
 - `facets`: The number of remaining candidates for each specified facet.
 

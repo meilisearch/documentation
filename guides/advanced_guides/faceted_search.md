@@ -90,7 +90,7 @@ $ curl \
 By introducing facets to MeiliSearch, new search query parameters were also added:
 
 - `facetFilters`:  Narrows the selection on which to search.
-- `facets`: Returns the number of matching documents distributed amongst all the values of a given facet.
+- `facetsDistribution`: Returns the number of matching documents distributed amongst all the values of a given facet.
 
 ### The facet filters
 
@@ -119,8 +119,8 @@ In the example below, on the [snowleader.co.uk website](https://www.snowleader.c
 ![snowleader ski pants](/faceted-search/facets-dist-pants.png)
 > If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying. Image from [snowleader.co.uk](https://www.snowleader.co.uk).
 
-To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facets` attribute.
-Learn more about `facets` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
+To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
+Learn more about `facetsDistribution` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
 
 #### Example
 
@@ -129,5 +129,5 @@ Given a movie database, suppose that you want to know how many Batman movies are
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'q=Batman' \
-    --data-urlencode 'facets=["genre", "director"]'
+    --data-urlencode 'facetsDistribution=["genre", "director"]'
 ```
