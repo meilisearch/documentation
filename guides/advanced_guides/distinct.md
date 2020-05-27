@@ -27,7 +27,7 @@ As shown below, you have 3 documents that contain information about the same jac
     "product_id": "123456"
   },
   {
-    "id": 2,
+    "id": 3,
     "description": "Leather jacket",
     "brand": "Lee jeans",
     "color": "blue",
