@@ -105,10 +105,10 @@ They can filter on facets to narrow down their results based on criteria with th
 
 Since the users can have a visual clue about the range of categories available in the UI, they can easily know how many search results are found for each category.
 
-In the example below, on the [snowleader.co.uk website](https://www.snowleader.co.uk), the number in parentheses matches how many search results each facet relates to.
+In the example below, on [IMDb](https://www.imdb.com), the number in parentheses matches how many search results each facet relates to.
 
-![snowleader ski pants](/faceted-search/facets-dist-pants.png)
-> If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying.
+![IMDb facets](/faceted-search/facets-imdb.png)
+> If a user searches Fantasy, Animation, Adventure movies, and TV shows, they will know there are 826 TV series and 137 video games matching their criteria.
 
 To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
 
