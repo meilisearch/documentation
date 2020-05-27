@@ -97,9 +97,40 @@ Because facets relate specifically to a set of documents, they give an overview 
 They can filter on facets to narrow down their results based on criteria with the `facetFilters` attribute.
 Learn more about `facetFilters` in **[the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
 
-#### Example
+### The facets distribution
 
-Given a movie database, suppose that you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele. You would use the following CURL command:
+Since the users can have a visual clue about the range of categories available in the UI, they can easily know how many search results are found for each category.
+
+In the example below, on the [snowleader.co.uk website](https://www.snowleader.co.uk), the number in parentheses matches how many search results each facet relates to.
+
+![snowleader ski pants](/faceted-search/facets-dist-pants.png)
+> If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying.
+
+To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
+Learn more about `facetsDistribution` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
+
+## Walkthrough
+
+Follow these steps to get started with faceting.
+
+Suppose that you manage a movie database. The first thing to do is to declare faceted attributes. In the example below, `director`, `producer`, `genres` and `production_companies` will be used as facets.
+
+```bash
+$ curl \
+  -X POST 'http://localhost:7700/indexes/movies/settings' \
+  --data '{
+      "attributesForFaceting": [
+          "director",
+          "producer",
+          "genres",
+          "production_companies"
+      ]
+  }'
+```
+
+You can now search your documents.
+
+Say you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele. You would use the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
@@ -170,21 +201,7 @@ And you would get the following response:
 "query": "thriller"
 ```
 
-### The facets distribution
-
-Since the users can have a visual clue about the range of categories available in the UI, they can easily know how many search results are found for each category.
-
-In the example below, on the [snowleader.co.uk website](https://www.snowleader.co.uk), the number in parentheses matches how many search results each facet relates to.
-
-![snowleader ski pants](/faceted-search/facets-dist-pants.png)
-> If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying.
-
-To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
-Learn more about `facetsDistribution` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
-
-#### Example
-
-Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
+If you want to know what the number of Batman movies per genre is. You would use the following CURL command:
 
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
@@ -280,5 +297,3 @@ And you would get the following response:
   }
 }
 ```
-
-## Walkthrough
