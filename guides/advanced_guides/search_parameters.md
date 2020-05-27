@@ -251,11 +251,8 @@ And you would get the following response:
     "producer": "William Dozier",
     "tagline": "He's Here Big As Life In A Real Bat-Epic",
     "genres": [
-      "Family",
       "Adventure",
-      "Comedy",
-      "Science Fiction",
-      "Crime"
+      "Comedy"
     ],
     "overview": "The Dynamic Duo faces four super-villains who plan to hold the world for ransom with the help of a secret invention that instantly dehydrates people.",
     "cast": [
@@ -306,25 +303,12 @@ And you would get the following response:
 "facetsDistribution": {
   "genres": {
     "action": 273,
-    "drama": 667,
     "animation": 118,
     "adventure": 132,
-    "documentary": 106,
-    "science fiction": 96,
     "fantasy": 67,
     "comedy": 475,
     "mystery": 70,
-    "family": 100,
-    "western": 35,
-    "romance": 182,
-    "music": 55,
-    "tv movie": 66,
-    "horror": 107,
-    "": 0,
     "thriller": 217,
-    "war": 45,
-    "history": 44,
-    "crime": 171
   }
 }
 ```
