@@ -56,13 +56,12 @@ async function requestSamples() {
   return await Promise.all(fetchPromises)
 }
 
-async function fetchRemoteSamples(options, ctx) {
-  if (ctx.isProd) {
-    log('Fetching remote sample files...')
-    const samples = (await requestSamples()).filter((sample) => sample)
-    log('Fetched sample files of')
-    samplesToFiles(samples)
-    log(`File created with the following SDK's samples:
+async function fetchRemoteSamples() {
+  log('Fetching remote sample files...')
+  const samples = (await requestSamples()).filter((sample) => sample)
+  log('Fetched sample files of')
+  samplesToFiles(samples)
+  log(`File created with the following SDK's samples:
     ${samples.map((sample) => sample.label).join('\n    ')}\n`)
 }
 
