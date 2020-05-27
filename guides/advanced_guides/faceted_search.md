@@ -95,7 +95,8 @@ By introducing facets to MeiliSearch, new search query parameters were also adde
 Because facets relate specifically to a set of documents, they give an overview of the records and help to understand what kind of information can be searched. Facets then help users navigate through their search results.
 
 They can filter on facets to narrow down their results based on criteria with the `facetFilters` attribute.
-Learn more about `facetFilters` in **[the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
+
+[Learn more about `facetFilters` in the search parameters](/guides/advanced_guides/search_parameters.md#facet-filters)
 
 ### The facets distribution
 
@@ -107,7 +108,8 @@ In the example below, on the [snowleader.co.uk website](https://www.snowleader.c
 > If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying.
 
 To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
-Learn more about `facetsDistribution` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
+
+[Learn more about `facetsDistribution` in the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)
 
 ## Walkthrough
 
