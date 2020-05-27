@@ -161,7 +161,7 @@ This attribute can take two values:
 
 If the `facetsDistribution` parameter has been set, the returned results will contain **two additional fields**:
 
-- `facets`: The number of remaining candidates for each specified facet.
+- `facetsDistribution`: The number of remaining candidates for each specified facet.
 
 - `exhaustiveFacetsCount`:
   Returns `true` if this count is **exhaustive**.
