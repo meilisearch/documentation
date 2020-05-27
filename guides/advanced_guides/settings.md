@@ -83,7 +83,7 @@ $ curl \
   --data '{
       "attributesForFaceting": [
           "director",
-          "genre"
+          "genres"
       ]
   }'
 ```

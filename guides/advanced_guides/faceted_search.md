@@ -78,7 +78,7 @@ $ curl \
   --data '{
       "attributesForFaceting": [
           "director",
-          "genre"
+          "genres"
       ]
   }'
 ```
@@ -255,7 +255,7 @@ And you would get the following response:
 "exhaustiveNbHits": false,
 "processingTimeMs": 5,
 "query": "Batman",
-"facets": {
+"facetsDistribution": {
   "genres": {
     "action": 273,
     "drama": 667,
@@ -280,3 +280,5 @@ And you would get the following response:
   }
 }
 ```
+
+## Walkthrough

@@ -126,10 +126,10 @@ Can be translated as:
 
 #### Example
 
-Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either comedy **or** horror **and** directed by Jordan Peele.
+Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
 
 ```SQL
-("genre:Horror" OR "genre:Comedy") AND "director:Jordan Peele"
+("genre:Horror" OR "genre:Mystery") AND "director:Jordan Peele"
 ```
 
 Querying on "thriller", the above example results in the following CURL command:
@@ -137,7 +137,70 @@ Querying on "thriller", the above example results in the following CURL command:
 ```bash
 $ curl --get 'http://localhost:7700/indexes/movies/search' \
     --data-urlencode 'q=thriller' \
-    --data-urlencode 'facetFilters=[["genre:Horror", "genre:Comedy"], "director:Jordan Peele"]'
+    --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
+```
+
+And you would get the following response:
+
+```json
+[
+  {
+    "id": 458723,
+    "title": "Us",
+    "director": "Jordan Peele",
+    "producer": "Sean McKittrick",
+    "tagline": "Watch yourself",
+    "genres": [
+      "Thriller",
+      "Horror",
+      "Mystery"
+    ],
+    "overview": "Husband and wife Gabe and Adelaide Wilson take their kids to their beach house expecting to unplug and unwind with friends. But as night descends, their serenity turns to tension and chaos when some shocking visitors arrive uninvited.",
+    "cast": [
+      "Lupita Nyong'o as Adelaide Wilson / Red",
+      "Winston Duke as Gabriel \"Gabe\" Wilson / Abraham"
+    ],
+    "production_companies": [
+      "Monkeypaw Productions"
+    ],
+    "vote_count": 3000,
+    "vote_average": 7,
+    "poster_path": "https://image.tmdb.org/t/p/w500/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
+    "popularity": 22.897,
+    "release_date": 1552521600
+  },
+  {
+    "id": 419430,
+    "title": "Get Out",
+    "director": "Jordan Peele",
+    "producer": "Sean McKittrick",
+    "tagline": "Just because you're invited, doesn't mean you're welcome.",
+    "genres": [
+      "Mystery",
+      "Thriller",
+      "Horror"
+    ],
+    "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
+    "cast": [
+      "Daniel Kaluuya as Chris Washington",
+      "Allison Williams as Rose Armitage"
+    ],
+    "production_companies": [
+      "Monkeypaw Productions"
+    ],
+    "vote_count": 9738,
+    "vote_average": 7.5,
+    "poster_path": "https://image.tmdb.org/t/p/w500/rdPGUJhadPg7FGFNzavib0iwTor.jpg",
+    "popularity": 28.295,
+    "release_date": 1487894400
+  }
+],
+"offset": 0,
+"limit": 20,
+"nbHits": 2,
+"exhaustiveNbHits": false,
+"processingTimeMs": 4,
+"query": "thriller"
 ```
 
 ## The facets distribution
@@ -166,6 +229,105 @@ If the `facetsDistribution` parameter has been set, the returned results will co
 - `exhaustiveFacetsCount`:
   Returns `true` if this count is **exhaustive**.
   Otherwise, returns `false` if this count is **approximative**.
+
+#### Example
+
+Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Batman' \
+    --data-urlencode 'facetsDistribution=["genres"]'
+```
+
+And you would get the following response:
+
+```json
+[
+  {
+    "id": 2661,
+    "title": "Batman",
+    "director": "Leslie H. Martinson",
+    "producer": "William Dozier",
+    "tagline": "He's Here Big As Life In A Real Bat-Epic",
+    "genres": [
+      "Family",
+      "Adventure",
+      "Comedy",
+      "Science Fiction",
+      "Crime"
+    ],
+    "overview": "The Dynamic Duo faces four super-villains who plan to hold the world for ransom with the help of a secret invention that instantly dehydrates people.",
+    "cast": [
+      "Adam West as Batman / Bruce Wayne",
+      "Burt Ward as Robin / Dick Grayson"
+      ],
+    "production_companies": [
+      "DC Comics"
+    ],
+    "vote_count": 404,
+    "vote_average": 6.2,
+    "poster_path": "https://image.tmdb.org/t/p/w500/udDVJXtAFsQ8DimrXkVFqy4DGEQ.jpg",
+    "popularity": 8.11,
+    "release_date": -108086400
+  },
+  {
+    "id": 268,
+    "title": "Batman",
+    "director": "Tim Burton",
+    "producer": "Peter Guber",
+    "tagline": "Have you ever danced with the devil in the pale moonlight?",
+    "genres": [
+      "Fantasy",
+      "Action"
+    ],
+    "overview": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker, who has seized control of Gotham's underworld.",
+    "cast": [
+      "Michael Keaton as Bruce Wayne / Batman",
+      "Jack Nicholson as Jack Napier / The Joker"
+    ],
+    "production_companies": [
+      "PolyGram Filmed Entertainment"
+    ],
+    "vote_count": 4264,
+    "vote_average": 7.1,
+    "poster_path": "https://image.tmdb.org/t/p/w500/kBf3g9crrADGMc2AMAMlLBgSm2h.jpg",
+    "popularity": 19.538,
+    "release_date": 614563200
+  }
+  ...
+],
+"offset": 0,
+"limit": 20,
+"nbHits": 1684,
+"exhaustiveNbHits": false,
+"processingTimeMs": 5,
+"query": "Batman",
+"facetsDistribution": {
+  "genres": {
+    "action": 273,
+    "drama": 667,
+    "animation": 118,
+    "adventure": 132,
+    "documentary": 106,
+    "science fiction": 96,
+    "fantasy": 67,
+    "comedy": 475,
+    "mystery": 70,
+    "family": 100,
+    "western": 35,
+    "romance": 182,
+    "music": 55,
+    "tv movie": 66,
+    "horror": 107,
+    "": 0,
+    "thriller": 217,
+    "war": 45,
+    "history": 44,
+    "crime": 171
+  }
+}
+```
 
 ## Attributes to Retrieve
 
