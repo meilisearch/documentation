@@ -113,11 +113,8 @@ Since the users can have a visual clue about the range of categories available i
 
 In the example below, on the [snowleader.co.uk website](https://www.snowleader.co.uk), the number in parentheses matches how many search results each facet relates to.
 
-![snowleader boot](/faceted-search/facets-dist-boot.png)
-> When searching for "Boot", 791 outdoor boots have been found. If the user wants to buy outdoor boots, they can narrow down their search results by clicking the Outdoor category. Image from [snowleader.co.uk](https://www.snowleader.co.uk).
-
 ![snowleader ski pants](/faceted-search/facets-dist-pants.png)
-> If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying. Image from [snowleader.co.uk](https://www.snowleader.co.uk).
+> If a user is looking for ski pants available in XXL size, they can select the right size. Thus they won't waste their time looking at items they are not interested in buying.
 
 To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
 Learn more about `facetsDistribution` in **[the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)**.
