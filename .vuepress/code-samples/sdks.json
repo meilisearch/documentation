@@ -2,7 +2,7 @@
   {
     "language": "bash",
     "label": "cURL",
-    "url": "https://raw.githubusercontent.com/meilisearch/documentation/code-samples/.code-samples.meilisearch.yaml"
+    "url": "https://raw.githubusercontent.com/meilisearch/documentation/master/.code-samples.meilisearch.yaml"
   },
   {
     "language": "javascript",
