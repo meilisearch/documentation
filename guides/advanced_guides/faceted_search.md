@@ -7,7 +7,7 @@
 A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is an **intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
 When users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
 
-![Amazon UI](/faceted-search/amazon-facets.png)
+![Amazon UI](/faceted-search/facets-amazon.png)
 > Faceted navigation on Amazon: facets are displayed on the left column.
 
 ## Filters or Facets?
@@ -93,6 +93,9 @@ By introducing facets to MeiliSearch, new search query parameters were also adde
 ### The facet filters
 
 Because facets relate specifically to a set of documents, they give an overview of the records and help to understand what kind of information can be searched. Facets then help users navigate through their search results.
+
+![Amazon movies](/faceted-search/facets-akira.png)
+> You can select multiple categories on Amazon.
 
 They can filter on facets to narrow down their results based on criteria with the `facetFilters` attribute.
 
