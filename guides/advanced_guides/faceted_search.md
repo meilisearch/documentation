@@ -104,7 +104,7 @@ They can filter on facets to narrow down their results based on criteria with th
 
 ### The facets distribution
 
-Facet distribution returns the number of matching documents distributed amongst all the values of a given facet. 
+Facet distribution returns the number of matching documents distributed amongst all the values of a given facet.
 
 > After a search in a movie dataset, the number of films found in all the different genres is the facet distribution of the `genres` facet.
 
