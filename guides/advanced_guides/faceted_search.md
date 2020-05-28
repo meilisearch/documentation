@@ -219,17 +219,11 @@ You will get the following response:
     "id": 268,
     "title": "Batman",
     "director": "Tim Burton",
-    "producer": "Peter Guber",
-    "tagline": "Have you ever danced with the devil in the pale moonlight?",
     "genres": [
       "Fantasy",
       "Action"
     ],
     "overview": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker, who has seized control of Gotham's underworld.",
-    "cast": [
-      "Michael Keaton as Bruce Wayne / Batman",
-      "Jack Nicholson as Jack Napier / The Joker"
-    ],
     "production_companies": [
       "PolyGram Filmed Entertainment"
     ],
