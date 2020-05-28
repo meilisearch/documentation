@@ -160,10 +160,6 @@ You will get the following response:
       "Mystery"
     ],
     "overview": "Husband and wife Gabe and Adelaide Wilson take their kids to their beach house expecting to unplug and unwind with friends. But as night descends, their serenity turns to tension and chaos when some shocking visitors arrive uninvited.",
-    "cast": [
-      "Lupita Nyong'o as Adelaide Wilson / Red",
-      "Winston Duke as Gabriel \"Gabe\" Wilson / Abraham"
-    ],
     "production_companies": [
       "Monkeypaw Productions"
     ],
