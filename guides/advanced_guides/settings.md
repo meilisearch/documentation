@@ -6,9 +6,9 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **[attributesForFaceting](/guides/advanced_guides/settings.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `none`     |
+| **[attributesForFaceting](/guides/advanced_guides/settings.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `null`     |
 | **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `none`                                                                                            |
+| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 | **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
@@ -61,7 +61,7 @@ Faceted attributes are the attributes used as facets. They **must be declared at
 
 `attributesForFaceting=[<Attribute>, ...]`
 
-- `[<Attribute>, ...]` (Array of strings, defaults to `none`)
+- `[<Attribute>, ...]` (Array of strings, defaults to `null`)
 
   An array of strings that contains the attributes to use as facets.
 
@@ -124,7 +124,7 @@ The **value of a field** whose attribute is set as a distinct attribute will alw
 
 `distinctAttribute=<String>`
 
-- `<String>` (String, defaults to `none`)
+- `<String>` (String, defaults to `null`)
 
   The field name.
 
