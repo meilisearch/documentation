@@ -143,7 +143,8 @@ $ curl --get 'http://localhost:7700/indexes/movies/search' \
 And you would get the following response:
 
 ```json
-[
+{
+"hits": [
   {
     "id": 458723,
     "title": "Us",
