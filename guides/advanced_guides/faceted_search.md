@@ -154,8 +154,6 @@ You will get the following response:
     "id": 458723,
     "title": "Us",
     "director": "Jordan Peele",
-    "producer": "Sean McKittrick",
-    "tagline": "Watch yourself",
     "genres": [
       "Thriller",
       "Horror",
