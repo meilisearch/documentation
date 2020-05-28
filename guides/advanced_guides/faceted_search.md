@@ -104,7 +104,9 @@ They can filter on facets to narrow down their results based on criteria with th
 
 ### The facets distribution
 
-Since the users can have a visual clue about the range of categories available in the UI, they can easily know how many search results are found for each category.
+Facet distribution returns the number of matching documents distributed amongst all the values of a given facet. 
+
+> After a search in a movie dataset, the number of films found in all the different genres is the facet distribution of the `genres` facet.
 
 In the example below, on [IMDb](https://www.imdb.com), the number in parentheses matches how many search results each facet relates to.
 
