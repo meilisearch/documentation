@@ -108,7 +108,7 @@ Facet distribution returns the number of matching documents distributed amongst 
 
 > After a search in a movie dataset, the number of films found in all the different genres is the facet distribution of the `genres` facet.
 
-In the example below, on [IMDb](https://www.imdb.com), the number in parentheses matches how many search results each facet relates to.
+In the example below, on [IMDb](https://www.imdb.com), the number in parentheses represents the count of search results each facet is associated to.
 
 ![IMDb facets](/faceted-search/facets-imdb.png)
 > If a user searches Fantasy, Animation, Adventure movies, and TV shows, they will know there are 826 TV series and 137 video games matching their criteria.
