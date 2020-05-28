@@ -111,6 +111,8 @@ In the example below, on [IMDb](https://www.imdb.com), the number in parentheses
 ![IMDb facets](/faceted-search/facets-imdb.png)
 > If a user searches Fantasy, Animation, Adventure movies, and TV shows, they will know there are 826 TV series and 137 video games matching their criteria.
 
+Since the users can have a visual clue about the range of categories available in the UI, they can easily know how many search results are found for each category.
+
 To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
 
 [Learn more about `facetsDistribution` in the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)
