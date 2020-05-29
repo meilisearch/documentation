@@ -7,11 +7,13 @@ Search parameters let the user customize their search request.
 | **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                                                                      |               |
 | **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
+| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on                                  |    `null`     |
+| **[facetsDistribution](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
 | **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `*`      |
-| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `null`     |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
-| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `null`     |
 | **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 ## Query (q)
@@ -65,6 +67,255 @@ Set a **limit to the number of documents returned** by search queries.
 If you want to get only **two** documents, set `limit` to `2`.
 
 <code-samples id="search_parameter_guide_limit_1" />
+
+## Filters
+
+`filters=<String>`
+
+Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
+
+<code-samples id="search_parameter_guide_filter_1" />
+
+```json
+{
+  "id": "569367",
+  "title": "Nightshift",
+  "poster": "https://image.tmdb.org/t/p/w1280/peOeFl8ZTBTCERz5XQZAjYbXYsQ.jpg",
+  "overview": "Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
+  "release_date": 1536282000
+}
+```
+
+The parameter should be **URL-encoded**.
+
+<code-samples id="search_parameter_guide_filter_2" />
+
+## Facet filters
+
+If you have [set up faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), you can filter on [facets](/guides/advanced_guides/faceted_search.md) to narrow down your results based on criteria.
+
+`facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
+or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
+
+- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
+
+  Both types of array contain the facet names and values to filter on.
+  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
+
+  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
+  - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
+
+### Logical Connectives
+
+Inputting a double dimensional array allows you to use **logical connectives**.
+
+- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["genre:Comedy", "genre:Romance"]]`).
+- **Outer arrays elements** are connected by an `AND` operator (e.g. `["genre:Romance", "director:Mati Diop"]`).
+
+You can mix connectives, for instance, the following array:
+
+```json
+[["genre:Comedy", "genre:Romance"], "director:Mati Diop"]
+```
+
+Can be translated as:
+
+```SQL
+("genre:Comedy" OR "genre:Romance") AND "director:Mati Diop"
+```
+
+#### Example
+
+Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
+
+```SQL
+("genre:Horror" OR "genre:Mystery") AND "director:Jordan Peele"
+```
+
+Querying on "thriller", the above example results in the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=thriller' \
+    --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
+```
+
+And you would get the following response:
+
+```json
+{
+  "hits": [
+    {
+      "id": 458723,
+      "title": "Us",
+      "director": "Jordan Peele",
+      "producer": "Sean McKittrick",
+      "tagline": "Watch yourself",
+      "genres": [
+        "Thriller",
+        "Horror",
+        "Mystery"
+      ],
+      "overview": "Husband and wife Gabe and Adelaide Wilson take their kids to their beach house expecting to unplug and unwind with friends. But as night descends, their serenity turns to tension and chaos when some shocking visitors arrive uninvited.",
+      "cast": [
+        "Lupita Nyong'o as Adelaide Wilson / Red",
+        "Winston Duke as Gabriel \"Gabe\" Wilson / Abraham"
+      ],
+      "production_companies": [
+        "Monkeypaw Productions"
+      ],
+      "vote_count": 3000,
+      "vote_average": 7,
+      "poster_path": "https://image.tmdb.org/t/p/w500/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
+      "popularity": 22.897,
+      "release_date": 1552521600
+    },
+    {
+      "id": 419430,
+      "title": "Get Out",
+      "director": "Jordan Peele",
+      "producer": "Sean McKittrick",
+      "tagline": "Just because you're invited, doesn't mean you're welcome.",
+      "genres": [
+        "Mystery",
+        "Thriller",
+        "Horror"
+      ],
+      "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
+      "cast": [
+        "Daniel Kaluuya as Chris Washington",
+        "Allison Williams as Rose Armitage"
+      ],
+      "production_companies": [
+        "Monkeypaw Productions"
+      ],
+      "vote_count": 9738,
+      "vote_average": 7.5,
+      "poster_path": "https://image.tmdb.org/t/p/w500/rdPGUJhadPg7FGFNzavib0iwTor.jpg",
+      "popularity": 28.295,
+      "release_date": 1487894400
+    }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "nbHits": 2,
+  "exhaustiveNbHits": false,
+  "processingTimeMs": 4,
+  "query": "thriller"
+}
+```
+
+## The facets distribution
+
+If you have [set up faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
+
+`facetsDistribution=[<facetName>, <facetName>, ...]`
+
+This attribute can take two values:
+
+- `[<facetName>, <facetName>, ...]` (Array of strings)
+
+  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned.
+  If a facet name doesn't exist, it will be ignored.
+
+- `"*"`
+
+  The `*` character can also be used. In that case, a count for all facets is returned.
+
+### Returned fields
+
+If the `facetsDistribution` parameter has been set, the returned results will contain **two additional fields**:
+
+- `facetsDistribution`: The number of remaining candidates for each specified facet.
+
+- `exhaustiveFacetsCount`:
+  Returns `true` if this count is **exhaustive**.
+  Otherwise, returns `false` if this count is **approximative**.
+
+#### Example
+
+Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
+
+```bash
+$ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Batman' \
+    --data-urlencode 'facetsDistribution=["genres"]'
+```
+
+And you would get the following response:
+
+```json
+{
+  "hits": [
+    {
+      "id": 2661,
+      "title": "Batman",
+      "director": "Leslie H. Martinson",
+      "producer": "William Dozier",
+      "tagline": "He's Here Big As Life In A Real Bat-Epic",
+      "genres": [
+        "Adventure",
+        "Comedy"
+      ],
+      "overview": "The Dynamic Duo faces four super-villains who plan to hold the world fo  r ransom with the help of a secret invention that instantly dehydrates people.",
+      "cast": [
+        "Adam West as Batman / Bruce Wayne",
+        "Burt Ward as Robin / Dick Grayson"
+        ],
+      "production_companies": [
+        "DC Comics"
+      ],
+      "vote_count": 404,
+      "vote_average": 6.2,
+      "poster_path": "https://image.tmdb.org/t/p/w500/udDVJXtAFsQ8DimrXkVFqy4DGEQ.jpg  ",
+      "popularity": 8.11,
+      "release_date": -108086400
+    },
+    {
+      "id": 268,
+      "title": "Batman",
+      "director": "Tim Burton",
+      "producer": "Peter Guber",
+      "tagline": "Have you ever danced with the devil in the pale moonlight?",
+      "genres": [
+        "Fantasy",
+        "Action"
+      ],
+      "overview": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker, who has seized control of Gotham's underworld.",
+      "cast": [
+        "Michael Keaton as Bruce Wayne / Batman",
+        "Jack Nicholson as Jack Napier / The Joker"
+      ],
+      "production_companies": [
+        "PolyGram Filmed Entertainment"
+      ],
+      "vote_count": 4264,
+      "vote_average": 7.1,
+      "poster_path": "https://image.tmdb.org/t/p/w500/kBf3g9crrADGMc2AMAMlLBgSm2h.jpg",
+      "popularity": 19.538,
+      "release_date": 614563200
+    }
+    ...
+  ],
+  "offset": 0,
+  "limit": 20,
+  "nbHits": 1684,
+  "exhaustiveNbHits": false,
+  "processingTimeMs": 5,
+  "query": "Batman",
+  "facetsDistribution": {
+    "genres": {
+      "action": 273,
+      "animation": 118,
+      "adventure": 132,
+      "fantasy": 67,
+      "comedy": 475,
+      "mystery": 70,
+      "thriller": 217,
+    }
+  }
+}
+```
 
 ## Attributes to Retrieve
 
@@ -197,28 +448,6 @@ You will get the following response with the **highlighted version in the \_form
 When evaluated in HTML, the **overview attribute in \_formatted** will look like as follows:
 
 The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
-
-## Filters
-
-`filters=<String>`
-
-Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
-
-<code-samples id="search_parameter_guide_filter_1" />
-
-```json
-{
-  "id": "569367",
-  "title": "Nightshift",
-  "poster": "https://image.tmdb.org/t/p/w1280/peOeFl8ZTBTCERz5XQZAjYbXYsQ.jpg",
-  "overview": "Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
-  "release_date": 1536282000
-}
-```
-
-The parameter should be **URL-encoded**.
-
-<code-samples id="search_parameter_guide_filter_2" />
 
 ## Matches
 
