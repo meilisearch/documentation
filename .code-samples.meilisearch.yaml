@@ -173,6 +173,20 @@ update_distinct_attribute_1: |-
 reset_distinct_attribute_1: |-
   $ curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
+get_attributes_for_faceting_1: |-
+  $ curl \
+    -X GET 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting'
+update_attributes_for_faceting_1: |-
+  $ curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting' \
+    --get \
+    --data '[
+        "genre",
+        "director"
+    ]'
+reset_attributes_for_faceting_1: |-
+  $ curl \
+    -X DELETE 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting'
 get_searchable_attributes_1: |-
   $ curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
@@ -428,3 +442,39 @@ getting_started_search_md: |-
   $ curl \
     -X GET 'http://127.0.0.1:7700/indexes/movies/search?q=botman'
   ```
+faceted_search_update_settings_1: |-
+  $ curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    --data '{
+        "attributesForFaceting": [
+            "director",
+            "genres"
+        ]
+    }'
+faceted_search_facet_filters_1: |-
+  $ curl --get 'http://localhost:7700/indexes/movies/search' \
+      --data-urlencode 'q=thriller' \
+      --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
+faceted_search_facets_distribution_1: |-
+  $ curl --get 'http://localhost:7700/indexes/movies/search' \
+    --data-urlencode 'q=Batman' \
+    --data-urlencode 'facetsDistribution=["genres"]'
+faceted_search_walkthrough_attributes_for_faceting_1: |-
+  $ curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    --data '{
+        "attributesForFaceting": [
+            "director",
+            "producer",
+            "genres",
+            "production_companies"
+        ]
+    }'
+faceted_search_walkthrough_facet_filters_1: |-
+  $ curl --get 'http://localhost:7700/indexes/movies/search' \
+      --data-urlencode 'q=thriller' \
+      --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
+faceted_search_walkthrough_facets_distribution_1: |-
+  $ curl --get 'http://localhost:7700/indexes/movies/search' \
+      --data-urlencode 'q=Batman' \
+      --data-urlencode 'facetsDistribution=["genres"]'

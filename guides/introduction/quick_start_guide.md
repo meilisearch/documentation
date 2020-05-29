@@ -93,7 +93,7 @@ $ ./target/release/meilisearch
 
 ::::
 
-[Environment variables and flags](/guides/advanced_guides/installation.md#environment-variables-and-flags) can be set before and on launch. Amongst all the flags, you can use the **master key** and the **port** flags.
+[Environment variables and options](/guides/advanced_guides/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
 
 ### Communicate with MeiliSearch
 
@@ -444,5 +444,5 @@ This will lead you to a web page with a search bar that will allow you to search
 ![movies demo gif](/movies-web-demo.gif)
 
 ::: warning
-Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/guides/advanced_guides/installation.md#environments).
+Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/guides/advanced_guides/configuration.md#environment).
 :::

@@ -14,7 +14,7 @@ When `accept-new-fields` is set to **false**, the fields are still stored. This 
 
 :::
 
-The `accept-new-fields` value can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
+The `accept-new-fields` value can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
@@ -63,6 +63,8 @@ This setting takes a **Boolean value**, `true` or `false`, and defaults to `true
 If `true`, each field found in the newly added documents are searchable and displayed in returned documents.
 
 Otherwise, if `false`, fields are stored but neither searchable nor displayed in returned documents.
+
+[More information about the body](/guides/advanced_guides/settings.md#accept-new-fields).
 
 ### Example
 
