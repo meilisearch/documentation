@@ -105,24 +105,9 @@ or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValu
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
   - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
-### Logical Connectives
+Facet filters also support logical connectives by using [inner and outer array elements](http://localhost:8080/guides/advanced_guides/faceted_search.md#using-facets).
 
-Inputting a double dimensional array allows you to use **logical connectives**.
-
-- **Inner arrays elements** are connected by an `OR` operator (e.g. `[["genre:Comedy", "genre:Romance"]]`).
-- **Outer arrays elements** are connected by an `AND` operator (e.g. `["genre:Romance", "director:Mati Diop"]`).
-
-You can mix connectives, for instance, the following array:
-
-```json
-[["genre:Comedy", "genre:Romance"], "director:Mati Diop"]
-```
-
-Can be translated as:
-
-```SQL
-("genre:Comedy" OR "genre:Romance") AND "director:Mati Diop"
-```
+[Learn more about facet filters in the dedicated guide](/guides/advanced_guides/faceted_search.md)
 
 #### Example
 
@@ -149,7 +134,6 @@ And you would get the following response:
       "id": 458723,
       "title": "Us",
       "director": "Jordan Peele",
-      "producer": "Sean McKittrick",
       "tagline": "Watch yourself",
       "genres": [
         "Thriller",
@@ -157,43 +141,17 @@ And you would get the following response:
         "Mystery"
       ],
       "overview": "Husband and wife Gabe and Adelaide Wilson take their kids to their beach house expecting to unplug and unwind with friends. But as night descends, their serenity turns to tension and chaos when some shocking visitors arrive uninvited.",
-      "cast": [
-        "Lupita Nyong'o as Adelaide Wilson / Red",
-        "Winston Duke as Gabriel \"Gabe\" Wilson / Abraham"
-      ],
-      "production_companies": [
-        "Monkeypaw Productions"
-      ],
-      "vote_count": 3000,
-      "vote_average": 7,
-      "poster_path": "https://image.tmdb.org/t/p/w500/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
-      "popularity": 22.897,
-      "release_date": 1552521600
     },
     {
       "id": 419430,
       "title": "Get Out",
       "director": "Jordan Peele",
-      "producer": "Sean McKittrick",
-      "tagline": "Just because you're invited, doesn't mean you're welcome.",
       "genres": [
         "Mystery",
         "Thriller",
         "Horror"
       ],
       "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
-      "cast": [
-        "Daniel Kaluuya as Chris Washington",
-        "Allison Williams as Rose Armitage"
-      ],
-      "production_companies": [
-        "Monkeypaw Productions"
-      ],
-      "vote_count": 9738,
-      "vote_average": 7.5,
-      "poster_path": "https://image.tmdb.org/t/p/w500/rdPGUJhadPg7FGFNzavib0iwTor.jpg",
-      "popularity": 28.295,
-      "release_date": 1487894400
     }
   ],
   "offset": 0,
@@ -222,6 +180,8 @@ This attribute can take two values:
 
   The `*` character can also be used. In that case, a count for all facets is returned.
 
+[Learn more about `facetsDistribution` in the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)
+
 ### Returned fields
 
 If the `facetsDistribution` parameter has been set, the returned results will contain **two additional fields**:
@@ -231,6 +191,8 @@ If the `facetsDistribution` parameter has been set, the returned results will co
 - `exhaustiveFacetsCount`:
   Returns `true` if this count is **exhaustive**.
   Otherwise, returns `false` if this count is **approximative**.
+
+[Learn more about facet distribution in the dedicated guide](/guides/advanced_guides/faceted_search.md)
 
 #### Example
 
@@ -251,49 +213,23 @@ And you would get the following response:
       "id": 2661,
       "title": "Batman",
       "director": "Leslie H. Martinson",
-      "producer": "William Dozier",
-      "tagline": "He's Here Big As Life In A Real Bat-Epic",
       "genres": [
         "Adventure",
         "Comedy"
       ],
       "overview": "The Dynamic Duo faces four super-villains who plan to hold the world fo  r ransom with the help of a secret invention that instantly dehydrates people.",
-      "cast": [
-        "Adam West as Batman / Bruce Wayne",
-        "Burt Ward as Robin / Dick Grayson"
-        ],
-      "production_companies": [
-        "DC Comics"
-      ],
-      "vote_count": 404,
-      "vote_average": 6.2,
-      "poster_path": "https://image.tmdb.org/t/p/w500/udDVJXtAFsQ8DimrXkVFqy4DGEQ.jpg  ",
-      "popularity": 8.11,
-      "release_date": -108086400
+      ...
     },
     {
       "id": 268,
       "title": "Batman",
       "director": "Tim Burton",
-      "producer": "Peter Guber",
-      "tagline": "Have you ever danced with the devil in the pale moonlight?",
       "genres": [
         "Fantasy",
         "Action"
       ],
-      "overview": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker, who has seized control of Gotham's underworld.",
-      "cast": [
-        "Michael Keaton as Bruce Wayne / Batman",
-        "Jack Nicholson as Jack Napier / The Joker"
-      ],
-      "production_companies": [
-        "PolyGram Filmed Entertainment"
-      ],
-      "vote_count": 4264,
-      "vote_average": 7.1,
-      "poster_path": "https://image.tmdb.org/t/p/w500/kBf3g9crrADGMc2AMAMlLBgSm2h.jpg",
-      "popularity": 19.538,
-      "release_date": 614563200
+      "overview": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker, who has seized control of Gotham's underworld."
+      ...
     }
     ...
   ],
