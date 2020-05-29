@@ -138,11 +138,12 @@ module.exports = {
     ['check-md', { pattern: '**/*.md', strictExt: true }],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
+    'img-lazy',
     'vuepress-plugin-element-tabs',
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
     [require('./code-samples')],
-    'img-lazy',
+    [require('./error-pages')],
     [
       'meilisearch',
       {
