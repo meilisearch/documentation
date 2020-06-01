@@ -15,7 +15,7 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Passing arguments via the environment variables
 
-The format of the environment variables are the same as the command line options with the exception that it is uppercased and `MEILI_` is added at the start.
+The format of the environment variables is identical to the command line options with the exception that it is uppercased and `MEILI_` is added at the beginning.
 
 ```
 $ export MEILI_DB_PATH=./meilifiles
