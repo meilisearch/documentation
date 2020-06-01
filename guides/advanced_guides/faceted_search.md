@@ -201,7 +201,7 @@ To get the facets distribution, you have to specify a list of facets for which t
 
 `facetsDistribution` is a query parameter added on a search request. It expects an array of strings. Each string is an attribute present in the `attributesForFiltering` list.
 
-Upon search with a `facetDistribution` parameter, in the returned object will be a `facetDistribution` key. It contains an object for every facet given. For each of these facets, another object containing all the different values and the count of matching document found with this value. This is called the distribution.
+Upon search, when using the `facetDistribution` parameter, there will be a `facetDistribution` key in the returned object. It contains an object for every facet given. For each of these facets, another object containing all the different values and the count of matching document found with this value. This is called the distribution.
 
 ```json
 {
