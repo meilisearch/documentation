@@ -276,7 +276,7 @@ And you would get the following response:
 
 ## Walkthrough
 
-With this walkthrough you will go through each step to successfully add facets and faceted search.
+With this walkthrough, you will go through each step to successfully add facets and faceted search.
 
 Suppose that you manage a movie database on which you want to search by `genre`, `producer`, `production_companies` and `directors`.
 
