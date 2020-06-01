@@ -40,7 +40,7 @@ List of options:
 **Environment Variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
 
-Defines the location for the database files
+Defines the location for the database files.
 
 **Default value**: `"./data.ms"`
 
@@ -58,7 +58,9 @@ The address the HTTP server will listen on.
 **Environment Variable**: `MEILI_MASTER_KEY`
 **CLI option**: `--master-key`
 
-The master key allowing you to do everything on the server. If no master key is provided
+The master key allowing you to do everything on the server. If no master key is provided all routes will be accessible without keys. This is only possible if your are in `developement` environment. An error is thrown if you try to start MeiliSearch without master key when the environment is set to `production`.
+
+[Learn more about the permission and authentication in this guide.](/guides/advanced_guides/authentication.md)
 
 **Default Value**: `None`
 
@@ -82,7 +84,7 @@ By default, MeiliSearch runs in `development` mode.
 - `Development`: the [master key](/guides/advanced_guides/authentication.md) is **optional**, and logs are output in "info" mode (_console output_).
 
 If the server is running in development mode more logs will be displayed, and the master key can be avoided which implies that there is no security on the updates routes.
-This is useful to debug when integrating the engine with another service
+This is useful to debug when integrating the engine with another service.
 
 **Default value**: `development`
 
