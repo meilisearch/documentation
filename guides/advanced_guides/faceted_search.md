@@ -102,7 +102,7 @@ They can filter on facets to narrow down their results based on criteria with th
 
 #### Usage
 
-`facetFilters` is a query parameter added on search request. It excepts a string or an array of string containing the facetFilter information. Each string is composed of a `facetName` a colon and a `facetValue`.
+`facetFilters` is a query parameter added on search request. It expects a string or an array of strings containing the facetFilter information. Each string is composed of a `facetName`, a colon, and a `facetValue`.
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 
