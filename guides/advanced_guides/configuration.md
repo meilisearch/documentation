@@ -49,7 +49,7 @@ Defines the location for the database files
 **Environment Variable**: `MEILI_HTTP_ADDR`
 **CLI option**: `--http-addr`
 
-he address on which the http server will listen.
+The address the HTTP server will listen on.
 
 **Default value**: `"127.0.0.1:7700"`
 
