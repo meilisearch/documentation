@@ -45,6 +45,7 @@ module.exports = {
           collapsable: false,
           children: [
             '/guides/advanced_guides/installation',
+            '/guides/advanced_guides/configuration',
             '/guides/advanced_guides/search_parameters',
             '/guides/advanced_guides/filtering',
             '/guides/advanced_guides/faceted_search',
