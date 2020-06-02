@@ -37,7 +37,7 @@ List of options:
 
 ### Path to database
 
-**Environment Variable**: `MEILI_DB_PATH`
+**Environment variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
 
 Defines the location for the database files.
