@@ -83,7 +83,7 @@ $ meilisearch
 888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
 
 [2020-05-04T11:47:13Z INFO  meilisearch] Database path: "./data.ms"
-[2020-05-04T11:47:13Z INFO  meilisearch] Start server on: "127.0.0.1:7700"
+[2020-05-04T11:47:13Z INFO  meilisearch] Server listening on: "127.0.0.1:7700"
 ```
 
 ## Step 2: Run MeiliSearch as a service
