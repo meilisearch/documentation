@@ -35,7 +35,7 @@ List of options:
 - [Environment](/guides/advanced_guides/configuration.md#environment)
 - [Payload size limit](/guides/advanced_guides/configuration.md#payload-size-limit)
 
-#### SSL
+#### SSL Configuration
 
 - [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
 - [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
