@@ -195,6 +195,9 @@ Since the users can have a visual clue about the range of categories available i
 
 To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
 
+The `facetsDistribution` parameter also introduces `exhaustiveFacetsCount` in the return object. `exhaustiveFacetsCount` is a boolean value that informs the user whether or not the facets distribution is matching the reality or if it is an approximation.
+The approximative facet count happens when there are too many documents in too many different facet values. In which case, MeiliSearch stops the distribution count to prevent considerably slowing down the request.
+
 #### Usage
 
 `facetsDistribution` is a query parameter added on a search request. It expects an array of strings. Each string is an attribute present in the `attributesForFiltering` list.

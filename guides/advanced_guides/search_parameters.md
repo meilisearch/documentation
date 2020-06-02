@@ -189,8 +189,9 @@ If the `facetsDistribution` parameter has been set, the returned results will co
 - `facetsDistribution`: The number of remaining candidates for each specified facet.
 
 - `exhaustiveFacetsCount`:
-  Returns `true` if this count is **exhaustive**.
-  Otherwise, returns `false` if this count is **approximative**.
+  Returns `true` if the count in each facet value is **exhaustive** (exact count for each facet value).
+  Otherwise, returns `false` if this count is **approximative** (approximative count for each facet value).
+  The approximative facet count happens when there are too many documents in too many different facet values. In which case, MeiliSearch stops the distribution count to prevent considerably slowing down the request.
 
 [Learn more about facet distribution in the dedicated guide](/guides/advanced_guides/faceted_search.md)
 

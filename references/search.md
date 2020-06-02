@@ -40,14 +40,15 @@ Search for documents matching a specific query in the given index.
 
 | field                | Description                    |    type    |
 | -------------------- | ------------------------------ | :--------: |
-| **hits**             | results of the query           | `[result]` |
-| **offset**           | number of documents skipped    |  `number`  |
-| **limit**            | number of documents to take    |  `number`  |
-| **nbHits**           | total number of matches        |  `number`  |
-| **exhaustiveNbHits** | whether `nbHits` is exhaustive | `boolean`  |
+| **hits**             | Results of the query           | `[result]` |
+| **offset**           | Number of documents skipped    |  `number`  |
+| **limit**            | Number of documents to take    |  `number`  |
+| **nbHits**           | Total number of matches        |  `number`  |
+| **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
 | **facetDistribution** | **[Distribution of the given facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | `object`
-| **processingTimeMs** | processing time of the query   |  `number`  |
-| **query**            | query originating the response |  `string`  |
+| **exhaustiveFacetsCount** | Whether `facetDistribution` is exhaustive | `boolean`
+| **processingTimeMs** | Processing time of the query   |  `number`  |
+| **query**            | Query originating the response |  `string`  |
 
 ### Example
 
