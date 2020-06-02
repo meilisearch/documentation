@@ -91,8 +91,26 @@ This is useful to debug when integrating the engine with another service.
 ### Payload Size Limit
 
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
-**CLI option**: --http-payload-size-limit
+**CLI option**: `--http-payload-size-limit`
 
 The maximum size, in bytes, of accepted JSON payloads.
 
 **Default value**: `10485760` (+=10Mb)
+
+### LMDB Main Map Size
+
+**Environment variable**: `MEILI_MAIN_MAP_SIZE`
+**CLI option**: `--main-map-size`
+
+The maximum size, in bytes, of the main lmdb database directory.
+
+**Default value**: `107374182400` (+=10Mb)
+
+### LMDB Update Map Size
+
+**Environment variable**: `MEILI_UPDATE_MAP_SIZE`
+**CLI option**: `--update-map-size`
+
+The maximum size, in bytes, of the update lmdb database directory.
+
+**Default value**: `107374182400` (+=10Mb)
