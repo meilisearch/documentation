@@ -46,7 +46,7 @@ Defines the location for the database files.
 
 ### HTTP Address
 
-**Environment Variable**: `MEILI_HTTP_ADDR`
+**Environment variable**: `MEILI_HTTP_ADDR`
 **CLI option**: `--http-addr`
 
 The address the HTTP server will listen on.
