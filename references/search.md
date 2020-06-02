@@ -21,6 +21,9 @@ Search for documents matching a specific query in the given index.
 | **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string \_(mandatory)                                                                      |               |
 | **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
+| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on                                  |    `null`     |
+| **[facetsDistribution](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
 | **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `*`      |
 | **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
 | **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
@@ -37,13 +40,15 @@ Search for documents matching a specific query in the given index.
 
 | field                | Description                    |    type    |
 | -------------------- | ------------------------------ | :--------: |
-| **hits**             | results of the query           | `[result]` |
-| **offset**           | number of documents skipped    |  `number`  |
-| **limit**            | number of documents to take    |  `number`  |
-| **nbHits**           | total number of matches        |  `number`  |
-| **exhaustiveNbHits** | whether `nbHits` is exhaustive | `boolean`  |
-| **processingTimeMs** | processing time of the query   |  `number`  |
-| **query**            | query originating the response |  `string`  |
+| **hits**             | Results of the query           | `[result]` |
+| **offset**           | Number of documents skipped    |  `number`  |
+| **limit**            | Number of documents to take    |  `number`  |
+| **nbHits**           | Total number of matches        |  `number`  |
+| **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
+| **facetDistribution** | **[Distribution of the given facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | `object`
+| **exhaustiveFacetsCount** | Whether `facetDistribution` is exhaustive | `boolean`
+| **processingTimeMs** | Processing time of the query   |  `number`  |
+| **query**            | Query originating the response |  `string`  |
 
 ### Example
 
