@@ -66,7 +66,7 @@ The master key allowing you to do everything on the server. If no master key is 
 
 ### No Analytics
 
-**Environment Variable**: `MEILI_NO_ANALYTICS`
+**Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
 
 Deactivates analytics. Analytics allow us to know how many users are using MeiliSearch, which versions and which platforms are used. This process is entirely anonymous.
