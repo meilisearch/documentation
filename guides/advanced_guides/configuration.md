@@ -106,6 +106,7 @@ The maximum size, in bytes, of accepted JSON payloads.
 
 The maximum size, in bytes, of the main lmdb database directory.
 It is the maximum size the directory can have depending on your OS:
+
 - On windows it is a fixed size that will be allocated on launch.
 - On UNIX it is the maximum size.
 
@@ -121,6 +122,7 @@ The `main` database stores the processed data.
 The maximum size, in bytes, of the update lmdb database directory.
 
 It is the maximum size the directory can have depending on your OS:
+
 - On windows it is a fixed size that will be allocated on launch.
 - On UNIX it is the maximum size.
 
