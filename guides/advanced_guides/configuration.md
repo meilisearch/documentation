@@ -26,18 +26,21 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Options
 
-List of options:
+#### General
 
-- [Path to database](/guides/advanced_guides/configuration.md#path-to-database)
-- [HTTP address](/guides/advanced_guides/configuration.md#http-address)
+- [Database path](/guides/advanced_guides/configuration.md#database-path)
+- [HTTP address & port binding](/guides/advanced_guides/configuration.md#http-address-port-binding)
 - [Master key](/guides/advanced_guides/configuration.md#master-key)
-- [No analytics](/guides/advanced_guides/configuration.md#no-analytics)
 - [Environment](/guides/advanced_guides/configuration.md#environment)
-- [Payload size limit](/guides/advanced_guides/configuration.md#payload-size-limit)
-- [LMDB main map size](/guides/advanced_guides/configuration.md#lmdb-main-map-size)
-- [LMDB update map size](/guides/advanced_guides/configuration.md#lmdb-update-map-size)
 
-### Path to database
+#### Advanced
+
+- [Analytics](/guides/advanced_guides/configuration.md#analytics)
+- [Payload Limit Size](/guides/advanced_guides/configuration.md#payload-limit-size)
+- [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
+- [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
+
+### Database path
 
 **Environment variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
@@ -46,7 +49,7 @@ Defines the location for the database files.
 
 **Default value**: `"./data.ms"`
 
-### HTTP Address
+### HTTP address & port binding
 
 **Environment variable**: `MEILI_HTTP_ADDR`
 **CLI option**: `--http-addr`
@@ -66,7 +69,7 @@ The master key allowing you to do everything on the server. If no master key is 
 
 **Default value**: `None`
 
-### No Analytics
+### Analytics
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
@@ -90,7 +93,7 @@ This is useful to debug when integrating the engine with another service.
 
 **Default value**: `development`
 
-### Payload Size Limit
+### Payload Limit Size
 
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: `--http-payload-size-limit`
@@ -99,33 +102,50 @@ The maximum size, in bytes, of accepted JSON payloads.
 
 **Default value**: `10485760` (+=10Mb)
 
-### LMDB Main Map Size
+### Max MDB Size
 
-**Environment variable**: `MEILI_MAIN_MAP_SIZE`
-**CLI option**: `--main-map-size`
+**Environment variable**: `MEILI_MAX_MDB_SIZE`
+**CLI option**: `--max-mdb-size`
 
-The maximum size, in bytes, of the main lmdb database directory.
-It is the maximum size the directory can have depending on your OS:
+The maximum size, in bytes, of the `main` database. The `main` database stores the processed data.
 
-- On windows it is a fixed size that will be allocated on launch.
-- On UNIX it is the maximum size.
+The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
+You can find out about the `PAGE_SIZE` with the following command:
 
-The `main` database stores the processed data.
+```bash
+getconf PAGE_SIZE
+```
+
+Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can have.
+
+- On **UNIX** it is the maximum size.
+- On **Windows** it is a fixed size that will be allocated on launch.
+  Because this allocates 100Gb on MeiliSearch launch, a windows user can use this option to decrease the size of the database.
+
+[To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
 **Default value**: `107374182400` (+= 107 Gb)
 
-### LMDB Update Map Size
+### Max UDB Size
 
-**Environment variable**: `MEILI_UPDATE_MAP_SIZE`
-**CLI option**: `--update-map-size`
+**Environment variable**: `MEILI_MAX_UDB_SIZE`
+**CLI option**: `--max-udb-size`
 
-The maximum size, in bytes, of the update lmdb database directory.
+The maximum size, in bytes, of the `update` database. The `update` database stores stores the [pending updates](/guides/advanced_guides/asynchronous_updates.md).
 
-It is the maximum size the directory can have depending on your OS:
+The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
+You can find out about the `PAGE_SIZE` with the following command:
 
-- On windows it is a fixed size that will be allocated on launch.
-- On UNIX it is the maximum size.
+```bash
+getconf PAGE_SIZE
+```
 
-The `update` database stores the [pending updates](/guides/advanced_guides/asynchronous_updates.md).
+Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can have.
+
+- On **UNIX** it is the maximum size.
+- On **Windows** it is a fixed size that will be allocated on launch.
+  Because this allocates 100Gb on MeiliSearch launch, a windows user can use this option to decrease the size of the database.
+
+[To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
 **Default value**: `107374182400` (+= 107 Gb)
