@@ -102,7 +102,7 @@ They can filter on facets to narrow down their results based on criteria with th
 
 #### Usage
 
-`facetFilters` is a query parameter added on search request. It excepts a string or an array of string containing the facetFilter information. Each string is composed of a `facetName` a colon and a `facetValue`.
+`facetFilters` is a query parameter added on search request. It expects a string or an array of strings containing the facetFilter information. Each string is composed of a `facetName`, a colon, and a `facetValue`.
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 
@@ -199,9 +199,9 @@ To get the facets distribution, you have to specify a list of facets for which t
 
 #### Usage
 
-`facetsDistribution` is a query parameter added on a search request. It expects an array of string. Each string is an attribute present in the `attributesForFiltering` list.
+`facetsDistribution` is a query parameter added on a search request. It expects an array of strings. Each string is an attribute present in the `attributesForFiltering` list.
 
-Upon search with a `facetDistribution` parameter, in the returned object will be a `facetDistribution` key. It contains an object for every facet given. For each of these facets, another object containing all the different values and the count of matching document found with this value. This is called the distribution.
+Upon search, when using the `facetDistribution` parameter, there will be a `facetDistribution` key in the returned object. It contains an object for every facet given. For each of these facets, another object containing all the different values and the count of matching document found with this value. This is called the distribution.
 
 ```json
 {
@@ -276,7 +276,7 @@ And you would get the following response:
 
 ## Walkthrough
 
-With this walkthrough you will go through each step to successfully add facets and faceted search.
+With this walkthrough, you will go through each step to successfully add facets and faceted search.
 
 Suppose that you manage a movie database on which you want to search by `genre`, `producer`, `production_companies` and `directors`.
 
