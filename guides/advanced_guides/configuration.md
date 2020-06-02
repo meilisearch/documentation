@@ -30,7 +30,7 @@ List of options:
 
 - [Path to database](/guides/advanced_guides/configuration.md#path-to-database)
 - [HTTP address](/guides/advanced_guides/configuration.md#http-address)
-- [Master Key](/guides/advanced_guides/configuration.md#master-key)
+- [Master key](/guides/advanced_guides/configuration.md#master-key)
 - [No Analytics](/guides/advanced_guides/configuration.md#no-analytics)
 - [Environment](/guides/advanced_guides/configuration.md#environment)
 - [Payload size limit](/guides/advanced_guides/configuration.md#payload-size-limit)
