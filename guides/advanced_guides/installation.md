@@ -90,13 +90,14 @@ $ ./target/release/meilisearch
 
 ::::
 
-## Environment variables and Options
+## Configuration Options
 
-Options are added on launch.
+Options are added on launch. Either through command line options or through environment variables.
 
+This is an example using the command line options.
 ```bash
 $ ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 Server is listening on: http://127.0.0.1:7700
 ```
 
-Here is the list of [all Environment variables and options](/guides/advanced_guides/configuration.md).
+Here is the list of [all the options and how to use them](/guides/advanced_guides/configuration.md).
