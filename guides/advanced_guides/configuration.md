@@ -104,7 +104,7 @@ The maximum size, in bytes, of accepted JSON payloads.
 
 The maximum size, in bytes, of the main lmdb database directory.
 
-**Default value**: `107374182400` (+=10Mb)
+**Default value**: `107374182400` (+= 107 Gb)
 
 ### LMDB Update Map Size
 
@@ -113,4 +113,4 @@ The maximum size, in bytes, of the main lmdb database directory.
 
 The maximum size, in bytes, of the update lmdb database directory.
 
-**Default value**: `107374182400` (+=10Mb)
+**Default value**: `107374182400` (+= 107 Gb)
