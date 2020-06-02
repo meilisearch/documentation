@@ -173,11 +173,9 @@ And you would get the following response:
       "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
     }
   ],
-  "offset": 0,
-  "limit": 20,
+  ...
   "nbHits": 2,
   "exhaustiveNbHits": false,
-  "processingTimeMs": 4,
   "query": "thriller"
 }
 ```
@@ -254,11 +252,9 @@ And you would get the following response:
     }
     ...
   ],
-  "offset": 0,
-  "limit": 20,
+  ...
   "nbHits": 1684,
   "exhaustiveNbHits": false,
-  "processingTimeMs": 5,
   "query": "Batman",
   "facetsDistribution": {
     "genres": {
@@ -337,11 +333,8 @@ You will get the following response:
       ...
     }
   ],
-  "offset": 0,
-  "limit": 20,
   "nbHits": 2,
   "exhaustiveNbHits": false,
-  "processingTimeMs": 4,
   "query": "thriller"
 }
 ```
@@ -383,11 +376,9 @@ You will get the following response:
     }
     ...
   ],
-  "offset": 0,
-  "limit": 20,
+  ...
   "nbHits": 1684,
   "exhaustiveNbHits": false,
-  "processingTimeMs": 5,
   "query": "Batman",
   "facetsDistribution": {
     "genres": {
