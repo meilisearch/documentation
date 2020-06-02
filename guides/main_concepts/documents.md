@@ -28,6 +28,19 @@ When using the [route to add new documents](/references/documents.md#add-or-upda
 
 In order to be indexed, each **document must contain** [the primary key field](/guides/main_concepts/documents.md#primary-key).
 
+## Upload
+
+By default, MeiliSearch limits the size of `JSON` payload to 10Mb. This affects the upload of documents.
+To upload more document in one go, it is possible to [change the payload size](/guides/advanced_guides/configuration.md#payload-size-limit) limit during the setup of the MeiliSearch instance using the `http-payload-size-limit` option.
+
+```
+./meilisearch http-payload-size-limit=100000000
+```
+
+> The payload limit is now +-100MB instead of 10MB
+
+**MeiliSearch uses a lot of RAM when indexing documents**, be aware of your RAM availability as you increase the size of your batch as this could result in a MeiliSearch crash.
+
 ## Fields
 
 - **[Data type](/guides/advanced_guides/datatypes.md)**: A field's data type determines what kind of data can be stored in that field.
