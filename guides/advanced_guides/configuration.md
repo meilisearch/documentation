@@ -62,7 +62,7 @@ The master key allowing you to do everything on the server. If no master key is 
 
 [Learn more about the permission and authentication in this guide.](/guides/advanced_guides/authentication.md)
 
-**Default Value**: `None`
+**Default value**: `None`
 
 ### No Analytics
 
