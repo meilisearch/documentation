@@ -55,7 +55,7 @@ The address the HTTP server will listen on.
 
 ### Master Key
 
-**Environment Variable**: `MEILI_MASTER_KEY`
+**Environment variable**: `MEILI_MASTER_KEY`
 **CLI option**: `--master-key`
 
 The master key allowing you to do everything on the server. If no master key is provided all routes will be accessible without keys. This is only possible if your are in `developement` environment. An error is thrown if you try to start MeiliSearch without master key when the environment is set to `production`.
