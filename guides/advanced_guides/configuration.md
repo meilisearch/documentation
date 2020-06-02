@@ -90,7 +90,7 @@ This is useful to debug when integrating the engine with another service.
 
 ### Payload Size Limit
 
-**Environment Variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
+**Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: --http-payload-size-limit
 
 The maximum size, in bytes, of accepted JSON payloads.
