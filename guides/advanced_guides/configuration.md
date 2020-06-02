@@ -2,7 +2,7 @@
 
 Many options are available to configure a MeiliSearch Instance. Each of these options are added on MeiliSearch Instance launch.
 
-Options can be either communicated through **environment variables** or **command line options**.
+Options can be either communicated through **environment variables** or **command line options**. If both are provided for the same option, the command line option value is kept.
 
 ## Passing arguments via the command line
 
