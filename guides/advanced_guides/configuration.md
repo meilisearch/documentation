@@ -17,7 +17,7 @@ Server is listening on: http://127.0.0.1:7700
 
 The format of the environment variables is identical to the command line options with the exception that it is uppercased and `MEILI_` is added at the beginning.
 
-```
+```bash
 $ export MEILI_DB_PATH=./meilifiles
 $ export MEILI_HTTP_ADDR=127.0.0.1:7700
 $ ./meilisearch
