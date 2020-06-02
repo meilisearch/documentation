@@ -20,7 +20,7 @@ You might find the answers to some of your questions [in the FAQ](/faq/faq.md) ð
 
 #### Content Type
 
-All request and response body are in `JSON`. 
+All request and response body are in `JSON`.
 
 It is **not required** to have `Content-Type: application/json` in the header. Any content-type is accepted.
 
