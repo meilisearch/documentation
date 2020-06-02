@@ -34,6 +34,8 @@ List of options:
 - [No analytics](/guides/advanced_guides/configuration.md#no-analytics)
 - [Environment](/guides/advanced_guides/configuration.md#environment)
 - [Payload size limit](/guides/advanced_guides/configuration.md#payload-size-limit)
+- [LMDB main map size](/guides/advanced_guides/configuration.md#lmdb-main-map-size)
+- [LMDB update map size](/guides/advanced_guides/configuration.md#lmdb-update-map-size)
 
 ### Path to database
 
@@ -103,6 +105,11 @@ The maximum size, in bytes, of accepted JSON payloads.
 **CLI option**: `--main-map-size`
 
 The maximum size, in bytes, of the main lmdb database directory.
+It is the maximum size the directory can have depending on your OS:
+- On windows it is a fixed size that will be allocated on launch.
+- On UNIX it is the maximum size.
+
+The `main` database stores the processed data.
 
 **Default value**: `107374182400` (+= 107 Gb)
 
@@ -112,5 +119,11 @@ The maximum size, in bytes, of the main lmdb database directory.
 **CLI option**: `--update-map-size`
 
 The maximum size, in bytes, of the update lmdb database directory.
+
+It is the maximum size the directory can have depending on your OS:
+- On windows it is a fixed size that will be allocated on launch.
+- On UNIX it is the maximum size.
+
+The `update` database stores the [pending updates](/guides/advanced_guides/asynchronous_updates.md).
 
 **Default value**: `107374182400` (+= 107 Gb)
