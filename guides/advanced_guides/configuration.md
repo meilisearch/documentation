@@ -75,7 +75,7 @@ Deactivates analytics. Analytics allow us to know how many users are using Meili
 
 ### Environment
 
-**Environment Variable**: `MEILI_ENV`
+**Environment variable**: `MEILI_ENV`
 **CLI option**: `--env`
 
 By default, MeiliSearch runs in `development` mode.
