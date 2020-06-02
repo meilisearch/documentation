@@ -24,7 +24,7 @@ Get stats of an index.
 {
   "numberOfDocuments": 19654,
   "isIndexing": false,
-  "fieldsFrequency": {
+  "fieldsDistribution": {
     "poster": 19654,
     "release_date": 19654,
     "title": 19654,
@@ -54,7 +54,7 @@ Get stats of all indexes.
     "movies": {
       "numberOfDocuments": 19654,
       "isIndexing": false,
-      "fieldsFrequency": {
+      "fieldsDistribution": {
         "poster": 19654,
         "overview": 19654,
         "title": 19654,
@@ -65,7 +65,7 @@ Get stats of all indexes.
     "rangemovies": {
       "numberOfDocuments": 19654,
       "isIndexing": false,
-      "fieldsFrequency": {
+      "fieldsDistribution": {
         "overview": 19654,
         "id": 19654,
         "title": 19654
