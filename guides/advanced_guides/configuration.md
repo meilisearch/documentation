@@ -1,6 +1,6 @@
 # Configuration
 
-Many options are available to configure a MeiliSearch Instance. Each of these options are added on MeiliSearch Instance launch.
+Many options are available to configure a MeiliSearch instance. Each of these options is added on MeiliSearch instance launch.
 
 Options can be either communicated through **environment variables** or **command line options**. If both are provided for the same option, the command line option value is kept.
 
