@@ -179,6 +179,7 @@ get_attributes_for_faceting_1: |-
 update_attributes_for_faceting_1: |-
   $ curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting' \
+    --get \
     --data '[
         "genre",
         "director"
