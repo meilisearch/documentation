@@ -92,7 +92,7 @@ $ ./target/release/meilisearch
 
 ## Configuration Options
 
-Options are added on launch. Either through command line options or through environment variables.
+Options are added at launch. Either through command line options or through environment variables.
 
 This is an example using the command line options.
 
