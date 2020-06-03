@@ -64,6 +64,8 @@ If `true`, each field found in the newly added documents are searchable and disp
 
 Otherwise, if `false`, fields are stored but neither searchable nor displayed in returned documents.
 
+[More information about the body](/guides/advanced_guides/settings.md#accept-new-fields).
+
 ### Example
 
 <code-samples id="update_accept_new_fields_1"/>

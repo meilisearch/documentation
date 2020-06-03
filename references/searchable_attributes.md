@@ -54,6 +54,8 @@ An array of strings that contains searchable attributes sorted by order of impor
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
+[More information about the body](/guides/advanced_guides/settings.md#searchable-attributes).
+
 ### Example
 
 <code-samples id="update_searchable_attributes_1" />

@@ -52,6 +52,8 @@ Update the [displayed attributes](/guides/advanced_guides/settings.md#displayed-
 
 An array of strings that contains attributes of an index to display.
 
+[More information about the body](/guides/advanced_guides/settings.md#displayed-attributes).
+
 #### Example
 
 <code-samples id="update_displayed_attributes_1"/>

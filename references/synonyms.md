@@ -54,7 +54,7 @@ Update the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
 
 An object that contains all synonyms and their associated words.
 
-[Learn more about how to add your synonyms](/guides/advanced_guides/synonyms.md).
+[More information about the body](/guides/advanced_guides/settings.md#synonyms).
 
 #### Example
 
