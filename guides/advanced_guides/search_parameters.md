@@ -100,7 +100,7 @@ or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValu
 - `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
 
   Both types of array contain the facet names and values to filter on.
-  A valid array must be an array which contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
+  A valid array must be an array that contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
 
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
   - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
