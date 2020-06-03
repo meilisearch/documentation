@@ -35,6 +35,16 @@ List of options:
 - [Environment](/guides/advanced_guides/configuration.md#environment)
 - [Payload size limit](/guides/advanced_guides/configuration.md#payload-size-limit)
 
+#### SSL Configuration
+
+- [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
+- [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
+- [SSL Key Path](/guides/advanced_guides/configuration.md#ssl-key-path)
+- [SSL OCSP Path](/guides/advanced_guides/configuration.md#ssl-ocsp-path)
+- [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
+- [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
+- [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
+
 ### Path to database
 
 **Environment variable**: `MEILI_DB_PATH`
@@ -96,3 +106,66 @@ This is useful to debug when integrating the engine with another service.
 The maximum size, in bytes, of accepted JSON payloads.
 
 **Default value**: `10485760` (+=10Mb)
+
+### SSL Authentication Path
+
+**Environment variable**: `MEILI_SSL_AUTH_PATH`
+**CLI option**: `--ssl-auth-path`
+
+Enable client authentication, and accept certificates signed by those roots provided in CERTFILE
+
+**Default value**: `None`
+
+### SSL Certificates Path
+
+**Environment variable**: `MEILI_SSL_CERT_PATH`
+**CLI option**: `--ssl-cert-path`
+
+Read server certificates from CERTFILE. This should contain PEM-format certificates in the right order (the first certificate should certify KEYFILE, the last should be a root CA).
+
+**Default value**: `None`
+
+### SSL Key Path
+
+**Environment variable**: `MEILI_SSL_KEY_PATH`
+**CLI option**: `--ssl-key-path`
+
+Read private key from KEYFILE.  This should be a RSA private key or PKCS8-encoded private key, in PEM format.
+
+**Default value**: `None`
+
+### SSL OCSP path
+
+**Environment variable**: `MEILI_SSL_OCSP_PATH`
+**CLI option**: `--ssl-ocsp-path`
+
+Read DER-encoded OCSP response from OCSPFILE and staple to certificate. *Optional*.
+
+**Default value**: `None`
+
+### SSL Require Auth
+
+**Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
+**CLI option**: `--ssl-require-auth`
+
+Send a fatal alert if the client does not complete client authentication.
+
+**Default value**: `None`
+
+### SSL Resumption
+
+**Environment variable**: `MEILI_SSL_RESUMPTION`
+**CLI option**: `--ssl-resumption`
+
+SSL support session resumption.
+
+**Default value**: `None`
+
+### SSL Tickets
+
+**Environment variable**: `MEILI_SSL_TICKETS`
+**CLI option**: `--ssl-tickets`
+
+SSL support tickets.
+
+**Default value**: `None`
