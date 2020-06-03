@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "74ae0358-b1f9-4fc3-8dd0-4751aff005b5",
-		"name": "MeiliSearch v0.10.0",
+		"_postman_id": "0c461543-58d6-47e8-91ac-7c147528dd01",
+		"name": "MeiliSearch v0.11",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -446,6 +446,16 @@
 								{
 									"key": "matches",
 									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "facetFilters",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "facetsDistribution",
+									"value": "[\"author\"]",
 									"disabled": true
 								}
 							]
@@ -977,6 +987,73 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get attributes for faceting",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"attributes-for-faceting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update attributes for faceting",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"author\"]",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"attributes-for-faceting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset attributes for faceting",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"attributes-for-faceting"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -1245,7 +1322,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1fa5df98-123b-4787-8f92-fef150bb3cd4",
+				"id": "49c64b80-045e-4502-931f-2da283c2e5ce",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1255,7 +1332,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "784448a2-2c24-472c-a75e-ba3bb452e7da",
+				"id": "ca825c82-8be7-4c3d-b446-94dcaa7e6bc5",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1265,13 +1342,13 @@
 	],
 	"variable": [
 		{
-			"id": "439bf25c-526d-4217-ad0f-646dcce191a3",
+			"id": "09b35b89-aff0-48ed-a0e9-78ebcb00704f",
 			"key": "url",
 			"value": "http://0.0.0.0:7700",
 			"type": "string"
 		},
 		{
-			"id": "26dffecf-18f5-4316-b762-9c47db59456a",
+			"id": "f9949ef8-fee9-4c05-bd83-3dc78713cce3",
 			"key": "indexUID",
 			"value": "indexUID",
 			"type": "string"
