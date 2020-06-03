@@ -4,7 +4,7 @@ _Child route of the [settings route](/references/settings.md)._
 
 `Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
 
-Synonyms can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
+Synonyms can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
