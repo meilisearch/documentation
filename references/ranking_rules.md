@@ -70,6 +70,8 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 - To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
+[More information about the body](/guides/advanced_guides/settings.md#ranking-rules).
+
 ### Example
 
 <code-samples id="update_ranking_rules_1" />
