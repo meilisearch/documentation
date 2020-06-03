@@ -116,7 +116,7 @@ You can find out about the `PAGE_SIZE` with the following command:
 getconf PAGE_SIZE
 ```
 
-Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can have.
+Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can attain.
 
 - On **UNIX** it is the maximum size.
 - On **Windows** it is a fixed size that will be allocated on launch.
