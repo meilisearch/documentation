@@ -72,7 +72,7 @@ Reset the [attributes for faceting](/guides/advanced_guides/faceted_search.md) o
 
 #### Default value
 
-Empty array
+An empty array (`[]`).
 
 #### Path Variables
 
