@@ -49,10 +49,6 @@ Server is listening on: http://127.0.0.1:7700
   * [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
 
 
-#### SSL Configuration
-
-
-
 ### Database path
 
 **Environment variable**: `MEILI_DB_PATH`
