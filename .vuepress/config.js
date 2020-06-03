@@ -88,6 +88,7 @@ module.exports = {
                 '/references/synonyms',
                 '/references/stop_words',
                 '/references/ranking_rules',
+                '/references/attributes_for_faceting',
                 '/references/distinct_attribute',
                 '/references/searchable_attributes',
                 '/references/displayed_attributes',

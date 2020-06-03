@@ -4,7 +4,7 @@ _Child route of the [settings route](/references/settings.md)._
 
 Ranking rules are built-in rules that **ensure relevancy in search results**. Ranking rules are applied in a default order which can be changed in the settings. You can add or remove rules and change their order of importance.
 
-Ranking rules can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
+Ranking rules can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
 [Learn more about ranking rules and their relevancy](/guides/main_concepts/relevancy.md).
 
