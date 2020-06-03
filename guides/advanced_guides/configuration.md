@@ -124,7 +124,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
-**Default value**: `107374182400` (+= 107 Gb)
+**Default value**: `107374182400` (100 GiB)
 
 ### Max UDB Size
 
