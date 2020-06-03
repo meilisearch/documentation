@@ -36,6 +36,7 @@ To upload more document in one go, it is possible to [change the payload size li
 
 ```bash
 $ ./meilisearch --http-payload-size-limit=100000000
+```
 
 > The payload limit is now +-100MB instead of 10MB
 
