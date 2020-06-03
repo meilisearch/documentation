@@ -40,14 +40,13 @@ Server is listening on: http://127.0.0.1:7700
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
-  * [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
-  * [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
-  * [SSL Key Path](/guides/advanced_guides/configuration.md#ssl-key-path)
-  * [SSL OCSP Path](/guides/advanced_guides/configuration.md#ssl-ocsp-path)
-  * [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
-  * [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
-  * [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
-
+  - [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
+  - [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
+  - [SSL Key Path](/guides/advanced_guides/configuration.md#ssl-key-path)
+  - [SSL OCSP Path](/guides/advanced_guides/configuration.md#ssl-ocsp-path)
+  - [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
+  - [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
+  - [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
 
 ### Database path
 
@@ -83,7 +82,19 @@ The master key allowing you to do everything on the server. If no master key is 
 **Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
 
-Deactivates analytics. Analytics allow us to know how many users are using MeiliSearch, which versions and which platforms are used. This process is entirely anonymous.
+Deactivates analytics.
+
+Analytics allow us to know how many users are using MeiliSearch and the following:
+
+- The application version.
+- The environment: development/production.
+- The number of days since the first start: Segment development/production.
+- The user email: (*Optional*) If the user wants to have alerts.
+- The server provider: (*Optional*).
+- The database size.
+- The last update time.
+- The number of updates.
+- The number of documents per index.
 
 **Default value**: `false`
 
