@@ -40,14 +40,13 @@ Server is listening on: http://127.0.0.1:7700
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
-  * [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
-  * [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
-  * [SSL Key Path](/guides/advanced_guides/configuration.md#ssl-key-path)
-  * [SSL OCSP Path](/guides/advanced_guides/configuration.md#ssl-ocsp-path)
-  * [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
-  * [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
-  * [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
-
+  - [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
+  - [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
+  - [SSL Key Path](/guides/advanced_guides/configuration.md#ssl-key-path)
+  - [SSL OCSP Path](/guides/advanced_guides/configuration.md#ssl-ocsp-path)
+  - [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
+  - [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
+  - [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
 
 ### Database path
 
@@ -233,4 +232,3 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
 **Default value**: `107374182400` (100 GiB)
-
