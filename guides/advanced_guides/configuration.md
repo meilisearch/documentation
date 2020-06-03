@@ -6,7 +6,7 @@ Options can be either communicated through **environment variables** or **comman
 
 ## Passing arguments via the command line
 
-Options are added on launch.
+Options are added at launch.
 
 ```bash
 $ ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
