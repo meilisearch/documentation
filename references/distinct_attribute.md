@@ -4,7 +4,7 @@ _Child route of the [settings route](/references/settings.md)._
 
 [Distinct attribute](/guides/advanced_guides/distinct.md) is a field whose value will always be **unique** in the returned documents.
 
-Distinct attribute can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
+Distinct attribute can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.

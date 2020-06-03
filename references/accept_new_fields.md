@@ -14,7 +14,7 @@ When `accept-new-fields` is set to **false**, the fields are still stored. This 
 
 :::
 
-The `accept-new-fields` value can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
+The `accept-new-fields` value can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.

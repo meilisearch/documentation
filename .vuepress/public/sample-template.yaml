@@ -32,6 +32,9 @@ reset_distinct_attribute_1: |-
 get_searchable_attributes_1: |-
 update_searchable_attributes_1: |-
 reset_searchable_attributes_1: |-
+get_attributes_for_faceting_1: |-
+update_attributes_for_faceting_1: |-
+reset_attributes_for_faceting_1: |-
 get_displayed_attributes_1: |-
 update_displayed_attributes_1: |-
 reset_displayed_attributes_1: |-
