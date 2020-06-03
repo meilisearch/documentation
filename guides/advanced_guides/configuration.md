@@ -79,7 +79,7 @@ Analytics allow us to know how many users are using MeiliSearch and the followin
 - The user email: (*Optional*) If the user wants to have alerts.
 - The server provider: (*Optional*).
 - The database size.
-- The last update.
+- The last update time.
 - The number of updates per index.
 - The number of documents per index.
 
