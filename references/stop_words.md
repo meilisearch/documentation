@@ -52,6 +52,8 @@ An array of strings that contains the [stop-words](/guides/advanced_guides/stop_
 
 If a list of stop-words already exists it will be overwritten (_replaced_).
 
+[More information about the body](/guides/advanced_guides/settings.md#stop-words).
+
 ### Example
 
 <code-samples id="update_stop_words_1" />

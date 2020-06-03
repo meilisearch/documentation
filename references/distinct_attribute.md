@@ -50,6 +50,8 @@ Update the [distinct attribute](/guides/advanced_guides/settings.md#distinct-att
 
 A String: the field name.
 
+[More information about the body](/guides/advanced_guides/settings.md#distinct-attribute).
+
 ### Example
 
 <code-samples id="update_distinct_attribute_1" />
