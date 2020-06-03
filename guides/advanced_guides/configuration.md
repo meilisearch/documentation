@@ -80,7 +80,7 @@ Analytics allow us to know how many users are using MeiliSearch and the followin
 - The server provider: (*Optional*).
 - The database size.
 - The last update time.
-- The number of updates per index.
+- The number of updates.
 - The number of documents per index.
 
 **The index names are hashed.**
