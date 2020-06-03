@@ -4,7 +4,7 @@ _Child route of the [settings route](/references/settings.md)._
 
 The attributes that can be used as [facets for faceted search](/guides/advanced_guides/faceted_search.md).
 
-Attributes for faceting can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
+Attributes for faceting can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
 [Learn more about faceted search](/guides/advanced_guides/faceted_search.md).
 
