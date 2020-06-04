@@ -73,16 +73,7 @@ Suppose that you have a collection of movies in the following JSON format:
 
 To be able to facet search on `director` and `genre`, you would declare faceted attributes as follows:
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "attributesForFaceting": [
-          "director",
-          "genres"
-      ]
-  }'
-```
+<code-samples id="faceted_search_update_settings_1" />
 
 ## Using facets
 
@@ -138,11 +129,7 @@ Suppose you have declared `director` and `genre` as [faceted attributes](/guides
 
 Querying on "thriller", the above example results in the following CURL command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=thriller' \
-    --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
-```
+<code-samples id="faceted_search_facet_filters_1" />
 
 And you would get the following response:
 
@@ -220,11 +207,7 @@ Upon search, when using the `facetDistribution` parameter, there will be a `face
 
 Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Batman' \
-    --data-urlencode 'facetsDistribution=["genres"]'
-```
+<code-samples id="faceted_search_facets_distribution_1"/>
 
 And you would get the following response:
 
@@ -281,18 +264,7 @@ Suppose that you manage a movie database on which you want to search by `genre`,
 
 The first thing to do is to declare faceted attributes as follows:
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "attributesForFaceting": [
-          "director",
-          "producer",
-          "genres",
-          "production_companies"
-      ]
-  }'
-```
+<code-samples id="faceted_search_walkthrough_attributes_for_faceting_1" />
 
 In the above example, `director`, `producer`, `genres` and `production_companies` will be used as facets.
 
@@ -300,11 +272,7 @@ You can now search your documents and use query parameters.
 
 You can filter on facets. For instance, say you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele. You have to use the following CURL command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=thriller' \
-    --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
-```
+<code-samples id="faceted_search_walkthrough_facet_filters_1" />
 
 You will get the following response:
 
@@ -344,39 +312,13 @@ You will get the following response:
 
 Now, if you want to know what the number of Batman movies per genre is, you have to use the following CURL command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Batman' \
-    --data-urlencode 'facetsDistribution=["genres"]'
-```
+<code-samples id="faceted_search_walkthrough_facets_distribution_1" />
 
 You will get the following response:
 
 ```json
 {
   "hits": [
-    {
-      "id": 2661,
-      "title": "Batman",
-      "director": "Leslie H. Martinson",
-      "genres": [
-        "Adventure",
-        "Comedy"
-      ],
-      "overview": "The Dynamic Duo faces four super-villains who plan to hold the world fo  r ransom with the help of a secret invention that instantly dehydrates people."
-      ...
-    },
-    {
-      "id": 268,
-      "title": "Batman",
-      "director": "Tim Burton",
-      "genres": [
-        "Fantasy",
-        "Action"
-      ],
-      "overview": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker, who has seized control of Gotham's underworld."
-      ...
-    }
     ...
   ],
   ...

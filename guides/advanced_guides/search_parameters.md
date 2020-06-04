@@ -119,11 +119,7 @@ Suppose you have declared `director` and `genre` as [faceted attributes](/guides
 
 Querying on "thriller", the above example results in the following CURL command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=thriller' \
-    --data-urlencode 'facetFilters=[["genres:Horror", "genres:Mystery"], "director:Jordan Peele"]'
-```
+<code-samples id="faceted_search_walkthrough_facet_filters_1" />
 
 And you would get the following response:
 
@@ -154,11 +150,7 @@ And you would get the following response:
       "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
     }
   ],
-  "offset": 0,
-  "limit": 20,
-  "nbHits": 2,
-  "exhaustiveNbHits": false,
-  "processingTimeMs": 4,
+  ...
   "query": "thriller"
 }
 ```
@@ -198,46 +190,18 @@ If the `facetsDistribution` parameter has been set, the returned results will co
 
 Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
 
-```bash
-$ curl --get 'http://localhost:7700/indexes/movies/search' \
-    --data-urlencode 'q=Batman' \
-    --data-urlencode 'facetsDistribution=["genres"]'
-```
+<code-samples id="faceted_search_facets_distribution_1" />
 
 And you would get the following response:
 
 ```json
 {
   "hits": [
-    {
-      "id": 2661,
-      "title": "Batman",
-      "director": "Leslie H. Martinson",
-      "genres": [
-        "Adventure",
-        "Comedy"
-      ],
-      "overview": "The Dynamic Duo faces four super-villains who plan to hold the world fo  r ransom with the help of a secret invention that instantly dehydrates people.",
-      ...
-    },
-    {
-      "id": 268,
-      "title": "Batman",
-      "director": "Tim Burton",
-      "genres": [
-        "Fantasy",
-        "Action"
-      ],
-      "overview": "The Dark Knight of Gotham City begins his war on crime with his first major enemy being the clownishly homicidal Joker, who has seized control of Gotham's underworld."
-      ...
-    }
     ...
   ],
-  "offset": 0,
-  "limit": 20,
+  ...
   "nbHits": 1684,
   "exhaustiveNbHits": false,
-  "processingTimeMs": 5,
   "query": "Batman",
   "facetsDistribution": {
     "genres": {
