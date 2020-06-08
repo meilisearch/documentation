@@ -172,9 +172,7 @@ This attribute can take two values:
 
   The `*` character can also be used. In that case, a count for all facets is returned.
 
-[Learn more about `facetsDistribution` in the search parameters](/guides/advanced_guides/search_parameters.md#the-facets-distribution)
-
-### Returned fields
+#### Returned fields
 
 If the `facetsDistribution` parameter has been set, the returned results will contain **two additional fields**:
 
@@ -185,7 +183,7 @@ If the `facetsDistribution` parameter has been set, the returned results will co
   Otherwise, returns `false` if this count is **approximative** (approximative count for each facet value).
   The approximative facet count happens when there are too many documents in too many different facet values. In which case, MeiliSearch stops the distribution count to prevent considerably slowing down the request.
 
-[Learn more about facet distribution in the dedicated guide](/guides/advanced_guides/faceted_search.md)
+[Learn more about facet distribution in the dedicated guide](/guides/advanced_guides/faceted_search.md#the-facets-distribution)
 
 #### Example
 
