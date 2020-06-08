@@ -172,7 +172,6 @@ This attribute can take two values:
 
   The `*` character can also be used. In that case, a count for all facets is returned.
 
-
 #### Returned fields
 
 If the `facetsDistribution` parameter has been set, the returned results will contain **two additional fields**:
