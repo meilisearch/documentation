@@ -34,7 +34,7 @@
     "@popperjs/core": "^2.4.0",
     "mermaid": "8.5.1",
     "vue-eslint-parser": "^7.1.0",
-    "vuepress": "^1.5.0",
+    "vuepress": "^1.5.1",
     "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-meilisearch": "^0.10.1",
     "vuepress-plugin-seo": "^0.1.3",
