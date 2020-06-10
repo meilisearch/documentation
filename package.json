@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.4.2",
-    "mermaid": "8.5.1",
+    "mermaid": "8.5.2",
     "vue-eslint-parser": "^7.1.0",
     "vuepress": "^1.5.1",
     "vuepress-plugin-element-tabs": "^0.2.8",
