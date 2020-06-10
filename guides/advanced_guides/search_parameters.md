@@ -105,7 +105,7 @@ or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValu
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
   - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
-Facet filters also support logical connectives by using [inner and outer array elements](http://localhost:8080/guides/advanced_guides/faceted_search.md#using-facets).
+Facet filters also support logical connectives by using [inner and outer array elements](/guides/advanced_guides/faceted_search.md#using-facets).
 
 [Learn more about facet filters in the dedicated guide](/guides/advanced_guides/faceted_search.md)
 
