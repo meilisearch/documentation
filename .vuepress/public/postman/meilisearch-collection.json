@@ -205,7 +205,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\", \"author\": \"Jane Austin\" },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\", \"author\": \"Antoine de Saint-Exupéry\" },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\", \"author\": \"Lewis Carroll\" },\n  { \"id\": 1344, \"title\": \"The Hobbit\", \"author\": \"J. R. R. Tolkien\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\", \"author\": \"Douglas Adams\" }\n]",
+							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austin\",              \"genre\": \"romance\" },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\" },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
 							"options": {
 								"raw": {}
 							}
@@ -440,7 +440,7 @@
 								},
 								{
 									"key": "filters",
-									"value": "author=\"J. K. Rowling\"",
+									"value": "genre=\"fantasy\"",
 									"disabled": true
 								},
 								{
@@ -450,12 +450,12 @@
 								},
 								{
 									"key": "facetFilters",
-									"value": null,
+									"value": "[[\"genre:fantasy\"]]",
 									"disabled": true
 								},
 								{
 									"key": "facetsDistribution",
-									"value": "[\"author\"]",
+									"value": "[\"genre\"]",
 									"disabled": true
 								}
 							]
@@ -1015,7 +1015,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"author\"]",
+									"raw": "[\"genre\"]",
 									"options": {
 										"raw": {}
 									}
@@ -1091,7 +1091,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t]\n}",
+							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"]\n}",
 							"options": {
 								"raw": {}
 							}
@@ -1342,13 +1342,13 @@
 	],
 	"variable": [
 		{
-			"id": "09b35b89-aff0-48ed-a0e9-78ebcb00704f",
+			"id": "c7c13b5a-db99-45b2-b2ca-834dd0907194",
 			"key": "url",
 			"value": "http://0.0.0.0:7700",
 			"type": "string"
 		},
 		{
-			"id": "f9949ef8-fee9-4c05-bd83-3dc78713cce3",
+			"id": "2f334668-72e8-4886-b7a6-31632849cf21",
 			"key": "indexUID",
 			"value": "indexUID",
 			"type": "string"
