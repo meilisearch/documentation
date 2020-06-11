@@ -58,7 +58,7 @@ No automatic behavior is applied to this field. It will stay where it is present
 
 For example:
 
-1. Add `size` to the `attributesForFacetting` setting, before adding documents.
+1. Add `size` to the `attributesForFacetting` setting before adding documents.
 
 2. Add documents containing the `size` field
 
