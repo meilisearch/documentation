@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-The `displayedAttributes` list is automatically updated when [new field](/guides/advanced_guides/field_properties.md#new-fields-and-known-fields) are found in documents and when `acceptNewFields` is set to true (default).
+The `displayedAttributes` list is automatically updated when [new fields](/guides/advanced_guides/field_properties.md#new-fields-and-known-fields) are found in documents and when `acceptNewFields` is set to true (default).
 The fields whose attributes are added to the displayed-attributes list are **displayed in each matching document**.
 
 Displayed attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
