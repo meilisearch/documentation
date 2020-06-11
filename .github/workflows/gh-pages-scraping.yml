@@ -31,7 +31,7 @@ jobs:
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: .vuepress/dist
 
-  scrap-docs:
+  scrape-docs:
     needs: build-deploy
     runs-on: ubuntu-18.04
     steps:
@@ -47,3 +47,30 @@ jobs:
           -e MEILISEARCH_API_KEY=$API_KEY \
           -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
           getmeili/docs-scraper:v0.9.0 pipenv run ./docs_scraper config.json
+
+  scrape-github:
+    needs: scrape-docs
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@master
+    - name: Connect to GitHub docker registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: ${{ secrets.GITHUB_DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.GITHUB_DOCKER_REGISTRY_PASSWORD }}
+    - name: Run github-issues-scraper
+      env:
+        HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+        API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
+        GH_LOGIN: ${{ secrets.GH_LOGIN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GH_REPOSITORY: meilisearch/meilisearch
+      run: |
+        docker run -t --rm \
+          -e GH_LOGIN=$GH_LOGIN \
+          -e GH_TOKEN=$GH_TOKEN \
+          -e GH_REPOSITORY=$GH_REPOSITORY \
+          -e MEILISEARCH_URL=$HOST_URL \
+          -e MEILISEARCH_API_KEY=$API_KEY \
+          docker.pkg.github.com/meilisearch/github-issues-scraper/github-issues-scraper:v0.1.2
