@@ -52,7 +52,7 @@ Once a new field has been added to those lists, it becomes **a known field** sin
 
 ### Known Fields Behavior
 
-A known field is a field that is already present in the settings. To know if a field is in the setting, you can [get the settings list](/references/settings.md#get-settings) and look for the presence of its attribute.
+A known field is a field that is already present in the settings. To know if a field is in the setting, you can [get the settings list](/references/settings.md#get-settings) to ensure the presence of its attribute.
 
 No automatic behavior is applied to this field. It will stay where it is present.
 
