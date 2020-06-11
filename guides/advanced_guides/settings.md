@@ -201,7 +201,7 @@ By adding the following settings, documents returned upon search will contain th
 
 ## Accept new fields
 
-This setting takes a **Boolean value** (`true` or `false`) and defines whether new fields should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
+This setting takes a **Boolean value** (`true` or `false`) and defines whether [new fields](/guides/advanced_guides/field_properties.md#new-fields-and-known-fields) should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
 
 `acceptNewFields=<Boolean>`
 

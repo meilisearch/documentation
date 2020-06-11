@@ -46,7 +46,7 @@ Depending on its state, a different behavior will be applied.
 
 A new field is a field that is **present in a new document and not present in the settings**. To know if a field is in the setting, you can [get the settings list](/references/settings.md#get-settings) to ensure the presence of your field.
 
-A new field is automatically added to the `searchableAttributes` and `displayedAttributes` lists.
+A new field is automatically added to the `searchableAttributes` and `displayedAttributes` lists if [acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields) is set to true (`true` is the default value).
 
 Once a new field has been added to those lists, it becomes **a known field** since it is now present in the settings.
 
