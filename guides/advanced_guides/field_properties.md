@@ -60,7 +60,7 @@ For example:
 
 1. Add `size` to the `attributesForFacetting` setting before adding documents.
 
-2. Add documents containing the `size` field
+2. Add documents containing the `size` field.
 
 `size` will not be automatically added to the `searchableAttributes` and `displayedAttributes` lists because its present in `attributesForFacetting` made it a known field.
 
