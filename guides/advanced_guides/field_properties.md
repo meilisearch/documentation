@@ -62,7 +62,7 @@ For example:
 
 2. Add documents containing the `size` field.
 
-`size` will not be automatically added to the `searchableAttributes` and `displayedAttributes` lists because its present in `attributesForFacetting` made it a known field.
+`size` will not be automatically added to the `searchableAttributes` and `displayedAttributes` lists since its presence in `attributesForFacetting` made it a known field.
 
 ```json
 {
