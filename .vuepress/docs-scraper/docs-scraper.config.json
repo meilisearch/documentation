@@ -16,5 +16,12 @@
     "text": ".theme-default-content p, .theme-default-content li"
   },
   "strip_chars": " .,;:#",
-  "scrap_start_urls": true
+  "scrap_start_urls": true,
+  "custom_settings": {
+    "synonyms": {
+      "relevancy": ["relevant", "relevance"],
+      "relevant": ["relevancy", "relevance"],
+      "relevance": ["relevancy", "relevant"]
+    }
+  }
 }
