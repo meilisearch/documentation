@@ -73,7 +73,7 @@ For example:
 }
 ```
 
-Now imagine the opposite scenario, whereas you first add the documents, and then you update the `attributesForFacetting` settings.
+Now imagine the opposite scenario in which you first add the documents, and then you update the `attributesForFacetting` settings.
 In that case when the documents are added, `size` is not yet present in the settings. Thus is automatically added to the `searchableAttributes` and `displayedAttributes` lists.
 Adding `size` to the `attributesForFacetting` settings will not remove `size` from any other setting.
 
