@@ -25,7 +25,7 @@ $ ./meilisearch --master-key=myMasterKey
 
 There are [other ways to install MeiliSearch](/guides/introduction/quick_start_guide.md#download-and-launch).
 
-MeiliSearch is open-source and can run either on you server or on any cloud provider.
+MeiliSearch is open-source and can run either on your server or on any cloud provider.
 
 ::: note
 
@@ -40,7 +40,7 @@ The Meili team provides and maintains a [scraper tool](https://github.com/meilis
 
 ### Configuration File
 
-The scraper tool needs a configuration file to know what content you want to scrape, this is done by providing selectors (e.g. the HTML tag).
+The scraper tool needs a configuration file to know what content you want to scrape. This is done by providing selectors (e.g. the HTML tag).
 
 Here is an example of a basic configuration file:
 
@@ -81,6 +81,12 @@ Every searchable `lvl` elements outside this main documentation container (for i
 
 If you use VuePress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/master/.vuepress/docs-scraper/docs-scraper.config.json) we use in production.
 In our case, the main container is `theme-default-content` and the selector the titles and sub-titles are `h1`, `h2`...
+
+::: tip
+
+More [optional fields are available](https://github.com/meilisearch/docs-scraper#all-the-config-file-settings) to fit your need.
+
+:::
 
 ### Run the Scraper
 
