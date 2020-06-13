@@ -8,5 +8,10 @@
     "language": "javascript",
     "label": "JavaScript",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-js/master/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "python",
+    "label": "Python",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-python/master/.code-samples.meilisearch.yaml"
   }
 ]
