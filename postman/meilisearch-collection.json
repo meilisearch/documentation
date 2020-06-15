@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "74ae0358-b1f9-4fc3-8dd0-4751aff005b5",
-		"name": "MeiliSearch v0.10.0",
+		"_postman_id": "0c461543-58d6-47e8-91ac-7c147528dd01",
+		"name": "MeiliSearch v0.11",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -205,7 +205,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\", \"author\": \"Jane Austin\" },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\", \"author\": \"Antoine de Saint-Exupéry\" },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\", \"author\": \"Lewis Carroll\" },\n  { \"id\": 1344, \"title\": \"The Hobbit\", \"author\": \"J. R. R. Tolkien\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\", \"author\": \"Douglas Adams\" }\n]",
+							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austin\",              \"genre\": \"romance\" },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\" },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
 							"options": {
 								"raw": {}
 							}
@@ -440,12 +440,22 @@
 								},
 								{
 									"key": "filters",
-									"value": "author=\"J. K. Rowling\"",
+									"value": "genre=\"fantasy\"",
 									"disabled": true
 								},
 								{
 									"key": "matches",
 									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "facetFilters",
+									"value": "[[\"genre:fantasy\"]]",
+									"disabled": true
+								},
+								{
+									"key": "facetsDistribution",
+									"value": "[\"genre\"]",
 									"disabled": true
 								}
 							]
@@ -977,6 +987,73 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get attributes for faceting",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"attributes-for-faceting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update attributes for faceting",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"genre\"]",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"attributes-for-faceting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset attributes for faceting",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"attributes-for-faceting"
+									]
+								}
+							},
+							"response": []
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -1014,7 +1091,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t]\n}",
+							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"]\n}",
 							"options": {
 								"raw": {}
 							}
@@ -1245,7 +1322,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1fa5df98-123b-4787-8f92-fef150bb3cd4",
+				"id": "49c64b80-045e-4502-931f-2da283c2e5ce",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1255,7 +1332,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "784448a2-2c24-472c-a75e-ba3bb452e7da",
+				"id": "ca825c82-8be7-4c3d-b446-94dcaa7e6bc5",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1265,13 +1342,13 @@
 	],
 	"variable": [
 		{
-			"id": "439bf25c-526d-4217-ad0f-646dcce191a3",
+			"id": "c7c13b5a-db99-45b2-b2ca-834dd0907194",
 			"key": "url",
 			"value": "http://0.0.0.0:7700",
 			"type": "string"
 		},
 		{
-			"id": "26dffecf-18f5-4316-b762-9c47db59456a",
+			"id": "2f334668-72e8-4886-b7a6-31632849cf21",
 			"key": "indexUID",
 			"value": "indexUID",
 			"type": "string"
