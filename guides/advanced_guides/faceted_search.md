@@ -8,6 +8,7 @@ When users perform a search, they are presented with a list of results and a lis
 
 ![Amazon UI](/faceted-search/facets-amazon.png)
 > Faceted navigation on Amazon: facets are displayed on the left column.
+
 ## Filters or Facets?
 
 Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**.
@@ -38,7 +39,7 @@ Suppose that you have a collection of movies containing the following fields:
 
 ```json
 [
-  {     
+  {
       "id": "458723",
       "title": "Us",
       "director": "Jordan Peele",
