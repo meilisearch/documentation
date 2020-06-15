@@ -2,9 +2,10 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
+The `searchableAttributes` list is automatically updated when [new fields](/guides/advanced_guides/field_properties.md#new-fields-and-known-fields) are found in documents and when `acceptNewFields` is set to true (default).
 The values of the fields whose attributes are added to the searchable-attributes list are **searched for matching query words**.
 
-Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) at the same time than the other settings.
+Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
@@ -53,6 +54,8 @@ Update the [searchable attributes](/guides/advanced_guides/field_properties.md#s
 An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
+
+[More information about the body](/guides/advanced_guides/settings.md#searchable-attributes).
 
 ### Example
 

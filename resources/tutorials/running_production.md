@@ -72,7 +72,7 @@ You can now start using MeiliSearch! In your terminal, run:
 ```bash
 $ meilisearch
 
-# --- Expected output for v0.10.1 ---
+# --- Expected output for v0.11.1 ---
 888b     d888          d8b 888 d8b  .d8888b.                                    888
 8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
 88888b.d88888              888     Y88b.                                        888
@@ -83,7 +83,7 @@ $ meilisearch
 888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
 
 [2020-05-04T11:47:13Z INFO  meilisearch] Database path: "./data.ms"
-[2020-05-04T11:47:13Z INFO  meilisearch] Start server on: "127.0.0.1:7700"
+[2020-05-04T11:47:13Z INFO  meilisearch] Server listening on: "127.0.0.1:7700"
 ```
 
 ## Step 2: Run MeiliSearch as a service

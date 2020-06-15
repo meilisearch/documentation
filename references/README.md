@@ -4,7 +4,7 @@ Welcome to the beta version of the MeiliSearch API documentation.
 
 ::: warning
 
-The documentation is written for the latest stable release: [v0.10.0](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.10.0).
+The documentation is written for the latest stable release: [v0.11.0](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.11.0).
 
 :::
 
@@ -20,9 +20,9 @@ You might find the answers to some of your questions [in the FAQ](/faq/faq.md) ð
 
 #### Content Type
 
-All request and response body are in `JSON`. Always specify it in your header.
+All request and response body are in `JSON`.
 
-`Content-Type: application/json`
+It is **not required** to have `Content-Type: application/json` in the header. Any content-type is accepted.
 
 #### Authentication
 

@@ -32,6 +32,9 @@ reset_distinct_attribute_1: |-
 get_searchable_attributes_1: |-
 update_searchable_attributes_1: |-
 reset_searchable_attributes_1: |-
+get_attributes_for_faceting_1: |-
+update_attributes_for_faceting_1: |-
+reset_attributes_for_faceting_1: |-
 get_displayed_attributes_1: |-
 update_displayed_attributes_1: |-
 reset_displayed_attributes_1: |-
@@ -72,3 +75,9 @@ search_guide_2: |-
 getting_started_create_index_md: |-
 getting_started_add_documents_md: |-
 getting_started_search_md: |-
+faceted_search_update_settings_1: |-
+faceted_search_facet_filters_1: |-
+faceted_search_facets_distribution_1: |-
+faceted_search_walkthrough_attributes_for_faceting_1: |-
+faceted_search_walkthrough_facet_filters_1: |-
+faceted_search_walkthrough_facets_distribution_1: |-
