@@ -116,5 +116,8 @@ yarn-error.log
 .externallinkchecksrc
 .vuepress/code-samples/generated-samples.json
 
-# End of https://www.gitignore.io/api/vue,node,vuejs
+###  CODE-SAMPLES
 
+.vuepress/code-samples/generated-samples.json
+
+# End of https://www.gitignore.io/api/vue,node,vuejs
