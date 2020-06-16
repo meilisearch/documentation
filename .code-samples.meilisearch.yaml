@@ -39,10 +39,10 @@ add_or_replace_documents_1: |-
 add_or_update_documents_1: |-
   $ curl \
     -X POST 'http://localhost:7700/indexes/movies/documents' \
-    -d 'primaryKey=movieskud'
     --data '[{
-        "movieskud": 287947,
-        "title": "Shazam ⚡️"
+        "id": 287947,
+        "title": "Shazam ⚡️",
+        "genre": "comedy"
     }]'
 delete_all_documents_1: |-
   curl \
