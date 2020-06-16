@@ -143,6 +143,7 @@ module.exports = {
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
     [require('./code-samples')],
+    'img-lazy',
     [
       'meilisearch',
       {
