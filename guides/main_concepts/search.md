@@ -62,6 +62,12 @@ Meilisearch allows you to define [filters](/guides/advanced_guides/filtering.md)
 
 [Faceted search](/guides/advanced_guides/faceted_search.md) is a feature provided out-of-the-box by MeiliSearch. It allows you to classify search results into categories and to build intuitive navigation interfaces.
 
+### Placeholder Search
+
+Placeholder returns documents sorted by the [ranking rules](/guides/advanced_guides/settings.md#ranking-rules) specified by the user, without any query words. It is compatible with facetting and filtering.
+
+To perform a placeholder search, simply ommit the query parameter.
+
 #### Example
 
 Here are a few examples of what can be achieved with the [search parameters](/guides/advanced_guides/search_parameters.md):

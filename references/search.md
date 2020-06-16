@@ -18,7 +18,7 @@ Search for documents matching a specific query in the given index.
 
 | Query Parameter                                                                                   | Description                                                                                     | Default Value |
 | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string \_(mandatory)                                                                      |               |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query strings                                                                                   |               |
 | **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
@@ -35,6 +35,10 @@ Search for documents matching a specific query in the given index.
 > `cropLength` is automatically rounded to match word boundaries.
 
 [Learn more about how to use the search parameters](/guides/advanced_guides/search_parameters.md).
+
+#### Placeholder Search
+
+When the `q` parameter is no specified, a [placeholder](/guides/advanced_guides/search_parameters.md#query-q) search is run instead.
 
 ### Response
 
