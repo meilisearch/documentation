@@ -52,16 +52,17 @@ export default {
           /* webpackChunkName: "docs-searchbar" */ 'docs-searchbar.js/dist/cdn/docs-searchbar.min.css'
         ),
       ]).then(([docsSearchBar]) => {
-        console.log('TITI')
         docsSearchBar = docsSearchBar.default
         const input = Object.assign({}, userOptions, {
           inputSelector: '#meilisearch-search-input',
           handleSelected: (input, event, suggestion) => {
-            console.log(suggestion)
-            const { pathname, hash } = new URL(suggestion.url)
-            const routepath = pathname.replace(this.$site.base, '/')
-            // this.$router.push(`${routepath}${hash}`)
-            console.log(`GO TO ${routepath}${hash}`)
+            const { hostname, pathname, hash } = new URL(suggestion.url)
+            if (hostname === 'github.com') {
+              window.open(suggestion.url, '_blank')
+            } else {
+              const routepath = pathname.replace(this.$site.base, '/')
+              this.$router.push(`${routepath}${hash}`)
+            }
           },
         })
         docsSearchBar(input)
