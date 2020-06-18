@@ -70,7 +70,7 @@ export default {
         this.linksWrapMaxWidth = null
       } else {
         this.linksWrapMaxWidth = this.$el.offsetWidth - NAVBAR_VERTICAL_PADDING -
-          (this.$refs.siteName && this.$refs.siteName.offsetWidth || 0)
+          ((this.$refs.siteName && this.$refs.siteName.offsetWidth) || 0)
       }
     }
     handleLinksWrapWidth()
