@@ -1,6 +1,6 @@
 # API References
 
-Welcome to the beta version of the MeiliSearch API documentation.
+Welcome to the MeiliSearch API documentation.
 
 ::: warning
 
