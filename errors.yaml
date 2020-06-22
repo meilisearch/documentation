@@ -1,0 +1,51 @@
+---
+errors:
+  - code: create_index
+    description: "Error relative to index creation, check out our guide on [index creation](link.com)"
+  - code: existing_index
+    description: "An index with this name already exists, check out our guide on [index creation](link.com)"
+  - code: invalid_index_uid
+    description: "The provided index formatting is wrong, check out our guide on [index creation](link.com)"
+  - code: open_index
+    description: "An error occured while trying to open the requested index, ..."
+  - code: invalid_state
+    description: "An error occuring when the database is in an invalid state. Deleting the database and reindexing should solve the problem."
+  - code: missing_primary_key
+    description: "All documents must be identified with a unique key. Meilisearch will try to infer the documetn field to use as primary key. If it can't, it has to be specified manually, and this error is returned. See <a href=\"https://docs.meilisearch.com/guides/main_concepts/documents.html#structure\">guide on primary keys</a>."
+  - code: primary_key_already_present
+    description: "Error thrown when trying to change the primary key for an index. See [guide on primary keys](https://docs.meilisearch.com/guides/main_concepts/documents.html#structure)."
+  - code: max_field_limit_exceeded
+    description: "The maximum number of fields for a document is 65,535. When this number is exceded, this error is returned."
+  - code: missing_document_id
+    description: "A document is missing a primary key, and is thus invalid. Check documents in the current addition for the invalid ones."
+  - code: invalid_facet
+    description: "The facet filter provided with the search is invalid. Check our [guide on faceting](https://docs.meilisearch.com/guides/advanced_guides/faceted_search.html) to troubleshoot."
+  - code: invalid_filter
+    description: "The facet filter provided with the search is invalid. Check our [guide on faceting](https://docs.meilisearch.com/guides/advanced_guides/filtering.html) to troubleshoot."
+  - code: bad_parameter
+    description: "The request contains invalid parameters, check the error message for more information."
+  - code: bad_request
+    description: "The request is invalid, check the error message for more information."
+  - code: document_not_found
+    description: "The requested document can't be retieved. It either doesn't exists, or the database was left in an inconsistent state."
+  - code: internal
+    description: "An error with Meilisearch internals has occured. Check the error message, and fill an issue if necessary."
+  - code: invalid_token
+    description: "The provided token is invalid."
+  - code: maintenance
+    description: "The Meilisearch instance in under maintenance."
+  - code: missing_authorization_header
+    description: "The requested ressources is protected with an API key, that was not provided in the request header. Check our guide on [authentication](https://docs.meilisearch.com/guides/advanced_guides/authentication.html) for more information."
+  - code: missing_header
+    description: "The header is missing."
+  - code: not_found
+    description: "The requested ressources could not be found."
+  - code: payload_too_large
+    description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/guides/advanced_guides/configuration.html#options) to change the maximum payload size"
+  - code: retrieve_document
+    description: "The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database."
+  - code: search_error
+    description: "There was an error in the search."
+  - code: unsupported_media_type
+    description: "The payload for the request is not supported by meilisearch. Meilisearch currently only support JSON payloads."
+...
