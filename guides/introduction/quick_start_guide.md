@@ -135,7 +135,7 @@ const MeiliSearch = require('meilisearch')
 
 var client = new MeiliSearch({ host: 'http://127.0.0.1:7700' })
 const index = client
-  .createIndex({ uid: 'movies' })
+  .createIndex('movies')
   .then((res) => console.log(res))
 ```
 
