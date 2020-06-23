@@ -1,0 +1,51 @@
+---
+errors:
+  - code: index_creation_failed
+    description: "An error occurred while trying to create an index, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
+  - code: index_already_exists
+    description: "An index with this UID already exists, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
+  - code: invalid_index_uid
+    description: "There is an error in the provided index format, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
+  - code: index_not_accessible
+    description: "An internal error occurred while trying to access the requested index."
+  - code: invalid_state
+    description: "An error that occurs when the database is in an invalid state. Deleting the database and re-indexing should solve the problem."
+  - code: missing_primary_key
+    description: "All documents must be identified with a unique key. MeiliSearch will try to infer the document field to use it as a primary key. If it can't infer it, the primary key must be specified manually, and this error is returned. See  our [guide on primary keys](https://docs.meilisearch.com/guides/main_concepts/documents.html#structure)."
+  - code: primary_key_already_present
+    description: "This error is thrown when trying to modify the primary key of an index, when it has been already set. See [guide on primary keys](https://docs.meilisearch.com/guides/main_concepts/documents.html#structure)."
+  - code: max_fields_limit_exceeded
+    description: "The maximum number of fields for a document is 65,535. When this number is exceeded, this error is returned."
+  - code: missing_document_id
+    description: "A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones."
+  - code: invalid_facet
+    description: "The facet provided with the search is invalid. Check our [guide on faceting](https://docs.meilisearch.com/guides/advanced_guides/faceted_search.html) to troubleshoot."
+  - code: invalid_filter
+    description: "The filter provided with the search is invalid. Check our [guide on filtering](https://docs.meilisearch.com/guides/advanced_guides/filtering.html) to troubleshoot."
+  - code: bad_parameter
+    description: "The request contains invalid parameters, check the error message for more information."
+  - code: bad_request
+    description: "The request is invalid, check the error message for more information."
+  - code: document_not_found
+    description: "The requested document can't be retrieved. Either it doesn't exist, or the database was left in an inconsistent state."
+  - code: internal
+    description: "MeiliSearch experienced an internal error. Check the error message, and open an issue if necessary."
+  - code: invalid_token
+    description: "The provided token is invalid."
+  - code: maintenance
+    description: "The MeiliSearch instance is under maintenance."
+  - code: missing_authorization_header
+    description: "The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [authentication](https://docs.meilisearch.com/guides/advanced_guides/authentication.html) for more information."
+  - code: missing_header
+    description: "A header is missing in the HTTP request."
+  - code: not_found
+    description: "The requested resources could not be found."
+  - code: payload_too_large
+    description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/guides/advanced_guides/configuration.html#options) to customize the maximum payload size accepted by MeiliSearch."
+  - code: unretrievable_document
+    description: "The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database."
+  - code: search_error
+    description: "There was an error in the search."
+  - code: unsupported_media_type
+    description: "The payload content type is not supported by MeiliSearch. Currently, MeiliSearch supports only JSON payloads."
+...
