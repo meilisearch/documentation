@@ -192,7 +192,7 @@ get_searchable_attributes_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
 update_searchable_attributes_1: |-
   $ curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     --data '[
         "title",
         "description",
@@ -206,7 +206,7 @@ get_displayed_attributes_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
 update_displayed_attributes_1: |-
   $ curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     --data '[
         "title",
         "description",
@@ -222,7 +222,7 @@ get_accept_new_fields_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/accept-new-fields'
 update_accept_new_fields_1: |-
   $ curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/accept-new-fields' \
+    -X POST 'http://localhost:7700/indexes/movies/settings/accept-new-fields' \
     --data 'false'
 get_index_stats_1: |-
   $ curl \
