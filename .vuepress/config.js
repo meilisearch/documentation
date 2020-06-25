@@ -139,10 +139,10 @@ module.exports = {
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'vuepress-plugin-element-tabs',
-    ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
     [require('./code-samples')],
+    'img-lazy',
     [
       'meilisearch',
       {
