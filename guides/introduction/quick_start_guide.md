@@ -4,13 +4,7 @@ This quick tour will help you get started with MeiliSearch in only a few steps.
 
 ## Download and launch
 
-First of all, let's run MeiliSearch.
-
-:::: tabs
-::: tab cURL
-Download the **latest stable release** of MeiliSearch with **curl**.
-
-Launch MeiliSearch to start the server.
+First of all, let's download and run MeiliSearch.
 
 ```bash
 $ curl -L https://install.meilisearch.com | sh
@@ -18,80 +12,7 @@ $ ./meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
 
-:::
-
-::: tab Brew
-Download the **latest stable release** of MeiliSearch with **Homebrew**.
-
-Launch MeiliSearch to start the server.
-
-```bash
-$ brew update && brew install meilisearch
-$ meilisearch
-Server is listening on: http://127.0.0.1:7700
-```
-
-:::
-
-::: tab Docker
-Using **Docker** you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags).
-
-This command starts the **latest stable release** of MeiliSearch.
-
-```bash
-$ docker run -it --rm \
-    -p 7700:7700 \
-    -v $(pwd)/data.ms:/data.ms \
-    getmeili/meilisearch
-Server is listening on: http://0.0.0.0:7700
-```
-
-Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
-
-:::
-
-::: tab APT
-
-Download the **latest stable release** of MeiliSearch with **APT**.
-
-Launch MeiliSearch to start the server.
-
-```bash
-$ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
-$ apt update && apt install meilisearch-http
-$ meilisearch
-Server is listening on: http://127.0.0.1:7700
-```
-
-:::
-
-::: tab Source
-
-MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
-
-If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
-
-```bash
-$ git clone https://github.com/meilisearch/MeiliSearch
-$ cd MeiliSearch
-```
-
-In the cloned repository, compile MeiliSearch.
-
-```bash
-# Update the rust toolchain to the latest version
-$ rustup update
-
-# Compile the project
-$ cargo build --release
-
-# Execute the server binary
-$ ./target/release/meilisearch
-```
-
-:::
-
-::::
+You can download & run MeiliSearch [in many different ways (i.e: docker, apt, brew, ...)](/guides/advanced_guides/installation.md).
 
 [Environment variables and options](/guides/advanced_guides/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
 
@@ -108,120 +29,7 @@ Indexes can be comparable to SQL tables. Since MeiliSearch is <clientGlossary wo
 
 In order to be able to store your documents in an index, it is required you create one first.
 
-:::: tabs
-
-::: tab cURL
-
-```bash
-$ curl \
-  -X POST 'http://127.0.0.1:7700/indexes' \
-  --data '{
-  "uid" : "movies"
-}'
-```
-
-:::
-
-::: tab JS
-
-```bash
-$ npm install meilisearch
-# or
-$ yarn add meilisearch
-```
-
-```js
-const MeiliSearch = require('meilisearch')
-
-var client = new MeiliSearch({ host: 'http://127.0.0.1:7700' })
-const index = client
-  .createIndex('movies')
-  .then((res) => console.log(res))
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-js/)
-:::
-
-::: tab Ruby
-
-```bash
-$ gem install meilisearch
-```
-
-```ruby
-require 'meilisearch'
-
-client = MeiliSearch::Client.new('http://127.0.0.1:7700')
-index = client.create_index('movies')
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-ruby/)
-:::
-
-::: tab PHP
-
-```bash
-$ composer require meilisearch/meilisearch-php
-```
-
-```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use MeiliSearch\Client;
-
-$client = new Client('http://127.0.0.1:7700');
-$index = $client->createIndex('movies');
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-php/)
-:::
-
-::: tab Python
-
-```bash
-$ pip3 install meilisearch
-```
-
-```python
-import meilisearch
-
-client = meilisearch.Client('http://127.0.0.1:7700')
-index = client.create_index(uid='movies')
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-python/)
-:::
-
-::: tab Go
-
-```bash
-$ go get github.com/meilisearch/meilisearch-go
-```
-
-```go
-package main
-
-import (
-    "github.com/meilisearch/meilisearch-go"
-)
-
-func main() {
-    var client = meilisearch.NewClient(meilisearch.Config{
-      Host: "http://127.0.0.1:7700",
-    })
-
-    client.Indexes().Create(meilisearch.CreateIndexRequest{
-        UID: "movies",
-    })
-}
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-go/)
-:::
-
-::::
+<code-samples id="getting_started_create_index_md" />
 
 [API references](/references/indexes.md)
 
@@ -237,89 +45,7 @@ There are [several ways to let MeiliSearch know what the primary key](/guides/ma
 
 Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
-:::: tabs
-::: tab cURL
-
-```bash
-$ curl \
-  -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
-  --data @movies.json
-```
-
-:::
-
-::: tab JS
-
-```js
-const movies = require('./movies.json')
-index.addDocuments(movies).then((res) => console.log(res))
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-js/)
-:::
-
-::: tab Ruby
-
-```ruby
-require 'json'
-
-movies_json = File.read('movies.json')
-movies = JSON.parse(movies_json)
-index.add_documents(movies)
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-ruby/)
-:::
-
-::: tab PHP
-
-```php
-$movies_json = file_get_contents('movies.json');
-$movies = json_decode($movies_json);
-$index->addDocuments($movies);
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-php/)
-:::
-
-::: tab Python
-
-```python
-import json
-
-json_file = open('movies.json')
-movies = json.load(json_file)
-index.add_documents(movies)
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-python/)
-:::
-
-::: tab Go
-
-```go
-import (
-    "encoding/json"
-    "io/ioutil"
-)
-```
-
-```go
-moviesJSON, _ := os.Open("movies.json")
-defer moviesJSON.Close()
-
-byteValue, _ := ioutil.ReadAll(moviesJSON)
-var movies []map[string]interface{}
-json.Unmarshal(byteValue, &movies)
-
-updateRes, _ := client.Documents("movies").AddOrUpdate(movies)
-fmt.Println(updateRes.UpdateID)
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-go/)
-:::
-
-::::
+<code-samples id="getting_started_add_documents_md" />
 
 [API references](/references/documents.md)
 
@@ -343,66 +69,7 @@ MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.m
 
 The search engine is now aware of your documents and can serve those via an HTTP server.
 
-:::: tabs
-::: tab cURL
-
-```bash
-$ curl \
-  -X GET 'http://127.0.0.1:7700/indexes/movies/search?q=botman'
-```
-
-:::
-
-::: tab JS
-
-```js
-index.search('botman').then((res) => console.log(res))
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-js/)
-:::
-
-::: tab Ruby
-
-```ruby
-index.search('botman')
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-ruby/)
-:::
-
-::: tab PHP
-
-```php
-$index->search('botman');
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-php/)
-:::
-
-::: tab Python
-
-```python
-index.search('botman')
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-python/)
-:::
-
-::: tab Go
-
-```go
-searchRes, _ := client.Search("movies").Search(meilisearch.SearchRequest{
-    Query: "botman",
-    Limit: 20,
-})
-fmt.Println(searchRes.Hits)
-```
-
-[About this package](https://github.com/meilisearch/meilisearch-go/)
-:::
-
-::::
+<code-samples id="getting_started_search_md" />
 
 MeiliSearch **response**:
 
@@ -442,7 +109,3 @@ To do so, open your web browser and enter MeiliSearch address (in our case: `htt
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
 ![movies demo gif](/movies-web-demo.gif)
-
-::: warning
-Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/guides/advanced_guides/configuration.md#environment).
-:::

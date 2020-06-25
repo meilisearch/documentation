@@ -79,7 +79,7 @@ The `attribute` rule sorts the results by [attribute importance](/guides/main_co
 
 :::
 
-::: tab Words position
+::: tab Words-position
 
 ![Image from alias](/ranking-rules/belgium.png)
 
