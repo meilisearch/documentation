@@ -1,12 +1,12 @@
 ---
 errors:
-  - code: create_index
+  - code: index_creation_failed
     description: "An error occurred while trying to create an index, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
-  - code: existing_index
+  - code: index_already_exists
     description: "An index with this UID already exists, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
   - code: invalid_index_uid
     description: "There is an error in the provided index format, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
-  - code: open_index
+  - code: index_not_accessible
     description: "An internal error occurred while trying to access the requested index."
   - code: invalid_state
     description: "An error that occurs when the database is in an invalid state. Deleting the database and re-indexing should solve the problem."
@@ -42,7 +42,7 @@ errors:
     description: "The requested resources could not be found."
   - code: payload_too_large
     description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/guides/advanced_guides/configuration.html#options) to customize the maximum payload size accepted by MeiliSearch."
-  - code: retrieve_document
+  - code: unretrievable_document
     description: "The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database."
   - code: search_error
     description: "There was an error in the search."
