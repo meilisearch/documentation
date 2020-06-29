@@ -13,5 +13,20 @@
     "language": "python",
     "label": "Python",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-python/master/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "php",
+    "label": "PHP",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-php/master/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "ruby",
+    "label": "Ruby",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-ruby/master/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "go",
+    "label": "Go",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/master/.code-samples.meilisearch.yaml"
   }
 ]
