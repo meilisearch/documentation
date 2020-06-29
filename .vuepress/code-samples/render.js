@@ -24,18 +24,20 @@ module.exports = function (fetchedSamples) {
   return fetchedSamples.reduce((acc, languageSample) => {
     for (const sampleId in languageSample.samples) {
       const previousSamples = acc[sampleId] || []
-      acc[sampleId] = [
-        ...previousSamples,
-        {
-          language: languageSample.language, // markdown code block language highlight ex: ```javascript ````
-          label: languageSample.label, // name of the tab ex: curl
-          code: renderCodeSample({
-            sample: languageSample.samples[sampleId],
-            sampleId,
-            language: languageSample.language,
-          }), // code rendered in HTML
-        },
-      ]
+      if (languageSample.samples[sampleId]) { // if the sample is not empty (""), null, false or undefined it is added
+        acc[sampleId] = [
+          ...previousSamples,
+          {
+            language: languageSample.language, // markdown code block language highlight ex: ```javascript ````
+            label: languageSample.label, // name of the tab ex: curl
+            code: renderCodeSample({
+              sample: languageSample.samples[sampleId],
+              sampleId,
+              language: languageSample.language,
+            }), // code rendered in HTML
+          },
+        ]
+      }
     }
     return acc
   }, {})
