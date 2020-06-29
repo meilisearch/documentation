@@ -63,6 +63,7 @@ module.exports = {
             '/guides/advanced_guides/prefix',
             '/guides/advanced_guides/concat',
             '/guides/advanced_guides/bucket_sort',
+            '/guides/advanced_guides/known_limitations',
           ],
         },
       ],
