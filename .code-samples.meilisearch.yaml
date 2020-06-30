@@ -425,17 +425,17 @@ search_guide_2: |-
     --data-urlencode 'filters=release_date > 795484800'
 getting_started_create_index_md: |-
   ```bash
-    $ curl \
-      -X POST 'http://127.0.0.1:7700/indexes' \
-      --data '{
-      "uid" : "movies"
-    }'
+  $ curl \
+    -X POST 'http://127.0.0.1:7700/indexes' \
+    --data '{
+    "uid" : "movies"
+  }'
   ```
 getting_started_add_documents_md: |-
   ```bash
-    $ curl \
-      -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
-      --data @movies.json
+  $ curl \
+    -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
+    --data @movies.json
   ```
 getting_started_search_md: |-
   ```bash
