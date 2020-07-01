@@ -94,6 +94,7 @@ This is the preferred route to perform search when an API key is required, as is
   "query": "american "
 }
 ```
+
 ## Search in an index with GET route
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/search"/>
