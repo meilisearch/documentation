@@ -31,7 +31,7 @@
   "author": "tpayet",
   "license": "MIT",
   "dependencies": {
-    "@popperjs/core": "^2.4.2",
+    "@popperjs/core": "^2.4.4",
     "mermaid": "8.5.2",
     "vue-eslint-parser": "^7.1.0",
     "vuepress": "^1.5.2",
