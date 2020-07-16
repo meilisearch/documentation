@@ -64,7 +64,7 @@ Meilisearch allows you to define [filters](/guides/advanced_guides/filtering.md)
 
 ### Placeholder Search
 
-Placeholder returns documents sorted by the [ranking rules](/guides/advanced_guides/settings.md#ranking-rules) specified by the user, without any query words. It is compatible with facetting and filtering.
+Placeholder returns documents sorted by the [ranking rules](/guides/advanced_guides/settings.md#ranking-rules) specified by the user, without inputting any query words. It is compatible with faceting and filtering.
 
 To perform a placeholder search, simply ommit the query parameter.
 
