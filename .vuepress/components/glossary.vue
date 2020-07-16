@@ -52,7 +52,6 @@ export default {
     }
   },
   created() {
-    console.log(this.label, this.word)
     this.displayed = this.label || this.word
     this.content =
       glossary[this.word] + "<div id='arrow' data-popper-arrow></div>"
