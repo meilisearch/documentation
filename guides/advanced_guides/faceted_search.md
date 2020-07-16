@@ -24,7 +24,7 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 
 ## Setting Up Facets
 
-The first step in using facets is to chose which of your document <clientGlossary word="field" label="fields"/> will be used as facets. Fields with common values are the most suited for faceting (e.g., `genre`, `color`, `size` ).
+The first step in using facets is to chose which of your document <clientGlossary word="field" label="fields"/> will be used as facets. Fields with common values are the best suited for faceting (e.g., `genre`, `color`, `size` ).
 
 For these fields to be used as facets during search, their <clientGlossary word="attribute" label="attributes"/> **have to be previously added to the settings**. In the settings, the chosen attributes must be added to the [`attributesForFaceting` list](/guides/advanced_guides/settings.md#attributes-for-faceting).
 It is a required step because facet needs to be properly processed and prepared by the engine to be usable. This process takes as much time as indexing all your documents.
