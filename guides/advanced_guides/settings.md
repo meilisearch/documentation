@@ -57,7 +57,7 @@ Suppose you would like to search `the mask` in a movie database. Since `the` is 
 
 ## Attributes For Faceting
 
-Faceted attributes are the attributes used as facets. They **must be declared at indexing time**.
+Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes used as facets. They **must be added to the settings to be usable as [facet filters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
 
 `attributesForFaceting=[<Attribute>, ...]`
 
@@ -66,9 +66,8 @@ Faceted attributes are the attributes used as facets. They **must be declared at
   An array of strings that contains the attributes to use as facets.
 
 ::: warning
-
-Only fields of data type **string** or **array of strings** can be used for faceting.
-
+  Only fields of data type **string** or **array of strings** can be used for faceting.
+  If the value is `null`, it will be ignored. In any other case, an error will be thrown.
 :::
 
 [Learn more about faceted attributes](/guides/advanced_guides/faceted_search.md)

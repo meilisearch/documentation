@@ -24,14 +24,15 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 
 ## Setting Up Facets
 
-Attributes that could be used as facets **must be declared at indexing time**.
+The first step in using facets is to chose which of your document <clientGlossary word="field" label="fields"/> will be used as facets. Fields with common values are the most suited for faceting (e.g., `genre`, `color`, `size` ).
 
-You can set up facets **through the API** via the [global settings route](/references/settings.md#update-settings).
-Attributes for which to enable faceting are defined in the `attributesForFaceting` list.
+For these fields to be used as facets during search, their <clientGlossary word="attribute" label="attributes"/> **have to be previously added to the settings**. In the settings, the chosen attributes must be added to the [`attributesForFaceting` list](/guides/advanced_guides/settings.md#attributes-for-faceting).
+It is a required step because facet needs to be properly processed and prepared by the engine to be usable. This process takes as much time as indexing all your documents.
 
-Any POST request on the `settings` route with the `attributesForFaceting` parameter set will overwrite the current value for `attributesForFaceting`: passing an empty array will remove all defined faceted attributes.
+The facet fields' value should be of type `string` or array of `string`. In some documents, if the value of the facet is `null`, it will be handled as if the document did not have that field.
+If a facet value in a given document is **not** of type `string`, array of `string`, or `null`, the transaction will stop and raise an error.
 
-[Learn more about `attributesForFaceting` in the settings](/guides/advanced_guides/settings.md#attributes-for-faceting)
+[References for `attributesForFaceting` in the settings](/guides/advanced_guides/settings.md#attributes-for-faceting)
 
 #### Example
 
@@ -81,6 +82,41 @@ They can filter on facets to narrow down their results based on criteria with th
 
 - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFiltering` list](/guides/advanced_guides/faceted_search.md#setting-up-facets).
 - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
+
+Facet filters can have a **maximum array deepness of two**.
+
+The following are correct:
+
+good ✅
+
+```javascript
+"genre:horror"
+```
+
+good ✅
+
+```javascript
+["genre:horror", "genre:thriller"]
+```
+
+good ✅
+
+```javascript
+["genre:comedy", ["genre:horror", "genre:thiller"]]
+```
+
+When you add one more array deepness, it will raise errors:
+error ❌
+
+```javascript
+["genre:comedy", ["genre:horror", ["genre:romance"]]]
+```
+
+error ❌
+
+```javascript
+[[["genre:romance"]]]
+```
 
 #### Logical Connectives
 
