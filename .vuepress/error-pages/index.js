@@ -23,14 +23,12 @@ module.exports = {
     const errors = sampleYamlToJs(errorYaml).errors
     const errorsPages = []
     errorsPages.push({
-      path: '/errors-list/', // Cannot be errors. Works in development mode but not production
-      content: `## MeiliSearch Errors \n ${errors.map(err => `* [${err.code}](/errors/${err.code})\n`).join('')}`,
-    })
-    errors.map(err => {
-      errorsPages.push({
-        path: `/errors/${err.code}/`,
-        content: `## ${err.code} \n ${err.description}`,
-      })
+      path: '/errors', // Cannot be errors. Works in development mode but not production
+      content: `## MeiliSearch Errors
+${errors.map(err => `
+#### \`${err.code}\`
+${err.description}
+`).join('')}`,
     })
     return errorsPages
   },
