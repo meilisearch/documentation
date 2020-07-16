@@ -19,7 +19,6 @@ function sampleYamlToJs(content) {
 module.exports = {
   async additionalPages() {
     const errorYaml = fs.readFileSync(`${process.cwd()}/errors.yaml`, 'utf-8')
-    console.log(errorYaml)
     const errors = sampleYamlToJs(errorYaml).errors
     const errorsPages = []
     errorsPages.push({
