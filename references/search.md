@@ -1,11 +1,11 @@
 # Search
 
-Meilisearch exposes 2 routes to perform searches:
+MeiliSearch exposes 2 routes to perform searches:
 
-- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) cache and better performances.
-- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)
+- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances.
+- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example).
 
-Other than the differences mentioned above, the two route are strictly equivalent.
+Other than the differences mentioned above, the two routes are strictly equivalent.
 
 ## Search in an index with POST route
 
@@ -13,7 +13,7 @@ Other than the differences mentioned above, the two route are strictly equivalen
 
 Search for documents matching a specific query in the given index.
 
-This is the preferred route to perform search when an API key is required, as is allows for preflight queries to be cached.
+This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **improves considerably the speed of the search**.
 
 #### Path Variables
 
@@ -37,7 +37,7 @@ This is the preferred route to perform search when an API key is required, as is
 | **attributesToHighlight** | `[Strings]`            | Attributes whose values will contain highlighted matching terms                                 | `true`                                                                                            |
 | **matches**               | `Boolean`              | Defines whether an object that contains information about the matches should be returned or not | `true`                                                                                            |
 
-> `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
+> `filters` accept a query string. You can find more about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
 > `cropLength` is automatically rounded to match word boundaries.
 
 [Learn more about how to use the search parameters](/guides/advanced_guides/search_parameters.md).
