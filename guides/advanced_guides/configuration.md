@@ -185,10 +185,10 @@ SSL support tickets.
 
 **Default value**: `None`
 
-### Max MDB Size
+### Main Map Size
 
-**Environment variable**: `MEILI_MAX_MDB_SIZE`
-**CLI option**: `--max-mdb-size`
+**Environment variable**: `MEILI_MAIN_MAP_SIZE`
+**CLI option**: `--main-map-size`
 
 The maximum size, in bytes, of the `main` database. The `main` database stores the processed data.
 
@@ -209,10 +209,10 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 **Default value**: `107374182400` (100 GiB)
 
-### Max UDB Size
+### Update Map Size
 
 **Environment variable**: `MEILI_MAX_UDB_SIZE`
-**CLI option**: `--max-udb-size`
+**CLI option**: `--update-map-size`
 
 The maximum size, in bytes, of the `update` database. The `update` database stores the [pending updates](/guides/advanced_guides/asynchronous_updates.md).
 
@@ -232,3 +232,15 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
 **Default value**: `107374182400` (100 GiB)
+
+A sample windows batch file showing the use of Map size
+
+```bat
+@echo off
+setlocal 
+set MEILI_DB_PATH=C:\mnt\disks\datadisk\apps\meilisearch\data\myindexdb
+set MEILI_MAIN_MAP_SIZE=409600000
+set MEILI_UPDATE_MAP_SIZE=40960000
+meilisearch.exe
+endlocal
+```
