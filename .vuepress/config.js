@@ -129,6 +129,7 @@ module.exports = {
             '/resources/howtos/meilisearch_react',
             '/resources/howtos/digitalocean_droplet',
             '/resources/howtos/search_bar_for_docs',
+            '/resources/howtos/http2_ssl',
           ],
         },
       ],
