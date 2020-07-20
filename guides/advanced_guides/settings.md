@@ -67,7 +67,7 @@ Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes
 
 ::: warning
   Only fields of data type **string** or **array of strings** can be used for faceting.
-  If the value is `null`, it will be ignored. In any other case, an error will be thrown.
+  A `null` value will be ignored. In any other case, an error will be thrown.
 :::
 
 [Learn more about faceted attributes](/guides/advanced_guides/faceted_search.md)
