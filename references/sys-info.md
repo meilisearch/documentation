@@ -1,5 +1,11 @@
 # System information
 
+::: warning
+
+The system informations endpoint has been deprecated in `0.13.0`.
+
+:::
+
 System information offers extended information about hardware usage by MeiliSearch (i.e, _processor_, _memory_).
 
 ## Get pretty system information
