@@ -38,7 +38,7 @@ Search for documents matching a specific query in the given index.
 
 #### Placeholder Search
 
-When the `q` parameter is no specified, a [placeholder](/guides/advanced_guides/search_parameters.md#query-q) search is run instead.
+When the `q` parameter is not specified, a [placeholder](/guides/advanced_guides/search_parameters.md#query-q) search is run instead.
 
 ### Response
 
