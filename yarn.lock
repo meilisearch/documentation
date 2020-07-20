@@ -6015,10 +6015,10 @@ merge2@^1.2.3, merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-mermaid@8.5.2:
-  version "8.5.2"
-  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-8.5.2.tgz#0f1914cda53d4ea5377380e5ce07a38bef2ea7e8"
-  integrity sha512-I+s+8/RzlazF3dGOhDUfU/ERkUV4zfIlTWb3703jNx+2lfACs+4AdY9ULQaw6BPWzW3gB+XlXFOOX/m/vqujIA==
+mermaid@8.6.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-8.6.0.tgz#570d0e6a156227af6eaf375d989049fba032d53b"
+  integrity sha512-TN3q75sGcdXHHOV5ySh1MnrMoRxhuhzFD7XneHrBR07r+In7Nq4JoHY9nG/dxwwktZyP9f+0r1gNNjLaTHA6Qw==
   dependencies:
     "@braintree/sanitize-url" "^3.1.0"
     crypto-random-string "^3.0.1"
