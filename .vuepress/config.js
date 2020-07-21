@@ -140,6 +140,7 @@ module.exports = {
     ['seo', {}],
     'img-lazy',
     'vuepress-plugin-element-tabs',
+    ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
     [require('./code-samples')],
