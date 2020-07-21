@@ -47,6 +47,7 @@ Server is listening on: http://127.0.0.1:7700
   - [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
   - [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
   - [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
+- [Disable Sentry](/guides/advanced_guides/configuration.md#disable-sentry)
 
 ### Database path
 
@@ -232,3 +233,10 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
 **Default value**: `107374182400` (100 GiB)
+
+### Disable Sentry
+
+**Environment variable**: `MEILI_NO_SENTRY`
+**CLI option**: `--no-sentry`
+
+We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. You can disable it at any moment by launching MeiliSearch with the argument above.
