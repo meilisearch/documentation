@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>How to use HTTP/2 and SSL with MeiliSearch | MeiliSearch Documentation v0.12</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <script>
+      window.$crisp=[];
+      window.CRISP_WEBSITE_ID="38a71dd2-729c-4970-b061-3e1db1c1eb20";
+      (function() {
+          var d=document;
+          var s=d.createElement("script");
+          s.src="https://client.crisp.chat/l.js";
+          s.async=1;
+          d.getElementsByTagName("head")[0].appendChild(s);
+      })();
+    </script>
+    <script>
+    (function(f, a, t, h, o, m){
+      a[h]=a[h]||function(){
+        (a[h].q=a[h].q||[]).push(arguments)
+      };
+      o=f.createElement('script'),
+      m=f.getElementsByTagName('script')[0];
+      o.async=1; o.src=t; o.id='fathom-script';
+      m.parentNode.insertBefore(o,m)
+    })(document, window, '//analytics.meilisearch.com/tracker.js', 'fathom');
+    fathom('set', 'siteId', 'XQNHD');
+    fathom('trackPageview');
+    </script>
+    <meta name="description" content="Open source Instant Search Engine">
+    <meta property="article:modified_time" content="2020-07-23T14:18:54.000Z">
+    <meta property="og:site_name" content="MeiliSearch Documentation v0.12">
+    <meta property="og:title" content="How to use HTTP/2 and SSL with MeiliSearch">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/http2-ssl/">
+    <meta name="twitter:title" content="How to use HTTP/2 and SSL with MeiliSearch">
+    <meta name="twitter:url" content="/http2-ssl/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="google-site-verification" content="u0OYrst4u5F16t0Vh4-EkO_sWE38Pp9aT7idfr0Ar9c">
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png">
+    <meta prefix="og: http://ogp.me/ns#" property="og:image-secure-url" content="https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png">
+    <meta prefix="og: http://ogp.me/ns#" property="og:image-image-type" content="image/png">
+    <meta prefix="og: http://ogp.me/ns#" property="og:image-height" content="630">
+    <meta prefix="og: http://ogp.me/ns#" property="og:locale" content="en_GB">
+    <meta prefix="og: http://ogp.me/ns#" property="og:site-name" content="MeiliSearch Documentation">
+    <meta property="twitter:title" content="MeiliSearch Documentation">
+    <meta property="twitter:description" content="The official documentation of MeiliSearch">
+    <meta property="twitter:image" content="https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:image:alt" content="Next generation search API">
+    <meta property="twitter:site" content="@meilisearch">
+    <link rel="preload" href="/assets/css/0.styles.083d2966.css" as="style"><link rel="preload" href="/assets/js/app.d5327bb9.js" as="script"><link rel="preload" href="/assets/js/3.40b896dd.js" as="script"><link rel="preload" href="/assets/js/68.15dad7da.js" as="script"><link rel="prefetch" href="/assets/js/10.f5ee04bb.js"><link rel="prefetch" href="/assets/js/11.9d20472e.js"><link rel="prefetch" href="/assets/js/12.168d8eab.js"><link rel="prefetch" href="/assets/js/13.598702b4.js"><link rel="prefetch" href="/assets/js/14.089b62fe.js"><link rel="prefetch" href="/assets/js/15.f87937de.js"><link rel="prefetch" href="/assets/js/16.3812ad5a.js"><link rel="prefetch" href="/assets/js/17.705d3e16.js"><link rel="prefetch" href="/assets/js/18.ffb5ef4c.js"><link rel="prefetch" href="/assets/js/19.31e2adb7.js"><link rel="prefetch" href="/assets/js/20.5895d914.js"><link rel="prefetch" href="/assets/js/21.f038b37e.js"><link rel="prefetch" href="/assets/js/22.6547de01.js"><link rel="prefetch" href="/assets/js/23.7be046dd.js"><link rel="prefetch" href="/assets/js/24.3ff73e7d.js"><link rel="prefetch" href="/assets/js/25.2408704a.js"><link rel="prefetch" href="/assets/js/26.b7460b11.js"><link rel="prefetch" href="/assets/js/27.9d87bcf6.js"><link rel="prefetch" href="/assets/js/28.feb6cb3c.js"><link rel="prefetch" href="/assets/js/29.74d13573.js"><link rel="prefetch" href="/assets/js/30.3ae22ce0.js"><link rel="prefetch" href="/assets/js/31.856c6358.js"><link rel="prefetch" href="/assets/js/32.f48015ab.js"><link rel="prefetch" href="/assets/js/33.ff4d0106.js"><link rel="prefetch" href="/assets/js/34.cb6955bf.js"><link rel="prefetch" href="/assets/js/35.1f77ce75.js"><link rel="prefetch" href="/assets/js/36.42a00a00.js"><link rel="prefetch" href="/assets/js/37.1cdaf82f.js"><link rel="prefetch" href="/assets/js/38.b47c09a8.js"><link rel="prefetch" href="/assets/js/39.194515fc.js"><link rel="prefetch" href="/assets/js/4.4325dc9a.js"><link rel="prefetch" href="/assets/js/40.7889ff01.js"><link rel="prefetch" href="/assets/js/41.eea091da.js"><link rel="prefetch" href="/assets/js/42.555afaf0.js"><link rel="prefetch" href="/assets/js/43.1ec83a51.js"><link rel="prefetch" href="/assets/js/44.0744e8f0.js"><link rel="prefetch" href="/assets/js/45.9a6cd5fb.js"><link rel="prefetch" href="/assets/js/46.bc159cbd.js"><link rel="prefetch" href="/assets/js/47.3818a3d3.js"><link rel="prefetch" href="/assets/js/48.a2129264.js"><link rel="prefetch" href="/assets/js/49.8785544c.js"><link rel="prefetch" href="/assets/js/5.36cd6e2f.js"><link rel="prefetch" href="/assets/js/50.35e6f6c8.js"><link rel="prefetch" href="/assets/js/51.d13d785f.js"><link rel="prefetch" href="/assets/js/52.f4dc6fec.js"><link rel="prefetch" href="/assets/js/53.48c6ae72.js"><link rel="prefetch" href="/assets/js/54.2ea60fe1.js"><link rel="prefetch" href="/assets/js/55.6d0d8a14.js"><link rel="prefetch" href="/assets/js/56.dd529b40.js"><link rel="prefetch" href="/assets/js/57.c88aeb96.js"><link rel="prefetch" href="/assets/js/58.571b1467.js"><link rel="prefetch" href="/assets/js/59.354c9cf4.js"><link rel="prefetch" href="/assets/js/6.aa22d954.js"><link rel="prefetch" href="/assets/js/60.1d56ef9b.js"><link rel="prefetch" href="/assets/js/61.0ca6dfb8.js"><link rel="prefetch" href="/assets/js/62.3dd681a5.js"><link rel="prefetch" href="/assets/js/63.fcaeb69d.js"><link rel="prefetch" href="/assets/js/64.cb56171c.js"><link rel="prefetch" href="/assets/js/65.f1c6f79b.js"><link rel="prefetch" href="/assets/js/66.e7748862.js"><link rel="prefetch" href="/assets/js/67.f006d636.js"><link rel="prefetch" href="/assets/js/69.01ce99fa.js"><link rel="prefetch" href="/assets/js/7.caf7b1c2.js"><link rel="prefetch" href="/assets/js/70.e12e7b0a.js"><link rel="prefetch" href="/assets/js/71.f66210d2.js"><link rel="prefetch" href="/assets/js/72.70572b1a.js"><link rel="prefetch" href="/assets/js/73.90ef3241.js"><link rel="prefetch" href="/assets/js/74.34804990.js"><link rel="prefetch" href="/assets/js/75.a604a166.js"><link rel="prefetch" href="/assets/js/8.32d8c079.js"><link rel="prefetch" href="/assets/js/9.56b84568.js"><link rel="prefetch" href="/assets/js/vendors~docs-searchbar.93495281.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.083d2966.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="MeiliSearch Documentation v0.12" class="logo"> <span class="site-name can-hide">MeiliSearch Documentation v0.12</span></a> <div class="links"><form id="search-form" role="search" class="meilisearch-search-wrapper search-box"><input id="meilisearch-search-input" class="search-query"></form> <nav class="nav-links can-hide"><div class="nav-item"><a href="/guides/" class="nav-link">
+  Guides
+</a></div><div class="nav-item"><a href="/references/" class="nav-link">
+  API References
+</a></div><div class="nav-item"><a href="/resources/" class="nav-link">
+  Resources
+</a></div><div class="nav-item"><a href="/faq/faq.html" class="nav-link">
+  FAQ
+</a></div><div class="nav-item"><a href="https://slack.meilisearch.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Slack
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/meilisearch/MeiliSearch" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/guides/" class="nav-link">
+  Guides
+</a></div><div class="nav-item"><a href="/references/" class="nav-link">
+  API References
+</a></div><div class="nav-item"><a href="/resources/" class="nav-link">
+  Resources
+</a></div><div class="nav-item"><a href="/faq/faq.html" class="nav-link">
+  FAQ
+</a></div><div class="nav-item"><a href="https://slack.meilisearch.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Slack
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/meilisearch/MeiliSearch" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><a href="/resources/" class="sidebar-heading clickable"><span>📦 Resources</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/resources/about_storage.html" class="sidebar-link">About storage</a></li><li><a href="/resources/sdks.html" class="sidebar-link">Official SDKs / Libraries</a></li><li><a href="/resources/comparison_to_alternatives.html" class="sidebar-link">Comparison to alternatives</a></li><li><a href="/resources/postman_collection.html" class="sidebar-link">Postman Collection for MeiliSearch</a></li><li><a href="/resources/contact.html" class="sidebar-link">Contact Us</a></li></ul></section></li><li><section class="sidebar-group depth-0"><a href="/resources/tutorials/" class="sidebar-heading clickable"><span>🏆 Tutorials</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/running-production/" class="sidebar-link">MeiliSearch in production: taking it to the next level</a></li></ul></section></li><li><section class="sidebar-group depth-0"><a href="/resources/howtos/" class="sidebar-heading clickable open"><span>🧷 How to's</span> <!----></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/instant-search-react-app/" class="sidebar-link">How to implement Instant Search within 5 minutes in your React App</a></li><li><a href="/resources/howtos/digitalocean_droplet.html" class="sidebar-link">How to deploy a MeiliSearch instance on DigitalOcean</a></li><li><a href="/resources/howtos/search_bar_for_docs.html" class="sidebar-link">Integrate a relevant search bar to your documentation</a></li><li><a href="/http2-ssl/" aria-current="page" class="active sidebar-link">How to use HTTP/2 and SSL with MeiliSearch</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/http2-ssl/#try-to-use-http-2-without-ssl" class="sidebar-link">Try to use HTTP/2 without SSL</a></li><li class="sidebar-sub-header"><a href="/http2-ssl/#try-to-use-http-2-with-ssl" class="sidebar-link">Try to use HTTP/2 with SSL</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="how-to-use-http-2-and-ssl-with-meilisearch"><a href="#how-to-use-http-2-and-ssl-with-meilisearch" class="header-anchor">#</a> How to use HTTP/2 and SSL with MeiliSearch</h1> <p>For those willing to use HTTP/2, please be aware that it is <strong>only possible if your server is configured with SSL certificate</strong>.</p> <p>Therefore, you will see how to launch a MeiliSearch server with SSL. This tutorial gives a short introduction to do it locally, but you can as well do the same thing on a remote server.</p> <p>First of all, you need the binary of MeiliSearch, or you can also use docker. In the latter case, it is necessary to pass the parameters using environment variables and the SSL certificates via a volume.</p> <p>A tool to generate SSL certificates is also required. In this How To, you will use <a href="https://github.com/FiloSottile/mkcert" target="_blank" rel="noopener noreferrer">mkcert<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>. However, if on a remote server, you can also use certbot or certificates signed by a Certificate Authority.</p> <p>Then, use <code>curl</code> to do requests. It is a simple way to specify that you want to send HTTP/2 requests by using the <code>--http2</code> option.</p> <h2 id="try-to-use-http-2-without-ssl"><a href="#try-to-use-http-2-without-ssl" class="header-anchor">#</a> Try to use HTTP/2 without SSL</h2> <p>Start by running the binary.</p> <div class="language- extra-class"><pre class="language-text"><code>./meilisearch
+</code></pre></div><p>And then, send a request.</p> <div class="language- extra-class"><pre class="language-text"><code>curl -kvs --http2 --request GET 'http://localhost:7700/indexes'
+</code></pre></div><p>You will get the following answer from the server:</p> <div class="language- extra-class"><pre class="language-text"><code>*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 7700 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 7700 (#0)
+&gt; GET /indexes HTTP/1.1
+&gt; Host: localhost:7700
+&gt; User-Agent: curl/7.64.1
+&gt; Accept: */*
+&gt; Connection: Upgrade, HTTP2-Settings
+&gt; Upgrade: h2c
+&gt; HTTP2-Settings: AAMAAABkAARAAAAAAAIAAAAA
+&gt;
+&lt; HTTP/1.1 200 OK
+&lt; content-length: 2
+&lt; content-type: application/json
+&lt; date: Fri, 17 Jul 2020 11:01:02 GMT
+&lt;
+* Connection #0 to host localhost left intact
+[]* Closing connection 0
+</code></pre></div><p>You can see on line <code>&gt; Connection: Upgrade, HTTP2-Settings</code> that the server tries to upgrade to HTTP/2, but is unsuccessful.<br>
+The answer <code>&lt; HTTP/1.1 200 OK</code> indicates that the server still uses HTTP/1.</p> <h2 id="try-to-use-http-2-with-ssl"><a href="#try-to-use-http-2-with-ssl" class="header-anchor">#</a> Try to use HTTP/2 with SSL</h2> <p>This time, start by generating the SSL certificates. mkcert creates two files: <code>127.0.0.1.pem</code> and <code>127.0.0.1-key.pem</code>.</p> <div class="language- extra-class"><pre class="language-text"><code>mkcert '127.0.0.1'
+</code></pre></div><p>Then, use the certificate and the key to configure MeiliSearch with SSL.</p> <div class="language- extra-class"><pre class="language-text"><code>./meilisearch --ssl-cert-path ./127.0.0.1.pem --ssl-key-path ./127.0.0.1-key.pem
+</code></pre></div><p>Next, make the same request as above but change <code>http://</code> to <code>https://</code>.</p> <div class="language- extra-class"><pre class="language-text"><code>curl -kvs --http2 --request GET 'https://localhost:7700/indexes'
+</code></pre></div><p>You will get the following answer from the server:</p> <div class="language- extra-class"><pre class="language-text"><code>*   Trying ::1...
+* TCP_NODELAY set
+* Connection failed
+* connect to ::1 port 7700 failed: Connection refused
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 7700 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/cert.pem
+  CApath: none
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+* TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+* TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES256-GCM-SHA384
+* ALPN, server accepted to use h2
+* Server certificate:
+*  subject: O=mkcert development certificate; OU=quentindequelen@s-iMac (Quentin de Quelen)
+*  start date: Jun  1 00:00:00 2019 GMT
+*  expire date: Jul 17 10:38:53 2030 GMT
+*  issuer: O=mkcert development CA; OU=quentindequelen@s-iMac (Quentin de Quelen); CN=mkcert quentindequelen@s-iMac (Quentin de Quelen)
+*  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0x7ff601009200)
+&gt; GET /indexes HTTP/2
+&gt; Host: localhost:7700
+&gt; User-Agent: curl/7.64.1
+&gt; Accept: */*
+&gt;
+* Connection state changed (MAX_CONCURRENT_STREAMS == 4294967295)!
+&lt; HTTP/2 200
+&lt; content-length: 2
+&lt; content-type: application/json
+&lt; date: Fri, 17 Jul 2020 11:06:27 GMT
+&lt;
+* Connection #0 to host localhost left intact
+[]* Closing connection 0
+</code></pre></div><p>You can see that the server now supports HTTP/2.</p> <div class="language- extra-class"><pre class="language-text"><code>* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+</code></pre></div><p>The server successfully receives HTTP/2 requests.</p> <div class="language- extra-class"><pre class="language-text"><code>&lt; HTTP/2 200
+</code></pre></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/meilisearch/documentation/edit/master/resources/howtos/http2_ssl.md" target="_blank" rel="noopener noreferrer">Edit this page</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">7/23/2020, 2:18:54 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/resources/howtos/search_bar_for_docs.html" class="prev">
+        Integrate a relevant search bar to your documentation
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.d5327bb9.js" defer></script><script src="/assets/js/3.40b896dd.js" defer></script><script src="/assets/js/68.15dad7da.js" defer></script>
+  </body>
+</html>
