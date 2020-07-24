@@ -47,6 +47,11 @@ Server is listening on: http://127.0.0.1:7700
   - [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
   - [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
   - [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
+- [Snapshoting](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
+  - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
+  - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
+  - [Init From Snapshot](/guides/advanced_guides/configuration.md#init-from-snapshot)
+  - [Recover From Snapshot](/guides/advanced_guides/configuration.md#recover-from-snapshot)
 
 ### Database path
 
@@ -232,3 +237,51 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
 **Default value**: `107374182400` (100 GiB)
+
+### Schedule Snapshot Creation
+
+**CLI option**: `--snapshot-path`
+
+The directory path where meilisearch will create snapshot,
+
+If this command is not provided, snapshoting is deactivated.
+
+### Snapshot interval
+
+**CLI option**: `--snapshot-interval-sec`
+
+defines time gap (seconds) between each snapshot creation.
+
+Require `--snapshot-path` to be defined.
+
+**Default value**: `86400` (1 day)
+
+### Init from snapshot
+
+**CLI option**: `--init-from-snapshot`
+
+The snapshot file path to import.
+
+This command stop the process if:
+
+- a database already exist
+- no snapshot exist at provided path.
+
+If this command is not provided, no snapshot will be imported.
+
+Uncompatible with `--recover-from-snapshot`
+
+### Recover from snapshot
+
+**CLI option**: `--recover-from-snapshot`
+
+The snapshot file path to import.
+
+This command skip importation and continue the process if:
+
+- a database already exist
+- no snapshot exist at provided path.
+
+If this command is not provided, no snapshot will be imported.
+
+Uncompatible with `--init-from-snapshot`
