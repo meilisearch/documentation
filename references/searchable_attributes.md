@@ -2,8 +2,8 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-The `searchableAttributes` list is automatically updated when [new fields](/guides/advanced_guides/field_properties.md#new-fields-and-known-fields) are found in documents and when `acceptNewFields` is set to true (default).
 The values of the fields whose attributes are added to the searchable-attributes list are **searched for matching query words**.
+By default, all fields are considered to be `searchableAttributes`. This behavior is represented by the `[*]` in the settings. Setting `searchableAttributes` to an empty array `[]` will reset the setting to its default value.
 
 Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
