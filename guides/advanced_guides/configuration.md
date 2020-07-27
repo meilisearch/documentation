@@ -39,6 +39,7 @@ Server is listening on: http://127.0.0.1:7700
 - [Payload Limit Size](/guides/advanced_guides/configuration.md#payload-limit-size)
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
+- [Backup](/guides/advanced_guides/configuration.md#backup-path)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
   - [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
   - [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
@@ -296,3 +297,11 @@ The engine ignores missing snapshots and does not throw an error in this case.
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
 The engine skips snapshot importation if a database already exists. No error is thrown in this case.
+### Backup path
+
+**Environment variable**: `MEILI_BACKUP_PATH`
+**CLI option**: `--backup-path`
+
+Path where backup will be created if [backup route](/references/backup.md#trigger-backup) is called.
+
+**Default value**: `backup/`

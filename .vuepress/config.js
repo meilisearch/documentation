@@ -99,6 +99,7 @@ module.exports = {
             '/references/stats',
             '/references/health',
             '/references/version',
+            '/references/backup',
           ],
         },
       ],
