@@ -275,7 +275,7 @@ Uncompatible with `--recover-from-snapshot`
 
 **CLI option**: `--recover-from-snapshot`
 
-The snapshot file path to import.
+The path of the snapshot file to import.
 
 This command will skip importing a snapshot and continue the process if:
 
