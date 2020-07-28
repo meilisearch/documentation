@@ -260,7 +260,7 @@ Requires `--snapshot-path` to be defined.
 
 **CLI option**: `--init-from-snapshot`
 
-The snapshot file path to import.
+The path of the snapshot file to import.
 
 This command will stop the process if:
 
