@@ -115,8 +115,7 @@ update_settings_1: |-
         "synonyms": {
             "wolverine": ["xmen", "logan"],
             "logan": ["wolverine"]
-        },
-        "acceptNewFields": false
+        }
     }'
 reset_settings_1: |-
   $ curl \
@@ -217,13 +216,7 @@ update_displayed_attributes_1: |-
 reset_displayed_attributes_1: |-
   $ curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
-get_accept_new_fields_1: |-
-  $ curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/accept-new-fields'
-update_accept_new_fields_1: |-
-  $ curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/accept-new-fields' \
-    --data 'false'
+
 get_index_stats_1: |-
   $ curl \
     -X GET 'http://localhost:7700/indexes/movies/stats'
@@ -382,12 +375,6 @@ settings_guide_displayed_1: |-
             "release_date",
             "rank"
         ]
-    }'
-settings_guide_accept_new_fields_1: |-
-  $ curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
-    --data '{
-        "acceptNewFields": false
     }'
 add_movies_json_1: |-
   $ curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
