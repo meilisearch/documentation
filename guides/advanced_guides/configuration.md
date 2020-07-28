@@ -244,7 +244,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 The directory path where MeiliSearch will create snapshots.
 
-If this command is not provided, snapshoting is deactivated.
+If this command is not called, snapshoting is deactivated.
 
 ### Snapshot interval
 
