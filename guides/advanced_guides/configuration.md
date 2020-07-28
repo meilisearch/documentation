@@ -282,6 +282,6 @@ This command will skip importing a snapshot and continue the process if:
 - A database already exists
 - No snapshot exists in the given path.
 
-If this command is not provided, no snapshot will be imported.
+If this command is not called, no snapshot will be imported for recovery.
 
 Uncompatible with `--init-from-snapshot`
