@@ -252,7 +252,7 @@ If this command is not provided, snapshoting is deactivated.
 
 Defines the time gap in seconds between each snapshot creation.
 
-Require `--snapshot-path` to be defined.
+Requires `--snapshot-path` to be defined.
 
 **Default value**: `86400` (1 day)
 
