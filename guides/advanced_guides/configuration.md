@@ -280,7 +280,7 @@ The snapshot file path to import.
 This command will skip importing a snapshot and continue the process if:
 
 - A database already exists
-- no snapshot exist at provided path.
+- No snapshot exists in the given path.
 
 If this command is not provided, no snapshot will be imported.
 
