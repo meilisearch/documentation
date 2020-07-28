@@ -264,7 +264,7 @@ The snapshot file path to import.
 
 This command will stop the process if:
 
-- a database already exist
+- A database already exists
 - no snapshot exist at provided path.
 
 If this command is not provided, no snapshot will be imported.
