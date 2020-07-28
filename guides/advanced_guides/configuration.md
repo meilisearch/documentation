@@ -242,7 +242,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 **CLI option**: `--snapshot-path`
 
-The directory path where meilisearch will create snapshot,
+The directory path where MeiliSearch will create snapshots.
 
 If this command is not provided, snapshoting is deactivated.
 
