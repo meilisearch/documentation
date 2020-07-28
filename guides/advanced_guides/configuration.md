@@ -262,7 +262,7 @@ Requires `--snapshot-path` to be defined.
 
 The snapshot file path to import.
 
-This command stop the process if:
+This command will stop the process if:
 
 - a database already exist
 - no snapshot exist at provided path.
