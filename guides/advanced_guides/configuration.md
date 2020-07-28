@@ -277,7 +277,7 @@ Uncompatible with `--recover-from-snapshot`
 
 The snapshot file path to import.
 
-This command skip importation and continue the process if:
+This command will skip importing a snapshot and continue the process if:
 
 - a database already exist
 - no snapshot exist at provided path.
