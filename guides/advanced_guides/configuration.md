@@ -250,7 +250,7 @@ If this command is not provided, snapshoting is deactivated.
 
 **CLI option**: `--snapshot-interval-sec`
 
-defines time gap (seconds) between each snapshot creation.
+Defines the time gap in seconds between each snapshot creation.
 
 Require `--snapshot-path` to be defined.
 
