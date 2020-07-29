@@ -291,10 +291,10 @@ search_parameter_guide_retrieve_1: |-
   --data '{ "q": "shifu", "attributesToRetrieve": ["overview", "title"] }'
 search_parameter_guide_crop_1: |-
   $ curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "attributesToCrop": "overview", "cropLength": 10 }'
+    --data '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
 search_parameter_guide_highlight_1: |-
   $ curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "attributesToHighlight": "overview" }'
+    --data '{ "q": "shifu", "attributesToHighlight": ["overview"] }'
 search_parameter_guide_filter_1: |-
   $ curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "n", "filters": "title = Nightshift" }'
@@ -303,7 +303,7 @@ search_parameter_guide_filter_2: |-
     --data '{ "q": "shifu", "filters": "title=\"Kung Fu Panda\"" }'
 search_parameter_guide_matches_1: |-
   $ curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "shifu", "attributesToHighlight": "overview", "matches": true }'
+  --data '{ "q": "shifu", "attributesToHighlight": ["overview"], "matches": true }'
 settings_guide_synonyms_1: |-
   $ curl \
     -X POST 'http://localhost:7700/indexes/tops/settings' \
