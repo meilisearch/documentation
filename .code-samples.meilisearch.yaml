@@ -235,12 +235,6 @@ update_health_1: |-
 get_version_1: |-
   $ curl \
     -X GET 'http://localhost:7700/version'
-get_pretty_sys_info_1: |-
-  $ curl \
-    -X GET 'http://localhost:7700/sys-info/pretty
-get_sys_info_1: |-
-  $ curl \
-    -X GET 'http://localhost:7700/sys-info'
 distinct_attribute_guide_1: |-
   $ curl
     -X POST 'http://localhost:7700/indexes/jackets/settings' \
