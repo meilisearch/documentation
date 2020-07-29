@@ -48,6 +48,12 @@ Server is listening on: http://127.0.0.1:7700
   - [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
   - [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
 - [Disable Sentry](/guides/advanced_guides/configuration.md#disable-sentry)
+- [Snapshoting](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
+  - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
+  - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
+  - [Load From Snapshot](/guides/advanced_guides/configuration.md#load-from-snapshot)
+  - [Ignore missing snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
+  - [Ignore snapshot if db exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
 
 ### Database path
 
@@ -240,3 +246,50 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 **CLI option**: `--no-sentry`
 
 We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. You can disable it at any moment by launching MeiliSearch with the argument above.
+### Schedule Snapshot Creation
+
+**Environment variable**: `MEILI_SNAPSHOT_PATH`
+**CLI option**: `--snapshot-path`
+
+The directory path where MeiliSearch will create snapshots.
+
+If this command is not called, snapshoting is deactivated.
+
+### Snapshot interval
+
+**Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
+**CLI option**: `--snapshot-interval-sec`
+
+Defines the time gap in seconds between each snapshot creation.
+
+Requires `--snapshot-path` to be defined.
+
+**Default value**: `86400` (1 day)
+
+### Load from snapshot
+
+**Environment variable**: `MEILI_LOAD_FROM_SNAPSHOT`
+**CLI option**: `--load-from-snapshot`
+
+The path of the snapshot file to import.
+
+This command will stop the process if:
+
+- A database already exists
+- No snapshot exists in the given path.
+
+If this command is not called, no snapshot will be imported.
+
+### Ignore missing snapshot
+
+**Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
+**CLI option**: `--ignore-missing-snapshot`
+
+The engine ignores missing snapshots and does not throw an error in this case.
+
+### Ignore snapshot if db exists
+
+**Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
+**CLI option**: `--ignore-snapshot-if-db-exists`
+
+The engine skips snapshot importation if a database already exists. No error is thrown in this case.
