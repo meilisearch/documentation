@@ -5,7 +5,7 @@
       @mouseover="showTooltip"
       @mouseleave="hideTooltip"
     >
-      {{ word }}
+      {{ displayed }}
     </span>
     <div class="tooltip-content" v-html="content" />
   </span>
@@ -39,14 +39,20 @@ export default {
         return glossary[x]
       },
     },
+    label: {
+      type: String,
+      default: null,
+    },
   },
   data: () => {
     return {
       glossary,
+      displayed: '',
       content: '',
     }
   },
   created() {
+    this.displayed = this.label || this.word
     this.content =
       glossary[this.word] + "<div id='arrow' data-popper-arrow></div>"
   },

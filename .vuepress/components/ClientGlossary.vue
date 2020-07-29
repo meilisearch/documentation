@@ -1,6 +1,6 @@
 <template>
   <!-- prettier-ignore-->
-  <ClientOnly><glossary :word="word" /></ClientOnly>
+  <ClientOnly><glossary :word="word" :label="label" /></ClientOnly>
 </template>
 
 <script>
@@ -10,6 +10,10 @@ export default {
     word: {
       type: String,
       default: '',
+    },
+    label: {
+      type: String,
+      default: null,
     },
   },
 }

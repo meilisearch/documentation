@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "0c461543-58d6-47e8-91ac-7c147528dd01",
-		"name": "MeiliSearch v0.11",
+		"_postman_id": "afbf6afd-dc19-4237-9ae0-2478dbc6ae9a",
+		"name": "MeiliSearch v0.12",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -86,7 +86,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"uid\": \"indexUID\",\n\t\"primaryKey\": \"id\"\n}",
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"id\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -193,6 +193,23 @@
 								"indexes",
 								"{{indexUID}}",
 								"documents"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "attributesToRetrieve",
+									"value": "*",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -252,6 +269,13 @@
 								"indexes",
 								"{{indexUID}}",
 								"documents"
+							],
+							"query": [
+								{
+									"key": "primaryKey",
+									"value": "id",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -458,6 +482,35 @@
 									"value": "[\"genre\"]",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search in index",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"q\": \"prinec\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"search"
 							]
 						}
 					},
@@ -954,7 +1007,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/index-new-field",
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/accept-new-fields",
 									"host": [
 										"{{url}}"
 									],
@@ -962,7 +1015,7 @@
 										"indexes",
 										"{{indexUID}}",
 										"settings",
-										"index-new-field"
+										"accept-new-fields"
 									]
 								}
 							},
@@ -1322,7 +1375,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "49c64b80-045e-4502-931f-2da283c2e5ce",
+				"id": "714519a5-0407-4487-83e0-469f263217f7",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1332,7 +1385,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "ca825c82-8be7-4c3d-b446-94dcaa7e6bc5",
+				"id": "863465ed-541c-4033-bb02-fc875842ef23",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1342,13 +1395,13 @@
 	],
 	"variable": [
 		{
-			"id": "c7c13b5a-db99-45b2-b2ca-834dd0907194",
+			"id": "a66bde1d-6f38-424c-a1e2-24ace91f6062",
 			"key": "url",
 			"value": "http://0.0.0.0:7700",
 			"type": "string"
 		},
 		{
-			"id": "2f334668-72e8-4886-b7a6-31632849cf21",
+			"id": "83c62928-e520-4060-a3c8-d31fc3222416",
 			"key": "indexUID",
 			"value": "indexUID",
 			"type": "string"

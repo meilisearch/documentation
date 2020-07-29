@@ -31,7 +31,7 @@ jobs:
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: .vuepress/dist
 
-  scrap-docs:
+  scrape-docs:
     needs: build-deploy
     runs-on: ubuntu-18.04
     steps:
@@ -46,4 +46,4 @@ jobs:
           -e MEILISEARCH_HOST_URL=$HOST_URL \
           -e MEILISEARCH_API_KEY=$API_KEY \
           -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
-          getmeili/docs-scraper:v0.9.4 pipenv run ./docs_scraper config.json
+          getmeili/docs-scraper:v0.10.0 pipenv run ./docs_scraper config.json

@@ -11,7 +11,6 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 | **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
 | **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
-| **[acceptNewFields](/guides/advanced_guides/settings.md#accept-new-fields)**          | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
 
 ## Synonyms
 
@@ -57,7 +56,7 @@ Suppose you would like to search `the mask` in a movie database. Since `the` is 
 
 ## Attributes For Faceting
 
-Faceted attributes are the attributes used as facets. They **must be declared at indexing time**.
+Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes used as facets. They **must be added to the settings to be usable as [facet filters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
 
 `attributesForFaceting=[<Attribute>, ...]`
 
@@ -66,9 +65,8 @@ Faceted attributes are the attributes used as facets. They **must be declared at
   An array of strings that contains the attributes to use as facets.
 
 ::: warning
-
-Only fields of data type **string** or **array of strings** can be used for faceting.
-
+  Only fields of data type **string** or **array of strings** can be used for faceting.
+  A `null` value will be ignored. In any other case, an error will be thrown.
 :::
 
 [Learn more about faceted attributes](/guides/advanced_guides/faceted_search.md)
@@ -198,23 +196,3 @@ Documents returned upon search contain only displayed fields.
 By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
 
 <code-samples id="settings_guide_displayed_1" />
-
-## Accept new fields
-
-This setting takes a **Boolean value** (`true` or `false`) and defines whether [new fields](/guides/advanced_guides/field_properties.md#new-fields-and-known-fields) should be automatically added to the [searchable-attributes](/references/searchable_attributes.md) and the [displayed-attributes](/references/displayed_attributes.md) lists.
-
-`acceptNewFields=<Boolean>`
-
-- `<Boolean>` (Boolean, defaults to `true`)
-
-  If set to `true`, which is the _default_ value, all new fields are searchable and displayed in returned documents.
-
-  If set to `false`, fields are stored but neither searchable nor displayed in returned documents.
-
-[Learn more about field properties](/guides/advanced_guides/field_properties.md)
-
-#### Example
-
-If you set `acceptNewFields` to `false`, new fields will be stored but neither searchable nor displayed in returned documents.
-
-<code-samples id="settings_guide_accept_new_fields_1" />
