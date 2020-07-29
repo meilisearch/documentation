@@ -56,11 +56,25 @@ async function requestSamples() {
   return await Promise.all(fetchPromises)
 }
 
+async function testPresenceOfSamples(samples) {
+  const rawTemplate = fs.readFileSync(`${process.cwd()}/.vuepress/public/sample-template.yaml`, 'utf-8')
+  const template = sampleYamlToJs(rawTemplate, { label: 'template', url: 'local' })
+  const templateIds = Object.keys(template).map(key => key)
+  samples.map(sdk => {
+    const samplesId = Object.keys(sdk.samples).map(key => key)
+    const missingInSamples = templateIds.filter(x => !samplesId.includes(x))
+    if (missingInSamples.length > 0) {
+      log(`Some templates are missing in the ${sdk.label} lib:
+    ${missingInSamples.join('\n    ')}\n`, 'FF0000')
+    }
+  })
+}
+
 async function fetchRemoteSamples() {
   log('Fetching remote sample files...')
   const samples = (await requestSamples()).filter((sample) => sample)
-  log('Fetched sample files of')
   samplesToFiles(samples)
+  testPresenceOfSamples(samples)
   log(`File created with the following SDK's samples:
     ${samples.map((sample) => sample.label).join('\n    ')}\n`)
 }
