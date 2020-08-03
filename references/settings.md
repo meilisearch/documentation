@@ -13,7 +13,6 @@ These are the reference pages for the dedicated routes:
 - [Distinct attribute](/references/distinct_attribute.md)
 - [Searchable attributes](/references/searchable_attributes.md)
 - [Displayed attributes](/references/displayed_attributes.md)
-- [Accept new fields](/references/accept_new_fields.md)
 
 [Learn more about the settings in this guide](/guides/advanced_guides/settings.md)
 
@@ -37,16 +36,15 @@ Get the settings of an index.
 
 ### Response Body
 
-| Variable                 | Type      | Description                                                                      | Default value                                                                                     |
-| ------------------------ | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **synonyms**             | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **stopWords**            | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **attributesForFaceting**         | [Strings] | Attributes to use as [facets](/guides/advanced_guides/faceted_search.md) | `[]` |
-| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
-| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
-| **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
+| Variable                  | Type      | Description                                                                      | Default value                                                                                     |
+| ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **attributesForFaceting** | [Strings] | Attributes to use as [facets](/guides/advanced_guides/faceted_search.md)         | `[]`                                                                                              |
+| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
+| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
+| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                         |
 
 [Learn more about the settings in this guide](/guides/advanced_guides/settings.md)
 
@@ -83,8 +81,7 @@ List the settings.
   "synonyms": {
     "wolverine": ["xmen", "logan"],
     "logan": ["wolverine", "xmen"]
-  },
-  "acceptNewFields": false
+  }
 }
 ```
 
@@ -105,16 +102,15 @@ Updates in the settings route are **partial**. This means that any parameters no
 
 #### Body
 
-| Variable                 | Type      | Description                                                                      | Default value                                                                                     |
-| ------------------------ | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **synonyms**             | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **stopWords**            | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **attributesForFaceting**         | [Strings] | Attributes to use as [facets](/guides/advanced_guides/faceted_search.md) | `[]` |
-| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
-| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
-| **acceptNewFields**      | Boolean   | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
+| Variable                  | Type      | Description                                                                      | Default value                                                                                     |
+| ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **attributesForFaceting** | [Strings] | Attributes to use as [facets](/guides/advanced_guides/faceted_search.md)         | `[]`                                                                                              |
+| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
+| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
+| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
 
 ### Example
 
@@ -138,16 +134,15 @@ Reset the settings of an index.
 
 All settings will be reset to their default value.
 
-| Variable                 | Description                                                                      | Default value                                                                                     |
-| ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **synonyms**             | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **stopWords**            | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**         | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **attributesForFaceting**  | Attributes to use as [facets](/guides/advanced_guides/faceted_search.md) | `[]` |
-| **distinctAttribute**    | Search returns documents with distinct (different) values of a given field       | `null`                                                                                            |
-| **searchableAttributes** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
-| **displayedAttributes**  | Fields displayed in the returned documents documents                             | All attributes found in the documents                                                             |
-| **acceptNewFields**      | Defines whether new fields should be searchable and displayed or not             | `true`                                                                                            |
+| Variable                  | Description                                                                      | Default value                                                                                     |
+| ------------------------  | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **synonyms**              | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **stopWords**             | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **rankingRules**          | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
+| **attributesForFaceting** | Attributes to use as [facets](/guides/advanced_guides/faceted_search.md)         | `[]`                                                                                              |
+| **distinctAttribute**     | Search returns documents with distinct (different) values of a given field       | `null`                                                                                            |
+| **searchableAttributes**  | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
+| **displayedAttributes**   | Fields displayed in the returned documents documents                             | `["*"]` (all attributes)                                                                          |
 
 [Learn more about the settings](/guides/advanced_guides/settings.md).
 

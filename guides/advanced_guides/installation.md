@@ -101,3 +101,9 @@ Server is listening on: http://127.0.0.1:7700
 ```
 
 Here is the list of [all the options and how to use them](/guides/advanced_guides/configuration.md).
+
+## Updating MeiliSearch
+
+Updating MeiliSearch is a straightforward process, simply get and install the latest binary with your preferred method (see installation above).
+
+Note that all MeiliSearch versions are not compatible with each other, and you may need to re-index your documents. If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, delete your database folder (defaults to `data.ms`), and re-index all your documents.

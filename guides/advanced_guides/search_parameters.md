@@ -4,7 +4,7 @@ Search parameters let the user customize their search request.
 
 | Query Parameter                                                                                   | Description                                                                                     | Default Value |
 | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string _(mandatory)_                                                                      |               |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string                                                                                    |               |
 | **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
 | **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
@@ -18,11 +18,15 @@ Search parameters let the user customize their search request.
 
 ## Query (q)
 
-The query parameter is the **only mandatory** parameter. This is the string used by the search engine to find relevant documents.
+This is the string used by the search engine to find relevant documents.
+
+When `q` isn't specified, a placeholder search is performed, returning documents that best match other search parameters.
+A placeholder allows you to find documents without providing search terms. It will return documents sorted according to the [ranking rules](/guides/advanced_guides/settings.md#ranking-rules) order.
+It also supports [faceting](/guides/advanced_guides/faceted_search.md) and [filtering](/guides/advanced_guides/filtering.md)
 
 `q=<String>`
 
-- `<String>` (Mandatory, string)
+- `<String>` (String)
 
   The query string.
 
@@ -222,11 +226,11 @@ Attributes to **display** in the returned documents.
 
 `attributesToRetrieve=<Attribute>,<Attribute>,...`
 
-- `<Attribute>` (Optional, string, Defaults to `*`)
+- `<Attribute>` (Optional, string, Defaults to `['*']`)
 
   Comma-separated list of attributes whose fields will be present in the returned documents.
 
-  Defaults to the attributes added to the [displayedAttributes list](/guides/advanced_guides/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
+  Defaults to to the [displayedAttributes list](/guides/advanced_guides/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
 
 #### Example
 
@@ -247,9 +251,9 @@ Attribute can have two values:
   Comma-separated list of attributes whose values will be cropped if they contain a matched query word.
   Each attribute can be joined by an optional `cropLength` that overwrites the [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) parameter.
 
-- `"*"`
+- `['*']`
 
-  The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
+  In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
 
 In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) to change this value).
 
@@ -300,7 +304,7 @@ Number of characters to keep on each side of the start of the matching word. See
 
 Attributes whose values will contain **highlighted matching query words**.
 
-- `attributesToHighlight=<Attribute>,<Attribute>,...`
+- `attributesToHighlight=[<Attribute>,<Attribute>,...]`
 
 Attribute can have two values:
 
@@ -310,7 +314,7 @@ Attribute can have two values:
 
 - `"*"`
 
-  The `*` character can also be used. In that case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+  In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
 Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
 

@@ -180,3 +180,7 @@ For more accurate features and issues, everything is detailed in the issues of a
 ## How can I contact the MeiliSearch team?
 
 See our [contact page](/resources/contact.md).
+
+## I have just updated MeiliSearch, and I am getting an error: "Cannot open database, expected MeiliSearch engine version..."
+
+MeiliSearch minor versions are not compatible with each other because the way we represent data internally changes with the addition of new breaking features. To fix this, it suffices to delete your database folder (`data.ms` by default) and re-index your documents with the new version.

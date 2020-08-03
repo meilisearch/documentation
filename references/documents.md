@@ -113,10 +113,6 @@ If you want to set the **primary key** of your index through this route, it only
 
 The body is composed of a **JSON array** of documents.
 
-::: warning
-Documents fields which are not known to the index schema will be ignored.
-:::
-
 ```json
 [
   {
