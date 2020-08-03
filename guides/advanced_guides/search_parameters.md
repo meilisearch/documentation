@@ -20,9 +20,9 @@ Search parameters let the user customize their search request.
 
 This is the string used by the search engine to find relevant documents.
 
-When q isn't specified, a placeholder search is performed, returning documents that best match other search parameters.
+When `q` isn't specified, a placeholder search is performed, returning documents that best match other search parameters.
 A placeholder allows you to find documents without providing search terms. It will return documents sorted according to the [ranking rules](/guides/advanced_guides/settings.md#ranking-rules) order.
-It also support [faceting](/guides/advanced_guides/faceted_search.md) and [filtering](/guides/advanced_guides/filtering.md)
+It also supports [faceting](/guides/advanced_guides/faceted_search.md) and [filtering](/guides/advanced_guides/filtering.md)
 
 `q=<String>`
 
