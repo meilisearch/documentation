@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "afbf6afd-dc19-4237-9ae0-2478dbc6ae9a",
-		"name": "MeiliSearch v0.12",
+		"_postman_id": "09d77062-af7a-4296-b202-4ce3f3878a96",
+		"name": "MeiliSearch v0.13",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -116,7 +116,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"identifier\": \"id\"\n}",
+							"raw": "{\n\t\"primaryKey\": \"objectId\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -415,6 +415,35 @@
 				{
 					"name": "Search in index",
 					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"q\": \"prince\",\n    \"attributesToRetrieve\": [\"*\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search in index",
+					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -482,35 +511,6 @@
 									"value": "[\"genre\"]",
 									"disabled": true
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Search in index",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"q\": \"prinec\"\n}"
-						},
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/search",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"search"
 							]
 						}
 					},
@@ -921,7 +921,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"wolverine\": [\"xmen\", \"logan\"],\n    \"logan\": [\"wolverine\", \"xmen\"],\n    \"wow\": [\"world of warcraft\"]\n}",
+									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}",
 									"options": {
 										"raw": {}
 									}
@@ -969,73 +969,6 @@
 										"{{indexUID}}",
 										"settings",
 										"synonyms"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get acceptNewField boolean",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/index-new-field",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"index-new-field"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update acceptNewField boolean",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "false",
-									"options": {
-										"raw": {}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/accept-new-fields",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"accept-new-fields"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Reset acceptNewField boolean",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/index-new-field",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"index-new-field"
 									]
 								}
 							},
@@ -1254,41 +1187,6 @@
 					"response": []
 				},
 				{
-					"name": "Sysinfo",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/sys-info",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"sys-info"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Pretty sysinfo",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/sys-info/pretty",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"sys-info",
-								"pretty"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Version",
 					"request": {
 						"method": "GET",
@@ -1375,7 +1273,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "714519a5-0407-4487-83e0-469f263217f7",
+				"id": "86b44741-0f06-4d8b-ba94-07a1de93e6d1",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1385,7 +1283,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "863465ed-541c-4033-bb02-fc875842ef23",
+				"id": "426148ef-a6b1-4636-803f-305db8c6218f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1395,16 +1293,14 @@
 	],
 	"variable": [
 		{
-			"id": "a66bde1d-6f38-424c-a1e2-24ace91f6062",
+			"id": "2f0b1ee1-9671-4e05-b8a8-d243ff86a6cd",
 			"key": "url",
-			"value": "http://0.0.0.0:7700",
-			"type": "string"
+			"value": "http://0.0.0.0:7700"
 		},
 		{
-			"id": "83c62928-e520-4060-a3c8-d31fc3222416",
+			"id": "0fc2b256-d73d-4c40-ac1e-b19ccb4ba2c6",
 			"key": "indexUID",
-			"value": "indexUID",
-			"type": "string"
+			"value": "indexUID"
 		}
 	],
 	"protocolProfileBehavior": {}
