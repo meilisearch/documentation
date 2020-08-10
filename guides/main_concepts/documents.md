@@ -30,7 +30,7 @@ In order to be indexed, each **document must contain** [the primary key field](/
 
 ## Upload
 
-By default, MeiliSearch limits the size of `JSON` payload to 10Mb. This affects the upload of documents.
+By default, MeiliSearch limits the size of `JSON` payload to 10MB. This affects the upload of documents.
 
 To upload more document in one go, it is possible to [change the payload size limit](/guides/advanced_guides/configuration.md#payload-limit-size) during the setup of the MeiliSearch instance using the `http-payload-size-limit` option.
 
