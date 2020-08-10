@@ -121,7 +121,7 @@ This is useful to debug when integrating the engine with another service.
 
 The maximum size, in bytes, of accepted JSON payloads.
 
-**Default value**: `10485760` (+=10Mb)
+**Default value**: `10485760` (+=10MB)
 
 ### SSL Authentication Path
 
