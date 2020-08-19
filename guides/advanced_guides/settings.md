@@ -75,16 +75,7 @@ Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes
 
 To be able to facet search on `director` and `genre` in a movie database, you would declare faceted attributes as follows:
 
-```bash
-$ curl \
-  -X POST 'http://localhost:7700/indexes/movies/settings' \
-  --data '{
-      "attributesForFaceting": [
-          "director",
-          "genres"
-      ]
-  }'
-```
+<code-samples id="faceted_search_update_settings_1" />
 
 ## Ranking rules
 
