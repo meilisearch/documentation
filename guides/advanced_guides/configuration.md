@@ -237,7 +237,7 @@ A sample windows batch file showing the use of Map size
 
 ```bat
 @echo off
-setlocal 
+setlocal
 set MEILI_DB_PATH=C:\mnt\disks\datadisk\apps\meilisearch\data\myindexdb
 set MEILI_MAIN_MAP_SIZE=409600000
 set MEILI_UPDATE_MAP_SIZE=40960000
