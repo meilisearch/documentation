@@ -28,6 +28,7 @@ const glossary = {
   searchable:
     'The data is used to determine the relevancy of a document when doing a search query.',
   displayed: 'The field is present in the documents returned upon search.',
+  indexing: 'In MeiliSearch, documents are <b>indexed</b>. Indexing is the process of saving data in a database in a prefered way to fit your purpose. </br> In MeiliSearch\'s case, the purpose is to optimise word-based search. To achieve this, in MeiliSearch the indexation is centered arround words (see reversed index).',
 }
 
 export default {

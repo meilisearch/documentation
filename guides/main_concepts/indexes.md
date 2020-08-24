@@ -9,6 +9,8 @@ An index is defined by an `uid` and contains the following information:
 - One <clientGlossary word="primary key"/>
 - Default settings that can be configured as needed: relevancy rules, synonyms, stop words, and field properties.
 
+You can create __up to 200 indexes__ in MeiliSearch. This limit has been hard set for performance reasons.
+
 #### Example
 
 Suppose you manage a database that contains information about movies. You would probably want to have multiple categories: one for movie descriptions, one for actors, one for costumes and one for reviews. Each of these categories would be represented by an index in MeiliSearch.

@@ -44,8 +44,11 @@ $ ./meilisearch --http-payload-size-limit=100000000
 
 ## Fields
 
-- **[Data type](/guides/advanced_guides/datatypes.md)**: A field's data type determines what kind of data can be stored in that field.
-- **[Field properties](/guides/advanced_guides/field_properties.md)**: Field properties determines the characteristics and behavior of the data added to that field.
+A document is composed of fields. A document must atleast contain one `primary key` field (see [primary key](/guides/main_concepts/documents.md#primary-key)).
+
+The **[data type of a field's value](/guides/advanced_guides/datatypes.md)** , determines how the data will be stored and made searchable by MeiliSearch (see [data types](/guides/advanced_guides/datatypes.md)). For example, integers are not searchable.
+
+A **[field can have properties](/guides/advanced_guides/field_properties.md)**. Field properties determines the characteristics and behavior of the data added to that field.
 
 By default, all fields included in a document are <clientGlossary word="searchable" /> and <clientGlossary word="displayed" />.
 You can adjust how a field get handled by MeiliSearch in the settings. It can either be searchable or displayed, both, or none of both. In the latter case, the field will be completely ignored when a document is sent.
