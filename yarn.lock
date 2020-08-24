@@ -1727,10 +1727,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bent@^7.3.9:
-  version "7.3.9"
-  resolved "https://registry.yarnpkg.com/bent/-/bent-7.3.9.tgz#41af9939b1017d911d944f21d86626fe3ee7b099"
-  integrity sha512-CyuIXgoO6UWJaoMtPHkq6JlzNRjCGQqZQeYuO4W5MxY+P0sO1jM3CMYLf16eoga2ozyhVPzXVUxkPw9rz5VNgA==
+bent@^7.3.10:
+  version "7.3.10"
+  resolved "https://registry.yarnpkg.com/bent/-/bent-7.3.10.tgz#3c58a218b51c1efc9e0381a4f230b2f437184cb9"
+  integrity sha512-X2P2nGRWejGn6IjJfL4usOuAVMng1DdyuRhXLGOcUvEblBcLZenrSjlkgS8ob1s3tbq3mo1FDxKhCRNvcf0y0Q==
   dependencies:
     bytesish "^0.4.1"
     caseless "~0.12.0"
