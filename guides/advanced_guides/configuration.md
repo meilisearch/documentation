@@ -52,7 +52,7 @@ Server is listening on: http://127.0.0.1:7700
   - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
   - [Load From Snapshot](/guides/advanced_guides/configuration.md#load-from-snapshot)
   - [Ignore missing snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
-  - [Ignore snapshot if db exists](/guides/advanced_guides/configuration.md#ignore_snapshot_if_db_exists)
+  - [Ignore snapshot if db exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
 
 ### Database path
 
