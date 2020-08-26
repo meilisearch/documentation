@@ -273,7 +273,6 @@ This command will stop the process if:
 
 If this command is not called, no snapshot will be imported.
 
-
 ### Ignore missing snapshot
 
 **Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
