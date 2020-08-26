@@ -50,8 +50,9 @@ Server is listening on: http://127.0.0.1:7700
 - [Snapshoting](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
   - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
   - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
-  - [Init From Snapshot](/guides/advanced_guides/configuration.md#init-from-snapshot)
-  - [Recover From Snapshot](/guides/advanced_guides/configuration.md#recover-from-snapshot)
+  - [Load From Snapshot](/guides/advanced_guides/configuration.md#load-from-snapshot)
+  - [Ignore missing snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
+  - [Ignore snapshot if db exists](/guides/advanced_guides/configuration.md#ignore_snapshot_if_db_exists)
 
 ### Database path
 
@@ -240,6 +241,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 ### Schedule Snapshot Creation
 
+**Environment variable**: `MEILI_SNAPSHOT_PATH`
 **CLI option**: `--snapshot-path`
 
 The directory path where MeiliSearch will create snapshots.
@@ -248,6 +250,7 @@ If this command is not called, snapshoting is deactivated.
 
 ### Snapshot interval
 
+**Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
 **CLI option**: `--snapshot-interval-sec`
 
 Defines the time gap in seconds between each snapshot creation.
@@ -256,9 +259,10 @@ Requires `--snapshot-path` to be defined.
 
 **Default value**: `86400` (1 day)
 
-### Init from snapshot
+### Load from snapshot
 
-**CLI option**: `--init-from-snapshot`
+**Environment variable**: `MEILI_LOAD_FROM_SNAPSHOT`
+**CLI option**: `--load-from-snapshot`
 
 The path of the snapshot file to import.
 
@@ -269,19 +273,17 @@ This command will stop the process if:
 
 If this command is not called, no snapshot will be imported.
 
-Uncompatible with `--recover-from-snapshot`
 
-### Recover from snapshot
+### Ignore missing snapshot
 
-**CLI option**: `--recover-from-snapshot`
+**Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
+**CLI option**: `--ignore-missing-snapshot`
 
-The path of the snapshot file to import.
+The engine will ignore a missing snapshot and not return an error in such case.
 
-This command will skip importing a snapshot and continue the process if:
+### Ignore snapshot if db exists
 
-- A database already exists
-- No snapshot exists in the given path.
+**Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
+**CLI option**: `--ignore-snapshot-if-db-exists`
 
-If this command is not called, no snapshot will be imported for recovery.
-
-Uncompatible with `--init-from-snapshot`
+The engine will skip snapshot importation if a database already exists and not return an error in such case.
