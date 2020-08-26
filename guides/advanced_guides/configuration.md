@@ -286,4 +286,4 @@ The engine will ignore a missing snapshot and not return an error in such case.
 **Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
-The engine will skip snapshot importation if a database already exists and not return an error in such case.
+The engine skips snapshot importation if a database already exists. No error is thrown in this case.
