@@ -279,7 +279,7 @@ If this command is not called, no snapshot will be imported.
 **Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
 **CLI option**: `--ignore-missing-snapshot`
 
-The engine will ignore a missing snapshot and not return an error in such case.
+The engine ignores missing snapshots and does not throw an error in this case.
 
 ### Ignore snapshot if db exists
 
