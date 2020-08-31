@@ -246,6 +246,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 **CLI option**: `--no-sentry`
 
 We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. You can disable it at any moment by launching MeiliSearch with the argument above.
+
 ### Schedule Snapshot Creation
 
 **Environment variable**: `MEILI_SNAPSHOT_PATH`
