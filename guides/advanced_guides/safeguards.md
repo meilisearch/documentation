@@ -8,6 +8,7 @@ A snapshot is an exact copy of the database at the time the snapshot was created
 With it, it is possible to create and restore MeiliSearch from snapshots and schedule snapshot creation at custom intervals.
 
 ### Creating Snapshots
+
 For MeiliSearch to create snapshots, the feature must be enabled by specifying a path to the directory in which snapshots will be saved.
 
 ```bash
@@ -21,6 +22,7 @@ The schedule can be modified with the `--snapshot-interval-sec` flag.
 ```bash
 meilisearch --snapshot-path mySnapShots/ --snapshot-interval-sec 3600
 ```
+
 Now a snapshot will be created every hour.
 
 During snapshot creation, snapshots are **overwritten**. Meaning, only the last snapshot will be present in the folder.
@@ -28,6 +30,7 @@ During snapshot creation, snapshots are **overwritten**. Meaning, only the last 
 [[More about snapshots flags and env variables]](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
 
 ### Start from snapshot
+
 Because snapshots are zipped copies of your database that did not go through any processing, starting a MeiliSearch instance from one of them is significantly faster.
 
 Using the global environment `MEILI_LOAD_FROM_SNAPSHOT` or the CLI flag `--load-from-snapshot` , MeiliSearch will start the server using the provided snapshot.
@@ -47,6 +50,7 @@ To ignore either one of these errors, you can add the following flags: `--ignore
 **Snapshots are safeguards in case of problems**. If your MeiliSearch instance encounters a problem or if you have done a mistake while manipulating your database, restarting your instance with the latest snapshot is an easy way to recover your data.
 
 ### Version compatibilities
+
 Since a snapshot is a replica of your database, it will restore it only if your MeiliSearch runs on the version it has been created on.
 
 For backups compatibility between different versions, we can't wait to show you our next feature: backups 😉.
