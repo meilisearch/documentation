@@ -168,7 +168,7 @@ get_distinct_attribute_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
 update_distinct_attribute_1: |-
   $ curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/distinct-attribute' \
+    -X POST 'http://localhost:7700/indexes/movies/settings/distinct-attribute' \
     --data 'movie_id'
 reset_distinct_attribute_1: |-
   $ curl \
