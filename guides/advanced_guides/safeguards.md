@@ -12,7 +12,7 @@ With it, it is possible to create and restore MeiliSearch from snapshots and sch
 For MeiliSearch to create snapshots, the feature must be enabled by specifying a path to the directory in which snapshots will be saved.
 
 ```bash
-meilisearch --snapshot-path mySnapShots/
+$ meilisearch --snapshot-path mySnapShots/
 ```
 
 By default, MeiliSearch schedules a snapshot creation every day. When the instance starts, it will wait 24 hours until the first snapshot. This means that if you have launched MeiliSearch on Tuesday at 4 pm, the first snapshot will be created on Wednesday at 4 pm, and so on every day.
@@ -20,7 +20,7 @@ By default, MeiliSearch schedules a snapshot creation every day. When the instan
 The schedule can be modified with the `--snapshot-interval-sec` flag.
 
 ```bash
-meilisearch --snapshot-path mySnapShots/ --snapshot-interval-sec 3600
+$ meilisearch --snapshot-path mySnapShots/ --snapshot-interval-sec 3600
 ```
 
 Now a snapshot will be created every hour.
@@ -36,7 +36,7 @@ Because snapshots are zipped copies of your database that did not go through any
 Using the global environment `MEILI_LOAD_FROM_SNAPSHOT` or the CLI flag `--load-from-snapshot` , MeiliSearch will start the server using the provided snapshot.
 
 ```bash
-meilisearch --load-from-snapshot mySnapShots/data.ms.tar.gz
+$ meilisearch --load-from-snapshot mySnapShots/data.ms.tar.gz
 ```
 
 If a database already exists, or if no snapshot is found at the given path, MeiliSearch will **stop processing and throw an error**.
