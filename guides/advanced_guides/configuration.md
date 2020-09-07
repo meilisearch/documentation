@@ -256,6 +256,8 @@ The directory path where MeiliSearch will create snapshots.
 
 If this command is not called, snapshoting is deactivated.
 
+[More about snapshots and safeguards](/guides/advanced_guides/safeguards.md#snapshots)
+
 ### Snapshot interval
 
 **Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
