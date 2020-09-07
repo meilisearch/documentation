@@ -49,7 +49,7 @@ To ignore either one of these errors, you can add the following flags: `--ignore
 
 **Snapshots are safeguards in case of problems**. If your MeiliSearch instance encounters a problem or if you have done a mistake while manipulating your database, restarting your instance with the latest snapshot is an easy way to recover your data.
 
-### Version compatibilities
+### Version Compatibilities
 
 Since a snapshot is a replica of your database, it will restore it only if your MeiliSearch runs on the version it has been created on.
 
