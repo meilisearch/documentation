@@ -57,4 +57,4 @@ For backups compatibility between different versions, we can't wait to show you 
 
 ## Backups
 
-Comming soon!
+Coming soon!
