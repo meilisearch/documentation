@@ -29,7 +29,7 @@ During snapshot creation, snapshots are **overwritten**. Meaning, only the last 
 
 [[More about snapshots flags and env variables]](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
 
-### Start from snapshot
+### Start from Snapshot
 
 Because snapshots are zipped copies of your database that did not go through any processing, starting a MeiliSearch instance from one of them is significantly faster.
 
