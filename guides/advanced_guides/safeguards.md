@@ -1,6 +1,6 @@
 # Safeguards
 
-MeiliSearch has only one way to save it's data as of today: Snapshots.
+MeiliSearch has only one way to save its data as of today: Snapshots.
 
 ## Snapshots
 
