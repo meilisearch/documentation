@@ -1,6 +1,6 @@
 # Safeguards
 
-MeiliSearch has only one way to save it's data as of today: Snapshots.
+MeiliSearch has only one way to save its data as of today: Snapshots.
 
 ## Snapshots
 
@@ -29,7 +29,7 @@ During snapshot creation, snapshots are **overwritten**. Meaning, only the last 
 
 [[More about snapshots flags and env variables]](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
 
-### Start from snapshot
+### Start from Snapshot
 
 Because snapshots are zipped copies of your database that did not go through any processing, starting a MeiliSearch instance from one of them is significantly faster.
 
@@ -49,7 +49,7 @@ To ignore either one of these errors, you can add the following flags: `--ignore
 
 **Snapshots are safeguards in case of problems**. If your MeiliSearch instance encounters a problem or if you have done a mistake while manipulating your database, restarting your instance with the latest snapshot is an easy way to recover your data.
 
-### Version compatibilities
+### Version Compatibilities
 
 Since a snapshot is a replica of your database, it will restore it only if your MeiliSearch runs on the version it has been created on.
 
@@ -57,4 +57,4 @@ For backups compatibility between different versions, we can't wait to show you 
 
 ## Backups
 
-Comming soon!
+Coming soon!
