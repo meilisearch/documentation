@@ -39,13 +39,14 @@ Using the global environment `MEILI_LOAD_FROM_SNAPSHOT` or the CLI flag `--load-
 $ meilisearch --load-from-snapshot mySnapShots/data.ms.tar.gz
 ```
 
-If a database already exists, or if no snapshot is found at the given path, MeiliSearch will **stop processing and throw an error**.
+If a database already exists, or if no snapshot is found at the given path, MeiliSearch will **stop processing and throw an error**. This is configurable.
 
 If you don't want MeiliSearch to throw an error if a database already exists, you can add the following flag: `--ignore-snapshot-if-db-exists=true`. By adding this flag, if a database exists, MeiliSearch will **not** import the snapshot and continue its process.
 
-When launching `--load-from-snapshot <path>` with a wrong path, Meilisearch throws an error. If you do not want MeiliSearch to throw an error you can add the following flag: `--ignore-missing-snapshot`. MeiliSearch will then continue its process and not import any snapshot.
+If you do not want MeiliSearch to throw an error when there is no snapshot at the given path you can add the following flag: `--ignore-missing-snapshot`. MeiliSearch will then continue its process and not import any snapshot.
 
-When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to delete it manually. By default, the database is in `/data.ms` folder, which is located in the same folder as your MeiliSearch binary. You might have launched MeiliSearch with `--db-path` or `MEILI_DB_PATH`, in which case, the database is the value of that configuration. The simplest way to delete your database is the use `rm -rf data.ms`. After which you can start your MeiliSearch with the path to the snapshot you want to load.
+When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to delete it manually. By default, the database is in `/data.ms` folder ([unless you changed the path](/guides/advanced_guides/configuration.html#database-path)), which is located in the same folder as your MeiliSearch binary.
+The simplest way to delete your database is the use `rm -rf data.ms`. After which you can start your MeiliSearch with the path to the snapshot you want to load.
 
 [[More about snapshots flags and env variables]](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
 
