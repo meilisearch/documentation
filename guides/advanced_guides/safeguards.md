@@ -45,7 +45,7 @@ If you don't want MeiliSearch to throw an error if a database already exists, yo
 
 If you do not want MeiliSearch to throw an error when there is no snapshot at the given path you can add the following flag: `--ignore-missing-snapshot`. MeiliSearch will then continue its process and not import any snapshot.
 
-When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to delete it manually. By default, the database is in `/data.ms` folder ([unless you changed the path](/guides/advanced_guides/configuration.md#database-path)), which is located in the same folder as your MeiliSearch binary.
+When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to delete it manually. By default, the database is in `data.ms` folder ([unless you changed the path](/guides/advanced_guides/configuration.md#database-path)), which is located in the same folder as your MeiliSearch binary.
 The simplest way to delete your database is the use `rm -rf data.ms`. After which you can start your MeiliSearch with the path to the snapshot you want to load.
 
 [[More about snapshots flags and env variables]](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
