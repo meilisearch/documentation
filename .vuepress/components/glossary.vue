@@ -16,18 +16,25 @@ import { createPopper } from '@popperjs/core'
 
 const glossary = {
   field:
-    "A field, or a key-value pair, is a set of two data items linked together: an <b>attribute</b> and its associated <b>value</b>. <br><br> Ex: <code>attribute: 'value'</code>",
+    'A field, or a key-value pair, is a set of two data items linked together: an <b>attribute</b> and its associated <b>value</b>. <br><br> Ex: <code>"attribute": "value"</code>',
   attribute:
-    "An attribute is the name of a field, like a key. <br><br> Ex:  <code>title: 'Batman'</code> <br> In the example above, title is the attribute.",
+    'An attribute is the name of a field, like a key. <br><br> Ex:  <code>"title": "Batman"</code> <br> In the example above, "title" is the attribute.',
+  value:
+    'A piece of data linked to an attribute. One half of a field. <br><br> Ex:  <code>"title": "Batman"</code> <br> In the example above, "Batman" is the value.',
   'ranking rules':
     'A set of consecutive rules applied to ensure relevancy in search results. <br><br> For example, to sort results by number of typos or number of matched query terms in each matching document.',
+  'primary field':
+    'A special field containing the primary key and a unique document id. <br><br> Every document must possess a correctly formatted primary field in order to be indexed.',
   'primary key':
-    'The attribute of the field which contains the unique identifier of the documents. <br><br> It is used by MeiliSearch to store the document. <br><br> Example: <code>movie_id</code> is the primary key of a movie document.',
+    'The attribute of the primary field. The primary key\'s associated value is a unique document id. An index possesses only one primary key, which is shared among all its documents. <br><br> Example: in a document with the primary field <code>"movie_id": "Abc_012"</code>, "movie_id" is the primary key.',
+  'document id':
+    'The value of the primary field. The document id acts as a unique identifier for storing documents. <br><br> Example: in a document with the primary field <code>"movie_id": "Abc_012"</code>, "Abc_012" is the document id.',
   schemaless:
-    "This means data can be indexed without providing a fixed data structure. <br><br> For example, SQL's tables require schema definition whereas MongoDB's collections don't.",
+    'This means data can be indexed without providing a fixed data structure. <br><br> For example, SQL\'s tables require schema definition whereas MongoDB\'s collections don\'t.',
   searchable:
     'The data is used to determine the relevancy of a document when doing a search query.',
-  displayed: 'The field is present in the documents returned upon search.',
+  displayed:
+    'The field is present in the documents returned upon search.',
 }
 
 export default {

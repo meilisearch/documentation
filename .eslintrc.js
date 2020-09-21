@@ -5,37 +5,37 @@ module.exports = {
     node: true,
   },
   extends: [
-    "eslint:recommended",
-    "eslint-config-standard",
-    "plugin:vue/recommended",
+    'eslint:recommended',
+    'eslint-config-standard',
+    'plugin:vue/recommended',
   ],
   globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly",
-    CODE_SAMPLES: "readonly"
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+    CODE_SAMPLES: 'readonly',
   },
   parserOptions: {
-    parser: "babel-eslint",
+    parser: 'babel-eslint',
     allowImportExportEverywhere: true,
     ecmaVersion: 2018,
-    sourceType: "module",
+    sourceType: 'module',
   },
-  plugins: ["vue", "prettier"],
+  plugins: ['vue', 'prettier'],
   rules: {
-    "vue/no-v-html": "off", //used in cases where HTML is needed
-    "space-before-function-paren": ["error", {
-      "anonymous": "always",
-      "named": "never",
-      "asyncArrow": "always"
+    'vue/no-v-html': 'off', // used in cases where HTML is needed
+    'space-before-function-paren': ['error', {
+      anonymous: 'always',
+      named: 'never',
+      asyncArrow: 'always',
     }],
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "exports": "always-multiline",
-      "functions": "never"
+    'comma-dangle': ['error', {
+      arrays: 'always-multiline',
+      objects: 'always-multiline',
+      imports: 'always-multiline',
+      exports: 'always-multiline',
+      functions: 'never',
     }],
-    "vue/max-attributes-per-line": [
+    'vue/max-attributes-per-line': [
       2,
       {
         singleline: 20,
@@ -44,6 +44,6 @@ module.exports = {
           allowFirstLine: false,
         },
       },
-    ]
+    ],
   },
-};
+}
