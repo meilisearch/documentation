@@ -48,4 +48,8 @@ errors:
     description: "There was an error in the search."
   - code: unsupported_media_type
     description: "The payload content type is not supported by MeiliSearch. Currently, MeiliSearch supports only JSON payloads."
+  - code: dump_already_in_progress
+    description: "A dump creation is already in progress and a new one can't be triggered until the previous dump creation is not finished."
+  - code: dump_process_failed
+    description: "An error occured during dump creation process, task aborted."
 ...
