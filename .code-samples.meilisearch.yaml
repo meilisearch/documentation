@@ -438,3 +438,7 @@ faceted_search_walkthrough_facet_filters_1: |-
 faceted_search_walkthrough_facets_distribution_1: |-
   $ curl 'http://localhost:7700/indexes/movies/search' \
   --data '{  "q": "Batman", "facetsDistribution": ["genres"] }'
+post_dump_1: |- 
+  $ curl -X POST 'http://localhost:7700/dumps'
+get_dump_status_1: |- 
+  $ curl -X GET 'http://localhost:7700/dumps/:dump_uid/status'
