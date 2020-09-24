@@ -2170,9 +2170,9 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-check-md@1.0.0, "check-md@https://github.com/bidoubiwa/check-md#no_missing_md_extension":
-  version "1.0.0"
-  resolved "https://github.com/bidoubiwa/check-md#9d53fdcb265ca4133c904673594f1cc3f81855c0"
+check-md@1.0.0, "check-md@https://github.com/bidoubiwa/check-md#add_ignore_pattern":
+  version "1.0.1"
+  resolved "https://github.com/bidoubiwa/check-md#f89f17638cca5d37604161edc3eb99695982e47f"
   dependencies:
     chalk "^4.0.0"
     commander "^5.0.0"
