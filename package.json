@@ -43,7 +43,7 @@
     "vuepress-plugin-sitemap": "^2.3.1"
   },
   "resolutions": {
-    "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#no_missing_md_extension"
+    "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#add_ignore_pattern"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
