@@ -13,7 +13,6 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-node-
-    - run: yarn cache clean
     - run: yarn install
 
     - run: yarn check-links
