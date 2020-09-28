@@ -14,5 +14,4 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
     - run: yarn install
-
     - run: yarn style
