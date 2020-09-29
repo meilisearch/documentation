@@ -27,9 +27,9 @@ Trigger the backup creation process.
 Get the status of a backup.
 Returned status could be:
 
-- `processing`: backup creation is not finished
-- `backup_process_failed`: an error occured during backup process, task aborted
-- `done`: backup creation is finished
+- `processing`: Backup creation is not finished.
+- `backup_process_failed`: An error occured during backup process, task aborted.
+- `done`: Backup creation is finished.
 
 ### Example
 
