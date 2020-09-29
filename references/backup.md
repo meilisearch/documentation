@@ -24,7 +24,7 @@ Trigger the backup creation process.
 
 <RouteHighlighter method="GET" route="/backup/:backup_uid/status"/>
 
-Get backup status.   
+Get the status of a backup.
 Returned status could be:
 
 - `processing`: backup creation is not finished
