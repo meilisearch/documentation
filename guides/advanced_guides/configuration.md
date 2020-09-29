@@ -37,9 +37,12 @@ Server is listening on: http://127.0.0.1:7700
 
 - [Analytics](/guides/advanced_guides/configuration.md#analytics)
 - [Payload Limit Size](/guides/advanced_guides/configuration.md#payload-limit-size)
+- [Dumps](/guides/advanced_guides/configuration.md#dumps-folder)
+  - [Dumps folder](/guides/advanced_guides/configuration.md#dumps-folder)
+  - [Import dump](/guides/advanced_guides/configuration.md#import-dump)
+  - [Dump batch size](/guides/advanced_guides/configuration.md#dump-batch-size)
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
-- [Backup](/guides/advanced_guides/configuration.md#backup-path)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
   - [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
   - [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
@@ -297,11 +300,30 @@ The engine ignores missing snapshots and does not throw an error in this case.
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
 The engine skips snapshot importation if a database already exists. No error is thrown in this case.
-### Backup path
 
-**Environment variable**: `MEILI_BACKUP_PATH`
-**CLI option**: `--backup-folder`
+### Dumps folder
 
-Path where backup's will be created if the [backup route](/references/backup.md#trigger-backup) is called.
+**Environment variable**: `MEILI_DUMPS_FOLDER`
+**CLI option**: `--dumps-folder`
 
-**Default value**: `backup/`
+Path of the folder where dumps will be created if the [dump route](/references/dump.md#trigger-dump) is called.
+
+**Default value**: `dumps/`
+
+### Import dump
+
+**Environment variable**: `MEILI_IMPORT_DUMP`
+**CLI option**: `--import-dump`
+
+Import a dump from the specified path, must be a `.tar.gz` file.
+As the data contained in the dump needs to be indexed,
+the process will take time to fully import the dump depending on the size of your dump.
+
+### Dump batch size
+
+**Environment variable**: `MEILI_DUMP_BATCH_SIZE`
+**CLI option**: `--dump-batch-size`
+
+The batch size used in the importation process, the bigger it is the faster the dump is created.
+
+**Default value**: `1024`
