@@ -6,7 +6,7 @@ The `backup` route allow users to trigger a backup creation and downloads the cr
 
 <RouteHighlighter method="POST" route="/backup"/>
 
-Trigger a backup creation process
+Trigger the backup creation process.
 
 ### Example
 
