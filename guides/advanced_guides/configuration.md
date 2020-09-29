@@ -302,6 +302,6 @@ The engine skips snapshot importation if a database already exists. No error is 
 **Environment variable**: `MEILI_BACKUP_PATH`
 **CLI option**: `--backup-path`
 
-Path where backup will be created if [backup route](/references/backup.md#trigger-backup) is called.
+Path where backup's will be created if the [backup route](/references/backup.md#trigger-backup) is called.
 
 **Default value**: `backup/`
