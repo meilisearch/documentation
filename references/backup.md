@@ -47,7 +47,7 @@ Returned status could be:
 
 <RouteHighlighter method="GET" route="/backup/:backup_uid"/>
 
-Download backup.
+Download a compressed backup in `tar.gz` format.
 
 ### Example
 
