@@ -49,7 +49,7 @@ errors:
   - code: unsupported_media_type
     description: "The payload content type is not supported by MeiliSearch. Currently, MeiliSearch supports only JSON payloads."
   - code: backup_already_in_process
-    description: "A backup is already in process and a new one can't be triggered until previous backup creation is not finished."
+    description: "A backup creation is already in process and a new one can't be triggered until the previous backup creation is not finished."
   - code: backup_process_failed
     description: "An error occured during backup process, task aborted."
 ...
