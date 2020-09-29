@@ -1,6 +1,6 @@
 # Backup
 
-The `backup` route allow user to trigger a backup creation and download created backup.
+The `backup` route allow users to trigger a backup creation and downloads the created backup.
 
 ## Trigger backup
 
