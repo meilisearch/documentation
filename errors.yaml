@@ -51,5 +51,5 @@ errors:
   - code: backup_already_in_process
     description: "A backup creation is already in process and a new one can't be triggered until the previous backup creation is not finished."
   - code: backup_process_failed
-    description: "An error occured during backup process, task aborted."
+    description: "An error occured during backup creation process, task aborted."
 ...
