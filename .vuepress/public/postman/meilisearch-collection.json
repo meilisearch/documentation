@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "b112fb40-a555-40f7-882e-370237b53693",
-		"name": "MeiliSearch v0.14",
+		"_postman_id": "0ff31625-5c59-4167-baa9-b14dadb2d721",
+		"name": "MeiliSearch v0.15",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Index",
+			"name": "Indexes",
 			"item": [
 				{
 					"name": "List all indexes",
@@ -224,7 +224,9 @@
 							"mode": "raw",
 							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austin\",              \"genre\": \"romance\" },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\" },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
 							"options": {
-								"raw": {}
+								"raw": {
+									"language": "json"
+								}
 							}
 						},
 						"url": {
@@ -257,7 +259,9 @@
 							"mode": "raw",
 							"raw": "[\n  {\n\t\"id\": 2,\n\t\"author\": \"J. Austen\",\n\t\"date\": \"1813\"\n  }\n]",
 							"options": {
-								"raw": {}
+								"raw": {
+									"language": "json"
+								}
 							}
 						},
 						"url": {
@@ -1252,6 +1256,82 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Dumps",
+			"item": [
+				{
+					"name": "Get a dump status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/dumps/20201001-110357260/status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dumps",
+								"20201001-110357260",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a dump",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/dumps",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dumps"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0265ea3d-b8e6-489d-82b5-330e5c5faa4c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "197a673a-9a4b-4cae-bb55-d815399a54dc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"auth": {
@@ -1273,7 +1353,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "3d558ac3-706e-4762-ba8e-949359fb6479",
+				"id": "82b5ff41-9cc7-41bc-9623-88410c73da63",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1283,7 +1363,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "35ce4f87-4f5e-4807-b938-b08ddee9d7fd",
+				"id": "10a519ec-0201-4e5d-8a0f-83c5d37e6a4b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1293,12 +1373,12 @@
 	],
 	"variable": [
 		{
-			"id": "1653a290-d7d8-43a1-b8bc-ab0cdad1ac5f",
+			"id": "f6184d92-9c0c-4521-9a76-1f84d37e974e",
 			"key": "url",
 			"value": "http://0.0.0.0:7700"
 		},
 		{
-			"id": "ac601bd6-d4a3-47f7-b024-77f9942a46e9",
+			"id": "d88ba4a1-c490-49a4-b3cf-3af96c889145",
 			"key": "indexUID",
 			"value": "indexUID"
 		}
