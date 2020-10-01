@@ -5,7 +5,7 @@ jobs:
   build-deploy:
     runs-on: ubuntu-18.04
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Cache dependencies
       uses: actions/cache@v1
       with:
@@ -13,7 +13,5 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-node-
-
     - run: yarn install
-
     - run: yarn style

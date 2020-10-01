@@ -136,7 +136,7 @@ module.exports = {
     },
   },
   plugins: [
-    ['check-md', { pattern: '**/*.md', strictExt: true }],
+    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: 'document_structure' }],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
@@ -270,6 +270,20 @@ module.exports = {
           s.async=1;
           d.getElementsByTagName("head")[0].appendChild(s);
       })();
+    `,
+    ],
+    [
+      'script',
+      {},
+      `
+      (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:2013731,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     `,
     ],
     [
