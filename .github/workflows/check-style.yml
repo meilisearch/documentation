@@ -1,8 +1,14 @@
 ---
 name: Check styling
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - trying
+      - staging
 jobs:
   build-deploy:
+    name: check style
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
