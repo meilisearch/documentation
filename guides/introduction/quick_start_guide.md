@@ -109,3 +109,156 @@ To do so, open your web browser and enter MeiliSearch address (in our case: `htt
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
 ![movies demo gif](/movies-web-demo.gif)
+
+
+### Integrations
+
+You can add MeiliSearch to your application in two different ways.
+
+- Using our SDK `instant-meilisearch` that
+- Using our javascript library `meilisearch-js`
+
+#### Instant-MeiliSearch
+
+`instant-meilisearch` is a SDK that helps you integrate MeiliSearch to your application with minimum effort.
+Communication and display is done by the library.
+
+:::: tabs
+
+::: tab VueJs
+
+```html
+  <!DOCTYPE html>
+  <html>
+      <body>
+          <div id="app">
+              <h1 style="text-align: center;">Search Movies</h1>
+                <ais-instant-search :search-client="searchClient" index-name="movies">
+                  <ais-configure
+                    :hits-per-page.camel="200"
+                  />
+                  <ais-search-box placeholder="Search here…" class="searchbox"></ais-search-box>
+                  <ais-hits>
+                    <div slot="item" slot-scope="{ item }">
+                          <h2>{{ item.title }}</h2>
+                    </div>
+                  </ais-hits>
+                </ais-instant-search>
+          </div>
+      </body>
+      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vue-instantsearch@3.2.0/dist/vue-instantsearch.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+      <script>
+          Vue.use(VueInstantSearch)
+          var app = new Vue({
+              el: '#app',
+              data: {
+                  searchClient: instantMeiliSearch('http://127.0.0.1:7700')
+              }
+          })
+      </script>
+  </html>
+```
+
+:::
+
+::: tab React
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+      <div id="app"></div>
+  </body>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script>
+    'use strict';
+      const { InstantSearch, SearchBox, Hits, Highlight }  = ReactInstantSearchDOM;
+
+      const searchClient = instantMeiliSearch(
+        "http://localhost:7700"
+      );
+
+      const App = () => (
+        React.createElement(InstantSearch, {
+          indexName: "movies",
+          searchClient: searchClient
+        }, [ React.createElement(SearchBox, { key: 1 }), React.createElement(Hits, { hitComponent: Hit, key: 2 })]
+        )
+      );
+      function Hit(props) {
+          return React.createElement(Highlight, {
+            attribute: "title",
+            hit: props.hit
+          })
+      }
+    const domContainer = document.querySelector('#app');
+    ReactDOM.render(React.createElement(App), domContainer);
+  </script>
+</html>
+```
+
+:::
+
+::: tab Javascript
+
+- The basic divs structure for the search bar and the results box
+- Adding the CDN's
+- Adding the configuration to link your DOM with instant-meilisearch
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div>
+      <div id="searchbox" focus></div>
+      <div id="hits"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <script>
+        const search = instantsearch({
+            indexName: "movies",
+            searchClient: instantMeiliSearch(
+                "http://localhost:7700",
+                "masterKey",
+            )
+            });
+
+            search.addWidgets([
+            instantsearch.widgets.searchBox({
+                container: "#searchbox"
+            }),
+            instantsearch.widgets.hits({
+                container: "#hits",
+                templates: {
+                item: `
+                    <div>
+                    <div class="hit-name">
+                        {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}
+                    </div>
+                    </div>
+                `
+                }
+            })
+            ]);
+
+            search.start();
+    </script>
+  </body>
+</html>
+```
+:::
+
+
+
+::::
