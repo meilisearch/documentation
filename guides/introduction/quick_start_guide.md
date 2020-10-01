@@ -114,3 +114,180 @@ This will lead you to a web page with a search bar that will allow you to search
 <br>
 <br>
 <MovieGif />
+
+## Integrate to your website
+
+The only step missing is adding the searchbar to your own application. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): A developer tool that generates all the search components needed to start searching.
+
+[Instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments as: [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [React](https://github.com/meilisearch/meilisearch-react) and [VueJs](https://github.com/meilisearch/meilisearch-vue).
+
+#### Lets Try:
+
+- Create a html file for example `index.html`
+- Open it in a text editor (notepad, sublime text, vsc or other)
+- Copy paste any of the code examples bellow and save the file
+- Open `index.html` in your browser (double click on it in your folder)
+
+_We uses browser builds for ease of integration. It is possible to add them with `npm` or `yarn`. Please refer to [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) for documentation._
+
+:::: tabs
+
+::: tab Javascript
+
+The following code samples uses plain [javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div>
+      <div id="searchbox" focus></div>
+      <div id="hits"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <script>
+        const search = instantsearch({
+            indexName: "movies",
+            searchClient: instantMeiliSearch(
+                "http://localhost:7700",
+                "masterKey",
+            )
+            });
+
+            search.addWidgets([
+            instantsearch.widgets.searchBox({
+                container: "#searchbox"
+            }),
+            instantsearch.widgets.hits({
+                container: "#hits",
+                templates: {
+                item: `
+                    <div>
+                    <div class="hit-name">
+                        {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}
+                    </div>
+                    </div>
+                `
+                }
+            })
+            ]);
+
+            search.start();
+    </script>
+  </body>
+</html>
+```
+
+The code above is divided in multiple parts:
+
+- The body of the page which adds both `searchbox` and `hits` divs.
+  This is where `instant-meilisearch` adds a searchbar and search results.
+- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch`.
+- The Javascript part where you can customize how `instant-meilisearch` works.
+
+To use `instant-meilisearch` using `npm` or `yarn` please visit [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch).
+
+:::
+
+::: tab VueJs
+
+The following example uses [VueJS](https://vuejs.org/) framework.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="app">
+      <ais-instant-search :search-client="searchClient" index-name="movies" >
+        <ais-search-box placeholder="Search here…" class="searchbox"></ais-search-box>
+        <ais-hits>
+          <div slot="item" slot-scope="{ item }">
+            <ais-highlight :hit="item" attribute="title" />
+          </div>
+        </ais-hits>
+      </ais-instant-search>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-instantsearch@3.2.0/dist/vue-instantsearch.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script>
+    Vue.use(VueInstantSearch)
+    var app = new Vue({
+        el: '#app',
+        data: {
+            searchClient: instantMeiliSearch('http://127.0.0.1:7700')
+        }
+    })
+  </script>
+</html>
+```
+
+The code above is divided in multiple parts:
+
+- The body of the page which which adds the right components using `VueJs`.
+  This is where `instant-meilisearch` adds a searchbar and search results.
+- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch`.
+- The `VueJs` part where you customize your `instant-meilisearch`.
+
+To use `instant-meilisearch` in `vueJs` using `npm` or `yarn` please visit [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue).
+
+:::
+
+::: tab React
+
+The following example uses [React](https://reactjs.org/) framework.
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+      <div id="app"></div>
+  </body>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script>
+    'use strict';
+      const { InstantSearch, SearchBox, Hits, Highlight }  = ReactInstantSearchDOM;
+
+      const searchClient = instantMeiliSearch(
+        "http://localhost:7700"
+      );
+
+      const App = () => (
+        React.createElement(InstantSearch, {
+          indexName: "movies",
+          searchClient: searchClient
+        }, [ React.createElement(SearchBox, { key: 1 }), React.createElement(Hits, { hitComponent: Hit, key: 2 })]
+        )
+      );
+      function Hit(props) {
+          return React.createElement(Highlight, {
+            attribute: "title",
+            hit: props.hit
+          })
+      }
+    const domContainer = document.querySelector('#app');
+    ReactDOM.render(React.createElement(App), domContainer);
+  </script>
+</html>
+```
+
+The code above is divided in multiple parts:
+
+- The body of the page, which is the entry point for you `react` components.
+- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
+- The `React` part where you customize your `instant-meilisearch`.
+
+To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
+
+:::
+
+::::
