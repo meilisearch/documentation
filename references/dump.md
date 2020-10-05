@@ -28,7 +28,7 @@ Trigger a dump creation process. Once the process is completed, a dump is create
 Get the status of a dump.
 Returned status could be:
 
-- `processing`: Dump creation is not finished.
+- `processing`: Dump creation is not yet finished.
 - `dump_process_failed`: An error occured during dump process, task aborted.
 - `done`: Dump creation is finished. A dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder)
 
