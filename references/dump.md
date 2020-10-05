@@ -1,4 +1,4 @@
-# Dump
+# Dumps
 
 The `dumps` route allow the creation of database dumps. Dumps are compatible between MeiliSearch versions.
 
