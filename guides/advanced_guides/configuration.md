@@ -326,6 +326,13 @@ the process will take time to fully import the dump depending on the size of you
 **Environment variable**: `MEILI_DUMP_BATCH_SIZE`
 **CLI option**: `--dump-batch-size`
 
-The batch size used in the importation process, the bigger it is the faster the dump is created.
+The batch size used in the importation process. The more you index documents in the same batch the less time it takes but more memory is used.
+
+**Example**
+Imagine you have `--dump-batch-size 1000` and the dump contains 2600 documents. Instead of indexing all of 3600 docs in one go, the engine will :
+
+1. Index documents 0 -> 999 (1000 docs)
+2. Index documents 1000 -> 1999 (1000 docs)
+3. Index documents 2000 -> 2599 (600 docs)
 
 **Default value**: `1024`
