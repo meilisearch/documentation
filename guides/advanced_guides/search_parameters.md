@@ -172,9 +172,9 @@ This attribute can take two values:
   An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned.
   If a facet name doesn't exist, it will be ignored.
 
-- `"*"`
+- `["*"]`
 
-  The `*` character can also be used. In that case, a count for all facets is returned.
+  In that case, a count for all facets is returned.
 
 #### Returned fields
 
