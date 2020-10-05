@@ -1,6 +1,6 @@
 # Dump
 
-The `dump` route allow the creation of database dumps. Dumps are compatible between MeiliSearch versions.
+The `dumps` route allow the creation of database dumps. Dumps are compatible between MeiliSearch versions.
 
 ## Trigger dump
 
