@@ -7,7 +7,7 @@ on:
       - trying
       - staging
 jobs:
-  build-deploy:
+  check-links:
     name: check validity of links
     runs-on: ubuntu-18.04
     steps:
