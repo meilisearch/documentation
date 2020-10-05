@@ -29,7 +29,7 @@ Get the status of a dump.
 Returned status could be:
 
 - `processing`: Dump creation is not yet finished.
-- `dump_process_failed`: An error occured during dump process, task aborted.
+- `dump_process_failed`: An error occured during dump process, and the task was aborted.
 - `done`: Dump creation is finished. A dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder)
 
 ### Example
