@@ -316,6 +316,8 @@ Path of the folder where dumps will be created if the [dump route](/references/d
 **CLI option**: `--import-dump`
 
 Import a dump from the specified path, must be a `.tar.gz` file.
+
+As the data contained in the dump needs to be indexed, the process will take some time to fully import the dump. Only when the dump has been fully imported, MeiliSearch server will be started.
 As the data contained in the dump needs to be indexed,
 the process will take time to fully import the dump depending on the size of your dump.
 
