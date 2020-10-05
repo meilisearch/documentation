@@ -2,7 +2,7 @@
 
 The `dumps` route allow the creation of database dumps. Dumps are compatible between MeiliSearch versions.
 
-## Trigger dump
+## Trigger a dump creation
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
