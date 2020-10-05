@@ -1,6 +1,9 @@
 # Dumps
 
 The `dumps` route allow the creation of database dumps. Dumps are compatible between MeiliSearch versions.
+Dumps contains one or several indexes with settings and documents for each index.
+During a dumps exportation, all indexes of the current instance are exported.
+During a dumps importation, all the contained indexes are imported and overwrite indexes with the same uid.
 
 ## Trigger a dump creation
 
@@ -30,7 +33,7 @@ Returned status could be:
 
 - `processing`: Dump creation is not yet finished.
 - `dump_process_failed`: An error occured during dump process, and the task was aborted.
-- `done`: Dump creation is finished. 
+- `done`: Dump creation is finished.
 
 A dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder). After the creation process is over, a dump can be imported to a MeiliSearch Instance at runtime.
 
