@@ -1,3 +1,3 @@
-status = ["check validity of links", "check style"]
+status = ["check validity of links", "check style", "build-deploy"]
 # 4 hours timeout
 timeout-sec = 14400
