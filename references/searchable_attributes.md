@@ -3,7 +3,7 @@
 _Child route of the [settings route](/references/settings.md)._
 
 The values of the fields whose attributes are added to the searchable-attributes list are **searched for matching query words**.
-By default, all fields are considered to be `searchableAttributes`. This behavior is represented by the `[*]` in the settings. Setting `searchableAttributes` to an empty array `[]` will reset the setting to its default value.
+By default, all fields are considered to be `searchableAttributes`. This behavior is represented by the `["*"]` in the settings. Setting `searchableAttributes` to an empty array `[]` will reset the setting to its default value.
 
 Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 

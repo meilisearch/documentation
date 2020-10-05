@@ -23,19 +23,19 @@ This is the preferred route to perform search when an API key is required, as it
 
 #### Body
 
-| Variable                  | Type                 | Description                                                                                     | Default value                                                                                     |
-| ------------------------- | -------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **q**                     | `String`               | Query string \_(mandatory)                                                                      | `{}`                                                                                              |
-| **offset**                | `Integer`              | Number of documents to skip                                                                     | `[]`                                                                                              |
-| **limit**                 | `Integer`              | Maximum number of documents returned                                                            | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **filters**               | `String`               | Filter queries by an attribute value                                                            | `[]`                                                                                              |
-| **facetFilters**          | `[Strings | [Strings]]` | Facet names and values to filter on                                                             | `null`                                                                                            |
-| **facetsDistribution**    | `[Strings]`            | Facets for which to retrieve the matching count                                                 | All attributes found in the documents                                                             |
-| **attributesToRetrieve**  | `[Strings]`            | Attributes to display in the returned documents                                                 | All attributes found in the documents                                                             |
-| **attributesToCrop**     | `[Strings]`            | Attributes whose values have to be cropped                                                      | `true`                                                                                            |
-| **cropLength**            | `Integer`              | Length used to crop field values                                                                | `true`                                                                                            |
-| **attributesToHighlight** | `[Strings]`            | Attributes whose values will contain highlighted matching terms                                 | `true`                                                                                            |
-| **matches**               | `Boolean`              | Defines whether an object that contains information about the matches should be returned or not | `true`                                                                                            |
+| Variable                  | Type                 | Description                                                                                       | Default value                                                                                   |
+| ------------------------- | -------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **q**                     | `String`               | Query string \_(mandatory)                                                                      | `""`                                                                                          |
+| **offset**                | `Integer`              | Number of documents to skip                                                                     | `0`                                                                                             |
+| **limit**                 | `Integer`              | Maximum number of documents returned                                                            | `20`                                                                                            |
+| **filters**               | `String`               | Filter queries by an attribute value                                                            | `null`                                                                                          |
+| **facetFilters**          | `[Strings OR [Strings]]` | Facet names and values to filter on                                                            | `null`                                                                                          |
+| **facetsDistribution**    | `[Strings]`            | Facets for which to retrieve the matching count                                                 | `null`                                                                                          |
+| **attributesToRetrieve**  | `[Strings]`            | Attributes to display in the returned documents                                                 | `["*"]`                                                                                           |
+| **attributesToCrop**     | `[Strings]`            | Attributes whose values have to be cropped                                                       | `null`                                                                                          |
+| **cropLength**            | `Integer`              | Length used to crop field values                                                                | `200`                                                                                           |
+| **attributesToHighlight** | `[Strings]`            | Attributes whose values will contain highlighted matching terms                                 | `null`                                                                                          |
+| **matches**               | `Boolean`              | Defines whether an object that contains information about the matches should be returned or not | `false`                                                                                         |
 
 > `filters` accept a query string. You can find more about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
 > `cropLength` is automatically rounded to match word boundaries.
@@ -115,17 +115,17 @@ This route should only be used when no API key is required. If an API key is req
 
 | Query Parameter                                                                                   | Description                                                                                     | Default Value |
 | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string                                                                                   |               |
-| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
+| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string                                                                                    |    `""`     |
+| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |     `0`       |
 | **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
-| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on                                  |    `null`     |
-| **[facetsDistribution](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
-| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `*`      |
-| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `none`     |
-| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
-| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `none`     |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `none`     |
-| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
+| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
+| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on                                                                                |    `null`     |
+| **[facetsDistribution](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                                    |    `null`     |
+| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |    `["*"]`      |
+| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `null`     |
+| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |    `200`      |
+| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `null`     |
+| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |   `false`     |
 
 > `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
 > `cropLength` is automatically rounded to match word boundaries.
