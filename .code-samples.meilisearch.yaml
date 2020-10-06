@@ -442,5 +442,3 @@ post_dump_1: |-
   $ curl -X POST 'http://localhost:7700/dumps',
 get_dump_status_1: |- 
   $ curl -X GET 'http://localhost:7700/dumps/:dump_uid/status',
-get_dump_1: |- 
-  $ curl -X GET 'http://localhost:7700/dumps/:dump_uid',
