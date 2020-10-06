@@ -2,6 +2,7 @@
 name: Check dead links
 on:
   pull_request:
+  # trying and staging branches are for BORS config
   push:
     branches:
       - trying
