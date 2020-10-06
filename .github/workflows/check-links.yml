@@ -6,6 +6,7 @@ on:
     branches:
       - trying
       - staging
+      - master
 jobs:
   check-links:
     name: check validity of links
