@@ -169,7 +169,7 @@ get_distinct_attribute_1: |-
 update_distinct_attribute_1: |-
   $ curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/distinct-attribute' \
-    --data 'movie_id'
+    --data '"movie_id"'
 reset_distinct_attribute_1: |-
   $ curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
