@@ -306,7 +306,7 @@ The engine skips snapshot importation if a database already exists. No error is 
 **Environment variable**: `MEILI_DUMPS_FOLDER`
 **CLI option**: `--dumps-folder`
 
-Path of the folder where dumps will be created if the [dump route](/references/dump.md#trigger-dump) is called.
+Path of the folder where dumps will be created if the [dump route](/references/dump.md#trigger-a-dump-creation) is called.
 
 **Default value**: `dumps/`
 
