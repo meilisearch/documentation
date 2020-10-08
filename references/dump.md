@@ -28,7 +28,7 @@ Triggers a dump creation process. Once the process is complete, a dump is create
 
 <RouteHighlighter method="GET" route="/dumps/:dump_uid/status"/>
 
-Get the status of a dump.
+Get the status of a dump creation process using the uid returned after calling the [dump creation route](/references/dump.md#create-a-dump).
 Returned status could be:
 
 - `processing`: Dump creation is not yet finished.
