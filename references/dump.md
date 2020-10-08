@@ -2,7 +2,7 @@
 
 The `dumps` route allows the creation of database dumps. Dumps are `.tar.gz` files that can be used to launch MeiliSearch. Dumps are compatible between MeiliSearch versions.
 
-Creating a dump is also referred to as exporting it, whereas launching MeiliSearch with a dump is referred to as importing it. 
+Creating a dump is also referred to as exporting it, whereas launching MeiliSearch with a dump is referred to as importing it.
 
 During a [dump export](/references/dump.md#create-a-dump), all indexes of the current instance are exported—together with their documents and settings—and saved as a single `.tar.gz` file.
 
