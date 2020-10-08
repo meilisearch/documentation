@@ -9,7 +9,7 @@ During a dumps importation, all the contained indexes are imported and overwrite
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder). If the dumps folder does not exist yet, it will be created. 
+Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder). If the dumps folder does not exist yet, it will be created.
 
 ### Example
 
@@ -34,7 +34,6 @@ The returned status could be:
 - `processing`: Dump creation is in progress.
 - `dump_process_failed`: An error occured during dump process, and the task was aborted.
 - `done`: Dump creation is finished and was successful.
-
 
 ### Example
 
