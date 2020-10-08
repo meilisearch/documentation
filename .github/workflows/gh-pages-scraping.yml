@@ -4,8 +4,8 @@ on:
   # trying and staging branches are for BORS config
   push:
     branches:
-      - trying
-      - staging
+      # - trying
+      # - staging
       - master
 
 jobs:
