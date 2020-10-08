@@ -1,5 +1,5 @@
 # Documents
- 
+
 A **document** is an object composed of one or more **<clientGlossary word="field" label="fields"/>**. Each field consists of an **<clientGlossary word="attribute" />** and its associated **<clientGlossary word="value" />**.
 
 Documents function as **containers for organizing data**, and are the basic building blocks of a MeiliSearch database. To search for a document, it must first be added to an [index][indexes].
