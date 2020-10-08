@@ -33,7 +33,7 @@ The returned status could be:
 
 - `processing`: Dump creation is in progress.
 - `dump_process_failed`: An error occured during dump process, and the task was aborted.
-- `done`: Dump creation is finished.
+- `done`: Dump creation is finished and was successful.
 
 A dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder). After the creation process is over, a dump can be imported to a MeiliSearch Instance at runtime.
 
