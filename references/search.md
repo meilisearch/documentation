@@ -36,7 +36,6 @@ This is the preferred route to perform search when an API key is required, as it
 | **cropLength**            | `Integer`              | Length used to crop field values                                                                | `200`                                                                                           |
 | **attributesToHighlight** | `[Strings]`            | Attributes whose values will contain highlighted matching terms                                 | `null`                                                                                          |
 | **matches**               | `Boolean`              | Defines whether an object that contains information about the matches should be returned or not | `false`                                                                                         |
-
 > `filters` accept a query string. You can find more about the filter syntax on [our dedicated page](/guides/advanced_guides/filtering.md).
 > `cropLength` is automatically rounded to match word boundaries.
 

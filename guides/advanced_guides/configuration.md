@@ -37,6 +37,10 @@ Server is listening on: http://127.0.0.1:7700
 
 - [Analytics](/guides/advanced_guides/configuration.md#analytics)
 - [Payload Limit Size](/guides/advanced_guides/configuration.md#payload-limit-size)
+- [Dumps](/guides/advanced_guides/configuration.md#dumps-folder)
+  - [Dumps folder](/guides/advanced_guides/configuration.md#dumps-folder)
+  - [Import dump](/guides/advanced_guides/configuration.md#import-dump)
+  - [Dump batch size](/guides/advanced_guides/configuration.md#dump-batch-size)
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
@@ -296,3 +300,37 @@ The engine ignores missing snapshots and does not throw an error in this case.
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
 The engine skips snapshot importation if a database already exists. No error is thrown in this case.
+
+### Dumps folder
+
+**Environment variable**: `MEILI_DUMPS_FOLDER`
+**CLI option**: `--dumps-folder`
+
+Path of the folder where dumps will be created if the [dump route](/references/dump.md#create-a-dump) is called.
+
+**Default value**: `dumps/`
+
+### Import dump
+
+**Environment variable**: `MEILI_IMPORT_DUMP`
+**CLI option**: `--import-dump`
+
+Import a dump from the specified path. Must be a `.tar.gz` file.
+
+As the data contained in the dump needs to be indexed, the process will take an amount of time corresponding to the size of the dump. Only when the import is complete and successful will the MeiliSearch server start.
+
+### Dump batch size
+
+**Environment variable**: `MEILI_DUMP_BATCH_SIZE`
+**CLI option**: `--dump-batch-size`
+
+Sets the batch size used in the dump importation process. This number corresponds to the maximum number of documents indexed in each batch. A larger value will take less time but use more memory.
+
+**Example**
+Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. Instead of indexing all 2600 docs in one go, the engine will :
+
+1. Index documents 0 -> 999 (1000 docs)
+2. Index documents 1000 -> 1999 (1000 docs)
+3. Index documents 2000 -> 2599 (600 docs)
+
+**Default value**: `1024`
