@@ -9,7 +9,7 @@ During a dumps importation, all the contained indexes are imported and overwrite
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-Trigger a dump creation process. Once the process is completed, a dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder).
+Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder). If the dumps folder does not exist yet, it will be created. 
 
 ### Example
 
