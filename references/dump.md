@@ -5,7 +5,7 @@ Dumps contains one or several indexes with settings and documents for each index
 During a dumps exportation, all indexes of the current instance are exported.
 During a dumps importation, all the contained indexes are imported and overwrite indexes with the same uid.
 
-## Trigger a dump creation
+## Create a Dump
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
