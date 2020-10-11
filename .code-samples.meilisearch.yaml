@@ -52,7 +52,7 @@ delete_one_document_1: |-
     -X DELETE 'http://localhost:7700/indexes/movies/documents/25684'
 delete_documents_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/delete-batch' \
+    -X POST 'http://localhost:7700/indexes/movies/documents/delete-batch' \
     --data '[
         23488,
         153738,
