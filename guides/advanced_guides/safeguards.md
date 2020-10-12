@@ -1,6 +1,14 @@
 # Safeguards
 
-MeiliSearch has only one way to save its data as of today: Snapshots.
+## Introduction: Snapshot vs Dump
+
+MeiliSearch has two ways to save its data, `snapshots` and `dumps`.
+
+Snapshots make it possible to schedule the creation of hard copies of your database. This feature is **intended mainly as a safeguard**—ensuring that if some failure occurs, you're able to relaunch MeiliSearch quickly and efficiently without having to wait for the re-indexing of documents. They are **not compatible between versions**.
+
+Dumps, at the difference, are **exporting the data out of MeiliSearch** in a way that they are not bound to the MeiliSearch version. Because of that, when importing a dump, MeiliSearch will need to index all of your documents, a process that takes up time and overhead (based on the amount of documents, their size and the settings).
+
+**To summarize**, **snapshots are highly efficient but not portable between different versions of MeiliSearch. Dumps, on the other hand, are highly portable but not very efficient, as frequently launching MeiliSearch from a dump would cause your performance to suffer.
 
 ## Snapshots
 
@@ -58,4 +66,36 @@ The simplest way to delete your database is the use `rm -rf data.ms`. After whic
 
 Since a snapshot is a replica of your database, it will restore it only if your MeiliSearch runs on the version it has been created on.
 
-For backups compatibility between different versions, we can't wait to show you our next feature: backups 😉.
+## Dumps
+
+Dumps are compressed files containing an export of your MeiliSearch instance. It contains all your indexes, documents and settings in a raw unprocessed manner. A dump isn't an exact copy—more like a blueprint that allows you to create an identical dataset. Dumps can be imported on the launch of MeiliSearch. MeiliSearch will start after the data has been indexed.
+
+### Dumps creation
+
+To create a dump of your dataset, you need to use the appropriate http route: `POST /dumps`. Using that route will trigger a dump creation process. Creating a dump is an asynchronous task that takes time based on the size of your dataset. A dump uid (unique identifier) is returned to help you track the process.
+
+<code-samples id="post_dump_1" />
+
+### Triggers a dump creation process.
+
+At any given moment, you can check the status of a particular dump creation process using the previously received dump uid, like so: `GET /dumps/:dump_uid/status`. Using this route, you can know whether your dump is still processing, is already done, or has encountered a problem.
+
+<code-samples id="get_dump_status_1" />
+
+After your dump creation process is done, the dump file is created and added in the dump folder. By default, this folder is `/dumps` at the root of your MeiliSearch binary, but this can be customized. Note that if your dump folder does not exist when the dump creation process is called, MeiliSearch will create it.
+
+### Import a Dump
+
+Once you have exported a dump, which is a tar.gz file, you are now able to use that dump to launch MeiliSearch. As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the MeiliSearch server start, after which you can begin searching through your data.
+
+```bash
+./meilisearch --import-dump /dumps/12345678.tar.gz
+```
+
+Because the indexation is the same process as when the documents are initially added to MeiliSearch, it is still a good practice to index documents in batches if the dataset is to big. The size of the batches are based on your dataset size and on your memory capacity.
+
+[See here for more dumps options](/guides/advanced_guides/configuration.md#dumps-folder)
+
+### Use Cases
+
+Dumps are used after MeiliSearch updates or to communicate your database to other instances of MeiliSearch (on different servers for exemple) without having to worry about their respective Meilisearch version.

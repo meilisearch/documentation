@@ -41,6 +41,12 @@ Server is listening on: http://127.0.0.1:7700
   - [Dumps folder](/guides/advanced_guides/configuration.md#dumps-folder)
   - [Import dump](/guides/advanced_guides/configuration.md#import-dump)
   - [Dump batch size](/guides/advanced_guides/configuration.md#dump-batch-size)
+- [Snapshoting](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
+  - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
+  - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
+  - [Load From Snapshot](/guides/advanced_guides/configuration.md#load-from-snapshot)
+  - [Ignore missing snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
+  - [Ignore snapshot if db exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
@@ -52,12 +58,6 @@ Server is listening on: http://127.0.0.1:7700
   - [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
   - [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
 - [Disable Sentry](/guides/advanced_guides/configuration.md#disable-sentry)
-- [Snapshoting](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
-  - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
-  - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
-  - [Load From Snapshot](/guides/advanced_guides/configuration.md#load-from-snapshot)
-  - [Ignore missing snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
-  - [Ignore snapshot if db exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
 
 ### Database path
 
@@ -325,6 +325,10 @@ As the data contained in the dump needs to be indexed, the process will take an 
 **CLI option**: `--dump-batch-size`
 
 Sets the batch size used in the dump importation process. This number corresponds to the maximum number of documents indexed in each batch. A larger value will take less time but use more memory.
+
+If the process is killed, this means that you do not have enough RAM. Consider reducing this number.
+
+If the process is too slow and you have a lot of RAM, consider improving this number as it will accelerate the indexation. If the process is killed, it means you put a number to high, try to find the good balance.
 
 **Example**
 Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. Instead of indexing all 2600 docs in one go, the engine will :
