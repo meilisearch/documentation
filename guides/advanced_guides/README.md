@@ -11,7 +11,7 @@ These advanced guides cover how to tune your search API and customize it:
 - [Stop words](stop_words.md)
 - [Distinct Attribute](distinct.md)
 - [Field properties](field_properties.md)
-- [Safeguard your MeiliSearch](safeguards.md)
+- [Snapshots and Dumps](snapshots_and_dumps.md)
 
 To learn how MeiliSearch works under the hood and better understand the algorithms behind it, you can read the following advanced guides:
 

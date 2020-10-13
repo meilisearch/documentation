@@ -260,7 +260,7 @@ The directory path where MeiliSearch will create snapshots.
 
 If this command is not called, snapshoting is deactivated.
 
-[More about snapshots and safeguards](/guides/advanced_guides/safeguards.md#snapshots)
+[More about snapshots in this guide](/guides/advanced_guides/snapshots_and_dumps.md#snapshots)
 
 ### Snapshot interval
 
@@ -338,3 +338,5 @@ Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. 
 3. Index documents 2000 -> 2599 (600 docs)
 
 **Default value**: `1024`
+
+[More about dumps in this guide](/guides/advanced_guides/snapshots_and_dumps.md#dumps)

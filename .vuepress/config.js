@@ -57,7 +57,7 @@ module.exports = {
             '/guides/advanced_guides/synonyms',
             '/guides/advanced_guides/stop_words',
             '/guides/advanced_guides/distinct',
-            '/guides/advanced_guides/safeguards',
+            '/guides/advanced_guides/snapshots_and_dumps',
             '/guides/advanced_guides/field_properties',
             '/guides/advanced_guides/typotolerance',
             '/guides/advanced_guides/prefix',

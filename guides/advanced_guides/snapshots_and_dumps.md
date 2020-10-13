@@ -1,6 +1,6 @@
-# Safeguards
+# Snapshots and Dumps
 
-## Introduction: Snapshot vs Dump
+## Snapshot vs Dump
 
 MeiliSearch has two ways to save its data, `snapshots` and `dumps`.
 
