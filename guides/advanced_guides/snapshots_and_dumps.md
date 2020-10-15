@@ -23,7 +23,7 @@ For MeiliSearch to create snapshots, the feature must be enabled by adding the f
 $ meilisearch --schedule-snapshot=true
 ```
 
-By default, MeiliSearch create snapshots in `snapshots/` directory.
+By default, MeiliSearch creates snapshots in a directory called `snapshots/` at the root of your MeiliSearch.
 
 The destination can be modified with the `--snapshot-dir` flag.
 
