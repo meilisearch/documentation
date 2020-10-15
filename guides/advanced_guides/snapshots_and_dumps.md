@@ -41,7 +41,7 @@ The amount of time between each new snapshot can be modified with the `--snapsho
 $ meilisearch --schedule-snapshot=true --snapshot-interval-sec 3600
 ```
 
-After running the above code, a snapshot will be created every hour (3600 seconds).
+After running the above code, a snapshot is created every hour (3600 seconds).
 
 During snapshot creation, old snapshots are **automatically overwritten**. This means that only the most recent snapshot should be present in the folder at any given time.
 
