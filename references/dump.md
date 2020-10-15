@@ -14,7 +14,7 @@ Dump imports are [performed at launch](/guides/advanced_guides/configuration.md#
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps folder](/guides/advanced_guides/configuration.md#dumps-folder). If the dumps folder does not exist yet, it will be created.
+Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps directory](/guides/advanced_guides/configuration.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
 
 ### Example
 
