@@ -257,9 +257,9 @@ We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and impro
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
 
-The directory path where MeiliSearch will create snapshots.
+Activates snapshots scheduling.
 
-If this command is not called, snapshotting is deactivated.
+If this command is not added or its value is `false` snapshotting is deactivated.
 
 [Read more about snapshots](/guides/advanced_guides/snapshots_and_dumps.md#snapshots).
 
