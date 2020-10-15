@@ -113,20 +113,19 @@ This will lead you to a web page with a search bar that will allow you to search
 
 ### Integrations
 
-You can add MeiliSearch to your application in two different ways.
+The only step missing is adding the searchbar to your own application. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): A developer tool that generates all the search components needed to start searching.
 
-- Using our SDK `instant-meilisearch` that
-- Using our javascript library `meilisearch-js`
+The first step is to create a `html` file wherever you want. Next, using one of the browser builds proposed bellow, you need to copy/paste the whole code inside the `html` file you just created.
+Now open the `html` file in your browser (by clicking on it and select a browser if it's not done automatically) and you should have the following user interacer:
 
-#### Instant-MeiliSearch
 
-`instant-meilisearch` is a SDK that helps you integrate MeiliSearch to your application with minimum effort.
-Communication and display is done by the library.
+
 
 :::: tabs
 
 ::: tab VueJs
 
+Browser build to create a vue environment.
 ```html
   <!DOCTYPE html>
   <html>
@@ -160,6 +159,8 @@ Communication and display is done by the library.
       </script>
   </html>
 ```
+
+To install `instant-meilisearch` using `npm` please visite [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue)
 
 :::
 
