@@ -31,7 +31,7 @@ The destination can be modified with the `--snapshot-dir` flag.
 $ meilisearch --schedule-snapshot=true --snapshot-dir mySnapShots/
 ```
 
-Now a snapshot will be created in `mySnapShots/` directory.
+Now snapshots are created in `mySnapShots/` directory.
 
 By default, MeiliSearch schedules a snapshot creation every day. When the instance starts, it will wait 24 hours until the first snapshot. This means that if you have launched MeiliSearch on Tuesday at 4 pm, the first snapshot will be created on Wednesday at 4 pm, and so on every day.
 
