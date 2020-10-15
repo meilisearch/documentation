@@ -8,7 +8,7 @@ Snapshots make it possible to schedule the creation of hard copies of your datab
 
 Dumps, at the difference, are **exporting the data out of MeiliSearch** in a way that they are not bound to the MeiliSearch version. Because of that, when importing a dump, MeiliSearch will need to index all of your documents, a process that takes up time and overhead (based on the amount of documents, their size and the settings).
 
-**To summarize**, **snapshots are highly efficient but not portable between different versions of MeiliSearch. Dumps, on the other hand, are highly portable but not very efficient, as frequently launching MeiliSearch from a dump would cause your performance to suffer.
+**To summarize**, snapshots are highly efficient but not portable between different versions of MeiliSearch. Dumps, on the other hand, are highly portable but not very efficient, as frequently launching MeiliSearch from a dump would cause your performance to suffer.
 
 ## Snapshots
 
