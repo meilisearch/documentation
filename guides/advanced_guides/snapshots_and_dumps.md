@@ -86,15 +86,15 @@ After your dump creation process is done, the dump file is created and added in 
 
 ### Import a Dump
 
-Once you have exported a dump, which is a tar.gz file, you are now able to use that dump to launch MeiliSearch. As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the MeiliSearch server start, after which you can begin searching through your data.
+Once you have exported a dump, which is a `.dump` file, you are now able to use that dump to launch MeiliSearch. As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the MeiliSearch server start, after which you can begin searching through your data.
 
 ```bash
-./meilisearch --import-dump /dumps/12345678.tar.gz
+./meilisearch --import-dump /dumps/12345678.dump
 ```
 
 Because the indexation is the same process as when the documents are initially added to MeiliSearch, it is still a good practice to index documents in batches if the dataset is to big. The size of the batches are based on your dataset size and on your memory capacity.
 
-[See here for more dumps options](/guides/advanced_guides/configuration.md#dumps-folder)
+[See here for more dumps options](/guides/advanced_guides/configuration.md#dumps-destination)
 
 ### Use Cases
 
