@@ -272,7 +272,7 @@ The directory path where MeiliSearch will create snapshots.
 
 **Default value**: `snapshots/`
 
-### Snapshot interval
+### Snapshot Interval
 
 **Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
 **CLI option**: `--snapshot-interval-sec`
@@ -281,7 +281,7 @@ Defines the time gap in seconds between each snapshot creation.
 
 **Default value**: `86400` (1 day)
 
-### import snapshot
+### Import Snapshot
 
 **Environment variable**: `MEILI_IMPORT_SNAPSHOT`
 **CLI option**: `--import-snapshot`
@@ -295,7 +295,7 @@ This command will stop the process if:
 
 If this command is not called, no snapshot will be imported.
 
-### Ignore missing snapshot
+### Ignore Missing Snapshot
 
 **Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
 **CLI option**: `--ignore-missing-snapshot`
@@ -304,7 +304,7 @@ The engine ignores missing snapshots and does not throw an error in this case.
 
 Requires `--import-snapshot` to be defined.
 
-### Ignore snapshot if db exists
+### Ignore Snapshot If DB Exists
 
 **Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
 **CLI option**: `--ignore-snapshot-if-db-exists`
@@ -313,7 +313,7 @@ The engine skips snapshot importation if a database already exists. No error is 
 
 Requires `--import-snapshot` to be defined.
 
-### Dumps destination
+### Dumps Destination
 
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
@@ -322,7 +322,7 @@ Path of the directory where dumps will be created if the [dump route](/reference
 
 **Default value**: `dumps/`
 
-### Import dump
+### Import Dump
 
 **Environment variable**: `MEILI_IMPORT_DUMP`
 **CLI option**: `--import-dump`
@@ -331,7 +331,7 @@ Import a dump from the specified path. Must be a `.dump` file.
 
 As the data contained in the dump needs to be indexed, the process will take an amount of time corresponding to the size of the dump. Only when the import is complete and successful will the MeiliSearch server start.
 
-### Dump batch size
+### Dump Batch Size
 
 **Environment variable**: `MEILI_DUMP_BATCH_SIZE`
 **CLI option**: `--dump-batch-size`
