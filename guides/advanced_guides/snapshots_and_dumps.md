@@ -47,9 +47,10 @@ Using the global environment `MEILI_LOAD_FROM_SNAPSHOT` or the CLI flag `--load-
 $ meilisearch --load-from-snapshot mySnapShots/data.ms.tar.gz
 ```
 
-####Common Problems
+#### Common Problems
 
 Take note that whenever you launch MeiliSearch from a snapshot, it will *stop processing and throw an error** if it encounters either of the two following situations:
+
 1. A database already exists (i.e. you have a non-empty `data.ms` folder in the same directory as your MeiliSearch binary)
 2. No snapshot is found at the given path
 
