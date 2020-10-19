@@ -45,8 +45,8 @@ Server is listening on: http://127.0.0.1:7700
   - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
   - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
   - [Load From Snapshot](/guides/advanced_guides/configuration.md#load-from-snapshot)
-  - [Ignore missing snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
-  - [Ignore snapshot if db exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
+  - [Ignore Missing Snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
+  - [Ignore Snapshot if Database Already Exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
@@ -258,9 +258,9 @@ We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and impro
 
 The directory path where MeiliSearch will create snapshots.
 
-If this command is not called, snapshoting is deactivated.
+If this command is not called, snapshotting is deactivated.
 
-[More about snapshots in this guide](/guides/advanced_guides/snapshots_and_dumps.md#snapshots)
+[Read more about snapshots](/guides/advanced_guides/snapshots_and_dumps.md#snapshots).
 
 ### Snapshot interval
 
@@ -326,9 +326,9 @@ As the data contained in the dump needs to be indexed, the process will take an 
 
 Sets the batch size used in the dump importation process. This number corresponds to the maximum number of documents indexed in each batch. A larger value will take less time but use more memory.
 
-If the process is killed, this means that you do not have enough RAM. Consider reducing this number.
+If a dump import process is killed, this means that you do not have enough RAM. Consider reducing your batch size.
 
-If the process is too slow and you have a lot of RAM, consider improving this number as it will accelerate the indexation. If the process is killed, it means you put a number to high, try to find the good balance.
+If you find that a dump import process is too slow and you have a lot of RAM to spare, consider increasing the batch size, as it will accelerate the indexation. However, if this leads to the dump process failing, you've gone too far and run out of memory. In this case, you should decrease the batch size until you find the right balance between speed and memory overhead.
 
 **Example**
 Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. Instead of indexing all 2600 docs in one go, the engine will :
@@ -339,4 +339,4 @@ Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. 
 
 **Default value**: `1024`
 
-[More about dumps in this guide](/guides/advanced_guides/snapshots_and_dumps.md#dumps)
+[Read more about dumps](/guides/advanced_guides/snapshots_and_dumps.md#dumps)
