@@ -32,8 +32,6 @@ errors:
     description: "MeiliSearch experienced an internal error. Check the error message, and open an issue if necessary."
   - code: invalid_token
     description: "The provided token is invalid."
-  - code: maintenance
-    description: "The MeiliSearch instance is under maintenance."
   - code: missing_authorization_header
     description: "The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [authentication](https://docs.meilisearch.com/guides/advanced_guides/authentication.html) for more information."
   - code: missing_header
