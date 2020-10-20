@@ -306,7 +306,7 @@ Requires `--import-snapshot` to be defined.
 
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
-The engine skips snapshot importation if a database already exists. No error is thrown in this case.
+If a database already exists, MeiliSearch will attempt to launch using that database instead of importing a snapshot. No error is thrown in this case.
 
 Requires `--import-snapshot` to be defined.
 
