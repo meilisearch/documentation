@@ -37,7 +37,7 @@ Server is listening on: http://127.0.0.1:7700
 
 - [Analytics](/guides/advanced_guides/configuration.md#analytics)
 - [Payload Limit Size](/guides/advanced_guides/configuration.md#payload-limit-size)
-- [Snapshoting](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
+- [Snapshots](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
   - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
   - [Snapshot Destination](/guides/advanced_guides/configuration.md#snapshot-destination)
   - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
