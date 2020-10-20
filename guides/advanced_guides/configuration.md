@@ -43,7 +43,7 @@ Server is listening on: http://127.0.0.1:7700
   - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
   - [Import Snapshot](/guides/advanced_guides/configuration.md#import-snapshot)
   - [Ignore Missing Snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
-  - [Ignore Snapshot If DB Exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
+  - [Ignore Snapshot if DB Exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
 - [Dumps](/guides/advanced_guides/configuration.md#dumps-destination)
   - [Dumps Destination](/guides/advanced_guides/configuration.md#dumps-destination)
   - [Import Dump](/guides/advanced_guides/configuration.md#import-dump)
