@@ -33,7 +33,7 @@
   "dependencies": {
     "@popperjs/core": "^2.5.3",
     "mermaid": "8.8.2",
-    "vue-eslint-parser": "^7.1.0",
+    "vue-eslint-parser": "^7.1.1",
     "vuepress": "^1.7.1",
     "vuepress-plugin-container": "^2.1.5",
     "vuepress-plugin-element-tabs": "^0.2.8",
