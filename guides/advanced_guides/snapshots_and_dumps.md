@@ -109,7 +109,7 @@ Once you have exported a dump, which is a `.dump` file, you are now able to use 
 ./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
 
-Because the indexation is the same process as when the documents are initially added to MeiliSearch, it is still a good practice to index documents in batches if the dataset is to big. The size of the batches are based on your dataset size and on your memory capacity.
+Because importing a dump is the same process as when documents are initially indexed by MeiliSearch, it can require some time and memory. If your dataset is very large, it is good practice to index documents in larger batches. This will speed up the indexing process at the cost of memory.
 
 [See here for more dumps options](/guides/advanced_guides/configuration.md#dumps-destination)
 
