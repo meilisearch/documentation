@@ -257,7 +257,7 @@ We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and impro
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
 
-Activates snapshots scheduling.
+Activates scheduled snapshots.
 
 If this command is not added or its value is `false` snapshotting is deactivated.
 
