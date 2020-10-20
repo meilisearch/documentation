@@ -283,7 +283,6 @@ Defines the time gap in seconds between each snapshot creation.
 
 ### Import Snapshot
 
-**Environment variable**: `MEILI_IMPORT_SNAPSHOT`
 **CLI option**: `--import-snapshot`
 
 The path of the snapshot file to import.
@@ -297,7 +296,6 @@ If this command is not called, no snapshot will be imported.
 
 ### Ignore Missing Snapshot
 
-**Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
 **CLI option**: `--ignore-missing-snapshot`
 
 The engine ignores missing snapshots and does not throw an error in this case.
@@ -306,7 +304,6 @@ Requires `--import-snapshot` to be defined.
 
 ### Ignore Snapshot if DB Exists
 
-**Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
 The engine skips snapshot importation if a database already exists. No error is thrown in this case.
@@ -324,7 +321,6 @@ Path of the directory where dumps will be created if the [dump route](/reference
 
 ### Import Dump
 
-**Environment variable**: `MEILI_IMPORT_DUMP`
 **CLI option**: `--import-dump`
 
 Import a dump from the specified path. Must be a `.dump` file.
