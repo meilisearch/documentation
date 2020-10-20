@@ -304,7 +304,7 @@ The engine ignores missing snapshots and does not throw an error in this case.
 
 Requires `--import-snapshot` to be defined.
 
-### Ignore Snapshot If DB Exists
+### Ignore Snapshot if DB Exists
 
 **Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
 **CLI option**: `--ignore-snapshot-if-db-exists`
