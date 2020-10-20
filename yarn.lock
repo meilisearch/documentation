@@ -9470,10 +9470,10 @@ vuepress-plugin-img-lazy@^1.0.4:
     markdown-it-img-lazy "^1.0.2"
     markdown-it-imsize "^2.0.1"
 
-vuepress-plugin-meilisearch@^0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.3.tgz#25207567294d2edd3b22ff185bc66402d1300872"
-  integrity sha512-snZ1cj+/l/IJ9IVgAy+Uh1M6m+y8yVZpqZ2JfvxZFxvaSxiRrXqhVWORduNM5ZQ71mEJhyG4+wcKDEPQjgGMrg==
+vuepress-plugin-meilisearch@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.4.tgz#2e2ecd7595ec197ff8103d3191ee5b3641dfc181"
+  integrity sha512-a84Rz5uhWUEabgKfN3UYyUpNCciSCImsxt3rDoTTSaBAnNttnZecX4D7wDr82RjJ1DyuQXdP+6TqgSRbAeBuNg==
   dependencies:
     docs-searchbar.js "^1.1"
 
