@@ -37,16 +37,17 @@ Server is listening on: http://127.0.0.1:7700
 
 - [Analytics](/guides/advanced_guides/configuration.md#analytics)
 - [Payload Limit Size](/guides/advanced_guides/configuration.md#payload-limit-size)
-- [Dumps](/guides/advanced_guides/configuration.md#dumps-folder)
-  - [Dumps folder](/guides/advanced_guides/configuration.md#dumps-folder)
-  - [Import dump](/guides/advanced_guides/configuration.md#import-dump)
-  - [Dump batch size](/guides/advanced_guides/configuration.md#dump-batch-size)
-- [Snapshoting](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
+- [Snapshots](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
   - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
+  - [Snapshot Destination](/guides/advanced_guides/configuration.md#snapshot-destination)
   - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
-  - [Load From Snapshot](/guides/advanced_guides/configuration.md#load-from-snapshot)
+  - [Import Snapshot](/guides/advanced_guides/configuration.md#import-snapshot)
   - [Ignore Missing Snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
-  - [Ignore Snapshot if Database Already Exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
+  - [Ignore Snapshot if DB Exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
+- [Dumps](/guides/advanced_guides/configuration.md#dumps-destination)
+  - [Dumps Destination](/guides/advanced_guides/configuration.md#dumps-destination)
+  - [Import Dump](/guides/advanced_guides/configuration.md#import-dump)
+  - [Dump Batch Size](/guides/advanced_guides/configuration.md#dump-batch-size)
 - [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
 - [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
 - [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
@@ -253,30 +254,36 @@ We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and impro
 
 ### Schedule Snapshot Creation
 
-**Environment variable**: `MEILI_SNAPSHOT_PATH`
-**CLI option**: `--snapshot-path`
+**Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
+**CLI option**: `--schedule-snapshot`
 
-The directory path where MeiliSearch will create snapshots.
+Activates scheduled snapshots.
 
-If this command is not called, snapshotting is deactivated.
+If this command is not added or its value is `false` snapshotting is deactivated.
 
 [Read more about snapshots](/guides/advanced_guides/snapshots_and_dumps.md#snapshots).
 
-### Snapshot interval
+### Snapshot Destination
+
+**Environment variable**: `MEILI_SNAPSHOT_DIR`
+**CLI option**: `--snapshot-dir`
+
+The directory path where MeiliSearch will create snapshots.
+
+**Default value**: `snapshots/`
+
+### Snapshot Interval
 
 **Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
 **CLI option**: `--snapshot-interval-sec`
 
 Defines the time gap in seconds between each snapshot creation.
 
-Requires `--snapshot-path` to be defined.
-
 **Default value**: `86400` (1 day)
 
-### Load from snapshot
+### Import Snapshot
 
-**Environment variable**: `MEILI_LOAD_FROM_SNAPSHOT`
-**CLI option**: `--load-from-snapshot`
+**CLI option**: `--import-snapshot`
 
 The path of the snapshot file to import.
 
@@ -287,39 +294,40 @@ This command will stop the process if:
 
 If this command is not called, no snapshot will be imported.
 
-### Ignore missing snapshot
+### Ignore Missing Snapshot
 
-**Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
 **CLI option**: `--ignore-missing-snapshot`
 
 The engine ignores missing snapshots and does not throw an error in this case.
 
-### Ignore snapshot if db exists
+Requires `--import-snapshot` to be defined.
 
-**Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
+### Ignore Snapshot if DB Exists
+
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
-The engine skips snapshot importation if a database already exists. No error is thrown in this case.
+If a database already exists, MeiliSearch will attempt to launch using that database instead of importing a snapshot. No error is thrown in this case.
 
-### Dumps folder
+Requires `--import-snapshot` to be defined.
 
-**Environment variable**: `MEILI_DUMPS_FOLDER`
-**CLI option**: `--dumps-folder`
+### Dumps Destination
 
-Path of the folder where dumps will be created if the [dump route](/references/dump.md#create-a-dump) is called.
+**Environment variable**: `MEILI_DUMPS_DIR`
+**CLI option**: `--dumps-dir`
+
+Path of the directory where dumps will be created if the [dump route](/references/dump.md#create-a-dump) is called.
 
 **Default value**: `dumps/`
 
-### Import dump
+### Import Dump
 
-**Environment variable**: `MEILI_IMPORT_DUMP`
 **CLI option**: `--import-dump`
 
-Import a dump from the specified path. Must be a `.tar.gz` file.
+Import a dump from the specified path. Must be a `.dump` file.
 
 As the data contained in the dump needs to be indexed, the process will take an amount of time corresponding to the size of the dump. Only when the import is complete and successful will the MeiliSearch server start.
 
-### Dump batch size
+### Dump Batch Size
 
 **Environment variable**: `MEILI_DUMP_BATCH_SIZE`
 **CLI option**: `--dump-batch-size`

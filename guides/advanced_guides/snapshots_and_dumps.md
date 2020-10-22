@@ -17,21 +17,31 @@ Using this feature, it is possible to schedule snapshot creation at custom inter
 
 ### Creating Snapshots
 
-For MeiliSearch to create snapshots, the feature must be enabled by specifying a path to the directory in which snapshots will be saved.
+For MeiliSearch to create snapshots, the feature must be enabled by adding the following flag:
 
 ```bash
-$ meilisearch --snapshot-path mySnapShots/
+$ meilisearch --schedule-snapshot=true
 ```
 
-By default, MeiliSearch schedules a snapshot creation every day. When the instance starts, it will wait 24 hours until the first snapshot. This means that if you have launched MeiliSearch on Tuesday at 4 pm, the first snapshot will be created on Wednesday at 4 pm, and so on every day.
+By default, MeiliSearch creates snapshots in a directory called `snapshots/` at the root of your MeiliSearch.
+
+The destination can be modified with the `--snapshot-dir` flag.
+
+```bash
+$ meilisearch --schedule-snapshot=true --snapshot-dir mySnapShots/
+```
+
+Now snapshots are created in `mySnapShots/` directory.
+
+The first snapshot is created on launching MeiliSearch. After that, snapshots are created routinely on a set interval until you deactivate snapshots or end the MeiliSearch instance. By default, one snapshot is taken every 24 hours.
 
 The amount of time between each new snapshot can be modified with the `--snapshot-interval-sec` flag.
 
 ```bash
-$ meilisearch --snapshot-path mySnapShots/ --snapshot-interval-sec 3600
+$ meilisearch --schedule-snapshot=true --snapshot-interval-sec 3600
 ```
 
-After running the above code, a snapshot will be created every hour (3600 seconds).
+After running the above code, a snapshot is created every hour (3600 seconds).
 
 During snapshot creation, old snapshots are **automatically overwritten**. This means that only the most recent snapshot should be present in the folder at any given time.
 
@@ -41,10 +51,10 @@ During snapshot creation, old snapshots are **automatically overwritten**. This 
 
 Because snapshots are exact copies of your database that haven't gone through any processing besides compression, starting a MeiliSearch instance from a snapshot is significantly faster than adding documents manually or starting from a dump.
 
-Using the global environment `MEILI_LOAD_FROM_SNAPSHOT` or the CLI flag `--load-from-snapshot` , MeiliSearch will start the server using the provided snapshot.
+Using the global environment `MEILI_IMPORT_SNAPSHOT` or the CLI flag `--import-snapshot` , MeiliSearch will start the server using the provided snapshot.
 
 ```bash
-$ meilisearch --load-from-snapshot mySnapShots/data.ms.tar.gz
+$ meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 ```
 
 #### Common Problems
@@ -96,10 +106,10 @@ After your dump creation process is done, the dump file is created and added in 
 Once you have exported a dump, which is a `.dump` file, you are now able to use that dump to launch MeiliSearch. As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the MeiliSearch server start, after which you can begin searching through your data.
 
 ```bash
-./meilisearch --import-dump /dumps/12345678.dump
+./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
 
-Because the indexation is the same process as when the documents are initially added to MeiliSearch, it is still a good practice to index documents in batches if the dataset is to big. The size of the batches are based on your dataset size and on your memory capacity.
+Because importing a dump is the same process as when documents are initially indexed by MeiliSearch, it can require some time and memory. If your dataset is very large, it is good practice to index documents in larger batches. This will speed up the indexing process at the cost of memory.
 
 [See here for more dumps options](/guides/advanced_guides/configuration.md#dumps-destination)
 
