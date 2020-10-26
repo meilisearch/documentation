@@ -1,6 +1,6 @@
 # Health
 
-The health check endpoint enables the health of a MeiliSearch instance to be periodically tested.
+The health check endpoint enables you to periodically test the health of your MeiliSearch instance.
 
 ## Get health
 
