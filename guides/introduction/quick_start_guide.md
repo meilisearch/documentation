@@ -22,20 +22,11 @@ Now that your MeiliSearch server is up and running, you should be able to commun
 
 Communication to the server is done through a [RESTful API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
-## Create your Index
-
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and associated documents.
-Indexes can be comparable to SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
-
-In order to be able to store your documents in an index, it is required you create one first.
-
-<CodeSamples id="getting_started_create_index_md" />
-
-[API references](/references/indexes.md)
-
 ## Add Documents
 
-Once the index has been created, the next step is to fill it with [documents](/guides/main_concepts/documents.md). These documents will be used and returned when search queries will be performed on MeiliSearch.
+To add documents to MeiliSearch you need to provide an [index](/guides/main_concepts/indexes.md) name and [documents](/guides/main_concepts/documents.md). The documents will be stored inside the given `index`. The index is created the first time you add documents to it.
+
+The documents will be used and returned when search queries will be performed on MeiliSearch.
 
 Documents are represented in `JSON format`.
 
@@ -43,7 +34,7 @@ To be processed, all documents must share one common <clientGlossary word="field
 
 There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
+Below is an example to showcase how to add documents to a index called `movies` using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
 <CodeSamples id="getting_started_add_documents_md" />
 

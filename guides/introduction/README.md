@@ -6,7 +6,6 @@ Contents :
 
 - 🚀 Getting Started
   - [Download and launch MeiliSearch](/guides/introduction/quick_start_guide.md#download-and-launch)
-  - [Create your index](/guides/introduction/quick_start_guide.md#create-your-index)
   - [Add documents](/guides/introduction/quick_start_guide.md#add-documents)
   - [Search!](/guides/introduction/quick_start_guide.md#search)
 - 👩‍🚀 [What's next?](/guides/introduction/whats_next.md)
