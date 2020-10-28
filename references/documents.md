@@ -90,7 +90,7 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
 
-Add a list of [documents](/guides/main_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
+Add a list of [documents](/guides/main_concepts/documents.md) or replace them if they already exist.
 
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
 
@@ -144,7 +144,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
 
-Add a list of documents and update them if they already. If the provided index does not exist, it will be created.
+Add a list of documents and update them if they already.
 
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
