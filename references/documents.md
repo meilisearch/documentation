@@ -96,6 +96,8 @@ If you send an already existing document (same [id](/guides/main_concepts/docume
 
 For a partial update of the document see [add or update documents](/references/documents.md#add-or-update-documents).
 
+If the provided index does not exist, it will be created.
+
 #### Path Variables
 
 | Variable      | Description   |
@@ -149,6 +151,8 @@ Add a list of documents and update them if they already. If the provided index d
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
 To completely overwrite a document, check out the [add or replace documents route](/references/documents.md#add-or-replace-documents).
+
+If the provided index does not exist, it will be created.
 
 #### Path Variables
 

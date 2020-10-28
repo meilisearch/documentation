@@ -68,6 +68,8 @@ Create an [index](/guides/main_concepts/indexes.md).
 
 This route takes as parameter an unique `uid` and **optionally** the [primary key](/guides/main_concepts/indexes.md#primary-key).
 
+You can also create a index by pushing directly the [documents](/references/documents) or [settings](/references/settings) on the index. 
+
 #### Body
 
 | Variable       | Description                                                |
