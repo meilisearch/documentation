@@ -28,5 +28,10 @@
     "language": "go",
     "label": "Go",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/master/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "rust",
+    "label": "Rust",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-rust/master/.code-samples.meilisearch.yaml"
   }
 ]
