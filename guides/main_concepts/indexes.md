@@ -19,12 +19,12 @@ For example, it means you could create on the same server synonyms for a `movie`
 
 ## Index Creation
 
-An Index is created the first time documents are added to it or manually using the [create index endpoint](/references/indexes.md#create-an-index).
+An index is created the first time documents are added to it or manually using the [create index endpoint](/references/indexes.md#create-an-index).
 
 #### Example
 
-In a new MeiliSearch instance without any index, let's add documents using the [add or replace documents endpoint](/references/documents.md#add-or-replace-documents).
-We provide `movie` as our index. Because that index was not previously created, using the following code will:
+Working on a fresh MeiliSearch instance with no indexes, let's add documents using the [add or replace documents endpoint](/references/documents.md#add-or-replace-documents).
+We provide `movie` as our index name. Because there's currently no index of that name in our MeiliSearch instance, using the following code will:
 
 1. Create the `movie` index.
 2. Add the documents to it.
