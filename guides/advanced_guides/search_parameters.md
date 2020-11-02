@@ -104,9 +104,9 @@ or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValu
 - `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
 
   Both types of array contain the facet names and values to filter on.
-  A valid array must be an array that contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
+  A valid array must be an array that contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genres:Comedy", "genres:Romance"]]`).
 
-  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
+  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`).
   - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
 Facet filters also support logical connectives by using [inner and outer array elements](/guides/advanced_guides/faceted_search.md#using-facets).
@@ -115,10 +115,10 @@ Facet filters also support logical connectives by using [inner and outer array e
 
 #### Example
 
-Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
+Suppose you have declared `director` and `genres` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
 
 ```SQL
-("genre:Horror" OR "genre:Mystery") AND "director:Jordan Peele"
+("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
 ```
 
 Querying on "thriller", the above example results in the following CURL command:

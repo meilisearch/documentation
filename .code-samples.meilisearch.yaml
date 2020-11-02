@@ -42,7 +42,7 @@ add_or_update_documents_1: |-
     --data '[{
         "id": 287947,
         "title": "Shazam ⚡️",
-        "genre": "comedy"
+        "genres": "comedy"
     }]'
 delete_all_documents_1: |-
   curl \
@@ -180,7 +180,7 @@ update_attributes_for_faceting_1: |-
   $ curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting' \
     --data '[
-        "genre",
+        "genres",
         "director"
     ]'
 reset_attributes_for_faceting_1: |-
