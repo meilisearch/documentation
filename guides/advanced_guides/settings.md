@@ -73,7 +73,7 @@ Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes
 
 #### Example
 
-To be able to facet search on `director` and `genre` in a movie database, you would declare faceted attributes as follows:
+To be able to facet search on `director` and `genres` in a movie database, you would declare faceted attributes as follows:
 
 <code-samples id="faceted_search_update_settings_1" />
 

@@ -67,7 +67,7 @@ List the settings.
     "exactness",
     "desc(release_date)"
   ],
-  "attributesForFaceting": ["genre"],
+  "attributesForFaceting": ["genres"],
   "distinctAttribute": null,
   "searchableAttributes": ["title", "description", "uid"],
   "displayedAttributes": [

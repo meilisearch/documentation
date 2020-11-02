@@ -29,7 +29,7 @@ Get the [attributes for faceting](/guides/advanced_guides/faceted_search.md) of 
 List the settings.
 
 ```json
-["genre", "director"]
+["genres", "director"]
 ```
 
 ## Update Attributes for Faceting
