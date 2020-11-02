@@ -226,12 +226,6 @@ get_indexes_stats_1: |-
 get_health_1: |-
   $ curl \
     -X GET 'http://localhost:7700/health'
-update_health_1: |-
-  $ curl \
-    -X PUT 'http://localhost:7700/health' \
-    --data '{
-        "health": false
-    }'
 get_version_1: |-
   $ curl \
     -X GET 'http://localhost:7700/version'
