@@ -28,7 +28,6 @@ To add documents to MeiliSearch you must provide [documents](/guides/main_concep
 
 Documents are the basic building blocks of your database. Whenever you perform a search query on an index, MeiliSearch examines the data contained in your documents and returns the ones that match your query, in order of [relevancy](/guides/main_concepts/relevancy.html). 
 
-Documents are represented in `JSON format`.
 
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
