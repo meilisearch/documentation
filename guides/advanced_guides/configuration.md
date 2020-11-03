@@ -116,8 +116,8 @@ Analytics allow us to know how many users are using MeiliSearch and the followin
 
 By default, MeiliSearch runs in `development` mode.
 
-- `Production`: the [master key](/guides/advanced_guides/authentication.md) is **mandatory**.
-- `Development`: the [master key](/guides/advanced_guides/authentication.md) is **optional**, and logs are output in "info" mode (_console output_).
+- `production`: the [master key](/guides/advanced_guides/authentication.md) is **mandatory**.
+- `development`: the [master key](/guides/advanced_guides/authentication.md) is **optional**, and logs are output in "info" mode (_console output_).
 
 If the server is running in development mode more logs will be displayed, and the master key can be avoided which implies that there is no security on the updates routes.
 This is useful to debug when integrating the engine with another service.
