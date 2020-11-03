@@ -14,7 +14,7 @@ To contribute, clone this repository, commit your changes and open a pull reques
 # Clone the repository
 $ git clone git@github.com:meilisearch/documentation.git meilisearch-documentation && cd meilisearch-documentation
 # Install dependencies
-$ yarn install
+$ yarn
 # Run MeiliSearch documentation on https://localhost:8080
 $ yarn dev
 ```
