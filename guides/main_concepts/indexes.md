@@ -17,6 +17,20 @@ Each index holds information about the fields found in the documents, how they g
 
 For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
 
+## Index Creation
+
+An index is created the first time documents are added to it or manually using the [create index endpoint](/references/indexes.md#create-an-index).
+
+#### Example
+
+Working on a fresh MeiliSearch instance with no indexes, let's add documents using the [add or replace documents endpoint](/references/documents.md#add-or-replace-documents).
+We provide `movie` as our index name. Because there's currently no index of that name in our MeiliSearch instance, using the following code will:
+
+1. Create the `movie` index.
+2. Add the documents to it.
+
+<code-samples id="add_or_replace_documents_1" />
+
 ## Index UID
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.

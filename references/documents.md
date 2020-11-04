@@ -3,6 +3,7 @@
 Documents are objects composed of fields that can store any type of data.
 Each field contains an attribute and its associated value.
 
+Documents are stored inside [indexes](/guides/main_concepts/indexes.md).
 [Learn more about documents](/guides/main_concepts/documents.md).
 
 ## Get one document
@@ -95,6 +96,8 @@ If you send an already existing document (same [id](/guides/main_concepts/docume
 
 For a partial update of the document see [add or update documents](/references/documents.md#add-or-update-documents).
 
+If the provided index does not exist, it will be created.
+
 #### Path Variables
 
 | Variable      | Description   |
@@ -149,6 +152,8 @@ If you send an already existing document (same [id](/guides/main_concepts/docume
 
 To completely overwrite a document, check out the [add or replace documents route](/references/documents.md#add-or-replace-documents).
 
+If the provided index does not exist, it will be created.
+
 #### Path Variables
 
 | Variable      | Description   |
@@ -180,7 +185,7 @@ The body is composed of a **JSON array** of documents.
 
 <code-samples id="add_or_update_documents_1" />
 This document is an update of the document found in [add or replace document](/references/documents.md#add-or-replace-documents).
-The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genre` field to that document. The rest of the document will remain unchanged.
+The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
 

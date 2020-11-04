@@ -67,7 +67,7 @@ List the settings.
     "exactness",
     "desc(release_date)"
   ],
-  "attributesForFaceting": ["genre"],
+  "attributesForFaceting": ["genres"],
   "distinctAttribute": null,
   "searchableAttributes": ["title", "description", "uid"],
   "displayedAttributes": [
@@ -93,6 +93,8 @@ Update the settings of an index.
 
 Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
 [Learn more about the settings in this guide](/guides/advanced_guides/settings.md).
+
+If the provided index does not exist, it will be created.
 
 #### Path Variables
 

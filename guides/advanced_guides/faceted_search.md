@@ -90,32 +90,32 @@ The following are correct:
 good ✅
 
 ```javascript
-"genre:horror"
+"genres:horror"
 ```
 
 good ✅
 
 ```javascript
-["genre:horror", "genre:thriller"]
+["genres:horror", "genres:thriller"]
 ```
 
 good ✅
 
 ```javascript
-["genre:comedy", ["genre:horror", "genre:thiller"]]
+["genres:comedy", ["genres:horror", "genres:thiller"]]
 ```
 
 If the maximum array depth is exceeded, errors will be raised:
 error ❌
 
 ```javascript
-["genre:comedy", ["genre:horror", ["genre:romance"]]]
+["genres:comedy", ["genres:horror", ["genres:romance"]]]
 ```
 
 error ❌
 
 ```javascript
-[[["genre:romance"]]]
+[[["genres:romance"]]]
 ```
 
 Facet filters can have a **maximum array deepness of two**.
@@ -125,32 +125,32 @@ The following are correct:
 good ✅
 
 ```javascript
-"genre:horror"
+"genres:horror"
 ```
 
 good ✅
 
 ```javascript
-["genre:horror", "genre:thriller"]
+["genres:horror", "genres:thriller"]
 ```
 
 good ✅
 
 ```javascript
-["genre:comedy", ["genre:horror", "genre:thiller"]]
+["genres:comedy", ["genres:horror", "genres:thiller"]]
 ```
 
 When you add one more array deepness, it will raise errors:
 error ❌
 
 ```javascript
-["genre:comedy", ["genre:horror", ["genre:romance"]]]
+["genres:comedy", ["genres:horror", ["genres:romance"]]]
 ```
 
 error ❌
 
 ```javascript
-[[["genre:romance"]]]
+[[["genres:romance"]]]
 ```
 
 #### Logical Connectives
