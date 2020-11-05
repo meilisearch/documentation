@@ -83,41 +83,6 @@ They can filter on facets to narrow down their results based on criteria with th
 - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFiltering` list](/guides/advanced_guides/faceted_search.md#setting-up-facets).
 - `facetValue`: The value of the facet used to filter results (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
-Facet filters can have a **maximum array depth of two**.
-
-The following are correct:
-
-good ✅
-
-```javascript
-"genres:horror"
-```
-
-good ✅
-
-```javascript
-["genres:horror", "genres:thriller"]
-```
-
-good ✅
-
-```javascript
-["genres:comedy", ["genres:horror", "genres:thiller"]]
-```
-
-If the maximum array depth is exceeded, errors will be raised:
-error ❌
-
-```javascript
-["genres:comedy", ["genres:horror", ["genres:romance"]]]
-```
-
-error ❌
-
-```javascript
-[[["genres:romance"]]]
-```
-
 Facet filters can have a **maximum array deepness of two**.
 
 The following are correct:
