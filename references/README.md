@@ -10,7 +10,7 @@ You might find the answers to some of your questions [in the FAQ](/faq/faq.md) ð
 
 ## Version Compatibility
 
-The documentation of MeiliSearch is compatible with the latests version of MeiliSearch. We do not provide multi-versionning documentation.
+The documentation of MeiliSearch is compatible with the latest version of MeiliSearch. We do not provide multi-versionning documentation.
 If you have a doubt concerning the version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch), it is written on the upper navbar on the left side.
 
 ![version of MeiliSearch](/doc-version.png)
