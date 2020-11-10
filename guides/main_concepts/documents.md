@@ -167,7 +167,7 @@ $ ./meilisearch --http-payload-size-limit=100000000
 
 When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 
-<code-samples id="documents_guide_add_movie_1" />
+<CodeSamples id="documents_guide_add_movie_1" />
 
 [primary-field]: /guides/main_concepts/documents.md#primary-field
 [primary-key]: /guides/main_concepts/documents.md#primary-key

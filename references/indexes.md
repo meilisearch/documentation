@@ -12,7 +12,7 @@ List all [indexes](/guides/main_concepts/indexes.md).
 
 ### Example
 
-<code-samples id='list_all_indexes_1' />
+<CodeSamples id='list_all_indexes_1' />
 
 #### Response: `200 Ok`
 
@@ -47,7 +47,7 @@ Get information about an [index](/guides/main_concepts/indexes.md).
 
 ### Example
 
-<code-samples id='get_one_index_1' />
+<CodeSamples id='get_one_index_1' />
 
 #### Response: `200 Ok`
 
@@ -88,7 +88,7 @@ An index is automatically created when adding [documents](/references/documents)
 
 ### Example
 
-<code-samples id='create_an_index_1' />
+<CodeSamples id='create_an_index_1' />
 
 #### Response: `201 created`
 
@@ -126,7 +126,7 @@ The `primaryKey` can be added if it does not already exist (to know if it has be
 
 ### Example
 
-<code-samples id='update_an_index_1' />
+<CodeSamples id='update_an_index_1' />
 
 #### Response: `200 Ok`
 
@@ -153,6 +153,6 @@ Delete an [index](/guides/main_concepts/indexes.md).
 
 ### Example
 
-<code-samples id='delete_an_index_1' />
+<CodeSamples id='delete_an_index_1' />
 
 #### Response: `204 No Content`

@@ -27,7 +27,7 @@ Get the [displayed attributes](/guides/advanced_guides/settings.md#displayed-att
 
 #### Example
 
-<code-samples id="get_displayed_attributes_1"/>
+<CodeSamples id="get_displayed_attributes_1"/>
 
 #### Response: `200 Ok`
 
@@ -57,7 +57,7 @@ An array of strings that contains attributes of an index to display.
 
 #### Example
 
-<code-samples id="update_displayed_attributes_1"/>
+<CodeSamples id="update_displayed_attributes_1"/>
 
 #### Response: `202 Accepted`
 
@@ -87,7 +87,7 @@ All attributes found in the documents added to the index.
 
 #### Example
 
-<code-samples id="reset_displayed_attributes_1"/>
+<CodeSamples id="reset_displayed_attributes_1"/>
 
 #### Response: `202 Accepted`
 

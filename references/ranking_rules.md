@@ -30,7 +30,7 @@ An array that contains [built-in ranking rules](/guides/main_concepts/relevancy.
 
 ### Example
 
-<code-samples id="get_ranking_rules_1" />
+<CodeSamples id="get_ranking_rules_1" />
 
 #### Response: `200 Ok`
 
@@ -74,7 +74,7 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 ### Example
 
-<code-samples id="update_ranking_rules_1" />
+<CodeSamples id="update_ranking_rules_1" />
 
 #### Response: `202 Accepted`
 
@@ -110,7 +110,7 @@ To remove all ranking rules, which is not recommended in any case, you would sen
 
 #### Example
 
-<code-samples id="reset_ranking_rules_1" />
+<CodeSamples id="reset_ranking_rules_1" />
 
 #### Response: `202 Accepted`
 

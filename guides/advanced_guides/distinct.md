@@ -38,7 +38,7 @@ As shown below, you have 3 documents that contain information about the same jac
 
 You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
 
-<code-samples id="distinct_attribute_guide_1" />
+<CodeSamples id="distinct_attribute_guide_1" />
 
 By [setting `product_id` as a distinct attribute](/references/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
 

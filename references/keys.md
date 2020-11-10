@@ -18,7 +18,7 @@ You must have the master key to access this route.
 
 ### Example
 
-<code-samples id="get_keys_1" />
+<CodeSamples id="get_keys_1" />
 
 #### Response: `200 Ok`
 

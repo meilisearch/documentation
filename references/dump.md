@@ -18,7 +18,7 @@ Triggers a dump creation process. Once the process is complete, a dump is create
 
 ### Example
 
-<code-samples id="post_dump_1" />
+<CodeSamples id="post_dump_1" />
 
 #### Response: `202 Accepted`
 
@@ -42,7 +42,7 @@ The returned status could be:
 
 ### Example
 
-<code-samples id="get_dump_status_1" />
+<CodeSamples id="get_dump_status_1" />
 
 #### Response: `200 Ok`
 

@@ -50,7 +50,7 @@ Get the settings of an index.
 
 ### Example
 
-<code-samples id="get_settings_1" />
+<CodeSamples id="get_settings_1" />
 
 #### Response: `200 Ok`
 
@@ -116,7 +116,7 @@ If the provided index does not exist, it will be created.
 
 ### Example
 
-<code-samples id="update_settings_1" />
+<CodeSamples id="update_settings_1" />
 
 #### Response: `202 Accepted`
 
@@ -156,7 +156,7 @@ All settings will be reset to their default value.
 
 #### Example
 
-<code-samples id="reset_settings_1" />
+<CodeSamples id="reset_settings_1" />
 
 #### Response: `202 Accepted`
 

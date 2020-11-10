@@ -16,7 +16,7 @@ Therefore, if a field attribute is not in the searchable-attributes list, the fi
 
 Suppose you manage a database that contains information about movies. By adding the following settings, the fields `uid`, `movie_id`, `title`, `description`, `poster`, `release_date` and `rank` will be searched.
 
-<code-samples id="field_properties_guide_searchable_1" />
+<CodeSamples id="field_properties_guide_searchable_1" />
 
 ## Displayed Fields
 
@@ -34,7 +34,7 @@ This list can be restricted to a selected set of attributes in the settings.
 
 Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
 
-<code-samples id="field_properties_guide_displayed_1" />
+<CodeSamples id="field_properties_guide_displayed_1" />
 
 ## Data storing
 
