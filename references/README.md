@@ -4,7 +4,7 @@ Welcome to the MeiliSearch API documentation.
 
 ::: warning
 
-The documentation is written for the latest stable release: [v0.15.0](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.15.0).
+The documentation is written for the latest stable release: [v0.16.0](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.15.0).
 
 :::
 
