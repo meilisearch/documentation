@@ -1,6 +1,7 @@
 const chalk = require('chalk')
 const fs = require('fs')
 const yaml = require('js-yaml')
+const path = require('path')
 
 /*
  * Convert YAML string to Js object
@@ -30,7 +31,7 @@ const log = (msg, color = 'FFB4E1', label = 'CODE-SAMPLE-FETCHER') => {
  */
 function samplesToFiles(samples) {
   fs.writeFileSync(
-    `${__dirname}/generated-samples.json`,
+    path.join(__dirname, 'generated-samples.json'),
     JSON.stringify(samples, null, 2)
   )
 }
