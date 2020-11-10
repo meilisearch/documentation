@@ -26,7 +26,7 @@ Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 ### Example
 
-<code-samples id="get_stop_words_1" />
+<CodeSamples id="get_stop_words_1" />
 
 #### Response: `200 Ok`
 
@@ -56,7 +56,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 ### Example
 
-<code-samples id="update_stop_words_1" />
+<CodeSamples id="update_stop_words_1" />
 
 #### Response: `202 Accepted`
 
@@ -86,7 +86,7 @@ Empty array: `[]`
 
 ### Example
 
-<code-samples id="reset_stop_words_1" />
+<CodeSamples id="reset_stop_words_1" />
 
 #### Response: `202 Accepted`
 

@@ -57,7 +57,7 @@ Suppose that you have a collection of movies containing the following fields:
 
 To be able to facet search on `director` and `genres`, you would declare faceted attributes as follows:
 
-<code-samples id="faceted_search_update_settings_1" />
+<CodeSamples id="faceted_search_update_settings_1" />
 
 ## Using facets
 
@@ -147,7 +147,7 @@ Suppose you have declared `director` and `genres` as [faceted attributes](/guide
 
 Querying on "thriller", the above example results in the following CURL command:
 
-<code-samples id="faceted_search_facet_filters_1" />
+<CodeSamples id="faceted_search_facet_filters_1" />
 
 And you would get the following response:
 
@@ -223,7 +223,7 @@ Upon search, when using the `facetDistribution` parameter, there will be a `face
 
 Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
 
-<code-samples id="faceted_search_facets_distribution_1"/>
+<CodeSamples id="faceted_search_facets_distribution_1"/>
 
 And you would get the following response:
 
@@ -278,7 +278,7 @@ Suppose that you manage a movie database on which you want to search by `genres`
 
 The first thing to do is to declare faceted attributes as follows:
 
-<code-samples id="faceted_search_walkthrough_attributes_for_faceting_1" />
+<CodeSamples id="faceted_search_walkthrough_attributes_for_faceting_1" />
 
 In the above example, `director`, `producer`, `genres` and `production_companies` will be used as facets.
 
@@ -286,7 +286,7 @@ You can now search your documents and use query parameters.
 
 You can filter on facets. For instance, say you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele. You have to use the following CURL command:
 
-<code-samples id="faceted_search_walkthrough_facet_filters_1" />
+<CodeSamples id="faceted_search_walkthrough_facet_filters_1" />
 
 You will get the following response:
 
@@ -324,7 +324,7 @@ You will get the following response:
 
 Now, if you want to know what the number of Batman movies per genre is, you have to use the following CURL command:
 
-<code-samples id="faceted_search_walkthrough_facets_distribution_1" />
+<CodeSamples id="faceted_search_walkthrough_facets_distribution_1" />
 
 You will get the following response:
 

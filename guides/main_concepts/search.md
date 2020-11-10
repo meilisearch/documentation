@@ -74,11 +74,11 @@ Here are a few examples of what can be achieved with the [search parameters](/gu
 
 Results can be paginated using the `limit` and `offset` query parameters.
 
-<code-samples id="search_guide_1" />
+<CodeSamples id="search_guide_1" />
 
 You can filter results using the `filters` query parameter.
 
-<code-samples id="search_guide_2" />
+<CodeSamples id="search_guide_2" />
 
 ## Give it a try!
 

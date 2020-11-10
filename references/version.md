@@ -8,7 +8,7 @@ Get version of MeiliSearch.
 
 ### Example
 
-<code-samples id="get_version_1" />
+<CodeSamples id="get_version_1" />
 
 #### Response: `200 Ok`
 

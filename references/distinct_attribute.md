@@ -26,7 +26,7 @@ Get the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attrib
 
 ### Example
 
-<code-samples id="get_distinct_attribute_1" />
+<CodeSamples id="get_distinct_attribute_1" />
 
 #### Response: `200 Ok`
 
@@ -54,7 +54,7 @@ A String: the field name.
 
 ### Example
 
-<code-samples id="update_distinct_attribute_1" />
+<CodeSamples id="update_distinct_attribute_1" />
 
 #### Response: `202 Accepted`
 
@@ -82,7 +82,7 @@ Reset the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attr
 
 #### Example
 
-<code-samples id="reset_distinct_attribute_1" />
+<CodeSamples id="reset_distinct_attribute_1" />
 
 #### Response: `202 Accepted`
 

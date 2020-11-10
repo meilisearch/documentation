@@ -29,7 +29,7 @@ We provide `movie` as our index name. Because there's currently no index of that
 1. Create the `movie` index.
 2. Add the documents to it.
 
-<code-samples id="add_or_replace_documents_1" />
+<CodeSamples id="add_or_replace_documents_1" />
 
 ## Index UID
 

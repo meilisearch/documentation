@@ -14,7 +14,7 @@ By default the web server can be reached on `http://127.0.0.1:7700`.
 
 Let's add some movies.
 
-<code-samples id="add_movies_json_1" />
+<CodeSamples id="add_movies_json_1" />
 
 Let's go to `http://127.0.0.1:7700` in our browser.
 

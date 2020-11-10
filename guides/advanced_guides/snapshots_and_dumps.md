@@ -91,13 +91,13 @@ A dump is a compressed file containing an export of your MeiliSearch instance. I
 
 To create a dump of your dataset, you need to use the appropriate HTTP route: `POST /dumps`. Using that route will trigger a dump creation process. Creating a dump is an asynchronous task that takes time based on the size of your dataset. A dump uid (unique identifier) is returned to help you track the process.
 
-<code-samples id="post_dump_1" />
+<CodeSamples id="post_dump_1" />
 
 The above code triggers a dump creation process.
 
 At any given moment, you can check the status of a particular dump creation process using the previously received dump uid, like so: `GET /dumps/:dump_uid/status`. Using this route, you can know whether your dump is still processing, has already been created, or has encountered a problem.
 
-<code-samples id="get_dump_status_1" />
+<CodeSamples id="get_dump_status_1" />
 
 After your dump creation process is done, the dump file is created and added in the dump folder. By default, this folder is `/dumps` at the root of your MeiliSearch binary, but this can be customized. Note that **if your dump folder does not already exist when the dump creation process is called, MeiliSearch will create it**.
 

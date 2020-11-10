@@ -27,7 +27,7 @@ Get the [searchable attributes](/guides/advanced_guides/field_properties.md#sear
 
 ### Example
 
-<code-samples id="get_searchable_attributes_1" />
+<CodeSamples id="get_searchable_attributes_1" />
 
 #### Response: `200 Ok`
 
@@ -59,7 +59,7 @@ This means that a document with a match in an attribute at the start of the arra
 
 ### Example
 
-<code-samples id="update_searchable_attributes_1" />
+<CodeSamples id="update_searchable_attributes_1" />
 
 A match in title will make a document more relevant than another document with a match in description.
 
@@ -91,7 +91,7 @@ All attributes found in the documents added to the index.
 
 #### Example
 
-<code-samples id="reset_searchable_attributes_1" />
+<CodeSamples id="reset_searchable_attributes_1" />
 
 #### Response: `202 Accepted`
 

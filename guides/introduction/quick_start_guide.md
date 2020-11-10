@@ -29,7 +29,7 @@ Indexes can be comparable to SQL tables. Since MeiliSearch is <clientGlossary wo
 
 In order to be able to store your documents in an index, it is required you create one first.
 
-<code-samples id="getting_started_create_index_md" />
+<CodeSamples id="getting_started_create_index_md" />
 
 [API references](/references/indexes.md)
 
@@ -45,7 +45,7 @@ There are [several ways to let MeiliSearch know what the primary key](/guides/ma
 
 Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
-<code-samples id="getting_started_add_documents_md" />
+<CodeSamples id="getting_started_add_documents_md" />
 
 [API references](/references/documents.md)
 
@@ -69,7 +69,7 @@ MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.m
 
 The search engine is now aware of your documents and can serve those via an HTTP server.
 
-<code-samples id="getting_started_search_md" />
+<CodeSamples id="getting_started_search_md" />
 
 MeiliSearch **response**:
 

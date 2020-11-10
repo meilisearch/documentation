@@ -10,6 +10,6 @@ Get health of MeiliSearch server.
 
 ### Example
 
-<code-samples id="get_health_1" />
+<CodeSamples id="get_health_1" />
 
 #### Response: `204 No Content`

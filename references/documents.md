@@ -21,7 +21,7 @@ Get one [document](/guides/main_concepts/documents.md) using its unique id.
 
 ### Example
 
-<code-samples id="get_one_document_1" />
+<CodeSamples id="get_one_document_1" />
 
 #### Response: `200 Ok`
 
@@ -63,7 +63,7 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 ### Example
 
-<code-samples id="get_documents_1" />
+<CodeSamples id="get_documents_1" />
 
 #### Response: `200 Ok`
 
@@ -130,7 +130,7 @@ The body is composed of a **JSON array** of documents.
 
 ### Example
 
-<code-samples id="add_or_replace_documents_1" />
+<CodeSamples id="add_or_replace_documents_1" />
 
 #### Response: `202 Accepted`
 
@@ -183,7 +183,7 @@ The body is composed of a **JSON array** of documents.
 
 ### Example
 
-<code-samples id="add_or_update_documents_1" />
+<CodeSamples id="add_or_update_documents_1" />
 This document is an update of the document found in [add or replace document](/references/documents.md#add-or-replace-documents).
 The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
@@ -211,7 +211,7 @@ Delete all documents in the specified index.
 
 ### Example
 
-<code-samples id="delete_all_documents_1" />
+<CodeSamples id="delete_all_documents_1" />
 
 #### Response: `202 Accepted`
 
@@ -238,7 +238,7 @@ Delete one document based on its unique id.
 
 ### Example
 
-<code-samples id="delete_one_document_1" />
+<CodeSamples id="delete_one_document_1" />
 
 #### Response: `202 Accepted`
 
@@ -272,7 +272,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 
 ### Example
 
-<code-samples id="delete_documents_1" />
+<CodeSamples id="delete_documents_1" />
 
 #### Response: `202 Accepted`
 

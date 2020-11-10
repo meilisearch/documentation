@@ -57,7 +57,7 @@ This is the preferred route to perform search when an API key is required, as it
 
 ### Example
 
-<code-samples id="search_1" />
+<CodeSamples id="search_1" />
 
 #### Response: `200 Ok`
 
@@ -151,7 +151,7 @@ When the `q` parameter is not specified, a [placeholder](/guides/advanced_guides
 
 ### Example
 
-<code-samples id="search_1" />
+<CodeSamples id="search_1" />
 
 #### Response: `200 Ok`
 

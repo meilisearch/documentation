@@ -26,7 +26,7 @@ Get the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
 
 #### Example
 
-<code-samples id="get_synonyms_1" />
+<CodeSamples id="get_synonyms_1" />
 
 #### Response: `200 OK`
 
@@ -58,7 +58,7 @@ An object that contains all synonyms and their associated words.
 
 #### Example
 
-<code-samples id="update_synonyms_1" />
+<CodeSamples id="update_synonyms_1" />
 
 #### Response: `202 Accepted`
 
@@ -88,7 +88,7 @@ Empty object : `{}`
 
 #### Example
 
-<code-samples id="reset_synonyms_1" />
+<CodeSamples id="reset_synonyms_1" />
 
 #### Response: `202 Accepted`
 

@@ -17,7 +17,7 @@ Get the status of an [update](/guides/advanced_guides/asynchronous_updates.md) i
 
 ### Example
 
-<code-samples id="get_update_1" />
+<CodeSamples id="get_update_1" />
 
 #### Response: `200 Ok`
 
@@ -51,7 +51,7 @@ Get the status of all [updates](/guides/advanced_guides/asynchronous_updates.md)
 
 ### Example
 
-<code-samples id="get_all_updates_1" />
+<CodeSamples id="get_all_updates_1" />
 
 #### Response: `200 Ok`
 
