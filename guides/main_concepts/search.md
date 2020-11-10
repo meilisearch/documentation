@@ -68,7 +68,7 @@ Placeholder returns documents sorted by the [ranking rules](/guides/advanced_gui
 
 To perform a placeholder search, simply omit the query parameter.
 
-#### Example
+### Examples
 
 Here are a few examples of what can be achieved with the [search parameters](/guides/advanced_guides/search_parameters.md):
 
