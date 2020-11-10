@@ -23,6 +23,7 @@ module.exports = {
   plugins: ['vue', 'prettier'],
   rules: {
     'vue/no-v-html': 'off', // used in cases where HTML is needed
+    'array-callback-return': 'off',
     'space-before-function-paren': ['error', {
       anonymous: 'always',
       named: 'never',

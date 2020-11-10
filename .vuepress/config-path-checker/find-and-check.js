@@ -1,14 +1,15 @@
 const { isObject } = require('./utils')
 const { addError } = require('./result-report')
+const path = require('path')
 
-function checkPath(path) {
-  if (path.slice(-1) !== '/') {
+function checkPath(givenPath) {
+  if (givenPath.slice(-1) !== '/') {
     addError.call(this, {
       type: 'error',
       errMsg: 'Path in config.json file is missing a trailing slash',
-      fileUrl: `${__dirname}/config.json`,
+      fileUrl: path.join(__dirname, 'config.json'),
       fullText: `path: '${path}'`,
-      path,
+      path: givenPath,
     })
   }
 }
