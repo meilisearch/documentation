@@ -4,14 +4,14 @@ Welcome to the MeiliSearch API documentation.
 
 ::: tip
 
-You might find the answers to some of your questions [in the FAQ](/faq/faq.md) 💡
+Check out [the FAQ](/faq/faq.md) for answers to some common questions 💡
 
 :::
 
 ## Version Compatibility
 
-The documentation is compatible with the latest version of MeiliSearch. We do not provide multi-versionning documentation.
-The actual version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is written on the upper navbar on the left side.
+This documentation only reflects the latest version of MeiliSearch. We do not provide multi-version documentation.
+The current version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch) can be found on the left side of the upper navbar.
 
 ![version of MeiliSearch](/doc-version.png)
 
