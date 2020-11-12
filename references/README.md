@@ -2,17 +2,18 @@
 
 Welcome to the MeiliSearch API documentation.
 
-::: warning
-
-The documentation is written for the latest stable release: [v0.16.0](https://github.com/meilisearch/MeiliSearch/releases/tag/v0.15.0).
-
-:::
-
 ::: tip
 
-You might find the answers to some of your questions [in the FAQ](/faq/faq.md) 💡
+Check out [the FAQ](/faq/faq.md) for answers to some common questions 💡
 
 :::
+
+## Version Compatibility
+
+This documentation only reflects the latest version of MeiliSearch. We do not provide multi-version documentation.
+The current version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch) can be found on the left side of the upper navbar.
+
+![version of MeiliSearch](/doc-version.png)
 
 ## Headers
 
