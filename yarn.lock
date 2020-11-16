@@ -3893,10 +3893,10 @@ eslint-plugin-promise@^4.2.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.2.1.tgz#845fd8b2260ad8f82564c1222fce44ad71d9418a"
   integrity sha512-VoM09vT7bfA7D+upt+FjeBO5eHIJQBUWki1aPvB+vbNiHS3+oGIJGIeyBtKQTME6UPXXy3vV07OL1tHd3ANuDw==
 
-eslint-plugin-standard@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-4.0.2.tgz#021211a9f077e63a6847e7bb9ab4247327ac8e0c"
-  integrity sha512-nKptN8l7jksXkwFk++PhJB3cCDTcXOEyhISIN86Ue2feJ1LFyY3PrY3/xT2keXlJSY5bpmbiTG0f885/YKAvTA==
+eslint-plugin-standard@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-4.1.0.tgz#0c3bf3a67e853f8bbbc580fb4945fbf16f41b7c5"
+  integrity sha512-ZL7+QRixjTR6/528YNGyDotyffm5OQst/sGxKDwGb9Uqs4In5Egi4+jbobhqJoyoCM6/7v/1A5fhQ7ScMtDjaQ==
 
 eslint-plugin-vue@^7.1.0:
   version "7.1.0"
@@ -9470,10 +9470,10 @@ vuepress-plugin-img-lazy@^1.0.4:
     markdown-it-img-lazy "^1.0.2"
     markdown-it-imsize "^2.0.1"
 
-vuepress-plugin-meilisearch@^0.10.4:
-  version "0.10.4"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.4.tgz#2e2ecd7595ec197ff8103d3191ee5b3641dfc181"
-  integrity sha512-a84Rz5uhWUEabgKfN3UYyUpNCciSCImsxt3rDoTTSaBAnNttnZecX4D7wDr82RjJ1DyuQXdP+6TqgSRbAeBuNg==
+vuepress-plugin-meilisearch@^0.10.5:
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.5.tgz#e4bb2415495fc719a62fb01c0b7c703a14c7077b"
+  integrity sha512-jcYIWr/BuDwaKbveCa0+zKJrqN4tdiJ5Ij8xHZy2eBSsogvNRnBP/1j5qW8+FfPNByYyasJKYjrFS6ivGyKTNA==
   dependencies:
     docs-searchbar.js "^1.1"
 
