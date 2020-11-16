@@ -64,9 +64,9 @@ Meilisearch allows you to define [filters](/guides/advanced_guides/filtering.md)
 
 ### Placeholder Search
 
-Placeholder returns documents without inputting any query words. The returned documents will be sorted according to MeiliSearch internal logic. To impact that order, [custom ranking rules](/guides/advanced_guides/settings.md#ranking-rules) need to be set. Placeholder search is compatible with faceting and filtering.
+If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](guides/advanced_guides/settings.html#custom-ranking-rule). This feature is called **placeholder search**. It is particularly effective when used with other features such as [faceting or filtering](guides/advanced_guides/faceted_search.html#filters-or-facets), which allow users to narrow their searches and browse by category.
 
-To perform a placeholder search, simply omit the query parameter.
+Placeholder search is not affected by MeiliSearch's [default ranking rules](guides/advanced_guides/settings.html#ranking-rules)—only custom rules added by a user. If no custom rules have been set, the results are displayed in the order of their internal database position.
 
 ### Examples
 
