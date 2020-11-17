@@ -111,5 +111,3 @@ This will lead you to a web page with a search bar that will allow you to search
 <br>
 <br>
 <MovieGif />
-
-
