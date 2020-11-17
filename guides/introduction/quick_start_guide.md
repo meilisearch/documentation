@@ -108,11 +108,8 @@ We also deliver an out-of-the-box [web interface](/guides/advanced_guides/web_in
 To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
-![movies demo gif](/movies-web-demo.gif)
+<br>
+<br>
+<MovieGif />
 
-<figure class="video_container">
-  <video allowfullscreen="true" autoplay="true" poster="truemen.jpg" loop muted>
-    <source src="truemen-fast.webm" type='video/webm'>
-    <source src="truemen-fast.gif" type="video/mp4">
-  </video>
-</figure>
+
