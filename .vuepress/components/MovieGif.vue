@@ -16,7 +16,7 @@ export default {
 <style lang="css" scoped>
 
 video{
-  width: 798px;
+  width: 754px;
   height: 812px;
 }
 
