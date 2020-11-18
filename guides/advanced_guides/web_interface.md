@@ -18,4 +18,4 @@ Let's add some movies.
 
 Let's go to `http://127.0.0.1:7700` in our browser.
 
-![Movies gif](/movies-web-demo.gif)
+<MovieGif />
