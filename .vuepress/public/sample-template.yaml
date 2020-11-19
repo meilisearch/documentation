@@ -46,7 +46,6 @@ reset_displayed_attributes_1: |-
 get_index_stats_1: |-
 get_indexes_stats_1: |-
 get_health_1: |-
-update_health_1: |-
 get_version_1: |-
 distinct_attribute_guide_1: |-
 field_properties_guide_searchable_1: |-
