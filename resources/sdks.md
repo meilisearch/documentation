@@ -15,8 +15,9 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ## Front-End Tools
 
-- [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
+- [Instant-meiliSearch](https://github.com/meilisearch/instant-meilisearch): helps you integrate a great search experience with minimum efforts.
 - [docs-searchbar.js](https://github.com/meilisearch/docs-searchbar.js): a search bar integration for all kinds of documentation.
+- [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
 
 ## Other Tools
 
