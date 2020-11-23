@@ -122,6 +122,7 @@ By default, MeiliSearch runs in `development` mode.
 
 If the server is running in development mode more logs will be displayed, and the master key can be avoided which implies that there is no security on the updates routes.
 This is useful to debug when integrating the engine with another service.
+In production mode, the [web interface](/guides/advanced_guides/web_interface.html#web-interface) is disabled.
 
 **Default value**: `development`
 
