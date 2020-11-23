@@ -5,7 +5,7 @@ MeiliSearch was built on a few core concepts. If you haven't already done so, we
 - [Indexes](/guides/main_concepts/indexes.md)
 - [Documents](/guides/main_concepts/documents.md)
 - [Search](/guides/main_concepts/search.md)
-- [Relevancy](/guides/main_concepts/search.md)
+- [Relevancy](/guides/main_concepts/relevancy.md)
 
 You can find the API references here:
 
