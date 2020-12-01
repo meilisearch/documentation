@@ -1,28 +1,39 @@
 # Official SDKs / Libraries
 
-## SDKs and Integrations
+## SDKs
 
 You can use MeiliSearch API wrappers in your favorite language. These libraries support all API routes.
 
 - [Golang](https://github.com/meilisearch/meilisearch-go)
+- [Java](https://github.com/meilisearch/meilisearch-java)
 - [JavaScript](https://github.com/meilisearch/meilisearch-js)
-- [Laravel Scout](https://github.com/meilisearch/meilisearch-laravel-scout)
 - [PHP](https://github.com/meilisearch/meilisearch-php)
 - [Python](https://github.com/meilisearch/meilisearch-python)
 - [Ruby](https://github.com/meilisearch/meilisearch-ruby)
 - [Rust](https://github.com/meilisearch/meilisearch-rust)
 - [Swift](https://github.com/meilisearch/meilisearch-swift)
 
+## Framework Integrations
+
+- [Laravel Scout](https://github.com/meilisearch/meilisearch-laravel-scout)
+- [Symfony](https://github.com/meilisearch/meilisearch-symfony)
+
 ## Front-End Tools
 
+- [React](https://github.com/meilisearch/meilisearch-react)
+- [Vue](https://github.com/meilisearch/meilisearch-vue)
 - [Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch): helps you integrate a great search experience with minimum efforts.
 - [docs-searchbar.js](https://github.com/meilisearch/docs-searchbar.js): a search bar integration for all kinds of documentation.
 - [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
 
+## DevOps Tools
+
+- [meilisearch-digital-ocean](https://github.com/meilisearch/meilisearch-digital-ocean): how to deploy a MeiliSearch instance on DigitalOcean. See this [dedicated page](/resources/howtos/digitalocean_droplet.md) to use it.
+- [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes): how to deploy a MeiliSearch instance on Kubernetes.
+
 ## Other Tools
 
 - [docs-scraper](https://github.com/meilisearch/docs-scraper): a scraper tool to automatically read the content of your documentation and store it into MeiliSearch.
-- [meilisearch-digital-ocean](https://github.com/meilisearch/docs-scraper): how to deploy a MeiliSearch instance on DigitalOcean. See this [dedicated page](/resources/howtos/digitalocean_droplet.md) to use it.
 
 ## Contributing
 
