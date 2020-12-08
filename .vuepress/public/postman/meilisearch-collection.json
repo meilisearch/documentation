@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "b6f66f14-9982-48fa-99da-94dd2e2acabd",
-		"name": "MeiliSearch v0.16",
+		"_postman_id": "d3c05934-10fd-44cd-9a97-538848b19948",
+		"name": "MeiliSearch v0.17",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -100,6 +100,33 @@
 					"response": []
 				},
 				{
+					"name": "Delete documents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[1, 2]",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete-batch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents",
+								"delete-batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Add or update documents",
 					"request": {
 						"method": "PUT",
@@ -186,33 +213,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Delete documents",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[1, 2]",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete-batch",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"documents",
-								"delete-batch"
-							]
-						}
-					},
-					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -220,35 +220,6 @@
 		{
 			"name": "Search",
 			"item": [
-				{
-					"name": "Search in index",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"q\": \"prinec\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
-						},
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/search",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"search"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Search in index",
 					"request": {
@@ -319,6 +290,38 @@
 									"value": "[\"genre\"]",
 									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search in index",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"q\": \"prinec\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"search"
 							]
 						}
 					},
@@ -798,6 +801,92 @@
 							"response": []
 						},
 						{
+							"name": "Get synonyms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update synonyms",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset synonyms",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"[\"wizard\"]\"",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Get stop-words",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -887,92 +976,6 @@
 										"{{indexUID}}",
 										"settings",
 										"stop-words"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get synonyms",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"synonyms"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update synonyms",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}",
-									"options": {
-										"raw": {}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"synonyms"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Reset synonyms",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "\"[\"wizard\"]\"",
-									"options": {
-										"raw": {}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"synonyms"
 									]
 								}
 							},
@@ -1081,7 +1084,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"]\n}",
+							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"],\n    \"distinctAttribute\": null\n}",
 							"options": {
 								"raw": {}
 							}
@@ -1283,7 +1286,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "2c2d7bb7-e0c1-4de4-9def-37cce7056b7e",
+						"id": "7a6f3247-aa13-4d11-be5a-c23086795bdb",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1293,7 +1296,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "930ee478-3df4-4951-9843-93875c6b6099",
+						"id": "26c926aa-9dce-4a8f-835c-b856a1ff8917",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1323,7 +1326,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f5940872-e0c9-46bc-bf4f-d75595c8dd95",
+				"id": "70452b3f-2e07-4237-a29f-c889bd219175",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1333,7 +1336,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "291a614b-6fcf-4184-b144-ccde4416b266",
+				"id": "867c9b3d-c101-4834-9d45-03296be51442",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1343,12 +1346,12 @@
 	],
 	"variable": [
 		{
-			"id": "115a95e3-a076-46dc-83ac-3d10683104bd",
+			"id": "9920ccac-f1ed-4ca1-9433-b0d7ca100fb5",
 			"key": "url",
 			"value": "http://0.0.0.0:7700"
 		},
 		{
-			"id": "08bef661-4ace-499c-a313-19205be217a2",
+			"id": "27253c9a-8533-431c-8101-3655397fa78b",
 			"key": "indexUID",
 			"value": "indexUID"
 		}
