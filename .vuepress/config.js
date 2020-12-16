@@ -14,7 +14,7 @@ module.exports = {
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
       { text: 'Resources', link: '/resources/' },
-      { text: 'FAQ', link: '/faq/faq.md' },
+      { text: 'FAQ', link: '/faq/' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
