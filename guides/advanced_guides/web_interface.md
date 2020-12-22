@@ -1,6 +1,6 @@
 # Web interface
 
-After adding documents to your MeiliSearch, it is possible to try out the search engine with the integrated web interface.
+After adding documents to your MeiliSearch, it is possible to try out the search engine with the integrated web interface. This only works in a [development environment](/guides/advanced_guides/configuration.md#environment).
 
 The web interface is served on the address and port specified in the command line argument `--listen`. If not specified, [the default address and port is used](/guides/advanced_guides/configuration.md#http-address-port-binding).
 

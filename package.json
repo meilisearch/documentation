@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@popperjs/core": "^2.5.4",
-    "mermaid": "8.8.3",
+    "mermaid": "8.8.4",
     "vue-eslint-parser": "^7.1.1",
     "vuepress": "^1.7.1",
     "vuepress-plugin-container": "^2.1.5",
@@ -48,17 +48,17 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "bent": "^7.3.12",
-    "eslint": "^7.13.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-config-standard": "^16.0.1",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.1.0",
+    "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.1.0",
     "js-yaml": "^3.14.0",
-    "markdownlint-cli": "^0.24.0",
+    "markdownlint-cli": "^0.25.0",
     "vuepress-plugin-check-md": "^0.0.2"
   }
 }
