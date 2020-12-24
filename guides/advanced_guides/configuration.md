@@ -131,7 +131,8 @@ In production mode, the [web interface](/guides/advanced_guides/web_interface.md
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: `--http-payload-size-limit`
 
-The maximum size, in bytes, of accepted JSON payloads.
+
+The maximum size, of accepted JSON payloads. By default, This size is in bytes but it can be represented in different units (bytes, kilobytes, megabytes), more information [here](#available-size-units).
 
 **Default value**: `10485760` (+=10MB)
 
@@ -219,6 +220,8 @@ Depending on the OS, it is either the size that will be allocated on launch or t
   Because this allocates 100Gb on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
 
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
+
+ By default, This size is in bytes but it can be represented in different units (bytes, kilobytes, megabytes, etc..), more information [here](#available-size-units).
 
 **Default value**: `107374182400` (100 GiB)
 
@@ -349,3 +352,30 @@ Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. 
 **Default value**: `1024`
 
 [Read more about dumps](/guides/advanced_guides/snapshots_and_dumps.md#dumps)
+
+
+
+### Available size units
+
+The available units are B for 1 byte, KB for 1000 bytes, KiB for 1024 bytes, MB for 1000000 bytes, MiB for 1048576 bytes, etc, and up to ZiB which is 1180591620717411303424 bytes
+
+This the complete list:
+
+```
+EXABYTE     EB
+EXBIBYTE	EiB
+GIBIBYTE	GiB
+GIGABYTE	GB
+KIBIBYTE	KiB
+KILOBYTE	KB
+MEBIBYTE	MiB
+MEGABYTE	MB
+PEBIBYTE	PiB
+PETABYTE	PB
+TEBIBYTE	TiB
+TERABYTE	TB
+ZEBIBYTE	ZiB
+ZETTABYTE	ZB
+```
+
+***Few examples*** can be:  `123KiB 1.50 MB 50.84 MB 0.5GiB 100 KB 50MB`
