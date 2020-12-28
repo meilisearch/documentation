@@ -4,6 +4,8 @@ errors:
     description: "An error occurred while trying to create an index, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
   - code: index_already_exists
     description: "An index with this UID already exists, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
+  - code: index_not_found
+    description: "An index with this UID was not found, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
   - code: invalid_index_uid
     description: "There is an error in the provided index format, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
   - code: index_not_accessible
