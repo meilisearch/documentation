@@ -41,7 +41,7 @@ errors:
   - code: not_found
     description: "The requested resources could not be found."
   - code: payload_too_large
-    description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/guides/advanced_guides/configuration.html#options) to customize the maximum payload size accepted by MeiliSearch."
+    description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/guides/advanced_guides/configuration.html#payload-limit-size) to customize the maximum payload size accepted by MeiliSearch."
   - code: unretrievable_document
     description: "The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database."
   - code: search_error
