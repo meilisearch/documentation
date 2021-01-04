@@ -105,6 +105,20 @@ A script will run automatically, asking for your settings and desired configurat
 
 ### 3. Enjoy your ready-to-use MeiliSearch droplet
 
-![Enjoy](/digitalocean/13.finish.png)
+Your MeiliSearch droplet is ready to be used in production.
+
+To check if everything is running smoothly, do an HTTP call to the health route:
+
+```bash
+curl -v https://<your-meilisearch-url>/health
+```
+
+The server should answer with a `204 No content` ststus code as shown in teh example below:
+
+```bash
+...
+< HTTP/1.1 204 No Content
+...
+```
 
 **Enjoy**!
