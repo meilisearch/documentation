@@ -7,7 +7,7 @@ MeiliSearch has been designed to be a ready-to-go open source solution and deliv
 The present article covers a comparison of alternatives to MeiliSearch, i.e., available search technologies to be considered when planning to implement a search bar.
 
 ::: note
-Please be advised that many of the search products described below are constantly evolving—just like MeiliSearch. These are only our own impressions, and may not reflect recent changes. If you see something that appears inaccurate, don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
+Please be advised that many of the search products described below are constantly evolving—just like MeiliSearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
 :::
 
 ## Comparisons
