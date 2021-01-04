@@ -6,6 +6,10 @@ MeiliSearch has been designed to be a ready-to-go open source solution and deliv
 
 The present article covers a comparison of alternatives to MeiliSearch, i.e., available search technologies to be considered when planning to implement a search bar.
 
+::: note
+Please be advised that many of the search products described below are constantly evolving—just like MeiliSearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
+:::
+
 ## Comparisons
 
 ### MeiliSearch vs. Elasticsearch
@@ -18,11 +22,6 @@ MeiliSearch is intended to deliver performant instant search experiences aimed a
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to MeiliSearch.
 MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides a prefix searching capability, makes search intuitive for users, and returns them their results instantly with near-perfect relevance.
-
-### MeiliSearch vs. Typesense
-
-[Typesense uses a default_sorting_field](https://typesense.org/docs/0.11.1/guide/#ranking-relevance) on each document, it means that before indexing your documents you need to compute a relevancy score for Typesense to be able to sort them based on your needs.
-On the other hand, [MeiliSearch uses a bucket sort](/guides/main_concepts/relevancy.md), which means that there is a default relevancy algorithm based on the proximity of words in the documents, the fields in which the words are found and the number of typos. And you can still add your own custom rules if you want to alter the default search behavior.
 
 ### MeiliSearch vs. Algolia
 
@@ -57,7 +56,7 @@ Its ability to run on a few MBs of RAM makes it a minimalist and resource-effici
 
 #### Typesense
 
-Another simple search engine is Typesense, which has been designed and optimized for speed. Particular attention has been given to ease-of-use. Thus, Typesense aims to be simple to set-up and focus on developer productivity and experience by providing a clean API. It is best suited for light projects.
+Like MeiliSearch, Typesense is a lightweight open-source search engine optimized for speed. We are currently re-evaluating its features and functionality to better understand how it compares with MeiliSearch.
 
 #### Lucene derivatives
 
@@ -101,9 +100,7 @@ Each Search solution fits best with the constraints of a particular use case. Si
 
 We cannot, therefore, compare ourselves with Lucene-based or other search engines targeted to specific tasks.
 
-In the particular use case we cover, the most similar solutions to MeiliSearch are Algolia and Typesense. The three of them are search-as-you-type relevant search engines.
-
-Typesense is a great tool but is not recommended for achieving a lot of operations with minimal configuration.
+In the particular use case we cover, the most similar solution to MeiliSearch is Algolia.
 
 While Algolia offers the most advanced and powerful search features, this efficiency comes with an expensive pricing. Moreover, their service is marketed to big companies.
 
