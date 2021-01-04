@@ -6,6 +6,10 @@ MeiliSearch has been designed to be a ready-to-go open source solution and deliv
 
 The present article covers a comparison of alternatives to MeiliSearch, i.e., available search technologies to be considered when planning to implement a search bar.
 
+::: note
+Please be advised that many of the search products described below are constantly evolving—just like MeiliSearch. These are only our own impressions, and may not reflect recent changes. If you see something that appears inaccurate, don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
+:::
+
 ## Comparisons
 
 ### MeiliSearch vs. Elasticsearch
@@ -49,6 +53,10 @@ Since Lucene is the technology behind many open source or closed source search e
 
 Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution and, compared to MeiliSearch, it does not ensure relevancy ranking. Indeed, it does not store any documents but is comprised of an inverted index with a Levenshtein automaton, which means any application querying Sonic has to retrieve the search results from an external database using the IDs that are returned and then apply some relevancy ranking.
 Its ability to run on a few MBs of RAM makes it a minimalist and resource-efficient alternative to database tools that can be too heavyweight to scale.
+
+#### Typesense
+
+Like MeiliSearch, Typesense is a lightweight open-source search engine optimized for speed. We are currently re-evaluating its features and functionality to better understand how it compares with MeiliSearch.
 
 #### Lucene derivatives
 
