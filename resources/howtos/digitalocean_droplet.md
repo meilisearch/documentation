@@ -103,9 +103,9 @@ A script will run automatically, asking for your settings and desired configurat
 
 `sh /var/opt/meilisearch/scripts/first-login/000-set-meili-env.sh`
 
-### 3. Enjoy your ready-to-use MeiliSearch droplet
+### 3. Enjoy your ready-to-use MeiliSearch Droplet
 
-Your MeiliSearch droplet is ready to be used in production.
+Your MeiliSearch Droplet is ready to be used in production.
 
 To check if everything is running smoothly, do an HTTP call to the health route:
 
