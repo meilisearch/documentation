@@ -131,7 +131,7 @@ In production mode, the [web interface](/guides/advanced_guides/web_interface.md
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: `--http-payload-size-limit`
 
-The maximum size, of accepted JSON payloads. By default, This size is in bytes but it can be represented in different units (bytes, kilobytes, megabytes), more information [here](#available-size-units).
+The maximum size of accepted JSON payloads. By default this size is in bytes, but it can be represented in many different units—more information [here](guides/advanced_guides/configuration.md#available-size-units).
 
 **Default value**: `10485760` (+=10MB)
 
