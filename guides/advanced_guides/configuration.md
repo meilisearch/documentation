@@ -220,7 +220,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
- By default, This size is in bytes but it can be represented in different units (bytes, kilobytes, megabytes, etc..), more information [here](#available-size-units).
+By default, this size is in bytes. However, it can be represented in many different units—more information [here](guides/advanced_guides/configuration.md#available-size-units).
 
 **Default value**: `107374182400` (100 GiB)
 
