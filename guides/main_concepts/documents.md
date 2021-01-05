@@ -153,7 +153,7 @@ Take note that the document addition request in MeiliSearch is <!-- prettier-ign
 
 ## Upload
 
-By default, MeiliSearch limits the size of `JSON` payloads—and therefore document uploads—to 10MB.
+By default, MeiliSearch limits the size of `JSON` payloads—and therefore document uploads—to 100MB.
 
 To upload more documents in one go, it is possible to [change the payload size limit](/guides/advanced_guides/configuration.md#payload-limit-size) during the setup of your MeiliSearch instance using the `http-payload-size-limit` option.
 
