@@ -14,7 +14,9 @@ Therefore, if a field attribute is not in the searchable-attributes list, the fi
 
 #### Example
 
-Suppose you manage a database that contains information about movies. By adding the following settings, the fields `uid`, `movie_id`, `title`, `description`, `poster`, `release_date` and `rank` will be searched.
+given a dataset with the following fields: id, description, genre, title, release_date. We can update the searchable attributes by removing the id and the release_date and re-order fields following their importance.
+
+Suppose that you managed a database of movies with the following fields: `id`, `description`, `genre`, `title`, `release_date`. They all contain useful information; however, some are more useful than others. If you wanted to make the `id` and `release_date` fields non-searchable, and re-order the remaining fields by importance, you could update the searchable attributes in the following way.
 
 <CodeSamples id="field_properties_guide_searchable_1" />
 
