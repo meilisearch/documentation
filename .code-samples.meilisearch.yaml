@@ -238,13 +238,9 @@ field_properties_guide_searchable_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "searchableAttributes": [
-            "uid",
-            "movie_id",
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre"
         ]
     }'
 field_properties_guide_displayed_1: |-
