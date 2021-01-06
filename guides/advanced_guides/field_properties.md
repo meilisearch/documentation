@@ -16,7 +16,7 @@ When you perform a search, all searchable fields are searched for matching query
 Non-searchable fields are most useful for internal information that's not relevant to the search experience, such as URLs, sales numbers, or ratings used exclusively for sorting results.
 
 ::: tip
-Even if you make a field non-searchable, it will remain on the server and can be made searchable again at a later time.
+Even if you make a field non-searchable, it will remain stored in the database and can be made searchable again at a later time.
 :::
 
 ### The Searchable Attributes List
