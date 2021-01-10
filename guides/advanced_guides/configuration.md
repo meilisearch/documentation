@@ -131,7 +131,7 @@ In production mode, the [web interface](/guides/advanced_guides/web_interface.md
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: `--http-payload-size-limit`
 
-The maximum size of accepted JSON payloads. By default this size is in bytes, but it can be represented in many different units—more information [here](guides/advanced_guides/configuration.md#available-size-units).
+The maximum size of accepted JSON payloads. By default this size is in bytes, but it can be represented in many different units — more information [here](#available-size-units).
 
 **Default value**: `10485760` (+=10MB)
 
@@ -220,7 +220,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 [To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
 
-By default, this size is in bytes. However, it can be represented in many different units—more information [here](guides/advanced_guides/configuration.md#available-size-units).
+By default, this size is in bytes. However, it can be represented in many different units — more information [here](#available-size-units).
 
 **Default value**: `107374182400` (100 GiB)
 
@@ -381,4 +381,4 @@ This the complete list:
 | KIBIBYTE | 2<sup>10</sup>  | KiB |
 
 
-***Few examples*** can be:  `123KiB 1.50 MB 50.84 MB 0.5GiB 100 KB 50MB`
+***Few examples*** could be:  ` 123KiB 1.50 MB 50.84 MB 0.5GiB 100 KB 50MB `
