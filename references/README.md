@@ -4,7 +4,7 @@ Welcome to the MeiliSearch API documentation.
 
 ::: tip
 
-Check out [the FAQ](/faq/faq.md) for answers to some common questions 💡
+Check out [the FAQ](/faq/) for answers to some common questions 💡
 
 :::
 

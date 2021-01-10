@@ -103,8 +103,22 @@ A script will run automatically, asking for your settings and desired configurat
 
 `sh /var/opt/meilisearch/scripts/first-login/000-set-meili-env.sh`
 
-### 3. Enjoy your ready-to-use MeiliSearch droplet
+### 3. Enjoy your ready-to-use MeiliSearch Droplet
 
-![Enjoy](/digitalocean/13.finish.png)
+Your MeiliSearch Droplet is ready to be used in production.
+
+To check if everything is running smoothly, do an HTTP call to the health route:
+
+```bash
+$ curl -v https://<your-meilisearch-url>/health
+```
+
+The server should answer with a `204 No content` status code as shown in the example below:
+
+```bash
+...
+< HTTP/1.1 204 No Content
+...
+```
 
 **Enjoy**!
