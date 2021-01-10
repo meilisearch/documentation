@@ -358,21 +358,27 @@ The available units are B for 1 byte, KB for 1000 bytes, KiB for 1024 bytes, MB 
 
 This the complete list:
 
-```
-EXABYTE     EB
-EXBIBYTE    EiB
-GIBIBYTE    GiB
-GIGABYTE    GB
-KIBIBYTE    KiB
-KILOBYTE    KB
-MEBIBYTE    MiB
-MEGABYTE    MB
-PEBIBYTE    PiB
-PETABYTE    PB
-TEBIBYTE    TiB
-TERABYTE    TB
-ZEBIBYTE    ZiB
-ZETTABYTE   ZB
-```
+| Name   | Equivalence (bytes)   | Symbol  |
+|---|---|---|
+| ZETTABYTE | 10<sup>21</sup> | ZB |
+| EXABYTE | 10<sup>18</sup> | EB | 
+| PETABYTE | 10<sup>15</sup> | PB |
+| TERABYTE | 10<sup>12</sup> | TB |
+| GIGABYTE | 10<sup>9</sup>  | GB |
+| MEGABYTE | 10<sup>6</sup>  | MB |
+| KILOBYTE | 10<sup>3</sup>  | KB |
+
+
+
+| Name   | Equivalence (bytes)   | Symbol  |
+|---|---|---|
+| ZEBIBYTE | 2<sup>70</sup> | ZiB |
+| EXBIBYTE | 2<sup>60</sup> | EiB | 
+| PEBIBYTE | 2<sup>50</sup> | PiB |
+| TEBIBYTE | 2<sup>40</sup> | TiB |
+| GIBIBYTE | 2<sup>30</sup>  | GiB |
+| MEBIBYTE | 2<sup>20</sup>  | MiB |
+| KIBIBYTE | 2<sup>10</sup>  | KiB |
+
 
 ***Few examples*** can be:  `123KiB 1.50 MB 50.84 MB 0.5GiB 100 KB 50MB`
