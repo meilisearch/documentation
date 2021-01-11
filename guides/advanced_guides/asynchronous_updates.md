@@ -82,7 +82,7 @@ Failing to upload document:
 
 Since in MeiliSearch asynchronous task are [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)), killing MeiliSearch in the middle of the process does not corrupt or alter the database.
 
->  An atomic transaction is an indivisible and irreducible series of database operations such that either all occur, or nothing occurs.
+> An atomic transaction is an indivisible and irreducible series of database operations such that either all occur, or nothing occurs.
 
 Essentially, tasks are done in transactions. If the transaction for any reason fails or is killed in the middle of its process, nothing of the tasks will be committed to your database.
 
@@ -95,6 +95,5 @@ Depending on the status of each process that you can know [by using the update r
 #### Example
 
 Imagine adding 100 documents in one batch to MeiliSearch. If you kill the process after 99 documents were correctly handled, when you restart MeiliSearch none of the 100 documents will be present in the dataset. Same goes if the 100th document raises an error.
-
 
 **Thus, killing MeiliSearch is safe!**
