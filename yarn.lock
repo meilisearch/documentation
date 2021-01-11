@@ -5550,13 +5550,20 @@ js-base64@^2.1.8:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
-js-yaml@^3.11.0, js-yaml@^3.13.1, js-yaml@^3.14.1, js-yaml@~3.14.1:
+js-yaml@^3.11.0, js-yaml@^3.13.1, js-yaml@~3.14.1:
   version "3.14.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.1.tgz#dae812fdb3825fa306609a8717383c50c36a0537"
   integrity sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
+
+js-yaml@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.0.0.tgz#f426bc0ff4b4051926cd588c71113183409a121f"
+  integrity sha512-pqon0s+4ScYUvX30wxQi3PogGFAlUyH0awepWvwkj4jD4v+ova3RiYw8bmA6x2rDrEaj8i/oWKoRxpVNW+Re8Q==
+  dependencies:
+    argparse "^2.0.1"
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -9335,7 +9342,7 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-eslint-parser@^7.1.1, vue-eslint-parser@^7.3.0:
+vue-eslint-parser@^7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-7.3.0.tgz#894085839d99d81296fa081d19643733f23d7559"
   integrity sha512-n5PJKZbyspD0+8LnaZgpEvNCrjQx1DyDHw8JdWwoxhhC+yRip4TAvSDpXGf9SWX6b0umeB5aR61gwUo6NVvFxw==
