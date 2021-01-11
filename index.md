@@ -35,7 +35,7 @@ Why should you use MeiliSearch instead of any other existing solution? We try to
 - **Instant Search** (answers < 50 milliseconds): Priority is given to fast answers for smooth search experience.
 - **Search as you type** (_prefix search_): Results are updated on each keystroke. To make this possible, we use a [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
 - [Typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and miss-spelling.
-- [Tokenization](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization) in English, Kanji and Latin based languages.
+- [Tokenization](/guides/advanced_guides/tokenization.md) in **English**, **Chinese**, **Japanese**, **Korean**, and languages that use the Latin alphabet.
 - **Return the whole document**: The entire document is returned upon search.
 - **Highly customizable search and indexation**:
   - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.

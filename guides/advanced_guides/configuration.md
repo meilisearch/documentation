@@ -133,7 +133,7 @@ In production mode, the [web interface](/guides/advanced_guides/web_interface.md
 
 The maximum size, in bytes, of accepted JSON payloads.
 
-**Default value**: `10485760` (+=10MB)
+**Default value**: `104857600` (+=100MB)
 
 ### SSL Authentication Path
 
