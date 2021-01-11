@@ -11,6 +11,7 @@ Currently, the MeiliSearch tokenizer has full support for four languages: Englis
 ![Tokenizer Architecture](https://user-images.githubusercontent.com/6482087/102896344-8560d200-4466-11eb-8cfe-b4ae8741093b.jpg)
 
 The tokenization process can be broken down into two broad steps:
+
 1. Determine the type of script that must be tokenized (e.g. Latin alphabet, Arabic script, Cyrillic etc.).
 2. Run the corresponding pipeline, if it exists. Pipelines include language-specific operations and stop words.
 
@@ -23,6 +24,7 @@ We rely on external contributors to help us extend our tokenizer to support new 
 If there is an unsupported language that you would like us to target, you can help by developing a pipeline, writing tests for that language, or simply giving a :+1: to the relevant GitHub issue.
 
 Here are some of the languages that have been requested by users and their corresponding issue:
+
 - [Thai](https://github.com/meilisearch/MeiliSearch/issues/864)
 - [Persian/Farsi](https://github.com/meilisearch/MeiliSearch/issues/553)
 - [Lao](https://github.com/meilisearch/MeiliSearch/issues/563)
