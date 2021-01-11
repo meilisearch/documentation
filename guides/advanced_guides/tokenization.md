@@ -21,7 +21,8 @@ We can break down the tokenization process like so:
 
 ## Language Support
 
-Currently, the MeiliSearch tokenizer is optimized for four languages: 
+Currently, the MeiliSearch tokenizer is optimized for four languages:
+
 - **English**  🇬🇧
 - **Chinese** 🇨🇳
 - **Japanese** 🇯🇵
