@@ -9335,7 +9335,7 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-eslint-parser@^7.1.1, vue-eslint-parser@^7.3.0:
+vue-eslint-parser@^7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-7.3.0.tgz#894085839d99d81296fa081d19643733f23d7559"
   integrity sha512-n5PJKZbyspD0+8LnaZgpEvNCrjQx1DyDHw8JdWwoxhhC+yRip4TAvSDpXGf9SWX6b0umeB5aR61gwUo6NVvFxw==
@@ -9453,10 +9453,10 @@ vuepress-plugin-img-lazy@^1.0.4:
     markdown-it-img-lazy "^1.0.2"
     markdown-it-imsize "^2.0.1"
 
-vuepress-plugin-meilisearch@^0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.5.tgz#e4bb2415495fc719a62fb01c0b7c703a14c7077b"
-  integrity sha512-jcYIWr/BuDwaKbveCa0+zKJrqN4tdiJ5Ij8xHZy2eBSsogvNRnBP/1j5qW8+FfPNByYyasJKYjrFS6ivGyKTNA==
+vuepress-plugin-meilisearch@^0.10.6:
+  version "0.10.6"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.6.tgz#493647ba8b107e7bf3486c9c6628884d7920c337"
+  integrity sha512-vNam6390ieI7DJydWa6RJdZV+EEQzHLmxBhjZWbGMs6XZ/BOD1AFGDDduO0FO5mN/kofIsrOavCnIJ94Vjv7dw==
   dependencies:
     docs-searchbar.js "^1.1"
 
