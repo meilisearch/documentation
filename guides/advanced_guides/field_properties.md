@@ -1,16 +1,50 @@
 # Field Properties
 
-By default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/references/settings.md).
+By default, whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
+
+- **The [searchable attributes list](/guides/advanced_guides/field_properties.md#the-searchable-attributes-list)**: Attributes whose fields are searched for matching query words.
+- **The [displayed attributes list](/guides/advanced_guides/field_properties.md#displayed-fields)**: Attributes whose fields are displayed in documents.
+
+This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/references/settings.md).
 
 ## Searchable Fields
 
-The **values** of the fields whose attributes are added to the [searchable-attributes list](/references/searchable_attributes.md) are **searched for matching query words**.
+A field can either be **searchable** or **non-searchable**.
 
-Their content is used by MeiliSearch to assess the relevancy of a document.
+When you perform a search, all searchable fields are searched for matching query words and used to assess document relevancy, while non-searchable fields are ignored entirely. **By default, all fields are searchable.**
 
-**By default, all field attributes are set as searchable**.
+Non-searchable fields are most useful for internal information that's not relevant to the search experience, such as URLs, sales numbers, or ratings used exclusively for sorting results.
 
-Therefore, if a field attribute is not in the searchable-attributes list, the field will be ignored from searches but will remain stored in the server. This list can be restricted to a selected set of attributes in the settings.
+::: tip
+Even if you make a field non-searchable, it will remain stored in the database and can be made searchable again at a later time.
+:::
+
+### The Searchable Attributes List
+
+MeiliSearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/guides/main_concepts/relevancy.md#attribute-ranking-order), from most impactful to least.
+
+In other words, the `searchableAttributes` list serves two purposes:
+
+1. It designates the fields that are searchable.
+2. It dictates the [attribute ranking order](/guides/main_concepts/relevancy.md#attribute-ranking-order).
+
+There are two possible modes for the `searchableAttributes` list.
+
+#### Default: Automatic
+
+**By default, all attributes are automatically added to the `searchableAttributes` list in their order of appearance.** This means that the initial order will be based on the order of attributes in the first document indexed, with each new attribute found in subsequent documents added at the end of this list.
+
+This default behavior is indicated by a `searchableAttributes` value of `["*"]`. To verify the current value of your `searchableAttributes` list, use the [get searchable attributes endpoint](/references/searchable_attributes.md#get-searchable-attributes).
+
+If you'd like to restore your searchable attributes list to this default behavior, simply [set `searchableAttributes` to an empty array `[]`](/references/searchable_attributes.md#update-searchable-attributes) or use the [reset searchable attributes endpoint](/references/searchable_attributes.md#reset-searchable-attributes).
+
+#### Manual
+
+You may want to make some attributes non-searchable, or change the [attribute ranking order](/guides/main_concepts/relevancy.md#attribute-ranking-order) after documents have been indexed. To do so, simply place the attributes in the desired order and send the updated list using the [update searchable attributes endpoint](/references/searchable_attributes.md#update-searchable-attributes).
+
+::: warning
+Be aware that after manually updating the `searchableAttributes` list, subsequent new attributes will no longer be automatically added unless the settings are [reset](/references/searchable_attributes.md#reset-searchable-attributes).
+:::
 
 #### Example
 
