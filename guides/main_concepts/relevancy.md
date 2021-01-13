@@ -32,7 +32,7 @@ It is now mandatory that all query terms are present in the returned documents. 
 Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
 
 **4. Attribute**
-Results are sorted according to **[the order of importance of the attributes](/guides/main_concepts/relevancy.md#importance-of-the-attributes)**: find documents that contain query terms in more important attributes first.
+Results are sorted according to the **[attribute ranking order](/guides/main_concepts/relevancy.md#attribute-ranking-order)**: find documents that contain query terms in more important attributes first.
 
 **5. Words Position**
 Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
@@ -75,7 +75,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 
 `If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `description`.
 
-The `attribute` rule sorts the results by [attribute importance](/guides/main_concepts/relevancy.md#importance-of-the-attributes).
+The `attribute` rule sorts the results by [attribute importance](/guides/main_concepts/relevancy.md#attribute-ranking-order).
 
 :::
 
@@ -157,31 +157,18 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 ]
 ```
 
-## Importance of the attributes
+## Attribute Ranking Order
 
-In a dataset, some fields are more relevant to the search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `director` name.
+In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `release_date`.
 
-By default, the order of importance of the attributes is based on their order of appearance in the first document added. Then, each new attribute found in new documents will be added at the end of this ordered list.
+By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the indexed documents. However, it can also be set manually.
 
-If you wish to specify the order of the attributes you can either define them in the settings or set the correct order in the first document indexed.
-
-### Changing the order of the attributes
-
-You may want to change the order once the documents have been ingested. This is still very possible using the [searchable attributes list](/guides/advanced_guides/field_properties.md#searchable-fields).
-
-Whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
-
-- **The [searchable attributes list](/references/searchable_attributes.md)**: Attributes of the fields in which to search for matching query words.
-- **The [displayed attributes list](/references/displayed_attributes.md)**: Attributes of the fields displayed in documents.
-
-This searchable attributes list is **ordered**, which means the order in which the attributes appear in the list determines their relevancy. Attributes are arranged from the most important attribute to the least important attribute.
-
-Place the attributes in the desired order and send this updated list using the [settings routes](/references/settings.md). Attributes will be re-ordered.
+For a more detailed look at this subject, see our reference page for [the searchable attributes list](/guides/advanced_guides/field_properties.md#the-searchable-attributes-list).
 
 #### Example
 
 ```json
-["title", "description", "director"]
+["title", "description", "release_date"]
 ```
 
-If you take a look at the above order, the matching words found in `title` will make the document more relevant than one with the same matching words found in `description` or `director`.
+With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `description` or `release_date`. If you searched "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.

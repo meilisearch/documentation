@@ -27,4 +27,4 @@ This limit is enforced for relevancy reasons. The more words there are in a give
 
 ### Payload size
 
-The default limit for the payload size is around __10MB__. [This limit can be modified](/guides/advanced_guides/configuration.md#payload-limit-size).
+The default limit for the payload size is around __100MB__. [This limit can be modified](/guides/advanced_guides/configuration.md#payload-limit-size).
