@@ -38,7 +38,7 @@ add_or_replace_documents_1: |-
     }]'
 add_or_update_documents_1: |-
   $ curl \
-    -X POST 'http://localhost:7700/indexes/movies/documents' \
+    -X PUT 'http://localhost:7700/indexes/movies/documents' \
     --data '[{
         "id": 287947,
         "title": "Shazam ⚡️",
@@ -238,13 +238,9 @@ field_properties_guide_searchable_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "searchableAttributes": [
-            "uid",
-            "movie_id",
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre"
         ]
     }'
 field_properties_guide_displayed_1: |-
