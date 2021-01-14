@@ -149,7 +149,7 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-Take note that the document addition request in MeiliSearch is <!-- prettier-ignore -->[atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)). This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
+Take note that the document addition request in MeiliSearch is <clientGlossary word="atomic"/>. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
 
 ## Upload
 

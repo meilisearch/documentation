@@ -80,16 +80,14 @@ Failing to upload document:
 
 ### Killing MeiliSearch When a Task is Processing
 
-Since in MeiliSearch asynchronous task are [atomic](https://en.wikipedia.org/wiki/Atomicity_(database_systems)), killing MeiliSearch in the middle of the process does not corrupt or alter the database.
-
-> An atomic transaction is an indivisible and irreducible series of database operations such that either all occur, or nothing occurs.
+Since in MeiliSearch asynchronous task are <clientGlossary word="atomic"/>, killing MeiliSearch in the middle of the process does not corrupt or alter the database.
 
 Essentially, tasks are done in transactions. If the transaction for any reason fails or is killed in the middle of its process, nothing of the tasks will be committed to your database.
 
 Depending on the status of each process that you can know [by using the update route](/references/updates.md), you can determine if a process has been committed to MeiliSearch or not.
 
 - status: `enqueued` => If MeiliSearch is killed, when restarted the task will still have enqueued as its status and will be processed eventually.
-- status `processing` => If MeiliSearch is killed, when restarted, since it is atomic, there will be no consequences as none of the parts of the task has been committed to MeiliSearch, Meilisearch will start that task as if it was `enqueued`.
+- status `processing` => If MeiliSearch is killed, when restarted, since it is <clientGlossary word="atomic"/>, there will be no consequences as none of the parts of the task has been committed to MeiliSearch, Meilisearch will start that task as if it was `enqueued`.
 - status `done` => If MeiliSearch is killed, this action is done and is permanently added to MeiliSearch. There is no data loss and your database/settings will be exactly the same as before you killed MeiliSearch.
 
 #### Example
