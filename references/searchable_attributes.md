@@ -33,7 +33,7 @@ Get the [searchable attributes](/guides/advanced_guides/field_properties.md#sear
 List the settings.
 
 ```json
-["title", "description", "uid"]
+["title", "description", "genre"]
 ```
 
 ## Update searchable attributes
