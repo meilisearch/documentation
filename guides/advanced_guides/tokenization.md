@@ -21,20 +21,20 @@ We can break down the tokenization process like so:
 
 ## Language Support
 
-Currently, the MeiliSearch tokenizer is optimized for four languages:
+Currently, MeiliSearch offers full support for two groups of languages:
 
-- **English**  🇬🇧
+- **English** 🇬🇧 and **any other language that uses the Latin alphabet**
 - **Chinese** 🇨🇳
-- **Japanese** 🇯🇵
-- **Korean** 🇰🇷
 
-It also supports any language that uses the Latin alphabet. **Results may vary in languages with long compound words, such as German.**
+This is due to how our [tokenizer](/guides/advanced_guides/tokenization.md#tokenization) is optimized. While we can't promise high-quality results for languages outside of these two groups, we find that **MeiliSearch works effectively in most languages**.
+
+Note that although we support all languages that use the Latin alphabet, **results may vary in languages with long compound words, such as German.**
 
 ## Future Development
 
-We rely on external contributors to help us extend our tokenizer to support new languages.
+While we have employees from all over the world at MeiliSearch, we don't speak every language. In fact, we rely almost entirely on external contributors to understand how our engine is performing in a given language.
 
-In the future, we hope that our international developer community will lead the process of developing additional tokenizer pipelines. For now, if there's an unsupported language that you would like us to target, you can help by writing tests for that language, giving us feedback, or simply giving a :+1: to the relevant GitHub issue.
+In the future, we plan to open-source the development of [tokenization pipelines](/guides/advanced_guides/tokenization.md#tokenization) and let our international community lead the charge towards a more global MeiliSearch. For now, you can help by sharing tests, results, and feedback with us in that language's GitHub issue. Be sure to also give a :+1: to any language you'd like us to target!
 
 Here are some of the languages that have been requested by users and their corresponding issue:
 
@@ -42,3 +42,5 @@ Here are some of the languages that have been requested by users and their corre
 - [Persian/Farsi](https://github.com/meilisearch/MeiliSearch/issues/553)
 - [Lao](https://github.com/meilisearch/MeiliSearch/issues/563)
 - [Arabic](https://github.com/meilisearch/MeiliSearch/issues/554)
+
+If you'd like us to add support for a language that isn't in the above list, please create an [issue](https://github.com/meilisearch/MeiliSearch/issues/new?assignees=&labels=&template=feature_request.md&title=) saying so, and then make a [pull request on the documentation](https://github.com/meilisearch/documentation/edit/master/guides/advanced_guides/tokenization.md) to add it to the above list.
