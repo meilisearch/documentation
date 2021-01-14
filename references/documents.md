@@ -146,7 +146,7 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
 
-Add a list of documents and update them if they already. If the provided index does not exist, it will be created.
+Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
