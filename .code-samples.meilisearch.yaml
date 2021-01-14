@@ -92,20 +92,15 @@ update_settings_1: |-
         ],
         "distinctAttribute": "movie_id",
         "searchableAttributes": [
-            "uid",
-            "movie_id",
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre"
         ],
         "displayedAttributes": [
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre",
+            "release_date"
         ],
         "stopWords": [
             "the",
@@ -195,7 +190,7 @@ update_searchable_attributes_1: |-
     --data '[
         "title",
         "description",
-        "uid"
+        "genre"
     ]'
 reset_searchable_attributes_1: |-
   $ curl \
@@ -209,9 +204,8 @@ update_displayed_attributes_1: |-
     --data '[
         "title",
         "description",
-        "release_date",
-        "rank",
-        "poster"
+        "genre",
+        "release_date"
     ]'
 reset_displayed_attributes_1: |-
   $ curl \
@@ -250,9 +244,8 @@ field_properties_guide_displayed_1: |-
         "displayedAttributes": [
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre",
+            "release_date"
         ]
     }'
 filtering_guide_1: |-
@@ -339,13 +332,9 @@ settings_guide_searchable_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "searchableAttributes": [
-            "uid",
-            "movie_id",
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre"
         ]
     }'
 settings_guide_displayed_1: |-
@@ -355,9 +344,8 @@ settings_guide_displayed_1: |-
         "displayedAttributes": [
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre",
+            "release_date"
         ]
     }'
 add_movies_json_1: |-
