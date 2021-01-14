@@ -18,7 +18,7 @@ If you have any questions we want to hear from you. Your feedback will help us i
 - [I am trying to add my documents but I keep receiving a `400 - Invalid data` response.](/faq/README.md#i-am-trying-to-add-my-documents-but-i-keep-receiving-a-400-invalid-data-response)
 - [My document upload failed with the `document id is missing` error.](/faq/README.md#my-document-upload-failed-with-the-document-id-is-missing-error)
 - [I have uploaded my documents, but I get no result when I search in my index.](/faq/README.md#i-have-uploaded-my-documents-but-i-get-no-result-when-i-search-in-my-index)
-- [Is killing Meilisearch process safe?](/faq/README.md#is-killing-meilisearch-process-safe)
+- [Is killing a MeiliSearch process safe?](/faq/README.md#is-killing-a-meilisearch-process-safe)
 - [Does MeiliSearch deliver an interface to search in my documents?](/faq/README.md#does-meilisearch-deliver-an-interface-to-search-in-my-documents)
 - [I do not understand the relevancy of my search results.](/faq/README.md#i-do-not-understand-the-relevancy-of-my-search-results)
 - [Do you provide a public roadmap for MeiliSearch and its integration tools?](/faq/README.md#do-you-provide-a-public-roadmap-for-meilisearch-and-its-integration-tools)
@@ -154,9 +154,9 @@ See more [information about the primary key](/guides/main_concepts/documents.md#
 Your documents upload probably failed.
 To understand what happened, please check this [answer](/faq/README.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
 
-## Is Killing MeiliSearch process safe?
+## Is killing a MeiliSearch process safe?
 
-Killing MeiliSearch even in the middle of a process (ex: adding a batch of document) is **safe**. When you restart the server, it will start the task all over again.
+Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
 More information in the [asynchronous updates guide](/guides/advanced_guides/asynchronous_updates.md).
 
 ## Does MeiliSearch deliver an interface to search in my documents?
