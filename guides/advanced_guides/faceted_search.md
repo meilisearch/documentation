@@ -80,7 +80,7 @@ They can filter on facets to narrow down their results based on criteria with th
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 
-- `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFiltering` list](/guides/advanced_guides/faceted_search.md#setting-up-facets).
+- `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFaceting` list](/guides/advanced_guides/faceted_search.md#setting-up-facets).
 - `facetValue`: The value of the facet used to filter results (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
 Facet filters can have a **maximum array deepness of two**.
