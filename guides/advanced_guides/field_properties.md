@@ -66,7 +66,7 @@ This list can be restricted to a selected set of attributes in the settings.
 
 #### Example
 
-Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
+Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `release_date` and `genre`.
 
 <CodeSamples id="field_properties_guide_displayed_1" />
 

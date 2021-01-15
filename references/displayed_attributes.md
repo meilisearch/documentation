@@ -34,7 +34,7 @@ Get the [displayed attributes](/guides/advanced_guides/settings.md#displayed-att
 List the settings.
 
 ```json
-["title", "description", "release_date", "rank", "poster"]
+["title", "description", "genre", "release_date"]
 ```
 
 ## Update displayed attributes

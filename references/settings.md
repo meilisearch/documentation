@@ -69,13 +69,12 @@ List the settings.
   ],
   "attributesForFaceting": ["genres"],
   "distinctAttribute": null,
-  "searchableAttributes": ["title", "description", "uid"],
+  "searchableAttributes": ["title", "description", "genre"],
   "displayedAttributes": [
     "title",
     "description",
-    "release_date",
-    "rank",
-    "poster"
+    "genre",
+    "release_date"
   ],
   "stopWords": null,
   "synonyms": {
