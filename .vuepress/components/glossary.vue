@@ -35,6 +35,8 @@ const glossary = {
     'The data is used to determine the relevancy of a document when doing a search query.',
   displayed:
     'The field is present in the documents returned upon search.',
+  atomic:
+    'An atomic transaction is an indivisible and irreducible series of database operations such that either all occur, or nothing occurs.',
 }
 
 export default {

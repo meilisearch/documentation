@@ -77,3 +77,21 @@ Failing to upload document:
   "processedAt": "2019-12-07T20:23:50.157436246Z"
 }
 ```
+
+### Killing MeiliSearch While a Task is Processing
+
+Since in MeiliSearch asynchronous tasks are <clientGlossary word="atomic"/>, killing MeiliSearch in the middle of a process does not corrupt or alter the database.
+
+Essentially, tasks are done in transactions. If the transaction fails or is killed for any reason before completing, none of the tasks will be committed to your database.
+
+You can use the `status` field returned by [the update route](/references/updates.md) to determine if a process has been committed to MeiliSearch or not.
+
+- status: `enqueued` => Not yet begun. If MeiliSearch is killed and then restarted, the task will remain enqueued and be processed eventually.
+- status `processing` => In progress. If MeiliSearch is killed, there will be no consequences, since no part of the task has been committed to MeiliSearch. After restarting, Meilisearch will treat the task as `enqueued`.
+- status `done` => Completed. This action is done and is permanently added to your MeiliSearch instance. If you kill MeiliSearch, there will be no data loss; your database will remain exactly the same as before you killed MeiliSearch.
+
+#### Example
+
+Imagine that you're adding 100 documents in one batch to MeiliSearch. If you kill the process after 99 documents have successfully been added, then none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. Either all documents are added, or none are.
+
+Thus, **killing MeiliSearch is always safe!**
