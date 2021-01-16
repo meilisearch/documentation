@@ -25,12 +25,20 @@ Communication to the server is done through a [RESTful API](/references/README.m
 ## Add Documents
 
 To add documents to MeiliSearch you must provide:
-- [documents](/guides/main_concepts/documents.md) in the form of `JSON objects`
-- the name for the [index](/guides/main_concepts/indexes.md). An index is where the documents will be stored.
-If you try to add documents to an index that doesn't already exist, an index with the given name is automatically created. 
+- [Documents](/guides/main_concepts/documents.md) in the form of `JSON objects`.
+- An [index](/guides/main_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
+> _If the index does not exist, MeiliSearch creates it when you first add the documents._
 
-To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+
+```json
+{
+  "id": "123",
+  "title": "Superman"
+}
+```
+> The primary key is `id`, the document's unique identifier is `123`.
 
 There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
@@ -51,6 +59,8 @@ This kind of **successful response** indicates that the operation has been taken
 You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
 
 Checking the update status is not a mandatory step to search through your documents but could prove useful in tracing the origin of errors or unexpected behaviors.
+
+[API references](/references/updates.md)
 
 ## Search
 

@@ -26,7 +26,7 @@ const glossary = {
   'primary field':
     'A special field containing the primary key and a unique document id. <br><br> Every document must possess a correctly formatted primary field in order to be indexed.',
   'primary key':
-    'The attribute of the primary field. The primary key\'s associated value is a unique document id. An index possesses only one primary key, which is shared among all its documents. <br><br> Example: in a document with the primary field <code>"movie_id": "Abc_012"</code>, "movie_id" is the primary key.',
+    'The attribute name of the field with an unique value in each document. <br><br> Example: In a document with the primary field <code>"id": "Abc_012"</code>, "id" is the primary key and "Abc_012" the unique identifier. <br> <br> The unique value is used to recognize documents in MeiliSearch. An index only needs one primary key.',
   'document id':
     'The value of the primary field. The document id acts as a unique identifier for storing documents. <br><br> Example: in a document with the primary field <code>"movie_id": "Abc_012"</code>, "Abc_012" is the document id.',
   schemaless:
