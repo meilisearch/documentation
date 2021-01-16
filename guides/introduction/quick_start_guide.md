@@ -24,9 +24,10 @@ Communication to the server is done through a [RESTful API](/references/README.m
 
 ## Add Documents
 
-To add documents to MeiliSearch you must provide [documents](/guides/main_concepts/documents.md) in the form of `JSON objects`, as well as a name for the [index](/guides/main_concepts/indexes.md) where they will be stored. If you try to add documents to an index that doesn't already exist, an index with the given name is automatically created. It is also possible to create indexes manually using the [create index endpoint](/references/indexes.md#create-an-index).
-
-Documents are the basic building blocks of your database. Whenever you perform a search query on an index, MeiliSearch examines the data contained in your documents and returns the ones that match your query, in order of [relevancy](/guides/main_concepts/relevancy.html). 
+To add documents to MeiliSearch you must provide:
+- [documents](/guides/main_concepts/documents.md) in the form of `JSON objects`
+- the name for the [index](/guides/main_concepts/indexes.md). An index is where the documents will be stored.
+If you try to add documents to an index that doesn't already exist, an index with the given name is automatically created. 
 
 
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
