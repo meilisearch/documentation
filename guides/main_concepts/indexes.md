@@ -19,7 +19,7 @@ For example, it means you could create on the same server synonyms for a `movie`
 
 ## Index Creation
 
-An Index is created the first time documents are added to it or manually using the [create index endpoint](/references/indexes.md#create-an-index).
+An index is created the first time documents are added to it or manually using the [create index endpoint](/references/indexes.md#create-an-index).
 
 #### Example
 
