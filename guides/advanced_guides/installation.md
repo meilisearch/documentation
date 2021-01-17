@@ -107,3 +107,9 @@ Here is the list of [all the options and how to use them](/guides/advanced_guide
 Updating MeiliSearch is a straightforward process, simply get and install the latest binary with your preferred method (see installation above).
 
 Note that all MeiliSearch versions are not compatible with each other, and you may need to re-index your documents. If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, delete your database folder (defaults to `data.ms`), and re-index all your documents.
+
+### Restoring your content between two versions
+
+You can use [dumps](/guides/advanced_guides/snapshots_and_dumps.md#dumps) to export your data to a state where it can be imported after updating MeiliSearch. Since the content is exported in a way that guarantees its importability, it needs to be re-indexed. This process can take long if your database is big. Nonetheless, it **guarantees restoring all setting and documents between two updates**.
+
+If you want a complete guide on how to do the transition, please [look at this github issue](https://github.com/meilisearch/MeiliSearch/discussions/1187#discussioncomment-278125).
