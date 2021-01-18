@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "d3c05934-10fd-44cd-9a97-538848b19948",
-		"name": "MeiliSearch v0.17",
+		"_postman_id": "ae1a07b8-bdc0-4580-bc59-1c49a39a2048",
+		"name": "MeiliSearch v0.18",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -106,10 +106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[1, 2]",
-							"options": {
-								"raw": {}
-							}
+							"raw": "[1, 2]"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete-batch",
@@ -166,13 +163,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n  { \"objectId\": 5, \"title\": \"Hahaha\" },\n  { \"objectId\": 2, \"title\": \"Lolilol\" },\n  { \"objectId\": 4, \"title\": \"Lolilol2\" },\n  { \"objectId\": 12, \"title\": \"Lolilol3\" }\n]",
-							"options": {
-								"raw": {}
-							}
-						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
@@ -194,10 +184,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {}
-							}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents/1",
@@ -214,8 +201,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Search",
@@ -308,10 +294,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"q\": \"prinec\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n    \"q\": \"prinec\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/search",
@@ -327,8 +310,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Updates Status",
@@ -372,8 +354,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Indexes",
@@ -426,10 +407,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"uid\": \"{{indexUID}}\"\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\"\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes",
@@ -456,10 +434,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"title\"\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"title\"\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes",
@@ -486,10 +461,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"primaryKey\": \"title\"\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"primaryKey\": \"title\"\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}",
@@ -523,8 +495,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Settings",
@@ -559,10 +530,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\n\t\"asc(title)\",\n\t\"typo\"\n]\n",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\n\t\"asc(title)\",\n\t\"typo\"\n]\n"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/ranking-rules",
@@ -626,10 +594,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "\"title\"",
-									"options": {
-										"raw": {}
-									}
+									"raw": "\"title\""
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/distinct-attribute",
@@ -693,10 +658,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"title\", \"author\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"title\", \"author\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/searchable-attributes",
@@ -760,10 +722,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"title\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"title\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/displayed-attributes",
@@ -833,10 +792,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}",
-									"options": {
-										"raw": {}
-									}
+									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
@@ -866,10 +822,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "\"[\"wizard\"]\"",
-									"options": {
-										"raw": {}
-									}
+									"raw": "\"[\"wizard\"]\""
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
@@ -902,10 +855,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"the\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"the\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/stop-words",
@@ -935,10 +885,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"the\", \"lol\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"the\", \"of\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/stop-words",
@@ -1008,10 +955,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"genre\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"genre\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
@@ -1048,9 +992,7 @@
 							},
 							"response": []
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					]
 				},
 				{
 					"name": "Get all settings",
@@ -1084,10 +1026,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"],\n    \"distinctAttribute\": null\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"],\n    \"distinctAttribute\": null\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/settings",
@@ -1128,8 +1067,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Keys",
@@ -1151,8 +1089,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Stats",
@@ -1227,8 +1164,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Dumps",
@@ -1286,7 +1222,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "7a6f3247-aa13-4d11-be5a-c23086795bdb",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1296,15 +1231,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "26c926aa-9dce-4a8f-835c-b856a1ff8917",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"auth": {
@@ -1326,7 +1259,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "70452b3f-2e07-4237-a29f-c889bd219175",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1336,7 +1268,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "867c9b3d-c101-4834-9d45-03296be51442",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1346,15 +1277,12 @@
 	],
 	"variable": [
 		{
-			"id": "9920ccac-f1ed-4ca1-9433-b0d7ca100fb5",
 			"key": "url",
 			"value": "http://0.0.0.0:7700"
 		},
 		{
-			"id": "27253c9a-8533-431c-8101-3655397fa78b",
 			"key": "indexUID",
 			"value": "indexUID"
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

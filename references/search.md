@@ -50,8 +50,8 @@ This is the preferred route to perform search when an API key is required, as it
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
 | **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetDistribution** | **[Distribution of the given facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | `object`
-| **exhaustiveFacetsCount** | Whether `facetDistribution` is exhaustive | `boolean`
+| **facetsDistribution** | **[Distribution of the given facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | `object`
+| **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
 | **processingTimeMs** | Processing time of the query   |  `number`  |
 | **query**            | Query originating the response |  `string`  |
 
@@ -144,8 +144,8 @@ When the `q` parameter is not specified, a [placeholder](/guides/advanced_guides
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
 | **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetDistribution** | **[Distribution of the given facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | `object`
-| **exhaustiveFacetsCount** | Whether `facetDistribution` is exhaustive | `boolean`
+| **facetsDistribution** | **[Distribution of the given facets](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | `object`
+| **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
 | **processingTimeMs** | Processing time of the query   |  `number`  |
 | **query**            | Query originating the response |  `string`  |
 

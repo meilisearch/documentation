@@ -133,7 +133,7 @@ In production mode, the [web interface](/guides/advanced_guides/web_interface.md
 
 The maximum size of accepted JSON payloads. By default this size is in bytes, but it can be represented in many different units — more information [here](#available-size-units).
 
-**Default value**: `10485760` (+=10MB)
+**Default value**: `104857600` (+=100MB)
 
 ### SSL Authentication Path
 
