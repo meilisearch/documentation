@@ -26,7 +26,7 @@ const glossary = {
   'primary field':
     'A special field containing the primary key and a unique document id. <br><br> Every document must possess a correctly formatted primary field in order to be indexed.',
   'primary key':
-    'An attribute that must be present in every document of a given index, used to identify and distinguish documents.<br><br> Example: In a document with the primary field <code>"id": "Abc_012"</code>, "id" is the index's primary key and "Abc_012" is the document's unique identifier.',
+    'An attribute that must be present in every document of a given index, used to identify and distinguish documents.<br><br> Example: In a document with the primary field <code>"id": "Abc_012"</code>, "id" is the index\'s primary key and "Abc_012" is the document\'s unique identifier.',
   'document id':
     'The value of the primary field. The document id acts as a unique identifier for storing documents. <br><br> Example: in a document with the primary field <code>"movie_id": "Abc_012"</code>, "Abc_012" is the document id.',
   schemaless:

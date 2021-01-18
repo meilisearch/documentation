@@ -25,6 +25,7 @@ Communication to the server is done through a [RESTful API](/references/README.m
 ## Add Documents
 
 To add documents to MeiliSearch you must provide:
+
 - [Documents](/guides/main_concepts/documents.md) in the form of `JSON objects`.
 - An [index](/guides/main_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
@@ -38,6 +39,7 @@ To be processed, all documents must share one common <clientGlossary word="field
   "title": "Superman"
 }
 ```
+
 > The primary key is `id`, the document's unique identifier is `123`.
 
 There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
