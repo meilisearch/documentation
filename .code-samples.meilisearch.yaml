@@ -365,14 +365,6 @@ search_guide_1: |-
 search_guide_2: |-
   $ curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "Avengers", "filters": "release_date > 795484800" }'
-getting_started_create_index_md: |-
-  ```bash
-  $ curl \
-    -X POST 'http://127.0.0.1:7700/indexes' \
-    --data '{
-    "uid" : "movies"
-  }'
-  ```
 getting_started_add_documents_md: |-
   ```bash
   $ curl \

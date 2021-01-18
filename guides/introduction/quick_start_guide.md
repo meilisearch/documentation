@@ -22,28 +22,29 @@ Now that your MeiliSearch server is up and running, you should be able to commun
 
 Communication to the server is done through a [RESTful API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
-## Create your Index
-
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and associated documents.
-Indexes can be comparable to SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
-
-In order to be able to store your documents in an index, it is required you create one first.
-
-<CodeSamples id="getting_started_create_index_md" />
-
-[API references](/references/indexes.md)
-
 ## Add Documents
 
-Once the index has been created, the next step is to fill it with [documents](/guides/main_concepts/documents.md). These documents will be used and returned when search queries will be performed on MeiliSearch.
+To add documents to MeiliSearch you must provide:
 
-Documents are represented in `JSON format`.
+- [Documents](/guides/main_concepts/documents.md) in the form of `JSON objects`.
+- An [index](/guides/main_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
-To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+> _If the index does not exist, MeiliSearch creates it when you first add documents._
+
+To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+
+```json
+{
+  "id": "123",
+  "title": "Superman"
+}
+```
+
+> The primary key is `id`, the document's unique identifier is `123`.
 
 There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
+Below is an example to showcase how to add documents to an index called `movies` using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
 <CodeSamples id="getting_started_add_documents_md" />
 
@@ -60,6 +61,8 @@ This kind of **successful response** indicates that the operation has been taken
 You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
 
 Checking the update status is not a mandatory step to search through your documents but could prove useful in tracing the origin of errors or unexpected behaviors.
+
+[API references](/references/updates.md)
 
 ## Search
 
