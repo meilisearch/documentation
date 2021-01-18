@@ -28,7 +28,7 @@ To add documents to MeiliSearch you must provide:
 - [Documents](/guides/main_concepts/documents.md) in the form of `JSON objects`.
 - An [index](/guides/main_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
-> _If the index does not exist, MeiliSearch creates it when you first add the documents._
+> _If the index does not exist, MeiliSearch creates it when you first add documents._
 
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
