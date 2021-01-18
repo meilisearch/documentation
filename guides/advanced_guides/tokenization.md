@@ -28,7 +28,7 @@ For more details or to make a contribution, check out the tokenizer [feature spe
 
 ## Language Support
 
-**MeiliSearch is multilingual**, featuring optimized support for: 
+**MeiliSearch is multilingual**, featuring optimized support for:
 
 - **Any language that uses whitespace to separate words**
 - **Chinese** 🇨🇳 (through [Jieba](https://github.com/messense/jieba-rs))
