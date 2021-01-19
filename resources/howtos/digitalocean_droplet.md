@@ -51,7 +51,7 @@ Tags are a very good method to know who created resources, and for organizing re
 
 ![Create droplet](/digitalocean/07.create-droplet.png)
 
-### 8. Your MeiliSearch is running (with no config)
+### 8. Your MeiliSearch is running (in DEVELOPMENT environment)
 
 Instance creation in progress...
 
@@ -73,7 +73,7 @@ Paste it in your browser. If this screen is shown, your MeiliSearch is now ready
 
 ## Configure production settings in your MeiliSearch Droplet
 
-Configuring your MeiliSearch from a DigitalOcean droplet is very straightforward. Establish an SSH connection with your droplet and a script will guide you through the process.
+Configuring your MeiliSearch in a PRODUCTION environment on DigitalOcean droplet is very straightforward. Establish an SSH connection with your droplet and a script will guide you through the process.
 
 ### 1. Make your domain name point to your droplet
 
@@ -81,13 +81,25 @@ If you want to use your own domain name (or sub-domain), add `A record` in your 
 
 ![Domain to  MeiliSearch](/digitalocean/11.domain-a-record.png)
 
-This should work out of the box. Your domain should be usable for your MeiliSearch.
+This should work out of the box. Your domain should be usable for your MeiliSearch. You can now do a health check to verify that your instance is running and your DNS is well configured:
+
+```bash
+$ curl -v http://<your-domain-name>/health
+```
+
+The server should answer with a `204 No content` status code as shown in the example below:
+
+```bash
+...
+< HTTP/1.1 204 No Content
+...
+```
 
 ![Domain to  MeiliSearch](/digitalocean/11.working-domain.png)
 
 ### 2. Set API KEY and SSL (HTTPS)
 
-Meilisearch is running with a development configuration. It means that you haven't set up an API KEY (anyone can read/write from your MeiliSearch) and you aren't using HTTPS yet. But no worries, the configuration process is automated and very simple. Just connect via SSH to your new MeiliSearch Droplet and answer a few questions:
+Meilisearch is running in a DEVELOPMENT environment. You haven't set up an API KEY (anyone can read/write from your MeiliSearch) and you aren't using HTTPS yet, which makes this configuration uinsafe to une in PRODUCTION. To start the configuration process, connect via SSH to your new MeiliSearch Droplet and follow the instructions:
 
 ### 2.1. Run the configuration script
 
@@ -95,22 +107,26 @@ Open a terminal and start a new SSH connection with the IP you got from DigitalO
 
 Write in your terminal `ssh root@<your-ip-address>` and press Enter to establish connection:
 
-![Terminal ssh](/digitalocean/12.open-terminal-ssh.png)
+```bash
+ssh meilisearch@42.42.42.42
+```
 
 Write `yes` and press Enter to accept the authentication process.
 
-A script will run automatically, asking for your settings and desired configuration. If you want to run this script again later, you can do so by typing:
+A script will run automatically, asking for your settings and desired configuration. If you want to run this script again anytime, you can do so by using the following command:
 
-`sh /var/opt/meilisearch/scripts/first-login/000-set-meili-env.sh`
+```bash
+meilisearch-setup
+```
 
 ### 3. Enjoy your ready-to-use MeiliSearch Droplet
 
-Your MeiliSearch Droplet is ready to be used in production.
+Your MeiliSearch Droplet is ready to be used in PRODUCTION.
 
-To check if everything is running smoothly, do an HTTP call to the health route:
+To check if everything is running smoothly, do an HTTP call to the `/health` route:
 
 ```bash
-$ curl -v https://<your-meilisearch-url>/health
+$ curl -v https://<your-domain-name>/health
 ```
 
 The server should answer with a `204 No content` status code as shown in the example below:
