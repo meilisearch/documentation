@@ -115,7 +115,7 @@ This will lead you to a web page with a search bar that will allow you to search
 <br>
 <MovieGif />
 
-## Integrate to your website
+## Integrate to Your Project
 
 The only step missing now is adding the search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): A developer tool that generates all the search components needed to start searching.
 
