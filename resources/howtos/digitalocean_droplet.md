@@ -99,7 +99,8 @@ The server should answer with a `204 No content` status code as shown in the exa
 
 ### 2. Set API KEY and SSL (HTTPS)
 
-Meilisearch is running in a DEVELOPMENT environment. You haven't set up an API KEY (anyone can read/write from your MeiliSearch) and you aren't using HTTPS yet, which makes this configuration uinsafe to une in PRODUCTION. To start the configuration process, connect via SSH to your new MeiliSearch Droplet and follow the instructions:
+Meilisearch is running in a DEVELOPMENT environment. You haven't set up an API KEY (anyone can read/write from your MeiliSearch) and you aren't using HTTPS yet, which makes this configuration unsafe to use in PRODUCTION.
+To start the configuration process, connect via SSH to your new MeiliSearch Droplet and follow the instructions:
 
 ### 2.1. Run the configuration script
 
@@ -108,7 +109,7 @@ Open a terminal and start a new SSH connection with the IP you got from DigitalO
 Write in your terminal `ssh root@<your-ip-address>` and press Enter to establish connection:
 
 ```bash
-ssh meilisearch@42.42.42.42
+$ ssh meilisearch@42.42.42.42
 ```
 
 Write `yes` and press Enter to accept the authentication process.
@@ -116,7 +117,7 @@ Write `yes` and press Enter to accept the authentication process.
 A script will run automatically, asking for your settings and desired configuration. If you want to run this script again anytime, you can do so by using the following command:
 
 ```bash
-meilisearch-setup
+$ meilisearch-setup
 ```
 
 ### 3. Enjoy your ready-to-use MeiliSearch Droplet
