@@ -154,8 +154,7 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
         const search = instantsearch({
             indexName: "movies",
             searchClient: instantMeiliSearch(
-                "http://localhost:7700",
-                "masterKey",
+                "http://localhost:7700"
             )
             });
 
