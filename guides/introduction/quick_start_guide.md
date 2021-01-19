@@ -233,7 +233,7 @@ The code above comes in multiple parts:
 - The body part adds the `VueJs` components.
   `instant-meilisearch` adds the search bar and search results in these components.
 - `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that import libraries needed to run `instant-meilisearch`.
-- The `VueJs` part where you customize your `instant-meilisearch`.
+- The `VueJs` part is where you customize your `instant-meilisearch`.
 
 To use `instant-meilisearch` in `vueJs` using `npm` or `yarn` please visit [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue).
 
@@ -285,7 +285,7 @@ The code above comes in multiple parts:
 - The body of the page, is the entry point for `react`.
   `instant-meilisearch` adds the search bar and search results in this entry point.
 - `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
-- The `React` part where you customize your `instant-meilisearch`.
+- The `React` part is where you customize your `instant-meilisearch`.
 
 To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
 
