@@ -117,24 +117,24 @@ This will lead you to a web page with a search bar that will allow you to search
 
 ## Integrate to your website
 
-The only step missing is adding the searchbar to your own application. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): A developer tool that generates all the search components needed to start searching.
+The only step missing now is adding the search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): A developer tool that generates all the search components needed to start searching.
 
-[Instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments as: [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [React](https://github.com/meilisearch/meilisearch-react) and [VueJs](https://github.com/meilisearch/meilisearch-vue).
+[Instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments as: [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [React](https://github.com/meilisearch/meilisearch-react), and [VueJs](https://github.com/meilisearch/meilisearch-vue).
 
 #### Lets Try:
 
-- Create a html file for example `index.html`
-- Open it in a text editor (notepad, sublime text, vsc or other)
-- Copy paste any of the code examples bellow and save the file
-- Open `index.html` in your browser (double click on it in your folder)
+- Create an `html` file, for example, `index.html`.
+- Open it in a text editor (notepad, sublime text, VSC, or other).
+- Copy-paste any of the code examples bellow and save the file.
+- Open `index.html` in your browser (double click on it in your folder).
 
-_We uses browser builds for ease of integration. It is possible to add them with `npm` or `yarn`. Please refer to [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) for documentation._
+_We use browser builds for ease of integration. It is possible to do this with `npm` or `yarn`. Please refer to [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) for documentation._
 
 :::: tabs
 
 ::: tab Javascript
 
-The following code samples uses plain [javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
+The following code sample uses plain [javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
 ```html
 <!DOCTYPE html>
@@ -183,12 +183,12 @@ The following code samples uses plain [javascript](https://developer.mozilla.org
 </html>
 ```
 
-The code above is divided in multiple parts:
+The code above comes in multiple parts:
 
-- The body of the page which adds both `searchbox` and `hits` divs.
-  This is where `instant-meilisearch` adds a searchbar and search results.
+- The body part of the page adds both `searchbox` and `hits` elements.
+  `instant-meilisearch` adds the search bar and search results in these elements.
 - `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch`.
-- The Javascript part where you can customize how `instant-meilisearch` works.
+- The Javascript part is where you customize `instant-meilisearch`.
 
 To use `instant-meilisearch` using `npm` or `yarn` please visit [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch).
 
@@ -196,7 +196,7 @@ To use `instant-meilisearch` using `npm` or `yarn` please visit [instant-meilise
 
 ::: tab VueJs
 
-The following example uses [VueJS](https://vuejs.org/) framework.
+The following code sample uses [VueJS](https://vuejs.org/) framework.
 
 ```html
 <!DOCTYPE html>
@@ -228,11 +228,11 @@ The following example uses [VueJS](https://vuejs.org/) framework.
 </html>
 ```
 
-The code above is divided in multiple parts:
+The code above comes in multiple parts:
 
-- The body of the page which which adds the right components using `VueJs`.
-  This is where `instant-meilisearch` adds a searchbar and search results.
-- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch`.
+- The body part adds the `VueJs` components.
+  `instant-meilisearch` adds the search bar and search results in these components.
+- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that import libraries needed to run `instant-meilisearch`.
 - The `VueJs` part where you customize your `instant-meilisearch`.
 
 To use `instant-meilisearch` in `vueJs` using `npm` or `yarn` please visit [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue).
@@ -241,7 +241,7 @@ To use `instant-meilisearch` in `vueJs` using `npm` or `yarn` please visit [meil
 
 ::: tab React
 
-The following example uses [React](https://reactjs.org/) framework.
+The following code sample uses [React](https://reactjs.org/) framework.
 
 ```html
 <!DOCTYPE html>
@@ -280,9 +280,10 @@ The following example uses [React](https://reactjs.org/) framework.
 </html>
 ```
 
-The code above is divided in multiple parts:
+The code above comes in multiple parts:
 
-- The body of the page, which is the entry point for you `react` components.
+- The body of the page, is the entry point for `react`.
+  `instant-meilisearch` adds the search bar and search results in this entry point.
 - `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
 - The `React` part where you customize your `instant-meilisearch`.
 
