@@ -22,9 +22,9 @@ We can break down the tokenization process like so:
 Pipelines include many language-specific operations. Currently, we have two pipelines:
 
 1. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
-2. A default pipeline that uses [unicode text segmentation](https://github.com/unicode-rs/unicode-segmentation).
+2. A default MeiliSearch pipeline that separates words based on categories. Works with a variety of languages.
 
-For more details or to make a contribution, check out the tokenizer [feature specification](https://github.com/meilisearch/specifications/blob/master/text/0001-script-based-tokenizer.md) and [repository](https://github.com/meilisearch/Tokenizer).
+For more details, check out the [feature specification](https://github.com/meilisearch/specifications/blob/master/text/0001-script-based-tokenizer.md).
 
 ## Language Support
 
@@ -33,19 +33,13 @@ For more details or to make a contribution, check out the tokenizer [feature spe
 - **Any language that uses whitespace to separate words**
 - **Chinese** 🇨🇳 (through [Jieba](https://github.com/messense/jieba-rs))
 
-Don't know if your language is covered? **We recommend trying MeiliSearch anyway.** MeiliSearch is a flexible engine designed to deliver results in any language. We are constantly working to improve our multilingual support and [welcome your feedback](/guides/advanced_guides/tokenization.md#future-development).
+We aim to provide global language support, and your feedback helps us [move closer to that goal](/guides/advanced_guides/tokenization.md#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/MeiliSearch/issues/new/choose).
 
-If you'd like more information on how MeiliSearch handles different languages, learn about our [tokenizer](/guides/advanced_guides/tokenization.md#tokenization).
+### Improving Our Language Support
 
-## Future Development
+While we have employees from all over the world at MeiliSearch, we don't speak every language. In fact, we rely almost entirely on feedback from external contributors to know how our engine is performing across different languages.
 
-There are many ways you can contribute to creating a more global MeiliSearch.
-
-If you're a Rust dev, check out our [tokenizer repo](https://github.com/meilisearch/Tokenizer) and consider developing a [tokenization pipeline](/guides/advanced_guides/tokenization.md#tokenization) for your language of choice.
-
-If you'd like to help in another way, please consider sharing your tests, results, and feedback with us on GitHub. We have issues on the MeiliSearch repository tracking our efforts to improve support for various languages. Be sure to also give a :+1: to any language you'd like us to target!
-
-Here are some of the languages that have been requested by users and their corresponding issue:
+If you'd like to help us create a more global MeiliSearch, please consider sharing your tests, results, and general feedback with us through [GitHub issues](https://github.com/meilisearch/MeiliSearch/issues). Here are some of the languages that have been requested by users and their corresponding issue:
 
 - [Arabic](https://github.com/meilisearch/MeiliSearch/issues/554)
 - [Lao](https://github.com/meilisearch/MeiliSearch/issues/563)
