@@ -1,8 +1,18 @@
 # MeiliSearch Documentation
 
-MeiliSearch is a **RESTful search API**. It aims to be a **ready-to-go solution** for everyone who wants a **fast and relevant search experience** for their end-users ⚡️🔎
+Welcome to the new MeiliSearch documentation! While it might look similar, you may find that some things have changed.
 
-[<linkButton text="🚀 GETTING STARTED"/>](/guides/introduction/quick_start_guide.md)
+For starters, our helpful content is now grouped into three categories: **learn**, **create**, and **reference**.
+
+If it's your first time using MeiliSearch or you want a refresher, we recommend starting with some [learning](insert link here). School's back in session!
+
+If you already know the basics of MeiliSearch but could use some help building your site or application, you'll find dozens of useful guides in [create](insert link here).
+
+Finally, if you just want the facts and none of the fluff--believe us, we get it--you should enjoy our [reference-style documentation](insert link here).
+
+## What is MeiliSearch?
+
+MeiliSearch is a **RESTful search API**. It aims to be a **ready-to-go solution** for everyone who wants a **fast and relevant search experience** for their end-users ⚡️🔎
 
 Efficient search engines often require a significant investment of resources. They are only accessible to companies with the means necessary to develop a bespoke search solution that fits their needs.
 
