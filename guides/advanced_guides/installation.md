@@ -104,9 +104,9 @@ Here is the list of [all the options and how to use them](/guides/advanced_guide
 
 ## Updating MeiliSearch
 
-Updating MeiliSearch is a straightforward process: simply get and install the latest binary with your preferred method (see [installation](/guides/advanced_guides/installation.md#download-and-launch) above).
+Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [installation](/guides/advanced_guides/installation.md#download-and-launch) above).
 
-Note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. Therefore, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
+However, please note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. Therefore, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
 
 If you want to transfer your database from an outdated MeiliSearch instance to the most recent version, we recommend following [the below guide](/guides/advanced_guides/installation.md#migrating-a-database-to-a-later-version).
 
