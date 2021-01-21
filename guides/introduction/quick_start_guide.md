@@ -141,9 +141,10 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
   </head>
   <body>
-    <div>
+    <div class="wrapper">
       <div id="searchbox" focus></div>
       <div id="hits"></div>
     </div>
@@ -159,21 +160,22 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
             });
 
             search.addWidgets([
-            instantsearch.widgets.searchBox({
-                container: "#searchbox"
-            }),
-            instantsearch.widgets.hits({
-                container: "#hits",
-                templates: {
-                item: `
-                    <div>
-                    <div class="hit-name">
-                        {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}
-                    </div>
-                    </div>
-                `
-                }
-            })
+              instantsearch.widgets.searchBox({
+                  container: "#searchbox"
+              }),
+              instantsearch.widgets.configure({ hitsPerPage: 8 }),
+              instantsearch.widgets.hits({
+                  container: "#hits",
+                  templates: {
+                  item: `
+                      <div>
+                      <div class="hit-name">
+                          {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}
+                      </div>
+                      </div>
+                  `
+                  }
+              })
             ]);
 
             search.start();
@@ -200,13 +202,18 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
 ```html
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+  </head>
   <body>
-    <div id="app">
+    <div id="app" class="wrapper">
       <ais-instant-search :search-client="searchClient" index-name="movies" >
+        <ais-configure :hits-per-page.camel="10" />
         <ais-search-box placeholder="Search here…" class="searchbox"></ais-search-box>
         <ais-hits>
           <div slot="item" slot-scope="{ item }">
-            <ais-highlight :hit="item" attribute="title" />
+            <ais-highlight :hit="item" attribute="name" />
           </div>
         </ais-hits>
       </ais-instant-search>
@@ -225,6 +232,7 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
     })
   </script>
 </html>
+
 ```
 
 The code above comes in multiple parts:
@@ -244,9 +252,13 @@ The following code sample uses [React](https://reactjs.org/) framework.
 
 ```html
 <!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+</head>
 <html>
   <body>
-      <div id="app"></div>
+      <div id="app" class="wrapper"></div>
   </body>
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
@@ -254,8 +266,7 @@ The following code sample uses [React](https://reactjs.org/) framework.
   <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script>
     'use strict';
-      const { InstantSearch, SearchBox, Hits, Highlight }  = ReactInstantSearchDOM;
-
+      const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
       const searchClient = instantMeiliSearch(
         "http://localhost:7700"
       );
@@ -264,12 +275,15 @@ The following code sample uses [React](https://reactjs.org/) framework.
         React.createElement(InstantSearch, {
           indexName: "movies",
           searchClient: searchClient
-        }, [ React.createElement(SearchBox, { key: 1 }), React.createElement(Hits, { hitComponent: Hit, key: 2 })]
+        }, [
+          React.createElement(SearchBox, { key: 1 }),
+          React.createElement(Hits, { hitComponent: Hit, key: 2 }),
+          React.createElement(Configure, { hitsPerPage: 10 })]
         )
       );
       function Hit(props) {
           return React.createElement(Highlight, {
-            attribute: "title",
+            attribute: "name",
             hit: props.hit
           })
       }
