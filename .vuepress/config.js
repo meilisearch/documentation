@@ -18,7 +18,17 @@ module.exports = {
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
-      '/guides/': [
+      '/learn/': [
+        {
+          title: 'What is MeiliSearch?',
+          path: '/learn/what_is_meilisearch/',
+          collapsable: false,
+          children: [
+            '/learn/what_is_meilisearch/sdks.md',
+            '/learn/what_is_meilisearch/comparison_to_alternatives.md',
+            '/learn/what_is_meilisearch/contact.md',
+          ],
+        },
         {
           title: '🚀 Introduction',
           path: '/guides/introduction/',
