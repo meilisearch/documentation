@@ -11,9 +11,9 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
-      { text: 'Guides', link: '/guides/' },
-      { text: 'API References', link: '/references/' },
-      { text: 'Resources', link: '/resources/' },
+      { text: 'Learn', link: '/learn/' },
+      { text: 'Create', link: '/create/' },
+      { text: 'Reference', link: '/reference/' },
       { text: 'FAQ', link: '/faq/' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
