@@ -1,3 +1,3 @@
 # Under the Hood
 
-To learn how MeiliSearch works under the hood and better understand the algorithms behind it, check out the following reference articles:
+This section explores how MeiliSearch works under the hood. To better understand some of the algorithms behind our beloved search engine, check out the following reference articles:
