@@ -141,15 +141,14 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.2.7/templates/basic_search.css" />
   </head>
   <body>
     <div class="wrapper">
       <div id="searchbox" focus></div>
       <div id="hits"></div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.2.7/dist/instant-meilisearch.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
     <script>
         const search = instantsearch({
@@ -177,7 +176,6 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
                   }
               })
             ]);
-
             search.start();
     </script>
   </body>
@@ -204,7 +202,7 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.2.7/templates/basic_search.css" />
   </head>
   <body>
     <div id="app" class="wrapper">
@@ -213,7 +211,7 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
         <ais-search-box placeholder="Search here…" class="searchbox"></ais-search-box>
         <ais-hits>
           <div slot="item" slot-scope="{ item }">
-            <ais-highlight :hit="item" attribute="name" />
+            <ais-highlight :hit="item" attribute="title" />
           </div>
         </ais-hits>
       </ais-instant-search>
@@ -221,7 +219,7 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue-instantsearch@3.2.0/dist/vue-instantsearch.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.2.7/dist/instant-meilisearch.umd.min.js"></script>
   <script>
     Vue.use(VueInstantSearch)
     var app = new Vue({
@@ -232,7 +230,6 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
     })
   </script>
 </html>
-
 ```
 
 The code above comes in multiple parts:
@@ -254,7 +251,7 @@ The following code sample uses [React](https://reactjs.org/) framework.
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.2.7/templates/basic_search.css" />
 </head>
 <html>
   <body>
@@ -263,30 +260,29 @@ The following code sample uses [React](https://reactjs.org/) framework.
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.2.7/dist/instant-meilisearch.umd.min.js"></script>
   <script>
-    'use strict';
-      const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
-      const searchClient = instantMeiliSearch(
-        "http://localhost:7700"
-      );
+    const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
+    const searchClient = instantMeiliSearch(
+      "http://localhost:7700"
+    );
 
-      const App = () => (
-        React.createElement(InstantSearch, {
-          indexName: "movies",
-          searchClient: searchClient
-        }, [
-          React.createElement(SearchBox, { key: 1 }),
-          React.createElement(Hits, { hitComponent: Hit, key: 2 }),
-          React.createElement(Configure, { hitsPerPage: 10 })]
-        )
-      );
-      function Hit(props) {
-          return React.createElement(Highlight, {
-            attribute: "name",
-            hit: props.hit
-          })
-      }
+    const App = () => (
+      React.createElement(InstantSearch, {
+        indexName: "movies",
+        searchClient: searchClient
+      }, [
+        React.createElement(SearchBox, { key: 1 }),
+        React.createElement(Hits, { hitComponent: Hit, key: 2 }),
+        React.createElement(Configure, { hitsPerPage: 10 })]
+      )
+    );
+    function Hit(props) {
+        return React.createElement(Highlight, {
+          attribute: "title",
+          hit: props.hit
+        })
+    }
     const domContainer = document.querySelector('#app');
     ReactDOM.render(React.createElement(App), domContainer);
   </script>
