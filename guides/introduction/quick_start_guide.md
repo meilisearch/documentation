@@ -186,8 +186,7 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
 
 The code above comes in multiple parts:
 
-- The first four lines of the `<body`> add both `searchbox and `hits` elements.
-  `instant-meilisearch` adds the search bar and search results in these elements.
+- The first four lines of the `<body`> add both `searchbox and`hits`elements.`instant-meilisearch` adds the search bar and search results in these elements.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch`.
 - The JavaScript part is where you customize `instant-meilisearch`.
 
