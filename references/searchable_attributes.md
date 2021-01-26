@@ -2,8 +2,7 @@
 
 _Child route of the [settings route](/references/settings.md)._
 
-The values of the fields whose attributes are added to the searchable-attributes list are **searched for matching query words**.
-By default, all fields are considered to be `searchableAttributes`. This behavior is represented by the `["*"]` in the settings. Setting `searchableAttributes` to an empty array `[]` will reset the setting to its default value.
+The values associated with attributes in the `searchableAttributes` list are **searched for matching query words**. The order of the list also determines the [attribute ranking order](/guides/main_concepts/relevancy.md#attribute-ranking-order).
 
 Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
 
@@ -27,14 +26,14 @@ Get the [searchable attributes](/guides/advanced_guides/field_properties.md#sear
 
 ### Example
 
-<code-samples id="get_searchable_attributes_1" />
+<CodeSamples id="get_searchable_attributes_1" />
 
 #### Response: `200 Ok`
 
 List the settings.
 
 ```json
-["title", "description", "uid"]
+["title", "description", "genre"]
 ```
 
 ## Update searchable attributes
@@ -59,7 +58,7 @@ This means that a document with a match in an attribute at the start of the arra
 
 ### Example
 
-<code-samples id="update_searchable_attributes_1" />
+<CodeSamples id="update_searchable_attributes_1" />
 
 A match in title will make a document more relevant than another document with a match in description.
 
@@ -91,7 +90,7 @@ All attributes found in the documents added to the index.
 
 #### Example
 
-<code-samples id="reset_searchable_attributes_1" />
+<CodeSamples id="reset_searchable_attributes_1" />
 
 #### Response: `202 Accepted`
 

@@ -4,6 +4,8 @@ errors:
     description: "An error occurred while trying to create an index, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
   - code: index_already_exists
     description: "An index with this UID already exists, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
+  - code: index_not_found
+    description: "An index with this UID was not found, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
   - code: invalid_index_uid
     description: "There is an error in the provided index format, check out our guide on [index creation](https://docs.meilisearch.com/guides/main_concepts/indexes.html)"
   - code: index_not_accessible
@@ -32,8 +34,6 @@ errors:
     description: "MeiliSearch experienced an internal error. Check the error message, and open an issue if necessary."
   - code: invalid_token
     description: "The provided token is invalid."
-  - code: maintenance
-    description: "The MeiliSearch instance is under maintenance."
   - code: missing_authorization_header
     description: "The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [authentication](https://docs.meilisearch.com/guides/advanced_guides/authentication.html) for more information."
   - code: missing_header
@@ -41,7 +41,7 @@ errors:
   - code: not_found
     description: "The requested resources could not be found."
   - code: payload_too_large
-    description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/guides/advanced_guides/configuration.html#options) to customize the maximum payload size accepted by MeiliSearch."
+    description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/guides/advanced_guides/configuration.html#payload-limit-size) to customize the maximum payload size accepted by MeiliSearch."
   - code: unretrievable_document
     description: "The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database."
   - code: search_error

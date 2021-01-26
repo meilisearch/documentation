@@ -50,7 +50,7 @@ Get the settings of an index.
 
 ### Example
 
-<code-samples id="get_settings_1" />
+<CodeSamples id="get_settings_1" />
 
 #### Response: `200 Ok`
 
@@ -67,15 +67,14 @@ List the settings.
     "exactness",
     "desc(release_date)"
   ],
-  "attributesForFaceting": ["genre"],
+  "attributesForFaceting": ["genres"],
   "distinctAttribute": null,
-  "searchableAttributes": ["title", "description", "uid"],
+  "searchableAttributes": ["title", "description", "genre"],
   "displayedAttributes": [
     "title",
     "description",
-    "release_date",
-    "rank",
-    "poster"
+    "genre",
+    "release_date"
   ],
   "stopWords": null,
   "synonyms": {
@@ -93,6 +92,8 @@ Update the settings of an index.
 
 Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
 [Learn more about the settings in this guide](/guides/advanced_guides/settings.md).
+
+If the provided index does not exist, it will be created.
 
 #### Path Variables
 
@@ -114,7 +115,7 @@ Updates in the settings route are **partial**. This means that any parameters no
 
 ### Example
 
-<code-samples id="update_settings_1" />
+<CodeSamples id="update_settings_1" />
 
 #### Response: `202 Accepted`
 
@@ -154,7 +155,7 @@ All settings will be reset to their default value.
 
 #### Example
 
-<code-samples id="reset_settings_1" />
+<CodeSamples id="reset_settings_1" />
 
 #### Response: `202 Accepted`
 

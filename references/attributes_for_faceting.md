@@ -22,14 +22,14 @@ Get the [attributes for faceting](/guides/advanced_guides/faceted_search.md) of 
 
 ### Example
 
-<code-samples id="get_attributes_for_faceting_1" />
+<CodeSamples id="get_attributes_for_faceting_1" />
 
 #### Response: `200 Ok`
 
 List the settings.
 
 ```json
-["genre", "director"]
+["genres", "director"]
 ```
 
 ## Update Attributes for Faceting
@@ -52,7 +52,7 @@ An array of strings that contains the attributes to use as facets.
 
 ### Example
 
-<code-samples id="update_attributes_for_faceting_1" />
+<CodeSamples id="update_attributes_for_faceting_1" />
 
 #### Response: `202 Accepted`
 
@@ -82,7 +82,7 @@ An empty array (`[]`).
 
 #### Example
 
-<code-samples id="reset_attributes_for_faceting_1" />
+<CodeSamples id="reset_attributes_for_faceting_1" />
 
 #### Response: `202 Accepted`
 

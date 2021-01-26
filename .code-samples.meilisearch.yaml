@@ -38,11 +38,11 @@ add_or_replace_documents_1: |-
     }]'
 add_or_update_documents_1: |-
   $ curl \
-    -X POST 'http://localhost:7700/indexes/movies/documents' \
+    -X PUT 'http://localhost:7700/indexes/movies/documents' \
     --data '[{
         "id": 287947,
         "title": "Shazam ⚡️",
-        "genre": "comedy"
+        "genres": "comedy"
     }]'
 delete_all_documents_1: |-
   curl \
@@ -92,20 +92,15 @@ update_settings_1: |-
         ],
         "distinctAttribute": "movie_id",
         "searchableAttributes": [
-            "uid",
-            "movie_id",
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre"
         ],
         "displayedAttributes": [
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre",
+            "release_date"
         ],
         "stopWords": [
             "the",
@@ -180,7 +175,7 @@ update_attributes_for_faceting_1: |-
   $ curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting' \
     --data '[
-        "genre",
+        "genres",
         "director"
     ]'
 reset_attributes_for_faceting_1: |-
@@ -195,7 +190,7 @@ update_searchable_attributes_1: |-
     --data '[
         "title",
         "description",
-        "uid"
+        "genre"
     ]'
 reset_searchable_attributes_1: |-
   $ curl \
@@ -209,9 +204,8 @@ update_displayed_attributes_1: |-
     --data '[
         "title",
         "description",
-        "release_date",
-        "rank",
-        "poster"
+        "genre",
+        "release_date"
     ]'
 reset_displayed_attributes_1: |-
   $ curl \
@@ -226,12 +220,6 @@ get_indexes_stats_1: |-
 get_health_1: |-
   $ curl \
     -X GET 'http://localhost:7700/health'
-update_health_1: |-
-  $ curl \
-    -X PUT 'http://localhost:7700/health' \
-    --data '{
-        "health": false
-    }'
 get_version_1: |-
   $ curl \
     -X GET 'http://localhost:7700/version'
@@ -244,13 +232,9 @@ field_properties_guide_searchable_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "searchableAttributes": [
-            "uid",
-            "movie_id",
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre"
         ]
     }'
 field_properties_guide_displayed_1: |-
@@ -260,9 +244,8 @@ field_properties_guide_displayed_1: |-
         "displayedAttributes": [
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre",
+            "release_date"
         ]
     }'
 filtering_guide_1: |-
@@ -349,13 +332,9 @@ settings_guide_searchable_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "searchableAttributes": [
-            "uid",
-            "movie_id",
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre"
         ]
     }'
 settings_guide_displayed_1: |-
@@ -365,9 +344,8 @@ settings_guide_displayed_1: |-
         "displayedAttributes": [
             "title",
             "description",
-            "poster",
-            "release_date",
-            "rank"
+            "genre",
+            "release_date"
         ]
     }'
 add_movies_json_1: |-
@@ -387,14 +365,6 @@ search_guide_1: |-
 search_guide_2: |-
   $ curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "Avengers", "filters": "release_date > 795484800" }'
-getting_started_create_index_md: |-
-  ```bash
-  $ curl \
-    -X POST 'http://127.0.0.1:7700/indexes' \
-    --data '{
-    "uid" : "movies"
-  }'
-  ```
 getting_started_add_documents_md: |-
   ```bash
   $ curl \

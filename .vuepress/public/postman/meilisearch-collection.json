@@ -1,161 +1,10 @@
 {
 	"info": {
-		"_postman_id": "0ff31625-5c59-4167-baa9-b14dadb2d721",
-		"name": "MeiliSearch v0.15",
+		"_postman_id": "ae1a07b8-bdc0-4580-bc59-1c49a39a2048",
+		"name": "MeiliSearch v0.18",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Indexes",
-			"item": [
-				{
-					"name": "List all indexes",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/indexes",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show index",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create index",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"uid\": \"{{indexUID}}\"\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/indexes",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create index with primary key",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"title\"\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/indexes",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Udpate index ",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"primaryKey\": \"title\"\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}"
-							]
-						},
-						"description": "Can only change the document identifier if it has not already been added before."
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an index",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
 		{
 			"name": "Documents",
 			"item": [
@@ -251,6 +100,30 @@
 					"response": []
 				},
 				{
+					"name": "Delete documents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[1, 2]"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete-batch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents",
+								"delete-batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Add or update documents",
 					"request": {
 						"method": "PUT",
@@ -290,13 +163,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n  { \"objectId\": 5, \"title\": \"Hahaha\" },\n  { \"objectId\": 2, \"title\": \"Lolilol\" },\n  { \"objectId\": 4, \"title\": \"Lolilol2\" },\n  { \"objectId\": 12, \"title\": \"Lolilol3\" }\n]",
-							"options": {
-								"raw": {}
-							}
-						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
@@ -318,10 +184,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {}
-							}
+							"raw": ""
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents/1",
@@ -337,114 +200,12 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Delete documents",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[1, 2]",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete-batch",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"documents",
-								"delete-batch"
-							]
-						}
-					},
-					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Updates Status",
-			"item": [
-				{
-					"name": "Get all update status",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/updates",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"updates"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get status for one update",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/updates/0",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"updates",
-								"0"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Search",
 			"item": [
-				{
-					"name": "Search in index",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"q\": \"prinec\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
-						},
-						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/search",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"search"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Search in index",
 					"request": {
@@ -519,9 +280,222 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search in index",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"q\": \"prinec\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"search"
+							]
+						}
+					},
+					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
+		},
+		{
+			"name": "Updates Status",
+			"item": [
+				{
+					"name": "Get all update status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/updates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"updates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get status for one update",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/updates/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"updates",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Indexes",
+			"item": [
+				{
+					"name": "List all indexes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create index",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create index with primary key",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"title\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Udpate index ",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"primaryKey\": \"title\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}"
+							]
+						},
+						"description": "Can only change the document identifier if it has not already been added before."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an index",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Settings",
@@ -556,10 +530,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\n\t\"asc(title)\",\n\t\"typo\"\n]\n",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\n\t\"asc(title)\",\n\t\"typo\"\n]\n"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/ranking-rules",
@@ -623,10 +594,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "\"title\"",
-									"options": {
-										"raw": {}
-									}
+									"raw": "\"title\""
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/distinct-attribute",
@@ -690,10 +658,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"title\", \"author\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"title\", \"author\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/searchable-attributes",
@@ -757,10 +722,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"title\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"title\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/displayed-attributes",
@@ -798,6 +760,86 @@
 							"response": []
 						},
 						{
+							"name": "Get synonyms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update synonyms",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset synonyms",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"[\"wizard\"]\""
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Get stop-words",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -813,10 +855,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"the\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"the\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/stop-words",
@@ -846,10 +885,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"the\", \"lol\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"the\", \"of\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/stop-words",
@@ -893,92 +929,6 @@
 							"response": []
 						},
 						{
-							"name": "Get synonyms",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"synonyms"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update synonyms",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}",
-									"options": {
-										"raw": {}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"synonyms"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Reset synonyms",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "\"[\"wizard\"]\"",
-									"options": {
-										"raw": {}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"indexes",
-										"{{indexUID}}",
-										"settings",
-										"synonyms"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Get attributes for faceting",
 							"request": {
 								"method": "GET",
@@ -1005,10 +955,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\"genre\"]",
-									"options": {
-										"raw": {}
-									}
+									"raw": "[\"genre\"]"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
@@ -1045,9 +992,7 @@
 							},
 							"response": []
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					]
 				},
 				{
 					"name": "Get all settings",
@@ -1081,10 +1026,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"]\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"rankingRules\": [\n\t\t\"typo\",\n\t\t\"words\",\n\t\t\"proximity\",\n\t\t\"attribute\",\n\t\t\"wordsPosition\",\n\t\t\"exactness\",\n\t\t\"desc(id)\"\n\t],\n\t\"stopWords\": [\"of\", \"the\"],\n\t\"attributesForFaceting\": [\"genre\"],\n    \"distinctAttribute\": null\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/settings",
@@ -1125,8 +1067,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Keys",
@@ -1148,8 +1089,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Stats",
@@ -1223,39 +1163,8 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Update health",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"health\": true\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/health",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"health"
-							]
-						}
-					},
-					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Dumps",
@@ -1313,7 +1222,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "0265ea3d-b8e6-489d-82b5-330e5c5faa4c",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1323,15 +1231,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "197a673a-9a4b-4cae-bb55-d815399a54dc",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"auth": {
@@ -1353,7 +1259,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "82b5ff41-9cc7-41bc-9623-88410c73da63",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1363,7 +1268,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "10a519ec-0201-4e5d-8a0f-83c5d37e6a4b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1373,15 +1277,12 @@
 	],
 	"variable": [
 		{
-			"id": "f6184d92-9c0c-4521-9a76-1f84d37e974e",
 			"key": "url",
 			"value": "http://0.0.0.0:7700"
 		},
 		{
-			"id": "d88ba4a1-c490-49a4-b3cf-3af96c889145",
 			"key": "indexUID",
 			"value": "indexUID"
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

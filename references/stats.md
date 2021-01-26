@@ -16,7 +16,7 @@ Get stats of an index.
 
 ### Example
 
-<code-samples id="get_index_stats_1" />
+<CodeSamples id="get_index_stats_1" />
 
 #### Response: `200 Ok`
 
@@ -42,7 +42,7 @@ Get stats of all indexes.
 
 ### Example
 
-<code-samples id="get_indexes_stats_1" />
+<CodeSamples id="get_indexes_stats_1" />
 
 #### Response: `200 Ok`
 

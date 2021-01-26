@@ -34,7 +34,7 @@ It also supports [faceting](/guides/advanced_guides/faceted_search.md) and [filt
 
 Suppose you would like to search `shifu` in a movie database, you would send:
 
-<code-samples id="search_parameter_guide_query_1" />
+<CodeSamples id="search_parameter_guide_query_1" />
 
 ::: tip
 Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API will respond.
@@ -54,7 +54,7 @@ A number of **documents to skip**.
 
 If you want to skip the **first** document, set `offset` to `1`.
 
-<code-samples id="search_parameter_guide_offset_1" />
+<CodeSamples id="search_parameter_guide_offset_1" />
 
 ## Limit
 
@@ -70,7 +70,7 @@ Set a **limit to the number of documents returned** by search queries.
 
 If you want to get only **two** documents, set `limit` to `2`.
 
-<code-samples id="search_parameter_guide_limit_1" />
+<CodeSamples id="search_parameter_guide_limit_1" />
 
 ## Filters
 
@@ -78,7 +78,7 @@ If you want to get only **two** documents, set `limit` to `2`.
 
 Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
 
-<code-samples id="search_parameter_guide_filter_1" />
+<CodeSamples id="search_parameter_guide_filter_1" />
 
 ```json
 {
@@ -92,7 +92,7 @@ Specify a filter to be used with the query. See our [dedicated guide](/guides/ad
 
 The parameter should be **URL-encoded**.
 
-<code-samples id="search_parameter_guide_filter_2" />
+<CodeSamples id="search_parameter_guide_filter_2" />
 
 ## Facet filters
 
@@ -104,9 +104,9 @@ or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValu
 - `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
 
   Both types of array contain the facet names and values to filter on.
-  A valid array must be an array that contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genre:Comedy", "genre:Romance"]]`).
+  A valid array must be an array that contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genres:Comedy", "genres:Romance"]]`).
 
-  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genre`).
+  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`).
   - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
 Facet filters also support logical connectives by using [inner and outer array elements](/guides/advanced_guides/faceted_search.md#using-facets).
@@ -115,15 +115,15 @@ Facet filters also support logical connectives by using [inner and outer array e
 
 #### Example
 
-Suppose you have declared `director` and `genre` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
+Suppose you have declared `director` and `genres` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
 
 ```SQL
-("genre:Horror" OR "genre:Mystery") AND "director:Jordan Peele"
+("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
 ```
 
 Querying on "thriller", the above example results in the following CURL command:
 
-<code-samples id="faceted_search_walkthrough_facet_filters_1" />
+<CodeSamples id="faceted_search_walkthrough_facet_filters_1" />
 
 And you would get the following response:
 
@@ -193,7 +193,7 @@ If the `facetsDistribution` parameter has been set, the returned results will co
 
 Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
 
-<code-samples id="faceted_search_facets_distribution_1" />
+<CodeSamples id="faceted_search_facets_distribution_1" />
 
 And you would get the following response:
 
@@ -236,7 +236,7 @@ Attributes to **display** in the returned documents.
 
 If you want to get only the `overview` and `title` field and not the other fields, set `attributesToRetrieve` to `overview,title`.
 
-<code-samples id="search_parameter_guide_retrieve_1" />
+<CodeSamples id="search_parameter_guide_retrieve_1" />
 
 ## Attributes to Crop
 
@@ -273,7 +273,7 @@ This is especially useful when you have to display content on the front-end in a
 
 If you input `shifu` as a search query and set the value of the parameter `cropLength` to `10`:
 
-<code-samples id="search_parameter_guide_crop_1" />
+<CodeSamples id="search_parameter_guide_crop_1" />
 
 You will get the following response with the **cropped version in the \_formatted object**:
 
@@ -327,7 +327,7 @@ Some working examples:
 
 If you choose to highlight the content of `overview`:
 
-<code-samples id="search_parameter_guide_highlight_1" />
+<CodeSamples id="search_parameter_guide_highlight_1" />
 
 You will get the following response with the **highlighted version in the \_formatted object**:
 
@@ -370,7 +370,7 @@ This is useful when you need to highlight the results without the default HTML h
 
 If you set `matches` to `true`:
 
-<code-samples id="search_parameter_guide_matches_1" />
+<CodeSamples id="search_parameter_guide_matches_1" />
 
 You will get the following response with the **information about the matches in the \_matchesInfo object**:
 

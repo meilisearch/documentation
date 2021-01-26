@@ -57,7 +57,7 @@ Suppose that you have a collection of movies containing the following fields:
 
 To be able to facet search on `director` and `genres`, you would declare faceted attributes as follows:
 
-<code-samples id="faceted_search_update_settings_1" />
+<CodeSamples id="faceted_search_update_settings_1" />
 
 ## Using facets
 
@@ -80,43 +80,8 @@ They can filter on facets to narrow down their results based on criteria with th
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 
-- `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFiltering` list](/guides/advanced_guides/faceted_search.md#setting-up-facets).
+- `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFaceting` list](/guides/advanced_guides/faceted_search.md#setting-up-facets).
 - `facetValue`: The value of the facet used to filter results (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
-
-Facet filters can have a **maximum array depth of two**.
-
-The following are correct:
-
-good ✅
-
-```javascript
-"genre:horror"
-```
-
-good ✅
-
-```javascript
-["genre:horror", "genre:thriller"]
-```
-
-good ✅
-
-```javascript
-["genre:comedy", ["genre:horror", "genre:thiller"]]
-```
-
-If the maximum array depth is exceeded, errors will be raised:
-error ❌
-
-```javascript
-["genre:comedy", ["genre:horror", ["genre:romance"]]]
-```
-
-error ❌
-
-```javascript
-[[["genre:romance"]]]
-```
 
 Facet filters can have a **maximum array deepness of two**.
 
@@ -125,32 +90,32 @@ The following are correct:
 good ✅
 
 ```javascript
-"genre:horror"
+"genres:horror"
 ```
 
 good ✅
 
 ```javascript
-["genre:horror", "genre:thriller"]
+["genres:horror", "genres:thriller"]
 ```
 
 good ✅
 
 ```javascript
-["genre:comedy", ["genre:horror", "genre:thiller"]]
+["genres:comedy", ["genres:horror", "genres:thiller"]]
 ```
 
 When you add one more array deepness, it will raise errors:
 error ❌
 
 ```javascript
-["genre:comedy", ["genre:horror", ["genre:romance"]]]
+["genres:comedy", ["genres:horror", ["genres:romance"]]]
 ```
 
 error ❌
 
 ```javascript
-[[["genre:romance"]]]
+[[["genres:romance"]]]
 ```
 
 #### Logical Connectives
@@ -182,7 +147,7 @@ Suppose you have declared `director` and `genres` as [faceted attributes](/guide
 
 Querying on "thriller", the above example results in the following CURL command:
 
-<code-samples id="faceted_search_facet_filters_1" />
+<CodeSamples id="faceted_search_facet_filters_1" />
 
 And you would get the following response:
 
@@ -258,7 +223,7 @@ Upon search, when using the `facetDistribution` parameter, there will be a `face
 
 Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
 
-<code-samples id="faceted_search_facets_distribution_1"/>
+<CodeSamples id="faceted_search_facets_distribution_1"/>
 
 And you would get the following response:
 
@@ -313,7 +278,7 @@ Suppose that you manage a movie database on which you want to search by `genres`
 
 The first thing to do is to declare faceted attributes as follows:
 
-<code-samples id="faceted_search_walkthrough_attributes_for_faceting_1" />
+<CodeSamples id="faceted_search_walkthrough_attributes_for_faceting_1" />
 
 In the above example, `director`, `producer`, `genres` and `production_companies` will be used as facets.
 
@@ -321,7 +286,7 @@ You can now search your documents and use query parameters.
 
 You can filter on facets. For instance, say you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele. You have to use the following CURL command:
 
-<code-samples id="faceted_search_walkthrough_facet_filters_1" />
+<CodeSamples id="faceted_search_walkthrough_facet_filters_1" />
 
 You will get the following response:
 
@@ -359,7 +324,7 @@ You will get the following response:
 
 Now, if you want to know what the number of Batman movies per genre is, you have to use the following CURL command:
 
-<code-samples id="faceted_search_walkthrough_facets_distribution_1" />
+<CodeSamples id="faceted_search_walkthrough_facets_distribution_1" />
 
 You will get the following response:
 

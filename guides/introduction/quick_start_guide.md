@@ -22,30 +22,31 @@ Now that your MeiliSearch server is up and running, you should be able to commun
 
 Communication to the server is done through a [RESTful API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
 
-## Create your Index
-
-In MeiliSearch, the information is subdivided into indexes. Each [index](/guides/main_concepts/indexes.md) contains a data structure and associated documents.
-Indexes can be comparable to SQL tables. Since MeiliSearch is <clientGlossary word="schemaless"/>, there's no need to define any attributes or data type when creating a table.
-
-In order to be able to store your documents in an index, it is required you create one first.
-
-<code-samples id="getting_started_create_index_md" />
-
-[API references](/references/indexes.md)
-
 ## Add Documents
 
-Once the index has been created, the next step is to fill it with [documents](/guides/main_concepts/documents.md). These documents will be used and returned when search queries will be performed on MeiliSearch.
+To add documents to MeiliSearch you must provide:
 
-Documents are represented in `JSON format`.
+- [Documents](/guides/main_concepts/documents.md) in the form of `JSON objects`.
+- An [index](/guides/main_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
-To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [primary key](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+> _If the index does not exist, MeiliSearch creates it when you first add documents._
+
+To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+
+```json
+{
+  "id": "123",
+  "title": "Superman"
+}
+```
+
+> The primary key is `id`, the document's unique identifier is `123`.
 
 There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
+Below is an example to showcase how to add documents to an index called `movies` using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
-<code-samples id="getting_started_add_documents_md" />
+<CodeSamples id="getting_started_add_documents_md" />
 
 [API references](/references/documents.md)
 
@@ -61,6 +62,8 @@ You can check the status of the operation via the `updateId` and the [get update
 
 Checking the update status is not a mandatory step to search through your documents but could prove useful in tracing the origin of errors or unexpected behaviors.
 
+[API references](/references/updates.md)
+
 ## Search
 
 Now that your documents have been ingested into MeiliSearch, you are able to [search them](/guides/main_concepts/search.md).
@@ -69,7 +72,7 @@ MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.m
 
 The search engine is now aware of your documents and can serve those via an HTTP server.
 
-<code-samples id="getting_started_search_md" />
+<CodeSamples id="getting_started_search_md" />
 
 MeiliSearch **response**:
 
@@ -108,118 +111,40 @@ We also deliver an out-of-the-box [web interface](/guides/advanced_guides/web_in
 To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
-![movies demo gif](/movies-web-demo.gif)
+<br>
+<br>
+<MovieGif />
 
+## Integrate to Your Project
 
-### Integrations
+The only step missing now is adding the search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the search components needed to start searching.
 
-The only step missing is adding the searchbar to your own application. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): A developer tool that generates all the search components needed to start searching.
+[Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments as: [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [React](https://github.com/meilisearch/meilisearch-react), and [Vue.js](https://github.com/meilisearch/meilisearch-vue).
 
-The first step is to create a `html` file wherever you want. Next, using one of the browser builds proposed bellow, you need to copy/paste the whole code inside the `html` file you just created.
-Now open the `html` file in your browser (by clicking on it and select a browser if it's not done automatically) and you should have the following user interacer:
+#### Let's Try!
 
+- Create an `html` file, for example, `index.html`.
+- Open it in a text editor (notepad, sublime text, VSC, or other).
+- Copy-paste any of the code examples bellow and save the file.
+- Open `index.html` in your browser (double click on it in your folder).
 
-
+_We use browser builds for ease of integration. It is possible to do this with `npm` or `yarn`. Please refer to [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) for documentation._
 
 :::: tabs
 
-::: tab VueJs
+::: tab JavaScript
 
-Browser build to create a vue environment.
-```html
-  <!DOCTYPE html>
-  <html>
-      <body>
-          <div id="app">
-              <h1 style="text-align: center;">Search Movies</h1>
-                <ais-instant-search :search-client="searchClient" index-name="movies">
-                  <ais-configure
-                    :hits-per-page.camel="200"
-                  />
-                  <ais-search-box placeholder="Search here…" class="searchbox"></ais-search-box>
-                  <ais-hits>
-                    <div slot="item" slot-scope="{ item }">
-                          <h2>{{ item.title }}</h2>
-                    </div>
-                  </ais-hits>
-                </ais-instant-search>
-          </div>
-      </body>
-      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vue-instantsearch@3.2.0/dist/vue-instantsearch.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
-      <script>
-          Vue.use(VueInstantSearch)
-          var app = new Vue({
-              el: '#app',
-              data: {
-                  searchClient: instantMeiliSearch('http://127.0.0.1:7700')
-              }
-          })
-      </script>
-  </html>
-```
-
-To install `instant-meilisearch` using `npm` please visite [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue)
-
-:::
-
-::: tab React
-
-```html
-<!DOCTYPE html>
-<html>
-  <body>
-      <div id="app"></div>
-  </body>
-  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
-  <script>
-    'use strict';
-      const { InstantSearch, SearchBox, Hits, Highlight }  = ReactInstantSearchDOM;
-
-      const searchClient = instantMeiliSearch(
-        "http://localhost:7700"
-      );
-
-      const App = () => (
-        React.createElement(InstantSearch, {
-          indexName: "movies",
-          searchClient: searchClient
-        }, [ React.createElement(SearchBox, { key: 1 }), React.createElement(Hits, { hitComponent: Hit, key: 2 })]
-        )
-      );
-      function Hit(props) {
-          return React.createElement(Highlight, {
-            attribute: "title",
-            hit: props.hit
-          })
-      }
-    const domContainer = document.querySelector('#app');
-    ReactDOM.render(React.createElement(App), domContainer);
-  </script>
-</html>
-```
-
-:::
-
-::: tab Javascript
-
-- The basic divs structure for the search bar and the results box
-- Adding the CDN's
-- Adding the configuration to link your DOM with instant-meilisearch
-
+The following code sample uses plain [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
   </head>
   <body>
-    <div>
+    <div class="wrapper">
       <div id="searchbox" focus></div>
       <div id="hits"></div>
     </div>
@@ -230,27 +155,27 @@ To install `instant-meilisearch` using `npm` please visite [meilisearch-vue](htt
         const search = instantsearch({
             indexName: "movies",
             searchClient: instantMeiliSearch(
-                "http://localhost:7700",
-                "masterKey",
+                "http://localhost:7700"
             )
             });
 
             search.addWidgets([
-            instantsearch.widgets.searchBox({
-                container: "#searchbox"
-            }),
-            instantsearch.widgets.hits({
-                container: "#hits",
-                templates: {
-                item: `
-                    <div>
-                    <div class="hit-name">
-                        {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}
-                    </div>
-                    </div>
-                `
-                }
-            })
+              instantsearch.widgets.searchBox({
+                  container: "#searchbox"
+              }),
+              instantsearch.widgets.configure({ hitsPerPage: 8 }),
+              instantsearch.widgets.hits({
+                  container: "#hits",
+                  templates: {
+                  item: `
+                      <div>
+                      <div class="hit-name">
+                          {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}
+                      </div>
+                      </div>
+                  `
+                  }
+              })
             ]);
 
             search.start();
@@ -258,8 +183,125 @@ To install `instant-meilisearch` using `npm` please visite [meilisearch-vue](htt
   </body>
 </html>
 ```
+
+The code above comes in multiple parts:
+
+- The body part of the page adds both `searchbox` and `hits` elements.
+  `instant-meilisearch` adds the search bar and search results in these elements.
+- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch`.
+- The JavaScript part is where you customize `instant-meilisearch`.
+
+To use `instant-meilisearch` using `npm` or `yarn` please visit [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch).
+
 :::
 
+::: tab Vue.js
 
+The following code sample uses [Vue.js](https://vuejs.org/) framework.
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+  </head>
+  <body>
+    <div id="app" class="wrapper">
+      <ais-instant-search :search-client="searchClient" index-name="movies" >
+        <ais-configure :hits-per-page.camel="10" />
+        <ais-search-box placeholder="Search here…" class="searchbox"></ais-search-box>
+        <ais-hits>
+          <div slot="item" slot-scope="{ item }">
+            <ais-highlight :hit="item" attribute="name" />
+          </div>
+        </ais-hits>
+      </ais-instant-search>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-instantsearch@3.2.0/dist/vue-instantsearch.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script>
+    Vue.use(VueInstantSearch)
+    var app = new Vue({
+        el: '#app',
+        data: {
+            searchClient: instantMeiliSearch('http://127.0.0.1:7700')
+        }
+    })
+  </script>
+</html>
+
+```
+
+The code above comes in multiple parts:
+
+- The body part adds the `Vue.js` components.
+  `instant-meilisearch` adds the search bar and search results in these components.
+- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that import libraries needed to run `instant-meilisearch`.
+- The `Vue.js` part is where you customize your `instant-meilisearch`.
+
+To use `instant-meilisearch` in `Vue.js` using `npm` or `yarn` please visit [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue).
+
+:::
+
+::: tab React
+
+The following code sample uses [React](https://reactjs.org/) framework.
+
+```html
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+</head>
+<html>
+  <body>
+      <div id="app" class="wrapper"></div>
+  </body>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script>
+    'use strict';
+      const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
+      const searchClient = instantMeiliSearch(
+        "http://localhost:7700"
+      );
+
+      const App = () => (
+        React.createElement(InstantSearch, {
+          indexName: "movies",
+          searchClient: searchClient
+        }, [
+          React.createElement(SearchBox, { key: 1 }),
+          React.createElement(Hits, { hitComponent: Hit, key: 2 }),
+          React.createElement(Configure, { hitsPerPage: 10 })]
+        )
+      );
+      function Hit(props) {
+          return React.createElement(Highlight, {
+            attribute: "name",
+            hit: props.hit
+          })
+      }
+    const domContainer = document.querySelector('#app');
+    ReactDOM.render(React.createElement(App), domContainer);
+  </script>
+</html>
+```
+
+The code above comes in multiple parts:
+
+- The body of the page, is the entry point for `react`.
+  `instant-meilisearch` adds the search bar and search results in this entry point.
+- `<scripts src="..">` tags are [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)'s that imports libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
+- The `React` part is where you customize your `instant-meilisearch`.
+
+To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
+
+:::
 
 ::::

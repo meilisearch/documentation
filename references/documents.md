@@ -3,6 +3,7 @@
 Documents are objects composed of fields that can store any type of data.
 Each field contains an attribute and its associated value.
 
+Documents are stored inside [indexes](/guides/main_concepts/indexes.md).
 [Learn more about documents](/guides/main_concepts/documents.md).
 
 ## Get one document
@@ -20,7 +21,7 @@ Get one [document](/guides/main_concepts/documents.md) using its unique id.
 
 ### Example
 
-<code-samples id="get_one_document_1" />
+<CodeSamples id="get_one_document_1" />
 
 #### Response: `200 Ok`
 
@@ -62,7 +63,7 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 ### Example
 
-<code-samples id="get_documents_1" />
+<CodeSamples id="get_documents_1" />
 
 #### Response: `200 Ok`
 
@@ -89,11 +90,13 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
 
-Add a list of [documents](/guides/main_concepts/documents.md) or replace them if they already exist.
+Add a list of [documents](/guides/main_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
 
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
 
 For a partial update of the document see [add or update documents](/references/documents.md#add-or-update-documents).
+
+If the provided index does not exist, it will be created.
 
 #### Path Variables
 
@@ -127,7 +130,7 @@ The body is composed of a **JSON array** of documents.
 
 ### Example
 
-<code-samples id="add_or_replace_documents_1" />
+<CodeSamples id="add_or_replace_documents_1" />
 
 #### Response: `202 Accepted`
 
@@ -143,11 +146,13 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
 
-Add a list of documents and update them if they already.
+Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
 If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
 To completely overwrite a document, check out the [add or replace documents route](/references/documents.md#add-or-replace-documents).
+
+If the provided index does not exist, it will be created.
 
 #### Path Variables
 
@@ -178,9 +183,9 @@ The body is composed of a **JSON array** of documents.
 
 ### Example
 
-<code-samples id="add_or_update_documents_1" />
+<CodeSamples id="add_or_update_documents_1" />
 This document is an update of the document found in [add or replace document](/references/documents.md#add-or-replace-documents).
-The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genre` field to that document. The rest of the document will remain unchanged.
+The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
 
@@ -206,7 +211,7 @@ Delete all documents in the specified index.
 
 ### Example
 
-<code-samples id="delete_all_documents_1" />
+<CodeSamples id="delete_all_documents_1" />
 
 #### Response: `202 Accepted`
 
@@ -233,7 +238,7 @@ Delete one document based on its unique id.
 
 ### Example
 
-<code-samples id="delete_one_document_1" />
+<CodeSamples id="delete_one_document_1" />
 
 #### Response: `202 Accepted`
 
@@ -267,7 +272,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 
 ### Example
 
-<code-samples id="delete_documents_1" />
+<CodeSamples id="delete_documents_1" />
 
 #### Response: `202 Accepted`
 

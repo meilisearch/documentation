@@ -28,7 +28,7 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 Suppose you have an e-commerce dataset. For an index that contains information about tops, you decide to create synonyms for `sweater` and `jumper` since these two items are very similar.
 
-<code-samples id="settings_guide_synonyms_1" />
+<CodeSamples id="settings_guide_synonyms_1" />
 
 By doing so, when searching for `black sweater`, results for `black jumper` will also be returned.
 
@@ -48,7 +48,7 @@ A set of words defined for an index. Because some words neither add semantic val
 
 To add `the`, `a` and `an` to the stop words list, send:
 
-<code-samples id="settings_guide_stop_words_1" />
+<CodeSamples id="settings_guide_stop_words_1" />
 
 With the settings in the example above, `the`, `a` and `an` are now ignored by the sorting algorithm if they are present in search queries.
 
@@ -73,9 +73,9 @@ Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes
 
 #### Example
 
-To be able to facet search on `director` and `genre` in a movie database, you would declare faceted attributes as follows:
+To be able to facet search on `director` and `genres` in a movie database, you would declare faceted attributes as follows:
 
-<code-samples id="faceted_search_update_settings_1" />
+<CodeSamples id="faceted_search_update_settings_1" />
 
 ## Ranking rules
 
@@ -103,7 +103,7 @@ You can add a custom ranking rule anywhere in the list of ranking rules. A custo
 
 To add your ranking rules to the settings, send:
 
-<code-samples id="settings_guide_ranking_rules_1" />
+<CodeSamples id="settings_guide_ranking_rules_1" />
 
 With the settings in the example above, documents will be sorted by number of typos first. If too many documents have the same number of typos, the `words` rule will be applied. This operation will be repeated with the next rules until the requested number of documents has been reached (default: 20).
 
@@ -146,7 +146,7 @@ As shown below, you have 2 documents that contain information about the same jac
 
 You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
 
-<code-samples id="settings_guide_distinct_1" />
+<CodeSamples id="settings_guide_distinct_1" />
 
 With the settings in the example above, only one of the two documents will be returned if you search `Lee leather jacket`.
 
@@ -164,9 +164,9 @@ The content of the fields whose attributes are added to the [searchable-attribut
 
 #### Example
 
-By adding the following settings, the fields `uid`, `movie_id`, `title`, `description`, `poster`, `release_date` and `rank` will be searched.
+By adding the following settings, the fields `title`, `description` and `genre` will be searched.
 
-<code-samples id="settings_guide_searchable_1" />
+<CodeSamples id="settings_guide_searchable_1" />
 
 ## Displayed attributes
 
@@ -184,6 +184,6 @@ Documents returned upon search contain only displayed fields.
 
 #### Example
 
-By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `poster`, `release_date` and `rank`.
+By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `genre` and `release_date`.
 
-<code-samples id="settings_guide_displayed_1" />
+<CodeSamples id="settings_guide_displayed_1" />

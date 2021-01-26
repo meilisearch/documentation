@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.15',
+  title: 'MeiliSearch Documentation v0.18',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -14,7 +14,7 @@ module.exports = {
       { text: 'Guides', link: '/guides/' },
       { text: 'API References', link: '/references/' },
       { text: 'Resources', link: '/resources/' },
-      { text: 'FAQ', link: '/faq/faq.md' },
+      { text: 'FAQ', link: '/faq/' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
@@ -57,13 +57,14 @@ module.exports = {
             '/guides/advanced_guides/synonyms',
             '/guides/advanced_guides/stop_words',
             '/guides/advanced_guides/distinct',
-            '/guides/advanced_guides/safeguards',
+            '/guides/advanced_guides/snapshots_and_dumps',
             '/guides/advanced_guides/field_properties',
             '/guides/advanced_guides/typotolerance',
             '/guides/advanced_guides/prefix',
             '/guides/advanced_guides/concat',
             '/guides/advanced_guides/bucket_sort',
             '/guides/advanced_guides/known_limitations',
+            '/guides/advanced_guides/tokenization',
           ],
         },
       ],
@@ -147,6 +148,10 @@ module.exports = {
     [require('./custom-markdown-rules')],
     [require('./code-samples')],
     [require('./error-pages')],
+    ['vuepress-plugin-code-copy', {
+      color: '#3eaf7c',
+      staticIcon: true,
+    }],
     [
       'meilisearch',
       {
