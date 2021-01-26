@@ -237,9 +237,8 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
 
 The code above comes in multiple parts:
 
-- The body part adds the `Vue.js` components.
-  `instant-meilisearch` adds the search bar and search results in these components.
-- `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch`.
+- In VueJs the DOM elements are written with a [declarative rendering](https://vuejs.org/v2/guide/#Declarative-Rendering) syntax. To make `instant-meilisearch` work with `Vue.js` some components must be added in the `<body>` tag. In the above example, `ais-instant-search`, `ais-search-box` and `ais-hits` are mandatory components to generate `instant-meilisearch` interface.
+- `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` with `Vue.js`.
 - The `Vue.js` part is where you customize your `instant-meilisearch`.
 
 To use `instant-meilisearch` in `Vue.js` using `npm` or `yarn` please visit [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue).
