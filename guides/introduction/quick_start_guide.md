@@ -12,7 +12,7 @@ $ ./meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
 
-You can download & run MeiliSearch [in many different ways (i.e: docker, apt, brew, ...)](/guides/advanced_guides/installation.md).
+You can download & run MeiliSearch [in many different ways (i.e: docker, apt, homebrew, ...)](/guides/advanced_guides/installation.md).
 
 [Environment variables and options](/guides/advanced_guides/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
 
