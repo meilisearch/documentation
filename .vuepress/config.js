@@ -129,34 +129,18 @@ module.exports = {
           ],
         },
       ],
-      '/resources/': [
+      '/create/': [
         {
-          title: '📦 Resources',
-          path: '/resources/',
+          title: '📜 How To',
+          path: '/create/how_to/',
           collapsable: false,
           children: [
-            '/resources/about_storage',
-            '/resources/sdks',
-            '/resources/comparison_to_alternatives',
-            '/resources/postman_collection',
-            '/resources/contact',
-          ],
-        },
-        {
-          title: '🏆 Tutorials',
-          path: '/resources/tutorials/',
-          collapsable: false,
-          children: ['/resources/tutorials/running_production'],
-        },
-        {
-          title: "🧷 How to's",
-          path: '/resources/howtos/',
-          collapsable: false,
-          children: [
-            '/resources/howtos/meilisearch_react',
-            '/resources/howtos/digitalocean_droplet',
-            '/resources/howtos/search_bar_for_docs',
-            '/resources/howtos/http2_ssl',
+            '/create/how_to/digitalocean_droplet',
+            '/create/how_to/http2_ssl',
+            '/create/how_to/meilisearch_react',
+            '/create/how_to/postman_collection',
+            '/create/how_to/running_production',
+            '/create/how_to/search_bar_for_docs',
           ],
         },
       ],
