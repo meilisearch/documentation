@@ -121,6 +121,8 @@ The only step missing now is adding the search bar to your project. The easiest 
 
 [Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments, such as [JavaScript](https://github.com/meilisearch/meilisearch-js), [React](https://github.com/meilisearch/meilisearch-react), and [Vue.js](https://github.com/meilisearch/meilisearch-vue).
 
+`instant-meilisearch` uses [instantSearch](https://github.com/algolia/instantsearch.js an open-source library that generates everything you need from a search interface.
+
 #### Let's Try!
 
 - Create an `html` file, for example, `index.html`.
@@ -235,7 +237,7 @@ The code above comes in multiple parts:
 
 - In `Vue.js` customization happens directly in the `<body>` tag. To make `instant-meilisearch` work with `Vue.js` some components must be added. In the above example, `ais-instant-search`, `ais-search-box` and `ais-hits` are mandatory components to generate the`instant-meilisearch` interface.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` with [Vue.js](https://vuejs.org).
-- The `<script>` containing JavaScript initializes `Vue.js`. The code creates a new `Vue` instance that is mandatory to link `Vue.js` with the `DOM`.
+- The `<script>` containing JavaScript initialize `Vue.js`. The code creates a new `Vue` instance that is mandatory to link `Vue.js` with the `DOM`.
 
 To use `instant-meilisearch` in `Vue.js` using `npm` or `yarn` please visit [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue).
 
@@ -291,7 +293,7 @@ The code above comes in multiple parts:
 
 - The `<body>` of the page is the entry point for React. `instant-meilisearch` adds the search bar and search results here by manipulating the DOM.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
-- The `<script>` containing JavaScript initalizes React and contains the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
+- The `<script>` containing JavaScript initalize React and renders the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
 
 To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
 
@@ -299,4 +301,4 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 ::::
 
-`instant-meilisearch` uses [instantSearch](https://github.com/algolia/instantsearch.js), an open-source library that generates everything you need for a search interface.
+You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/guides/introduction/whats_next.html) to continue your MeiliSearch journey.
