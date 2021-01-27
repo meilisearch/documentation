@@ -114,7 +114,7 @@ module.exports = {
           ],
         },
         {
-          title: '🛠️ Under the Hood 🔬',
+          title: '🛠️ Under the Hood',
           path: '/reference/under_the_hood',
           collapsable: false,
           children: [
