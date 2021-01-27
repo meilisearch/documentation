@@ -51,7 +51,7 @@ Tags are a very good method to know who created resources, and for organizing re
 
 ![Create droplet](/digitalocean/07.create-droplet.png)
 
-### 8. Your MeiliSearch is running (in DEVELOPMENT environment)
+### 8. Your MeiliSearch is running (in **development** environment)
 
 Instance creation in progress...
 
@@ -73,7 +73,7 @@ Paste it in your browser. If this screen is shown, your MeiliSearch is now ready
 
 ## Configure production settings in your MeiliSearch Droplet
 
-Configuring your MeiliSearch in a PRODUCTION environment on DigitalOcean droplet is very straightforward. Establish an SSH connection with your droplet and a script will guide you through the process.
+Configuring your MeiliSearch in a **production** environment on DigitalOcean droplet is very straightforward. Establish an SSH connection with your droplet and a script will guide you through the process.
 
 ### 1. Make your domain name point to your droplet
 
@@ -99,7 +99,7 @@ The server should answer with a `204 No content` status code as shown in the exa
 
 ### 2. Set API KEY and SSL (HTTPS)
 
-Meilisearch is running in a DEVELOPMENT environment. You haven't set up an API KEY (anyone can read/write from your MeiliSearch) and you aren't using HTTPS yet, which makes this configuration unsafe to use in PRODUCTION.
+Meilisearch is running in a **development** environment. You haven't set up an API KEY (anyone can read/write from your MeiliSearch) and you aren't using HTTPS yet, which makes this configuration unsafe to use in **production**.
 To start the configuration process, connect via SSH to your new MeiliSearch Droplet and follow the instructions:
 
 ### 2.1. Run the configuration script
@@ -122,7 +122,7 @@ $ meilisearch-setup
 
 ### 3. Enjoy your ready-to-use MeiliSearch Droplet
 
-Your MeiliSearch Droplet is ready to be used in PRODUCTION.
+Your MeiliSearch Droplet is ready to be used in **production**.
 
 To check if everything is running smoothly, do an HTTP call to the `/health` route:
 
