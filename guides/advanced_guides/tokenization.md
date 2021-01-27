@@ -17,28 +17,33 @@ When you add documents to a MeiliSearch index, the tokenization process is handl
 We can break down the tokenization process like so:
 
 1. Crawl the document(s) and determine the primary language for each field.
-2. Go back over the documents field-by-field, running the corresponding tokenization pipeline, if it exists. Pipelines include many language-specific operations.
+2. Go back over the documents field-by-field, running the corresponding tokenization pipeline, if it exists.
+
+Pipelines include many language-specific operations. Currently, we have two pipelines:
+
+1. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
+2. A default MeiliSearch pipeline that separates words based on categories. Works with a variety of languages.
+
+For more details, check out the [feature specification](https://github.com/meilisearch/specifications/blob/master/text/0001-script-based-tokenizer.md).
 
 ## Language Support
 
-Currently, the MeiliSearch tokenizer is optimized for four languages:
+**MeiliSearch is multilingual**, featuring optimized support for:
 
-- **English**  🇬🇧
-- **Chinese** 🇨🇳
-- **Japanese** 🇯🇵
-- **Korean** 🇰🇷
+- **Any language that uses whitespace to separate words**
+- **Chinese** 🇨🇳 (through [Jieba](https://github.com/messense/jieba-rs))
 
-It also supports any language that uses the Latin alphabet. **Results may vary in languages with long compound words, such as German.**
+We aim to provide global language support, and your feedback helps us [move closer to that goal](/guides/advanced_guides/tokenization.md#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/MeiliSearch/issues/new/choose).
 
-## Future Development
+### Improving Our Language Support
 
-We rely on external contributors to help us extend our tokenizer to support new languages.
+While we have employees from all over the world at MeiliSearch, we don't speak every language. In fact, we rely almost entirely on feedback from external contributors to know how our engine is performing across different languages.
 
-In the future, we hope that our international developer community will lead the process of developing additional tokenizer pipelines. For now, if there's an unsupported language that you would like us to target, you can help by writing tests for that language, giving us feedback, or simply giving a :+1: to the relevant GitHub issue.
+If you'd like to help us create a more global MeiliSearch, please consider sharing your tests, results, and general feedback with us through [GitHub issues](https://github.com/meilisearch/MeiliSearch/issues). Here are some of the languages that have been requested by users and their corresponding issue:
 
-Here are some of the languages that have been requested by users and their corresponding issue:
-
-- [Thai](https://github.com/meilisearch/MeiliSearch/issues/864)
-- [Persian/Farsi](https://github.com/meilisearch/MeiliSearch/issues/553)
-- [Lao](https://github.com/meilisearch/MeiliSearch/issues/563)
 - [Arabic](https://github.com/meilisearch/MeiliSearch/issues/554)
+- [Lao](https://github.com/meilisearch/MeiliSearch/issues/563)
+- [Persian/Farsi](https://github.com/meilisearch/MeiliSearch/issues/553)
+- [Thai](https://github.com/meilisearch/MeiliSearch/issues/864)
+
+If you'd like us to add or improve support for a language that isn't in the above list, please create an [issue](https://github.com/meilisearch/MeiliSearch/issues/new?assignees=&labels=&template=feature_request.md&title=) saying so, and then make a [pull request on the documentation](https://github.com/meilisearch/documentation/edit/master/guides/advanced_guides/tokenization.md) to add it to the above list.

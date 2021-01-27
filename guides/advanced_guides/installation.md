@@ -104,6 +104,18 @@ Here is the list of [all the options and how to use them](/guides/advanced_guide
 
 ## Updating MeiliSearch
 
-Updating MeiliSearch is a straightforward process, simply get and install the latest binary with your preferred method (see installation above).
+Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [installation](/guides/advanced_guides/installation.md#download-and-launch) above).
 
-Note that all MeiliSearch versions are not compatible with each other, and you may need to re-index your documents. If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, delete your database folder (defaults to `data.ms`), and re-index all your documents.
+However, please note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. Therefore, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
+
+If you want to transfer your database from an outdated MeiliSearch instance to the most recent version, we recommend following [the below guide](/guides/advanced_guides/installation.md#migrating-a-database-to-a-later-version).
+
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, simply delete your database folder (defaults to `data.ms`), and re-index all your documents.
+
+### Migrating a Database to a Later Version
+
+Using [dumps](/guides/advanced_guides/snapshots_and_dumps.md#dumps), you can export your MeiliSearch data—all indexes, documents, and settings contained in your database—into a transferrable state. Then, you can re-import this data after updating MeiliSearch to the latest version.
+
+Since the content is exported in a way that guarantees mobility, it needs to be re-indexed. If your database is large, this process can take a long time. Nonetheless, this process guarantees **to migrate all settings and documents between two different versions of MeiliSearch**.
+
+If you want a complete guide on how to update MeiliSearch on DigitalOcean, please [look at this GitHub issue](https://github.com/meilisearch/MeiliSearch/discussions/1187#discussioncomment-278125).
