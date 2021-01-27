@@ -16,7 +16,7 @@ We think chat and forum discussions are [highly complementary](https://blog.disc
 
 ## GitHub Issues 🔩
 
-Pull requests or bug reports should be added to the Issues of its respective repository, e.g. [meilisearch/MeiliSearch](https://github.com/meilisearch/MeiliSearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
+Bug reports should be added as issues in the corresponding repository, e.g. [meilisearch/MeiliSearch](https://github.com/meilisearch/MeiliSearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
 
 ## Email 💌
 
