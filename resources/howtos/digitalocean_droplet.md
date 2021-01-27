@@ -81,7 +81,7 @@ If you want to use your own domain name (or sub-domain), add `A record` in your 
 
 ![Domain to  MeiliSearch](/digitalocean/11.domain-a-record.png)
 
-This should work out of the box. Your domain name should be now linked to your MeiliSearch instance. You can now do a health check to verify that your instance is running and your DNS is well configured:
+This should work out of the box. Your domain name should now be linked to your MeiliSearch instance. You can now do a health check to verify that your instance is running and your DNS is well configured:
 
 ```bash
 $ curl -v http://<your-domain-name>/health
