@@ -184,7 +184,7 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
 
 The code above comes in multiple parts:
 
-- The first four lines of the `<body`> add both `searchbox and`hits`elements.`instant-meilisearch` adds the search bar and search results in these elements.
+- The first four lines of the `<body>` add both `searchbox` and `hits` elements. Ultimately, `instant-meilisearch` adds the search bar and search results in these elements.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch`.
 - The JavaScript part is where you customize `instant-meilisearch`.
 
@@ -234,7 +234,7 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
 The code above comes in multiple parts:
 
 - In VueJs the DOM elements are written with a [declarative rendering](https://vuejs.org/v2/guide/#Declarative-Rendering) syntax. To make `instant-meilisearch` work with `Vue.js` some components must be added in the `<body>` tag. In the above example, `ais-instant-search`, `ais-search-box` and `ais-hits` are mandatory components to generate `instant-meilisearch` interface.
-- `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` with `Vue.js`.
+- `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` with [Vue.js](https://vuejs.org).
 - The `Vue.js` part is where you customize your `instant-meilisearch`.
 
 To use `instant-meilisearch` in `Vue.js` using `npm` or `yarn` please visit [meilisearch-vue](https://github.com/meilisearch/meilisearch-vue).
@@ -289,8 +289,7 @@ The following code sample uses [React](https://reactjs.org/) framework.
 
 The code above comes in multiple parts:
 
-- The `<body>` of the page is the entry point for `react`.
-  `instant-meilisearch` adds the search bar and search results in this entry point.
+- The `<body>` of the page is the entry point for React. `instant-meilisearch` adds the search bar and search results here by manipulating the DOM.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
 - The React script (last `<script>` tag in the file) is where you customize your `instant-meilisearch`.
 
