@@ -299,4 +299,4 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 ::::
 
-`instant-meilisearch` uses [instantSearch](https://github.com/algolia/instantsearch.js an open-source library that generates a search interface.
+`instant-meilisearch` uses [instantSearch](https://github.com/algolia/instantsearch.js an open-source library that generates everything you need from a search interface.
