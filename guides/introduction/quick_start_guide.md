@@ -121,7 +121,7 @@ The only step missing now is adding the search bar to your project. The easiest 
 
 [Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments, such as [JavaScript](https://github.com/meilisearch/meilisearch-js), [React](https://github.com/meilisearch/meilisearch-react), and [Vue.js](https://github.com/meilisearch/meilisearch-vue).
 
-`instant-meilisearch` uses [instantSearch](<https://github.com/algolia/instantsearch.js> an open-source library that generates everything you need from a search interface.
+`instant-meilisearch` uses [instantSearch](https://github.com/algolia/instantsearch.js) an open-source library that generates everything you need from a search interface.
 
 #### Let's Try!
 
@@ -301,4 +301,4 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 ::::
 
-You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/guides/introduction/whats_next.html) to continue your MeiliSearch journey.
+You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/guides/introduction/whats_next.md) to continue your MeiliSearch journey.
