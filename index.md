@@ -18,7 +18,9 @@ For starters, our helpful content is now grouped into three categories:
 - [Create](/create): If you're looking to start your own MeiliSearch project or get answers to a question, this is where you'll find **useful guides**, **inspiring community projects**, and **answers to all your questions**.
 - [Reference](/reference): **Encyclopedia-style documentation** for all of MeiliSearch's features, API, and search engine internals. If you just want the facts and none of the fluff, this is the place for you.
 
-Since this is a new resource, it's possible that you will encounter bugs or broken links. We would love [your feedback](https://github.com/meilisearch/documentation/issues) on it.
+::: note
+This [documentation is completely open-source](https://github.com/meilisearch/documentation). We keep it up-to-date but you might find some typos or mistakes. Help us make it a better guide by submitting a pull request or [an issue](https://github.com/meilisearch/documentation/issues) 😁
+:::
 
 ## Open-source
 

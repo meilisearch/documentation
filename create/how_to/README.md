@@ -1,6 +1,8 @@
 # How To
 
-How to guides take the reader through the steps required to solve a real-world problem. Like recipes in a cookbook, they're a repeatable solution that can be returned to again and again.
+These how-to guides take the reader through the steps required to solve a real-world problem. Like recipes in a cookbook, they represent repeatable solutions to particular problems.
+
+This is not the section for tutorial content. If you'd like to follow a step-by-step tutorial that introduces you to the basics of MeiliSearch, check out our [getting started guide](/learn/learn_meilisearch/getting_started.md).
 
 ### Available content
 
