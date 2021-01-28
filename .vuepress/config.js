@@ -49,11 +49,11 @@ module.exports = {
           ],
         },
         {
-          title: '📚 Elevate Your Understanding',
-          path: '/learn/elevate/',
+          title: '📚 Advanced Topics',
+          path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/elevate/faq',
+            '/learn/advanced/faq',
           ],
         },
       ],
