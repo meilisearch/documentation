@@ -29,12 +29,12 @@ module.exports = {
           ],
         },
         {
-          title: '🚀 Learn MeiliSearch',
-          path: '/learn/learn_meilisearch/',
+          title: '🚀 Tutorials',
+          path: '/learn/tutorials/',
           collapsable: false,
           children: [
-            '/learn/learn_meilisearch/getting_started',
-            '/learn/learn_meilisearch/whats_next',
+            '/learn/tutorials/getting_started',
+            '/learn/tutorials/whats_next',
           ],
         },
         {
