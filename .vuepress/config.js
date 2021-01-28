@@ -143,6 +143,11 @@ module.exports = {
             '/create/how_to/search_bar_for_docs',
           ],
         },
+        {
+          title: '❓ FAQ',
+          path: '/create/faq',
+          collapsable: false,
+        },
       ],
     },
   },
