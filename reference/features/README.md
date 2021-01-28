@@ -1,5 +1,5 @@
 # Feature References
 
-Here you will find factual descriptions of all of MeiliSearch's user-facing features and tools.
+Here you will find detailed descriptions of all of MeiliSearch's user-facing features and tools.
 
-If you're a new user, you might prefer to start with a [conceptual approach](/learn/core_concepts/) or a [guided tutorial](/learn/learn_meilisearch/).
+This section assumes background knowledge of MeiliSearch's [core concepts](/learn/core_concepts). If you're a new user, you might prefer to start with an [explanation of MeiliSearch's features](/learn/what_is_meilisearch) or a [guided tutorial](/learn/learn_meilisearch/).
