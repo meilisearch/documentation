@@ -7,29 +7,18 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@master
-    - name: Cache dependencies
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
 
-    - run: yarn install
-
-    - run: yarn build
-
-    - run: echo 'docs.meilisearch.com' > .vuepress/dist/CNAME
-
-    - name: deploy
-      uses: peaceiris/actions-gh-pages@v2.5.0
+    - name: Publish
+      uses: netlify/actions/build@master
       env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: .vuepress/dist
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_CMD: vuepress build .
+        NETLIFY_DIR: .vuepress/dist
 
   scrape-docs:
     needs: build-deploy
