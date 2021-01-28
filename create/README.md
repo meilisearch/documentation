@@ -1,6 +1,6 @@
-# Create
+# Create with MeiliSearch
 
-Want to create a brilliant website with MeiliSearch? This section covers everything you need to get your MeiliSearch project from start to perfection.
+Want to create a brilliant website, app, or other project with MeiliSearch? This section covers everything you need to carry your MeiliSearch project from idea to perfection.
 
 ## Table of Contents
 - [How To](/create/how_to): Step-by-step guides for efficient problem-solving
