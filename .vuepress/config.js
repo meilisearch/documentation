@@ -53,7 +53,7 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/faq',
+            '/learn/advanced/snapshots_vs_dumps',
           ],
         },
       ],
