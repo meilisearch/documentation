@@ -148,6 +148,10 @@ module.exports = {
     [require('./custom-markdown-rules')],
     [require('./code-samples')],
     [require('./error-pages')],
+    ['vuepress-plugin-code-copy', {
+      color: '#3eaf7c',
+      staticIcon: true,
+    }],
     [
       'meilisearch',
       {
