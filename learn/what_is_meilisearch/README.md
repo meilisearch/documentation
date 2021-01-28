@@ -34,3 +34,15 @@ Why should you use MeiliSearch instead of any other existing solution? We try to
   - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
 - **RESTful API**
 - **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface.md) in MeiliSearch that allows to try the search engine out during development.
+
+## 🧘‍♀️ Philosophy & usage of MeiliSearch
+
+MeiliSearch aims to be your go-to search backend when you want to build a great search experience for your end-users.
+MeiliSearch is designed for end-user search in a not-so-big data collection (< 10M documents).
+MeiliSearch is made for [type-as-you-search](https://en.wikipedia.org/wiki/Incremental_search) and [prefix-search](https://en.wikipedia.org/wiki/Trie).
+
+## ⛔️ Anti-pattern
+
+MeiliSearch should **not be your main data store**. MeiliSearch should contain only the data you want your users to search through. The more data MeiliSearch contains, the less relevant it is.
+
+MeiliSearch queries should be sent directly from the front-end. The more proxy there is between MeiliSearch and the end-user, the less fast queries and thus search-experience will be.
