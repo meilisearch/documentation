@@ -1,17 +1,16 @@
-name: GitHub pages and scraping haha
+name: GitHub pages and scraping
 
 on:
   push:
     branches:
     - master
-    - new-deploy
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
     steps:
-##    - uses: actions/checkout@master
+    - uses: actions/checkout@master
 
     - name: Publish
       uses: netlify/actions/build@master
