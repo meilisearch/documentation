@@ -9,4 +9,4 @@ These resources are aimed at first-time and new users of MeiliSearch. If you're 
 - [What Is MeiliSearch](/learn/what_is_meilisearch): Get acquainted with MeiliSearch's features, competitors, SDKs, and more.
 - [Getting Started](/learn/learn_meilisearch): Follow a step-by-step tutorial that covers all the basics of MeiliSearch.
 - [Core Concepts](/learn/core_concepts): Learn about search fundamentals like documents, indexes, and relevancy.
-- [Advanced Topics](/learn/elevate): Deepen your understanding of MeiliSearch with articles about some of our advanced features.
+- [Advanced Topics](/learn/advanced): Deepen your understanding of MeiliSearch with articles about some of our advanced features.
