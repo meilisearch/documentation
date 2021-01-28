@@ -10,7 +10,7 @@ If you're looking for information on a specific MeiliSearch SDK or front-end int
 
 Hold up--something seems different around here.
 
-While it might look similar, our documentation has been reorganized to promote **clarity**, **browsability**, and **maintainability**. Though we made an effort to preserve any information that was here before, you may find that some things are not where they used to be.
+While it might look similar, our documentation has been reorganized to promote **clarity**, **browsability**, and **maintainability**. You may find that some things are not where they used to be.
 
 For starters, our helpful content is now grouped into three categories:
 
@@ -19,7 +19,7 @@ For starters, our helpful content is now grouped into three categories:
 - [Reference](/reference): **Encyclopedia-style documentation** for all of MeiliSearch's features, API, and search engine internals. If you just want the facts and none of the fluff, this is the place for you.
 
 ::: note
-This [documentation is completely open-source](https://github.com/meilisearch/documentation). We keep it up-to-date but you might find some typos or mistakes. Help us make it a better guide by submitting a pull request or [an issue](https://github.com/meilisearch/documentation/issues) 😁
+This documentation is [completely open-source](https://github.com/meilisearch/documentation). We keep it up-to-date but you might find some typos or mistakes. Help us make it better by submitting a [pull request](https://github.com/meilisearch/documentation/fork) or [issue](https://github.com/meilisearch/documentation/issues) 😁
 :::
 
 ## Open-source
