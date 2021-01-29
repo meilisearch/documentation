@@ -17,7 +17,7 @@ Server is listening on: http://127.0.0.1:7700
 
 :::
 
-::: tab Brew
+::: tab Homebrew
 Download the **latest stable release** of MeiliSearch with **Homebrew**.
 
 Launch MeiliSearch to start the server.
