@@ -23,6 +23,8 @@ module.exports = {
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
           children: [
+            '/learn/what_is_meilisearch/features',
+            '/learn/what_is_meilisearch/philosophy',
             '/learn/what_is_meilisearch/sdks',
             '/learn/what_is_meilisearch/comparison_to_alternatives',
             '/learn/what_is_meilisearch/contact',
