@@ -28,37 +28,37 @@ Server is listening on: http://127.0.0.1:7700
 
 #### General
 
-- [Database path](/guides/advanced_guides/configuration.md#database-path)
-- [HTTP address & port binding](/guides/advanced_guides/configuration.md#http-address-port-binding)
-- [Master key](/guides/advanced_guides/configuration.md#master-key)
-- [Environment](/guides/advanced_guides/configuration.md#environment)
+- [Database path](/reference/features/configuration.md#database-path)
+- [HTTP address & port binding](/reference/features/configuration.md#http-address-port-binding)
+- [Master key](/reference/features/configuration.md#master-key)
+- [Environment](/reference/features/configuration.md#environment)
 
 #### Advanced
 
-- [Analytics](/guides/advanced_guides/configuration.md#analytics)
-- [Payload Limit Size](/guides/advanced_guides/configuration.md#payload-limit-size)
-- [Snapshots](/guides/advanced_guides/configuration.md#schedule-snapshot-creation):
-  - [Schedule Snapchot Creation](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
-  - [Snapshot Destination](/guides/advanced_guides/configuration.md#snapshot-destination)
-  - [Snapshot Interval](/guides/advanced_guides/configuration.md#snapshot-interval)
-  - [Import Snapshot](/guides/advanced_guides/configuration.md#import-snapshot)
-  - [Ignore Missing Snapshot](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)
-  - [Ignore Snapshot if DB Exists](/guides/advanced_guides/configuration.md#ignore-snapshot-if-db-exists)
-- [Dumps](/guides/advanced_guides/configuration.md#dumps-destination)
-  - [Dumps Destination](/guides/advanced_guides/configuration.md#dumps-destination)
-  - [Import Dump](/guides/advanced_guides/configuration.md#import-dump)
-  - [Dump Batch Size](/guides/advanced_guides/configuration.md#dump-batch-size)
-- [Max MDB Size](/guides/advanced_guides/configuration.md#max-mdb-size)
-- [Max UDB Size](/guides/advanced_guides/configuration.md#max-udb-size)
-- [SSL Configuration](/guides/advanced_guides/configuration.md#ssl-authentication-path):
-  - [SSL Authentication Path](/guides/advanced_guides/configuration.md#ssl-authentication-path)
-  - [SSL Certicates Path](/guides/advanced_guides/configuration.md#ssl-certificates-path)
-  - [SSL Key Path](/guides/advanced_guides/configuration.md#ssl-key-path)
-  - [SSL OCSP Path](/guides/advanced_guides/configuration.md#ssl-ocsp-path)
-  - [SSL Require Auth](/guides/advanced_guides/configuration.md#ssl-require-auth)
-  - [SSL Resumption](/guides/advanced_guides/configuration.md#ssl-resumption)
-  - [SSL Tickets](/guides/advanced_guides/configuration.md#ssl-tickets)
-- [Disable Sentry](/guides/advanced_guides/configuration.md#disable-sentry)
+- [Analytics](/reference/features/configuration.md#analytics)
+- [Payload Limit Size](/reference/features/configuration.md#payload-limit-size)
+- [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
+  - [Schedule Snapchot Creation](/reference/features/configuration.md#schedule-snapshot-creation)
+  - [Snapshot Destination](/reference/features/configuration.md#snapshot-destination)
+  - [Snapshot Interval](/reference/features/configuration.md#snapshot-interval)
+  - [Import Snapshot](/reference/features/configuration.md#import-snapshot)
+  - [Ignore Missing Snapshot](/reference/features/configuration.md#ignore-missing-snapshot)
+  - [Ignore Snapshot if DB Exists](/reference/features/configuration.md#ignore-snapshot-if-db-exists)
+- [Dumps](/reference/features/configuration.md#dumps-destination)
+  - [Dumps Destination](/reference/features/configuration.md#dumps-destination)
+  - [Import Dump](/reference/features/configuration.md#import-dump)
+  - [Dump Batch Size](/reference/features/configuration.md#dump-batch-size)
+- [Max MDB Size](/reference/features/configuration.md#max-mdb-size)
+- [Max UDB Size](/reference/features/configuration.md#max-udb-size)
+- [SSL Configuration](/reference/features/configuration.md#ssl-authentication-path):
+  - [SSL Authentication Path](/reference/features/configuration.md#ssl-authentication-path)
+  - [SSL Certicates Path](/reference/features/configuration.md#ssl-certificates-path)
+  - [SSL Key Path](/reference/features/configuration.md#ssl-key-path)
+  - [SSL OCSP Path](/reference/features/configuration.md#ssl-ocsp-path)
+  - [SSL Require Auth](/reference/features/configuration.md#ssl-require-auth)
+  - [SSL Resumption](/reference/features/configuration.md#ssl-resumption)
+  - [SSL Tickets](/reference/features/configuration.md#ssl-tickets)
+- [Disable Sentry](/reference/features/configuration.md#disable-sentry)
 
 ### Database path
 
@@ -85,7 +85,7 @@ The address the HTTP server will listen on.
 
 The master key allowing you to do everything on the server. If no master key is provided all routes will be accessible without keys. This is only possible if you are in `development` environment. An error is thrown if you try to start MeiliSearch without any master key when the environment is set to `production`.
 
-[Learn more about the permission and authentication in this guide.](/guides/advanced_guides/authentication.md)
+[Learn more about the permission and authentication in this guide.](/reference/features/authentication.md)
 
 **Default value**: `None`
 
@@ -117,12 +117,12 @@ Analytics allow us to know how many users are using MeiliSearch and the followin
 
 By default, MeiliSearch runs in `development` mode.
 
-- `production`: the [master key](/guides/advanced_guides/authentication.md) is **mandatory**.
-- `development`: the [master key](/guides/advanced_guides/authentication.md) is **optional**, and logs are output in "info" mode (_console output_).
+- `production`: the [master key](/reference/features/authentication.md) is **mandatory**.
+- `development`: the [master key](/reference/features/authentication.md) is **optional**, and logs are output in "info" mode (_console output_).
 
 If the server is running in development mode more logs will be displayed, and the master key can be avoided which implies that there is no security on the updates routes.
 This is useful to debug when integrating the engine with another service.
-In production mode, the [web interface](/guides/advanced_guides/web_interface.md#web-interface) is disabled.
+In production mode, the [web interface](/reference/features/web_interface.md#web-interface) is disabled.
 
 **Default value**: `development`
 
@@ -227,7 +227,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 **Environment variable**: `MEILI_MAX_UDB_SIZE`
 **CLI option**: `--max-udb-size`
 
-The maximum size, in bytes, of the `update` database. The `update` database stores the [pending updates](/guides/advanced_guides/asynchronous_updates.md).
+The maximum size, in bytes, of the `update` database. The `update` database stores the [pending updates](/reference/features/asynchronous_updates.md).
 
 The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
 You can find out about the `PAGE_SIZE` with the following command:
@@ -262,7 +262,7 @@ Activates scheduled snapshots.
 
 If this command is not added or its value is `false` snapshotting is deactivated.
 
-[Read more about snapshots](/guides/advanced_guides/snapshots_and_dumps.md#snapshots).
+[Read more about snapshots](/reference/features/snapshots_and_dumps.md#snapshots).
 
 ### Snapshot Destination
 
@@ -348,4 +348,4 @@ Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. 
 
 **Default value**: `1024`
 
-[Read more about dumps](/guides/advanced_guides/snapshots_and_dumps.md#dumps)
+[Read more about dumps](/reference/features/dumps.md)

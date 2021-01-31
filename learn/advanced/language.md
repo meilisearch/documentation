@@ -5,7 +5,9 @@
 - **Any language that uses whitespace to separate words**
 - **Chinese** 🇨🇳 (through [Jieba](https://github.com/messense/jieba-rs))
 
-We aim to provide global language support, and your feedback helps us [move closer to that goal](/guides/advanced_guides/tokenization.md#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/MeiliSearch/issues/new/choose).
+We aim to provide global language support, and your feedback helps us [move closer to that goal](/learn/advanced/language.md#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/MeiliSearch/issues/new/choose).
+
+If you'd like to learn more about how different languages are processed in MeiliSearch, see our [tokenizer documentation](/reference/under_the_hood/tokenization.md).
 
 ## Improving Our Language Support
 
