@@ -16,9 +16,34 @@ Our solution delivers an **instant search experience** including **typo handling
 
 > Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
 
+## Features
+
+- **Blazing fast** (answers < 50 milliseconds): Priority is given to fast answers for a smooth search experience.
+- [Search as you type](/learn/what_is_meilisearch/features.md#search-as-you-type): Results are updated on each keystroke. To make this possible, we use [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
+- [Typo tolerance](/learn/what_is_meilisearch/features.md#typo-tolerance): Understands typoes and misspellings.
+- [Tokenization](/guides/advanced_guides/tokenization.md) in **English**, **Chinese**, and **all languages that uses space as a word divider**.
+- **Return the whole document**: The entire document is returned upon search.
+- **Highly customizable search and indexation**:
+  - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
+  - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
+  - [Highlighting](/learn/what_is_meilisearch/features.md#highlighting): Highlighted search results in documents
+  - [Synonyms](/learn/what_is_meilisearch/features.md#synonyms): define synonyms for a better search experience.
+- **RESTful API**
+- [Integrated web interface](/guides/advanced_guides/web_interface.md): allows you to test your search settings without implementing a front-end
+
+## Philosophy
+
+MeiliSearch is committed to providing **open source**, **easy to use**, **customizable** instant search that **focuses on the needs of end-users**.
+
+Read more about [the philosophy of our search engine](/learn/what_is_meilisearch/philosophy.md).
+
+## SDKs and Integrations
+
+Our team and community have worked hard to bring MeiliSearch to almost all popular web development languages, frameworks, and deployment options—and new integrations are constantly in development. Check out [the full list of our integrations](/learn/what_is_meilisearch/sdks.md).
+
 ## Alternatives
 
-Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md). In short, Meilisearch most closely compares with Algolia. Meilisearch stands out by being open source (while commercial) and aims to be simpler to deploy and maintain.
+Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/learn/what_is_meilisearch/comparison_to_alternatives.md). In short, MeiliSearch most closely compares with Algolia. MeiliSearch stands out by being open source (while commercial), and aims to be simpler to deploy and maintain than other competitors.
 
 ## Give it a try!
 
