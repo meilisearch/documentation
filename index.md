@@ -14,15 +14,17 @@ If you're looking for information on a specific MeiliSearch SDK or front-end int
 
 ## Same Docs; New Organization
 
-Hold up—is it just me, or is something different here? 🤔
+Hold up a minute—is it just me, or is something different here? 🤔
 
 Our documentation has been reorganized to promote **clarity**, **browsability**, and **maintainability**. While it might look similar, you may also find that some things are not where they used to be.
 
-For starters, our helpful content is now grouped into three categories:
+For starters, our helpful content is now grouped into **three categories**:
 
-- [Learn](/learn): If it's your **first-time using MeiliSearch** or you want a refresher, we recommend starting here.
-- [Create](/create): If you're looking to start your own MeiliSearch project or get answers to a question, this is where you'll find **useful guides**, **inspiring community projects**, and **answers to all your questions**.
-- [Reference](/reference): **Encyclopedia-style documentation** for all of MeiliSearch's features, API, and search engine internals. If you just want the facts and none of the fluff, this is the place for you.
+- [Learn](/learn): Contains an [introduction to MeiliSearch](/learn/what_is_meilisearch) as a product, [beginner tutorials](/learn/tutorials), explanations of some [core concepts](/learn/core_concepts), and articles about [advanced topics](/learn/advanced). If it's your **first-time using MeiliSearch** or you want a refresher, we recommend starting [here](/learn).
+
+- [Create](/create): Contains [how-to guides](/create/how_to) that take you step-by-step through a problem and solution, [frequently asked quetsions](/create/faq.md), and more. If you're looking to **start your own MeiliSearch project** or get answers to a question, this is the place.
+
+- [Reference](/reference): **Encyclopedia-style documentation** for all of MeiliSearch's [features](/reference/features), [API](/reference/api), and [search engine internals](/reference/under_the_hood). If you just want the facts and none of the fluff, you'll like it here.
 
 ::: note
 This documentation is [completely open-source](https://github.com/meilisearch/documentation). We keep it up-to-date but you might find some typos or mistakes. Help us make it better by submitting a [pull request](https://github.com/meilisearch/documentation/fork) or [issue](https://github.com/meilisearch/documentation/issues) 😁
