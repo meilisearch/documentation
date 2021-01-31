@@ -8,18 +8,17 @@ Understanding our reference doucmentation might require some background knowledg
 
 ## Table of Contents
 
-[Authentication]
+[Authentication](/reference/features/authentication.md)
 [Configuration] - take a look at this
-[Distinct Attributes]
-[Faceted Search]
-[Field Properties] - should maybe be split into multiple articles
-[Filtering]
-[Known Limitations] - take a look at this
-[Search Parameters]
-[Settings] - take a look at this
-[Snapshots and Dumps] - advanced topic article inside this
-[Synonyms]
-[Web Interface]
-
-[Installation] - split into two parts, a how-to and an advanced topic on updating meilisearch
-[Tokenization] - language part should go in What is Meilisearch, tokenizer part should go in under the hood
+[Distinct Attributes](/reference/features/distinct.md)
+[Dumps](/reference/features/dumps.md)
+[Faceted Search](/reference/features/faceted_search.md)
+[Field Properties](/reference/features/field_properties.md)
+[Filtering](/reference/features/filtering.md)
+[Installation](/reference/features/installation.md)
+[Known Limitations](/reference/features/known_limitations.md)
+[Search Parameters](/reference/features/search_parameters.md)
+[Settings](/reference/features/settings.md)
+[Snapshots](/reference/features/snapshots.md)
+[Synonyms](/reference/features/synonyms.md)
+[Web Interface](/reference/features/web_interface.md)
