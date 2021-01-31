@@ -4,13 +4,19 @@ Welcome to the MeiliSearch documentation. Here you'll find everything you need t
 
 [<linkButton text="🔎 WHAT IS MEILISEARCH?"/>](/learn/what_is_meilisearch)
 
-If you're looking for information on a specific MeiliSearch SDK or front-end integration, check out our [comprehensive list](/learn/what_is_meilisearch/sdks.md).
+If you're looking for information on a specific MeiliSearch SDK or front-end integration, you'll find it in our [SDK list](/learn/what_is_meilisearch/sdks.md).
 
-## Same Content, New Organization
+## Getting Started
 
-Hold up--something seems different around here.
+**Enjoy a hands-on approach to learning**? Follow a [quick tutorial](/learn/tutorials/getting_started.md) to learn the basics of the engine.
 
-While it might look similar, our documentation has been reorganized to promote **clarity**, **browsability**, and **maintainability**. You may find that some things are not where they used to be.
+**Prefer to learn by reading**? You're not alone. Check out articles covering the most important [core concepts](/learn/core_concepts) of MeiliSearch.
+
+## Same Docs; New Organization
+
+Hold up—is it just me, or is something different here? 🤔
+
+Our documentation has been reorganized to promote **clarity**, **browsability**, and **maintainability**. While it might look similar, you may also find that some things are not where they used to be.
 
 For starters, our helpful content is now grouped into three categories:
 
@@ -24,7 +30,7 @@ This documentation is [completely open-source](https://github.com/meilisearch/do
 
 ## Open-source
 
-MeiliSearch is open source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
+MeiliSearch is completely open source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
 
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a>
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a><!-- prettier-ignore
