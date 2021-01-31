@@ -1,6 +1,4 @@
-# Language and Tokenization
-
-## Tokenization
+# Tokenization
 
 **Tokenization** is the act of taking a sentence or phrase and splitting it into smaller units of language, called tokens. It is the first step of document indexing in the Meilisearch engine, and is a critical factor in the quality of search results.
 
@@ -8,7 +6,7 @@ Breaking sentences into smaller chunks requires understanding where one word end
 
 This allows MeiliSearch to function in several different languages with zero setup.
 
-### Deep Dive: The Meili Tokenizer
+## Deep Dive: The Meili Tokenizer
 
 ![Tokenizer Architecture](https://user-images.githubusercontent.com/6482087/102896344-8560d200-4466-11eb-8cfe-b4ae8741093b.jpg)
 

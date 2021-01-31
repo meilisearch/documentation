@@ -54,6 +54,7 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
+            '/learn/advanced/language',
             '/learn/advanced/snapshots_vs_dumps',
           ],
         },
@@ -77,7 +78,6 @@ module.exports = {
             '/reference/features/settings',
             '/reference/features/snapshots',
             '/reference/features/synonyms',
-            '/reference/features/tokenization',
             '/reference/features/web_interface',
           ],
         },
@@ -127,6 +127,7 @@ module.exports = {
             '/reference/under_the_hood/datatypes',
             '/reference/under_the_hood/prefix',
             '/reference/under_the_hood/stop_words',
+            '/reference/under_the_hood/tokenization',
             '/reference/under_the_hood/typotolerance',
           ],
         },
