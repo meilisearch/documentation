@@ -46,7 +46,6 @@ module.exports = {
           children: [
             '/learn/core_concepts/indexes',
             '/learn/core_concepts/documents',
-            '/learn/core_concepts/search',
             '/learn/core_concepts/relevancy',
           ],
         },
