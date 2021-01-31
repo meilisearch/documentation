@@ -1,4 +1,4 @@
-# How to deploy a MeiliSearch instance on DigitalOcean
+# Deploy a MeiliSearch Instance on DigitalOcean
 
 ## Create an out-of-the-box MeiliSearch
 

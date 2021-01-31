@@ -1,7 +1,7 @@
 ---
 permalink: /instant-search-react-app
 ---
-# How to implement Instant Search within 5 minutes in your React App
+# Implement Instant Search in Your React App in 5 Minutes
 
 _The following is a guest post by Riccardo Giorato._
 
