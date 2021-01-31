@@ -137,12 +137,12 @@ module.exports = {
           path: '/create/how_to/',
           collapsable: false,
           children: [
+            '/create/how_to/running_production',
+            '/create/how_to/search_bar_for_docs',
             '/create/how_to/digitalocean_droplet',
             '/create/how_to/http2_ssl',
             '/create/how_to/meilisearch_react',
             '/create/how_to/postman_collection',
-            '/create/how_to/running_production',
-            '/create/how_to/search_bar_for_docs',
           ],
         },
         {
