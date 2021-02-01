@@ -1,5 +1,9 @@
 # Official SDKs / Libraries
 
+Our team and community have worked hard to bring MeiliSearch to almost all popular web development languages, frameworks, and deployment options.
+
+New integrations are constantly in development. If you'd like to contribute, [see below](/learn/what_is_meilisearch/sdks.md#contributing).
+
 ## SDKs
 
 You can use MeiliSearch API wrappers in your favorite language. These libraries support all API routes.
