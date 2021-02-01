@@ -79,7 +79,7 @@ By adding words to a stop words list, these specific terms will be ignored durin
 
 For example, suppose you would perform the following search query: `the great gatsby`. Having the word `the` in a film review wouldn't make the review more relevant. By adding `the` to the stop word list, performance would be increased and search results more relevant.
 
-[Learn more about stop words](/reference/under_the_hood/stop_words.md)
+[Learn more about stop words](/reference/features/stop_words.md)
 
 ## Field properties
 

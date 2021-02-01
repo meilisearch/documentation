@@ -18,7 +18,7 @@ As a result, importing a dump requires MeiliSearch to re-index all of your docum
 
 ## Conclusion
 
-**To summarize**:
+To summarize:
 - **Snapshots are highly efficient, but not portable** between different versions of MeiliSearch.
 - **Dumps are highly portable, but not very efficient**.
   - Frequently launching MeiliSearch from a dump would cause your performance to suffer.

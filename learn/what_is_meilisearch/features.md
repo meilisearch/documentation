@@ -9,7 +9,7 @@ Also called "instant search". Results are delivered while you're still inputting
 ## Typo Tolerance
 
 Instead of letting typos ruin your search experience, MeiliSearch will always find the results you expect.
-Read more about typo tolerance in [this dedicated guide](/reference/features/typotolerance.md).
+Read more about typo tolerance in [this dedicated guide](/reference/under_the_hood/typotolerance.md).
 
 ## Synonyms
 
