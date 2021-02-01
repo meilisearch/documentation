@@ -1,22 +1,22 @@
 # Synonyms
 
-_Child route of the [settings route](/references/settings.md)._
+_Child route of the [settings route](/reference/api/settings.md)._
 
 `Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
 
-Synonyms can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
+Synonyms can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
+[Learn more about synonyms](/reference/features/synonyms.md)
 
 ## Get synonyms
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/synonyms"/>
 
-Get the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
+Get the list of [synonyms](/reference/features/synonyms.md) of an index.
 
 #### Path Variables
 
@@ -42,7 +42,7 @@ Get the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/synonyms"/>
 
-Update the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
+Update the list of [synonyms](/reference/features/synonyms.md) of an index.
 
 #### Path Variables
 
@@ -54,7 +54,7 @@ Update the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index.
 
 An object that contains all synonyms and their associated words.
 
-[More information about the body](/guides/advanced_guides/settings.md#synonyms).
+[More information about the body](/reference/features/settings.md#synonyms).
 
 #### Example
 
@@ -68,13 +68,13 @@ An object that contains all synonyms and their associated words.
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Reset synonyms
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/synonyms"/>
 
-Reset the list of [synonyms](/guides/advanced_guides/synonyms.md) of an index to its default value.
+Reset the list of [synonyms](/reference/features/synonyms.md) of an index to its default value.
 
 #### Default value
 
@@ -98,4 +98,4 @@ Empty object : `{}`
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).

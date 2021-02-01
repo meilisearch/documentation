@@ -1,22 +1,22 @@
 # Distinct attribute
 
-_Child route of the [settings route](/references/settings.md)._
+_Child route of the [settings route](/reference/api/settings.md)._
 
-[Distinct attribute](/guides/advanced_guides/distinct.md) is a field whose value will always be **unique** in the returned documents.
+[Distinct attribute](/reference/features/distinct.md) is a field whose value will always be **unique** in the returned documents.
 
-Distinct attribute can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
+Distinct attribute can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-[Learn more about distinct attribute](/guides/advanced_guides/settings.md#distinct-attribute).
+[Learn more about distinct attribute](/reference/features/settings.md#distinct-attribute).
 
 ## Get distinct attribute
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/distinct-attribute" />
 
-Get the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attribute) field of an index.
+Get the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index.
 
 #### Path Variables
 
@@ -38,7 +38,7 @@ Get the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attrib
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/distinct-attribute" />
 
-Update the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attribute) field of an index.
+Update the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index.
 
 #### Path Variables
 
@@ -50,7 +50,7 @@ Update the [distinct attribute](/guides/advanced_guides/settings.md#distinct-att
 
 A String: the field name.
 
-[More information about the body](/guides/advanced_guides/settings.md#distinct-attribute).
+[More information about the body](/reference/features/settings.md#distinct-attribute).
 
 ### Example
 
@@ -64,13 +64,13 @@ A String: the field name.
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Reset distinct attribute
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/distinct-attribute"/>
 
-Reset the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attribute) field of an index to its default value.
+Reset the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index to its default value.
 
 **Default value**: `null`
 
@@ -92,4 +92,4 @@ Reset the [distinct attribute](/guides/advanced_guides/settings.md#distinct-attr
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).

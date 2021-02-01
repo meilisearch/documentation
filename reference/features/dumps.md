@@ -26,7 +26,7 @@ Once you have exported a dump, which is a `.dump` file, you are now able to use 
 
 Because importing a dump is the same process as when documents are initially indexed by MeiliSearch, it can require some time and memory. If your dataset is very large, it is good practice to index documents in larger batches. This will speed up the indexing process at the cost of memory.
 
-[See here for more dumps options](/guides/advanced_guides/configuration.md#dumps-destination)
+[See here for more dumps options](/reference/features/configuration.md#dumps-destination)
 
 ## Use Cases
 

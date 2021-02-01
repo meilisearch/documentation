@@ -1,14 +1,14 @@
 # Indexes
 
-An index is an entity that gathers a set of [documents](/guides/main_concepts/documents.md) with its own settings.
+An index is an entity that gathers a set of [documents](/learn/core_concepts/documents.md) with its own settings.
 
-[Learn more about indexes](/guides/main_concepts/indexes.md).
+[Learn more about indexes](/learn/core_concepts/indexes.md).
 
 ## List all indexes
 
 <RouteHighlighter method="GET" route="/indexes"/>
 
-List all [indexes](/guides/main_concepts/indexes.md).
+List all [indexes](/learn/core_concepts/indexes.md).
 
 ### Example
 
@@ -37,7 +37,7 @@ List all [indexes](/guides/main_concepts/indexes.md).
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid"/>
 
-Get information about an [index](/guides/main_concepts/indexes.md).
+Get information about an [index](/learn/core_concepts/indexes.md).
 
 #### Path Variables
 
@@ -64,12 +64,12 @@ Get information about an [index](/guides/main_concepts/indexes.md).
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an [index](/guides/main_concepts/indexes.md).
+Create an [index](/learn/core_concepts/indexes.md).
 
-This route takes as parameter an unique `uid` and **optionally** the [primary key](/guides/main_concepts/indexes.md#primary-key).
+This route takes as parameter an unique `uid` and **optionally** the [primary key](/learn/core_concepts/indexes.md#primary-key).
 
 ::: note
-An index is automatically created when adding [documents](/references/documents.md) or [settings](/references/settings.md) to an index that does not already exist.
+An index is automatically created when adding [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not already exist.
 :::
 
 #### Body
@@ -105,7 +105,7 @@ An index is automatically created when adding [documents](/references/documents.
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
 
-Update an [index](/guides/main_concepts/indexes.md).
+Update an [index](/learn/core_concepts/indexes.md).
 
 #### Path Variables
 
@@ -120,9 +120,9 @@ Update an [index](/guides/main_concepts/indexes.md).
 | **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
 
 The `uid` of an index cannot be changed.
-The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/references/indexes.md#get-one-index)).
+The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/reference/api/indexes.md#get-one-index)).
 
-[There are many ways in MeiliSearch to set the primary key](/guides/main_concepts/documents.md#primary-key).
+[There are many ways in MeiliSearch to set the primary key](/learn/core_concepts/documents.md#primary-key).
 
 ### Example
 
@@ -143,7 +143,7 @@ The `primaryKey` can be added if it does not already exist (to know if it has be
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
 
-Delete an [index](/guides/main_concepts/indexes.md).
+Delete an [index](/learn/core_concepts/indexes.md).
 
 #### Path Variables
 

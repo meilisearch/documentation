@@ -77,6 +77,7 @@ module.exports = {
             '/reference/features/search_parameters',
             '/reference/features/settings',
             '/reference/features/snapshots',
+            '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',
           ],

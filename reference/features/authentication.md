@@ -20,7 +20,7 @@ When launching an instance, you have the option of giving a master key. By doing
 
 You can specify it by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
 
-You can retrieve both the private and the public keys using the master key on the [keys route](/references/keys.md).
+You can retrieve both the private and the public keys using the master key on the [keys route](/reference/api/keys.md).
 
 #### No master key
 
@@ -28,7 +28,7 @@ If no master key is provided, all routes can be accessed without requiring any k
 
 ## API Key
 
-If a master key is set, on each API call, a key must be added to [the header](/references/#authentication).
+If a master key is set, on each API call, a key must be added to [the header](/reference/api/README.md#authentication).
 
 If no or a wrong API key is provided in the header you will have no access to any route and you will receive the
 `HTTP/1.1 403 Forbidden` status code.

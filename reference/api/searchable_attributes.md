@@ -1,22 +1,22 @@
 # Searchable attributes
 
-_Child route of the [settings route](/references/settings.md)._
+_Child route of the [settings route](/reference/api/settings.md)._
 
-The values associated with attributes in the `searchableAttributes` list are **searched for matching query words**. The order of the list also determines the [attribute ranking order](/guides/main_concepts/relevancy.md#attribute-ranking-order).
+The values associated with attributes in the `searchableAttributes` list are **searched for matching query words**. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
-Searchable attributes can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
+Searchable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-[Learn more about searchable fields](/guides/advanced_guides/field_properties.md#searchable-fields).
+[Learn more about searchable fields](/reference/features/field_properties.md#searchable-fields).
 
 ## Get searchable attributes
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/searchable-attributes" />
 
-Get the [searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields) of an index.
+Get the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
 
 #### Path Variables
 
@@ -40,7 +40,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/searchable-attributes" />
 
-Update the [searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields) of an index.
+Update the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
 
 #### Path Variables
 
@@ -54,7 +54,7 @@ An array of strings that contains searchable attributes sorted by order of impor
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
-[More information about the body](/guides/advanced_guides/settings.md#searchable-attributes).
+[More information about the body](/reference/features/settings.md#searchable-attributes).
 
 ### Example
 
@@ -70,13 +70,13 @@ A match in title will make a document more relevant than another document with a
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Reset searchable attributes
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/searchable-attributes"/>
 
-Reset the [searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields) of the index to the default value.
+Reset the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of the index to the default value.
 
 #### Default value
 
@@ -100,4 +100,4 @@ All attributes found in the documents added to the index.
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).

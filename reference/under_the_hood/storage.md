@@ -51,7 +51,7 @@ In this case, MeiliSearch will always ask for a memory map of 200Gb. This refers
 
 ## Measured disk usage
 
-We did some measurements on the default [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) dataset that you can find in the [getting started guide](/guides/introduction/quick_start_guide.md#add-documents).
+We did some measurements on the default [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) dataset that you can find in the [getting started guide](/learn/tutorials/getting_started.md#add-documents).
 This dataset is a JSON file of 8.6 MB and has 19,553 documents.
 When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122MB.
 

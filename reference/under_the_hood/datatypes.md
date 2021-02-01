@@ -9,12 +9,12 @@ Based on their type, however, the fields will be handled and used in different w
 
 Types:
 
-- [String](/guides/advanced_guides/datatypes.md#string)
-- [Numeric types](/guides/advanced_guides/datatypes.md#numeric-type): `integer`, `float`
-- [Boolean](/guides/advanced_guides/datatypes.md#boolean)
-- [Array](/guides/advanced_guides/datatypes.md#array)
-- [Object](/guides/advanced_guides/datatypes.md#object)
-- [`null` type](/guides/advanced_guides/datatypes.md#null-type)
+- [String](/reference/under_the_hood/datatypes.md#string)
+- [Numeric types](/reference/under_the_hood/datatypes.md#numeric-type): `integer`, `float`
+- [Boolean](/reference/under_the_hood/datatypes.md#boolean)
+- [Array](/reference/under_the_hood/datatypes.md#array)
+- [Object](/reference/under_the_hood/datatypes.md#object)
+- [`null` type](/reference/under_the_hood/datatypes.md#null-type)
 
 ### String
 
@@ -32,7 +32,7 @@ For Latin-based languages, there are two kinds of **space separators**:
 - **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
 - **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
 
-Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/guides/main_concepts/relevancy.md). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
+Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/learn/core_concepts/relevancy.md). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
 
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
@@ -69,8 +69,8 @@ This will happen because the proximity distance between `Bruce` and `Willis` is 
 
 A numeric type (`integer`, `float`) is converted to a human-readable decimal number string representation. Numeric types can be searched as they are converted to strings.
 
-You can [add custom ranking rules](/guides/main_concepts/relevancy.md#adding-your-rules) to create an ascending or descending sorting rule on a given attribute that has a numeric value in the documents.
-You can also create [filters](/guides/advanced_guides/filtering.md). The `>`, `>=`, `<`, and `<=` relational operators apply only to numerical values.
+You can [add custom ranking rules](/learn/core_concepts/relevancy.md#adding-your-rules) to create an ascending or descending sorting rule on a given attribute that has a numeric value in the documents.
+You can also create [filters](/reference/features/filtering.md). The `>`, `>=`, `<`, and `<=` relational operators apply only to numerical values.
 
 ### Boolean
 
@@ -96,7 +96,7 @@ Will be processed as if all elements were arranged at the same level:
 "Bruce Willis. Vin Diesel. Kung Fu Panda."
 ```
 
-The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#examples).
+The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/reference/under_the_hood/datatypes.md#examples).
 
 ### Object
 
@@ -119,7 +119,7 @@ In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are a
 "movie_id. 1564saqw12ss. title. Kung fu Panda."
 ```
 
-These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/guides/advanced_guides/datatypes.md#examples).
+These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/reference/under_the_hood/datatypes.md#examples).
 
 ### null type
 
