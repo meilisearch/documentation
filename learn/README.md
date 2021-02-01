@@ -4,7 +4,7 @@ Welcome to MeiliSearch's learning center. These resources are aimed at first-tim
 
 ## Easy to Learn, Fun to Master
 
-MeiliSearch has been developed to provide an **easily integrated search solution** with a **simple and intuitive implementation process**. 
+MeiliSearch has been developed to provide an **easily integrated search solution** with a **simple and intuitive implementation process**.
 
 It is our fondest hope that anyone could learn the basics simply by looking at our [API endpoints](/reference/api) or [feature references](/reference/features).
 

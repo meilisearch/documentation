@@ -5,6 +5,7 @@ Want to create a brilliant website, app, or other project with MeiliSearch? You'
 This section covers everything you need to bring your project from idea to completion.
 
 ## Table of Contents
+
 - [📜 How To](/create/how_to): Step-by-step guides for efficient problem-solving
   - [Run MeiliSearch in Production](/create/how_to/running_production.md)
   - [Integrate a Relevant Search Bar to Your Documentation](/create/how_to/search_bar_for_docs.md)
