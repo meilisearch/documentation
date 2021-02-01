@@ -126,7 +126,6 @@ module.exports = {
             '/reference/under_the_hood/concat',
             '/reference/under_the_hood/datatypes',
             '/reference/under_the_hood/prefix',
-            '/reference/under_the_hood/stop_words',
             '/reference/under_the_hood/storage',
             '/reference/under_the_hood/tokenization',
             '/reference/under_the_hood/typotolerance',
