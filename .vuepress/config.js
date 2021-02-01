@@ -63,7 +63,7 @@ module.exports = {
         {
           title: '⭐ Feature References',
           path: '/reference/features/',
-          collapsable: false,
+          collapsable: true,
           children: [
             '/reference/features/authentication',
             '/reference/features/configuration',
@@ -84,7 +84,7 @@ module.exports = {
         {
           title: '📒 API References',
           path: '/reference/api/',
-          collapsable: false,
+          collapsable: true,
           children: [
             '/reference/api/indexes',
             '/reference/api/documents',
@@ -118,7 +118,7 @@ module.exports = {
         {
           title: '🛠️ Under the Hood',
           path: '/reference/under_the_hood',
-          collapsable: false,
+          collapsable: true,
           children: [
             '/reference/under_the_hood/about_storage',
             '/reference/under_the_hood/asynchronous_updates',
