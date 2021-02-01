@@ -40,11 +40,11 @@ At minimum, the document must contain one field with the **[primary key][primary
 
 ### Limitations and Requirements
 
-Documents have a **soft maximum of 1000 fields**; beyond that the [<clientGlossary word="ranking rules" />](/guides/main_concepts/relevancy.md#ranking-rules) may no longer be effective, leading to undefined behavior.
+Documents have a **soft maximum of 1000 fields**; beyond that the [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective, leading to undefined behavior.
 
 Additionally, every document must have at minimum one field containing the **[<clientGlossary word="primary key" />][primary-key]** and a **[unique id][document-id]**.
 
-If you try to [index a document](/guides/introduction/quick_start_guide.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/guides/main_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
+If you try to [index a document](/learn/tutorials/getting_started.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
 
 ## Fields
 
@@ -52,19 +52,19 @@ A <clientGlossary word="field" /> is a set of two data items linked together: an
 
 An attribute functions a bit like a variable in most programming languages, i.e. it is a name that allows you to store, access, and describe some data. That data is the attribute's **value**.
 
-Every field has a [data type](/guides/advanced_guides/datatypes.md) dictated by its value. Every value must be a valid [`JSON` data type](https://www.w3schools.com/js/js_json_datatypes.asp).
+Every field has a [data type](/reference/under_the_hood/datatypes.md) dictated by its value. Every value must be a valid [`JSON` data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-Take note that in the case of strings, the value **[can contain at most 1000 words](/guides/advanced_guides/known_limitations.md#maximum-words-per-attribute)**. If it contains more than 1000 words, only the first 1000 will be indexed.
+Take note that in the case of strings, the value **[can contain at most 1000 words](/reference/features/known_limitations.md#maximum-words-per-attribute)**. If it contains more than 1000 words, only the first 1000 will be indexed.
 
-You can also apply [<clientGlossary word="ranking rules" />](/guides/main_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
+You can also apply [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
-If you would like to adjust how a field gets handled by MeiliSearch, you can do so in the [settings](/guides/advanced_guides/settings.md#settings).
+If you would like to adjust how a field gets handled by MeiliSearch, you can do so in the [settings](/reference/features/settings.md#settings).
 
 ### Field properties
 
-A field may also possess **[field properties](/guides/advanced_guides/field_properties.md)**. Field properties determine the characteristics and behavior of the data added to that field.
+A field may also possess **[field properties](/reference/features/field_properties.md)**. Field properties determine the characteristics and behavior of the data added to that field.
 
-At this time, there are two field properties: [<clientGlossary word="searchable" />](/guides/advanced_guides/field_properties.md#searchable-fields) and [<clientGlossary word="displayed" />](/guides/advanced_guides/field_properties.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
+At this time, there are two field properties: [<clientGlossary word="searchable" />](/reference/features/field_properties.md#searchable-fields) and [<clientGlossary word="displayed" />](/reference/features/field_properties.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
 
 To clarify, a field may be:
 
@@ -73,7 +73,7 @@ To clarify, a field may be:
 - both displayed and searchable (default)
 - neither displayed nor searchable
 
-In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/guides/advanced_guides/field_properties.md#data-storing) in the document.
+In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/reference/features/field_properties.md#data-storing) in the document.
 
 ## Primary Field
 
@@ -113,9 +113,9 @@ Each index recognizes **only one** primary key attribute. Once a primary key has
 
 There are several ways for MeiliSearch to know which field is the primary key.
 
-- You can set it manually [on index creation](/references/indexes.md#create-an-index)
-- You can set it manually [on document addition](/references/documents.md#add-or-replace-documents)
-- MeiliSearch can [automatically infer the primary key](/guides/main_concepts/documents.md#meilisearch-infers-your-primary-key) based on your first document.
+- You can set it manually [on index creation](/reference/api/indexes.md#create-an-index)
+- You can set it manually [on document addition](/reference/api/documents.md#add-or-replace-documents)
+- MeiliSearch can [automatically infer the primary key](/learn/core_concepts/documents.md#meilisearch-infers-your-primary-key) based on your first document.
 
 #### MeiliSearch infers your primary key
 
@@ -125,7 +125,7 @@ If no corresponding attribute is found, the index will have no known primary key
 #### Missing primary key error
 
 ❗️ If you get the `Could not infer a primary key` error, the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
-Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/references/documents.md#add-or-replace-documents) or [the update index route](/references/indexes.md#create-an-index).
+Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).
 
 ### Document Id
 
@@ -155,7 +155,7 @@ Take note that the document addition request in MeiliSearch is <clientGlossary w
 
 By default, MeiliSearch limits the size of `JSON` payloads—and therefore document uploads—to 100MB.
 
-To upload more documents in one go, it is possible to [change the payload size limit](/guides/advanced_guides/configuration.md#payload-limit-size) during the setup of your MeiliSearch instance using the `http-payload-size-limit` option. The new limit must be given in bytes.
+To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) during the setup of your MeiliSearch instance using the `http-payload-size-limit` option. The new limit must be given in bytes.
 
 ```bash
 $ ./meilisearch --http-payload-size-limit= 1048576000
@@ -165,12 +165,12 @@ $ ./meilisearch --http-payload-size-limit= 1048576000
 
 **MeiliSearch uses a lot of RAM when indexing documents**. Be aware of your RAM availability as you increase the size of your batch as this could result in a MeiliSearch crash.
 
-When using the [route to add new documents](/references/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
+When using the [route to add new documents](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 
 <CodeSamples id="documents_guide_add_movie_1" />
 
-[primary-field]: /guides/main_concepts/documents.md#primary-field
-[primary-key]: /guides/main_concepts/documents.md#primary-key
-[document-id]: /guides/main_concepts/documents.md#document-id
-[fields]: /guides/main_concepts/documents.md#fields
-[indexes]: /guides/main_concepts/indexes.md
+[primary-field]: /learn/core_concepts/documents.md#primary-field
+[primary-key]: /learn/core_concepts/documents.md#primary-key
+[document-id]: /learn/core_concepts/documents.md#document-id
+[fields]: /learn/core_concepts/documents.md#fields
+[indexes]: /learn/core_concepts/indexes.md

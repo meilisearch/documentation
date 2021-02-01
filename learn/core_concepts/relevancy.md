@@ -1,6 +1,6 @@
 # Relevancy
 
-Search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, MeiliSearch uses a [bucket sort](/guides/advanced_guides/bucket_sort.md) to rank documents. Each rule is applied to all documents that are considered equal according to the previous rule to break the tie.
+Search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, MeiliSearch uses a [bucket sort](/reference/under_the_hood/bucket_sort.md) to rank documents. Each rule is applied to all documents that are considered equal according to the previous rule to break the tie.
 
 Ranking rules are **built-in rules applied to the search results** in order to improve their relevancy. To benefit from the ranking rules and make them meet your dataset and needs, it is important to understand how each of them works and how to create new ones.
 
@@ -32,7 +32,7 @@ It is now mandatory that all query terms are present in the returned documents. 
 Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
 
 **4. Attribute**
-Results are sorted according to the **[attribute ranking order](/guides/main_concepts/relevancy.md#attribute-ranking-order)**: find documents that contain query terms in more important attributes first.
+Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**: find documents that contain query terms in more important attributes first.
 
 **5. Words Position**
 Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
@@ -75,7 +75,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 
 `If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `description`.
 
-The `attribute` rule sorts the results by [attribute importance](/guides/main_concepts/relevancy.md#attribute-ranking-order).
+The `attribute` rule sorts the results by [attribute importance](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
 :::
 
@@ -110,7 +110,7 @@ By default, the built-in rules are executed in the following order to meet most 
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
-Depending on your needs, you might want to change this order of importance. To do so, you can use the [settings route](/references/ranking_rules.md#update-ranking-rules) of your index.
+Depending on your needs, you might want to change this order of importance. To do so, you can use the [settings route](/reference/api/ranking_rules.md#update-ranking-rules) of your index.
 
 ## Adding your rules
 
@@ -124,7 +124,7 @@ To add your own ranking rule, you have to communicate either `asc` for ascending
 
 - To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
-Add this rule to the existing list of ranking rules using the [settings route](/references/ranking_rules.md#update-ranking-rules).
+Add this rule to the existing list of ranking rules using the [settings route](/reference/api/ranking_rules.md#update-ranking-rules).
 
 #### Example
 
@@ -142,7 +142,7 @@ The following example will create a rule that makes movies with a good rank more
 desc(movie_ranking)
 ```
 
-To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/references/ranking_rules.md#update-ranking-rules),
+To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/reference/api/ranking_rules.md#update-ranking-rules),
 
 ```json
 [
@@ -163,7 +163,7 @@ In a typical dataset, some fields are more relevant to search than others. A `ti
 
 By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the indexed documents. However, it can also be set manually.
 
-For a more detailed look at this subject, see our reference page for [the searchable attributes list](/guides/advanced_guides/field_properties.md#the-searchable-attributes-list).
+For a more detailed look at this subject, see our reference page for [the searchable attributes list](/reference/features/field_properties.md#the-searchable-attributes-list).
 
 #### Example
 

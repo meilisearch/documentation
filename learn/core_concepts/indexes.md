@@ -19,11 +19,11 @@ For example, it means you could create on the same server synonyms for a `movie`
 
 ## Index Creation
 
-An index is created the first time documents are added to it or manually using the [create index endpoint](/references/indexes.md#create-an-index).
+An index is created the first time documents are added to it or manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
 
 #### Example
 
-In a new MeiliSearch instance without any index, let's add documents using the [add or replace documents endpoint](/references/documents.md#add-or-replace-documents).
+In a new MeiliSearch instance without any index, let's add documents using the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents).
 We provide `movies` as our index. Because that index was not previously created, using the following code will:
 
 1. Create the `movie` index.
@@ -35,7 +35,7 @@ We provide `movies` as our index. Because that index was not previously created,
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
-The uid is set at [index creation time](/references/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
+The uid is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
 {
@@ -49,9 +49,9 @@ The uid is set at [index creation time](/references/indexes.md#create-an-index).
 
 An index is a collection of documents. All documents have a primary key, which is a mandatory <clientGlossary word="field"/>. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value.
 
-The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/guides/main_concepts/documents.md#setting-the-primary-key).
+The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/learn/core_concepts/documents.md#setting-the-primary-key).
 
-[Learn more about document primary key](/guides/main_concepts/documents.md#primary-key)
+[Learn more about document primary key](/learn/core_concepts/documents.md#primary-key)
 
 ## Relevancy rules
 
@@ -61,7 +61,7 @@ For example, if in your first document attributes are listed as follows: `id, ti
 
 On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or popularity, or both and so on. **Rules are customizable** so the results meet your user's needs as close as possible.
 
-[Learn more about ranking rules](/guides/main_concepts/relevancy.md)
+[Learn more about ranking rules](/learn/core_concepts/relevancy.md)
 
 ## Synonyms
 
@@ -69,27 +69,27 @@ In your dataset, you may decide to create synonyms for words which have the same
 
 Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
 
-[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
+[Learn more about synonyms](/reference/features/synonyms.md)
 
 ## Stop words
 
 Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e., `the` or `of` in English).
 
-By adding words to a stop words list, these specific terms will be ignored during search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/guides/main_concepts/relevancy.md#ranking-rules) or in a good [position](/guides/main_concepts/relevancy.md#ranking-rules). This will also greatly improve the response time because all the documents that contain only those words will not be used for documents sorting.
+By adding words to a stop words list, these specific terms will be ignored during search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/learn/core_concepts/relevancy.md#ranking-rules) or in a good [position](/learn/core_concepts/relevancy.md#ranking-rules). This will also greatly improve the response time because all the documents that contain only those words will not be used for documents sorting.
 
 For example, suppose you would perform the following search query: `the great gatsby`. Having the word `the` in a film review wouldn't make the review more relevant. By adding `the` to the stop word list, performance would be increased and search results more relevant.
 
-[Learn more about stop words](/guides/advanced_guides/stop_words.md)
+[Learn more about stop words](/reference/under_the_hood/stop_words.md)
 
 ## Field properties
 
 By default, every document field is searchable and returned on search queries.
 
-Fields can have either or both or none of the following properties that can be modified in the [settings](/references/settings.md):
+Fields can have either or both or none of the following properties that can be modified in the [settings](/reference/api/settings.md):
 
 - **Searchable**: The content of searchable fields is used by MeiliSearch to assess the relevancy of a document.
 - **Displayed**: Documents returned upon search contain only displayed fields.
 
 By default, each field is stored and this behavior cannot be changed.
 
-[Learn more about field properties](/guides/advanced_guides/field_properties.md)
+[Learn more about field properties](/reference/features/field_properties.md)

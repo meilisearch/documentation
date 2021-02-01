@@ -44,8 +44,8 @@ module.exports = {
           path: '/learn/core_concepts/',
           collapsable: false,
           children: [
-            '/learn/core_concepts/indexes',
             '/learn/core_concepts/documents',
+            '/learn/core_concepts/indexes',
             '/learn/core_concepts/relevancy',
           ],
         },
