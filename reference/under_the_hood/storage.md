@@ -1,4 +1,4 @@
-# About storage
+# Storage
 
 ::: tip TLDR
 

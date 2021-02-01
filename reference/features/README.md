@@ -1,15 +1,15 @@
-# Feature References
+# Feature Reference
 
 Want to know something about MeiliSearch? Chances are high that it's written down here.
 
-This section is where we document all of MeiliSearch's user-facing features and tools. The two exceptions are [API routes](/reference/api) and [MeiliSearch engine internals](/reference/under_the_hood): these each have their own section.
+This section is where we document all of MeiliSearch's user-facing features and tools. This does not include [API routes](/reference/api) or [details of the MeiliSearch engine](/reference/under_the_hood); these each have their own section.
 
-Understanding our reference doucmentation might require some background knowledge of MeiliSearch's [core concepts](/learn/core_concepts). If you're a new user, you might prefer to start with an [explanation of MeiliSearch's features](/learn/what_is_meilisearch) or a [guided tutorial](/learn/learn_meilisearch/).
+Understanding our reference documentation is easier with background knowledge of MeiliSearch's [core concepts](/learn/core_concepts). If you're a **new user**, you might prefer to start with an [explanation of MeiliSearch's features](/learn/what_is_meilisearch/features.md) or a [guided tutorial](/learn/tutorials/).
 
 ## Table of Contents
 
 [Authentication](/reference/features/authentication.md)
-[Configuration] - take a look at this
+[Configuration](/reference/features/configuration.md)
 [Distinct Attributes](/reference/features/distinct.md)
 [Dumps](/reference/features/dumps.md)
 [Faceted Search](/reference/features/faceted_search.md)
