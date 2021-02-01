@@ -7,25 +7,25 @@ permalink: /running-production
 
 Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
 
-Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
+Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/tutorials/getting_started.md): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
 
 Using MeiliSearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy MeiliSearch in production** and ensure it is **safe and ready to use**?
 
 ## Content of this article
 
-[Step 1: Install MeiliSearch](/resources/tutorials/running_production.md#step-1-install-meilisearch)
+[Step 1: Install MeiliSearch](/create/how_to/running_production.md#step-1-install-meilisearch)
 
-[Step 2: Run MeiliSearch as a service](/resources/tutorials/running_production.md#step-2-run-meilisearch-as-a-service)
+[Step 2: Run MeiliSearch as a service](/create/how_to/running_production.md#step-2-run-meilisearch-as-a-service)
 
-+ [2.1 Create a service file](/resources/tutorials/running_production.md#_2-1-create-a-service-file)
-+ [2.2. Enable and start service](/resources/tutorials/running_production.md#_2-2-enable-and-start-service)
++ [2.1 Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
++ [2.2. Enable and start service](/create/how_to/running_production.md#_2-2-enable-and-start-service)
 
-[Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](/resources/tutorials/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
 
-+ [3.1. Creating a Reverse Proxy with Nginx](/resources/tutorials/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
-+ [3.2. Set up SSL/TLS for your MeiliSearch](/resources/tutorials/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
++ [3.1. Creating a Reverse Proxy with Nginx](/create/how_to/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
++ [3.2. Set up SSL/TLS for your MeiliSearch](/create/how_to/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
 
-[Conclusion](/resources/tutorials/running_production.md#conclusion)
+[Conclusion](/create/how_to/running_production.md#conclusion)
 
 ## Get your MeiliSearch ready for production
 
@@ -53,7 +53,7 @@ $ apt install curl -y
 $ curl -L https://install.meilisearch.com | sh
 ```
 
-> The different options to achieve a MeiliSearch installation are detailed in **[this guide](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**.
+> The different options to achieve a MeiliSearch installation are detailed in **[this guide](/reference/features/installation.md#download-and-launch)**.
 > It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your achitecture in the best possible way.
 
 You can always check the latest MeiliSearch stable version, and get MeiliSearch for the Operating System of your choice, by visiting the following link:
@@ -115,7 +115,7 @@ WantedBy=default.target
 EOF
 ```
 
-> For more information on MeiliSearch authentication and API keys see the **[Authentication Docs](https://docs.meilisearch.com/guides/advanced_guides/authentication.html)**. For more information on MeiliSearch options and flags see the **[Installation Docs](https://docs.meilisearch.com/guides/advanced_guides/installation.html#download-and-launch)**
+> For more information on MeiliSearch authentication and API keys see the **[authentication docs](/reference/features/authentication.md)**. For more information on MeiliSearch options and flags see the **[installation docs](/reference/features/installation.md#download-and-launch)**
 
 As for now, it is not time yet to expose your MeiliSearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your MeiliSearch instance.
 
@@ -304,6 +304,6 @@ Your SSL certificates should be working and Nginx should be able to find them. E
 
 You have followed the main steps to provide a safe and stable service. Your MeiliSearch instance should be up and running, in a safe environment and ready to stay available even when the most common issues occur. In addition, it is protected by a reverse proxy with your own domain name and API key, so your data and configuration are accessible only to trusted clients. Communication with your server is now encrypted. Furthermore, its identity will be verified every time before sending sensitive data in a fast and automated manner.
 
-You are now ready to start using your **Production-ready MeiliSearch**!
+You are now ready to start using your **production-ready MeiliSearch instance**!
 
 > MeiliSearch is a database which means that it needs a file system it can write to, and which must be persistent.

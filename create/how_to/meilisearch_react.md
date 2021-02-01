@@ -60,7 +60,7 @@ You will be able to check that MeiliSearch is running by visiting the following 
 
 An index is an entity in which documents are stored, like an array of objects with some specific settings attached to it and a unique primary key.
 
-You can read more about the properties of [indexes](https://docs.meilisearch.com/guides/main_concepts/indexes.html) in the the MeiliSearch documentation.
+You can read more about the properties of [indexes](/learn/core_concepts/indexes.md) in the the MeiliSearch documentation.
 
 In order to create your index, you need to find out what your primary key is. Below is a sample document to add to MeiliSearch.
 
@@ -344,7 +344,7 @@ With MeiliSearch, you get a ton of other small options you can fine-tune to impr
 
 ### Search Ranking
 
-Start by changing the search rankings, or more simply, the way MeiliSearch looks through the documents you uploaded to find the references to your search terms inside the [rankingRules](/guides/main_concepts/relevancy.md#relevancy) object. In that case, set the following ranking:
+Start by changing the search rankings, or more simply, the way MeiliSearch looks through the documents you uploaded to find the references to your search terms inside the [rankingRules](/learn/core_concepts/relevancy.md#relevancy) object. In that case, set the following ranking:
 
 - "typo"
 - "words"
@@ -358,7 +358,7 @@ This configuration is the default one except for the last field which is a custo
 
 ### Searchable Attributes
 
-Secondly, you have to specify the attributes that MeiliSearch can search from in each document, inside a [searchableAttributes](/guides/advanced_guides/field_properties.md#searchable-fields) object. Here, the configuration is done to search only on name, vendor, category and tags leaving out images or URL.
+Secondly, you have to specify the attributes that MeiliSearch can search from in each document, inside a [searchableAttributes](/reference/features/field_properties.md#searchable-fields) object. Here, the configuration is done to search only on name, vendor, category and tags leaving out images or URL.
 
 ### Displayed Attributes
 
