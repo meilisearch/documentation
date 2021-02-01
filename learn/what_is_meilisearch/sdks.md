@@ -32,7 +32,7 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ## DevOps Tools
 
-- [meilisearch-digitalocean](https://github.com/meilisearch/meilisearch-digitalocean): how to deploy a MeiliSearch instance on DigitalOcean. See this [dedicated page](/resources/howtos/digitalocean_droplet.md) to use it.
+- [meilisearch-digitalocean](https://github.com/meilisearch/meilisearch-digitalocean): how to deploy a MeiliSearch instance on DigitalOcean. See this [dedicated page](/create/how_to/digitalocean_droplet.md) to use it.
 - [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes): how to deploy a MeiliSearch instance on Kubernetes.
 
 ## Other Tools

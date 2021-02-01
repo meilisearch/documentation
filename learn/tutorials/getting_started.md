@@ -12,26 +12,26 @@ $ ./meilisearch
 Server is listening on: http://127.0.0.1:7700
 ```
 
-You can download & run MeiliSearch [in many different ways (i.e: docker, apt, homebrew, ...)](/guides/advanced_guides/installation.md).
+You can download & run MeiliSearch [in many different ways (i.e: docker, apt, homebrew, ...)](/reference/features/installation.md).
 
-[Environment variables and options](/guides/advanced_guides/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
+[Environment variables and options](/reference/features/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
 
 ### Communicate with MeiliSearch
 
 Now that your MeiliSearch server is up and running, you should be able to communicate with it.
 
-Communication to the server is done through a [RESTful API](/references/README.md) or one of our [SDKs](/resources/sdks.md).
+Communication to the server is done through a [RESTful API](/reference/api/README.md) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
 
 ## Add Documents
 
 To add documents to MeiliSearch you must provide:
 
-- [Documents](/guides/main_concepts/documents.md) in the form of `JSON objects`.
-- An [index](/guides/main_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
+- [Documents](/learn/core_concepts/documents.md) in the form of `JSON objects`.
+- An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
 > _If the index does not exist, MeiliSearch creates it when you first add documents._
 
-To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/guides/main_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
 ```json
 {
@@ -42,13 +42,13 @@ To be processed, all documents must share one common <clientGlossary word="field
 
 > The primary key is `id`, the document's unique identifier is `123`.
 
-There are [several ways to let MeiliSearch know what the primary key](/guides/main_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
+There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
 Below is an example to showcase how to add documents to an index called `movies` using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
 
 <CodeSamples id="getting_started_add_documents_md" />
 
-[API references](/references/documents.md)
+[API references](/reference/api/documents.md)
 
 ### Checking updates
 
@@ -58,17 +58,17 @@ The document addition process returns a JSON object containing only an `updateId
 
 This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
 
-You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
+You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md).
 
 Checking the update status is not a mandatory step to search through your documents but could prove useful in tracing the origin of errors or unexpected behaviors.
 
-[API references](/references/updates.md)
+[API references](/reference/api/updates.md)
 
 ## Search
 
-Now that your documents have been ingested into MeiliSearch, you are able to [search them](/guides/main_concepts/search.md).
+Now that your documents have been ingested into MeiliSearch, you are able to search them.
 
-MeiliSearch [offers many parameters](/guides/advanced_guides/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
+MeiliSearch [offers many parameters](/reference/features/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
 The search engine is now aware of your documents and can serve those via an HTTP server.
 
@@ -102,11 +102,11 @@ MeiliSearch **response**:
 }
 ```
 
-[API references](/references/search.md)
+[API references](/reference/api/search.md)
 
 ### Web Interface
 
-We also deliver an out-of-the-box [web interface](/guides/advanced_guides/web_interface.md) in which you can test MeiliSearch interactively.
+We also deliver an out-of-the-box [web interface](/reference/features/web_interface.md) in which you can test MeiliSearch interactively.
 
 To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
@@ -301,4 +301,4 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 ::::
 
-You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/guides/introduction/whats_next.md) to continue your MeiliSearch journey.
+You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/learn/tutorials/whats_next.md) to continue your MeiliSearch journey.

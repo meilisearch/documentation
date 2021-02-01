@@ -8,7 +8,7 @@ Some operations are put in a queue and will be executed in turn (asynchronously)
 
 - When making a write request (_create/update/delete_) against the search engine, it stores the operation received in a queue and returns an `updateId`. With this id, the operation update is trackable.
 - Each update received is treated following the order it has been received.
-- You can get the update status on the [`/updates`](/references/updates.md) route.
+- You can get the update status on the [`/updates`](/reference/api/updates.md) route.
 - Processed updates are marked as processed and kept in the operation list (available at `/indexes/:index_uid/updates`). They won't be deleted.
 
 <mermaid>
@@ -84,7 +84,7 @@ Since in MeiliSearch asynchronous tasks are <clientGlossary word="atomic"/>, kil
 
 Essentially, tasks are done in transactions. If the transaction fails or is killed for any reason before completing, none of the tasks will be committed to your database.
 
-You can use the `status` field returned by [the update route](/references/updates.md) to determine if a process has been committed to MeiliSearch or not.
+You can use the `status` field returned by [the update route](/reference/api/updates.md) to determine if a process has been committed to MeiliSearch or not.
 
 - status: `enqueued` => Not yet begun. If MeiliSearch is killed and then restarted, the task will remain enqueued and be processed eventually.
 - status `processing` => In progress. If MeiliSearch is killed, there will be no consequences, since no part of the task has been committed to MeiliSearch. After restarting, Meilisearch will treat the task as `enqueued`.
