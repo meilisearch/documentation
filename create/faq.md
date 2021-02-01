@@ -30,9 +30,9 @@ Of course! No knowledge of ElasticSearch or Solr is required to use MeiliSearch.
 
 MeiliSearch is really **easy to use** and thus accessible to all kinds of developers.
 
-[Take a quick tour](/guides/introduction/quick_start_guide.md) to learn the basics of MeiliSearch!
+[Take a quick tour](/learn/tutorials/getting_started.md) to learn the basics of MeiliSearch!
 
-We also provide a lot of tools, including [SDKs](/resources/sdks.md), to help you integrate easily MeiliSearch in your project. We're adding new tools every day!
+We also provide a lot of tools, including [SDKs](/learn/what_is_meilisearch/sdks.md), to help you integrate easily MeiliSearch in your project. We're adding new tools every day!
 
 Plus, you can [contact us](/create/faq.md#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
 
@@ -43,15 +43,15 @@ MeiliSearch configuration works out-of-the-box. It means, by default, MeiliSearc
 For example, without requiring any configuration, MeiliSearch is typo tolerant.
 Type `craete an inedx` in the search bar of this documentation to experience the typo tolerance of our search engine.
 
-To find out more about the relevancy of MeiliSearch, take a look at this detailed [explanation](/guides/main_concepts/relevancy.md#ranking-rules).
+To find out more about the relevancy of MeiliSearch, take a look at this detailed [explanation](/learn/core_concepts/relevancy.md#ranking-rules).
 
-However, MeiliSearch is of course [highly customizable](/references/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
+However, MeiliSearch is of course [highly customizable](/reference/api/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
 
 ## How to know if MeiliSearch perfectly fits my use cases?
 
-Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/guides/introduction/quick_start_guide.md) to get a quick start!
+Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/learn/tutorials/getting_started.md) to get a quick start!
 
-Besides, we published a [comparison between MeiliSearch and other search engines](/resources/comparison_to_alternatives.md) with the goal of providing an overview of MeiliSearch alternatives.
+Besides, we published a [comparison between MeiliSearch and other search engines](/learn/what_is_meilisearch/comparison_to_alternatives.md) with the goal of providing an overview of MeiliSearch alternatives.
 
 ## Which languages can MeiliSearch handle?
 
@@ -76,24 +76,24 @@ It means that in many cases (e.g., documents addition), you will receive as serv
 This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
 
 ::: tip
-You can check the status of the operation using the `updateId` via the [get update status route](/references/updates.md#get-an-update-status).
-In addition, MeiliSearch delivers a global route to [track all your update status](/references/updates.md#get-all-update-status).
+You can check the status of the operation using the `updateId` via the [get update status route](/reference/api/updates.md#get-an-update-status).
+In addition, MeiliSearch delivers a global route to [track all your update status](/reference/api/updates.md#get-all-update-status).
 **This way, you will be informed if your action was processed or not, and <u>why</u>**.
 :::
 
-If you are curious about how the asynchronous part of MeiliSearch works, you can find more information [here](/guides/advanced_guides/asynchronous_updates.md).
+If you are curious about how the asynchronous part of MeiliSearch works, you can find more information [here](/learn/advanced/asynchronous_updates.md).
 
 ## I am trying to add my documents but I keep receiving a `400 - Invalid data` response.
 
 MeiliSearch API only accepts JSON format.
-In case of a [document addition](/references/documents.md#add-or-replace-documents), only an array of objects is expected.
+In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
 
 The `400 - Invalid data` response probably means that your data is not in an expected format.
 
 Most common errors:
 
 - Extraneous comma at the end of a line.
-- Data is not an array of objects: for the [document addition route](/references/documents.md#add-or-replace-documents), MeiliSearch only accepts an array in the body even if there is only one document.
+- Data is not an array of objects: for the [document addition route](/reference/api/documents.md#add-or-replace-documents), MeiliSearch only accepts an array in the body even if there is only one document.
 
 Wrong:
 
@@ -127,11 +127,11 @@ Most common reasons:
 
 Each document is required to contain a unique identifier. This identifier attribute is the `primary key`.
 
-How do I know the primary key of my index? [Check this route](/references/indexes.md#get-one-index). The `null` value means it has not been defined yet.
+How do I know the primary key of my index? [Check this route](/reference/api/indexes.md#get-one-index). The `null` value means it has not been defined yet.
 
 By default, the primary key will be inferred from the first document received. MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`). If none has been found, no documents will be added.
 
-If you get a `document id is missing` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending primary key's name as a query parameter [when adding documents](/references/documents.md#add-or-replace-documents) should solve this issue.
+If you get a `document id is missing` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending primary key's name as a query parameter [when adding documents](/reference/api/documents.md#add-or-replace-documents) should solve this issue.
 
 Note that the primary key value must contain only `A-Z a-z 0-9` and `-_` characters.
 
@@ -147,7 +147,7 @@ Good:
 "id": "_Aabc012_"
 ```
 
-See more [information about the primary key](/guides/main_concepts/documents.md#primary-key).
+See more [information about the primary key](/learn/core_concepts/documents.md#primary-key).
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
@@ -157,7 +157,7 @@ To understand what happened, please check this [answer](/create/faq.md#i-did-a-c
 ## Is killing a MeiliSearch process safe?
 
 Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
-More information in the [asynchronous updates guide](/guides/advanced_guides/asynchronous_updates.md).
+More information in the [asynchronous updates guide](/learn/advanced/asynchronous_updates.md).
 
 ## Does MeiliSearch deliver an interface to search in my documents?
 
@@ -165,17 +165,17 @@ Yes, a web interface is available on the default address and port of your MeiliS
 
 All you need to do is open your web browser and enter MeiliSearch’s address to visit it. This leads you to a web page with a search bar that allows you to search in a selected index.
 
-Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/guides/advanced_guides/configuration.md#environment).
+Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/reference/features/configuration.md#environment).
 
-Here is more information about the [MeiliSearch web interface](/guides/advanced_guides/web_interface.md).
+Here is more information about the [MeiliSearch web interface](/reference/features/web_interface.md).
 
 ## I do not understand the relevancy of my search results.
 
 The search responses are sorted according to a set of consecutive rules called ranking rules.
-Here is more information about the [relevancy of MeiliSearch](/guides/main_concepts/relevancy.md).
+Here is more information about the [relevancy of MeiliSearch](/learn/core_concepts/relevancy.md).
 
 MeiliSearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.
-All of the ranking rules can be modified via the [dedicated routes in the MeiliSearch API](/references/ranking_rules.md).
+All of the ranking rules can be modified via the [dedicated routes in the MeiliSearch API](/reference/api/ranking_rules.md).
 
 ## Do you provide a public roadmap for MeiliSearch and its integration tools?
 
@@ -185,7 +185,7 @@ For more accurate features and issues, everything is detailed in the issues of a
 
 ## How can I contact the MeiliSearch team?
 
-See our [contact page](/resources/contact.md).
+See our [contact page](/learn/what_is_meilisearch/contact.md).
 
 ## I have just updated MeiliSearch, and I am getting an error: "Cannot open database, expected MeiliSearch engine version..."
 

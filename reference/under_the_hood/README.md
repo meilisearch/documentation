@@ -12,7 +12,6 @@ To better understand some of the algorithms behind our beloved search engine, ch
 [Concatenate and Split Queries](/reference/under_the_hood/concat.md)
 [Data Types](/reference/under_the_hood/datatypes.md)
 [Prefix Search](/reference/under_the_hood/prefix.md)
-[Stop Words](/reference/under_the_hood/stop_words.md)
 [Storage](/reference/under_the_hood/storage.md)
 [Tokenization](/reference/under_the_hood/tokenization.md)
 [Typo Tolerance](/reference/under_the_hood/typotolerance.md)

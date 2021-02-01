@@ -227,7 +227,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 **Environment variable**: `MEILI_MAX_UDB_SIZE`
 **CLI option**: `--max-udb-size`
 
-The maximum size, in bytes, of the `update` database. The `update` database stores the [pending updates](/reference/features/asynchronous_updates.md).
+The maximum size, in bytes, of the `update` database. The `update` database stores the [pending updates](/learn/advanced/asynchronous_updates.md).
 
 The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
 You can find out about the `PAGE_SIZE` with the following command:
@@ -262,7 +262,7 @@ Activates scheduled snapshots.
 
 If this command is not added or its value is `false` snapshotting is deactivated.
 
-[Read more about snapshots](/reference/features/snapshots_and_dumps.md#snapshots).
+[Read more about snapshots](/reference/features/snapshots.md).
 
 ### Snapshot Destination
 

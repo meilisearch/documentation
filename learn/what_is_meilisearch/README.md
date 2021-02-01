@@ -19,17 +19,17 @@ Our solution delivers an **instant search experience** including **typo handling
 ## Features
 
 - **Blazing fast** (answers < 50 milliseconds): Priority is given to fast answers for a smooth search experience.
-- [Search as you type](/learn/what_is_meilisearch/features.md#search-as-you-type): Results are updated on each keystroke. To make this possible, we use [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
+- [Search as you type](/learn/what_is_meilisearch/features.md#search-as-you-type): Results are updated on each keystroke. To make this possible, we use [prefix-search](/reference/under_the_hood/prefix.md#prefix-search).
 - [Typo tolerance](/learn/what_is_meilisearch/features.md#typo-tolerance): Understands typoes and misspellings.
-- [Tokenization](/guides/advanced_guides/tokenization.md) in **English**, **Chinese**, and **all languages that uses space as a word divider**.
+- [Tokenization](/reference/under_the_hood/tokenization.md) in **English**, **Chinese**, and **all languages that uses space as a word divider**.
 - **Return the whole document**: The entire document is returned upon search.
 - **Highly customizable search and indexation**:
-  - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
-  - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
+  - [Custom ranking](/learn/core_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
+  - [Stop words](/reference/features/stop_words.md): Ignore common non-relevant words like `of` or `the`.
   - [Highlighting](/learn/what_is_meilisearch/features.md#highlighting): Highlighted search results in documents
   - [Synonyms](/learn/what_is_meilisearch/features.md#synonyms): define synonyms for a better search experience.
 - **RESTful API**
-- [Integrated web interface](/guides/advanced_guides/web_interface.md): allows you to test your search settings without implementing a front-end
+- [Integrated web interface](/reference/features/web_interface.md): allows you to test your search settings without implementing a front-end
 
 ## Philosophy
 
@@ -49,6 +49,6 @@ Why should you use MeiliSearch instead of any other existing solution? We try to
 
 Instead of showing you examples, why not just invite you to test MeiliSearch interactively in the **out-of-the-box web interface** we deliver?
 
-There's no need to write a single line of front-end code. All you need to do is follow [this guide](/guides/advanced_guides/web_interface.md) to give the search engine a try!
+There's no need to write a single line of front-end code. All you need to do is follow [this guide](/reference/features/web_interface.md) to give the search engine a try!
 
 ![web interface](/web-interface.png)

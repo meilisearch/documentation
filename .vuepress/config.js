@@ -55,6 +55,7 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/advanced/language',
+            '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
           ],
         },
@@ -118,7 +119,7 @@ module.exports = {
         },
         {
           title: '🛠️ Under the Hood',
-          path: '/reference/under_the_hood',
+          path: '/reference/under_the_hood/',
           collapsable: true,
           children: [
             '/reference/under_the_hood/bucket_sort',
