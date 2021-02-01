@@ -4,13 +4,13 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 
 | Variable                                                                              | Description                                                                      | Default value                                                                                     |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **[synonyms](/guides/advanced_guides/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **[stopWords](/guides/advanced_guides/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **[attributesForFaceting](/guides/advanced_guides/settings.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `null`     |
-| **[rankingRules](/guides/advanced_guides/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/guides/main_concepts/relevancy.md#order-of-the-rules) |
-| **[distinctAttribute](/guides/advanced_guides/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **[searchableAttributes](/guides/advanced_guides/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
-| **[displayedAttributes](/guides/advanced_guides/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
+| **[synonyms](/reference/features/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **[stopWords](/reference/features/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **[attributesForFaceting](/reference/features/settings.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `null`     |
+| **[rankingRules](/reference/features/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#order-of-the-rules) |
+| **[distinctAttribute](/reference/features/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
+| **[searchableAttributes](/reference/features/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
+| **[displayedAttributes](/reference/features/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
 
 ## Synonyms
 
@@ -22,7 +22,7 @@ A set of words defined for an index. Synonyms are **different words that have th
 
   An object that contains words with a list of their associated synonyms.
 
-[Learn more about synonyms](/guides/advanced_guides/synonyms.md)
+[Learn more about synonyms](/reference/features/synonyms.md)
 
 #### Example
 
@@ -42,7 +42,7 @@ A set of words defined for an index. Because some words neither add semantic val
 
   An array of strings that contains the stop words.
 
-[Learn more about stop words](/guides/advanced_guides/stop_words.md)
+[Learn more about stop words](/reference/features/stop_words.md)
 
 #### Example
 
@@ -56,7 +56,7 @@ Suppose you would like to search `the mask` in a movie database. Since `the` is 
 
 ## Attributes For Faceting
 
-Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes used as facets. They **must be added to the settings to be usable as [facet filters](/guides/advanced_guides/search_parameters.md#facet-filters)**.
+Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes used as facets. They **must be added to the settings to be usable as [facet filters](/reference/features/search_parameters.md#facet-filters)**.
 
 `attributesForFaceting=[<Attribute>, ...]`
 
@@ -69,7 +69,7 @@ Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes
   A `null` value will be ignored. In any other case, an error will be thrown.
 :::
 
-[Learn more about faceted attributes](/guides/advanced_guides/faceted_search.md)
+[Learn more about faceted attributes](/reference/features/faceted_search.md)
 
 #### Example
 
@@ -93,7 +93,7 @@ Default value (the ranking rules in the default order):
 ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
-[Read this guide to know more about what each ranking rules does](/guides/main_concepts/relevancy.md)
+[Read this guide to know more about what each ranking rules does](/learn/core_concepts/relevancy.md)
 
 ### Custom ranking rule
 
@@ -117,7 +117,7 @@ The **value of a field** whose attribute is set as a distinct attribute will alw
 
   The field name.
 
-[Learn more about the distinct attribute](/guides/advanced_guides/distinct.md)
+[Learn more about the distinct attribute](/reference/features/distinct.md)
 
 #### Example
 
@@ -152,7 +152,7 @@ With the settings in the example above, only one of the two documents will be re
 
 ## Searchable attributes
 
-The content of the fields whose attributes are added to the [searchable-attributes list](/references/searchable_attributes.md) are **searched for matching query words**.
+The content of the fields whose attributes are added to the [searchable-attributes list](/reference/api/searchable_attributes.md) are **searched for matching query words**.
 
 `searchableAttributes=[<String>, <String>, ...]`
 
@@ -160,7 +160,7 @@ The content of the fields whose attributes are added to the [searchable-attribut
 
   An array of strings that contains searchable attributes ordered by importance (arranged from the most important attribute to the least important attribute).
 
-[Learn more about searchable attributes](/guides/advanced_guides/field_properties.md#searchable-fields)
+[Learn more about searchable attributes](/reference/features/field_properties.md#searchable-fields)
 
 #### Example
 
@@ -170,7 +170,7 @@ By adding the following settings, the fields `title`, `description` and `genre` 
 
 ## Displayed attributes
 
-The fields whose attributes are added to the [displayed-attributes list](/references/displayed_attributes.md) are **contained in each matching document**.
+The fields whose attributes are added to the [displayed-attributes list](/reference/features/field_properties.md) are **contained in each matching document**.
 
 Documents returned upon search contain only displayed fields.
 
@@ -180,7 +180,7 @@ Documents returned upon search contain only displayed fields.
 
   An array of strings that contains attributes of an index to display.
 
-[Learn more about displayed attributes](/guides/advanced_guides/field_properties.md#displayed-fields)
+[Learn more about displayed attributes](/reference/features/field_properties.md#displayed-fields)
 
 #### Example
 

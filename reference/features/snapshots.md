@@ -34,7 +34,7 @@ After running the above code, a snapshot is created every hour (3600 seconds).
 
 During snapshot creation, old snapshots are **automatically overwritten**. This means that only the most recent snapshot should be present in the folder at any given time.
 
-[[More about snapshots flags and env variables]](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
+[[More about snapshots flags and env variables]](/reference/features/configuration.md#schedule-snapshot-creation)
 
 ## Starting from a Snapshot
 
@@ -53,16 +53,16 @@ Take note that whenever you launch MeiliSearch from a snapshot, it will *stop pr
 1. A database already exists (i.e. you have a non-empty `data.ms` folder in the same directory as your MeiliSearch binary)
 2. No snapshot is found at the given path
 
-In both cases, **this behavior is [configurable](/guides/advanced_guides/configuration.md#ignore-missing-snapshot)**.
+In both cases, **this behavior is [configurable](/reference/features/configuration.md#ignore-missing-snapshot)**.
 
 If you don't want MeiliSearch to throw an error when finding that a database already exists, you can add the following flag: `--ignore-snapshot-if-db-exists=true`. When using this flag, MeiliSearch will use the existing database to start an instance instead of throwing an error. The snapshot will be ignored.
 
 If you do not want MeiliSearch to throw an error when there is no snapshot at the given path, you can add the following flag: `--ignore-missing-snapshot`. MeiliSearch will then continue its process and not import any snapshot.
 
-When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to manually delete the existing database. By default, this is the contents of the `data.ms` folder (unless you [changed the path](/guides/advanced_guides/configuration.md#database-path)) which is located in the same folder as your MeiliSearch binary.
+When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to manually delete the existing database. By default, this is the contents of the `data.ms` folder (unless you [changed the path](/reference/features/configuration.md#database-path)) which is located in the same folder as your MeiliSearch binary.
 The simplest way to delete your database is with the terminal command `rm -rf data.ms`, after which you should be able to start MeiliSearch with a snapshot.
 
-[[More about snapshots flags and env variables]](/guides/advanced_guides/configuration.md#schedule-snapshot-creation)
+[[More about snapshots flags and env variables]](/reference/features/configuration.md#schedule-snapshot-creation)
 
 ## Use Cases
 

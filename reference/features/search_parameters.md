@@ -4,25 +4,25 @@ Search parameters let the user customize their search request.
 
 | Query Parameter                                                                                   | Description                                                                                     | Default Value |
 | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **[q](/guides/advanced_guides/search_parameters.md#query-q)**                                     | Query string                                                                                    |     `""`     |
-| **[offset](/guides/advanced_guides/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
-| **[limit](/guides/advanced_guides/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
-| **[filters](/guides/advanced_guides/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
-| **[facetFilters](/guides/advanced_guides/search_parameters.md#facet-filters)** | Facet names and values to filter on                                  |    `null`     |
-| **[facetsDistribution](/guides/advanced_guides/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
-| **[attributesToRetrieve](/guides/advanced_guides/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `["*"]`      |
-| **[attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `null`     |
-| **[cropLength](/guides/advanced_guides/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
-| **[attributesToHighlight](/guides/advanced_guides/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `null`     |
-| **[matches](/guides/advanced_guides/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
+| **[q](/reference/features/search_parameters.md#query-q)**                                     | Query string                                                                                    |     `""`     |
+| **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
+| **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
+| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
+| **[facetFilters](/reference/features/search_parameters.md#facet-filters)** | Facet names and values to filter on                                  |    `null`     |
+| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
+| **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `["*"]`      |
+| **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `null`     |
+| **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
+| **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `null`     |
+| **[matches](/reference/features/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
 
 ## Query (q)
 
 This is the string used by the search engine to find relevant documents.
 
 When `q` isn't specified, a placeholder search is performed, returning documents that best match other search parameters.
-A placeholder allows you to find documents without providing search terms. It will return documents sorted according to the [ranking rules](/guides/advanced_guides/settings.md#ranking-rules) order.
-It also supports [faceting](/guides/advanced_guides/faceted_search.md) and [filtering](/guides/advanced_guides/filtering.md)
+A placeholder allows you to find documents without providing search terms. It will return documents sorted according to the [ranking rules](/reference/features/settings.md#ranking-rules) order.
+It also supports [faceting](/reference/features/faceted_search.md) and [filtering](/reference/features/filtering.md)
 
 `q=<String>`
 
@@ -76,7 +76,7 @@ If you want to get only **two** documents, set `limit` to `2`.
 
 `filters=<String>`
 
-Specify a filter to be used with the query. See our [dedicated guide](/guides/advanced_guides/filtering.md).
+Specify a filter to be used with the query. See our [dedicated guide](/reference/features/filtering.md).
 
 <CodeSamples id="search_parameter_guide_filter_1" />
 
@@ -96,7 +96,7 @@ The parameter should be **URL-encoded**.
 
 ## Facet filters
 
-If you have [set up faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), you can filter on [facets](/guides/advanced_guides/faceted_search.md) to narrow down your results based on criteria.
+If you have [set up faceted attributes](/reference/features/settings.md#attributes-for-faceting), you can filter on [facets](/reference/features/faceted_search.md) to narrow down your results based on criteria.
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
@@ -109,13 +109,13 @@ or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValu
   - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`).
   - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
-Facet filters also support logical connectives by using [inner and outer array elements](/guides/advanced_guides/faceted_search.md#using-facets).
+Facet filters also support logical connectives by using [inner and outer array elements](/reference/features/faceted_search.md#using-facets).
 
-[Learn more about facet filters in the dedicated guide](/guides/advanced_guides/faceted_search.md)
+[Learn more about facet filters in the dedicated guide](/reference/features/faceted_search.md)
 
 #### Example
 
-Suppose you have declared `director` and `genres` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
+Suppose you have declared `director` and `genres` as [faceted attributes](/reference/features/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
 
 ```SQL
 ("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
@@ -161,7 +161,7 @@ And you would get the following response:
 
 ## The facets distribution
 
-If you have [set up faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/guides/advanced_guides/faceted_search.md).
+If you have [set up faceted attributes](/reference/features/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/reference/features/faceted_search.md).
 
 `facetsDistribution=[<facetName>, <facetName>, ...]`
 
@@ -187,7 +187,7 @@ If the `facetsDistribution` parameter has been set, the returned results will co
   Otherwise, returns `false` if this count is **approximative** (approximative count for each facet value).
   The approximative facet count happens when there are too many documents in too many different facet values. In which case, MeiliSearch stops the distribution count to prevent considerably slowing down the request.
 
-[Learn more about facet distribution in the dedicated guide](/guides/advanced_guides/faceted_search.md#the-facets-distribution)
+[Learn more about facet distribution in the dedicated guide](/reference/features/faceted_search.md#the-facets-distribution)
 
 #### Example
 
@@ -230,7 +230,7 @@ Attributes to **display** in the returned documents.
 
   Comma-separated list of attributes whose fields will be present in the returned documents.
 
-  Defaults to to the [displayedAttributes list](/guides/advanced_guides/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
+  Defaults to to the [displayedAttributes list](/reference/features/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
 
 #### Example
 
@@ -249,13 +249,13 @@ Attribute can have two values:
 - `<Attribute>` OR `<Attribute:Croplength>` (Optional, string, defaults to empty)
 
   Comma-separated list of attributes whose values will be cropped if they contain a matched query word.
-  Each attribute can be joined by an optional `cropLength` that overwrites the [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) parameter.
+  Each attribute can be joined by an optional `cropLength` that overwrites the [cropLength](/reference/features/search_parameters.md#crop-length) parameter.
 
 - `['*']`
 
   In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
 
-In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/guides/advanced_guides/search_parameters.md#crop-length) to change this value).
+In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/reference/features/search_parameters.md#crop-length) to change this value).
 
 Some working examples:
 
@@ -298,7 +298,7 @@ You will get the following response with the **cropped version in the \_formatte
 
 `cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
 
-Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/guides/advanced_guides/search_parameters.md#attributes-to-crop).
+Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop).
 
 ## Attributes to Highlight
 

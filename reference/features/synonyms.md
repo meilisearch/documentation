@@ -1,6 +1,6 @@
 # Synonyms
 
-To make your search more relevant, you can [create a list of synonyms](/references/synonyms.md#update-synonyms).
+To make your search more relevant, you can [create a list of synonyms](/reference/api/synonyms.md#update-synonyms).
 
 If multiples words have an equivalent meaning in your dataset, you can decide to create a synonym list for these words. The search engine will give the same search results for any search with one of the associated words as a query.
 
@@ -27,7 +27,7 @@ By searching `phone` you will get all results containing `iphone` with the same 
 
 #### Example
 
-To create a one-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#update-synonyms).
+To create a one-way synonym list this is the JSON that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
 
 ```json
 {
@@ -59,7 +59,7 @@ The "San Fransisco" search will be considered less relevant than the "SF" search
 
 #### Example
 
-To create a multi-way synonym list this is the JSON that should be [added to the settings](/references/synonyms.md#update-synonyms).
+To create a multi-way synonym list this is the JSON that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
 
 ```json
 {

@@ -15,7 +15,7 @@ Faceted search, also known as faceted navigation, is a technique that combines t
 Setting categorical document attributes as "facet" enables efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language.
 Besides, faceting is a powerful feature that allows building intuitive navigation interfaces.
 
-Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/guides/advanced_guides/filtering.md)**.
+Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/reference/features/filtering.md)**.
 
 - **Filters** exclude some results based on criteria. They allow users to narrow down a set of documents to only those matching these chosen criteria. In other words, filtering is used to filter the returned results by adding constraints.
 - **Facets**, on the other hand, are used to categorize the data into subsets that will be searched upon: they reduce the number of documents to process.
@@ -26,13 +26,13 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 
 The first step in using facets is to chose which of your document <clientGlossary word="field" label="fields"/> will be used as facets. Fields with common values are the best suited for faceting (e.g., `genre`, `color`, `size` ).
 
-For these fields to be used as facets during search, their <clientGlossary word="attribute" label="attributes"/> **must have been previously added to the settings**. In the settings, the chosen attributes must be added to the [`attributesForFaceting` list](/guides/advanced_guides/settings.md#attributes-for-faceting).
+For these fields to be used as facets during search, their <clientGlossary word="attribute" label="attributes"/> **must have been previously added to the settings**. In the settings, the chosen attributes must be added to the [`attributesForFaceting` list](/reference/features/settings.md#attributes-for-faceting).
 This step is required because facet needs to be properly processed and prepared by the engine to be usable. This process takes as much time as indexing all your documents.
 
 You can perform faceting on attributes that are either `String` or `[String]`, and `null` values are ignored.
 If a facet value in a given document is **not** of type `string`, or `[String]`, or `null`, the transaction will stop and raise an error.
 
-[References for `attributesForFaceting` in the settings](/guides/advanced_guides/settings.md#attributes-for-faceting)
+[References for `attributesForFaceting` in the settings](/reference/features/settings.md#attributes-for-faceting)
 
 #### Example
 
@@ -80,7 +80,7 @@ They can filter on facets to narrow down their results based on criteria with th
 
 `facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
 
-- `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFaceting` list](/guides/advanced_guides/faceted_search.md#setting-up-facets).
+- `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`). This attribute must be [in the `attributesForFaceting` list](/reference/features/faceted_search.md#setting-up-facets).
 - `facetValue`: The value of the facet used to filter results (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
 
 Facet filters can have a **maximum array deepness of two**.
@@ -139,7 +139,7 @@ Can be translated as:
 
 #### Example
 
-Suppose you have declared `director` and `genres` as [faceted attributes](/guides/advanced_guides/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
+Suppose you have declared `director` and `genres` as [faceted attributes](/reference/features/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
 
 ```SQL
 ("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"

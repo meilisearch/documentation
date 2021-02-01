@@ -1,18 +1,18 @@
 # Attributes for Faceting
 
-_Child route of the [settings route](/references/settings.md)._
+_Child route of the [settings route](/reference/api/settings.md)._
 
-The attributes that can be used as [facets for faceted search](/guides/advanced_guides/faceted_search.md).
+The attributes that can be used as [facets for faceted search](/reference/features/faceted_search.md).
 
-Attributes for faceting can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
+Attributes for faceting can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-[Learn more about faceted search](/guides/advanced_guides/faceted_search.md).
+[Learn more about faceted search](/reference/features/faceted_search.md).
 
 ## Get Attributes for Faceting
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/attributes-for-faceting" />
 
-Get the [attributes for faceting](/guides/advanced_guides/faceted_search.md) of an index.
+Get the [attributes for faceting](/reference/features/faceted_search.md) of an index.
 
 #### Path Variables
 
@@ -36,7 +36,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/attributes-for-faceting" />
 
-Update the [attributes for faceting](/guides/advanced_guides/faceted_search.md) of an index.
+Update the [attributes for faceting](/reference/features/faceted_search.md) of an index.
 
 #### Path Variables
 
@@ -48,7 +48,7 @@ Update the [attributes for faceting](/guides/advanced_guides/faceted_search.md) 
 
 An array of strings that contains the attributes to use as facets.
 
-[More information about the body](/guides/advanced_guides/settings.md#attributes-for-faceting).
+[More information about the body](/reference/features/settings.md#attributes-for-faceting).
 
 ### Example
 
@@ -62,13 +62,13 @@ An array of strings that contains the attributes to use as facets.
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Reset Attributes for Faceting
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/attributes-for-faceting"/>
 
-Reset the [attributes for faceting](/guides/advanced_guides/faceted_search.md) of the index to the default value.
+Reset the [attributes for faceting](/reference/features/faceted_search.md) of the index to the default value.
 
 #### Default value
 
@@ -92,4 +92,4 @@ An empty array (`[]`).
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).

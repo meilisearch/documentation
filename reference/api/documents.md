@@ -3,21 +3,21 @@
 Documents are objects composed of fields that can store any type of data.
 Each field contains an attribute and its associated value.
 
-Documents are stored inside [indexes](/guides/main_concepts/indexes.md).
-[Learn more about documents](/guides/main_concepts/documents.md).
+Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
+[Learn more about documents](/learn/core_concepts/documents.md).
 
 ## Get one document
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:document_id"/>
 
-Get one [document](/guides/main_concepts/documents.md) using its unique id.
+Get one [document](/learn/core_concepts/documents.md) using its unique id.
 
 #### Path Variables
 
 | Variable        | Description                                                       |
 | --------------- | ----------------------------------------------------------------- |
 | **index_uid**   | The index UID                                                     |
-| **document_id** | [The document id](/guides/main_concepts/documents.md#primary-key) |
+| **document_id** | [The document id](/learn/core_concepts/documents.md#primary-key) |
 
 ### Example
 
@@ -39,7 +39,7 @@ Get one [document](/guides/main_concepts/documents.md) using its unique id.
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
 
-Get [documents](/guides/main_concepts/documents.md) by batch.
+Get [documents](/learn/core_concepts/documents.md) by batch.
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
@@ -90,11 +90,11 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
 
-Add a list of [documents](/guides/main_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
+Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
+If you send an already existing document (same [id](/learn/core_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
 
-For a partial update of the document see [add or update documents](/references/documents.md#add-or-update-documents).
+For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
 
 If the provided index does not exist, it will be created.
 
@@ -108,7 +108,7 @@ If the provided index does not exist, it will be created.
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
+| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
 
 If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
@@ -140,7 +140,7 @@ The body is composed of a **JSON array** of documents.
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Add or update documents
 
@@ -148,9 +148,9 @@ This `updateId` allows you to [track the current update](/references/updates.md)
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [id](/guides/main_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
+If you send an already existing document (same [id](/learn/core_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
-To completely overwrite a document, check out the [add or replace documents route](/references/documents.md#add-or-replace-documents).
+To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents.md#add-or-replace-documents).
 
 If the provided index does not exist, it will be created.
 
@@ -166,7 +166,7 @@ If you want to set the **primary key** of your index through this route, it only
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/guides/main_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
+| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
 
 #### Body
 
@@ -184,7 +184,7 @@ The body is composed of a **JSON array** of documents.
 ### Example
 
 <CodeSamples id="add_or_update_documents_1" />
-This document is an update of the document found in [add or replace document](/references/documents.md#add-or-replace-documents).
+This document is an update of the document found in [add or replace document](/reference/api/documents.md#add-or-replace-documents).
 The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
@@ -195,7 +195,7 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Delete all documents
 
@@ -221,7 +221,7 @@ Delete all documents in the specified index.
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Delete one document
 
@@ -234,7 +234,7 @@ Delete one document based on its unique id.
 | Variable        | Description                                                       |
 | --------------- | ----------------------------------------------------------------- |
 | **index_uid**   | The index UID                                                     |
-| **document_id** | [The document id](/guides/main_concepts/documents.md#primary-key) |
+| **document_id** | [The document id](/learn/core_concepts/documents.md#primary-key) |
 
 ### Example
 
@@ -248,7 +248,7 @@ Delete one document based on its unique id.
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Delete documents
 
@@ -282,4 +282,4 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).

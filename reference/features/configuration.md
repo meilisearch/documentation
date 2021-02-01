@@ -218,7 +218,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 - On **Windows** it is a fixed size that will be allocated on launch.
   Because this allocates 100Gb on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
 
-[To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
+[To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
 
 **Default value**: `107374182400` (100 GiB)
 
@@ -242,7 +242,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 - On **Windows** it is a fixed size that will be allocated on launch.
   Because this allocates 100Gb on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
 
-[To know more about storage in MeiliSearch look at this guide](/resources/about_storage.md)
+[To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
 
 **Default value**: `107374182400` (100 GiB)
 
@@ -316,7 +316,7 @@ Requires `--import-snapshot` to be defined.
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
 
-Path of the directory where dumps will be created if the [dump route](/references/dump.md#create-a-dump) is called.
+Path of the directory where dumps will be created if the [dump route](/reference/api/dump.md#create-a-dump) is called.
 
 **Default value**: `dumps/`
 

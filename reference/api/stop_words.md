@@ -1,12 +1,12 @@
 # Stop-words
 
-_Child route of the [settings route](/references/settings.md)._
+_Child route of the [settings route](/reference/api/settings.md)._
 
 The stop-words route lets you add a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
 
-Stop-words can also be updated directly through the [global settings route](/references/settings.md#update-settings) along with the other settings.
+Stop-words can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-[Learn more about stop words](/guides/advanced_guides/stop_words.md)
+[Learn more about stop words](/reference/features/stop_words.md)
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
@@ -16,7 +16,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
 
-Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
+Get the [stop-words](/reference/features/stop_words.md) list of an index.
 
 #### Path Variables
 
@@ -38,7 +38,7 @@ Get the [stop-words](/guides/advanced_guides/stop_words.md) list of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
 
-Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index.
+Update the list of [stop-words](/reference/features/stop_words.md) of an index.
 
 #### Path Variables
 
@@ -48,11 +48,11 @@ Update the list of [stop-words](/guides/advanced_guides/stop_words.md) of an ind
 
 #### Body
 
-An array of strings that contains the [stop-words](/guides/advanced_guides/stop_words.md).
+An array of strings that contains the [stop-words](/reference/features/stop_words.md).
 
 If a list of stop-words already exists it will be overwritten (_replaced_).
 
-[More information about the body](/guides/advanced_guides/settings.md#stop-words).
+[More information about the body](/reference/features/settings.md#stop-words).
 
 ### Example
 
@@ -66,13 +66,13 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
 ## Reset stop-words
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
 
-Reset the list of [stop-words](/guides/advanced_guides/stop_words.md) of an index to its default value.
+Reset the list of [stop-words](/reference/features/stop_words.md) of an index to its default value.
 
 #### Default value
 
@@ -96,4 +96,4 @@ Empty array: `[]`
 }
 ```
 
-This `updateId` allows you to [track the current update](/references/updates.md).
+This `updateId` allows you to [track the current update](/reference/api/updates.md).

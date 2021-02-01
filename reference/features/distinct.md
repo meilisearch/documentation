@@ -40,7 +40,7 @@ You may want to ignore the different colors of an item. To do so, you can set `p
 
 <CodeSamples id="distinct_attribute_guide_1" />
 
-By [setting `product_id` as a distinct attribute](/references/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
+By [setting `product_id` as a distinct attribute](/reference/api/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
 
 ::: warning
 If the field does not exist, no error will be thrown.
