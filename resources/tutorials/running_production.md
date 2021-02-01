@@ -7,7 +7,7 @@ permalink: /running-production
 
 Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
 
-Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html): using Docker, Brew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
+Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](https://docs.meilisearch.com/guides/introduction/quick_start_guide.html): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
 
 Using MeiliSearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy MeiliSearch in production** and ensure it is **safe and ready to use**?
 
