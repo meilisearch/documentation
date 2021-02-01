@@ -1,4 +1,4 @@
-# API References
+# API Reference
 
 Welcome to the MeiliSearch API documentation.
 
@@ -8,27 +8,20 @@ Check out [the FAQ](/faq/) for answers to some common questions 💡
 
 :::
 
-## Version Compatibility
-
-This documentation only reflects the latest version of MeiliSearch. We do not provide multi-version documentation.
-The current version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch) can be found on the left side of the upper navbar.
-
-![version of MeiliSearch](/doc-version.png)
-
 ## Headers
 
 ### Recommended Headers
 
 #### Content Type
 
-All request and response body are in `JSON`.
+Every request and response body is in `JSON`.
 
 It is **not required** to have `Content-Type: application/json` in the header. Any content-type is accepted.
 
 #### Authentication
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
-Please read the [advanced part about keys](/guides/advanced_guides/authentication.md) and [how to manage them](/references/keys.md) for more information.
+Please read about [authentication keys](/reference/features/authentication.md) and [how to manage them](/reference/api/keys.md) for more information.
 
 `X-Meili-API-Key: $API_KEY`
 
@@ -76,7 +69,7 @@ MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you wi
 }
 ```
 
-This kind of successful response indicates that the operation has been taken into account, but it may not have been executed yet.
+This successful response indicates that the operation has been queued or is currently executing.
 You can check the status of the operation via the `updateId` and the [get update status route](/references/updates.md).
 
-See more information about [asynchronous updates](/guides/advanced_guides/asynchronous_updates.md).
+See more information about [asynchronous updates](/learn/advanced/asynchronous_updates.md).

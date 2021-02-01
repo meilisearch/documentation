@@ -12,6 +12,13 @@ If you're looking for information on a specific MeiliSearch SDK or front-end int
 
 **Prefer to learn by reading**? You're not alone. Check out articles covering the most important [core concepts](/learn/core_concepts) of MeiliSearch.
 
+## Version Compatibility
+
+This documentation only reflects the latest version of MeiliSearch. We do not provide multi-version documentation.
+The current version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch) can be found on the left side of the upper navbar.
+
+![version of MeiliSearch](/doc-version.png)
+
 ## Same Docs; New Organization
 
 Hold up a minute—is it just me, or is something different here? 🤔
