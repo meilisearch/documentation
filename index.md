@@ -2,8 +2,6 @@
 
 Welcome to the MeiliSearch documentation. Here you'll find everything you need to learn and create with our **lightning fast search engine**.
 
-[<linkButton text="🔎 WHAT IS MEILISEARCH?"/>](/learn/what_is_meilisearch)
-
 If you're looking for information on a specific MeiliSearch SDK or front-end integration, you'll find it in our [SDK list](/learn/what_is_meilisearch/sdks.md).
 
 ## Getting Started
