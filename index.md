@@ -1,46 +1,46 @@
 # MeiliSearch Documentation
 
-MeiliSearch is a **RESTful search API**. It aims to be a **ready-to-go solution** for everyone who wants a **fast and relevant search experience** for their end-users ⚡️🔎
+Welcome to the MeiliSearch documentation. Here you'll find everything you need to learn and create with our **lightning fast search engine**.
 
-[<linkButton text="🚀 GETTING STARTED"/>](/guides/introduction/quick_start_guide.md)
+If you're looking for information on a specific MeiliSearch SDK or front-end integration, you'll find it in our [SDK list](/learn/what_is_meilisearch/sdks.md).
 
-Efficient search engines often require a significant investment of resources. They are only accessible to companies with the means necessary to develop a bespoke search solution that fits their needs.
+## Getting Started
 
-Small to medium sized businesses commonly resort to subpar search engines that incur invisible costs on their user experience and retention due to poor search fulfillment.
+**Enjoy a hands-on approach to learning**? Follow a [quick tutorial](/learn/tutorials/getting_started.md) to learn the basics of the engine.
 
-That's why we created MeiliSearch: An open source solution accessible to everyone, designed to meet a vast majority of needs. Requiring very little configuration to be installed, yet highly customizable.
+**Prefer to learn by reading**? You're not alone. Check out articles covering the most important [core concepts](/learn/core_concepts) of MeiliSearch.
 
-Our solution delivers an **instant search experience**; it handles **typos**; it understands **filters**, **custom rankings**, and many other [features](#features).
+## Version Compatibility
+
+This documentation only reflects the latest version of MeiliSearch. We do not provide multi-version documentation.
+The current version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch) can be found on the left side of the upper navbar.
+
+![version of MeiliSearch](/doc-version.png)
+
+## Same Docs; New Organization
+
+Hold up a minute—is it just me, or is something different here? 🤔
+
+Our documentation has been reorganized to promote **clarity**, **browsability**, and **maintainability**. For starters, our helpful content is now grouped into **three categories**:
+
+- [Learn](/learn): If it's your **first-time using MeiliSearch** or you want a refresher, we recommend starting here.
+
+- [Create](/create): If you're looking to **start your own MeiliSearch project** or get answers to a question, this is the place.
+
+- [Reference](/reference): **Encyclopedia-style documentation** for all of MeiliSearch's [features](/reference/features), [API](/reference/api), and [search engine internals](/reference/under_the_hood). If you just want the facts and none of the fluff, you'll like it here.
+
+Have fun browsing the new site, and let us know [what you think could be improved](https://github.com/meilisearch/documentation/issues/new).
+
+Happy searching! 🖖
 
 ## Open-source
 
-MeiliSearch is open source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
+MeiliSearch is completely open source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
 
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a>
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch/fork" data-icon="octicon-repo-forked" data-size="large" data-show-count="false" aria-label="Fork meilisearch/MeiliSearch on GitHub">Fork</a><!-- prettier-ignore
 --><script async defer src="https://buttons.github.io/buttons.js"></script>
 
-## Demo
-
-![crates.io demo gif](/crates-io-demo.gif)
-
-> Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
-
-## Alternatives
-
-Why should you use MeiliSearch instead of any other existing solution? We try to answer this question in this [comparison to alternatives](/resources/comparison_to_alternatives.md). In short, Meilisearch most closely compares with Algolia. Meilisearch stands out by being open source (while commercial) and aims to be simpler to deploy and maintain.
-
-## Features
-
-- **Instant Search** (answers < 50 milliseconds): Priority is given to fast answers for smooth search experience.
-- **Search as you type** (_prefix search_): Results are updated on each keystroke. To make this possible, we use a [prefix-search](/guides/advanced_guides/prefix.md#prefix-search).
-- [Typo tolerance](/guides/advanced_guides/typotolerance.md#typo-tolerance): Understands typo and miss-spelling.
-- [Tokenization](/guides/advanced_guides/tokenization.md) in **English**, **Chinese**, and **all languages that uses space as a word divider**.
-- **Return the whole document**: The entire document is returned upon search.
-- **Highly customizable search and indexation**:
-  - [Custom ranking](/guides/main_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
-  - [Stop words](/guides/advanced_guides/stop_words.md): Ignore common non-relevant words like `of` or `the`.
-  - [Highlights](/guides/advanced_guides/search_parameters.md#attributes-to-highlight): Highlighted search results in documents
-  - Ability to create [synonyms](/guides/advanced_guides/synonyms.md) for a better search experience.
-- **RESTful API**
-- **Friendly web interface**: [Integrated web interface](/guides/advanced_guides/web_interface.md) in MeiliSearch that allows to try the search engine out during development.
+::: note
+This documentation is [completely open-source](https://github.com/meilisearch/documentation). We keep it up-to-date but you might find some typos or mistakes. Help us make it better by submitting a [pull request](https://github.com/meilisearch/documentation/fork) or [issue](https://github.com/meilisearch/documentation/issues) 😁
+:::
