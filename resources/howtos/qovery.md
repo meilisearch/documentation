@@ -5,6 +5,7 @@ In this tutorial I explain how to deploy a pre-configured Meilisearch instance i
 *Qovery provides free Cloud hosting with databases, SSL, a global CDN, and automatic deploys with Git.*
 
 Deploying Meilisearch with Qovery provides:
+
 * A pre-configured Meilisearch instance.
 * A free SSD storage.
 * A free SSL.
@@ -13,9 +14,11 @@ Deploying Meilisearch with Qovery provides:
 ## Step-by-step Meilisearch deployment
 
 ### 1. Create a Qovery Account
+
 Visit [the Qovery dashboard](https://start.qovery.com) to create an account if you don't already have one.
 
 ### 2. Create a project
+
 * Click on the "create a project" button and give a name to your project. Eg. `Meilisearch`
 * Click on "next".
 
