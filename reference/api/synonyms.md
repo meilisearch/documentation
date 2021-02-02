@@ -42,7 +42,7 @@ Get the list of [synonyms](/reference/features/synonyms.md) of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/synonyms"/>
 
-Update the list of [synonyms](/reference/features/synonyms.md) of an index.
+Update the list of [synonyms](/reference/features/synonyms.md) of an index. Synonyms are [normalized](/reference/features/synonyms.md#normalization).
 
 #### Path Variables
 

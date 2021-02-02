@@ -22,6 +22,8 @@ A set of words defined for an index. Synonyms are **different words that have th
 
   An object that contains words with a list of their associated synonyms.
 
+Synonyms are [automatically normalized](/reference/features/synonyms.md#normalization) to be case-insensitive and unaffected by accent marks.
+
 [Learn more about synonyms](/reference/features/synonyms.md)
 
 #### Example
