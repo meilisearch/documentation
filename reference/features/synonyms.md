@@ -20,7 +20,7 @@ Consider a situation where "Résumé" and "CV" are set as synonyms.
 }
 ```
 
-A search for "cv" would return any documents that contain the strings "Résumé", "resumé", or "resume", without regards to case or accent marks.
+A search for "cv" would return any documents that contain the strings "Résumé", "resumé", or "resume", without being affected by case or accent marks.
 
 ## One-way Association
 
