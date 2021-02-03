@@ -19,8 +19,8 @@ First of all, you need your documentation content to be scraped and pushed into 
 You can install and run MeiliSearch on your machine using `curl`.
 
 ```bash
-$ curl -L https://install.meilisearch.com | sh
-$ ./meilisearch --master-key=myMasterKey
+curl -L https://install.meilisearch.com | sh
+./meilisearch --master-key=myMasterKey
 ```
 
 There are [other ways to install MeiliSearch](/learn/tutorials/getting_started.md#download-and-launch).
@@ -93,12 +93,12 @@ More [optional fields are available](https://github.com/meilisearch/docs-scraper
 You can run the scraper with Docker. With our local MeiliSearch instance set up at [the first step](#run-a-meilisearch-instance), we run:
 
 ```bash
-$ docker run -t --rm \
-    --network=host \
-    -e MEILISEARCH_HOST_URL='http://localhost:7700' \
-    -e MEILISEARCH_API_KEY='myMasterKey' \
-    -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
-    getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
+docker run -t --rm \
+  --network=host \
+  -e MEILISEARCH_HOST_URL='http://localhost:7700' \
+  -e MEILISEARCH_API_KEY='myMasterKey' \
+  -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
+  getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
 
 ::: note
@@ -130,11 +130,21 @@ If you use VuePress for your documentation, we provide a [Vuepress plugin](https
 
 In your VuePress project:
 
+:::: tabs
+
+::: tab yarn
 ```bash
-$ yarn add vuepress-plugin-meilisearch
-# or
-$ npm install vuepress-plugin-meilisearch
+yarn add vuepress-plugin-meilisearch
 ```
+:::
+
+::: tab npm
+```bash
+npm install vuepress-plugin-meilisearch
+```
+:::
+
+::::
 
 In your `config.js` file:
 
