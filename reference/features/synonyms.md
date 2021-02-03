@@ -1,33 +1,40 @@
 # Synonyms
 
-To make your search more relevant, you can [create a list of synonyms](/reference/api/synonyms.md#update-synonyms).
+If multiple words have an equivalent meaning in your dataset, you can [create a list of synonyms](/reference/api/synonyms.md#update-synonyms). This will make your search results more relevant.
 
-If multiples words have an equivalent meaning in your dataset, you can decide to create a synonym list for these words. The search engine will give the same search results for any search with one of the associated words as a query.
+In general, **a search on a word will return the same results as a search on any of its synonyms**.
+There is one exception to this rule, [detailed below](#multi-word-phrases).
 
-Synonyms are considered to be the same.
-A search on a word or its synonym will return the same search result.
+## Normalization
 
-::: warning
-However, when a sentence is considered the synonym of another word or sentence, when searching the word or sentence will always be more relevant than its synonym. It will still be in the search results in the absence of a more relevant result.
-:::
+All synonyms are **lowercased** and **de-unicoded** during the indexing process.
 
-There are several ways to associate words with each other.
+#### Example
 
-## The One-way association
+Consider a situation where "Résumé" and "CV" are set as synonyms.
 
-This makes it possible to determine that a word will be synonymous with another but not the other way around.
+```json
+{
+  "Résumé": ["CV"],
+  "CV": ["Résumé"]
+}
+```
 
-example:
+A search for "cv" would return any documents that contain the strings "Résumé", "resumé", or "resume", without regards to case or accent marks.
+
+## One-way Association
+
+Use this when you want one word to be synonymous with another, but not the other way around.
 
 ```
 phone => iphone
 ```
 
-By searching `phone` you will get all results containing `iphone` with the same relevance. However, if you search for `iphone`, documents containing `phone` will not be shown in your results.
+By searching `phone`, you will get all results containing `iphone` with the same relevance. However, if you search for `iphone`, documents containing `phone` will not be returned in your results.
 
 #### Example
 
-To create a one-way synonym list this is the JSON that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
+To create a one-way synonym list, this is the JSON syntax that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
 
 ```json
 {
@@ -35,31 +42,38 @@ To create a one-way synonym list this is the JSON that should be [added to the s
 }
 ```
 
-## The multi-way association
+## Mutual Association
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
-
-example:
 
 ```
 shoe <=> boot <=> slipper <=> sneakers
 ```
 
-When a search is done with one of these words, all the others will be considered as the same word and will appear in the search results.
-
-However, in the case of word to sentence or sentence to sentence
-
-example:
-
-```
-"San Fransisco" <=> SF
-```
-
-The "San Fransisco" search will be considered less relevant than the "SF" search but will still be considered an acceptable search result in the absence of a more relevant result.
+When a search is done with one of these words, all synonyms will be considered as the same word and will appear in the search results.
 
 #### Example
 
-To create a multi-way synonym list this is the JSON that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
+To create a mutual association between four words, this is the JSON syntax that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
+
+```json
+{
+  "shoe": ["boot", "slipper", "sneakers"],
+  "boot": ["shoe", "slipper", "sneakers"],
+  "slipper": ["shoe", "boot", "sneakers"],
+  "sneakers": ["shoe", "boot", "slipper"]
+}
+```
+
+## Multi-Word Phrases
+
+Take note that **multi-word phrases are treated differently** than associations between individual words.
+
+When a multi-word phrase is considered the synonym of another word or phrase, the **exact search query will always take precedence over its synonym(s)**.
+
+#### Example
+
+Suppose you set "San Francisco" and "SF" as synonyms with a [mutual association](#mutual-association)
 
 ```json
 {
@@ -67,3 +81,5 @@ To create a multi-way synonym list this is the JSON that should be [added to the
   "sf": ["san francisco"]
 }
 ```
+
+If you input "SF" as a search query, then results containing "San Francisco" will also be returned. However, **they will be considered less relevant than those containing "SF"**. The reverse is also true.
