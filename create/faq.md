@@ -111,7 +111,7 @@ Good:
 The [jq](https://github.com/stedolan/jq) command line tool can greatly help you check the format of your data.
 
 ```bash
-$ cat your_file.json | jq
+cat your_file.json | jq
 ```
 
 :::
