@@ -244,12 +244,21 @@ Connecting to MeiliSearch from React using the MeiliSearch Javascript SDK is a s
 
 Install the MeiliSearch SDK:
 
+:::: tabs
+
+::: tab npm
 ```bash
 # if you use npm
 npm install meilisearch
+```
+:::
+::: tab yarn
+```bash
 # if you use yarn
 yarn add meilisearch
 ```
+:::
+::::
 
 Set up the MeiliSearch Client with the server URL. In our case, it was the localhost Docker machine. Finally, load the right Index from the backend.
 
