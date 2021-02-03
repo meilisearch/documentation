@@ -158,7 +158,7 @@ By default, MeiliSearch limits the size of `JSON` payloads—and therefore docum
 To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) during the setup of your MeiliSearch instance using the `http-payload-size-limit` option. The new limit must be given in bytes.
 
 ```bash
-$ ./meilisearch --http-payload-size-limit= 1048576000
+./meilisearch --http-payload-size-limit=1048576000
 ```
 
 > The above code sets the payload limit to 1GB, instead of the 100MB default.
