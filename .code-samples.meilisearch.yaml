@@ -1,33 +1,33 @@
 get_one_index_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies'
 list_all_indexes_1: |1-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes'
 create_an_index_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes' \
     --data '{
       "uid": "movies",
       "primaryKey": "movie_id"
     }'
 update_an_index_1: |-
-  $ curl \
+  curl \
     -X PUT 'http://localhost:7700/indexes/movie_review' \
     --data '{
         "primaryKey" : "movie_review_id"
     }'
 delete_an_index_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies'
 get_one_document_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/documents/25684'
 get_documents_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/documents?limit=2'
 add_or_replace_documents_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/documents' \
     --data '[{
         "id": 287947,
@@ -37,7 +37,7 @@ add_or_replace_documents_1: |-
         "release_date": "2019-03-23"
     }]'
 add_or_update_documents_1: |-
-  $ curl \
+  curl \
     -X PUT 'http://localhost:7700/indexes/movies/documents' \
     --data '[{
         "id": 287947,
@@ -60,24 +60,24 @@ delete_documents_1: |-
         363869
     ]'
 search_1: |-
-  $ curl \
+  curl \
     'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "american ninja" }'
 get_update_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/updates/1'
 get_all_updates_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/updates'
 get_keys_1: |-
-  $ curl \
+  curl \
     -H "X-Meili-API-Key: 123"
     -X GET 'http://localhost:7700/keys'
 get_settings_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings'
 update_settings_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "rankingRules": [
@@ -113,13 +113,13 @@ update_settings_1: |-
         }
     }'
 reset_settings_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings'
 get_synonyms_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/synonyms'
 update_synonyms_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
     --data '{
       "wolverine": ["xmen", "logan"],
@@ -127,23 +127,23 @@ update_synonyms_1: |-
       "wow": ["world of warcraft"]
     }'
 reset_synonyms_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/synonyms'
 get_stop_words_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/stop-words'
 update_stop_words_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
     --data '["the", "of", "to"]'
 reset_stop_words_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/stop-words'
 get_ranking_rules_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/ranking-rules'
 update_ranking_rules_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     --data '[
         "typo",
@@ -156,36 +156,36 @@ update_ranking_rules_1: |-
         "desc(rank)"
     ]'
 reset_ranking_rules_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/ranking-rules'
 get_distinct_attribute_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
 update_distinct_attribute_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/distinct-attribute' \
     --data '"movie_id"'
 reset_distinct_attribute_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
 get_attributes_for_faceting_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting'
 update_attributes_for_faceting_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting' \
     --data '[
         "genres",
         "director"
     ]'
 reset_attributes_for_faceting_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting'
 get_searchable_attributes_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
 update_searchable_attributes_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     --data '[
         "title",
@@ -193,13 +193,13 @@ update_searchable_attributes_1: |-
         "genre"
     ]'
 reset_searchable_attributes_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
 get_displayed_attributes_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
 update_displayed_attributes_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     --data '[
         "title",
@@ -208,27 +208,27 @@ update_displayed_attributes_1: |-
         "release_date"
     ]'
 reset_displayed_attributes_1: |-
-  $ curl \
+  curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
 
 get_index_stats_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/indexes/movies/stats'
 get_indexes_stats_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/stats'
 get_health_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/health'
 get_version_1: |-
-  $ curl \
+  curl \
     -X GET 'http://localhost:7700/version'
 distinct_attribute_guide_1: |-
-  $ curl
+  curl
     -X POST 'http://localhost:7700/indexes/jackets/settings' \
     --data '{ "distinctAttribute": "product_id" }'
 field_properties_guide_searchable_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "searchableAttributes": [
@@ -238,7 +238,7 @@ field_properties_guide_searchable_1: |-
         ]
     }'
 field_properties_guide_displayed_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "displayedAttributes": [
@@ -249,46 +249,46 @@ field_properties_guide_displayed_1: |-
         ]
     }'
 filtering_guide_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "Avengers", "filters": "release_date > 795484800" }'
 filtering_guide_2: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q":"Batman",  "filters": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
 filtering_guide_3: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "horror", "filters": "director = \"Jordan Peele\"" }'
 filtering_guide_4: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "Planet of the Apes", "filters": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
 search_parameter_guide_query_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
     --data { "q": "shifu" }
 search_parameter_guide_offset_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "shifu", "offset": 1 }'
 search_parameter_guide_limit_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "shifu", "limit": 2 }'
 search_parameter_guide_retrieve_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "shifu", "attributesToRetrieve": ["overview", "title"] }'
 search_parameter_guide_crop_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
 search_parameter_guide_highlight_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "shifu", "attributesToHighlight": ["overview"] }'
 search_parameter_guide_filter_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "n", "filters": "title = Nightshift" }'
 search_parameter_guide_filter_2: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "shifu", "filters": "title=\"Kung Fu Panda\"" }'
 search_parameter_guide_matches_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "shifu", "attributesToHighlight": ["overview"], "matches": true }'
 settings_guide_synonyms_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/tops/settings' \
     --data '{
         "synonyms": {
@@ -297,7 +297,7 @@ settings_guide_synonyms_1: |-
         }
     }'
 settings_guide_stop_words_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "stopWords": [
@@ -307,7 +307,7 @@ settings_guide_stop_words_1: |-
         ]
     }'
 settings_guide_ranking_rules_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "rankingRules": [
@@ -322,13 +322,13 @@ settings_guide_ranking_rules_1: |-
         ]
     }'
 settings_guide_distinct_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/jackets/settings' \
     --data '{
         "distinctAttribute": "product_id"
     }
 settings_guide_searchable_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "searchableAttributes": [
@@ -338,7 +338,7 @@ settings_guide_searchable_1: |-
         ]
     }'
 settings_guide_displayed_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "displayedAttributes": [
@@ -349,10 +349,10 @@ settings_guide_displayed_1: |-
         ]
     }'
 add_movies_json_1: |-
-  $ curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
+  curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
     --data @movies.json
 documents_guide_add_movie_1: |-
-  $ curl -X POST `http://localhost:7700/indexes/movies/documents` \
+  curl -X POST `http://localhost:7700/indexes/movies/documents` \
     --data '[
       {
         "movie_id": "123sq178",
@@ -360,24 +360,24 @@ documents_guide_add_movie_1: |-
       }
     ]'
 search_guide_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "shifu", "limit": 5, "offset": 10 }'
 search_guide_2: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "Avengers", "filters": "release_date > 795484800" }'
 getting_started_add_documents_md: |-
   ```bash
-  $ curl \
+  curl \
     -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
     --data @movies.json
   ```
 getting_started_search_md: |-
   ```bash
-  $ curl 'http://127.0.0.1:7700/indexes/movies/search' \
+  curl 'http://127.0.0.1:7700/indexes/movies/search' \
   --data '{ "q": "botman" }'
   ```
 faceted_search_update_settings_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "attributesForFaceting": [
@@ -386,13 +386,13 @@ faceted_search_update_settings_1: |-
         ]
     }'
 faceted_search_facet_filters_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "thriller", "facetFilters": [["genres:Horror", "genres:Mystery"], "director:Jordan Peele"] }'
 faceted_search_facets_distribution_1: |-
-  $ curl --get 'http://localhost:7700/indexes/movies/search' \
+  curl --get 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "Batman", "facetsDistribution": ["genres"] }'
 faceted_search_walkthrough_attributes_for_faceting_1: |-
-  $ curl \
+  curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "attributesForFaceting": [
@@ -403,12 +403,12 @@ faceted_search_walkthrough_attributes_for_faceting_1: |-
         ]
     }'
 faceted_search_walkthrough_facet_filters_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "thriller", "facetFilters": [["genres:Horror", "genres:Mystery"], "director:Jordan Peele"] }'
 faceted_search_walkthrough_facets_distribution_1: |-
-  $ curl 'http://localhost:7700/indexes/movies/search' \
+  curl 'http://localhost:7700/indexes/movies/search' \
   --data '{  "q": "Batman", "facetsDistribution": ["genres"] }'
 post_dump_1: |-
-  $ curl -X POST 'http://localhost:7700/dumps'
+  curl -X POST 'http://localhost:7700/dumps'
 get_dump_status_1: |-
-  $ curl -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
+  curl -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
