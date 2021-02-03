@@ -20,7 +20,7 @@ A set of words defined for an index. Synonyms are **different words that have th
 
 - `<Object>` (Object, defaults to `{}`) : `{ <String>: [<String>, <String>, ...], ... }`
 
-  An object that contains words with a list of their associated synonyms.
+  An object that contains words with a list of their associated synonyms. Synonym strings are [normalized](/reference/features/synonyms.md#normalization).
 
 [Learn more about synonyms](/reference/features/synonyms.md)
 
