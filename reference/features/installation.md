@@ -108,8 +108,8 @@ After launching MeiliSearch, you should see the following response:
 888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
 
-Database path:		"./data.ms"
-Server listening on:	"127.0.0.1:7700"
+Database path:       "./data.ms"
+Server listening on: "127.0.0.1:7700"
 ```
 
 ## Configuration Options
