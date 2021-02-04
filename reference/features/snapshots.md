@@ -9,7 +9,7 @@ Using this feature, it is possible to schedule snapshot creation at custom inter
 For MeiliSearch to create snapshots, the feature must be enabled by adding the following flag:
 
 ```bash
-$ meilisearch --schedule-snapshot=true
+meilisearch --schedule-snapshot=true
 ```
 
 By default, MeiliSearch creates snapshots in a directory called `snapshots/` at the root of your MeiliSearch.
@@ -17,7 +17,7 @@ By default, MeiliSearch creates snapshots in a directory called `snapshots/` at 
 The destination can be modified with the `--snapshot-dir` flag.
 
 ```bash
-$ meilisearch --schedule-snapshot=true --snapshot-dir mySnapShots/
+meilisearch --schedule-snapshot=true --snapshot-dir mySnapShots/
 ```
 
 Now snapshots are created in `mySnapShots/` directory.
@@ -27,7 +27,7 @@ The first snapshot is created on launching MeiliSearch. After that, snapshots ar
 The amount of time between each new snapshot can be modified with the `--snapshot-interval-sec` flag.
 
 ```bash
-$ meilisearch --schedule-snapshot=true --snapshot-interval-sec 3600
+meilisearch --schedule-snapshot=true --snapshot-interval-sec 3600
 ```
 
 After running the above code, a snapshot is created every hour (3600 seconds).
@@ -43,7 +43,7 @@ Because snapshots are exact copies of your database that haven't gone through an
 Using the global environment `MEILI_IMPORT_SNAPSHOT` or the CLI flag `--import-snapshot` , MeiliSearch will start the server using the provided snapshot.
 
 ```bash
-$ meilisearch --import-snapshot mySnapShots/data.ms.snapshot
+meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 ```
 
 ## Common Problems

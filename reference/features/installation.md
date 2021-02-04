@@ -10,9 +10,11 @@ Download the **latest stable release** of MeiliSearch with **curl**.
 Launch MeiliSearch to start the server.
 
 ```bash
-$ curl -L https://install.meilisearch.com | sh
-$ ./meilisearch
-Server is listening on: http://127.0.0.1:7700
+# Install MeiliSearch
+curl -L https://install.meilisearch.com | sh
+
+# Launch MeiliSearch
+./meilisearch
 ```
 
 :::
@@ -23,9 +25,11 @@ Download the **latest stable release** of MeiliSearch with **Homebrew**.
 Launch MeiliSearch to start the server.
 
 ```bash
-$ brew update && brew install meilisearch
-$ meilisearch
-Server is listening on: http://127.0.0.1:7700
+# Update brew and install MeiliSearch
+brew update && brew install meilisearch
+
+# Launch MeiliSearch
+meilisearch
 ```
 
 :::
@@ -36,11 +40,10 @@ Using **Docker** you can choose to run [any available tags](https://hub.docker.c
 This command starts the **latest stable release** of MeiliSearch.
 
 ```bash
-$ docker run -it --rm \
+docker run -it --rm \
     -p 7700:7700 \
     -v $(pwd)/data.ms:/data.ms \
     getmeili/meilisearch
-Server is listening on: http://0.0.0.0:7700
 ```
 
 Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
@@ -53,10 +56,14 @@ Download the **latest stable release** of MeiliSearch with **APT**.
 Launch MeiliSearch to start the server.
 
 ```bash
-$ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
-$ apt update && apt install meilisearch-http
-$ meilisearch
-Server is listening on: http://127.0.0.1:7700
+# Add MeiliSearch package
+echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+
+# Update APT and install MeiliSearch
+apt update && apt install meilisearch-http
+
+# Launch MeiliSearch
+meilisearch
 ```
 
 :::
@@ -68,26 +75,42 @@ MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain]
 If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
-$ git clone https://github.com/meilisearch/MeiliSearch
-$ cd MeiliSearch
+git clone https://github.com/meilisearch/MeiliSearch
+cd MeiliSearch
 ```
 
 In the cloned repository, compile MeiliSearch.
 
 ```bash
 # Update the rust toolchain to the latest version
-$ rustup update
+rustup update
 
 # Compile the project
-$ cargo build --release
+cargo build --release
 
 # Execute the server binary
-$ ./target/release/meilisearch
+./target/release/meilisearch
 ```
 
 :::
 
 ::::
+
+After launching MeiliSearch, you should see the following response:
+
+```
+888b     d888          d8b 888 d8b  .d8888b.                                    888
+8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
+88888b.d88888              888     Y88b.                                        888
+888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
+
+Database path:       "./data.ms"
+Server listening on: "127.0.0.1:7700"
+```
 
 ## Configuration Options
 
@@ -96,7 +119,10 @@ Options are added at launch. Either through command line options or through envi
 This is an example using the command line options.
 
 ```bash
-$ ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
+./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
+```
+
+```bash
 Server is listening on: http://127.0.0.1:7700
 ```
 

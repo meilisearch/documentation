@@ -46,11 +46,11 @@ Once you are logged in into your machine via SSH, ensure your system and its dep
 
 ```bash
 # Update the list of available packages and their versions
-$ apt update
+apt update
 # Install curl which is required to install MeiliSearch in the next step
-$ apt install curl -y
+apt install curl -y
 # Install MeiliSearch latest version from the script
-$ curl -L https://install.meilisearch.com | sh
+curl -L https://install.meilisearch.com | sh
 ```
 
 > The different options to achieve a MeiliSearch installation are detailed in **[this guide](/reference/features/installation.md#download-and-launch)**.
@@ -64,15 +64,18 @@ MeiliSearch is finally installed and ready to use. To make it accessible from ev
 
 ```bash
 # Move the MeiliSearch binary to your system binaries
-$ mv ./meilisearch /usr/bin/
+mv ./meilisearch /usr/bin/
 ```
 
-You can now start using MeiliSearch! In your terminal, run:
+You can now start using MeiliSearch! In your terminal, run the following command to launch meilisearch.
 
 ```bash
-$ meilisearch
+meilisearch
+```
 
-# --- Expected output for v0.11.1 ---
+You should see the following successful response:
+
+```
 888b     d888          d8b 888 d8b  .d8888b.                                    888
 8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
 88888b.d88888              888     Y88b.                                        888
@@ -82,8 +85,8 @@ $ meilisearch
 888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
 888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
 
-[2020-05-04T11:47:13Z INFO  meilisearch] Database path: "./data.ms"
-[2020-05-04T11:47:13Z INFO  meilisearch] Server listening on: "127.0.0.1:7700"
+Database path: "./data.ms"
+Server listening on: "127.0.0.1:7700"
 ```
 
 ## Step 2: Run MeiliSearch as a service
@@ -101,7 +104,7 @@ Service files are text files that tell your operating system how to run your pro
 To run MeiliSearch in a production environment, use the `--env` flag. To generate a master key that will let MeiliSearch create reading and writing keys, use the `--master-key` flag. With those keys, you can easily control who can access or create new documents, indexes, or change the configuration. You can change the `Master Key` to any value in the following command. However, for security concerns, it's better to choose a safe and random key, never share it and, just, **keep it safe**.
 
 ```bash
-$ cat << EOF >/etc/systemd/system/meilisearch.service
+cat << EOF > /etc/systemd/system/meilisearch.service
 [Unit]
 Description=MeiliSearch
 After=systemd-user-sessions.service
@@ -125,14 +128,16 @@ The service file you just built is all you need for creating your service. Now y
 
 ```bash
 # Set the service meilisearch
-$ systemctl enable meilisearch
+systemctl enable meilisearch
 
 # Start the meilisearch service
-$ systemctl start meilisearch
+systemctl start meilisearch
 
 # Verify that the service is actually running
-$ systemctl status meilisearch
+systemctl status meilisearch
+```
 
+```bash
 -# --- Expected output ---
 ● meilisearch.service - MeiliSearch
    Loaded: loaded (/etc/systemd/system/meilisearch.service; enabled; vendor preset: enabled)
@@ -158,17 +163,17 @@ Configuring Nginx as a proxy server is really simple. First of all, install it o
 
 ```bash
 # Install Nginx on Debian
-$ apt-get install nginx -y
+apt-get install nginx -y
 ```
 
 First, deleting the default configuration file is important as the default port for HTTP, the `port 80`, is used by Nginx by default. Thus, trying to use it for MeiliSearch will create a conflict. Replace the default file by your own configuration file. You can also make MeiliSearch listen to another port by specifying it in the Nginx configuration file, but we will not cover this option in this tutorial.
 
 ```bash
 # Delete the default configuration file for Nginx
-$ rm -f /etc/nginx/sites-enabled/default
+rm -f /etc/nginx/sites-enabled/default
 
 # Add your configuration file specifying the Reverse Proxy settings
-$ cat << EOF > /etc/nginx/sites-enabled/meilisearch
+cat << EOF > /etc/nginx/sites-enabled/meilisearch
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -184,11 +189,11 @@ Finally, enable and start the Nginx service again to make sure it is still avail
 
 ```bash
 # Reload the operating system daemons / services
-$ systemctl daemon-reload
+systemctl daemon-reload
 
 # Enable and start Nginx service
-$ systemctl enable nginx
-$ systemctl restart nginx
+systemctl enable nginx
+systemctl restart nginx
 ```
 
 MeiliSearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. You should now be able to send requests to your server from the outside world. Open your web browser and visit: (<http://your-ip-address>). The IP address is the same you used to connect to your machine via SSH in Step 1.
@@ -215,7 +220,7 @@ Using certbot in your Linux server is very easy and straightforward. This tool w
 First of all, install the packages on your system:
 
 ```bash
-$ sudo apt-get install certbot python-certbot-nginx -y
+sudo apt-get install certbot python-certbot-nginx -y
 ```
 
 Let's run the Certbot script to be guided through the installation process:
@@ -252,13 +257,13 @@ First, let's copy your certificate files in their conventional directory so the 
 
 ```bash
 # Create a directory /etc/ssl/example to store the certificate files
-$ mkdir -p /etc/ssl/example
+mkdir -p /etc/ssl/example
 
 # Move your files to /etc/ssl/example. We will suppose that your
 # files are called example.pem and example.key
 
-$ mv path-to-your-files/example.pem /etc/ssl/example/
-$ mv path-to-your-files/example.key /etc/ssl/example/
+mv path-to-your-files/example.pem /etc/ssl/example/
+mv path-to-your-files/example.key /etc/ssl/example/
 ```
 
 Finally, we create a new Nginx configuration file, and restart the daemons and Nginx service
@@ -269,7 +274,7 @@ Finally, we create a new Nginx configuration file, and restart the daemons and N
 
 # Replace example.com in both `server_name` fields with your own domain name
 
-$ cat << EOF > /etc/nginx/sites-enabled/meilisearch
+cat << EOF > /etc/nginx/sites-enabled/meilisearch
 server {
       listen 80 default_server;
       listen [::]:80 default_server;
@@ -295,7 +300,7 @@ server {
 }
 EOF
 
-$ systemctl restart nginx
+systemctl restart nginx
 ```
 
 Your SSL certificates should be working and Nginx should be able to find them. Every request to `http://example.com` will now be redirected to `https://example.com`

@@ -18,19 +18,19 @@ Then, use `curl` to do requests. It is a simple way to specify that you want to 
 
 Start by running the binary.
 
-```
+```bash
 ./meilisearch
 ```
 
 And then, send a request.
 
-```
+```bash
 curl -kvs --http2 --request GET 'http://localhost:7700/indexes'
 ```
 
 You will get the following answer from the server:
 
-```
+```bash
 *   Trying ::1...
 * TCP_NODELAY set
 * Connection failed
@@ -62,25 +62,25 @@ The answer `< HTTP/1.1 200 OK` indicates that the server still uses HTTP/1.
 
 This time, start by generating the SSL certificates. mkcert creates two files: `127.0.0.1.pem` and `127.0.0.1-key.pem`.
 
-```
+```bash
 mkcert '127.0.0.1'
 ```
 
 Then, use the certificate and the key to configure MeiliSearch with SSL.
 
-```
+```bash
 ./meilisearch --ssl-cert-path ./127.0.0.1.pem --ssl-key-path ./127.0.0.1-key.pem
 ```
 
 Next, make the same request as above but change `http://` to `https://`.
 
-```
+```bash
 curl -kvs --http2 --request GET 'https://localhost:7700/indexes'
 ```
 
 You will get the following answer from the server:
 
-```
+```bash
 *   Trying ::1...
 * TCP_NODELAY set
 * Connection failed
@@ -132,13 +132,13 @@ You will get the following answer from the server:
 
 You can see that the server now supports HTTP/2.
 
-```
+```bash
 * Using HTTP2, server supports multi-use
 * Connection state changed (HTTP/2 confirmed)
 ```
 
 The server successfully receives HTTP/2 requests.
 
-```
+```bash
 < HTTP/2 200
 ```

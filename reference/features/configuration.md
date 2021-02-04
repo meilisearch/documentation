@@ -9,7 +9,10 @@ Options can be either communicated through **environment variables** or **comman
 Options are added at launch.
 
 ```bash
-$ ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
+./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
+```
+
+```bash
 Server is listening on: http://127.0.0.1:7700
 ```
 
@@ -18,9 +21,12 @@ Server is listening on: http://127.0.0.1:7700
 The format of the environment variables is identical to the command line options with the exception that it is uppercased and `MEILI_` is prepended.
 
 ```bash
-$ export MEILI_DB_PATH=./meilifiles
-$ export MEILI_HTTP_ADDR=127.0.0.1:7700
-$ ./meilisearch
+export MEILI_DB_PATH=./meilifiles
+export MEILI_HTTP_ADDR=127.0.0.1:7700
+./meilisearch
+```
+
+```bash
 Server is listening on: http://127.0.0.1:7700
 ```
 

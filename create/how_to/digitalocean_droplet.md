@@ -84,7 +84,7 @@ If you want to use your own domain name (or sub-domain), add `A record` in your 
 This should work out of the box. Your domain name should now be linked to your MeiliSearch instance. You can now do a health check to verify that your instance is running and your DNS is well configured:
 
 ```bash
-$ curl -v http://<your-domain-name>/health
+curl -v http://<your-domain-name>/health
 ```
 
 The server should answer with a `204 No content` status code as shown in the example below:
@@ -109,7 +109,7 @@ Open a terminal and start a new SSH connection with the IP you got from DigitalO
 Write in your terminal `ssh root@<your-ip-address>` and press Enter to establish connection:
 
 ```bash
-$ ssh meilisearch@42.42.42.42
+ssh meilisearch@42.42.42.42
 ```
 
 Write `yes` and press Enter to accept the authentication process.
@@ -117,7 +117,7 @@ Write `yes` and press Enter to accept the authentication process.
 A script will run automatically, asking for your settings and desired configuration. If you want to run this script again anytime, you can do so by using the following command:
 
 ```bash
-$ meilisearch-setup
+meilisearch-setup
 ```
 
 ### 3. Enjoy your ready-to-use MeiliSearch Droplet
@@ -127,7 +127,7 @@ Your MeiliSearch Droplet is ready to be used in **production**.
 To check if everything is running smoothly, do an HTTP call to the `/health` route:
 
 ```bash
-$ curl -v https://<your-domain-name>/health
+curl -v https://<your-domain-name>/health
 ```
 
 The server should answer with a `204 No content` status code as shown in the example below:
