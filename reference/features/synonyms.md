@@ -20,7 +20,7 @@ Consider a situation where "Résumé" and "CV" are set as synonyms.
 }
 ```
 
-A search for "cv" would return any documents that contain the strings "Résumé", "resumé", or "resume", without being affected by case or accent marks.
+A search for "cv" would return any documents containing "cv" or "CV", in addition to any that contain "Résumé", "resumé", "resume", etc. unaffected by case or accent marks.
 
 ## One-way Association
 
@@ -30,7 +30,9 @@ Use this when you want one word to be synonymous with another, but not the other
 phone => iphone
 ```
 
-By searching `phone`, you will get all results containing `iphone` with the same relevance. However, if you search for `iphone`, documents containing `phone` will not be returned in your results.
+A search for `phone` will return documents containing `iphone` as if they contained the word `phone`.
+
+However, if you search for `iphone`, documents containing `phone` will be ranked lower in the results due to [the typo rule](/learn/core_concepts/relevancy.md#ranking-rules).
 
 #### Example
 
@@ -71,6 +73,11 @@ Take note that **multi-word phrases are treated differently** than associations 
 
 When a multi-word phrase is considered the synonym of another word or phrase, the **exact search query will always take precedence over its synonym(s)**.
 
+::: tip
+Multi-word synonyms are limited to a maximum of **three words**.
+For example, although you could make "League of Legends" and "LOL" into synonyms, you could not do the same for "The Lord of the Rings" and "LOTR".
+:::
+
 #### Example
 
 Suppose you set "San Francisco" and "SF" as synonyms with a [mutual association](#mutual-association)
@@ -82,4 +89,4 @@ Suppose you set "San Francisco" and "SF" as synonyms with a [mutual association]
 }
 ```
 
-If you input "SF" as a search query, then results containing "San Francisco" will also be returned. However, **they will be considered less relevant than those containing "SF"**. The reverse is also true.
+If you input "SF" as a search query, then results containing "San Francisco" will also be returned. However, **they will be considered less [relevant](/learn/core_concepts/relevancy.md) than those containing "SF"**. The reverse is also true.
