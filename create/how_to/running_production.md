@@ -67,11 +67,15 @@ MeiliSearch is finally installed and ready to use. To make it accessible from ev
 mv ./meilisearch /usr/bin/
 ```
 
-You can now start using MeiliSearch! In your terminal, run `meilisearch`. Expected output:
+You can now start using MeiliSearch! In your terminal, run the following command to launch meilisearch.
+
+```bash
+meilisearch
+```
+
+You should see the following successful response:
 
 ```
-$ meilisearch
-
 888b     d888          d8b 888 d8b  .d8888b.                                    888
 8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
 88888b.d88888              888     Y88b.                                        888
@@ -100,7 +104,7 @@ Service files are text files that tell your operating system how to run your pro
 To run MeiliSearch in a production environment, use the `--env` flag. To generate a master key that will let MeiliSearch create reading and writing keys, use the `--master-key` flag. With those keys, you can easily control who can access or create new documents, indexes, or change the configuration. You can change the `Master Key` to any value in the following command. However, for security concerns, it's better to choose a safe and random key, never share it and, just, **keep it safe**.
 
 ```bash
-cat << EOF >/etc/systemd/system/meilisearch.service
+cat << EOF > /etc/systemd/system/meilisearch.service
 [Unit]
 Description=MeiliSearch
 After=systemd-user-sessions.service

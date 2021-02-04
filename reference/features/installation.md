@@ -10,12 +10,11 @@ Download the **latest stable release** of MeiliSearch with **curl**.
 Launch MeiliSearch to start the server.
 
 ```bash
+# Install MeiliSearch
 curl -L https://install.meilisearch.com | sh
-./meilisearch
-```
 
-```bash
-Server is listening on: http://127.0.0.1:7700
+# Launch MeiliSearch
+./meilisearch
 ```
 
 :::
@@ -26,12 +25,11 @@ Download the **latest stable release** of MeiliSearch with **Homebrew**.
 Launch MeiliSearch to start the server.
 
 ```bash
+# Update brew and install MeiliSearch
 brew update && brew install meilisearch
-meilisearch
-```
 
-```bash
-Server is listening on: http://127.0.0.1:7700
+# Launch MeiliSearch
+meilisearch
 ```
 
 :::
@@ -48,10 +46,6 @@ docker run -it --rm \
     getmeili/meilisearch
 ```
 
-```bash
-Server is listening on: http://0.0.0.0:7700
-```
-
 Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
 :::
 
@@ -62,13 +56,14 @@ Download the **latest stable release** of MeiliSearch with **APT**.
 Launch MeiliSearch to start the server.
 
 ```bash
+# Add MeiliSearch package
 echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
-apt update && apt install meilisearch-http
-meilisearch
-```
 
-```bash
-Server is listening on: http://127.0.0.1:7700
+# Update APT and install MeiliSearch
+apt update && apt install meilisearch-http
+
+# Launch MeiliSearch
+meilisearch
 ```
 
 :::
@@ -100,6 +95,22 @@ cargo build --release
 :::
 
 ::::
+
+After launching MeiliSearch, you should see the following response:
+
+```
+888b     d888          d8b 888 d8b  .d8888b.                                    888
+8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
+88888b.d88888              888     Y88b.                                        888
+888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
+
+Database path:		"./data.ms"
+Server listening on:	"127.0.0.1:7700"
+```
 
 ## Configuration Options
 
