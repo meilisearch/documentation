@@ -11,6 +11,7 @@ Options are added at launch.
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 ```
+
 ```bash
 Server is listening on: http://127.0.0.1:7700
 ```
@@ -24,6 +25,7 @@ export MEILI_DB_PATH=./meilifiles
 export MEILI_HTTP_ADDR=127.0.0.1:7700
 ./meilisearch
 ```
+
 ```bash
 Server is listening on: http://127.0.0.1:7700
 ```

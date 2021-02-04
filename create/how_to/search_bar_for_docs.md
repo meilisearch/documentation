@@ -133,15 +133,19 @@ In your VuePress project:
 :::: tabs
 
 ::: tab yarn
+
 ```bash
 yarn add vuepress-plugin-meilisearch
 ```
+
 :::
 
 ::: tab npm
+
 ```bash
 npm install vuepress-plugin-meilisearch
 ```
+
 :::
 
 ::::

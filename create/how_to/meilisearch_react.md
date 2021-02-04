@@ -247,16 +247,20 @@ Install the MeiliSearch SDK:
 :::: tabs
 
 ::: tab npm
+
 ```bash
 # if you use npm
 npm install meilisearch
 ```
+
 :::
 ::: tab yarn
+
 ```bash
 # if you use yarn
 yarn add meilisearch
 ```
+
 :::
 ::::
 

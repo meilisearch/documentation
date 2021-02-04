@@ -13,6 +13,7 @@ Launch MeiliSearch to start the server.
 curl -L https://install.meilisearch.com | sh
 ./meilisearch
 ```
+
 ```bash
 Server is listening on: http://127.0.0.1:7700
 ```
@@ -28,6 +29,7 @@ Launch MeiliSearch to start the server.
 brew update && brew install meilisearch
 meilisearch
 ```
+
 ```bash
 Server is listening on: http://127.0.0.1:7700
 ```
@@ -45,6 +47,7 @@ docker run -it --rm \
     -v $(pwd)/data.ms:/data.ms \
     getmeili/meilisearch
 ```
+
 ```bash
 Server is listening on: http://0.0.0.0:7700
 ```
@@ -63,6 +66,7 @@ echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.l
 apt update && apt install meilisearch-http
 meilisearch
 ```
+
 ```bash
 Server is listening on: http://127.0.0.1:7700
 ```
@@ -106,6 +110,7 @@ This is an example using the command line options.
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 ```
+
 ```bash
 Server is listening on: http://127.0.0.1:7700
 ```
