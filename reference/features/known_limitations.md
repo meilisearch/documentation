@@ -17,11 +17,7 @@ This is because large queries can lead to long response times, and MeiliSearch's
 MeiliSearch uses two databases: the first one for storage and the second one for updates.
 On launch LMDB needs to know the size that it can allocate on disk. This space will be reserved on disk for LMDB, thus MeiliSearch. This space will also be allocated as virtual memory.
 
-<<<<<<< HEAD
-The maximum database size is by default __100GiB__ for each databases. This size can me modified using the options `--max-mdb-size` & `--max-udb-size` as described in the [configuration guide](/reference/features/configuration.md#max-mdb-size).
-=======
 The maximum database size is by default __100GiB__ for each database. This size can be modified using the options `--max-mdb-size` & `--max-udb-size` as described in the [configuration guide](/reference/features/configuration.md#max-mdb-size).
->>>>>>> Add query limit info
 
 ### Number of indexes
 
