@@ -81,7 +81,8 @@ typings/
 .nuxt
 
 # vuepress build output
-.vuepress/dist
+.vuepress/dist/*
+!.vuepress/dist/_redirects
 
 # Serverless directories
 .serverless/
