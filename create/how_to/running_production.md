@@ -1,6 +1,3 @@
----
-permalink: /running-production
----
 # Run MeiliSearch in Production: taking it to the next level
 
 ## A quick introduction
