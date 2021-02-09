@@ -12,7 +12,7 @@ Writing a database is hard, and we do not want to reinvent the wheel, so MeiliSe
 
 ## LMDB
 
-The storage engine of MeiliSearch is [LMDB](http://www.lmdb.tech/doc/). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
+The storage engine of MeiliSearch is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
 
 We chose LMDB after we successfully (or not) tried MeiliSearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for Meilisearch.
 

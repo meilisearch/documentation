@@ -18,11 +18,11 @@ Search parameters let the user customize their search request.
 
 ## Query (q)
 
-This is the string used by the search engine to find relevant documents.
+This is the string used by the search engine to find relevant documents. Search queries are [tokenized](/reference/under_the_hood/tokenization.md).
 
-When `q` isn't specified, a placeholder search is performed, returning documents that best match other search parameters.
-A placeholder allows you to find documents without providing search terms. It will return documents sorted according to the [ranking rules](/reference/features/settings.md#ranking-rules) order.
-It also supports [faceting](/reference/features/faceted_search.md) and [filtering](/reference/features/filtering.md)
+::: warning
+MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast type-as-you-search experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search) in a consistent way.
+:::
 
 `q=<String>`
 
@@ -32,13 +32,15 @@ It also supports [faceting](/reference/features/faceted_search.md) and [filterin
 
 #### Example
 
-Suppose you would like to search `shifu` in a movie database, you would send:
+Suppose you would like to search `shifu` in a movie database. You would send the following:
 
 <CodeSamples id="search_parameter_guide_query_1" />
 
-::: tip
-Although the API will send back documents even if the query is only one character long, the more precise the search query is, the faster the API will respond.
-:::
+### Placeholder Search
+
+When `q` isn't specified, a **placeholder search** is performed. Placeholder search allows you to find documents without providing any search terms.
+
+Placeholder search returns the documents that best match other search parameters, sorted according to that index's [ranking rules](/reference/features/settings.md#ranking-rules). This feature also supports [faceting](/reference/features/faceted_search.md) and [filtering](/reference/features/filtering.md)
 
 ## Offset
 

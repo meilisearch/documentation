@@ -114,7 +114,7 @@ Server listening on: "127.0.0.1:7700"
 
 ## Configuration Options
 
-Options are added at launch. Either through command line options or through environment variables.
+Configuration options are added at launch, either through command line options or through environment variables.
 
 This is an example using the command line options.
 
@@ -122,11 +122,7 @@ This is an example using the command line options.
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 ```
 
-```bash
-Server is listening on: http://127.0.0.1:7700
-```
-
-Here is the list of [all the options and how to use them](/reference/features/configuration.md).
+Here is a list of [all the options and how to use them](/reference/features/configuration.md).
 
 ## Updating MeiliSearch
 
