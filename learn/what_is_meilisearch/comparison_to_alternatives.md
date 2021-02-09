@@ -1,4 +1,11 @@
+---
+sidebarDepth: 0
+---
 # Comparison to alternatives
+
+## Table of Contents
+
+[[toc]]
 
 ## About MeiliSearch
 

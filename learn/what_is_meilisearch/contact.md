@@ -1,3 +1,6 @@
+---
+sidebarDepth: 0
+---
 # Contact Us
 
 ## Forum 📋
