@@ -1,7 +1,3 @@
----
-permalink: /http2-ssl
----
-
 # Use HTTP/2 and SSL with MeiliSearch
 
 For those willing to use HTTP/2, please be aware that it is **only possible if your server is configured with SSL certificate**.
