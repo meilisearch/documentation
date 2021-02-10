@@ -49,4 +49,4 @@ Placeholder search is not affected by MeiliSearch's [default ranking rules](/ref
 
 ## Comprehensive language support
 
-[MeiliSearch is multilingual](/learn/advanced/language.md)! We aim to support every language represented in our global community.
+[MeiliSearch is multilingual](/reference/features/language.md)! We aim to support every language represented in our global community.
