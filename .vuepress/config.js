@@ -138,12 +138,27 @@ module.exports = {
           path: '/create/how_to/',
           collapsable: false,
           children: [
-            '/create/how_to/running_production',
-            '/create/how_to/search_bar_for_docs',
-            '/create/how_to/digitalocean_droplet',
+            {
+              title: 'Run MeiliSearch in Production',
+              path: '/create/how_to/running_production',
+            },
+            {
+              title: 'Integrate MeiliSearch into Your Docs',
+              path: '/create/how_to/search_bar_for_docs',
+            },
+            {
+              title: 'Deploy MeiliSearch on DigitalOcean',
+              path: '/create/how_to/digitalocean_droplet',
+            },
             '/create/how_to/http2_ssl',
-            '/create/how_to/postman_collection',
-            '/create/how_to/meilisearch_react',
+            {
+              title: 'Use Postman with MeiliSearch',
+              path: '/create/how_to/postman_collection',
+            },
+            {
+              title: 'Implement Instant Search in React',
+              path: '/create/how_to/meilisearch_react',
+            },
           ],
         },
         {
