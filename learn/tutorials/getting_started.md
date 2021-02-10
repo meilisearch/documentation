@@ -67,17 +67,13 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 ### Checking updates
 
-Most actions are asynchronous, which allows you to stack them. All of the actions are executed in the order in which they were sent.
+Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_updates.md), including the document addition process. 
 
-The document addition process returns a JSON object containing only an `updateId` attribute.
+Asynchronous actions return a JSON object that contains only an `updateId` attribute. This is a **successful response**, indicating that the operation has been taken into account, but may not have been executed yet.
 
-This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
+You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md). Checking the update status of an operation is never mandatory, but can prove useful in tracing the origin of errors or unexpected behavior.
 
-You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md).
-
-Checking the update status is not a mandatory step to search through your documents but could prove useful in tracing the origin of errors or unexpected behaviors.
-
-[API references](/reference/api/updates.md)
+See our guide to [asynchronous updates](/learn/advanced/asynchronous_updates.md) or the [updates API reference](/reference/api/updates.md) for more information.
 
 ## Search
 
