@@ -54,7 +54,6 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/language',
             '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
           ],
@@ -75,6 +74,7 @@ module.exports = {
             '/reference/features/filtering',
             '/reference/features/installation',
             '/reference/features/known_limitations',
+            '/reference/features/language',
             '/reference/features/search_parameters',
             '/reference/features/settings',
             '/reference/features/snapshots',

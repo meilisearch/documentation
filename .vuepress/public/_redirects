@@ -60,3 +60,6 @@
 /resources/howtos/digitalocean_droplet.html         /create/how_to/digitalocean_droplet.html
 /resources/howtos/search_bar_for_docs.html          /create/how_to/search_bar_for_docs.html
 /http2-ssl                                          /create/how_to/http2_ssl.html
+
+# Move language
+/learn/advanced/language.html                       /reference/features/language.html
