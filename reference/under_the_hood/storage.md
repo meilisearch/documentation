@@ -57,6 +57,8 @@ When we index this file in MeiliSearch, the amount of disk space taken by LMDB i
 
 | Raw JSON | MeiliSearch database size on disk | Real memory size | Private memory size     | Virtual memory size |
 | -------- | --------------------------------- | ---------------- | ----------------------- | ------------------- |
-| 8.6 MB   | 122 MB ( raw data **\* 14** )     | ≃ 6.3 MB         | 120 MB (≃ size on disk) | 204 Gb (memory map) |
+| 8.6 MB   | 122 MB                            | ≃ 6.3 MB         | 120 MB (≃ size on disk) | 204 Gb (memory map) |
 
-That means this dataset is using 6.3 MB of RAM and 122 MB of disk space.
+That means this dataset is using 6.3 MB of RAM and 122 MB of disk space. 
+
+It is important to note that there is no way to predict the final size of the database. It is highly related to the settings, the number of searchable and faceted fields, and the size of the documents attributes. 
