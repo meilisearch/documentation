@@ -1,7 +1,9 @@
 <template>
-  <div class="route">
-    <div>{{ text }}</div>
-  </div>
+  <ClientOnly>
+    <div class="route">
+      <div>{{ text }}</div>
+    </div>
+  </ClientOnly>
 </template>
 
 <script>
