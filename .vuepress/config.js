@@ -139,15 +139,15 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Run MeiliSearch in Production',
+              title: 'Run in Production',
               path: '/create/how_to/running_production',
             },
             {
-              title: 'Integrate MeiliSearch into Your Docs',
+              title: 'Integrate into Your Docs',
               path: '/create/how_to/search_bar_for_docs',
             },
             {
-              title: 'Deploy MeiliSearch on DigitalOcean',
+              title: 'Deploy on DigitalOcean',
               path: '/create/how_to/digitalocean_droplet',
             },
             '/create/how_to/http2_ssl',
