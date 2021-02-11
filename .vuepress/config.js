@@ -22,6 +22,7 @@ module.exports = {
           title: '🔎 What Is MeiliSearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
+          sidebarDepth: 0,
           children: [
             '/learn/what_is_meilisearch/features',
             '/learn/what_is_meilisearch/philosophy',
@@ -54,7 +55,6 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/language',
             '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
           ],
@@ -75,6 +75,7 @@ module.exports = {
             '/reference/features/filtering',
             '/reference/features/installation',
             '/reference/features/known_limitations',
+            '/reference/features/language',
             '/reference/features/search_parameters',
             '/reference/features/settings',
             '/reference/features/snapshots',
@@ -138,12 +139,27 @@ module.exports = {
           path: '/create/how_to/',
           collapsable: false,
           children: [
-            '/create/how_to/running_production',
-            '/create/how_to/search_bar_for_docs',
-            '/create/how_to/digitalocean_droplet',
+            {
+              title: 'Run in Production',
+              path: '/create/how_to/running_production',
+            },
+            {
+              title: 'Integrate into Your Documentation',
+              path: '/create/how_to/search_bar_for_docs',
+            },
+            {
+              title: 'Deploy on DigitalOcean',
+              path: '/create/how_to/digitalocean_droplet',
+            },
             '/create/how_to/http2_ssl',
-            '/create/how_to/postman_collection',
-            '/create/how_to/meilisearch_react',
+            {
+              title: 'Use with Postman',
+              path: '/create/how_to/postman_collection',
+            },
+            {
+              title: 'Add to a React app',
+              path: '/create/how_to/meilisearch_react',
+            },
           ],
         },
         {

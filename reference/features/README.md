@@ -1,4 +1,4 @@
-# Feature Reference
+# Feature References
 
 Want to know something about MeiliSearch? Chances are high that it's written down here.
 

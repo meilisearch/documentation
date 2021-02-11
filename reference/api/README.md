@@ -1,4 +1,4 @@
-# API Reference
+# API References
 
 Welcome to the MeiliSearch API documentation.
 

@@ -2,7 +2,7 @@
 
 Finding a high-quality search engine can be difficult. We decided to create MeiliSearch because we noticed that no search engine on the market was powerful, simple, and accessible to individuals and small companies. **Ease of use** was our primary goal starting out, and continues to drive the development of MeiliSearch today.
 
-## Simple and Intuitive
+### Simple and Intuitive
 
 We always aim for a simple and intuitive experience for both developers and end-users.
 
@@ -10,7 +10,7 @@ For developers, we're proud to say that MeiliSearch requires very little configu
 
 For end-users, the search experience aims to feel simple so they can focus on the results. MeiliSearch aims to deliver an intuitive search-as-you-type experience, with a response time lower than 50 milliseconds.
 
-## Highly Customizable
+### Highly Customizable
 
 MeiliSearch works out-of-the-box with default settings that meet the needs of most projects. However, searching is still highly customizable.
 
@@ -20,7 +20,7 @@ The returned results are **sorted according to a set of consecutive rules called
 
 You can also **configure the [search parameters](/reference/features/search_parameters.md)** to refine your search even further. We support [filters](/reference/features/filtering.md) and [faceting](/reference/features/faceted_search.md).
 
-## Front-Facing Search
+### Front-Facing Search
 
 MeiliSearch aims to be your go-to search backend when you want to build a great search experience for your end-users.
 
@@ -28,7 +28,7 @@ It's not designed for searching through large data collections (> 10M documents)
 
 As a result, we are fully committed to the philosophy of [prefix search](https://en.wikipedia.org/wiki/Trie).
 
-## Anti-pattern
+### Anti-pattern
 
 MeiliSearch should **not be your main data store**. MeiliSearch should contain only the data you want your users to search through. The more data MeiliSearch contains, the less relevant it is.
 

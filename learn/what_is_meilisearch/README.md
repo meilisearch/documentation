@@ -20,7 +20,7 @@ Our solution delivers an **instant search experience** including **typo handling
 
 - **Blazing fast** (answers < 50 milliseconds): Priority is given to fast answers for a smooth search experience.
 - [Search as you type](/learn/what_is_meilisearch/features.md#search-as-you-type): Results are updated on each keystroke. To make this possible, we use [prefix-search](/reference/under_the_hood/prefix.md#prefix-search).
-- [Typo tolerance](/learn/what_is_meilisearch/features.md#typo-tolerance): Understands typoes and misspellings.
+- [Typo tolerance](/learn/what_is_meilisearch/features.md#typo-tolerant): Understands typoes and misspellings.
 - [Tokenization](/reference/under_the_hood/tokenization.md) in **English**, **Chinese**, and **all languages that uses space as a word divider**.
 - **Return the whole document**: The entire document is returned upon search.
 - **Highly customizable search and indexation**:

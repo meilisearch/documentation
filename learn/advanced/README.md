@@ -8,6 +8,5 @@ These articles are conceptual explorations of important—but difficult—topics
 
 ## Table of Contents
 
-- [Language](/learn/advanced/language.md)
 - [Asynchronous Updates](/learn/advanced/asynchronous_updates.md)
 - [Snapshots vs. Dumps](/learn/advanced/snapshots_vs_dumps.md)
