@@ -1,6 +1,3 @@
----
-sidebarDepth: 0
----
 # Official SDKs / Libraries
 
 Our team and community have worked hard to bring MeiliSearch to almost all popular web development languages, frameworks, and deployment options.

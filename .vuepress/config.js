@@ -22,6 +22,7 @@ module.exports = {
           title: '🔎 What Is MeiliSearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
+          sidebarDepth: 0,
           children: [
             '/learn/what_is_meilisearch/features',
             '/learn/what_is_meilisearch/philosophy',
@@ -143,7 +144,7 @@ module.exports = {
               path: '/create/how_to/running_production',
             },
             {
-              title: 'Integrate into Your Docs',
+              title: 'Integrate into Your Documentation',
               path: '/create/how_to/search_bar_for_docs',
             },
             {

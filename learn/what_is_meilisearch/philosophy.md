@@ -1,6 +1,3 @@
----
-sidebarDepth: 0
----
 # Philosophy
 
 Finding a high-quality search engine can be difficult. We decided to create MeiliSearch because we noticed that no search engine on the market was powerful, simple, and accessible to individuals and small companies. **Ease of use** was our primary goal starting out, and continues to drive the development of MeiliSearch today.
