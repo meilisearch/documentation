@@ -17,6 +17,7 @@ Understanding our reference documentation is easier with background knowledge of
 [Filtering](/reference/features/filtering.md)
 [Installation](/reference/features/installation.md)
 [Known Limitations](/reference/features/known_limitations.md)
+[Language](/reference/features/language.md)
 [Search Parameters](/reference/features/search_parameters.md)
 [Settings](/reference/features/settings.md)
 [Snapshots](/reference/features/snapshots.md)

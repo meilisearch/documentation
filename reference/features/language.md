@@ -20,4 +20,4 @@ If you'd like to help us create a more global MeiliSearch, please consider shari
 - [Persian/Farsi](https://github.com/meilisearch/MeiliSearch/issues/553)
 - [Thai](https://github.com/meilisearch/MeiliSearch/issues/864)
 
-If you'd like us to add or improve support for a language that isn't in the above list, please create an [issue](https://github.com/meilisearch/MeiliSearch/issues/new?assignees=&labels=&template=feature_request.md&title=) saying so, and then make a [pull request on the documentation](https://github.com/meilisearch/documentation/edit/master/guides/advanced_guides/tokenization.md) to add it to the above list.
+If you'd like us to add or improve support for a language that isn't in the above list, please create an [issue](https://github.com/meilisearch/MeiliSearch/issues/new?assignees=&labels=&template=feature_request.md&title=) saying so, and then make a [pull request on the documentation](https://github.com/meilisearch/documentation/edit/master/reference/features/language.md) to add it to the above list.
