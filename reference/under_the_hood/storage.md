@@ -61,4 +61,6 @@ When we index this file in MeiliSearch, the amount of disk space taken by LMDB i
 
 That means this dataset is using 6.3 MB of RAM and 122 MB of disk space.
 
-It is important to note that there is no way to predict the final size of the database. Since the settings, as well as the number of searchable and faceted attributes play an important role on the amount of space taken, the input JSON file size is not reliable to make such estimations.
+It is important to note that **there is no reliable way to predict the final size of a database**.
+
+Database size is affected by a large number of criteria, including settings, relevancy rules, use of facets, the number of different languages present, and more.
