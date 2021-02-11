@@ -152,11 +152,11 @@ module.exports = {
             },
             '/create/how_to/http2_ssl',
             {
-              title: 'Use Postman with MeiliSearch',
+              title: 'Use with Postman',
               path: '/create/how_to/postman_collection',
             },
             {
-              title: 'Implement Instant Search in React',
+              title: 'Add to a React app',
               path: '/create/how_to/meilisearch_react',
             },
           ],
