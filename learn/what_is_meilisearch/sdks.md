@@ -24,6 +24,7 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ### Front-End Tools
 
+- [Angular](https://github.com/meilisearch/meilisearch-angular)
 - [React](https://github.com/meilisearch/meilisearch-react)
 - [Vue](https://github.com/meilisearch/meilisearch-vue)
 - [Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch): helps you integrate a great search experience with minimum efforts.
