@@ -86,6 +86,7 @@ Therefore, every document in the same index **must possess the exact same primar
 #### Example:
 
 Suppose we have an index called `movie` that contains 200,000 documents. As shown below, each document is identified by a **primary field** containing the **primary key** `movie_id` and a **unique value** (the document id).
+
 Aside from the primary key, **documents in the same index are not required to share attributes**, e.g. you could have a document in this index without the "title" attribute.
 
 ```json
