@@ -127,6 +127,7 @@ If no corresponding attribute is found, the index will have no known primary key
 #### Missing primary key error
 
 ❗️ If you get the `Could not infer a primary key` error, the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
+
 Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).
 
 ### Document Id
