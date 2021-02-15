@@ -35,13 +35,17 @@ Every operation which could be compute-expensive is asynchronous. These include:
 
 ### Understanding updates
 
-Updates returns the following information:
+All updates return the following information:
 
 - **status**: The state of the operation (enqueued, processed, or failed).
 - **updateId**: The id of the update.
 - **type**: The type of the operation.
 - **enqueuedAt**: The date at which the operation has been added to the queue.
-- **processedAt**: The date at which the operation has been processed.
+
+Updates which have already been processed may also return the following fields:
+
+- **duration**: The number of seconds taken to complete the operation.
+- **processedAt**: The date at which the operation has been processed (only if operation has already completed).
 
 ### Examples
 
