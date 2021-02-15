@@ -7,22 +7,9 @@ permalink: /faq
 This FAQ is still a work in progress.
 If you have any questions we want to hear from you. Your feedback will help us improve this page!
 
-## Table of contents
+#### Table of contents
 
-- [I have never used a search engine before. Can I use MeiliSearch anyway?](/create/faq.md#i-have-never-used-a-search-engine-before-can-i-use-meilisearch-anyway)
-- [Do I need to configure MeiliSearch to get it working?](/create/faq.md#do-i-need-to-configure-meilisearch-to-get-it-working)
-- [How to know if MeiliSearch perfectly fits my use cases?](/create/faq.md#how-to-know-if-meilisearch-perfectly-fits-my-use-cases)
-- [Which languages can MeiliSearch handle?](/create/faq.md#which-languages-can-meilisearch-handle)
-- [Do you provide a real dataset to test MeiliSearch?](/create/faq.md#do-you-provide-a-real-dataset-to-test-meilisearch)
-- [I did a call to an API route, and I only got an `updateId` as a response. What does it mean?](/create/faq.md#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean)
-- [I am trying to add my documents but I keep receiving a `400 - Invalid data` response.](/create/faq.md#i-am-trying-to-add-my-documents-but-i-keep-receiving-a-400-invalid-data-response)
-- [My document upload failed with the `document id is missing` error.](/create/faq.md#my-document-upload-failed-with-the-document-id-is-missing-error)
-- [I have uploaded my documents, but I get no result when I search in my index.](/create/faq.md#i-have-uploaded-my-documents-but-i-get-no-result-when-i-search-in-my-index)
-- [Is killing a MeiliSearch process safe?](/create/faq.md#is-killing-a-meilisearch-process-safe)
-- [Does MeiliSearch deliver an interface to search in my documents?](/create/faq.md#does-meilisearch-deliver-an-interface-to-search-in-my-documents)
-- [I do not understand the relevancy of my search results.](/create/faq.md#i-do-not-understand-the-relevancy-of-my-search-results)
-- [Do you provide a public roadmap for MeiliSearch and its integration tools?](/create/faq.md#do-you-provide-a-public-roadmap-for-meilisearch-and-its-integration-tools)
-- [How can I contact the MeiliSearch team?](/create/faq.md#how-can-i-contact-the-meilisearch-team)
+[[toc]]
 
 ## I have never used a search engine before. Can I use MeiliSearch anyway?
 
@@ -189,4 +176,39 @@ See our [contact page](/learn/what_is_meilisearch/contact.md).
 
 ## I have just updated MeiliSearch, and I am getting an error: "Cannot open database, expected MeiliSearch engine version..."
 
-MeiliSearch minor versions are not compatible with each other because the way we represent data internally changes with the addition of new breaking features. To fix this, it suffices to delete your database folder (`data.ms` by default) and re-index your documents with the new version.
+MeiliSearch minor versions are not compatible with each other because the way we represent data internally changes with the addition of new breaking features. To fix this, it suffices to delete your database folder (`data.ms` by default) and re-index your documents with the new version. See [updating MeiliSearch](/reference/features/installation.md#updating-meilisearch) for more information.
+
+## What are the recommended requirements for hosting a MeiliSearch instance?
+
+The disk size and RAM usage of your MeiliSearch database can vary widely. The following factors have a great effect on space and memory use:
+
+- Length of attributes and values
+- Number of simultaneous search queries
+- Number of relevancy rules
+- Number and distribution of languages
+- Number of repeated words
+- Whether or not you use faceting
+
+All of this means that **it's almost impossible to estimate the size and memory usage of a MeiliSearch database** before creation, even based on the size of its documents. There are, however, a few [general principles](#how-does-hardware-affect-search-speed) you should know.
+
+## How does hardware affect search speed?
+
+Because MeiliSearch uses a [memory map](/reference/under_the_hood/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
+
+- A big database + a small amount of RAM => slow search
+- A small database + tons of RAM => lightning fast search
+
+The number of CPU cores has no impact on index speed (indexing is single-threaded... for now 😉). However, **the more cores you provide to the engine, the more search queries it will be able to process at the same time**.
+
+### Speeding Up MeiliSearch
+
+MeiliSearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your MeiliSearch instance is querying slowly, there are two primary methods to speed it up:
+
+- Increase the amount of RAM.
+- Reduce the size of your database.
+
+In general, we recommend the former. However, if you need to reduce the size of your database for any reason, keep in mind that:
+
+- **More relevancy rules => a larger database**
+  - The proximity ranking rule alone can be responsible for almost 80% of database size
+- Faceting also consumes a large amount of disk space.
