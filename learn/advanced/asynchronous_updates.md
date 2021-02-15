@@ -45,7 +45,7 @@ All updates return the following information:
 Updates which have already been processed may also return the following fields:
 
 - **duration**: The number of seconds taken to complete the operation.
-- **processedAt**: The date at which the operation has been processed (only if operation has already completed).
+- **processedAt**: The date at which the operation has been processed.
 
 ### Examples
 
