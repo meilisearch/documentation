@@ -180,7 +180,9 @@ MeiliSearch minor versions are not compatible with each other because the way we
 
 ## What are the recommended requirements for hosting a MeiliSearch instance?
 
-The disk size and RAM usage of your MeiliSearch database can vary widely. The following factors have a great effect on space and memory use:
+**Short answer**: It's impossible to say. We recommend [experimenting with RAM availability and database size](#how-does-hardware-affect-search-speed) to find the hardware + relevancy setup that works best for your dataset.
+
+**Long answer**: The disk size and RAM usage of your MeiliSearch database can vary widely. The following factors have a great effect on space and memory use:
 
 - Length of attributes and values
 - Number of simultaneous search queries
