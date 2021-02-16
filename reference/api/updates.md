@@ -21,7 +21,7 @@ Get the status of an [update](/learn/advanced/asynchronous_updates.md) in a give
 
 #### Response: `200 Ok`
 
-Here is an example response of [an update that has been processed](/learn/advanced/asynchronous_updates.md#understanding-updates).
+Here is an example response representing [an update that has already been processed](/learn/advanced/asynchronous_updates.md#understanding-updates).
 
 ```json
 {
@@ -55,7 +55,7 @@ Get the status of all [updates](/learn/advanced/asynchronous_updates.md) in a gi
 
 #### Response: `200 Ok`
 
-Here is an example of an [enqueued update](/learn/advanced/asynchronous_updates.md#understanding-updates) response.
+Here is an example response representing an [enqueued update](/learn/advanced/asynchronous_updates.md#understanding-updates).
 
 ```json
 [

@@ -4,7 +4,7 @@ MeiliSearch is an **asynchronous API**. It means that the API does not behave as
 
 Some operations are put in a queue and will be executed in turn (asynchronously). In this case, the server response contains the identifier to track the execution of the operation.
 
-### Async flow
+## Async flow
 
 - When making a write request (_create/update/delete_) against the search engine, it stores the operation received in a queue and returns an `updateId`. With this id, the operation update is trackable.
 - Each update received is treated following the order it has been received.
@@ -33,19 +33,23 @@ Every operation which could be compute-expensive is asynchronous. These include:
 - Update index settings
 - Add/update/delete documents
 
-### Understanding updates
+## Understanding updates
 
-All updates return the following information:
+All updates return the following fields:
 
-- **status**: The state of the operation (enqueued, processed, or failed).
-- **updateId**: The id of the update.
-- **type**: The type of the operation.
-- **enqueuedAt**: The date at which the operation has been added to the queue.
+- **`status`**: The state of the operation (enqueued, processed, or failed).
+- **`updateId`**: The id of the update.
+- **`type`**: The type of the operation, including its name and number.
+- **`enqueuedAt`**: The date at which the operation has been added to the queue.
 
-Updates which have already been processed may also return the following fields:
+Updates that have already been processed also return the following fields:
 
-- **duration**: The number of seconds taken to complete the operation.
-- **processedAt**: The date at which the operation has been processed.
+- **`duration`**: The number of seconds taken to complete the operation.
+- **`processedAt`**: The date at which the operation has been processed.
+
+Finally, failed updates return an additional field:
+
+- **`error`**: A string describing [the error that occurred](https://docs.meilisearch.com/errors/).
 
 ### Examples
 
@@ -82,7 +86,7 @@ Failing to upload document:
 }
 ```
 
-### Killing MeiliSearch While a Task is Processing
+## Killing MeiliSearch While a Task is Processing
 
 Since in MeiliSearch asynchronous tasks are <clientGlossary word="atomic"/>, killing MeiliSearch in the middle of a process does not corrupt or alter the database.
 
@@ -94,7 +98,7 @@ You can use the `status` field returned by [the update route](/reference/api/upd
 - status `processing` => In progress. If MeiliSearch is killed, there will be no consequences, since no part of the task has been committed to MeiliSearch. After restarting, Meilisearch will treat the task as `enqueued`.
 - status `done` => Completed. This action is done and is permanently added to your MeiliSearch instance. If you kill MeiliSearch, there will be no data loss; your database will remain exactly the same as before you killed MeiliSearch.
 
-#### Example
+### Example
 
 Imagine that you're adding 100 documents in one batch to MeiliSearch. If you kill the process after 99 documents have successfully been added, then none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. Either all documents are added, or none are.
 
