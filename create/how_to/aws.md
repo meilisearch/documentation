@@ -39,7 +39,7 @@ Once you've made your choice, click on **Next: Configure instance details** to c
 
 ### 4. Instance details
 
-Here you can specify details of your MeiliSearch instance. Since **this section is not required to run MeiliSearch**, we won't cover it in this guide.
+Here you can specify [details of your Instance](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html). Since **this section is not required to run MeiliSearch**, we won't cover it in this guide.
 
 ![Instance details (optional)](/aws/04.instance-details.png)
 
