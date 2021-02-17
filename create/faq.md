@@ -184,12 +184,12 @@ MeiliSearch minor versions are not compatible with each other because the way we
 
 **Long answer**: The disk size and RAM usage of your MeiliSearch database can vary widely. The following factors have a great effect on space and memory use:
 
-- Length of attributes and values
-- Number of simultaneous search queries
-- Number of relevancy rules
-- Number and distribution of languages
-- Number of repeated words
-- Whether or not you use faceting
+- The number of documents
+- The size of documents
+- The number of indexed fields
+- The number of faceted fields
+- The size of each update
+- The number of different words present in documents (warning on multi-lingual datasets and fields with unique words like ids)
 
 All of this means that **it's almost impossible to estimate the size and memory usage of a MeiliSearch database** before creation, even based on the size of its documents. There are, however, a few [general principles](#how-does-hardware-affect-search-speed) you should know.
 
