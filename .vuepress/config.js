@@ -195,6 +195,16 @@ module.exports = {
         placeholder: 'Search as you type...',
       },
     ],
+    ['vuepress-plugin-zooming',
+      {
+        selector: 'img',
+        delay: 1000,
+        options: {
+          bgColor: 'black',
+          zIndex: 10000,
+        },
+      },
+    ],
   ],
   head: [
     ['meta', { charset: 'utf-8' }],
