@@ -12,18 +12,16 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    - name: Publish
-      uses: netlify/actions/build@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        NETLIFY_CMD: vuepress build .
-        NETLIFY_DIR: .vuepress/dist
-
   scrape-docs:
     needs: build-deploy
     runs-on: ubuntu-18.04
     steps:
+    - name: Waiting for 200 from the Netlify Preview
+      uses: jakepartusch/wait-for-netlify-action@v1.2
+      id: waitFor200
+      with:
+        site_name: "dreamy-wiles-8fd85b"
+        max_timeout: 200
     - uses: actions/checkout@master
     - name: Run docs-scraper
       env:
