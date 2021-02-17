@@ -62,7 +62,7 @@ Response body:
 }
 ```
 
-The [complete list](https://docs.meilisearch.com/errors) of all the `errorCode` with their detailed description might help you understanding the MeiliSearch errors.
+If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `errorCode` values and descriptions.
 
 ## Asynchronous Updates
 
