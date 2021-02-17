@@ -41,7 +41,7 @@ Once you've made your choice, click on **Next: Configure instance details** to c
 
 Here you can specify details of your MeiliSearch instance. Since **this section is not required to run MeiliSearch**, we won't cover it in this guide.
 
-![Instance details (optional)](/aws/04.instance-details.png)
+![Instance details](/aws/04.instance-details.png)
 
 Simply click on **Next: Add Storage** to keep going.
 
