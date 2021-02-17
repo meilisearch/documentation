@@ -189,7 +189,7 @@ MeiliSearch minor versions are not compatible with each other because the way we
 - The number of indexed fields
 - The number of faceted fields
 - The size of each update
-- The number of different words present in documents (warning on multi-lingual datasets and fields with unique words like ids)
+- The number of different words present in documents (beware heavily multi-lingual datasets and fields with unique words, such as IDs)
 
 All of this means that **it's almost impossible to estimate the size and memory usage of a MeiliSearch database** before creation, even based on the size of its documents. There are, however, a few [general principles](#how-does-hardware-affect-search-speed) you should know.
 
