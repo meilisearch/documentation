@@ -214,3 +214,7 @@ In general, we recommend the former. However, if you need to reduce the size of 
 - **More relevancy rules => a larger database**
   - The proximity ranking rule alone can be responsible for almost 80% of database size
 - Faceting also consumes a large amount of disk space.
+- Split your dataset, one spoken language per index.
+- Add stopwords
+- Select carefully indexed attributes
+    - Do not index uniques ids
