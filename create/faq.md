@@ -217,4 +217,4 @@ In general, we recommend the former. However, if you need to reduce the size of 
 - Multi-lingual datasets are costly, so split your dataset—one language per index
 - Make sure to add [stop words](/reference/features/stop_words.md)
 - Be selective about which attributes you index and make [searchable](/reference/features/field_properties.md#searchable-fields)
-    - Avoid indexing unique IDs
+  - Avoid indexing unique IDs
