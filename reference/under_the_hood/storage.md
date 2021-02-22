@@ -37,30 +37,31 @@ As a result, you may see that the disk occupied by LMDB and therefore by MeiliSe
 
 #### Memory usage
 
-Since LMDB is memory mapped, it is the operating system who will manage the real memory allocated or not to MeiliSearch.
+Since LMDB is memory mapped, it is the operating system that manages the real memory allocated (or not) to MeiliSearch.
 
 Thus, if you run MeiliSearch as a standalone program on a server, LMDB will use the maximum RAM it can use.
-If you run MeiliSearch along with other programs, the OS will manage memory based on everyone's need making MeiliSearch quite flexible when used in development.
+
+On the other hand, if you run MeiliSearch along with other programs, the OS will manage memory based on everyone's need. This makes MeiliSearch's memory usage quite flexible when used in development.
 
 ::: tip
-**Virtual memory != Real memory**
-Virtual memory is the memory asked by a program to the OS. This is not the memory that the program will actually use.
+**Virtual Memory != Real Memory**
+Virtual memory is the disk space a program requests from the OS. It is not the memory that the program will actually use.
 
-In this case, MeiliSearch will always ask for a memory map of 200Gb. This refers to the virtual memory requested to the OS by MeiliSearch, but as you can see, the amount of real memory in RAM used will be smaller.
+MeiliSearch will always demand a certain amount of space to use as a [memory map](#memory-mapping). This space will be used as virtual memory, but the amount of real memory (RAM) used will be much smaller.
 :::
 
 ## Measured disk usage
 
 We did some measurements on the default [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) dataset that you can find in the [getting started guide](/learn/tutorials/getting_started.md#add-documents).
-This dataset is a JSON file of 8.6 MB and has 19,553 documents.
-When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122MB.
+
+This dataset is a JSON file of 8.6 MB and has 19,553 documents. When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122MB.
 
 | Raw JSON | MeiliSearch database size on disk | Real memory size | Private memory size     | Virtual memory size |
 | -------- | --------------------------------- | ---------------- | ----------------------- | ------------------- |
-| 8.6 MB   | 122 MB                            | ≃ 6.3 MB         | 120 MB (≃ size on disk) | 204 Gb (memory map) |
+| 8.6 MB   | 122 MB                            | ≃ 6.3 MB         | 120 MB (≤ size on disk) | 204 Gb (memory map) |
 
-That means this dataset is using 6.3 MB of RAM and 122 MB of disk space.
+> This means the database is using 6.3 MB of RAM and 122 MB of disk space. Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database. See [Memory Usage](#memory-usage) for more details.
 
-It is important to note that **there is no reliable way to predict the final size of a database**.
+It is important to note that **there is no reliable way to predict the final size of a database**. This is true for just about any search engine on the market—we're just the only ones saying it out loud.
 
 Database size is affected by a large number of criteria, including settings, relevancy rules, use of facets, the number of different languages present, and more.
