@@ -141,7 +141,7 @@ To start the configuration process, connect via SSH to your new MeiliSearch Inst
 
 ### 2.1. Secure your Key Pair
 
-Open a terminal window and navigate to wherever you saved your [key pair](#8-set-and-download-key-pair). It should be a `.pem` file.
+Open a terminal window and navigate to wherever you saved your [key pair](#_8-set-and-download-key-pair). It should be a `.pem` file.
 
 Run the following command to secure your key pair.
 
