@@ -12,11 +12,9 @@ servers:
           - http
         default: https
       domain:
-        type: string
         default: example.meilisearch.com
       port:
-        type: number
-        default: 7700
+        default: '7700'
 
 components:
   parameters:
