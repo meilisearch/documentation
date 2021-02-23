@@ -1,0 +1,520 @@
+base:
+
+  get:
+
+    operationId: indexes.settings.get
+    summary: Get settings
+    description: |
+      Get the settings of an index.
+
+      [Learn more about the settings](/reference/features/settings.html).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: ../open-api.yaml#/components/schemas/settings
+
+  post:
+
+    operationId: indexes.settings.update
+    summary: Update settings
+    description: |
+      Update the settings of an index.
+
+      Updates in the settings route are __partial__. This means that any parameters not provided in the body will be left unchanged.
+      [Learn more about the settings in this guide](/reference/features/settings.html).
+
+      If the provided index does not exist, it will be created.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              synonyms:
+                $ref: ../open-api.yaml#/components/schemas/synonyms
+              stopWords:
+                $ref: ../open-api.yaml#/components/schemas/stopWords
+              rankingRules:
+                $ref: ../open-api.yaml#/components/schemas/rankingRules
+              attributesForFaceting:
+                $ref: ../open-api.yaml#/components/schemas/attributesForFaceting
+              distinctAttribute:
+                $ref: ../open-api.yaml#/components/schemas/distinctAttribute
+              searchableAttributes:
+                $ref: ../open-api.yaml#/components/schemas/searchableAttributes
+              displayedAttributes:
+                $ref: ../open-api.yaml#/components/schemas/displayedAttributes
+            additionalProperties: false
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.reset
+    summary: Reset settings
+    description: |
+      Reset the settings of an index.
+
+      All settings will be reset to their default value.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+synonyms:
+
+  get:
+
+    operationId: indexes.settings.synonyms.get
+    summary: Get synonyms
+    description: |
+      Get the list of [synonyms](/reference/features/synonyms.html) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/synonyms
+
+  post:
+
+    operationId: indexes.settings.synonyms.update
+    summary: Update synonyms
+    description: |
+      Update the list of [synonyms](/reference/features/synonyms.html) of an index. Synonyms are [normalized](/reference/features/synonyms.html#normalization).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ../open-api.yaml#/components/schemas/synonyms
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.synonyms.reset
+    summary: Reset synonyms
+    description: |
+      Reset the list of [synonyms](/reference/features/synonyms.html) of an index to its default value (`{}`).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+stopWords:
+
+  get:
+
+    operationId: indexes.settings.stopWords.get
+    summary: Get stop-words
+    description: |
+      Get the list of [stop-words](/reference/features/stop_words.html) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/stopWords
+
+  post:
+
+    operationId: indexes.settings.stopWords.update
+    summary: Update stop-words
+    description: |
+      Update the list of [stop-words](/reference/features/stop_words.html) of an index.
+
+      If a list of stop-words already exists it will be overwritten (replaced).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ../open-api.yaml#/components/schemas/stopWords
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.stopWords.reset
+    summary: Reset stop-words
+    description: |
+      Reset the list of [stop-words](/reference/features/stop_words.html) of an index to its default value (`[]`).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+rankingRules:
+
+  get:
+
+    operationId: indexes.settings.rankingRules.get
+    summary: Get ranking rules
+    description: |
+      Get the [ranking rules](/learn/core_concepts/relevancy.html#ranking-rules) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/rankingRules
+
+  post:
+
+    operationId: indexes.settings.rankingRules.update
+    summary: Update ranking rules
+    description: |
+      Update the [ranking rules](/learn/core_concepts/relevancy.html#ranking-rules) of an index.
+
+      To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name in brackets.
+
+      * To apply an ascending sorting (results sorted by increasing value of the attribute): `asc(attribute_name)`
+      * To apply a descending sorting (results sorted by decreasing value of the attribute): `desc(attribute_name)`
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ../open-api.yaml#/components/schemas/rankingRules
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.rankingRules.reset
+    summary: Reset ranking rules
+    description: |
+      Reset the [ranking rules](/learn/core_concepts/relevancy.html#ranking-rules) of an index to its default value.
+
+      Default Value:
+      ```json
+      ["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+      ```
+
+      To remove all ranking rules, which is not recommended in any case, you would send an empty array to the add or replace ranking rules route.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+attributesForFaceting:
+
+  get:
+
+    operationId: indexes.settings.attributesForFaceting.get
+    summary: Get Attributes for Faceting
+    description: |
+      Get the [attributes for faceting](/reference/features/faceted_search.html) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/attributesForFaceting
+
+  post:
+
+    operationId: indexes.settings.attributesForFaceting.update
+    summary: Update Attributes for Faceting
+    description: |
+      Update the [attributes for faceting](/reference/features/faceted_search.html) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ../open-api.yaml#/components/schemas/attributesForFaceting
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.attributesForFaceting.reset
+    summary: Reset Attributes for Faceting
+    description: |
+      Reset the [attributes for faceting](/reference/features/faceted_search.html) of an index to its default value (`[]`).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+distinctAttribute:
+
+  get:
+
+    operationId: indexes.settings.distinctAttribute.get
+    summary: Get distinct attribute
+    description: |
+      Get the [distinct attribute](/reference/features/settings.html#distinct-attribute) field of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/distinctAttribute
+
+  post:
+
+    operationId: indexes.settings.distinctAttribute.update
+    summary: Update distinct attribute
+    description: |
+      Update the [distinct attribute](/reference/features/settings.html#distinct-attribute) field of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ../open-api.yaml#/components/schemas/distinctAttribute
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.distinctAttribute.reset
+    summary: Reset distinct attribute
+    description: |
+      Reset the [distinct attribute](/reference/features/settings.html#distinct-attribute) field of an index to its default value (`null`).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+searchableAttributes:
+
+  get:
+
+    operationId: indexes.settings.searchableAttributes.get
+    summary: Get searchable attributes
+    description: |
+      Get the [searchable attributes](/reference/features/field_properties.html#searchable-fields) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/searchableAttributes
+
+  post:
+
+    operationId: indexes.settings.searchableAttributes.update
+    summary: Update searchable attributes
+    description: |
+      Update the [searchable attributes](/reference/features/field_properties.html#searchable-fields) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ../open-api.yaml#/components/schemas/searchableAttributes
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.searchableAttributes.reset
+    summary: Reset searchable attributes
+    description: |
+      Reset the [searchable attributes](/reference/features/field_properties.html#searchable-fields) of an index to its default value (`['*']`).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+displayedAttributes:
+
+  get:
+
+    operationId: indexes.settings.displayedAttributes.get
+    summary: Get displayed attributes
+    description: |
+      Get the [displayed attributes](h/reference/features/settings.html#displayed-attributes) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/displayedAttributes
+
+  post:
+
+    operationId: indexes.settings.displayedAttributes.update
+    summary: Update displayed attributes
+    description: |
+      Update the [displayed attributes](/reference/features/settings.html#displayed-attributes) of an index.
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: ../open-api.yaml#/components/schemas/displayedAttributes
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202
+
+  delete:
+
+    operationId: indexes.settings.displayedAttributes.reset
+    summary: Reset displayed attributes
+    description: |
+      Reset the [displayed attributes](/reference/features/settings.html#displayed-attributes) of an index to its default value (`['*']`).
+    tags:
+      - Settings
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      202:
+        $ref: ../open-api.yaml#/components/responses/202

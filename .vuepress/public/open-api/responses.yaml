@@ -1,0 +1,13 @@
+202:
+  description: Accepted
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          updateId:
+            type: number
+            description: This `updateId` allows you to [track the current update](/reference/api/updates.html).
+
+204:
+  description: No Content

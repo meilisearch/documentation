@@ -1,0 +1,43 @@
+base:
+
+  post:
+
+    operationId: dumps.create
+    summary: Create a Dump
+    description: |
+      Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps directory](/reference/features/configuration.html#dumps-destination). If the dumps directory does not exist yet, it will be created.
+    tags:
+      - Dumps
+    security:
+      - apiKey: []
+    responses:
+      202:
+        description: Accepted
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/dump
+status:
+
+  get:
+
+    operationId: dumps.get
+    summary: Get dump status
+    description: |
+      Get the status of a dump creation process using the uid returned after calling the [dump creation route](/reference/api/dump.html#create-a-dump).
+      The returned status could be:
+
+      * `in_progress`: Dump creation is in progress.
+      * `failed`: An error occured during dump process, and the task was aborted.
+      * `done`: Dump creation is finished and was successful.
+    tags:
+      - Dumps
+    security:
+      - apiKey: []
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/dump

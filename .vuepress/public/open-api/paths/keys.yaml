@@ -1,0 +1,28 @@
+base:
+
+  get:
+
+    operationId: keys.get
+    summary: Get keys
+    description: |
+      Get the private and public [key](/reference/features/authentication.html).
+    tags:
+      - Keys
+    security:
+      - apiKey: []
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                private:
+                  type: string
+                public:
+                  type: string
+              additionalProperties: false
+              required:
+                - private
+                - public

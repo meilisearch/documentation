@@ -1,0 +1,157 @@
+indexSearch:
+
+  get:
+
+    operationId: indexes.documents.searchGet
+    summary: Search in an index with GET route
+    description: |
+      Search for documents matching a specific query in the given index.
+
+      This route should only be used when no API key is required. If an API key is required, use the POST route instead.
+    tags:
+      - Search
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+      - name: q
+        in: query
+        description: Query string.
+        required: true
+        schema:
+          type: string
+      - $ref: ../open-api.yaml#/components/parameters/limit
+      - $ref: ../open-api.yaml#/components/parameters/offset
+      - name: filters
+        in: query
+        description: |
+          Specify a filter to be used with the query.
+
+          See our [dedicated guide](/reference/features/filtering.html).
+        schema:
+          type: string
+          example: ("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
+      - name: facetFilters
+        in: query
+        description: |
+          If you have [set up faceted attributes](/reference/features/settings.html#attributes-for-faceting), you can filter on [facets](/reference/features/faceted_search.html) to narrow down your results based on criteria.
+
+          Facet filters also support logical connectives by using [inner and outer array elements](/reference/features/faceted_search.html#using-facets).
+
+          [Learn more about facet filters in the dedicated guide](/reference/features/faceted_search.html)
+        schema:
+          $ref: ../open-api.yaml#/components/schemas/facetFilters
+      - name: facetsDistribution
+        in: query
+        description: |
+          If you have [set up faceted attributes](/reference/features/settings.html#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/reference/features/faceted_search.html).
+
+          [Learn more about facet distribution in the dedicated guide](/reference/features/faceted_search.html#the-facets-distribution)
+        schema:
+          type: array
+          items:
+            type: string
+      - $ref: ../open-api.yaml#/components/parameters/attributesToRetrieve
+      - name: attributesToCrop
+        in: query
+        description: Attributes whose values have to be cropped
+        schema:
+          type: array
+          items:
+            type: string
+      - name: cropLength
+        in: query
+        description: Length used to crop field values
+        schema:
+          type: number
+      - name: attributesToHighlight
+        in: query
+        description: Attributes whose values will contain highlighted matching terms
+        schema:
+          type: array
+          items:
+            type: string
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/queryResponse
+
+  post:
+
+    operationId: indexes.documents.search
+    summary: Search in an index with POST route
+    description: |
+      Search for documents matching a specific query in the given index.
+
+      This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests improves considerably the speed of the search.
+    tags:
+      - Search
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              q:
+                type: string
+                description: Query string _(mandatory)_.
+              offset:
+                type: number
+                description: Number of documents to skip.
+                default: 0
+              limit:
+                type: number
+                description: Maximum number of documents returned.
+                default: 20
+              filters:
+                type: string
+                description: Filter queries by an attribute value.
+                example: ("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
+              facetFilters:
+                $ref: ../open-api.yaml#/components/schemas/facetFilters
+              facetsDistribution:
+                type: array
+                description: Facets for which to retrieve the matching count.
+                items:
+                  type: string
+              attributesToRetrieve:
+                type: array
+                description: Attributes to display in the returned documents.
+                items:
+                  type: string
+                default: ['*']
+              attributesToCrop:
+                type: array
+                description: Attributes whose values have to be cropped.
+                items:
+                  type: string
+              cropLength:
+                type: number
+                description: Length used to crop field values.
+                default: 200
+              attributesToHighlight:
+                type: array
+                description: Attributes whose values will contain highlighted matching terms.
+                items:
+                  type: string
+              matches:
+                type: boolean
+                description: Defines whether an object that contains information about the matches should be returned or not.
+            additionalProperties: false
+            required:
+              - q
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/queryResponse

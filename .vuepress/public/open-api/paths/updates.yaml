@@ -1,0 +1,46 @@
+indexUpdates:
+
+  get:
+
+    operationId: indexes.updates.list
+    summary: Get all update status
+    description: |
+      Get the status of all [updates](https://docs.meilisearch.com/learn/advanced/asynchronous_updates.html) in a given [index](https://docs.meilisearch.com/learn/core_concepts/indexes.html).
+    tags:
+      - Updates
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: ../open-api.yaml#/components/schemas/update
+
+indexUpdateId:
+
+  get:
+
+    operationId: indexes.updates.get
+    summary: Get an update status
+    description: |
+      Get the status of an [update](https://docs.meilisearch.com/learn/advanced/asynchronous_updates.html) in a given [index](https://docs.meilisearch.com/learn/core_concepts/indexes.html).
+    tags:
+      - Updates
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+      - $ref: ../open-api.yaml#/components/parameters/updateId
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/update
