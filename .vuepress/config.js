@@ -151,6 +151,10 @@ module.exports = {
               title: 'Deploy on DigitalOcean',
               path: '/create/how_to/digitalocean_droplet',
             },
+            {
+              title: 'Deploy on AWS',
+              path: '/create/how_to/aws',
+            },
             '/create/how_to/http2_ssl',
             {
               title: 'Use with Postman',
