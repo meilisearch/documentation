@@ -148,29 +148,62 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Run in Production',
-              path: '/create/how_to/running_production',
+              title: 'Get Started',
+              collapsable: false,
+              children: [
+                {
+                  title: 'Install',
+                  path: '/create/how_to/installation',
+                },
+                {
+                  title: 'Update',
+                  path: '/create/how_to/updating',
+                },
+                {
+                  title: 'Run in Production',
+                  path: '/create/how_to/running_production',
+                },
+              ],
             },
             {
-              title: 'Integrate into Your Documentation',
-              path: '/create/how_to/search_bar_for_docs',
+              title: 'Deploy',
+              collapsable: false,
+              children: [
+                {
+                  title: 'Deploy on DigitalOcean',
+                  path: '/create/how_to/digitalocean_droplet',
+                },
+                {
+                  title: 'Deploy on AWS',
+                  path: '/create/how_to/aws',
+                },
+                {
+                  title: 'Deploy on Qovery',
+                  path: '/create/how_to/qovery'
+                },
+              ],
             },
             {
-              title: 'Deploy on DigitalOcean',
-              path: '/create/how_to/digitalocean_droplet',
+              title: 'Integrate',
+              collapsable: false,
+              children: [
+                {
+                  title: 'Add a Search Bar to Your Documentation',
+                  path: '/create/how_to/search_bar_for_docs',
+                },
+                {
+                  title: 'Add to a React app',
+                  path: '/create/how_to/meilisearch_react',
+                },
+              ],
             },
             {
-              title: 'Deploy on AWS',
-              path: '/create/how_to/aws',
+              title: 'Use HTTP/2 and SSL',
+              path: '/create/how_to/http2_ssl',
             },
-            '/create/how_to/http2_ssl',
             {
               title: 'Use with Postman',
               path: '/create/how_to/postman_collection',
-            },
-            {
-              title: 'Add to a React app',
-              path: '/create/how_to/meilisearch_react',
             },
           ],
         },
