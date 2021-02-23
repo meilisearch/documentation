@@ -119,9 +119,9 @@ module.exports = {
           ],
         },
         {
-            title: '📇 OpenAPI',
-            path: '/reference/open-api/',
-          },
+          title: '📇 OpenAPI',
+          path: '/reference/open-api/',
+        },
         {
           title: '🛠️ Under the Hood',
           path: '/reference/under_the_hood/',
