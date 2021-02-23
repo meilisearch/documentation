@@ -2,7 +2,8 @@
 # Deploy a MeiliSearch Instance on AWS
 
 Using our **MeiliSearch [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html)**, MeiliSearch can be deployed on AWS in just a few minutes.
-The following `how-to guide` will walk you through every step to deploy MeiliSearch in an AWS EC2 instance.
+
+The following `how-to guide` will walk you through every step to deploy MeiliSearch in an AWS EC2 instance. If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
 
 **Table of Contents**:
 
@@ -51,7 +52,7 @@ Choose the storage **device** and **size** for your MeiliSearch instance.
 
 ![Storage](/aws/05.storage.png)
 
-The amount of storage space required can vary drastically depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for a small to medium dataset.
+The amount of storage space required can [vary drastically](/reference/under_the_hood/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).
 
 When you're ready, click on **Next: Add Tags** to continue.
 
@@ -178,4 +179,4 @@ The server should answer with a `204 No content` status code as shown in the exa
 ...
 ```
 
-You're all set to use MeiliSearch in production with AWS!
+You're all set to use MeiliSearch in production with AWS! If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
