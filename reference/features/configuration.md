@@ -32,8 +32,8 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Usage
 
-All options should have a value specified. Adding the flag without a value will throw an error (same goes for environment variables). 
-Example: 
+All options should have a value specified. Adding the flag without a value will throw an error (same goes for environment variables).
+Example:
 `meilisearch --schedule-snapshot` throws an error.
 `meilisearch --schedule-snapshot=true` activates snapshots scheduling properly.
 
@@ -264,7 +264,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 **Environment variable**: `MEILI_NO_SENTRY`
 **CLI option**: `--no-sentry`
 
-We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. You can disable it at any moment by launching MeiliSearch by adding the argument above with a `true` as value.
+We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. It should be set to `true` to desactivate sentry.
 
 **Default value**: `false`
 
