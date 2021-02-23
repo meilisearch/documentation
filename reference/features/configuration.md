@@ -30,6 +30,13 @@ export MEILI_HTTP_ADDR=127.0.0.1:7700
 Server is listening on: http://127.0.0.1:7700
 ```
 
+## Usage
+
+All options should have a value specified. Adding the flag without a value will throw an error (same goes for environment variables). 
+Example: 
+`meilisearch --schedule-snapshot` throws an error.
+`meilisearch --schedule-snapshot=true` activates snapshots scheduling properly.
+
 ## Options
 
 #### General
@@ -257,18 +264,20 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 **Environment variable**: `MEILI_NO_SENTRY`
 **CLI option**: `--no-sentry`
 
-We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. You can disable it at any moment by launching MeiliSearch with the argument above.
+We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. You can disable it at any moment by launching MeiliSearch by adding the argument above with a `true` as value.
+
+**Default value**: `false`
 
 ### Schedule Snapshot Creation
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
 
-Activates scheduled snapshots.
-
-If this command is not added or its value is `false` snapshotting is deactivated.
+Activates scheduled snapshots. Disabled by default, should be set to `true` to activate it.
 
 [Read more about snapshots](/reference/features/snapshots.md).
+
+**Default value**: `false`
 
 ### Snapshot Destination
 
@@ -309,6 +318,8 @@ The engine ignores missing snapshots and does not throw an error in this case.
 
 Requires `--import-snapshot` to be defined.
 
+**Default value**: `false`
+
 ### Ignore Snapshot if DB Exists
 
 **CLI option**: `--ignore-snapshot-if-db-exists`
@@ -316,6 +327,8 @@ Requires `--import-snapshot` to be defined.
 If a database already exists, MeiliSearch will attempt to launch using that database instead of importing a snapshot. No error is thrown in this case.
 
 Requires `--import-snapshot` to be defined.
+
+**Default value**: `false`
 
 ### Dumps Destination
 
