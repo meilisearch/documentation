@@ -42,6 +42,28 @@ You may want to ignore the different colors of an item. To do so, you can set `p
 
 By [setting `product_id` as a distinct attribute](/reference/api/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
 
+Querying for `lee leather jacket` would only return the first document found. The response should look like this:
+
+```json
+{
+  "hits": [
+    {
+      "id": 1,
+      "description": "Leather jacket",
+      "brand": "Lee jeans",
+      "color": "brown",
+      "product_id": "123456"
+    }
+  ],
+  "offset": 0,
+  "limit": 20,
+  "nbHits": 1,
+  "exhaustiveNbHits": false,
+  "processingTimeMs": 0,
+  "query": "lee leather jacket"
+}
+```
+
 ::: warning
 If the field does not exist, no error will be thrown.
 :::
