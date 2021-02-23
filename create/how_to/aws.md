@@ -139,19 +139,44 @@ Meilisearch is currently running in a *development environment*. You haven't set
 
 To start the configuration process, connect via SSH to your new MeiliSearch Instance and follow the instructions that appear.
 
-### 2.1. Run the configuration script
+### 2.1. Secure your Key Pair
 
-Open a terminal and start a new SSH connection with the **Public IPv4** or **your domain name**, using 'admin' as the username.
+Open a terminal window and navigate to wherever you saved your [key pair](#8-set-and-download-key-pair). It should be a `.pem` file.
+
+Run the following command to secure your key pair.
 
 ```bash
-ssh admin@<your-ipv4-address>
+chmod 400 <YourMeiliSearchKeyPair>.pem
+```
+
+### 2.2. Run the configuration script
+
+Next, start a new SSH connection with the **Public IPv4 address** or **your domain name**, using 'admin' as the username. You'll also need to supply the relative path to your `.pem` file.
+
+```bash
+ssh -i <relative-path-to-your-key-pair> admin@<your-ipv4-address>
 ```
 
 ```bash
-ssh admin@<your-domain-name>
+ssh -i <relative-path-to-your-pem-file> admin@<your-domain-name>
 ```
 
-Write `yes` and press `Enter` to accept the authentication process.
+You should see something like this:
+
+```
+________________________________________________
+________________________________________________
+             _ _ _ __                     _
+  /\/\   ___(_) (_) _\ ___  __ _ _ __ ___| |__
+ /    \ / _ \ | | \ \ / _ \/ _` | '__/ __| '_ \
+/ /\/\ \  __/ | | |\ \  __/ (_| | | | (__| | | |
+\/    \/\___|_|_|_\__/\___|\__,_|_|  \___|_| |_|
+
+________________________________________________
+________________________________________________
+```
+
+When asked if you would like to use MeiliSearch in a production environment, write `yes` and press `Enter` to accept the authentication process.
 
 A script will run automatically, asking for your settings and desired configuration. If you want to run this script again at any time, you can do so by using the following command:
 
