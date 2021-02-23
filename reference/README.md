@@ -8,4 +8,5 @@ This is **timeless knowledge**. We recommend keeping it open in a spare tab, whe
 
 - [⭐ Features](/reference/features)
 - [📒 API](/reference/api)
+- [📇 OpenAPI](/reference/open-api)
 - [🛠️ Under the Hood](/reference/under_the_hood)
