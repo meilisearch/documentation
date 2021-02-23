@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Meilisearch Open API</title>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@3.43.0/swagger-ui.css" crossorigin="anonymous" integrity="sha384-noOPWV/2mXRpArM0B1KmUjB+Dma7uzBNUZv/lSLU5Ent8mxGdqUOULqLAKw/Q4uD">
+        <script src="https://unpkg.com/swagger-ui-dist@3.43.0/swagger-ui-bundle.js" async crossorigin="anonymous" integrity="sha384-Zb06Xc0oXkxn//IOQeob2LVug137MWHyTqBlGlgwHShuRQSMuhYrRg86+lP7V42k"></script>
+        <script>window.onload = function() {
+            SwaggerUIBundle({
+                url: '/open-api/open-api.yaml',
+                dom_id: '#swagger-ui',
+                docExpansion: 'none',
+                deepLinking: true,
+                displayOperationId: true,
+                displayRequestDuration: true
+            });
+        }</script>
+    </head>
+    <body>
+        <div id="swagger-ui"></div>
+    </body>
+</html>
