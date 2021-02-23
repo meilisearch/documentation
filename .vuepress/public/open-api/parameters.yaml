@@ -1,0 +1,63 @@
+indexUid:
+  name: indexUid
+  in: path
+  description: Index Unique Id
+  required: true
+  schema:
+    type: string
+
+documentId:
+  name: documentId
+  in: path
+  description: The document identifier
+  required: true
+  schema:
+    $ref: ./open-api.yaml#/components/schemas/documentId
+
+updateId:
+  name: updateId
+  in: path
+  description: The update identifier
+  required: true
+  schema:
+    type: number
+
+primaryKey:
+  name: primaryKey
+  in: query
+  description: |
+    The [primary key](/learn/core_concepts/documents.html#primary-key) of the documents _(optional)_.
+
+    If you want to set the __primary key__ of your index through this route, it only has to be done __the first time you add documents__ to the index. After which it will be ignored if given.
+
+  schema:
+    type: string
+
+limit:
+  name: limit
+  in: query
+  description: Maximum number of documents returned.
+  schema:
+    type: number
+    default: 20
+
+offset:
+  name: offset
+  in: query
+  description: Number of documents to skip.
+  schema:
+    type: number
+    default: 0
+
+attributesToRetrieve:
+  name: attributesToRetrieve
+  in: query
+  description: |
+    Comma-separated list of attributes whose fields will be present in the returned documents.
+
+    Defaults to to the [displayedAttributes list](/reference/features/settings.html#displayed-attributes) which contains by default all attributes found in the documents.
+  schema:
+    type: array
+    items:
+      type: string
+    default: ['*']

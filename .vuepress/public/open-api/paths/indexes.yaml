@@ -1,0 +1,118 @@
+base:
+
+  get:
+
+    operationId: indexes.list
+    summary: List Indexes
+    description: List all indexes.
+    tags:
+      - Indexes
+    security:
+      - apiKey: []
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: ../open-api.yaml#/components/schemas/index
+
+  post:
+
+    operationId: indexes.create
+    summary: Create Index
+    description: Create an index.
+    tags:
+      - Indexes
+    security:
+      - apiKey: []
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              uid:
+                type: string
+              primaryKey:
+                type: string
+            additionalProperties: false
+            required:
+              - uid
+    responses:
+      201:
+        description: Created
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/index
+
+indexUid:
+
+  get:
+
+    operationId: indexes.get
+    summary: Get Index
+    description: Get information about an index.
+    tags:
+      - Indexes
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/index
+
+  put:
+
+    operationId: indexes.update
+    summary: Update Index
+    description: Update an index.
+    tags:
+      - Indexes
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              primaryKey:
+                type: string
+            additionalProperties: false
+            required:
+              - primaryKey
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            schema:
+              $ref: ../open-api.yaml#/components/schemas/index
+
+  delete:
+
+    operationId: indexes.remove
+    summary: Delete Index
+    description: Delete an index.
+    tags:
+      - Indexes
+    security:
+      - apiKey: []
+    parameters:
+      - $ref: ../open-api.yaml#/components/parameters/indexUid
+    responses:
+      204:
+        description: No Content
