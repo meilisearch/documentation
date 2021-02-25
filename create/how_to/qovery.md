@@ -1,4 +1,8 @@
-# How to deploy a MeiliSearch instance on Qovery
+# Deploy a MeiliSearch Instance on Qovery
+
+_The following is a guest post by Romaric Philogène, CEO and Co-Founder of Qovery._
+
+## Introduction
 
 In this tutorial I explain how to deploy a pre-configured Meilisearch instance in one click.
 
@@ -6,10 +10,10 @@ In this tutorial I explain how to deploy a pre-configured Meilisearch instance i
 
 Deploying Meilisearch with Qovery provides:
 
-* A pre-configured Meilisearch instance.
-* A free SSD storage.
-* A free SSL.
-* Optional: custom domain.
+- A pre-configured Meilisearch instance.
+- A free SSD storage.
+- A free SSL.
+- Optional: custom domain.
 
 ## Step-by-step Meilisearch deployment
 
@@ -19,16 +23,16 @@ Visit [the Qovery dashboard](https://start.qovery.com) to create an account if y
 
 ### 2. Create a project
 
-* Click on the "create a project" button and give a name to your project. Eg. `Meilisearch`
-* Click on "next".
+- Click on the "create a project" button and give a name to your project, e.g. `MeiliSearch`.
+- Click on "next".
 
 ### 3. Deploy Meilisearch
 
 ![meilisearch template](https://github.com/Qovery/public-resources/raw/master/screenshots/meilisearch-template.png)
 
-* Click on the "use a template" button.
-* Select "Meilisearch".
-* Select your Github or Gitlab repository where Qovery will save your configuration files (Qovery uses Git as the source of truth).
-* Click on "deploy".
+- Click on the "use a template" button.
+- Select "Meilisearch".
+- Select your Github or Gitlab repository where Qovery will save your configuration files (Qovery uses Git as the source of truth).
+- Click on "deploy".
 
 Congrats 🔥 - Your Meilisearch instance is deployed and ready to be used 🎉
