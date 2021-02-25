@@ -176,7 +176,7 @@ See our [contact page](/learn/what_is_meilisearch/contact.md).
 
 ## I have just updated MeiliSearch, and I am getting an error: "Cannot open database, expected MeiliSearch engine version..."
 
-MeiliSearch minor versions are not compatible with each other because the way we represent data internally changes with the addition of new breaking features. To fix this, it suffices to delete your database folder (`data.ms` by default) and re-index your documents with the new version. See [updating MeiliSearch](/reference/features/installation.md#updating-meilisearch) for more information.
+Until our first stable release (v1.0), MeiliSearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating MeiliSearch](/reference/features/installation.md#updating-meilisearch) for more information.
 
 ## What are the recommended requirements for hosting a MeiliSearch instance?
 
@@ -200,21 +200,26 @@ Because MeiliSearch uses a [memory map](/reference/under_the_hood/storage.md#lmd
 - A big database + a small amount of RAM => slow search
 - A small database + tons of RAM => lightning fast search
 
-The number of CPU cores has no impact on index speed (indexing is single-threaded... for now 😉). However, **the more cores you provide to the engine, the more search queries it will be able to process at the same time**.
+MeiliSearch also uses disk space as [virtual memory](/reference/under_the_hood/storage.md#memory-usage). This disk space does not correspond to database size; rather, it provides speed and flexibility to the engine by allowing it to go over the limits of physical RAM.
+
+At this time, the number of CPU cores has no direct impact on index or search speed. However, **the more cores you provide to the engine, the more search queries it will be able to process at the same time**.
+
+::: tip
+Our new engine (currently in development) **will support multi-core indexing at launch**.
+:::
 
 ### Speeding Up MeiliSearch
 
 MeiliSearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your MeiliSearch instance is querying slowly, there are two primary methods to speed it up:
 
-- Increase the amount of RAM.
-- Reduce the size of your database.
+1. Increase the amount of RAM (or virtual memory)
+2. Reduce the size of the database
 
 In general, we recommend the former. However, if you need to reduce the size of your database for any reason, keep in mind that:
 
 - **More relevancy rules => a larger database**
-  - The proximity ranking rule alone can be responsible for almost 80% of database size
-- Faceting also consumes a large amount of disk space
+  - The proximity [ranking rule](/learn/core_concepts/relevancy.md#ranking-rules) alone can be responsible for almost 80% of database size
+- [Faceting](/reference/features/faceted_search.md) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
-- Make sure to add [stop words](/reference/features/stop_words.md)
-- Be selective about which attributes you index and make [searchable](/reference/features/field_properties.md#searchable-fields)
-  - Avoid indexing unique IDs
+- [Stop words](/reference/features/stop_words.md) are essential to reducing database size
+- Not all attributes need to be [searchable](/reference/features/field_properties.md#searchable-fields). Avoid indexing unique IDs.
