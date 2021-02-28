@@ -5,6 +5,13 @@ If multiple words have an equivalent meaning in your dataset, you can [create a 
 In general, **a search on a word will return the same results as a search on any of its synonyms**.
 There is one exception to this rule, [detailed below](#multi-word-phrases).
 
+## Synonyms created by the community
+
+There are lists of synonyms that have been created by the community, ready to use.
+
+- [EN-US - Created by André Ribeiro](https://github.com/andresribeiro/meilisearch-en-us-synonyms)
+- [PT-BR - Created by André Ribeiro](https://github.com/andresribeiro/meilisearch-pt-br-synonyms)
+
 ## Normalization
 
 All synonyms are **lowercased** and **de-unicoded** during the indexing process.
