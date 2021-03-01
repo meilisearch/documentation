@@ -82,6 +82,10 @@ module.exports = {
             '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',
+            {
+              title: 'Errors',
+              path: '/errors/',
+            },
           ],
         },
         {
@@ -179,7 +183,7 @@ module.exports = {
     },
   },
   plugins: [
-    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: 'errors' }],
+    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: ['errors', 'document_structure'] }],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
