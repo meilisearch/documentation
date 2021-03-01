@@ -36,6 +36,7 @@ module.exports = {
           path: '/learn/tutorials/',
           collapsable: false,
           children: [
+            '/reference/features/installation',
             '/learn/tutorials/getting_started',
             '/learn/tutorials/whats_next',
           ],
@@ -73,7 +74,6 @@ module.exports = {
             '/reference/features/faceted_search',
             '/reference/features/field_properties',
             '/reference/features/filtering',
-            '/reference/features/installation',
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
