@@ -53,22 +53,22 @@ div.route {
 }
 
 .route > div.method.get {
-  background-color: #3eaf7c;
+  background-color: #39d98a;
   color: white;
 }
 
 .route div.method.post {
-  background-color: #f5a623;
+  background-color: #fdac42;
   color: white;
 }
 
 .route div.method.put {
-  background-color: #2c88ea;
+  background-color: #6698ff;
   color: white;
 }
 
 .route div.method.delete {
-  background-color: #ef5d5a;
+  background-color: #ff5c5c;
   color: white;
 }
 
@@ -76,7 +76,7 @@ div.route {
   line-height: 1.4;
   padding: 1.25rem 1.5rem;
   margin: 0.85rem 0;
-  background-color: #3eaf7c;
+  background-color: #39d98a;
   border-radius: 6px 0px 0px 6px;
   overflow: auto;
   color: white;
