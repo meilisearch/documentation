@@ -156,7 +156,7 @@ paths:
     $ref: ./paths/documents.yaml#/indexDocument
   /indexes/{indexUid}/documents/delete-batch:
     $ref: ./paths/documents.yaml#/indexDocumentDeleteBatch
-  /indexes/{indexUid}/documents/{documentUid}:
+  /indexes/{indexUid}/documents/{documentId}:
     $ref: ./paths/documents.yaml#/indexDocumentId
 
   /indexes/{indexUid}/search:
