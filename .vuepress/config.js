@@ -186,7 +186,7 @@ module.exports = {
     [require('./code-samples')],
     [require('./error-pages')],
     ['vuepress-plugin-code-copy', {
-      color: '#3eaf7c',
+      color: '#3385ff',
       staticIcon: true,
     }],
     [

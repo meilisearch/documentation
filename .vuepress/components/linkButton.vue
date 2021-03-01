@@ -30,7 +30,7 @@ div.route {
   line-height: 1.4;
   padding: 1.25rem 1.75rem;
   margin: 0.85rem 0;
-  background-color: #3eaf7c;
+  background-color: #0063f7;
   border-radius: 6px 6px 6px 6px;
   overflow: auto;
   color: white;
