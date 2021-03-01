@@ -19,6 +19,7 @@ Hold up a minute—is it just me, or is something different here? 🤔
 Our documentation has been reorganized to promote **clarity**, **browsability**, and **maintainability**. For starters, our helpful content is now grouped into **three categories**:
 
 - [Learn](/learn): If it's your **first-time using MeiliSearch** or you want a refresher, we recommend starting here.
+- [Learn](/errors): If it's your **first-time using MeiliSearch** or you want a refresher, we recommend starting here.
 
 - [Create](/create): If you're looking to **start your own MeiliSearch project** or get answers to a question, go here.
 

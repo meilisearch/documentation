@@ -179,7 +179,7 @@ module.exports = {
     },
   },
   plugins: [
-    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: 'document_structure' }],
+    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: 'errors' }],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',

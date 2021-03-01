@@ -6,8 +6,6 @@ Documents function as **containers for organizing data**, and are the basic buil
 
 ## Structure
 
-![document structure](/document_structure.svg =573x400)
-
 ### Important Terms
 
 - **Document**: an object which contains data in the form of one or more fields.
