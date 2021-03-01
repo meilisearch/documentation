@@ -148,8 +148,9 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Get Started',
+              title: 'Basics',
               collapsable: false,
+              sidebarDepth: 0,
               children: [
                 {
                   title: 'Install',
@@ -163,11 +164,16 @@ module.exports = {
                   title: 'Run in Production',
                   path: '/create/how_to/running_production',
                 },
+                {
+                  title: 'Use with Postman',
+                  path: '/create/how_to/postman_collection',
+                },
               ],
             },
             {
               title: 'Deploy',
               collapsable: false,
+              sidebarDepth: 0,
               children: [
                 {
                   title: 'Deploy on DigitalOcean',
@@ -186,9 +192,10 @@ module.exports = {
             {
               title: 'Integrate',
               collapsable: false,
+              sidebarDepth: 0,
               children: [
                 {
-                  title: 'Add a Search Bar to Your Documentation',
+                  title: 'Add a Search Bar to Your Docs',
                   path: '/create/how_to/search_bar_for_docs',
                 },
                 {
@@ -198,12 +205,15 @@ module.exports = {
               ],
             },
             {
-              title: 'Use HTTP/2 and SSL',
-              path: '/create/how_to/http2_ssl',
-            },
-            {
-              title: 'Use with Postman',
-              path: '/create/how_to/postman_collection',
+              title: 'Miscellaneous',
+              collapsable: false,
+              sidebarDepth: 0,
+              children: [
+                {
+                  title: 'Use HTTP/2 and SSL',
+                  path: '/create/how_to/http2_ssl',
+                },
+              ],
             },
           ],
         },
