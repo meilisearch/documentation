@@ -262,7 +262,7 @@ filtering_guide_4: |-
   --data '{ "q": "Planet of the Apes", "filters": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
 search_parameter_guide_query_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data { "q": "shifu" }
+    --data '{ "q": "shifu" }'
 search_parameter_guide_offset_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "shifu", "offset": 1 }'

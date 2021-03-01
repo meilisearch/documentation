@@ -21,7 +21,7 @@ Get the status of an [update](/learn/advanced/asynchronous_updates.md) in a give
 
 #### Response: `200 Ok`
 
-Here is an example response of an update that has been processed.
+Here is an example response representing [an update that has already been processed](/learn/advanced/asynchronous_updates.md#understanding-updates).
 
 ```json
 {
@@ -55,20 +55,18 @@ Get the status of all [updates](/learn/advanced/asynchronous_updates.md) in a gi
 
 #### Response: `200 Ok`
 
-Here is an example response of updates that have been processed.
+Here is an example response representing an [enqueued update](/learn/advanced/asynchronous_updates.md#understanding-updates).
 
 ```json
 [
-  {
-    "status": "processed",
-    "updateId": 1,
-    "type": {
-      "name": "DocumentsAddition",
-      "number": 4
-    },
-    "duration": 0.076980613,
-    "enqueuedAt": "2019-12-07T21:16:09.623944Z",
-    "processedAt": "2019-12-07T21:16:09.703509Z"
-  }
+    {
+        "status": "enqueued",
+        "updateId": 0,
+        "type": {
+            "name": "DocumentsAddition",
+            "number": 30
+        },
+        "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
+    }
 ]
 ```

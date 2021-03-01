@@ -12,7 +12,9 @@ When users perform a search, they are presented with a list of results and a lis
 ## Filters or Facets?
 
 Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**.
+
 Setting categorical document attributes as "facet" enables efficient filtering within the different categories. Such categorical attributes are, for example, movie genre, director, or language.
+
 Besides, faceting is a powerful feature that allows building intuitive navigation interfaces.
 
 Both faceting and filtering help drill down into a subset of search results. However, **faceting differs from [filtering](/reference/features/filtering.md)**.
@@ -27,6 +29,7 @@ Faceting and filtering aim at being complementary;  facets narrows down the set 
 The first step in using facets is to chose which of your document <clientGlossary word="field" label="fields"/> will be used as facets. Fields with common values are the best suited for faceting (e.g., `genre`, `color`, `size` ).
 
 For these fields to be used as facets during search, their <clientGlossary word="attribute" label="attributes"/> **must have been previously added to the settings**. In the settings, the chosen attributes must be added to the [`attributesForFaceting` list](/reference/features/settings.md#attributes-for-faceting).
+
 This step is required because facet needs to be properly processed and prepared by the engine to be usable. This process takes as much time as indexing all your documents.
 
 You can perform faceting on attributes that are either `String` or `[String]`, and `null` values are ignored.
@@ -198,6 +201,7 @@ Since the users can have a visual clue about the range of categories available i
 To get the facets distribution, you have to specify a list of facets for which to retrieve the count of matching documents using the `facetsDistribution` attribute.
 
 The `facetsDistribution` parameter also introduces `exhaustiveFacetsCount` in the return object. `exhaustiveFacetsCount` is a boolean value that informs the user whether or not the facets distribution is matching the reality or if it is an approximation.
+
 The approximative facet count happens when there are too many documents in too many different facet values. In which case, MeiliSearch stops the distribution count to prevent considerably slowing down the request.
 
 #### Usage

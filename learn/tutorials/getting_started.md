@@ -41,7 +41,7 @@ Communication to the server is done through a [RESTful API](/reference/api/READM
 
 To add documents to MeiliSearch you must provide:
 
-- [Documents](/learn/core_concepts/documents.md) in the form of `JSON objects`.
+- [Documents](/learn/core_concepts/documents.md) in the form of an array of `JSON objects`.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
 > _If the index does not exist, MeiliSearch creates it when you first add documents._
@@ -59,7 +59,7 @@ To be processed, all documents must share one common <clientGlossary word="field
 
 There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents to an index called `movies` using the following test dataset: [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json).
+Below is an example to showcase how to add documents to an index called `movies` using the following test dataset: [movies.json](https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/datasets/movies/movies.json).
 
 <CodeSamples id="getting_started_add_documents_md" />
 

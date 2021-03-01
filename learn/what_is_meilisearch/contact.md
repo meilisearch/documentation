@@ -16,8 +16,4 @@ We think chat and forum discussions are [highly complementary](https://blog.disc
 
 Bug reports should be added as issues in the corresponding repository, e.g. [meilisearch/MeiliSearch](https://github.com/meilisearch/MeiliSearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
 
-## Email 💌
-
-Prefer a good old email? For a private conversation, you may message us at [bonjour@meilisearch.com](mailto:bonjour@meilisearch.com). English or French is welcome! 🇬🇧 🇫🇷 (+ 🇳🇴 🇧🇪)
-
 _Any suggestion or feedback is highly appreciated. Thank you for your support!_

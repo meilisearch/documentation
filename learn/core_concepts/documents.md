@@ -86,6 +86,7 @@ Therefore, every document in the same index **must possess the exact same primar
 #### Example:
 
 Suppose we have an index called `movie` that contains 200,000 documents. As shown below, each document is identified by a **primary field** containing the **primary key** `movie_id` and a **unique value** (the document id).
+
 Aside from the primary key, **documents in the same index are not required to share attributes**, e.g. you could have a document in this index without the "title" attribute.
 
 ```json
@@ -120,11 +121,13 @@ There are several ways for MeiliSearch to know which field is the primary key.
 #### MeiliSearch infers your primary key
 
 If the primary key has neither been set at index creation nor as a parameter of the add documents route, MeiliSearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
+
 If no corresponding attribute is found, the index will have no known primary key, and therefore, **no documents will be added**.
 
 #### Missing primary key error
 
 ❗️ If you get the `Could not infer a primary key` error, the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
+
 Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).
 
 ### Document Id
@@ -155,7 +158,7 @@ Take note that the document addition request in MeiliSearch is <clientGlossary w
 
 By default, MeiliSearch limits the size of `JSON` payloads—and therefore document uploads—to 100MB.
 
-To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) during the setup of your MeiliSearch instance using the `http-payload-size-limit` option. The new limit must be given in bytes.
+To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) at runtime using the `http-payload-size-limit` option. The new limit must be given in bytes.
 
 ```bash
 ./meilisearch --http-payload-size-limit=1048576000

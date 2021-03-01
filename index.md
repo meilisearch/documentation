@@ -36,7 +36,7 @@ The current version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch)
 
 ## Open-source
 
-MeiliSearch is open source. You can **support the project by starring** [our GitHub repository](https://github.com/meilisearch/MeiliSearch)!
+MeiliSearch is open source. You can **support the project by starring** [our main GitHub repository](https://github.com/meilisearch/MeiliSearch)!
 
 <a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a><!-- prettier-ignore
 --><script async defer src="https://buttons.github.io/buttons.js"></script>
