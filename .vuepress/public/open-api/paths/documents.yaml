@@ -104,7 +104,7 @@ indexDocument:
 
 indexDocumentDeleteBatch:
 
-  delete:
+  post:
 
     operationId: indexes.documents.removeBatch
     summary: Delete documents
