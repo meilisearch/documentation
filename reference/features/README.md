@@ -15,7 +15,7 @@ Understanding our reference documentation is easier with background knowledge of
 [Faceted Search](/reference/features/faceted_search.md)
 [Field Properties](/reference/features/field_properties.md)
 [Filtering](/reference/features/filtering.md)
-[Installation](/reference/features/installation.md)
+[Installation](/learn/tutorials/installation.md)
 [Known Limitations](/reference/features/known_limitations.md)
 [Language](/reference/features/language.md)
 [Search Parameters](/reference/features/search_parameters.md)
