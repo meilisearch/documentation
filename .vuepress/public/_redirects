@@ -1,14 +1,14 @@
 # Redirects from old site to new
 /guides                                             /
-/guides/introduction                                /learn/tutorials
-/guides/introduction/quick_start_guide.html         /learn/tutorials/getting_started.html
-/guides/introduction/whats_next.html                /learn/tutorials/whats_next.html
+/guides/introduction                                /learn/getting_started
+/guides/introduction/quick_start_guide.html         /learn/getting_started/quick_start.html
+/guides/introduction/whats_next.html                /learn/getting_started/whats_next.html
 /guides/main_concepts                               /learn/core_concepts
 /guides/main_concepts/indexes.html                  /learn/core_concepts/indexes.html
 /guides/main_concepts/documents.html                /learn/core_concepts/documents.html
 /guides/main_concepts/search.html                   /learn/what_is_meilisearch/features.html
 /guides/main_concepts/relevancy.html                /learn/core_concepts/relevancy.html
-/guides/advanced_guides/installation.html           /learn/tutorials/installation.html
+/guides/advanced_guides/installation.html           /learn/getting_started/installation.html
 /guides/advanced_guides/configuration.html          /reference/features/configuration.html
 /guides/advanced_guides/search_parameters.html      /reference/features/search_parameters.html
 /guides/advanced_guides/filtering.html              /reference/features/filtering.html
@@ -53,7 +53,7 @@
 /resources/comparison_to_alternatives.html          /learn/what_is_meilisearch/comparison_to_alternatives.html
 /resources/postman_collection.html                  /create/how_to/postman_collection.html
 /resources/contact.html                             /learn/what_is_meilisearch/contact.html
-/resources/tutorials                                /learn/tutorials
+/resources/tutorials                                /learn/getting_started
 /running-production                                 /create/how_to/running_production.html
 /resources/howtos                                   /create/how_to
 /instant-search-react-app                           /create/how_to/meilisearch_react.html
@@ -63,3 +63,11 @@
 
 # Move language
 /learn/advanced/language.html                       /reference/features/language.html
+
+# Move installation
+/reference/features/installation.html               /learn/getting_started/installation.html
+
+# Rename tutorials to getting started
+/learn/tutorials                                    /learn/getting_started
+/learn/tutorials/getting_started.html               /learn/getting_started/quick_start.html
+/learn/tutorials/whats_next.html                    /learn/getting_started/whats_next.html

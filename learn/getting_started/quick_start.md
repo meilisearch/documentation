@@ -27,7 +27,7 @@ Database path:       "./data.ms"
 Server listening on: "127.0.0.1:7700"
 ```
 
-You can download & run MeiliSearch [in many different ways (i.e: docker, apt, homebrew, ...)](/learn/tutorials/installation.md).
+You can download & run MeiliSearch [in many different ways (i.e: docker, apt, homebrew, ...)](/learn/getting_started/installation.md).
 
 [Environment variables and options](/reference/features/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
 
@@ -312,4 +312,4 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 ::::
 
-You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/learn/tutorials/whats_next.md) to continue your MeiliSearch journey.
+You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/learn/getting_started/whats_next.md) to continue your MeiliSearch journey.

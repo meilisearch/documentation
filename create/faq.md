@@ -17,7 +17,7 @@ Of course! No knowledge of ElasticSearch or Solr is required to use MeiliSearch.
 
 MeiliSearch is really **easy to use** and thus accessible to all kinds of developers.
 
-[Take a quick tour](/learn/tutorials/getting_started.md) to learn the basics of MeiliSearch!
+[Take a quick tour](/learn/getting_started/quick_start.md) to learn the basics of MeiliSearch!
 
 We also provide a lot of tools, including [SDKs](/learn/what_is_meilisearch/sdks.md), to help you integrate easily MeiliSearch in your project. We're adding new tools every day!
 
@@ -36,7 +36,7 @@ However, MeiliSearch is of course [highly customizable](/reference/api/settings.
 
 ## How to know if MeiliSearch perfectly fits my use cases?
 
-Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/learn/tutorials/getting_started.md) to get a quick start!
+Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/learn/getting_started/quick_start.md) to get a quick start!
 
 Besides, we published a [comparison between MeiliSearch and other search engines](/learn/what_is_meilisearch/comparison_to_alternatives.md) with the goal of providing an overview of MeiliSearch alternatives.
 
@@ -176,7 +176,7 @@ See our [contact page](/learn/what_is_meilisearch/contact.md).
 
 ## I have just updated MeiliSearch, and I am getting an error: "Cannot open database, expected MeiliSearch engine version..."
 
-Until our first stable release (v1.0), MeiliSearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating MeiliSearch](/learn/tutorials/installation.md#updating-meilisearch) for more information.
+Until our first stable release (v1.0), MeiliSearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating MeiliSearch](/learn/getting_started/installation.md#updating-meilisearch) for more information.
 
 ## What are the recommended requirements for hosting a MeiliSearch instance?
 

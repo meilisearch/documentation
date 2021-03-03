@@ -4,7 +4,7 @@
 
 Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
 
-Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/tutorials/getting_started.md): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
+Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/getting_started/quick_start.md): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
 
 Using MeiliSearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy MeiliSearch in production** and ensure it is **safe and ready to use**?
 
@@ -50,7 +50,7 @@ apt install curl -y
 curl -L https://install.meilisearch.com | sh
 ```
 
-> The different options to achieve a MeiliSearch installation are detailed in **[this guide](/learn/tutorials/installation.md#download-and-launch)**.
+> The different options to achieve a MeiliSearch installation are detailed in **[this guide](/learn/getting_started/installation.md#download-and-launch)**.
 > It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your achitecture in the best possible way.
 
 You can always check the latest MeiliSearch stable version, and get MeiliSearch for the Operating System of your choice, by visiting the following link:
@@ -115,7 +115,7 @@ WantedBy=default.target
 EOF
 ```
 
-> For more information on MeiliSearch authentication and API keys see the **[authentication docs](/reference/features/authentication.md)**. For more information on MeiliSearch options and flags see the **[installation docs](/learn/tutorials/installation.md#download-and-launch)**
+> For more information on MeiliSearch authentication and API keys see the **[authentication docs](/reference/features/authentication.md)**. For more information on MeiliSearch options and flags see the **[installation docs](/learn/getting_started/installation.md#download-and-launch)**
 
 As for now, it is not time yet to expose your MeiliSearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your MeiliSearch instance.
 
