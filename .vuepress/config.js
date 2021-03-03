@@ -36,7 +36,7 @@ module.exports = {
           path: '/learn/tutorials/',
           collapsable: false,
           children: [
-            '/reference/features/installation',
+            '/learn/tutorials/installation',
             '/learn/tutorials/getting_started',
             '/learn/tutorials/whats_next',
           ],
@@ -71,6 +71,10 @@ module.exports = {
             '/reference/features/configuration',
             '/reference/features/distinct',
             '/reference/features/dumps',
+            {
+              title: 'Errors',
+              path: '/errors/',
+            },
             '/reference/features/faceted_search',
             '/reference/features/field_properties',
             '/reference/features/filtering',
@@ -82,10 +86,6 @@ module.exports = {
             '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',
-            {
-              title: 'Errors',
-              path: '/errors/',
-            },
           ],
         },
         {
