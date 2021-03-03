@@ -36,6 +36,7 @@ module.exports = {
           path: '/learn/tutorials/',
           collapsable: false,
           children: [
+            '/learn/tutorials/installation',
             '/learn/tutorials/getting_started',
             '/learn/tutorials/whats_next',
           ],
@@ -70,10 +71,13 @@ module.exports = {
             '/reference/features/configuration',
             '/reference/features/distinct',
             '/reference/features/dumps',
+            {
+              title: 'Errors',
+              path: '/errors/',
+            },
             '/reference/features/faceted_search',
             '/reference/features/field_properties',
             '/reference/features/filtering',
-            '/reference/features/installation',
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
@@ -179,7 +183,7 @@ module.exports = {
     },
   },
   plugins: [
-    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: 'document_structure' }],
+    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: ['errors', 'document_structure'] }],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
