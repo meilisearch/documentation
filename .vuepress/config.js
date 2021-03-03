@@ -155,6 +155,10 @@ module.exports = {
               title: 'Deploy on DigitalOcean',
               path: '/create/how_to/digitalocean_droplet',
             },
+            {
+              title: 'Deploy on AWS',
+              path: '/create/how_to/aws',
+            },
             '/create/how_to/http2_ssl',
             {
               title: 'Use with Postman',
@@ -183,10 +187,11 @@ module.exports = {
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
+    [require('./custom-timestamp')],
     [require('./code-samples')],
     [require('./error-pages')],
     ['vuepress-plugin-code-copy', {
-      color: '#3eaf7c',
+      color: '#3385ff',
       staticIcon: true,
     }],
     [
@@ -201,7 +206,7 @@ module.exports = {
     ],
     ['vuepress-plugin-zooming',
       {
-        selector: 'img',
+        selector: '.theme-default-content img',
         delay: 1000,
         options: {
           bgColor: 'black',
