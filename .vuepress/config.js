@@ -32,13 +32,13 @@ module.exports = {
           ],
         },
         {
-          title: '🚀 Tutorials',
-          path: '/learn/tutorials/',
+          title: '🚀 Getting Started',
+          path: '/learn/getting_started/',
           collapsable: false,
           children: [
-            '/learn/tutorials/installation',
-            '/learn/tutorials/getting_started',
-            '/learn/tutorials/whats_next',
+            '/learn/getting_started/installation',
+            '/learn/getting_started/quick_start',
+            '/learn/getting_started/whats_next',
           ],
         },
         {

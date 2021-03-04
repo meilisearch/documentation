@@ -2,7 +2,7 @@
 
 These how-to guides take the reader through the steps required to solve a real-world problem. Like recipes in a cookbook, they represent repeatable solutions to particular problems.
 
-This is not the section for tutorial content. If you'd like to follow a step-by-step tutorial that introduces you to the basics of MeiliSearch, check out our [getting started guide](/learn/tutorials/getting_started.md).
+This is not the section for tutorial content. If you'd like to follow a step-by-step tutorial that introduces you to the basics of MeiliSearch, check out our [getting started guide](/learn/getting_started/quick_start.md).
 
 ## Table of Contents
 
