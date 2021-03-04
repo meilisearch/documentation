@@ -52,6 +52,10 @@ A String: the field name.
 
 [More information about the body](/reference/features/settings.md#distinct-attribute).
 
+::: warning
+If the field does not exist, no error will be thrown.
+:::
+
 ### Example
 
 <CodeSamples id="update_distinct_attribute_1" />
