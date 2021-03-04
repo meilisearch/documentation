@@ -105,7 +105,7 @@ Once the instance is ready, use your web browser to navigate to the **Public IPv
 
 Keep in mind that your MeiliSearch instance is currently running in a *development environment*, which is unsafe for production usage. If you want to set up a *production environment*, continue to the [next section](#part-2-configure-production-settings).
 
-Otherwise, if you want to get started creating indexes and adding documents, don't hesitate to check out our [learning resources](/learn), [API Reference](/reference), or [getting started guide](/learn/tutorials/getting_started.md).
+Otherwise, if you want to get started creating indexes and adding documents, don't hesitate to check out our [learning resources](/learn), [API Reference](/reference), or [getting started guide](/learn/getting_started/quick_start.md).
 
 And of course, **enjoy**!
 

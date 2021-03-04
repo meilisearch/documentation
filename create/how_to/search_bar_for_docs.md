@@ -23,7 +23,7 @@ curl -L https://install.meilisearch.com | sh
 ./meilisearch --master-key=myMasterKey
 ```
 
-There are [other ways to install MeiliSearch](/learn/tutorials/getting_started.md#download-and-launch).
+There are [other ways to install MeiliSearch](/learn/getting_started/quick_start.md#download-and-launch).
 
 MeiliSearch is open-source and can run either on your server or on any cloud provider.
 

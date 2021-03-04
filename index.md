@@ -2,13 +2,13 @@
 
 Welcome to the MeiliSearch documentation. Here you'll find everything you need to learn and create with our **lightning fast search engine**.
 
-[<linkButton text="🚀 GETTING STARTED"/>](/learn/tutorials/getting_started.md)
+[<linkButton text="🚀 GETTING STARTED"/>](/learn/getting_started/quick_start.md)
 
 If you're looking for information on a specific MeiliSearch SDK or front-end integration, you'll find it in our [SDK list](/learn/what_is_meilisearch/sdks.md).
 
 ## Getting Started
 
-**Enjoy a hands-on approach to learning**? Follow a [quick tutorial](/learn/tutorials/getting_started.md) to learn the basics of the engine.
+**Enjoy a hands-on approach to learning**? Follow a [quick tutorial](/learn/getting_started/quick_start.md) to learn the basics of the engine.
 
 **Prefer to learn by reading**? You're not alone. Check out articles covering the most important [core concepts](/learn/core_concepts) of MeiliSearch.
 
