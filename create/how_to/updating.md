@@ -1,6 +1,6 @@
 # Update to the Latest MeiliSearch Version
 
-Currently, MeiliSearch versions [are not compatible with each other](/learn/getting_started/installation.md#updating-meilisearch). The following guide will walk you through all the steps to migrate your database from an older version of MeiliSearch to the most recent one. 
+Currently, MeiliSearch versions [are not compatible with each other](/learn/getting_started/installation.md#updating-meilisearch). The following guide will walk you through all the steps to migrate your database from an older version of MeiliSearch to the most recent one.
 
 If you already have a MeiliSearch database with some data you don’t want to lose, you are in the right place!
 
@@ -20,8 +20,8 @@ If MeiliSearch launched successfully, simply use the [get version endpoint](/ref
 
 Now that you know the version your database is using, proceed accordingly:
 
-- **If your database version is v0.15.0 or above**, continue to the [next section](#updating-from-v0150-or-above).
-- **If your version is v0.14.0 or below**, [go here](#updating-from-v0140-or-below).
+- **If your database version is v0.15.0 or above**, continue to the [next section](#updating-from-v0-15-0-or-above).
+- **If your version is v0.14.0 or below**, [go here](#updating-from-v0-14-0-or-below).
 
 ## Updating from v0.15.0 or above
 
@@ -31,23 +31,23 @@ Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/fea
 
 When creating dumps, MeiliSearch calls the same service as the [`GET /documents` route](/reference/api/documents.md#get-documents). This means that a field must be present in the [displayed-attributes list](/reference/features/field_properties.md#displayed-fields) in order to be saved in the dump.
 
-By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes](/reference/api/displayed_attributes.html#get-displayed-attributes) endpoint: 
+By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes](/reference/api/displayed_attributes.md#get-displayed-attributes) endpoint:
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes" />
 
 If the returned value is `["*"]`, you can move on to the next step.
 
-If not, then you need to use the [reset displayed-attributes](/reference/api/displayed_attributes.html#reset-displayed-attributes) endpoint.
+If not, then you need to use the [reset displayed-attributes](/reference/api/displayed_attributes.md#reset-displayed-attributes) endpoint.
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
 
 ### Step 2: Create the dump
 
-To create a dump, simply use the [create dump endpoint](/reference/api/dump.html#create-a-dump).
+To create a dump, simply use the [create dump endpoint](/reference/api/dump.md#create-a-dump).
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-MeiliSearch will store the dump in your dump directory, by default `dumps/`. You can [modify this directory](/reference/features/configuration.html#dumps-destination) through the command line or an environment variable. 
+MeiliSearch will store the dump in your dump directory, by default `dumps/`. You can [modify this directory](/reference/features/configuration.md#dumps-destination) through the command line or an environment variable.
 
 The server should return a response that looks like this:
 
@@ -58,7 +58,7 @@ The server should return a response that looks like this:
 }
 ```
 
-Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.html#get-dump-status).
+Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 <RouteHighlighter method="GET" route="/dumps/:dump_uid/status"/>
 
@@ -84,9 +84,9 @@ Congratulations! You have successfully migrated your MeiliSearch database to the
 
 ## Updating from v0.14.0 or below
 
-Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as JSON files. 
+Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as JSON files.
 
-If you don’t need to preserve index settings, skip directly to [step 2](#step-2-check-your-settings).
+If you don’t need to preserve index settings, skip directly to [step 2](#step-2-set-all-fields-as-displayed-attributes).
 
 ### Step 1: Save your settings
 
@@ -105,15 +105,15 @@ It is important to first export your settings before exporting documents, since 
 
 ### Step 2: Set all fields as displayed attributes
 
-In order to retrieve all the fields present in your documents, all fields must be set as `displayedAttributes`. 
+In order to retrieve all the fields present in your documents, all fields must be set as `displayedAttributes`.
 
-By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify your settings before continuing. Do so using the [get displayed attributes](/reference/api/displayed_attributes.html#get-displayed-attributes) endpoint: 
+By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify your settings before continuing. Do so using the [get displayed attributes](/reference/api/displayed_attributes.md#get-displayed-attributes) endpoint:
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes"/>
 
 If the returned value is `["*"]`, you can move on to the next step.
 
-If not, use the [reset displayed-attributes](/reference/api/displayed_attributes.html#reset-displayed-attributes) endpoint.
+If not, use the [reset displayed-attributes](/reference/api/displayed_attributes.md#reset-displayed-attributes) endpoint.
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
 

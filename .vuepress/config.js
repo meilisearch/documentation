@@ -181,7 +181,7 @@ module.exports = {
                 },
                 {
                   title: 'Deploy on Qovery',
-                  path: '/create/how_to/qovery'
+                  path: '/create/how_to/qovery',
                 },
               ],
             },

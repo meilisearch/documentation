@@ -115,6 +115,7 @@ MeiliSearch will allocate 100GB on launch. If disk space is an issue on your mac
 ## Cloud Deploy
 
 To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
+
 - [AWS](/create/how_to/aws.md)
 - [DigitalOcean](/create/how_to/digitalocean_droplet.md)
 - [Qovery](/create/how_to/qovery.md)
