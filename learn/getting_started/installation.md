@@ -130,9 +130,7 @@ Getting the latest version of MeiliSearch is a straightforward process: simply f
 
 However, please note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. Therefore, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
 
-If you want to transfer your database from an outdated MeiliSearch instance to the most recent version, we recommend following [the below guide](/learn/getting_started/installation.md#migrating-a-database-to-a-later-version).
-
-If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, simply delete your database folder (defaults to `data.ms`), and re-index all your documents.
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, we recommend following our [dedicated guide](/create/how_to/updating.md).
 
 ### Migrating a Database to a Later Version
 
@@ -140,4 +138,4 @@ Using [dumps](/reference/features/dumps.md), you can export your MeiliSearch dat
 
 Since the content is exported in a way that guarantees mobility, it needs to be re-indexed. If your database is large, this process can take a long time. Nonetheless, this process guarantees **to migrate all settings and documents between two different versions of MeiliSearch**.
 
-If you want a complete guide on how to update MeiliSearch on DigitalOcean, please [look at this GitHub issue](https://github.com/meilisearch/MeiliSearch/discussions/1187#discussioncomment-278125).
+For a complete guide on how to migrate your database to the most recent version, [click here](/create/how_to/updating.md).

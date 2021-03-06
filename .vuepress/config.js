@@ -153,11 +153,7 @@ module.exports = {
               sidebarDepth: 0,
               children: [
                 {
-                  title: 'Install',
-                  path: '/create/how_to/installation',
-                },
-                {
-                  title: 'Update',
+                  title: 'Update MeiliSearch',
                   path: '/create/how_to/updating',
                 },
                 {

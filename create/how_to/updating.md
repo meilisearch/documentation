@@ -1,97 +1,146 @@
 # Update to the Latest MeiliSearch Version
 
-Currently, MeiliSearch versions are not compatible with each other. If you try to use the same database with different versions, you’ll get the following error:
+Currently, MeiliSearch versions [are not compatible with each other](/learn/getting_started/installation.md#updating-meilisearch). The following guide will walk you through all the steps to migrate your database from an older version of MeiliSearch to the most recent one. 
 
-`Error: Cannot open database, expected MeiliSearch engine version: 0.16.XX, current engine version: 0.18.1`
+If you already have a MeiliSearch database with some data you don’t want to lose, you are in the right place!
 
-If you already have a MeiliSearch database with some data you don’t want to lose, you are in the right place. We’ll guide you through all the steps to migrate your data to the most recent version of MeiliSearch.
+## Verify your database version
 
-If your database version is v0.15.0 or above, continue to the next section. If your version is v.14.0 or below, [go here](#upgrading-from-v0140-or-below).
+Before you can begin following this guide, you need to verify your database's **expected MeiliSearch version**, i.e. the version that indexed the data. You can do so by launching a MeiliSearch instance:
 
+```bash
+./meilisearch
+```
 
-## Upgrading from v.015.0 or above
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. Find and download the **expected version** [here](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
 
+If MeiliSearch launched successfully, simply use the [get version endpoint](/reference/api/version.md).
 
-It is very simple to upgrade from v.15.0 or above since the dumps feature is available for those versions. You just need to create a dump, which is sort of a copy of your dataset that can be used with any version of MeiliSearch.
+<RouteHighlighter method="GET" route="/version"/>
 
-### Step 1: Set all fields as displayedAttributes
+Now that you know the version your database is using, proceed accordingly:
 
-When creating dumps, MeiliSearch calls the same service as the GET /documents route.
-Meaning that if a field is not in the displayed-attribute list, it won’t get returned with the document. 
+- **If your database version is v0.15.0 or above**, continue to the [next section](#updating-from-v0150-or-above).
+- **If your version is v0.14.0 or below**, [go here](#updating-from-v0140-or-below).
 
-By default, all fields are considered to be displayedAttributes. But, if you don’t want to lose document information, it is important to check that all fields are set to be displayed. You can verify your setup by making a GET request to the following endpoint: 
+## Updating from v0.15.0 or above
 
-GET /indexes/:index_uid/settings/displayed-attributes
+Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/features/dumps.md), updating is very simple. You just need to **create a dump** using the expected MeiliSearch version, then **import it** using the most recent one.
 
-If the returned value is: ["*"], you are good,
-If not, then you need to reset the displayed-attributes settings to their default value ([*]). You can use the DELETE /indexes/:index_uid/settings/displayed-attributes endpoint.
+### Step 1: Set all fields as displayed attributes
+
+When creating dumps, MeiliSearch calls the same service as the [`GET /documents` route](/reference/api/documents.md#get-documents). This means that a field must be present in the [displayed-attributes list](/reference/features/field_properties.md#displayed-fields) in order to be saved in the dump.
+
+By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes](/reference/api/displayed_attributes.html#get-displayed-attributes) endpoint: 
+
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes" />
+
+If the returned value is `["*"]`, you can move on to the next step.
+
+If not, then you need to use the [reset displayed-attributes](/reference/api/displayed_attributes.html#reset-displayed-attributes) endpoint.
+
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
 
 ### Step 2: Create the dump
 
-To create a dump you just have to make a POST request to the following endpoint /dumps.
-MeiliSearch will create a dumps/ folder to store the created dump. You can modify the dumps destination by specifying the route of the directory of your choice in the command line or through an environment variable, when starting the process. 
+To create a dump, simply use the [create dump endpoint](/reference/api/dump.html#create-a-dump).
 
-The server will then return a response that should like like this:
+<RouteHighlighter method="POST" route="/dumps"/>
 
-{"uid":"20210212-151153878","status":"in_progress"}
+MeiliSearch will store the dump in your dump directory, by default `dumps/`. You can [modify this directory](/reference/features/configuration.html#dumps-destination) through the command line or an environment variable. 
 
-Since the dump creation is an asynchronous process, it may take some time. That’s why the uid comes in handy to know the process status. 
-You can make a GET /dumps/:dump_uid/status request.
-And you’ll know if it’s still “in progress”, “done” or if some problem occurred.
+The server should return a response that looks like this:
+
+```json
+{
+  "uid": "20210212-151153878",
+  "status": "in_progress"
+}
+```
+
+Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.html#get-dump-status).
+
+<RouteHighlighter method="GET" route="/dumps/:dump_uid/status"/>
+
+This process can take some time. Once the status is `"done"`, move on to the next step.
 
 ### Step 3: Import the dump
 
-Now that you’ve got your dump, you just need to install the latest version of MeiliSearch and import the dump at launch, like so:
+Now that you’ve got your dump, you just need to [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and import the dump at launch, like so:
 
-./meilisearch --import-dump /dumps/20210212-151153878.dump
+```bash
+# Install MeiliSearch in the local directory
+curl -L https://install.meilisearch.com | sh
 
-Importing a dump is the same process as indexing documents for the first time, it can require some time and memory. You may want to make batches to import your dumps. You can set the batch size through a CLI option: 
---dump-batch-size 
-Or an environment variable: MEILI_DUMP_BATCH_SIZE
-The default size iis 1024 documents per batch.
+# Launch MeiliSearch and import the specified dump file
+./meilisearch --import-dump /dumps/name_of_your_dump.dump
+```
 
-Finally, don’t forget to set the displayedAttributes to their previous value, if needed.
+> Importing a dump is the same process as indexing documents. This can take some time and cause a spike in RAM usage. To save RAM, use a [smaller batch size](/reference/features/configuration.md#dump-batch-size).
 
-## Upgrading from v.014.0 or below
+Finally, don’t forget to set `displayedAttributes` back to its previous value, if necessary.
 
-Since dumps didn’t exist back then, the best solution would be to save your documents and your settings in JSON files. 
+Congratulations! You have successfully migrated your MeiliSearch database to the latest version! 🎉
 
-If you don’t have any particular setting you want to keep, you can move to step 2.
+## Updating from v0.14.0 or below
+
+Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as JSON files. 
+
+If you don’t need to preserve index settings, skip directly to [step 2](#step-2-check-your-settings).
 
 ### Step 1: Save your settings
 
-First of all, we need to retrieve the settings using the GET /settings endpoint. It is important to first get the settings and then the documents because you might need to modify the settings to retrieve the documents in their entirety. You can get the settings and save them to a file using the method you prefer, for simplicity reasons, we are going to use curl in this example:
+First, use the [get settings](/reference/api/settings.md#get-settings) endpoint to retrieve the [settings](/reference/features/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
 
-curl -X GET “http://127.0.0.1:7700/indexes/:index_uid/settings” -o mysettings.json 
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings"/>
 
-Note: cURL can be instructed to save data into a local file, with the -o option (-o stands for output)
+For simplicity's sake, this example uses cURL.
 
-### Step 2: Check your settings 
+```bash
+# the -o option saves the output as a local file
+curl -X GET “http://127.0.0.1:7700/indexes/:index_uid/settings” -o mysettings.json
+```
 
-In order to save all the information present in the documents. All fields must be set as displayedAttributes. 
+It is important to first export your settings before exporting documents, since retrieving the documents in their entirety may require modifying the settings.
 
-You can verify your setup by making a GET request to the following endpoint: 
+### Step 2: Set all fields as displayed attributes
 
-GET /indexes/:index_uid/settings/displayed-attributes
+In order to retrieve all the fields present in your documents, all fields must be set as `displayedAttributes`. 
 
-If the returned value is: ["*"],  all attributes are set as displayed, you can continue to step 3.
+By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify your settings before continuing. Do so using the [get displayed attributes](/reference/api/displayed_attributes.html#get-displayed-attributes) endpoint: 
 
-If not, then you might want to reset the displayed-attributes settings to their default value (all). To do so, you just have to make a DELETE /settings/displayed-attributes request.
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes"/>
 
-Now that all fields are included in the displayedAttributes. You can proceed to save the documents, without risking any information loss.
+If the returned value is `["*"]`, you can move on to the next step.
 
-### Step 3: Save the documents
+If not, use the [reset displayed-attributes](/reference/api/displayed_attributes.html#reset-displayed-attributes) endpoint.
 
-You can request your documents and save them in a file. An easy way to do so is using curl:
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
 
+Now that all fields are **displayed**, you can proceed to save your documents without risking any information loss.
+
+### Step 3: Save your documents
+
+Use a GET request to retrieve your documents and save them using the method you prefer.
+
+<RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
+
+cURL provides an easy option for exporting the results of an API call:
+
+```bash
+# the -o option saves the output as a local file
 curl -X GET “http://127.0.0.1:7700/indexes/:index_uid/documents” -o mydocuments.json
-
+```
 
 ### Step 4: Upload your data to the latest version of MeiliSearch
 
-Finally, you can install the latest version of MeiliSearch and upload your data as usual.
-If you saved your settings, the addition should be done in a particular order:
-upload your settings
-add your documents
+Finally, [install the latest version of MeiliSearch](/learn/getting_started/installation.md) and upload your data as usual.
 
-This order is crucial to indexation speed.
+If you chose to save your settings, make sure to follow this order:
+
+1. [Update your settings](/reference/api/settings.md#update-settings)
+2. [Add your documents](/reference/api/documents.md#add-or-replace-documents)
+
+This order prevents double indexing and will save time and memory.
+
+Congratulations! You have successfully migrated your MeiliSearch database to the latest version! 🎉
