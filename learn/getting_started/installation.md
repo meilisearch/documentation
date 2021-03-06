@@ -1,11 +1,11 @@
 # Installation
 
-## Download and launch
+## Download and Launch
 
 :::: tabs
 
 ::: tab cURL
-Download the **latest stable release** of MeiliSearch with **curl**.
+Download the **latest stable release** of MeiliSearch with **cURL**.
 
 Launch MeiliSearch to start the server.
 
@@ -96,21 +96,28 @@ cargo build --release
 
 ::::
 
-After launching MeiliSearch, you should see the following response:
+::: tip Compile for Best Performance
+For best performance, compile MeiliSearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
+:::
 
-```
-888b     d888          d8b 888 d8b  .d8888b.                                    888
-8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
-88888b.d88888              888     Y88b.                                        888
-888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
+::: details MeiliSearch on M1 Mac
+At this time, MeiliSearch may not compile on M1 Macs. If you have issues installing MeiliSearch, please [create an issue](https://github.com/meilisearch/MeiliSearch/issues/new/choose) so we can improve our software!
+:::
 
-Database path:       "./data.ms"
-Server listening on: "127.0.0.1:7700"
-```
+::: details MeiliSearch on Windows
+To install MeiliSearch on Windows, use Docker or compile from the source.
+
+A common compilation error (`"link.exe not found"`) can be solved by installing [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/) (scroll down and click on **Tools for Visual Studio 2019**).
+
+MeiliSearch will allocate 100GB on launch. If disk space is an issue on your machine, adjust the [main database](/reference/features/configuration.md#max-mdb-size) and [update database](/reference/features/configuration.md#max-udb-size) maximums accordingly.
+:::
+
+## Cloud Deploy
+
+To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
+- [AWS](/create/how_to/aws.md)
+- [DigitalOcean](/create/how_to/digitalocean_droplet.md)
+- [Qovery](/create/how_to/qovery.md)
 
 ## Configuration Options
 
@@ -128,7 +135,7 @@ Here is a list of [all the options and how to use them](/reference/features/conf
 
 Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [installation](/learn/getting_started/installation.md#download-and-launch) above).
 
-However, please note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. Therefore, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
+However, please note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. In other words, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
 
 If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, we recommend following our [dedicated guide](/create/how_to/updating.md).
 

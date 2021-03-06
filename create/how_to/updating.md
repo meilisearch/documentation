@@ -6,7 +6,7 @@ If you already have a MeiliSearch database with some data you don’t want to lo
 
 ## Verify your database version
 
-Before you can begin following this guide, you need to verify your database's **expected MeiliSearch version**, i.e. the version that indexed the data. You can do so by launching a MeiliSearch instance:
+Before we begin, you need to verify your database's **expected MeiliSearch version**, i.e. the version that indexed the data. You can do so by launching a MeiliSearch instance:
 
 ```bash
 ./meilisearch

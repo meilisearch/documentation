@@ -230,7 +230,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 - On **UNIX** it is the maximum size.
 - On **Windows** it is a fixed size that will be allocated on launch.
-  Because this allocates 100Gb on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
+  Because this allocates 100GiB on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
 
 [To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
 
@@ -254,7 +254,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 - On **UNIX** it is the maximum size.
 - On **Windows** it is a fixed size that will be allocated on launch.
-  Because this allocates 100Gb on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
+  Because this allocates 100GiB on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
 
 [To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
 
