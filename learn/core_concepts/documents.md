@@ -112,13 +112,13 @@ Each index recognizes **only one** primary key attribute. Once a primary key has
 
 #### Setting the primary key
 
-There are several ways for MeiliSearch to know which field is the primary key.
+There are several ways to set the primary key for an index:
 
 - You can set it manually [on index creation](/reference/api/indexes.md#create-an-index)
 - You can set it manually [on document addition](/reference/api/documents.md#add-or-replace-documents)
-- MeiliSearch can [automatically infer the primary key](/learn/core_concepts/documents.md#meilisearch-infers-your-primary-key) based on your first document.
+- If no primary key is set, MeiliSearch automatically [guesses the primary key](/learn/core_concepts/documents.md#meilisearch-guesses-your-primary-key) when you add documents.
 
-#### MeiliSearch infers your primary key
+#### MeiliSearch guesses your primary key
 
 If the primary key has neither been set at index creation nor as a parameter of the add documents route, MeiliSearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
 
