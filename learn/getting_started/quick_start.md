@@ -65,7 +65,7 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 [API references](/reference/api/documents.md)
 
-### Checking updates
+### Checking Updates
 
 Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_updates.md), including the document addition process.
 
