@@ -180,20 +180,43 @@ Until our first stable release (v1.0), MeiliSearch minor versions are not compat
 
 ## What are the recommended requirements for hosting a MeiliSearch instance?
 
-**Short answer**: It's impossible to say. We recommend [experimenting with RAM availability and database size](#how-does-hardware-affect-search-speed) to find the hardware + relevancy setup that works best for your dataset.
+### Short Answer
 
-**Long answer**: The disk size and RAM usage of your MeiliSearch database can vary widely. The following factors have a great effect on space and memory use:
+It's extremely difficult to accurately estimate the size and memory use of a MeiliSearch database, even knowing the size of the `.JSON` files. There's just too much complexity involved in the indexing process. For a benchmark and more thorough explanation, [go here](/reference/under_the_hood/storage.md#measured-disk-usage).
+
+We recommend reading [the long answer below](#long-answer) to find the setup that works best for your needs.
+
+### Long Answer
+
+#### Memory Use
+
+When it comes to RAM, there are two things that can cause your usage to spike:
+
+1. Adding documents
+2. Updating index settings (if index contains documents)
+
+To reduce RAM usage, follow this best practice: always update index settings **before** adding your documents.
+
+:::tip
+MeiliSearch's new engine (release date: sometime in 2021) will allow you to set a limit on how much RAM MeiliSearch uses.
+:::
+
+#### Disk Use
+
+The following factors have a great impact on the size of your database (in no particular order):
 
 - The number of documents
 - The size of documents
-- The number of indexed fields
+- The number of searchable fields
 - The number of faceted fields
 - The size of each update
-- The number of different words present in documents (beware heavily multi-lingual datasets and fields with unique words, such as IDs)
+- The number of different words present in the dataset
+  
+:::tip
+Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes).
+:::
 
-All of this means that **it's almost impossible to estimate the size and memory usage of a MeiliSearch database** before creation, even based on the size of its documents. There are, however, a few [general principles](#how-does-hardware-affect-search-speed) you should know.
-
-## How does hardware affect search speed?
+#### How does hardware affect search speed?
 
 Because MeiliSearch uses a [memory map](/reference/under_the_hood/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
 
@@ -208,7 +231,7 @@ At this time, the number of CPU cores has no direct impact on index or search sp
 Our new engine (currently in development) **will support multi-core indexing at launch**.
 :::
 
-### Speeding Up MeiliSearch
+#### Speeding Up MeiliSearch
 
 MeiliSearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your MeiliSearch instance is querying slowly, there are two primary methods to speed it up:
 
