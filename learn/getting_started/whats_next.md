@@ -18,4 +18,4 @@ And additional resources here:
 - [How-To Guides](/create/how_to)
 - [Postman Collection](/create/how_to/postman_collection.md): it can be tedious to re-write every route when wanting to try out an API. Try out MeiliSearch with our collection in Postman
 
-More tutorials are currently in development and will be available soon.
+More tutorials are currently in development and will be available soon. If you want to suggest a tutorial, please [create an issue](https://github.com/meilisearch/devrel/issues/new) in the [Developer Relations repository](https://github.com/meilisearch/devrel/).
