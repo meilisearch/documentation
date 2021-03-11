@@ -88,7 +88,7 @@ Failing to upload document:
 
 ## Terminate MeiliSearch While a Task is Processing
 
-In the rare cases where you would need to terminate MeiliSearch, since the asynchronous tasks are <clientGlossary word="atomic"/>, terminating MeiliSearch in the middle of a process does not corrupt or alter the database.
+In the rare cases when you need to terminate MeiliSearch in the middle of a process, know that it will not corrupt or alter the database in any way. This is because MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>.
 
 Essentially, tasks are done in transactions. If the transaction fails or is killed for any reason before completing, none of the tasks will be committed to your database.
 
