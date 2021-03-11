@@ -12,15 +12,13 @@ Before we begin, you need to verify your database's **expected MeiliSearch versi
 ./meilisearch
 ```
 
-If MeiliSearch launches successfully, simply use the [get version endpoint](/reference/api/version.md) and [proceed to the next step](#proceed-according-to-your-database-version).
+If MeiliSearch launches successfully, use the [get version endpoint](/reference/api/version.md) and [proceed to the next step](#proceed-according-to-your-database-version).
 
 ```bash
-curl -X GET “http://127.0.0.1:7700/version"
+curl -X GET 'http://127.0.0.1:7700/version'
 ```
 
-If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. You need to download the expected version and use that to launch your database.
-
-This step is different depending on which tool you used to download MeiliSearch.
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, **your database is not compatible with the currently installed MeiliSearch version**. You need to download the expected version and use that instead.
 
 :::: tabs
 
@@ -86,21 +84,27 @@ Now that you know the version your database is using, proceed accordingly:
 
 ## Updating from v0.15.0 or above
 
-Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/features/dumps.md), updating is very simple. You just need to **create a dump** using the expected MeiliSearch version, then **import it** using the most recent one.
+Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/features/dumps.md), updating is very simple.
+
+You just need to:
+1. **Create a dump** using the *expected* MeiliSearch version.
+2. **Import it** using the *most recent* MeiliSearch version.
 
 ### Step 1: Set all fields as displayed attributes
 
-When creating dumps, MeiliSearch calls the same service as the [`GET /documents` route](/reference/api/documents.md#get-documents). This means that a field must be present in the [displayed-attributes list](/reference/features/field_properties.md#displayed-fields) in order to be saved in the dump.
+When creating dumps, MeiliSearch calls the same method as the [GET documents endpoint](/reference/api/documents.md#get-documents). This means that a field must be present in the [displayed attributes list](/reference/features/field_properties.md#displayed-fields) in order to be included in the dump.
 
-By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes](/reference/api/displayed_attributes.md#get-displayed-attributes) endpoint:
+By default, all fields are added to `displayedAttributes`. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes" />
+```bash
+curl -X GET 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+```
 
-If the returned value is `["*"]`, you can move on to the next step.
+If the returned value is `["*"]`, you can move on to the [next step](#step-2-create-the-dump). If not, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes).
 
-If not, then you need to use the [reset displayed-attributes](/reference/api/displayed_attributes.md#reset-displayed-attributes) endpoint.
-
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
+```bash
+curl -X DELETE 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+```
 
 ### Step 2: Create the dump
 
@@ -118,7 +122,7 @@ which meilisearch
 To create a dump, simply use the [create dump endpoint](/reference/api/dump.md#create-a-dump).
 
 ```bash
-curl -X POST "http://127.0.0.1:7700/dumps"
+curl -X POST 'http://127.0.0.1:7700/dumps'
 ```
 
 The server should return a response that looks like this:
@@ -133,7 +137,7 @@ The server should return a response that looks like this:
 Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 ```bash
-curl -X GET "http://127.0.0.1:7700/dumps/:dump_uid/status"
+curl -X GET 'http://127.0.0.1:7700/dumps/:dump_uid/status'
 ```
 
 This process can take some time. Once the status is `"done"`, move on to the next step.
@@ -144,10 +148,10 @@ Now that you’ve got your dump, you just need to [install the latest version of
 
 ```bash
 # Launch MeiliSearch and import the specified dump file
-./meilisearch --import-dump /dumps/name_of_your_dump.dump
+./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
-> Importing a dump is the same process as indexing documents. This can take some time and cause a spike in RAM usage. To save RAM, use a [smaller batch size](/reference/features/configuration.md#dump-batch-size).
+> Importing a dump is the same process as indexing documents. This can take time and cause a spike in RAM usage. To save RAM, use a [smaller batch size](/reference/features/configuration.md#dump-batch-size).
 
 Finally, don’t forget to set `displayedAttributes` back to its previous value, if necessary.
 
@@ -155,48 +159,49 @@ Congratulations! You have successfully migrated your MeiliSearch database to the
 
 ## Updating from v0.14.0 or below
 
-Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as JSON files.
+Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as `.JSON` files.
 
 If you don’t need to preserve index settings, skip directly to [step 2](#step-2-set-all-fields-as-displayed-attributes).
 
 ### Step 1: Save your settings
 
-First, use the [get settings](/reference/api/settings.md#get-settings) endpoint to retrieve the [settings](/reference/features/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
-
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings"/>
-
-For simplicity's sake, this example uses cURL.
+First, use the [get settings endpoint](/reference/api/settings.md#get-settings) to retrieve the [settings](/reference/features/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
 
 ```bash
 # the -o option saves the output as a local file
-curl -X GET “http://127.0.0.1:7700/indexes/:index_uid/settings” -o mysettings.json
+curl -X GET 'http://127.0.0.1:7700/indexes/:index_uid/settings' -o mysettings.json
 ```
 
-It is important to first export your settings before exporting documents, since retrieving the documents in their entirety may require modifying the settings.
+Repeat this process for all indexes you wish to migrate.
+
+**It is important to save your settings before exporting documents**, since the next step may require you to modify the settings.
 
 ### Step 2: Set all fields as displayed attributes
 
-In order to retrieve all the fields present in your documents, all fields must be set as `displayedAttributes`.
+To prevent data loss, all fields must be set as [displayed](/reference/features/field_properties.md#displayed-fields).
 
-By default, all fields are included in `displayedAttributes`. Still, it's a good idea to verify your settings before continuing. Do so using the [get displayed attributes](/reference/api/displayed_attributes.md#get-displayed-attributes) endpoint:
+By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes"/>
+```bash
+curl -X GET 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+```
 
-If the returned value is `["*"]`, you can move on to the next step.
+If the returned value is `["*"]`, you can move on to the [next step](#step-2-create-the-dump). If not, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes).
 
-If not, use the [reset displayed-attributes](/reference/api/displayed_attributes.md#reset-displayed-attributes) endpoint.
+```bash
+curl -X DELETE 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+```
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
-
-Now that all fields are **displayed**, you can proceed to save your documents without risking any information loss.
+Now that all fields are displayed, you can proceed to the next step.
 
 ### Step 3: Save your documents
 
-Use the [GET documents endpoint](/reference/api/documents.md#get-documents) to retrieve your documents and save them using the method you prefer. Make sure to set the limit parameter so that, if you have `n` documents, `limit ≥ n`.
+Use the [get documents endpoint](/reference/api/documents.md#get-documents) to retrieve your documents and save them using the method you prefer. Make sure to set the `limit` parameter so that, if you have `n` documents, `limit ≥ n`. Otherwise, you risk data loss.
 
 ```bash
 # the -o option saves the output as a local file
-curl -X GET “http://127.0.0.1:7700/indexes/:index_uid/documents?limit=n” -o mydocuments.json
+curl -X GET 'http://127.0.0.1:7700/indexes/:index_uid/documents?limit=n' \
+  -o mydocuments.json
 ```
 
 ### Step 4: Upload your data to the latest version of MeiliSearch
@@ -205,9 +210,16 @@ Finally, [install the latest version of MeiliSearch](/learn/getting_started/inst
 
 If you chose to save your settings, make sure to follow this order:
 
-1. [Update your settings](/reference/api/settings.md#update-settings)
-2. [Add your documents](/reference/api/documents.md#add-or-replace-documents)
+```bash
+# Update your settings
+curl -X POST -H "Content-Type: application/json" -d @mysettings.json \
+  'http://127.0.0.1:7700/indexes/:index_uid/settings'
 
-This order prevents double indexing and will save time and memory.
+# Then, add your documents
+curl -X POST -H "Content-Type: application/json" -d @mydocuments.json \
+  'http://127.0.0.1:7700/indexes/:index_uid/documents'
+```
+
+Since updating the settings requires re-indexing all documents, this order saves time and memory.
 
 Congratulations! You have successfully migrated your MeiliSearch database to the latest version! 🎉
