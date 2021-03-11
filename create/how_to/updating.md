@@ -87,6 +87,7 @@ Now that you know the version your database is using, proceed accordingly:
 Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/features/dumps.md), updating is very simple.
 
 You just need to:
+
 1. **Create a dump** using the *expected* MeiliSearch version.
 2. **Import it** using the *most recent* MeiliSearch version.
 
@@ -97,13 +98,15 @@ When creating dumps, MeiliSearch calls the same method as the [GET documents end
 By default, all fields are added to `displayedAttributes`. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
 ```bash
-curl -X GET 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+curl -X GET \
+  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
 If the returned value is `["*"]`, you can move on to the [next step](#step-2-create-the-dump). If not, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes).
 
 ```bash
-curl -X DELETE 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+curl -X DELETE \
+  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
 ### Step 2: Create the dump
@@ -169,7 +172,8 @@ First, use the [get settings endpoint](/reference/api/settings.md#get-settings) 
 
 ```bash
 # the -o option saves the output as a local file
-curl -X GET 'http://127.0.0.1:7700/indexes/:index_uid/settings' -o mysettings.json
+curl -X GET \
+  'http://127.0.0.1:7700/indexes/:index_uid/settings' -o mysettings.json
 ```
 
 Repeat this process for all indexes you wish to migrate.
@@ -183,13 +187,15 @@ To prevent data loss, all fields must be set as [displayed](/reference/features/
 By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
 ```bash
-curl -X GET 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+curl -X GET \
+  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
 If the returned value is `["*"]`, you can move on to the [next step](#step-2-create-the-dump). If not, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes).
 
 ```bash
-curl -X DELETE 'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+curl -X DELETE \
+  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
 Now that all fields are displayed, you can proceed to the next step.
