@@ -12,11 +12,72 @@ Before we begin, you need to verify your database's **expected MeiliSearch versi
 ./meilisearch
 ```
 
-If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. Find and download the **expected version** [here](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
+If MeiliSearch launches successfully, simply use the [get version endpoint](/reference/api/version.md) and [proceed to the next step](#proceed-according-to-your-database-version).
 
-If MeiliSearch launched successfully, simply use the [get version endpoint](/reference/api/version.md).
+```bash
+curl -X GET “http://127.0.0.1:7700/version"
+```
 
-<RouteHighlighter method="GET" route="/version"/>
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. You need to download the expected version and use that to launch your database.
+
+This step is different depending on which tool you used to download MeiliSearch.
+
+:::: tabs
+
+::: tab cURL
+If you downloaded MeiliSearch using curl, find and download the **expected version** [here](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
+:::
+
+::: tab Homebrew
+
+```bash
+brew install meilisearch@0.X.X
+```
+
+:::
+
+::: tab Source
+
+```bash
+# Clone MeiliSearch and checkout the branch of the expected version
+git clone https://github.com/meilisearch/MeiliSearch
+cd MeiliSearch
+git checkout v0.X.X
+
+# Update the rust toolchain to the latest version
+rustup update
+
+# Compile the project
+cargo build --release
+
+# Execute the server binary
+./target/release/meilisearch
+```
+
+:::
+
+::: tab APT
+
+```bash
+apt-get install meilisearch=0.X.X
+```
+
+:::
+
+::: tab Docker
+
+```bash
+docker run -it --rm \
+    -p 7700:7700 \
+    -v $(pwd)/data.ms:/data.ms \
+    getmeili/meilisearch:v0.X.X
+```
+
+:::
+
+::::
+
+## Proceed according to your database version
 
 Now that you know the version your database is using, proceed accordingly:
 
@@ -43,11 +104,22 @@ If not, then you need to use the [reset displayed-attributes](/reference/api/dis
 
 ### Step 2: Create the dump
 
+Before creating your dump, verify that your [dump directory](/reference/features/configuration.md#dumps-destination) is somewhere accessible to you. By default this is a folder called `dumps` at the root of your MeiliSearch directory, but can be modified at launch.
+
+::: tip
+If you're unsure where your MeiliSearch directory is located, try this:
+
+```bash
+which meilisearch
+```
+
+:::
+
 To create a dump, simply use the [create dump endpoint](/reference/api/dump.md#create-a-dump).
 
-<RouteHighlighter method="POST" route="/dumps"/>
-
-MeiliSearch will store the dump in your dump directory, by default `dumps/`. You can [modify this directory](/reference/features/configuration.md#dumps-destination) through the command line or an environment variable.
+```bash
+curl -X POST "http://127.0.0.1:7700/dumps"
+```
 
 The server should return a response that looks like this:
 
@@ -60,7 +132,9 @@ The server should return a response that looks like this:
 
 Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
-<RouteHighlighter method="GET" route="/dumps/:dump_uid/status"/>
+```bash
+curl -X GET "http://127.0.0.1:7700/dumps/:dump_uid/status"
+```
 
 This process can take some time. Once the status is `"done"`, move on to the next step.
 
@@ -69,9 +143,6 @@ This process can take some time. Once the status is `"done"`, move on to the nex
 Now that you’ve got your dump, you just need to [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and import the dump at launch, like so:
 
 ```bash
-# Install MeiliSearch in the local directory
-curl -L https://install.meilisearch.com | sh
-
 # Launch MeiliSearch and import the specified dump file
 ./meilisearch --import-dump /dumps/name_of_your_dump.dump
 ```
@@ -121,15 +192,11 @@ Now that all fields are **displayed**, you can proceed to save your documents wi
 
 ### Step 3: Save your documents
 
-Use a GET request to retrieve your documents and save them using the method you prefer.
-
-<RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
-
-cURL provides an easy option for exporting the results of an API call:
+Use the [GET documents endpoint](/reference/api/documents.md#get-documents) to retrieve your documents and save them using the method you prefer. Make sure to set the limit parameter so that, if you have `n` documents, `limit ≥ n`.
 
 ```bash
 # the -o option saves the output as a local file
-curl -X GET “http://127.0.0.1:7700/indexes/:index_uid/documents” -o mydocuments.json
+curl -X GET “http://127.0.0.1:7700/indexes/:index_uid/documents?limit=n” -o mydocuments.json
 ```
 
 ### Step 4: Upload your data to the latest version of MeiliSearch

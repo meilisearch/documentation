@@ -94,22 +94,22 @@ cargo build --release
 
 :::
 
-::::
-
-::: tip Compile for Best Performance
-For best performance, compile MeiliSearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
-:::
-
-::: details MeiliSearch on M1 Mac
-At this time, MeiliSearch may not compile on M1 Macs. If you have issues installing MeiliSearch, please [create an issue](https://github.com/meilisearch/MeiliSearch/issues/new/choose) so we can improve our software!
-:::
-
-::: details MeiliSearch on Windows
+::: tab Windows
 To install MeiliSearch on Windows, use Docker or compile from the source.
 
 A common compilation error (`"link.exe not found"`) can be solved by installing [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/) (scroll down and click on **Tools for Visual Studio 2019**).
 
 MeiliSearch will allocate 100GB on launch. If disk space is an issue on your machine, adjust the [main database](/reference/features/configuration.md#max-mdb-size) and [update database](/reference/features/configuration.md#max-udb-size) maximums accordingly.
+:::
+
+::: tab M1 Mac
+At this time, MeiliSearch may not compile on M1 Macs. If you have problems installing MeiliSearch, please [create an issue](https://github.com/meilisearch/MeiliSearch/issues/new/choose) so we can improve our software!
+:::
+
+::::
+
+::: tip Compile for Best Performance
+For best performance, compile MeiliSearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
 :::
 
 ## Cloud Deploy
