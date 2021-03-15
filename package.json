@@ -31,8 +31,8 @@
   "author": "tpayet",
   "license": "MIT",
   "dependencies": {
-    "@popperjs/core": "^2.9.0",
-    "mermaid": "8.9.1",
+    "@popperjs/core": "^2.9.1",
+    "mermaid": "8.9.2",
     "moment": "^2.29.1",
     "vue-eslint-parser": "^7.6.0",
     "vuepress": "^1.8.2",
@@ -51,7 +51,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "bent": "^7.3.12",
-    "eslint": "^7.21.0",
+    "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
