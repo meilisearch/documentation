@@ -32,7 +32,7 @@ All you need to create an issue is a [GitHub account](https://github.com).
 2. Go to the MeiliSearch [Documentation repository](https://github.com/meilisearch/documentation).
 3. Click on "Issues".
 4. Click "New issue".
-5. Fill in a short, descriptive title and longer description summarizing the problem or suggestion.
+5. Fill in a short, descriptive title and longer summary of your problem or suggestion.
 6. Click "Submit new issue".
 7. Enjoy the feeling of a job well done! 🎉
 
