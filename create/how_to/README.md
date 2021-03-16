@@ -10,6 +10,7 @@ How to:
 
 - [Run MeiliSearch in Production](/create/how_to/running_production.md)
 - [Integrate a Relevant Search Bar to Your Documentation](/create/how_to/search_bar_for_docs.md)
+- [Deploy MeiliSearch on Qovery](/create/how_to/qovery.md)
 - [Deploy MeiliSearch on DigitalOcean](/create/how_to/digitalocean_droplet.md)
 - [Deploy MeiliSearch on AWS](/create/how_to/aws.md)
 - [Use HTTP/2 and SSL with MeiliSearch](/create/how_to/http2_ssl.md)
