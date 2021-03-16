@@ -124,7 +124,7 @@ curl -X GET \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-If the response is `'displayedAttributes': '["*"]'`, you can move on to the [next step](#step-2-create-the-dump).
+If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
 
 If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
@@ -157,7 +157,7 @@ If you're unsure where your MeiliSearch directory is located, try this:
 which meilisearch
 ```
 
-The return should look like this:
+It should return something like this:
 
 ```bash
 /absolute/path/to/your/meilisearch/directory
@@ -172,7 +172,7 @@ The return should look like this:
 where meilisearch
 ```
 
-The return should look like this:
+It should return something like this:
 
 ```bash
 /absolute/path/to/your/meilisearch/directory
@@ -262,7 +262,7 @@ curl -X GET \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-If the response is `'displayedAttributes': '["*"]'`, you can move on to the [next step](#step-2-create-the-dump).
+If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
 
 If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
