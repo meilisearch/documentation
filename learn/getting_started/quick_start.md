@@ -1,8 +1,8 @@
-# Getting Started
+# Quick Start
 
 This quick tour will help you get started with MeiliSearch in only a few steps.
 
-## Download and launch
+## Download and Launch
 
 First of all, let's download and run MeiliSearch.
 

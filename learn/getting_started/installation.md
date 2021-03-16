@@ -102,10 +102,6 @@ A common compilation error (`"link.exe not found"`) can be solved by installing 
 MeiliSearch will allocate 100GB on launch. If disk space is an issue on your machine, adjust the [main database](/reference/features/configuration.md#max-mdb-size) and [update database](/reference/features/configuration.md#max-udb-size) maximums accordingly.
 :::
 
-::: tab M1 Mac
-At this time, MeiliSearch may not compile on M1 Macs. If you have problems installing MeiliSearch, please [create an issue](https://github.com/meilisearch/MeiliSearch/issues/new/choose) so we can improve our software!
-:::
-
 ::::
 
 ::: tip Compile for Best Performance
@@ -134,16 +130,10 @@ Here is a list of [all the options and how to use them](/reference/features/conf
 
 ## Updating MeiliSearch
 
-Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [installation](/learn/getting_started/installation.md#download-and-launch) above).
+Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [Installation](/learn/getting_started/installation.md#download-and-launch) above).
 
-However, please note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. In other words, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
+However, please note that **prior to our official release (`v1.0`), databases are not compatible across versions**. Any database created by MeiliSearch `v0.X` can only be read by that version.
 
-If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, we recommend following our [dedicated guide](/create/how_to/updating.md).
+### Migrating Your Database to a Later Version
 
-### Migrating a Database to a Later Version
-
-Using [dumps](/reference/features/dumps.md), you can export your MeiliSearch data—all indexes, documents, and settings contained in your database—into a transferrable state. Then, you can re-import this data after updating MeiliSearch to the latest version.
-
-Since the content is exported in a way that guarantees mobility, it needs to be re-indexed. If your database is large, this process can take a long time. Nonetheless, this process guarantees **to migrate all settings and documents between two different versions of MeiliSearch**.
-
-For a complete guide on how to migrate your database to the most recent version, [click here](/create/how_to/updating.md).
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, follow our [dedicated guide](/create/how_to/updating.md).
