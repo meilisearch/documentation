@@ -165,11 +165,24 @@ It should return something like this:
 
 :::
 
-::: tab Windows
+::: tab Windows CMD
 
 ```bash
-# if using PowerShell, replace where with where.exe
 where meilisearch
+```
+
+It should return something like this:
+
+```bash
+/absolute/path/to/your/meilisearch/directory
+```
+
+:::
+
+::: tab Windows PowerShell
+
+```bash
+(Get-Command meilisearch).Path
 ```
 
 It should return something like this:
