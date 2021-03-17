@@ -1,11 +1,11 @@
 # Installation
 
-## Download and launch
+## Download and Launch
 
 :::: tabs
 
 ::: tab cURL
-Download the **latest stable release** of MeiliSearch with **curl**.
+Download the **latest stable release** of MeiliSearch with **cURL**.
 
 Launch MeiliSearch to start the server.
 
@@ -94,23 +94,27 @@ cargo build --release
 
 :::
 
+::: tab Windows
+To install MeiliSearch on Windows, use Docker or compile from the source.
+
+A common compilation error (`"link.exe not found"`) can be solved by installing [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/) (scroll down and click on **Tools for Visual Studio 2019**).
+
+MeiliSearch will allocate 100GB on launch. If disk space is an issue on your machine, adjust the [main database](/reference/features/configuration.md#max-mdb-size) and [update database](/reference/features/configuration.md#max-udb-size) maximums accordingly.
+:::
+
 ::::
 
-After launching MeiliSearch, you should see the following response:
+::: tip Compile for Best Performance
+For best performance, compile MeiliSearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
+:::
 
-```
-888b     d888          d8b 888 d8b  .d8888b.                                    888
-8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
-88888b.d88888              888     Y88b.                                        888
-888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
+## Cloud Deploy
 
-Database path:       "./data.ms"
-Server listening on: "127.0.0.1:7700"
-```
+To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
+
+- [AWS](/create/how_to/aws.md)
+- [DigitalOcean](/create/how_to/digitalocean_droplet.md)
+- [Qovery](/create/how_to/qovery.md)
 
 ## Configuration Options
 
@@ -126,18 +130,10 @@ Here is a list of [all the options and how to use them](/reference/features/conf
 
 ## Updating MeiliSearch
 
-Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [installation](/learn/getting_started/installation.md#download-and-launch) above).
+Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [Installation](/learn/getting_started/installation.md#download-and-launch) above).
 
-However, please note that prior to our official release (`v1.0`), all minor updates (`v0.X`) are considered breaking. Therefore, **MeiliSearch databases are not compatible across versions** for as long as we are in beta.
+However, please note that **prior to our official release (`v1.0`), databases are not compatible across versions**. Any database created by MeiliSearch `v0.X` can only be read by that version.
 
-If you want to transfer your database from an outdated MeiliSearch instance to the most recent version, we recommend following [the below guide](/learn/getting_started/installation.md#migrating-a-database-to-a-later-version).
+### Migrating Your Database to a Later Version
 
-If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, simply delete your database folder (defaults to `data.ms`), and re-index all your documents.
-
-### Migrating a Database to a Later Version
-
-Using [dumps](/reference/features/dumps.md), you can export your MeiliSearch data—all indexes, documents, and settings contained in your database—into a transferrable state. Then, you can re-import this data after updating MeiliSearch to the latest version.
-
-Since the content is exported in a way that guarantees mobility, it needs to be re-indexed. If your database is large, this process can take a long time. Nonetheless, this process guarantees **to migrate all settings and documents between two different versions of MeiliSearch**.
-
-If you want a complete guide on how to update MeiliSearch on DigitalOcean, please [look at this GitHub issue](https://github.com/meilisearch/MeiliSearch/discussions/1187#discussioncomment-278125).
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, follow our [dedicated guide](/create/how_to/updating.md).

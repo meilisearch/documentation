@@ -7,7 +7,7 @@ It is **not** to provide exhaustive or universal instructions on how to use Meil
 ## Table of Contents:
 
 - [Installation](/learn/getting_started/installation.md)
-- [Getting Started](/learn/getting_started/quick_start.md)
+- [Quick Start Guide](/learn/getting_started/quick_start.md)
   - [Download and launch MeiliSearch](/learn/getting_started/quick_start.md#download-and-launch)
   - [Add documents](/learn/getting_started/quick_start.md#add-documents)
   - [Search!](/learn/getting_started/quick_start.md#search)
