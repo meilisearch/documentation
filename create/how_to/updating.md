@@ -87,7 +87,7 @@ Replace `0.X.X` with the version you would like to install.
 ```bash
 docker run -it --rm \
     -p 7700:7700 \
-    -v $(pwd)/data.ms:/data.ms \
+    -v "$(pwd)/data.ms:/data.ms" \
     getmeili/meilisearch:v0.X.X
 ```
 
@@ -104,9 +104,9 @@ Now that you know which MeiliSearch version your database is compatible with, pr
 
 ## Updating from v0.15.0 or above
 
-Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/features/dumps.md), updating is very simple.
+Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/features/dumps.md), updating is relatively simple.
 
-You just need to:
+In this guide, we will:
 
 1. [Set all fields as displayed attributes](#step-1-set-all-fields-as-displayed-attributes)
 2. [Create a dump using the MeiliSearch version that's compatible with your database](#step-2-create-the-dump)
@@ -151,7 +151,7 @@ If you're unsure where your MeiliSearch directory is located, try this:
 
 :::: tabs
 
-::: tab OSX / Linux
+::: tab macOS / Linux
 
 ```bash
 which meilisearch
