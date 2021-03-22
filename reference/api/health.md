@@ -12,4 +12,10 @@ Get health of MeiliSearch server.
 
 <CodeSamples id="get_health_1" />
 
-#### Response: `204 No Content`
+#### Response: `200 OK`
+
+```json
+{
+  "status": "available"
+}
+```
