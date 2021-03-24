@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "b0bc5652-cf46-402d-9ba0-32127c89a424",
-		"name": "MeiliSearch v0.19",
+		"_postman_id": "7149d425-b8e7-460a-a34a-cab56d2d843f",
+		"name": "MeiliSearch v0.20",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -294,7 +294,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"q\": \"prinec\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
+							"raw": "{\n    \"q\": \"\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/search",
@@ -530,7 +530,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\n\t\"asc(title)\",\n\t\"typo\"\n]\n"
+									"raw": "[\n\t\"typo\"\n]\n"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/ranking-rules",
