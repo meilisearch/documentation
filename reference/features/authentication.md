@@ -9,7 +9,6 @@ MeiliSearch uses a key-based authentication. There are three types of keys:
   - `POST /indexes/:index_uid/search`
   - `GET /indexes/:index_uid/documents`
   - `GET /indexes/:index_uid/documents/:doc_id`
-  - `GET /health`
 - Without any key, you can always access `GET /health`
 
 When a master key is provided to MeiliSearch, both the private and the public keys are automatically generated. **You cannot create any additional keys**.
