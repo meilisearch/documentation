@@ -49,6 +49,9 @@ The returned status could be:
 ```json
 {
   "uid": "20200929-114144097",
-  "status": "done"
+  "status": "done",
+  "duration": 12.757581815,
+  "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
+  "processedAt": "2019-12-07T21:10:20.511525620Z"
 }
 ```
