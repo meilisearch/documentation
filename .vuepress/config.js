@@ -425,7 +425,7 @@ module.exports = {
       ;e.amplitude=n})(window,document);
 
       amplitude.getInstance().init("b1e93a7d40b5ea629cf0abee212cb54c");
-      amplitude.getInstance().logEvent('visit');
+      amplitude.getInstance().logEvent('NEW_DOC_VISIT');
     `,
     ],
   ],
