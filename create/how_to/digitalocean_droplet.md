@@ -109,7 +109,7 @@ Open a terminal and start a new SSH connection with the IP you got from DigitalO
 Write in your terminal `ssh root@<your-ip-address>` and press Enter to establish connection:
 
 ```bash
-ssh meilisearch@42.42.42.42
+ssh root@42.42.42.42
 ```
 
 Write `yes` and press Enter to accept the authentication process.
