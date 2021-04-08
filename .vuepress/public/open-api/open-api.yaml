@@ -48,6 +48,10 @@ components:
       $ref: ./schemas.yaml#/documentId
     facetFilters:
       $ref: ./schemas.yaml#/facetFilters
+    hitDocument:
+      $ref: ./schemas.yaml#/hitDocument
+    matchesInfo:
+      $ref: ./schemas.yaml#/matchesInfo
     queryResponse:
       $ref: ./schemas.yaml#/queryResponse
     update:

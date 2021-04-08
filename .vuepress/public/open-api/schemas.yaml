@@ -33,6 +33,52 @@ document:
     overview: When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.
     release_date: '1993-01-01'
 
+matchesInfo:
+  type: object
+  properties:
+    start:
+      type: integer
+    length:
+      type: integer
+  additionalProperties: false
+  required:
+    - start
+    - length
+
+hitDocument:
+  type: object
+  properties:
+    _formatted:
+      type: object
+      description: Only present if attributesToHighlight is not empty. Copy of normal search result fields with every matching string sequence in the given attribute's field wrapped around an <em> tag.
+      additionalProperties: true
+    _matchesInfo:
+      type: object
+      description: Only present if matches=true. Array of all search query occurrences in all fields.
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/matchesInfo'
+  additionalProperties: true
+  example:
+    id: 25684
+    title: American Ninja 5
+    poster: https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg
+    overview: When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.
+    release_date: '1993-01-01'
+    _formatted:
+      id: 25684
+      title: American Ninja 5
+      poster: https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg
+      overview: When a scientists daughter is kidnapped, American <em>Ninja</em>, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the <em>ninja</em>.
+      release_date: '1993-01-01'
+    _matchesInfo:
+      overview:
+        - start: 49
+          length: 5
+        - start: 155
+          length: 5
+
 documentId:
   oneOf:
     - type: number
@@ -59,7 +105,7 @@ queryResponse:
       type: array
       description: Results of the query.
       items:
-        $ref: '#/document'
+        $ref: '#/hitDocument'
     offset:
       type: number
       description: Number of documents skipped.
@@ -98,7 +144,7 @@ queryResponse:
     query:
       type: string
       description: Query originating the response.
-      example: thriller
+      example: ninja
   additionalProperties: false
   required:
     - hits
