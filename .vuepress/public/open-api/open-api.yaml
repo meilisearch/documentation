@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Meilisearch
   description: MeiliSearch API
-  version: 0.19.0
+  version: 0.20.0
 servers:
   - url: '{protocol}://{domain}:{port}/'
     variables:
