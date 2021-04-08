@@ -107,13 +107,13 @@ queryResponse:
       items:
         $ref: '#/hitDocument'
     offset:
-      type: number
+      type: integer
       description: Number of documents skipped.
     limit:
-      type: number
+      type: integer
       description: Number of documents to take.
     nbHits:
-      type: number
+      type: integer
       description: Total number of matches.
     exhaustiveNbHits:
       type: boolean
@@ -123,7 +123,7 @@ queryResponse:
       additionalProperties:
         type: object
         additionalProperties:
-          type: number
+          type: integer
       description: |
         [Distribution of the given facets](/reference/features/search_parameters.html#the-facets-distribution).
       example:
@@ -139,7 +139,7 @@ queryResponse:
       type: boolean
       description: Whether `facetsDistribution` is exhaustive.
     processingTimeMs:
-      type: number
+      type: integer
       description: Processing time of the query.
     query:
       type: string
@@ -171,7 +171,7 @@ update:
         - processed
         - failed
     updateId:
-      type: number
+      type: integer
       description: The id of the update.
     type:
       type: object
@@ -179,7 +179,7 @@ update:
         name:
           type: string
         number:
-          type: number
+          type: integer
       additionalProperties: false
       required:
         - name
@@ -285,13 +285,13 @@ stats:
   type: object
   properties:
     numberOfDocuments:
-      type: number
+      type: integer
     isIndexing:
       type: boolean
     fieldsDistribution:
       type: object
       additionalProperties:
-        type: number
+        type: integer
   additionalProperties: false
   required:
     - numberOfDocuments
