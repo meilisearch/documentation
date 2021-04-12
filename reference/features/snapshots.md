@@ -40,7 +40,7 @@ During snapshot creation, old snapshots are **automatically overwritten**. This 
 
 Because snapshots are exact copies of your database that haven't gone through any processing besides compression, starting a MeiliSearch instance from a snapshot is significantly faster than adding documents manually or starting from a dump.
 
-Using the global environment `MEILI_IMPORT_SNAPSHOT` or the CLI flag `--import-snapshot` , MeiliSearch will start the server using the provided snapshot.
+Using the CLI flag `--import-snapshot`, MeiliSearch will start the server using the provided snapshot.
 
 ```bash
 meilisearch --import-snapshot mySnapShots/data.ms.snapshot
