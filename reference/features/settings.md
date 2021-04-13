@@ -102,7 +102,8 @@ You can add a custom ranking rule anywhere in the list of ranking rules. A custo
 ::: warning
 
 If some documents do not contain the attribute defined in a custom ranking rule, the application of the ranking rule is undefined and the search results might not be sorted as you expected.
-We recommend providing documents that all contain the attribute filled in the ranking rule.
+
+We recommend that all your documents contain any attribute used in a custom ranking rule. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
 
 :::
 
