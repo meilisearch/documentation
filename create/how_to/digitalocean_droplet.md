@@ -87,11 +87,13 @@ This should work out of the box. Your domain name should now be linked to your M
 curl -v http://<your-domain-name>/health
 ```
 
-The server should answer with a `204 No content` status code as shown in the example below:
+The server should answer with a `200 OK` status code and, the following body `{"status":"available"}` as shown in the example below:
 
 ```bash
 ...
-< HTTP/1.1 204 No Content
+HTTP/1.1 200 OK
+...
+{"status":"available"}
 ...
 ```
 
