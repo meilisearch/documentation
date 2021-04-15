@@ -132,12 +132,13 @@ To check if everything is running smoothly, do an HTTP call to the `/health` rou
 curl -v https://<your-domain-name>/health
 ```
 
-The server should answer with a `204 No content` status code as shown in the example below:
+The server should answer with a `200 OK` status code and, the following body `{"status":"available"}` as shown in the example below:
 
 ```bash
 ...
-< HTTP/1.1 204 No Content
+HTTP/1.1 200 OK
+...
+{"status":"available"}
 ...
 ```
-
 **Enjoy**!
