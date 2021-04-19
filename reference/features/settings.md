@@ -99,6 +99,14 @@ Default value (the ranking rules in the default order):
 
 You can add a custom ranking rule anywhere in the list of ranking rules. A custom ranking rule is composed of an attribute and an ascending or descending order. The attribute **must have a numeric value** in the documents.
 
+::: warning
+
+If some documents do not contain the attribute defined in a custom ranking rule, the application of the ranking rule is undefined and the search results might not be sorted as you expected.
+
+We recommend that all your documents contain any attribute used in a custom ranking rule. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
+
+:::
+
 #### Example
 
 To add your ranking rules to the settings, send:
