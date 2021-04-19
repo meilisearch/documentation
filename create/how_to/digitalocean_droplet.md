@@ -87,7 +87,7 @@ This should work out of the box. Your domain name should now be linked to your M
 curl -v http://<your-domain-name>/health
 ```
 
-The server should answer with a `200 OK` status code and, the following body `{"status":"available"}` as shown in the example below:
+The server should answer with a `200 OK` status code and the following body `{"status":"available"}` as shown in the example below:
 
 ```bash
 ...
@@ -132,7 +132,7 @@ To check if everything is running smoothly, do an HTTP call to the `/health` rou
 curl -v https://<your-domain-name>/health
 ```
 
-The server should answer with a `200 OK` status code and, the following body `{"status":"available"}` as shown in the example below:
+The server should answer with a `200 OK` status code and the following body `{"status":"available"}` as shown in the example below:
 
 ```bash
 ...
