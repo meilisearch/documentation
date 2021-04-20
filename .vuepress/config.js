@@ -172,12 +172,16 @@ module.exports = {
               sidebarDepth: 0,
               children: [
                 {
-                  title: 'Deploy on DigitalOcean',
-                  path: '/create/how_to/digitalocean_droplet',
-                },
-                {
                   title: 'Deploy on AWS',
                   path: '/create/how_to/aws',
+                },
+                {
+                  title: 'Deploy on GCP',
+                  path: '/create/how_to/gcp',
+                },
+                {
+                  title: 'Deploy on DigitalOcean',
+                  path: '/create/how_to/digitalocean_droplet',
                 },
                 {
                   title: 'Deploy on Qovery',
