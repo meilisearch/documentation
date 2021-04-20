@@ -1,8 +1,8 @@
-# Deploy a MeiliSearch Instance on GCP Compute Engine
+# Deploy a MeiliSearch Instance on Google Cloud Platform (GCP) Compute Engine
 
-Using our MeiliSearch GCP custom image, MeiliSearch can be deployed on GCP in just a few minutes.
+Using our GCP custom image, MeiliSearch can be deployed on GCP in just a few minutes.
 
-The following `how-to guide` will walk you through every step to deploy MeiliSearch in an GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
+The following guide will walk you through every step to deploy MeiliSearch in a GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
 
 **Table of Contents**:
 
@@ -14,13 +14,17 @@ The following `how-to guide` will walk you through every step to deploy MeiliSea
 
 - Navigate to `Compute Engine` => `Images`.
 
+![Compute Engine - Images](/gcp/01.compute-engine.png)
+
 - Click on `[+] CREATE IMAGE`.
+
+![Fill in image info](/gcp/02.image-info.png)
 
 - Give it a name (`meilisearch-v0-20-0`).
 
 - For the `Source` field select `Virtual disk (VMDK, VHD)`.
 
-- You may be prompted to enable Cloud Build tools and grant permissions. Do it.
+- If you are prompted to enable Cloud Build tools and grant permissions, do it.
 
 - Copy the following URI in the `Cloud Storage file` field.
 
@@ -28,23 +32,35 @@ The following `how-to guide` will walk you through every step to deploy MeiliSea
 gs://meilisearch-image/meilisearch-v0.20.0-debian-10.vmdk
 ```
 
-- The other fields are not required and are optional.
+- **The other fields are not required.**
 
-- Click on `Create`. This process can take up to 5 or 6 minutes, while the MeiliSearch custom image imports to your account.
+- Click on `Create`. You may have to wait up to 6 minutes while the MeiliSearch custom image imports to your account.
+
+![Wait for the image to finish importing](/gcp/03.import-image.png)
 
 ### 2. Create a new GCP Compute Engine instance from the imported image
 
 - Open the tab `Images` and click on the name of the image that you just imported, and click on the `[+] Create instance` button.
 
+![Create instance](/gcp/04.create-instance.png)
+
 - Give your instance a name
 
-- In the `Machine configuration` section, make sure to pick a machine type with enough memory  to run MeiliSearch according to your needs. More memory allows faster searching.
+- In the `Machine configuration` section, make sure to pick a `Machine type` with enough memory to run MeiliSearch according to your needs. More memory means faster searching.
 
-- In the `Boot disk` section, click the `Change` button. From the `Custom images` tab, select the image that you just imported in the previous steps (meilisearch-v0-20-0) from the drop down menu. Don't forget to set the `Size` of the disk to an amount corresponding to your needs. When you are done, click on `Select`.
+![Machine configuration](/gcp/05.machine-configuration.png)
+
+- In the `Boot disk` section, click the `Change` button.
+
+- From the `Custom images` tab, select the image that you just imported in the previous steps (meilisearch-v0-20-0) from the drop down menu. Don't forget to set the `Size` of the disk to an amount corresponding to your needs. When you are done, click on `Select`.
+
+![Boot disk](/gcp/06.boot-disk.png)
 
 - In the `Firewall` section, make sure to check the `Allow HTTP traffic` and `Allow HTTPS traffic` boxes so that your MeiliSearch instance can communicate with the internet.
 
 - Finally, click on the `Create` button. After a minute or two, your MeiliSearch instance should be up and running.
+
+![Your instance is running!](/gcp/07.instance-running.png)
 
 You can check that your instance is running correctly by copying and pasting the `External IP` address provided by GCP into your browser, or by typing the following command on your terminal:
 
@@ -66,7 +82,7 @@ Configuring your MeiliSearch instance in a production environment is not just st
 
 If you want to use a custom domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, you can skip this step.
 
-![Domain to  MeiliSearch](/aws/11.domain.png)
+![Domain to  MeiliSearch](/gcp/08.domain.png)
 
 Your domain name should now be linked to your MeiliSearch instance. Run a health check to verify that your instance is running and your DNS is well configured:
 

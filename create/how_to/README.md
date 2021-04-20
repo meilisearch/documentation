@@ -14,8 +14,9 @@ This is not the best section for MeiliSearch beginners. If you'd like to follow 
 
 **Deploy**:
 
-- [Deploy MeiliSearch on DigitalOcean](/create/how_to/digitalocean_droplet.md)
 - [Deploy MeiliSearch on AWS](/create/how_to/aws.md)
+- [Deploy MeiliSearch on GCP](/create/how_to/gcp.md)
+- [Deploy MeiliSearch on DigitalOcean](/create/how_to/digitalocean_droplet.md)
 - [Deploy MeiliSearch on Qovery](/create/how_to/qovery.md)
 
 **Front-end Integration**:

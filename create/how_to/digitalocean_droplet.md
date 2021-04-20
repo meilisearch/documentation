@@ -1,6 +1,10 @@
 # Deploy a MeiliSearch Instance on DigitalOcean
 
-## Create an out-of-the-box MeiliSearch
+**Table of Contents**:
+
+[[toc]]
+
+## Deploy MeiliSearch on a DigitalOcean droplet
 
 ### 1. Create a new "droplet"
 
