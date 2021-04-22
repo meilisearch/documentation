@@ -65,7 +65,10 @@ module.exports = {
           path: '/learn/contributing/',
           collapsable: false,
           children: [
-            '/learn/contributing/contributing_to_docs',
+            {
+              title: 'Contributing to the Docs',
+              path: '/learn/contributing/contributing_to_docs',
+            },
           ],
         },
       ],
