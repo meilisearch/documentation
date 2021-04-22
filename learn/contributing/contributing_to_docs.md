@@ -33,7 +33,7 @@ All you need to create an issue is a [GitHub account](https://github.com).
 3. Click on "Issues".
 4. Use the search bar to make sure nobody else has reported your issue already. If somebody has, give them an upvote 👍 and **don't create that issue**!
 5. Click "New issue".
-6. Fill in a short, descriptive title and longer summary of your problem or suggestion. If you're reporting a bug, make sure to include steps to reproduce the error, as well as your OS and browser version. 
+6. Fill in a short, descriptive title and longer summary of your problem or suggestion. If you're reporting a bug, make sure to include steps to reproduce the error, as well as your OS and browser version.
 7. Click "Submit new issue".
 8. A member of our team should [get back to you](#how-we-review-contributions) shortly with feedback.
 9. Enjoy the feeling of a job well done! 🎉
@@ -74,7 +74,7 @@ For **reviewing issues**, we consider a couple criteria:
 
 1. Is this task a priority for the documentation team?
 2. Is our documentation the best place for this information? Sometimes an idea for new content might work better on our blog than the docs, or it might be more effective to link to an external resource than write it ourselves.
-3. Can we reproduce this error? 
+3. Can we reproduce this error?
 
 If multiple people create similar issues (or upvote 👍 an issue to show suport), that makes us more likely to divert resources towards that task.
 
