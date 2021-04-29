@@ -195,10 +195,6 @@ There are two things that can cause your memory usage (RAM) to spike:
 
 To reduce memory use and indexing time, follow this best practice: **always update index settings before adding your documents**. This avoids unnecessary double-indexing.
 
-:::tip
-MeiliSearch's new engine (release date: before the end of 2021) **will allow you to set a limit on how much RAM MeiliSearch uses**.
-:::
-
 ### Disk Usage
 
 The following factors have a great impact on the size of your database (in no particular order):
@@ -211,7 +207,7 @@ The following factors have a great impact on the size of your database (in no pa
 - The number of different words present in the dataset
   
 :::tip
-Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes) unless they're useful as search criteria.
+Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes) unless they are useful as search criteria.
 :::
 
 ### Search Speed
