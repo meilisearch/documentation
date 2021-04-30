@@ -12,14 +12,4 @@ updates:
       - dependency-name: "babel-eslint"
       - dependency-name: "js-yaml"
       - dependency-name: "*prettier*"
-  - dependency-name: y18n
-    versions:
-    - 4.0.1
-  - dependency-name: "@popperjs/core"
-    versions:
-    - 2.8.2
-    - 2.8.6
-  - dependency-name: vue-eslint-parser
-    versions:
-    - 7.5.0
   rebase-strategy: disabled
