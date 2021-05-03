@@ -8,7 +8,7 @@ There are many ways to contribute to MeiliSearch. You can:
   - [Create an integration](https://github.com/meilisearch/integration-guides#building-an-integration)
 - Create written or video content (tutorials, blog posts, etc.)
 
-There are many types of contributions, and we value them all equally:
+There are many ways of contributing to the above repositories, and we value them all equally:
 
 - Giving feedback
 - Suggesting features
