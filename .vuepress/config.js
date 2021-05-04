@@ -60,6 +60,17 @@ module.exports = {
             '/learn/advanced/snapshots_vs_dumps',
           ],
         },
+        {
+          title: '👐 Contributing',
+          path: '/learn/contributing/',
+          collapsable: false,
+          children: [
+            {
+              title: 'Contributing to the Docs',
+              path: '/learn/contributing/contributing_to_docs',
+            },
+          ],
+        },
       ],
       '/reference/': [
         {
