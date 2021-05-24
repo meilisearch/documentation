@@ -76,7 +76,7 @@ module.exports = {
         {
           title: '⭐ Feature References',
           path: '/reference/features/',
-          collapsable: true,
+          collapsable: false,
           children: [
             '/reference/features/authentication',
             '/reference/features/configuration',
@@ -102,7 +102,7 @@ module.exports = {
         {
           title: '📒 API References',
           path: '/reference/api/',
-          collapsable: true,
+          collapsable: false,
           children: [
             '/reference/api/indexes',
             '/reference/api/documents',
