@@ -19,7 +19,7 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ### Framework Integrations
 
-- [Laravel Scout](https://github.com/meilisearch/meilisearch-laravel-scout)
+- Laravel: the official [Laravel-Scout](https://github.com/laravel/scout) package supports MeiliSearch.
 - [Symfony](https://github.com/meilisearch/meilisearch-symfony)
 
 ### Front-End Tools

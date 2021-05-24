@@ -237,7 +237,14 @@ module.exports = {
     },
   },
   plugins: [
-    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: ['errors', 'document_structure'] }],
+    [
+      'check-md',
+      {
+        pattern: '**/*.md',
+        strictExt: true,
+        ignorePattern: ['errors', 'document_structure'],
+      },
+    ],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
@@ -248,10 +255,13 @@ module.exports = {
     [require('./custom-timestamp')],
     [require('./code-samples')],
     [require('./error-pages')],
-    ['vuepress-plugin-code-copy', {
-      color: '#3385ff',
-      staticIcon: true,
-    }],
+    [
+      'vuepress-plugin-code-copy',
+      {
+        color: '#3385ff',
+        staticIcon: true,
+      },
+    ],
     [
       'meilisearch',
       {
@@ -262,7 +272,8 @@ module.exports = {
         placeholder: 'Search as you type...',
       },
     ],
-    ['vuepress-plugin-zooming',
+    [
+      'vuepress-plugin-zooming',
       {
         selector: '.theme-default-content img',
         delay: 1000,
@@ -441,6 +452,16 @@ module.exports = {
 
       amplitude.getInstance().init("b1e93a7d40b5ea629cf0abee212cb54c");
       amplitude.getInstance().logEvent('NEW_DOC_VISIT');
+    `,
+    ],
+    [
+      'script',
+      {},
+      `
+      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="jezyOXRIO1Azyxx0vCcH1afz4b4boYmp";analytics.SNIPPET_VERSION="4.13.2";
+        analytics.load("jezyOXRIO1Azyxx0vCcH1afz4b4boYmp");
+        analytics.page();
+      }}();
     `,
     ],
   ],
