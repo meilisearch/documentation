@@ -60,12 +60,23 @@ module.exports = {
             '/learn/advanced/snapshots_vs_dumps',
           ],
         },
+        {
+          title: '👐 Contributing',
+          path: '/learn/contributing/',
+          collapsable: false,
+          children: [
+            {
+              title: 'Contributing to the Docs',
+              path: '/learn/contributing/contributing_to_docs',
+            },
+          ],
+        },
       ],
       '/reference/': [
         {
           title: '⭐ Feature References',
           path: '/reference/features/',
-          collapsable: true,
+          collapsable: false,
           children: [
             '/reference/features/authentication',
             '/reference/features/configuration',
@@ -91,7 +102,7 @@ module.exports = {
         {
           title: '📒 API References',
           path: '/reference/api/',
-          collapsable: true,
+          collapsable: false,
           children: [
             '/reference/api/indexes',
             '/reference/api/documents',
@@ -172,12 +183,16 @@ module.exports = {
               sidebarDepth: 0,
               children: [
                 {
-                  title: 'Deploy on DigitalOcean',
-                  path: '/create/how_to/digitalocean_droplet',
-                },
-                {
                   title: 'Deploy on AWS',
                   path: '/create/how_to/aws',
+                },
+                {
+                  title: 'Deploy on GCP',
+                  path: '/create/how_to/gcp',
+                },
+                {
+                  title: 'Deploy on DigitalOcean',
+                  path: '/create/how_to/digitalocean_droplet',
                 },
                 {
                   title: 'Deploy on Qovery',
@@ -222,7 +237,14 @@ module.exports = {
     },
   },
   plugins: [
-    ['check-md', { pattern: '**/*.md', strictExt: true, ignorePattern: ['errors', 'document_structure'] }],
+    [
+      'check-md',
+      {
+        pattern: '**/*.md',
+        strictExt: true,
+        ignorePattern: ['errors', 'document_structure'],
+      },
+    ],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
@@ -233,10 +255,13 @@ module.exports = {
     [require('./custom-timestamp')],
     [require('./code-samples')],
     [require('./error-pages')],
-    ['vuepress-plugin-code-copy', {
-      color: '#3385ff',
-      staticIcon: true,
-    }],
+    [
+      'vuepress-plugin-code-copy',
+      {
+        color: '#3385ff',
+        staticIcon: true,
+      },
+    ],
     [
       'meilisearch',
       {
@@ -247,7 +272,8 @@ module.exports = {
         placeholder: 'Search as you type...',
       },
     ],
-    ['vuepress-plugin-zooming',
+    [
+      'vuepress-plugin-zooming',
       {
         selector: '.theme-default-content img',
         delay: 1000,
@@ -395,6 +421,48 @@ module.exports = {
         site: 'WIMXMDAA',
         defer: true,
       },
+    ],
+    [
+      'script',
+      {},
+      `
+      (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
+      ;r.type="text/javascript"
+      ;r.integrity="sha384-girahbTbYZ9tT03PWWj0mEVgyxtZoyDF9KVZdL+R53PP5wCY0PiVUKq0jeRlMx9M"
+      ;r.crossOrigin="anonymous";r.async=true
+      ;r.src="https://cdn.amplitude.com/libs/amplitude-7.2.1-min.gz.js"
+      ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
+      console.log("[Amplitude] Error: could not load SDK")}}
+      ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
+      ;function s(e,t){e.prototype[t]=function(){
+      this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
+      var o=function(){this._q=[];return this}
+      ;var a=["add","append","clearAll","prepend","set","setOnce","unset"]
+      ;for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[]
+      ;return this}
+      ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
+      ;for(var p=0;p<l.length;p++){s(c,l[p])}n.Revenue=c
+      ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId", "enableTracking", "setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
+      ;function v(e){function t(t){e[t]=function(){
+      e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
+      for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
+      e=(!e||e.length===0?"$default_instance":e).toLowerCase()
+      ;if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]}
+      ;e.amplitude=n})(window,document);
+
+      amplitude.getInstance().init("b1e93a7d40b5ea629cf0abee212cb54c");
+      amplitude.getInstance().logEvent('NEW_DOC_VISIT');
+    `,
+    ],
+    [
+      'script',
+      {},
+      `
+      !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="jezyOXRIO1Azyxx0vCcH1afz4b4boYmp";analytics.SNIPPET_VERSION="4.13.2";
+        analytics.load("jezyOXRIO1Azyxx0vCcH1afz4b4boYmp");
+        analytics.page();
+      }}();
+    `,
     ],
   ],
 }

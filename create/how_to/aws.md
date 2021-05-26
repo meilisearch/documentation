@@ -1,9 +1,9 @@
 
-# Deploy a MeiliSearch Instance on AWS
+# Deploy a MeiliSearch Instance on Amazon Web Services (AWS)
 
 Using our **MeiliSearch [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html)**, MeiliSearch can be deployed on AWS in just a few minutes.
 
-The following `how-to guide` will walk you through every step to deploy MeiliSearch in an AWS EC2 instance. If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
+The following guide will walk you through every step to deploy MeiliSearch in an AWS EC2 instance. If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
 
 **Table of Contents**:
 
@@ -125,11 +125,11 @@ Your domain name should now be linked to your MeiliSearch instance. Run a health
 curl -v http://<your-domain-name>/health
 ```
 
-The server should answer with a `204 No content` status code as shown in the example below:
+The server should answer with a `200 OK` status code as shown in the example below:
 
 ```bash
 ...
-< HTTP/1.1 204 No Content
+< HTTP/1.1 200 OK
 ...
 ```
 
@@ -196,11 +196,11 @@ curl -v https://<your-domain-name>/health
 
 > Note that this time, we're using HTTPS.
 
-The server should answer with a `204 No content` status code as shown in the example below:
+The server should answer with a `200 OK` status code as shown in the example below:
 
 ```bash
 ...
-< HTTP/1.1 204 No Content
+< HTTP/1.1 200 OK
 ...
 ```
 
