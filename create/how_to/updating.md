@@ -23,7 +23,7 @@ The response should look something like this:
 ```json
 {
   "commitSha":"stringOfLettersAndNumbers",
-  "buildDate":"YYYY-MM-DDTimestamp",
+  "commitDate":"YYYY-MM-DDTimestamp",
   "pkgVersion":"x.y.z"
 }
 ```
