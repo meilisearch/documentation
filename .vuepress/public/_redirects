@@ -71,3 +71,6 @@
 /learn/tutorials                                    /learn/getting_started
 /learn/tutorials/getting_started.html               /learn/getting_started/quick_start.html
 /learn/tutorials/whats_next.html                    /learn/getting_started/whats_next.html
+
+# Move FAQ and Open API
+/reference/open-api                                 /open-api-readme
