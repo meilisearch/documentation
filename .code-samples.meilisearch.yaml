@@ -59,10 +59,13 @@ delete_documents_1: |-
         437035,
         363869
     ]'
-search_1: |-
+search_post_1: |-
   curl \
-    'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "american ninja" }'
+search_get_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/search?q=american%20ninja'
 get_update_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/updates/1'
