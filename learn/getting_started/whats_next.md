@@ -13,7 +13,7 @@ You can find the API references here:
 And additional resources here:
 
 - [SDKs](/learn/what_is_meilisearch/sdks.md)
-- [FAQ](/create/faq.md)
+- [FAQ](/resources/faq.md)
 - [Advanced Topics](/learn/advanced)
 - [How-To Guides](/create/how_to)
 - [Postman Collection](/create/how_to/postman_collection.md): it can be tedious to re-write every route when wanting to try out an API. Try out MeiliSearch with our collection in Postman

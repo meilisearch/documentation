@@ -14,6 +14,27 @@ module.exports = {
       { text: 'Learn', link: '/learn/' },
       { text: 'Create', link: '/create/' },
       { text: 'Reference', link: '/reference/' },
+      {
+        text: 'Resources',
+        items: [
+          { text: 'FAQ', link: '/resources/faq' },
+          { text: 'Open API', link: '/resources/open-api-readme' },
+          {
+            text: 'SDKs',
+            items: [
+              { text: '.Net', link: 'https://github.com/meilisearch/meilisearch-dotnet' },
+              { text: 'Golang', link: 'https://github.com/meilisearch/meilisearch-go' },
+              { text: 'Java', link: 'https://github.com/meilisearch/meilisearch-java' },
+              { text: 'JavaScript', link: 'https://github.com/meilisearch/meilisearch-js' },
+              { text: 'PHP', link: 'https://github.com/meilisearch/meilisearch-php' },
+              { text: 'Python', link: 'https://github.com/meilisearch/meilisearch-python' },
+              { text: 'Ruby', link: 'https://github.com/meilisearch/meilisearch-ruby' },
+              { text: 'Rust', link: 'https://github.com/meilisearch/meilisearch-rust' },
+              { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
+            ],
+          },
+        ],
+      },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
@@ -134,10 +155,6 @@ module.exports = {
           ],
         },
         {
-          title: '📇 OpenAPI',
-          path: '/reference/open-api/',
-        },
-        {
           title: '🛠️ Under the Hood',
           path: '/reference/under_the_hood/',
           collapsable: true,
@@ -154,7 +171,7 @@ module.exports = {
       ],
       '/create/': [
         {
-          title: '📜 How To',
+          title: '📕 How To',
           path: '/create/how_to/',
           collapsable: false,
           children: [
@@ -227,11 +244,6 @@ module.exports = {
               ],
             },
           ],
-        },
-        {
-          title: '❓ FAQ',
-          path: '/create/faq',
-          collapsable: false,
         },
       ],
     },
