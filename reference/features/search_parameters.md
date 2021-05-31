@@ -398,6 +398,10 @@ You will get the following response with the **information about the matches in 
 }
 ```
 
+::: warning
+`start` and `length` return the number of bytes and not the number of characters. For example, `ü` represents two bytes but one character.
+:::
+
 ## Examples
 
 Here are a few examples of what can be achieved with search parameters:
