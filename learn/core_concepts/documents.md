@@ -166,7 +166,7 @@ To upload more documents in one go, it is possible to [change the payload size l
 
 > The above code sets the payload limit to 1GB, instead of the 100MB default.
 
-**MeiliSearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/create/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase the size of your batch as this could cause MeiliSearch to crash.
+**MeiliSearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase the size of your batch as this could cause MeiliSearch to crash.
 
 When using the [route to add new documents](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 

@@ -18,9 +18,12 @@ body
     background-color #f3f5f7
     border-color #1e90ff
 .code-copy
-    position: absolute;
-    right: 0;
-    bottom: 5px;
+    position: sticky;
+    left: 0px;
+    svg {
+      right: -6px;
+      bottom: -6px !important;
+    }
 
 {$contentClass} a code
   color $accentColor
