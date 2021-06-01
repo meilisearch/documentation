@@ -1,13 +1,15 @@
 # Prefix Search
 
-In MeiliSearch, **the search is possible even with a single letter sent**.
+In MeiliSearch, **you can perform a search with only a single letter as your query**. This is because we follow the philosophy of **prefix search**.
 
-A prefix search is when the documents sorting starts by comparing your search query with the start of each word in your dataset.
+Prefix search is when document sorting starts by comparing the search query against the beginning of each word in your dataset. All documents with words that match the query term are added to the [bucket sort](/reference/under_the_hood/bucket_sort.md), before the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) are applied sequentially.
 
-All words beginning with this letter are added to the [bucket sort](/reference/under_the_hood/bucket_sort.md), and then the other [ranking rules](/learn/core_concepts/relevancy.md) are applied.
+In other words, prefix search means that it's not necessary to type a word in its entirety to find documents containing that word—you can just type the first one or two letters.
+
+Note that prefix search is only performed on the last word in a search query—prior words must be typed out fully in order to get accurate results.
 
 ::: note
-Searching by prefix has a significant impact on search time. The shorter the word, the more possible matches in the documents increase.
+Searching by prefix (rather than using complete words) has a significant impact on search time. The shorter the query term, the more possible matches in the dataset.
 :::
 
 ### Example
@@ -31,8 +33,6 @@ query: `sho`:
 response:
 
 - `show`
-
-Notice that a prefix search is only done for the last word of a query, other words must be of the same length but can contain typos.
 
 MeiliSearch also handles typos while performing the prefix search. You can [read more about the typo rules on the dedicated page](/reference/under_the_hood/typotolerance.md#typo-tolerance-rules).
 
