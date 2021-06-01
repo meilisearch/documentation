@@ -10,7 +10,7 @@ To contribute, clone this repository, commit your changes and open a pull reques
 
 ### Requirements
 
-- Node version => v10 and < v15
+- Node version >= v10 and < v15
 
 ### Installing & Running
 
