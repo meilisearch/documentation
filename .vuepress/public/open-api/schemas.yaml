@@ -33,6 +33,52 @@ document:
     overview: When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.
     release_date: '1993-01-01'
 
+matchesInfo:
+  type: object
+  properties:
+    start:
+      type: integer
+    length:
+      type: integer
+  additionalProperties: false
+  required:
+    - start
+    - length
+
+hitDocument:
+  type: object
+  properties:
+    _formatted:
+      type: object
+      description: Only present if attributesToHighlight is not empty. Copy of normal search result fields with every matching string sequence in the given attribute's field wrapped around an <em> tag.
+      additionalProperties: true
+    _matchesInfo:
+      type: object
+      description: Only present if matches=true. Array of all search query occurrences in all fields.
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/matchesInfo'
+  additionalProperties: true
+  example:
+    id: 25684
+    title: American Ninja 5
+    poster: https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg
+    overview: When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.
+    release_date: '1993-01-01'
+    _formatted:
+      id: 25684
+      title: American Ninja 5
+      poster: https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg
+      overview: When a scientists daughter is kidnapped, American <em>Ninja</em>, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the <em>ninja</em>.
+      release_date: '1993-01-01'
+    _matchesInfo:
+      overview:
+        - start: 49
+          length: 5
+        - start: 155
+          length: 5
+
 documentId:
   oneOf:
     - type: number
@@ -59,15 +105,15 @@ queryResponse:
       type: array
       description: Results of the query.
       items:
-        $ref: '#/document'
+        $ref: '#/hitDocument'
     offset:
-      type: number
+      type: integer
       description: Number of documents skipped.
     limit:
-      type: number
+      type: integer
       description: Number of documents to take.
     nbHits:
-      type: number
+      type: integer
       description: Total number of matches.
     exhaustiveNbHits:
       type: boolean
@@ -77,7 +123,7 @@ queryResponse:
       additionalProperties:
         type: object
         additionalProperties:
-          type: number
+          type: integer
       description: |
         [Distribution of the given facets](/reference/features/search_parameters.html#the-facets-distribution).
       example:
@@ -93,12 +139,12 @@ queryResponse:
       type: boolean
       description: Whether `facetsDistribution` is exhaustive.
     processingTimeMs:
-      type: number
+      type: integer
       description: Processing time of the query.
     query:
       type: string
       description: Query originating the response.
-      example: thriller
+      example: ninja
   additionalProperties: false
   required:
     - hits
@@ -125,7 +171,7 @@ update:
         - processed
         - failed
     updateId:
-      type: number
+      type: integer
       description: The id of the update.
     type:
       type: object
@@ -133,7 +179,7 @@ update:
         name:
           type: string
         number:
-          type: number
+          type: integer
       additionalProperties: false
       required:
         - name
@@ -239,13 +285,13 @@ stats:
   type: object
   properties:
     numberOfDocuments:
-      type: number
+      type: integer
     isIndexing:
       type: boolean
     fieldsDistribution:
       type: object
       additionalProperties:
-        type: number
+        type: integer
   additionalProperties: false
   required:
     - numberOfDocuments

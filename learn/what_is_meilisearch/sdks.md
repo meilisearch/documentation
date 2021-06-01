@@ -8,6 +8,7 @@ New integrations are constantly in development. If you'd like to contribute, [se
 
 You can use MeiliSearch API wrappers in your favorite language. These libraries support all API routes.
 
+- [.Net](https://github.com/meilisearch/meilisearch-dotnet)
 - [Golang](https://github.com/meilisearch/meilisearch-go)
 - [Java](https://github.com/meilisearch/meilisearch-java)
 - [JavaScript](https://github.com/meilisearch/meilisearch-js)
@@ -19,7 +20,7 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ### Framework Integrations
 
-- [Laravel Scout](https://github.com/meilisearch/meilisearch-laravel-scout)
+- Laravel: the official [Laravel-Scout](https://github.com/laravel/scout) package supports MeiliSearch.
 - [Symfony](https://github.com/meilisearch/meilisearch-symfony)
 
 ### Front-End Tools

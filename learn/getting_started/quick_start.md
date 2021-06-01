@@ -59,7 +59,7 @@ To be processed, all documents must share one common <clientGlossary word="field
 
 There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents to an index called `movies` using the following test dataset: [movies.json](https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/datasets/movies/movies.json).
+Below is an example to showcase how to add documents to an index called `movies`. To follow along, first right-click this link and download the file: [movies.json](https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/datasets/movies/movies.json). Then, move the downloaded file to your working directory.
 
 <CodeSamples id="getting_started_add_documents_md" />
 
@@ -230,8 +230,8 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
     </div>
   </body>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue-instantsearch@3.2.0/dist/vue-instantsearch.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.3.2/dist/instant-meilisearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-instantsearch/dist/vue-instantsearch.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script>
     Vue.use(VueInstantSearch)
     var app = new Vue({
@@ -271,7 +271,7 @@ The following code sample uses [React](https://reactjs.org/) framework.
   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
   <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.3.2/dist/instant-meilisearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script>
     const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
     const searchClient = instantMeiliSearch(

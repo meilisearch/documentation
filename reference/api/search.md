@@ -57,7 +57,7 @@ This is the preferred route to perform search when an API key is required, as it
 
 ### Example
 
-<CodeSamples id="search_1" />
+<CodeSamples id="search_post_1" />
 
 #### Response: `200 Ok`
 
@@ -149,7 +149,7 @@ When the `q` parameter is not specified, a [placeholder](/reference/features/sea
 
 ### Example
 
-<CodeSamples id="search_1" />
+<CodeSamples id="search_get_1" />
 
 #### Response: `200 Ok`
 

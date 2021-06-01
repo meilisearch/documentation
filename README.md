@@ -74,8 +74,7 @@ $ yarn build
 
 Feel free to contact us about any questions you may have:
 
-- At [bonjour@meilisearch.com](mailto:bonjour@meilisearch.com): English or French is welcome! 🇬🇧 🇫🇷
 - Join our [Slack community](https://slack.meilisearch.com/).
-- By opening an issue.
+- Open an [issue](https://github.com/meilisearch/documentation/issues)!
 
 Any suggestion or feedback is highly appreciated. Thank you for your support!
