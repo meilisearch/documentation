@@ -1,6 +1,10 @@
 # Quick Start
 
 This quick tour will help you get started with MeiliSearch in only a few steps.
+In order to follow along, you'll need to be somewhat familiar with the command line. Many of
+the examples use JavaScript, but you are not required to know JavaScript syntax, but an
+understanding of basic programming concepts, especially JSON, will help you make the most of
+this guide.
 
 ## Download and Launch
 
