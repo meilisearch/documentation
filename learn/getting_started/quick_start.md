@@ -1,15 +1,10 @@
 # Quick start
 
-<<<<<<< HEAD
-This quick tour will help you get started with MeiliSearch in only a few steps. In order to make the most of it, you should be somewhat familiar with:
-=======
-This quick tour will help you get started with MeiliSearch in only a few steps. In order to follow along, you'll need to be somewhat familiar with the command line. Many of the examples use JavaScript, but you are not required to know JavaScript syntax. An understanding of basic programming concepts will help you make the most of this guide.
->>>>>>> d75382bb (Remove repeated clauses beginning with `but`, avoid mentioning JSON)
+This quick tour will help you get started with MeiliSearch in only a few steps. In order to make the most of it, you should be somewhat familiar with: 
 
 - [The command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal)
 - [cURL](https://curl.se)
 - [JavaScript syntax](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)
-
 ## Download and launch
 
 First of all, let's download and run MeiliSearch.
