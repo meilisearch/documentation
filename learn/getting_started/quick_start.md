@@ -1,6 +1,7 @@
 # Quick Start
 
-This quick tour will help you get started with MeiliSearch in only a few steps. In order to make the most of it, you should be somewhat familiar with: 
+This quick tour will help you get started with MeiliSearch in only a few steps. In order to make the most of it, you should be somewhat familiar with:
+
 - [The command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal)
 - [cURL](https://curl.se)
 - [JavaScript syntax](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)
