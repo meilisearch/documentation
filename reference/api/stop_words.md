@@ -18,7 +18,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the [stop-words](/reference/features/stop_words.md) list of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -40,7 +40,7 @@ Get the [stop-words](/reference/features/stop_words.md) list of an index.
 
 Update the list of [stop-words](/reference/features/stop_words.md) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -78,7 +78,7 @@ Reset the list of [stop-words](/reference/features/stop_words.md) of an index to
 
 Empty array: `[]`
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

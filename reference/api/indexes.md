@@ -39,7 +39,7 @@ List all [indexes](/learn/core_concepts/indexes.md).
 
 Get information about an [index](/learn/core_concepts/indexes.md).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -107,7 +107,7 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 Update an [index](/learn/core_concepts/indexes.md).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -145,7 +145,7 @@ The `primaryKey` can be added if it does not already exist (to know if it has be
 
 Delete an [index](/learn/core_concepts/indexes.md).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

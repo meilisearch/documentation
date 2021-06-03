@@ -1,4 +1,4 @@
-# Update to the Latest MeiliSearch Version
+# Update to the latest meilisearch version
 
 Currently, MeiliSearch databases can only be opened by the MeiliSearch version you used to create them. The following guide will walk you through all the steps to **migrate an existing database** from an older version of MeiliSearch to the most recent one.
 
@@ -306,7 +306,7 @@ curl -X GET \
   -o mydocuments.json
 ```
 
-### Step 4: Upload your data to the latest version of MeiliSearch
+### Step 4: Upload your data to the latest version of meilisearch
 
 Finally, [install the latest version of MeiliSearch](/learn/getting_started/installation.md) and upload your data as usual.
 

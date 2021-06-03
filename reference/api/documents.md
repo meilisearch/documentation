@@ -12,7 +12,7 @@ Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
 
 Get one [document](/learn/core_concepts/documents.md) using its unique id.
 
-#### Path Variables
+#### Path variables
 
 | Variable        | Description                                                       |
 | --------------- | ----------------------------------------------------------------- |
@@ -47,13 +47,13 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 Documents are ordered by MeiliSearch depending on the hash of their id.
 :::
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-#### Query Parameters
+#### Query parameters
 
 | Query Parameter          | Description                 | Default Value |
 | ------------------------ | --------------------------- | :-----------: |
@@ -98,13 +98,13 @@ For a partial update of the document see [add or update documents](/reference/ap
 
 If the provided index does not exist, it will be created.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-#### Query Parameters
+#### Query parameters
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
@@ -154,7 +154,7 @@ To completely overwrite a document, check out the [add or replace documents rout
 
 If the provided index does not exist, it will be created.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -162,7 +162,7 @@ If the provided index does not exist, it will be created.
 
 If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
-#### Query Parameters
+#### Query parameters
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
@@ -203,7 +203,7 @@ This `updateId` allows you to [track the current update](/reference/api/updates.
 
 Delete all documents in the specified index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -229,7 +229,7 @@ This `updateId` allows you to [track the current update](/reference/api/updates.
 
 Delete one document based on its unique id.
 
-#### Path Variables
+#### Path variables
 
 | Variable        | Description                                                       |
 | --------------- | ----------------------------------------------------------------- |
@@ -256,7 +256,7 @@ This `updateId` allows you to [track the current update](/reference/api/updates.
 
 Delete a selection of documents based on array of document id's.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

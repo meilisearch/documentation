@@ -12,7 +12,7 @@ This tutorial will guide you through the steps of building a relevant and powerf
 2. [Scrape your content](#scrape-your-content)
 3. [Integrate the Search Bar](#integrate-the-search-bar)
 
-## Run a MeiliSearch Instance
+## Run a meilisearch instance
 
 First of all, you need your documentation content to be scraped and pushed into a MeiliSearch instance.
 
@@ -34,11 +34,11 @@ In the example above, the host URL is `http://localhost:7700` and the API key is
 
 :::
 
-## Scrape your Content
+## Scrape your content
 
 The Meili team provides and maintains a [scraper tool](https://github.com/meilisearch/docs-scraper) to automatically read the content of your website and store it into an index in MeiliSearch.
 
-### Configuration File
+### Configuration file
 
 The scraper tool needs a configuration file to know what content you want to scrape. This is done by providing selectors (e.g. the HTML tag).
 
@@ -88,7 +88,7 @@ More [optional fields are available](https://github.com/meilisearch/docs-scraper
 
 :::
 
-### Run the Scraper
+### Run the scraper
 
 You can run the scraper with Docker. With our local MeiliSearch instance set up at [the first step](#run-a-meilisearch-instance), we run:
 
@@ -118,11 +118,11 @@ We recommend running the scraper at each new deployment of your documentation, [
 
 :::
 
-## Integrate the Search Bar
+## Integrate the search bar
 
 If your documentation is not a VuePress application, you can directly go to [this section](#for-all-kinds-of-documentation).
 
-### For a VuePress Documentation
+### For a vuepress documentation
 
 If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the MeiliSearch documentation.
 
@@ -179,7 +179,7 @@ Read more about [MeiliSearch authentication](/reference/features/authentication.
 
 :::
 
-### For All Kinds of Documentation
+### For all kinds of documentation
 
 If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
 

@@ -19,7 +19,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the [displayed attributes](/reference/features/settings.md#displayed-attributes) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -43,7 +43,7 @@ List the settings.
 
 Update the [displayed attributes](/reference/features/settings.md#displayed-attributes) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -79,7 +79,7 @@ Reset the [displayed attributes](/reference/features/settings.md#displayed-attri
 
 All attributes found in the documents added to the index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

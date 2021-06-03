@@ -1,4 +1,4 @@
-# Run MeiliSearch in Production: taking it to the next level
+# Run meiliSearch in production: taking it to the next level
 
 ## A quick introduction
 
@@ -24,7 +24,7 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 
 [Conclusion](/create/how_to/running_production.md#conclusion)
 
-## Get your MeiliSearch ready for production
+## Get your meilisearch ready for production
 
 For this tutorial, we will be using a Debian 10 server, running on DigitalOcean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your MeiliSearch and are not already registered on DigitalOcean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).
 
@@ -86,7 +86,7 @@ Database path: "./data.ms"
 Server listening on: "127.0.0.1:7700"
 ```
 
-## Step 2: Run MeiliSearch as a service
+## Step 2: Run meilisearch as a service
 
 In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
 
@@ -146,11 +146,11 @@ At this point, MeiliSearch is installed and running. It is protected from eventu
 
 But you probably want to open your MeiliSearch to the outside world, and for now, it is isolated. Let's fix that in a safe way.
 
-## Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS
+## Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS
 
 It's time to safely make your brand new MeiliSearch available to be requested from the outside world. For this purpose, you will use two of the main technologies available on the web: a Reverse Proxy and SSL/TLS.
 
-### 3.1. Creating a Reverse Proxy with [Nginx](https://www.nginx.com/)
+### 3.1. Creating a reverse proxy with [Nginx](https://www.nginx.com/)
 
 A reverse proxy is basically an application that will handle every communication between the outside world and your internal applications. Nginx will receive external HTTP requests and redirect them to MeiliSearch. When MeiliSearch has done its amazing job, it will communicate its response to Nginx, which will then transfer the latter to the user who originally sent the request. This is a common way to isolate and protect any application by adding a robust, secure, and fast gate-keeper such as Nginx, one of the safest and most efficient tools available online, and of course, open-source!
 
@@ -199,7 +199,7 @@ MeiliSearch is now up, deployed in a production environment, using a safe API ke
 
 The only remaining problem is that MeiliSearch processes requests via HTTP without any additional security. The content that is being transmitted over HTTP could easily be read or modified by attackers, and someone could get full or partial access to your data. In order to prevent this to happen, it's important to use the HTTPS, which will enable you to use a SSL/TLS certificate, and securely transmit data.
 
-### 3.2. Set up SSL/TLS for your MeiliSearch
+### 3.2. Set up SSL/TLS for your meilisearch
 
 SSL will let the user or client establish an authenticated connection to MeiliSearch. In this way, a user can verify server's identity before sending sensitive data or making any request to it. Then, data is sent in an encrypted way that only MeiliSearch server will be able to decrypt, providing you a fast, reliable, and automatic layer of security.
 
@@ -239,7 +239,7 @@ change by editing your web server's configuration.
 
 We recommend that you choose option 2, to redirect HTTP to HTTPS and always use a secure connection. You should be able to request your domain name with SSL as in `https://example.com` or `https://example.com/indexes`.
 
-#### 3.2. Option B: Custom SSL/TLS Certificates
+#### 3.2. Option B: Custom SSL/TLS certificates
 
 When a `Certificate Authority` issues a SSL certificate for you, you receive at least two files with encrypted keys:
 

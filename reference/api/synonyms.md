@@ -18,7 +18,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the list of [synonyms](/reference/features/synonyms.md) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -44,7 +44,7 @@ Get the list of [synonyms](/reference/features/synonyms.md) of an index.
 
 Update the list of [synonyms](/reference/features/synonyms.md) of an index. Synonyms are [normalized](/reference/features/synonyms.md#normalization).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -80,7 +80,7 @@ Reset the list of [synonyms](/reference/features/synonyms.md) of an index to its
 
 Empty object : `{}`
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

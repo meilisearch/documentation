@@ -1,4 +1,4 @@
-# Deploy a MeiliSearch Instance on Qovery
+# Deploy a meilisearch instance on qovery
 
 _The following is a guest post by Romaric Philogène, CEO and Co-Founder of Qovery._
 
@@ -15,9 +15,9 @@ Deploying Meilisearch with Qovery provides:
 - A free SSL.
 - Optional: custom domain.
 
-## Step-by-step Meilisearch deployment
+## Step-by-step meilisearch deployment
 
-### 1. Create a Qovery Account
+### 1. Create a qovery Account
 
 Visit [the Qovery dashboard](https://start.qovery.com) to create an account if you don't already have one.
 
@@ -26,7 +26,7 @@ Visit [the Qovery dashboard](https://start.qovery.com) to create an account if y
 - Click on the "create a project" button and give a name to your project, e.g. `MeiliSearch`.
 - Click on "next".
 
-### 3. Deploy Meilisearch
+### 3. Deploy meilisearch
 
 ![meilisearch template](https://github.com/Qovery/public-resources/raw/master/screenshots/meilisearch-template.png)
 

@@ -1,4 +1,4 @@
-# Attributes for Faceting
+# Attributes for faceting
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
@@ -8,13 +8,13 @@ Attributes for faceting can also be updated directly through the [global setting
 
 [Learn more about faceted search](/reference/features/faceted_search.md).
 
-## Get Attributes for Faceting
+## Get attributes for faceting
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/attributes-for-faceting" />
 
 Get the [attributes for faceting](/reference/features/faceted_search.md) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -32,13 +32,13 @@ List the settings.
 ["genres", "director"]
 ```
 
-## Update Attributes for Faceting
+## Update attributes for faceting
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/attributes-for-faceting" />
 
 Update the [attributes for faceting](/reference/features/faceted_search.md) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -64,7 +64,7 @@ An array of strings that contains the attributes to use as facets.
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
-## Reset Attributes for Faceting
+## Reset attributes for faceting
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/attributes-for-faceting"/>
 
@@ -74,7 +74,7 @@ Reset the [attributes for faceting](/reference/features/faceted_search.md) of th
 
 An empty array (`[]`).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

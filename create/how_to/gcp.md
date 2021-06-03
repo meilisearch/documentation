@@ -1,16 +1,16 @@
-# Deploy a MeiliSearch Instance on Google Cloud Platform (GCP) Compute Engine
+# Deploy a milisearch instance on google cloud platform (GCP) compute engine
 
 Using our GCP custom image, MeiliSearch can be deployed on GCP in just a few minutes.
 
 The following guide will walk you through every step to deploy MeiliSearch in a GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
 
-**Table of Contents**:
+**Table of contents**:
 
 [[toc]]
 
-## Part 1: Deploy a MeiliSearch instance
+## Part 1: Deploy a meilisearch instance
 
-### 1. Import MeiliSearch custom image on your GCP account
+### 1. Import meilisearch custom image on your GCP account
 
 - Navigate to `Compute Engine` => `Images`.
 
@@ -38,7 +38,7 @@ gs://meilisearch-image/meilisearch-v0.20.0-debian-10.vmdk
 
 ![Wait for the image to finish importing](/gcp/03.import-image.png)
 
-### 2. Create a new GCP Compute Engine instance from the imported image
+### 2. Create a new GCP compute engine instance from the imported image
 
 - Open the tab `Images` and click on the name of the image that you just imported, and click on the `[+] Create instance` button.
 
@@ -78,7 +78,7 @@ The server should answer with a `200 OK` status code as shown in the example bel
 
 Configuring your MeiliSearch instance in a production environment is not just straightforward—it's completely automated. Establish an SSH connection with your instance, and a script will guide you through the process.
 
-### 1. Make your domain name point to your Instance IP
+### 1. Make your domain name point to your instance IP
 
 If you want to use a custom domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, you can skip this step.
 
@@ -98,7 +98,7 @@ The server should answer with a `200 OK` status code as shown in the example bel
 ...
 ```
 
-### 2. Set API KEY and SSL (HTTPS)
+### 2. Set API Key and SSL (HTTPS)
 
 Meilisearch is currently running in a *development environment*. You haven't set up an API key, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for production.
 
@@ -106,11 +106,11 @@ To start the configuration process, connect via SSH to your new MeiliSearch inst
 
 ### 2.2. Run the configuration script
 
-#### 2.2.1 Option 1: Using the Google Cloud console
+#### 2.2.1 Option 1: Using the google cloud console
 
 Navigate to Compute Engine => VM instances. Click on the name of your instance, and then click on the SSH button (make sure to have pop-ups enabled or the window may be blocked). The connection will be established and the script will automatically run.
 
-#### 2.2.2 Option 2: Add your SSH key to the Compute Engine metadata
+#### 2.2.2 Option 2: Add your SSH key to the compute engine metadata
 
 - Make sure that you have an SSH public key (normally stored in `~/.ssh/id_rsa.pub`). If you haven't created your SSH key or want to generate a new one, you can follow [this guide](https://www.ssh.com/ssh/keygen/).
 
@@ -157,7 +157,7 @@ If it’s your first time accessing the instance via SSH, a script will run auto
 meilisearch-setup
 ```
 
-### 3. Enjoy your ready-to-use MeiliSearch instance
+### 3. Enjoy your ready-to-use meilisearch instance
 
 Your MeiliSearch instance is up and running on GCP and ready to be used in production.
 

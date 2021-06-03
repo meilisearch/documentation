@@ -18,7 +18,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -40,7 +40,7 @@ Get the [distinct attribute](/reference/features/settings.md#distinct-attribute)
 
 Update the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -78,7 +78,7 @@ Reset the [distinct attribute](/reference/features/settings.md#distinct-attribut
 
 **Default value**: `null`
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

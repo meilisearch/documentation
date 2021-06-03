@@ -1,4 +1,4 @@
-# All Settings
+# All settings
 
 `Settings` is a list of all the **customization** possible for an index.
 
@@ -28,13 +28,13 @@ Get the settings of an index.
 
 [Learn more about the settings](/reference/features/settings.md).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-### Response Body
+### Response body
 
 | Variable                  | Type      | Description                                                                      | Default value                                                                                     |
 | ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -95,7 +95,7 @@ Updates in the settings route are **partial**. This means that any parameters no
 
 If the provided index does not exist, it will be created.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -147,7 +147,7 @@ All settings will be reset to their default value.
 
 [Learn more about the settings](/reference/features/settings.md).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

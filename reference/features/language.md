@@ -9,7 +9,7 @@ We aim to provide global language support, and your feedback helps us [move clos
 
 If you'd like to learn more about how different languages are processed in MeiliSearch, see our [tokenizer documentation](/reference/under_the_hood/tokenization.md).
 
-## Improving Our Language Support
+## Improving Our language support
 
 While we have employees from all over the world at MeiliSearch, we don't speak every language. In fact, we rely almost entirely on feedback from external contributors to know how our engine is performing across different languages.
 

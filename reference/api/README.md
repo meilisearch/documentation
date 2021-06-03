@@ -1,4 +1,4 @@
-# API References
+# API references
 
 Welcome to the MeiliSearch API documentation.
 
@@ -10,9 +10,9 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
 ## Headers
 
-### Recommended Headers
+### Recommended headers
 
-#### Content Type
+#### Content type
 
 Every request and response body is in `JSON`.
 
@@ -25,7 +25,7 @@ Please read about [authentication keys](/reference/features/authentication.md) a
 
 `X-Meili-API-Key: $API_KEY`
 
-## Errors & Status Code
+## Errors & status code
 
 #### Success
 
@@ -64,7 +64,7 @@ Response body:
 
 If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `errorCode` values and descriptions.
 
-## Asynchronous Updates
+## Asynchronous updates
 
 MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `updateId` attribute:
 

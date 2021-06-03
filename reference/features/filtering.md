@@ -4,11 +4,11 @@ When searching for documents, it is sometimes desired to filter through the resu
 
 Meilisearch allows you to define filters thanks to a **very simple query language**. Once defined, you can pass your filter to your search query, as a parameter.
 
-### Using Filters
+### Using filters
 
 In order to apply filtering to a search, simply add a filter expression to the `filters` query parameter of your search. Find out more on search query parameters in our [API reference](/reference/api/search.md#query-parameters).
 
-### The Query Language
+### The query language
 
 In itself, the query language is very simple and allows you to filter results on any document field. For now, it only allows you to query on fields that are either `number`, `boolean`,  `string`, or an array of the aforementioned. Filtering on nested arrays or objects isn't permitted.
 
@@ -48,7 +48,7 @@ NOT (title = Scream OR title = "The Avengers") // negate the whole expression
 rating >= 3 AND (NOT (title = Scream OR title = "The Avengers")) // and so on...
 ```
 
-### Logical Connectives
+### Logical connectives
 
 An arbitrary number of expressions can be connected together thanks to logical connectives. These connectives are:
 
@@ -64,7 +64,7 @@ An arbitrary number of expressions can be connected together thanks to logical c
 This means that `NOT title = Scream OR title = "The Avengers"` is effectively evaluated `(NOT title = Scream) OR title = "The Avengers"`, and `title = Scream OR title = "The Avengers" AND release_date > 795484800` is effectively evaluated `title = Scream OR (title = "The Avengers" AND release_date > 795484800)`
 :::
 
-### A Note on Performance
+### A note on performance
 
 MeiliSearch is intended to be a flexible tool. For this reason, we decided not to put any restrictions on which fields the user can filter on, nor on how the queries are built. It is important to understand that it can lead to performance issues in some cases. We are currently working on new features to address this issue, such as [faceting](https://en.wikipedia.org/wiki/Faceted_search) to allow you to efficiently narrow down the number of candidates to a query, and thus improving performances of plain filters, even in worst cases.
 

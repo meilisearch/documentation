@@ -1,10 +1,10 @@
-# Deploy a MeiliSearch Instance on DigitalOcean
+# Deploy a meilisearch instance on digitalocean
 
 **Table of Contents**:
 
 [[toc]]
 
-## Deploy MeiliSearch on a DigitalOcean droplet
+## Deploy meilisearch on a digitalocean droplet
 
 ### 1. Create a new "droplet"
 
@@ -13,7 +13,7 @@ In any DigitalOcean page, when you are logged in, you will find a menu in the up
 
 ![Create droplet](/digitalocean/01.create.png)
 
-### 2. Select MeiliSearch snapshot
+### 2. Select meilisearch snapshot
 
 By default, DigitalOcean will display the "distributions" tab. Select the "Marketplace" tab and search for "meili". Select it.
 
@@ -51,11 +51,11 @@ Tags are a very good method to know who created resources, and for organizing re
 
 ![Add tags](/digitalocean/06.add-tags.png)
 
-### 7. Finally click on Create Droplet
+### 7. Finally click on create droplet
 
 ![Create droplet](/digitalocean/07.create-droplet.png)
 
-### 8. Your MeiliSearch is running (in **development** environment)
+### 8. Your meiliSearch is running (in **development** environment)
 
 Instance creation in progress...
 
@@ -65,7 +65,7 @@ Instance creation in progress...
 
 ![Created](/digitalocean/08.created-ip.png)
 
-### 9. Test MeiliSearch.
+### 9. Test Meilisearch.
 
 Copy the public IP address:
 
@@ -75,7 +75,7 @@ Paste it in your browser. If this screen is shown, your MeiliSearch is now ready
 
 ![Test MeiliSearch](/digitalocean/09.test-meili.png)
 
-## Configure production settings in your MeiliSearch Droplet
+## Configure production settings in your meilisearch droplet
 
 Configuring your MeiliSearch in a **production** environment on DigitalOcean droplet is very straightforward. Establish an SSH connection with your droplet and a script will guide you through the process.
 
@@ -103,7 +103,7 @@ HTTP/1.1 200 OK
 
 ![Domain to  MeiliSearch](/digitalocean/11.working-domain.png)
 
-### 2. Set API KEY and SSL (HTTPS)
+### 2. Set API key and SSL (HTTPS)
 
 Meilisearch is running in a **development** environment. You haven't set up an API KEY (anyone can read/write from your MeiliSearch) and you aren't using HTTPS yet, which makes this configuration unsafe to use in **production**.
 To start the configuration process, connect via SSH to your new MeiliSearch Droplet and follow the instructions:
@@ -126,7 +126,7 @@ A script will run automatically, asking for your settings and desired configurat
 meilisearch-setup
 ```
 
-### 3. Enjoy your ready-to-use MeiliSearch Droplet
+### 3. Enjoy your ready-to-use meilisearch droplet
 
 Your MeiliSearch Droplet is ready to be used in **production**.
 

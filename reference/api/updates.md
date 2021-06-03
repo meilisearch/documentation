@@ -8,7 +8,7 @@ The `updates` route gives information about the progress of the [asynchronous pr
 
 Get the status of an [update](/learn/advanced/asynchronous_updates.md) in a given [index](/learn/core_concepts/indexes.md).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description           |
 | ------------- | --------------------- |
@@ -43,7 +43,7 @@ Here is an example response representing [an update that has already been proces
 
 Get the status of all [updates](/learn/advanced/asynchronous_updates.md) in a given [index](/learn/core_concepts/indexes.md).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

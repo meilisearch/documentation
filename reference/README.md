@@ -4,7 +4,7 @@ Welcome to MeiliSearch's reference documentation. Here you will find straightfor
 
 This is **timeless knowledge**. We recommend keeping it open in a spare tab, whether working on your first, tenth, or thousandth MeiliSearch project.
 
-## Table of Contents
+## Table of contents
 
 - [⭐ Features](/reference/features)
 - [📒 API](/reference/api)

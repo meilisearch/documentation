@@ -1,15 +1,15 @@
 
-# Deploy a MeiliSearch Instance on Amazon Web Services (AWS)
+# Deploy a meilisearch instance on amazon web services (AWS)
 
 Using our **MeiliSearch [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html)**, MeiliSearch can be deployed on AWS in just a few minutes.
 
 The following guide will walk you through every step to deploy MeiliSearch in an AWS EC2 instance. If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
 
-**Table of Contents**:
+**Table of contents**:
 
 [[toc]]
 
-## Part 1: Deploy an out-of-the-box MeiliSearch instance
+## Part 1: Deploy an out-of-the-box meilisearch instance
 
 ### 1. Launch an instance from the AWS console
 
@@ -19,7 +19,7 @@ After logging into your [AWS Console](https://aws.amazon.com/console), navigate 
 
 In the top-right corner, click on the **Launch instances** button to start the process of configuring your MeiliSearch instance.
 
-### 2. Select 'MeiliSearch' AMI from 'Community AMIs'
+### 2. Select 'Meilisearch' AMI from 'Community AMIs'
 
 You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the searchbar and select the **Community AMIs** tab on the left sidebar.
 
@@ -27,7 +27,7 @@ You will now select which AMI or system Image to use to run your instance. Type 
 
 Click on **Select** (right side of the screen) to confirm your choice.
 
-### 3. Size and specs
+### 3. Size and Specs
 
 Select the specifications of the server you want MeiliSearch to run on.
 
@@ -64,7 +64,7 @@ Tags are used to identify your resources in AWS. **They are not required by Meil
 
 Click on **Next: Configure Security Groups**.
 
-### 7. Security Groups: Networking and connectivity
+### 7. Security groups: networking and connectivity
 
 For your MeiliSearch instance to communicate with the outside world, it is very important to allow SSH connections, HTTP, and HTTPS traffic.
 
@@ -79,7 +79,7 @@ You can also **use an existing security group**, if preferred.
 
 Once your configuration looks similar to the above image, click on **Review and Launch**.
 
-### 8. Set and Download Key Pair
+### 8. Set and download key pair
 
 Once you have reviewed your instance configuration, there is one last step before you can launch your Instance.
 
@@ -91,7 +91,7 @@ If you have an existing Key Pair, you can use that. Otherwise, select the option
 
 Once you've downloaded your key pair (and only then), click on **Launch Instances**, then on **View Instances**.
 
-### 9. Enjoy your MeiliSearch instance running on AWS!
+### 9. Enjoy your meilisearch instance running on AWS!
 
 Your instance may take a minute or two to get up and running (see the **Instance state** column).
 
@@ -113,7 +113,7 @@ And of course, **enjoy**!
 
 Configuring your MeiliSearch instance in a production environment is not just straightforward—it's completely automated. Simply establish an SSH connection with your instance, and a script will guide you through the process.
 
-### 1. Make your domain name point to your Instance IP
+### 1. Make your domain name point to your instance IP
 
 If you want to use your own domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, **you can skip this step**.
 
@@ -133,13 +133,13 @@ The server should answer with a `200 OK` status code as shown in the example bel
 ...
 ```
 
-### 2. Set API KEY and SSL (HTTPS)
+### 2. Set API key and SSL (HTTPS)
 
 Meilisearch is currently running in a *development environment*. You haven't set up an **API key**, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for production.
 
 To start the configuration process, connect via SSH to your new MeiliSearch Instance and follow the instructions that appear.
 
-### 2.1. Secure your Key Pair
+### 2.1. Secure your key pair
 
 Open a terminal window and navigate to wherever you saved your [key pair](#_8-set-and-download-key-pair). It should be a `.pem` file.
 
@@ -184,7 +184,7 @@ A script will run automatically, asking for your settings and desired configurat
 meilisearch-setup
 ```
 
-### 3. Enjoy your ready-to-use MeiliSearch instance
+### 3. Enjoy your ready-to-use meiliSearch instance
 
 Your MeiliSearch Instance is up and running on AWS, and it is ready to be used in **production**.
 

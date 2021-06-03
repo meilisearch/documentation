@@ -1,4 +1,4 @@
-# Implement Instant Search in Your React App in 5 Minutes
+# Implement instant search in your react app in 5 minutes
 
 _The following is a guest post by Riccardo Giorato._
 
@@ -26,16 +26,16 @@ You will create the boilerplate code for your React app using the custom project
 
 Finally, this tutorial assumes that you are already familiar with [React](https://reactjs.org/docs/getting-started.html). If that is not the case, you can check the React Documentation to learn more.
 
-## Getting Started
+## Getting started
 
-### Clone the Repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/Giorat/meili_react_demo.git
 cd meili_react_demo
 ```
 
-### Run a new Docker image
+### Run a new docker image
 
 If you cloned the repository, to set up the MeiliSearch instance just execute inside the main folder:
 
@@ -53,7 +53,7 @@ You will be able to check that MeiliSearch is running by visiting the following 
 
 - [http://localhost:7700/](http://localhost:7700/)
 
-## Create an Index in MeiliSearch
+## Create an index in meilisearch
 
 An index is an entity in which documents are stored, like an array of objects with some specific settings attached to it and a unique primary key.
 
@@ -143,7 +143,7 @@ Remember to change the path to your JSON file before running this script!
 
 :::
 
-## Prepare the React App
+## Prepare the react app
 
 You will use a standard React App that you can create using CRA or simply by cloning this repository:
 
@@ -159,7 +159,7 @@ npx create-react-app meili_react_demo
 cd meili_react_demo
 ```
 
-### Including Tailwind CSS
+### Including tailwind CSS
 
 To speed up the styling process, add Tailwind CSS style directly to index.html:
 
@@ -167,7 +167,7 @@ To speed up the styling process, add Tailwind CSS style directly to index.html:
 <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 ```
 
-### Configure App.js State
+### Configure App.js state
 
 Then, modify the App.js file using this code to set up a simple Search form and a few State variables to handle every aspect of the search.
 
@@ -233,11 +233,11 @@ This code should output this beautiful header with a search form.
 
 ![Decathlon front page](/react-guide/decat_before.png)
 
-## Search Results in React
+## Search results in react
 
 Connecting to MeiliSearch from React using the MeiliSearch Javascript SDK is a simple operation that can be done in just a few steps.
 
-### MeiliSearch Client
+### MeiliSearch client
 
 Install the MeiliSearch SDK:
 
@@ -276,7 +276,7 @@ const client = new MeiliSearch({
 const index = client.getIndex("decathlon");
 ```
 
-### Send the Search Query
+### Send the search query
 
 Use an `useEffect` to execute the search of the typed words into MeiliSearch. All the results hits will be set to a simple state variable called “resultsSearch”.
 
@@ -295,7 +295,7 @@ Replace this comment in App.js by the code snippet below:
   }, [searchedWord]);
 ```
 
-### Showcase the Results
+### Showcase the results
 
 Inside a second `useEffect`, you will search through the JSON objects returned by MeiliSearch. They will have the same structure than the uploaded JSON objects.
 
@@ -348,11 +348,11 @@ You can visit the live application here: [https://meili-react-demo.netlify.app/]
 
 ![Decathlon front page](/react-guide/decatlon.png)
 
-## Configure the Search even more!
+## Configure the search even more!
 
 With MeiliSearch, you get a ton of other small options you can fine-tune to improve your Search experience. For advanced exploration, you will need to do a few extra configuration steps.
 
-### Search Ranking
+### Search ranking
 
 Start by changing the search rankings, or more simply, the way MeiliSearch looks through the documents you uploaded to find the references to your search terms inside the [rankingRules](/learn/core_concepts/relevancy.md#relevancy) object. In that case, set the following ranking:
 
@@ -366,15 +366,15 @@ Start by changing the search rankings, or more simply, the way MeiliSearch looks
 
 This configuration is the default one except for the last field which is a custom rule "desc(creation_date)". The latter ranks items by their creation date if all previous values are identical.
 
-### Searchable Attributes
+### Searchable attributes
 
 Secondly, you have to specify the attributes that MeiliSearch can search from in each document, inside a [searchableAttributes](/reference/features/field_properties.md#searchable-fields) object. Here, the configuration is done to search only on name, vendor, category and tags leaving out images or URL.
 
-### Displayed Attributes
+### Displayed attributes
 
 Lastly, you have to specify the attributes that MeiliSearch can return to the user by the Frontend application with the [displayedAttributes](http://localhost:8080/guides/advanced_guides/field_properties.md#displayed-fields) object.
 
-### Upload the new Settings to MeiliSearch
+### Upload the new settings to meilisearch
 
 ```javascript
 const MeiliSearch = require("meilisearch");

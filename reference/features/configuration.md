@@ -94,7 +94,7 @@ The address the HTTP server will listen on.
 
 **Default value**: `"127.0.0.1:7700"`
 
-### Master Key
+### Master key
 
 **Environment variable**: `MEILI_MASTER_KEY`
 **CLI option**: `--master-key`
@@ -142,7 +142,7 @@ In production mode, the [web interface](/reference/features/web_interface.md#web
 
 **Default value**: `development`
 
-### Payload Limit Size
+### Payload limit size
 
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: `--http-payload-size-limit`
@@ -151,7 +151,7 @@ The maximum size, in bytes, of accepted JSON payloads.
 
 **Default value**: `104857600` (+=100MB)
 
-### SSL Authentication Path
+### SSL authentication path
 
 **Environment variable**: `MEILI_SSL_AUTH_PATH`
 **CLI option**: `--ssl-auth-path`
@@ -160,7 +160,7 @@ Enable client authentication, and accept certificates signed by those roots prov
 
 **Default value**: `None`
 
-### SSL Certificates Path
+### SSL certificates path
 
 **Environment variable**: `MEILI_SSL_CERT_PATH`
 **CLI option**: `--ssl-cert-path`
@@ -169,7 +169,7 @@ Read server certificates from CERTFILE. This should contain PEM-format certifica
 
 **Default value**: `None`
 
-### SSL Key Path
+### SSL key path
 
 **Environment variable**: `MEILI_SSL_KEY_PATH`
 **CLI option**: `--ssl-key-path`
@@ -187,7 +187,7 @@ Read DER-encoded OCSP response from OCSPFILE and staple to certificate. *Optiona
 
 **Default value**: `None`
 
-### SSL Require Auth
+### SSL require auth
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
 **CLI option**: `--ssl-require-auth`
@@ -196,7 +196,7 @@ Send a fatal alert if the client does not complete client authentication.
 
 **Default value**: `None`
 
-### SSL Resumption
+### SSL resumption
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
 **CLI option**: `--ssl-resumption`
@@ -205,7 +205,7 @@ SSL support session resumption.
 
 **Default value**: `None`
 
-### SSL Tickets
+### SSL tickets
 
 **Environment variable**: `MEILI_SSL_TICKETS`
 **CLI option**: `--ssl-tickets`
@@ -214,7 +214,7 @@ SSL support tickets.
 
 **Default value**: `None`
 
-### Max MDB Size
+### Max MDB size
 
 **Environment variable**: `MEILI_MAX_MDB_SIZE`
 **CLI option**: `--max-mdb-size`
@@ -238,7 +238,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 **Default value**: `107374182400` (100 GiB)
 
-### Max UDB Size
+### Max UDB size
 
 **Environment variable**: `MEILI_MAX_UDB_SIZE`
 **CLI option**: `--max-udb-size`
@@ -262,7 +262,7 @@ Depending on the OS, it is either the size that will be allocated on launch or t
 
 **Default value**: `107374182400` (100 GiB)
 
-### Disable Sentry
+### Disable sentry
 
 **Environment variable**: `MEILI_NO_SENTRY`
 **CLI option**: `--no-sentry`
@@ -271,7 +271,7 @@ We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and impro
 
 **Default value**: `false`
 
-### Schedule Snapshot Creation
+### Schedule snapshot creation
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
@@ -282,7 +282,7 @@ To activate scheduled snapshots, set this value to `true`. Disabled by default.
 
 **Default value**: `false`
 
-### Snapshot Destination
+### Snapshot destination
 
 **Environment variable**: `MEILI_SNAPSHOT_DIR`
 **CLI option**: `--snapshot-dir`
@@ -291,7 +291,7 @@ The directory path where MeiliSearch will create snapshots.
 
 **Default value**: `snapshots/`
 
-### Snapshot Interval
+### Snapshot interval
 
 **Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
 **CLI option**: `--snapshot-interval-sec`
@@ -300,7 +300,7 @@ Defines the time gap in seconds between each snapshot creation.
 
 **Default value**: `86400` (1 day)
 
-### Import Snapshot
+### Import snapshot
 
 **CLI option**: `--import-snapshot`
 
@@ -313,7 +313,7 @@ This command will stop the process if:
 
 If this command is not called, no snapshot will be imported.
 
-### Ignore Missing Snapshot
+### Ignore missing snapshot
 
 **CLI option**: `--ignore-missing-snapshot`
 
@@ -323,7 +323,7 @@ Requires `--import-snapshot` to be defined.
 
 **Default value**: `false`
 
-### Ignore Snapshot if DB Exists
+### Ignore snapshot if DB exists
 
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
@@ -333,7 +333,7 @@ Requires `--import-snapshot` to be defined.
 
 **Default value**: `false`
 
-### Dumps Destination
+### Dumps destination
 
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
@@ -342,7 +342,7 @@ Path of the directory where dumps will be created if the [dump route](/reference
 
 **Default value**: `dumps/`
 
-### Import Dump
+### Import dump
 
 **CLI option**: `--import-dump`
 
@@ -350,7 +350,7 @@ Import a dump from the specified path. Must be a `.dump` file.
 
 As the data contained in the dump needs to be indexed, the process will take an amount of time corresponding to the size of the dump. Only when the import is complete and successful will the MeiliSearch server start.
 
-### Dump Batch Size
+### Dump batch size
 
 **Environment variable**: `MEILI_DUMP_BATCH_SIZE`
 **CLI option**: `--dump-batch-size`
