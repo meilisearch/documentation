@@ -17,7 +17,7 @@ Each index holds information about the fields found in the documents, how they g
 
 For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
 
-## Index Creation
+## Index creation
 
 An index is created the first time documents are added to it or manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
 

@@ -1,4 +1,4 @@
-# Asynchronous Updates
+# Asynchronous updates
 
 MeiliSearch is an **asynchronous API**. It means that the API does not behave as you would typically expect when handling the request's responses.
 
@@ -86,7 +86,7 @@ Failing to upload document:
 }
 ```
 
-## Terminate MeiliSearch While a Task is Processing
+## Terminate meilisearch while a task is processing
 
 In the rare cases when you need to terminate MeiliSearch in the middle of a process, know that it will not corrupt or alter the database in any way. This is because MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>.
 

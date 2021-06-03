@@ -1,4 +1,4 @@
-# What Is MeiliSearch?
+# What is meilisearch?
 
 MeiliSearch is a **RESTful search API**. It aims to be a **ready-to-go solution** for everyone who wants a **fast and relevant search experience** for their end-users ⚡️🔎
 
@@ -37,7 +37,7 @@ MeiliSearch is committed to providing **open source**, **easy to use**, **custom
 
 Read more about [the philosophy of our search engine](/learn/what_is_meilisearch/philosophy.md).
 
-## SDKs and Integrations
+## SDKs and integrations
 
 Our team and community have worked hard to bring MeiliSearch to almost all popular web development languages, frameworks, and deployment options—and new integrations are constantly in development. Check out [the full list of our integrations](/learn/what_is_meilisearch/sdks.md).
 

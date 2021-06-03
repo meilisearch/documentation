@@ -1,4 +1,4 @@
-# Contributing to MeiliSearch
+# Contributing to meilisearch
 
 There are many ways to contribute to MeiliSearch. You can:
 

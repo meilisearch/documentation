@@ -1,10 +1,10 @@
-# Get Started with MeiliSearch!
+# Get started with meilisearch!
 
 The aim of these guides is **to provide an introduction to all of MeiliSearch's core features** and prepare you to start your own MeiliSearch projects.
 
 It is **not** to provide exhaustive or universal instructions on how to use MeiliSearch's [SDKs](/learn/what_is_meilisearch/sdks.md) or [API](/reference/api).
 
-## Table of Contents:
+## Table of contents:
 
 - [Installation](/learn/getting_started/installation.md)
 - [Quick Start Guide](/learn/getting_started/quick_start.md)

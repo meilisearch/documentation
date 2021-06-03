@@ -8,7 +8,7 @@ Documents function as **containers for organizing data**, and are the basic buil
 
 ![document structure](/document_structure.svg =573x400)
 
-### Important Terms
+### Important terms
 
 - **Document**: an object which contains data in the form of one or more fields.
 - **[Field][fields]**: a set of two data items that are linked together: an **attribute** and a **value**.
@@ -38,7 +38,7 @@ In the above example, `"id"`, `"title"`, `"genre"`, `"release-year"`, and `"cast
 Each attribute must be associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`.
 At minimum, the document must contain one field with the **[primary key][primary-key]** attribute and a unique **[document id][document-id]** as its value. Above, that's: `"id": "1564saqw12ss"`.
 
-### Limitations and Requirements
+### Limitations and requirements
 
 Documents have a **soft maximum of 1000 fields**; beyond that the [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective, leading to undefined behavior.
 
@@ -75,7 +75,7 @@ To clarify, a field may be:
 
 In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/reference/features/field_properties.md#data-storing) in the document.
 
-## Primary Field
+## Primary field
 
 The <clientGlossary word="primary field" /> is a special <clientGlossary word="field" /> that must be present in all documents. Its attribute is the [<clientGlossary word="primary key" />][primary-key] and its value is the [<clientGlossary word="document id" />][document-id].
 
@@ -104,7 +104,7 @@ Aside from the primary key, **documents in the same index are not required to sh
 ]
 ```
 
-### Primary Key
+### Primary key
 
 The <clientGlossary word="primary key" />  is a **mandatory <clientGlossary word="attribute" /> linked to a unique <clientGlossary word="value" />:** the [<clientGlossary word="document id" />][document-id]. It is part of the [<clientGlossary word="primary field" />][primary-field].
 

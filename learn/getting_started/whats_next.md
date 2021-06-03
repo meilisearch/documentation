@@ -1,4 +1,4 @@
-# What's Next?
+# What's next?
 
 MeiliSearch was built on a few core concepts. If you haven't already done so, we invite you to explore the following pages that will give you an essential insight into our search engine:
 
