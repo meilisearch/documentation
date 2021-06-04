@@ -1,4 +1,4 @@
-# Create with MeiliSearch
+# Create with meilisearch
 
 Want to create a brilliant website, app, or other project with MeiliSearch?
 
