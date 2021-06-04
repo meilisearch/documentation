@@ -19,7 +19,7 @@ After logging into your [AWS Console](https://aws.amazon.com/console), navigate 
 
 In the top-right corner, click on the **Launch instances** button to start the process of configuring your MeiliSearch instance.
 
-### 2. Select 'Meilisearch' AMI from 'Community AMIs'
+### 2. Select 'meilisearch' AMI from 'Community AMIs'
 
 You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the searchbar and select the **Community AMIs** tab on the left sidebar.
 
