@@ -184,7 +184,7 @@ A script will run automatically, asking for your settings and desired configurat
 meilisearch-setup
 ```
 
-### 3. Enjoy your ready-to-use meiliSearch instance
+### 3. Enjoy your ready-to-use meilisearch instance
 
 Your MeiliSearch Instance is up and running on AWS, and it is ready to be used in **production**.
 
