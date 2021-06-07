@@ -22,13 +22,13 @@ When a master key is provided, both the private and the public keys are automati
 
 The only unprotected route available when using MeiliSearch in `production` is `GET /health`.
 
-## Master Key
+## Adding a key
 
 When launching a MeiliSearch instance, you have the option of giving it a master key. By doing so, all routes will be protected and will require a key to be accessed.
 
-You can specify it by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
+You can specify a key by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
 
-You can retrieve both the private and the public keys using the master key on the [keys route](/reference/api/keys.md).
+After adding the master key, you can retrieve both the private and the public keys on the [keys route](/reference/api/keys.md).
 
 #### No master key
 
