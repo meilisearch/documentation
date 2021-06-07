@@ -18,9 +18,9 @@ MeiliSearch uses three types of keys:
   - `GET /indexes/:index_uid/documents`
   - `GET /indexes/:index_uid/documents/:doc_id`
 
-When a master key is provided to MeiliSearch, both the private and the public keys are automatically generated. **You cannot create any additional keys**.
+When a master key is provided, both the private and the public keys are automatically generated. **You cannot create any additional keys**.
 
-If a user queries a protected instance without any key, they will only be able to access `GET /health`.
+The only unprotected route available when using MeiliSearch in `production` is `GET /health`.
 
 ## Master Key
 
