@@ -1,6 +1,10 @@
 # Authentication
 
-MeiliSearch uses key-based authentication. There are three types of keys:
+MeiliSearch can be configured to use key-based authentication.
+
+Although not mandatory, using authentication is highly recommended in production environments. If a MeiliSearch instance is created and not provided with a key, all routes will be publicly accessible and unprotected.
+
+MeiliSearch uses three types of keys:
 
 - The **Master** key grants access to all routes
 - The **Private** key grants access to all routes except the `/keys` routes
@@ -9,13 +13,14 @@ MeiliSearch uses key-based authentication. There are three types of keys:
   - `POST /indexes/:index_uid/search`
   - `GET /indexes/:index_uid/documents`
   - `GET /indexes/:index_uid/documents/:doc_id`
-- Without any key, you can always access `GET /health`
 
 When a master key is provided to MeiliSearch, both the private and the public keys are automatically generated. **You cannot create any additional keys**.
 
+If a user queries a protected instance without any key, they will only be able to access `GET /health`.
+
 ## Master Key
 
-When launching an instance, you have the option of giving a master key. By doing so, all routes will be protected and will require a key to be accessed.
+When launching a MeiliSearch instance, you have the option of giving it a master key. By doing so, all routes will be protected and will require a key to be accessed.
 
 You can specify it by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
 
