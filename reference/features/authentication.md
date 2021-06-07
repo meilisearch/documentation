@@ -30,9 +30,9 @@ You can specify a key by passing the `MEILI_MASTER_KEY` environment variable, or
 
 After adding the master key, you can retrieve both the private and the public keys on the [keys route](/reference/api/keys.md).
 
-#### No master key
+## Using an authenticated MeiliSearch instance
 
-If no master key is provided, all routes can be accessed without requiring any key.
+When using authentication, a key must be added to [the header](/reference/api/README.md#authentication) of each API call.
 
 We strongly recommend only using the master key to retrieve the public and private keys.
 
