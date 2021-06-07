@@ -26,7 +26,7 @@ If you'd like us to add or improve support for a language that isn't in the abov
 
 ### What do you mean when you say MeiliSearch offers *optimized* support for a language?
 
-Under the hood, MeiliSearch relies on tokenizers that identify the most important parts of each document in a given dataset. Currently, MeiliSearch has two tokenization pipelines: one for languages that separate words with spaces and one specifically tailored for Chinese. Languages that delimit their words in other ways will still work, but the quality and relevancy of search results may vary significantly.
+Under the hood, MeiliSearch relies on tokenizers that identify the most important parts of each document in a given dataset. We currently use two tokenization pipelines: one for languages that separate words with spaces and one specifically tailored for Chinese. Languages that delimit their words in other ways will still work, but the quality and relevancy of search results may vary significantly.
 
 ### My language does not use whitespace to separate words. Can I still use MeiliSearch?
 
