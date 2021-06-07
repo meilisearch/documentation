@@ -2,8 +2,8 @@
 
 MeiliSearch uses key-based authentication. There are three types of keys:
 
-- The **Master** key grants access to all routes.
-- The **Private** key grants access to all routes except the `/keys` routes.
+- The **Master** key grants access to all routes
+- The **Private** key grants access to all routes except the `/keys` routes
 - The **Public** key only grants access to the following routes:
   - `GET /indexes/:index_uid/search`
   - `POST /indexes/:index_uid/search`
