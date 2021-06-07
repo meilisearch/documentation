@@ -38,11 +38,8 @@ We strongly recommend only using the master key to retrieve the public and priva
 
 If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` status code. You will receive the same error if you fail to provide a key when querying a protected route.
 
+## Changing a key
 
-## Reset Key
+**Changing the master key will automatically generate new private and public keys**. It is not possible to change one key without altering the others.
 
-Since both the private and the public keys are generated based on your master key, changing the master key will result in the modification of the two other keys.
-
-After having changed your master key, it is mandatory to restart the MeiliSearch server to ensure the renewal of the private and the public keys.
-
-**All keys will be changed**. Therefore, it is not possible to change only one of the keys.
+After changing the master key, it is mandatory to restart the MeiliSearch instance to ensure the renewal of the private and the public keys.
