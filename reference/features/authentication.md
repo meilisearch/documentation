@@ -1,8 +1,10 @@
 # Authentication
 
-MeiliSearch can be configured to use key-based authentication.
+MeiliSearch uses key-based authentication.
 
-Although not mandatory, using authentication is highly recommended in production environments. If a MeiliSearch instance is created and not provided with a key, all routes will be publicly accessible and unprotected.
+When using MeiliSearch in `production`, authentication is mandatory. You can read more about `production` mode in the [configuration reference](/reference/features/configuration).
+
+If a MeiliSearch instance does not use authentication, all routes will be publicly accessible and unprotected.
 
 MeiliSearch uses three types of keys:
 
