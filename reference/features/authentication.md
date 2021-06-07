@@ -6,6 +6,8 @@ When using MeiliSearch in `production`, authentication is mandatory. You can rea
 
 If a MeiliSearch instance does not use authentication, all routes will be publicly accessible and unprotected.
 
+## Key types
+
 MeiliSearch uses three types of keys:
 
 - The **Master** key grants access to all routes
