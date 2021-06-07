@@ -34,12 +34,10 @@ After adding the master key, you can retrieve both the private and the public ke
 
 If no master key is provided, all routes can be accessed without requiring any key.
 
-## API Key
+We strongly recommend only using the master key to retrieve the public and private keys.
 
-If a master key is set, on each API call, a key must be added to [the header](/reference/api/README.md#authentication).
+If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` status code. You will receive the same error if you fail to provide a key when querying a protected route.
 
-If no or a wrong API key is provided in the header you will have no access to any route and you will receive the
-`HTTP/1.1 403 Forbidden` status code.
 
 ## Reset Key
 
