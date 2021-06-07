@@ -1,6 +1,6 @@
 # Authentication
 
-MeiliSearch uses a key-based authentication. There are three types of keys:
+MeiliSearch uses key-based authentication. There are three types of keys:
 
 - The **Master** key grants access to all routes.
 - The **Private** key grants access to all routes except the `/keys` routes.
