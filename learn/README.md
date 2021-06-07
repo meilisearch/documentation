@@ -1,4 +1,4 @@
-# Learn Meilisearch
+# Learn MeiliSearch
 
 Welcome to MeiliSearch's learning center. These resources are aimed at first-time and new users of MeiliSearch. If you're looking for a more detailed or comprehensive resource, have a look at our [reference documentation](/reference).
 

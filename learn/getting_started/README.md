@@ -1,4 +1,4 @@
-# Get started with meilisearch!
+# Get started with MeiliSearch!
 
 The aim of these guides is **to provide an introduction to all of MeiliSearch's core features** and prepare you to start your own MeiliSearch projects.
 

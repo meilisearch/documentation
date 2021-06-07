@@ -10,7 +10,7 @@ For developers, we're proud to say that MeiliSearch requires very little configu
 
 For end-users, the search experience aims to feel simple so they can focus on the results. MeiliSearch aims to deliver an intuitive search-as-you-type experience, with a response time lower than 50 milliseconds.
 
-### Highly Customizable
+### Highly customizable
 
 MeiliSearch works out-of-the-box with default settings that meet the needs of most projects. However, searching is still highly customizable.
 

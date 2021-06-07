@@ -31,7 +31,7 @@ You can download & run MeiliSearch [in many different ways (i.e: docker, apt, ho
 
 [Environment variables and options](/reference/features/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
 
-### Communicate with meilisearch
+### Communicate with MeiliSearch
 
 Now that your MeiliSearch server is up and running, you should be able to communicate with it.
 

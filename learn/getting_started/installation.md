@@ -128,7 +128,7 @@ This is an example using the command line options.
 
 Here is a list of [all the options and how to use them](/reference/features/configuration.md).
 
-## Updating meilisearch
+## Updating MeiliSearch
 
 Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [Installation](/learn/getting_started/installation.md#download-and-launch) above).
 

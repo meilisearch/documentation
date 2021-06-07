@@ -1,4 +1,4 @@
-# What is meilisearch?
+# What is MeiliSearch?
 
 MeiliSearch is a **RESTful search API**. It aims to be a **ready-to-go solution** for everyone who wants a **fast and relevant search experience** for their end-users ⚡️🔎
 
