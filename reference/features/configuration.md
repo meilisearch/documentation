@@ -1,6 +1,6 @@
 # Configuration
 
-Options can be passed to a MeiliSearch instance through **environment variables** and **command line options**. 
+Options can be passed to a MeiliSearch instance through **environment variables** and **command line options**.
 
 ## Configuring an instance with command-line flags
 
@@ -82,56 +82,38 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 
 **Environment variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
-
-Defines the location for the database files.
-
 **Default value**: `"./data.ms"`
+
+Set the location of the database file.
 
 ### HTTP address & port binding
 
 **Environment variable**: `MEILI_HTTP_ADDR`
 **CLI option**: `--http-addr`
+**Default value**: `"127.0.0.1:7700"`
 
 The address the HTTP server will listen on.
 
-**Default value**: `"127.0.0.1:7700"`
-
-### Master key
+### Master Key
 
 **Environment variable**: `MEILI_MASTER_KEY`
 **CLI option**: `--master-key`
-
-The master key allowing you to do everything on the server. If no master key is provided all routes will be accessible without keys. This is only possible if you are in `development` environment. An error is thrown if you try to start MeiliSearch without any master key when the environment is set to `production`.
-
-[Learn more about the permission and authentication in this guide.](/reference/features/authentication.md)
-
 **Default value**: `None`
 
-### Analytics
+The master key granting access to all MeiliSearch's API routes. Providing a mandatory key is mandatory when environment is set to `production`.
 
-**Environment variable**: `MEILI_NO_ANALYTICS`
-**CLI option**: `--no-analytics`
+If no master key is provided all routes will be unprotected and publicly accessible.
 
-Deactivates analytics.
+This is only possible if you are in `development` environment. An error is thrown if you try to start MeiliSearch without any master key when the environment is set to `production`.
 
-Analytics allow us to know how many users are using MeiliSearch and the following:
+[Learn more about MeiliSearch's use of security keys in this guide.](/reference/features/authentication.md)
 
-- The application version.
-- The environment: development/production.
-- The number of days since the first start: Segment development/production.
-- The user email: (*Optional*) If the user wants to have alerts.
-- The server provider: (*Optional*).
-- The database size.
-- The last update time.
-- The number of updates.
-- The number of documents per index.
-
-**Default value**: `false`
 
 ### Environment
 
 **Environment variable**: `MEILI_ENV`
 **CLI option**: `--env`
+**Default value**: `development`
 
 By default, MeiliSearch runs in `development` mode.
 
