@@ -30,6 +30,8 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Usage
 
+Command-line flags take precedence over environment variables. If an option is specified both as a flag and an environment variable, the command-line flag and its respective value will be used.
+
 All options should have a value specified. Adding a command-line flag or environment variable without a value will throw an error.
 
 Command-line flags take precedence over environment variables. If an option is specified both as a flag and an environment variable, the command-line flag and its respective value will be used.
