@@ -21,7 +21,7 @@ Results are sorted by **decreasing number of matched query terms** in each match
 
 ::: note
 
-Be aware that the `words` rule works from right to left, so order of the query string does affect the sorting results.
+Be aware that the `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
 
 For example, if someone were to search `batman dark knight`, then the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third. All other documents would be ranked last.
 
