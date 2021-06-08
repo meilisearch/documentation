@@ -2,7 +2,7 @@
 
 Many options are available to configure a MeiliSearch instance. Each of these options is added on MeiliSearch instance launch.
 
-Options can be either communicated through **environment variables** or **command line options**. If both are provided for the same option, the command line option value is kept.
+## Configuring an instance with command-line flags
 
 ## Passing arguments via the command line
 
@@ -16,7 +16,7 @@ Options are added at launch.
 Server is listening on: http://127.0.0.1:7700
 ```
 
-## Passing arguments via the environment variables
+## Configuring an instance with environment variables
 
 The format of the environment variables is identical to the command line options with the exception that it is uppercased and `MEILI_` is prepended.
 
