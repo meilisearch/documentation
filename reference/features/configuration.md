@@ -104,7 +104,7 @@ Set an instance's master key, automatically protecting all routes except `GET /h
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-This is only possible if you are in `development` environment. An error is thrown if you try to start MeiliSearch without any master key when the environment is set to `production`.
+If no master key is provided in a `production` environment, the MeiliSearch instance will throw an error and refuse to launch. 
 
 [Learn more about MeiliSearch's use of security keys in this guide.](/reference/features/authentication.md)
 
@@ -117,14 +117,36 @@ This is only possible if you are in `development` environment. An error is throw
 
 By default, MeiliSearch runs in `development` mode.
 
-- `production`: the [master key](/reference/features/authentication.md) is **mandatory**.
-- `development`: the [master key](/reference/features/authentication.md) is **optional**, and logs are output in "info" mode (_console output_).
+- `production`: setting a [master key](/reference/features/authentication.md) is **mandatory**.
+- `development`: setting a [master key](/reference/features/authentication.md) is **optional**. Log level is automatically set to `info`.
 
-If the server is running in development mode more logs will be displayed, and the master key can be avoided which implies that there is no security on the updates routes.
-This is useful to debug when integrating the engine with another service.
-In production mode, the [web interface](/reference/features/web_interface.md#web-interface) is disabled.
+If the server is running in `development` mode, logs are more verbose and providing a master key is not mandatory. This is useful when debugging, but dangerous otherwise since update routes are unprotected.
 
-**Default value**: `development`
+The [web interface](/reference/features/web_interface.md#web-interface) is disabled in `production` mode.
+
+### Analytics
+
+**Environment variable**: `MEILI_NO_ANALYTICS`
+**CLI option**: `--no-analytics`
+**Default value**: `false`
+
+If set to `true`, deactivates MeiliSearch's built-in analytics and telemetry. 
+
+By default, MeiliSearch collects the following data from all instances that do not explicitly opt-out:
+
+- Application version
+- Environment (development or production)
+- Number of days since the first start (segment development/production
+- Database size
+- Last update time
+- Number of updates
+- Number of documents per index
+
+Additionally, a user does not disable analytics, they may also provide an email address and their server provider by setting the environment variables `MEILI_USER_EMAIL` and `MEILI_SERVER_PROVIDER`.
+
+All collected data is used solely for the purpose of improving MeiliSearch.
+
+A full document describing why we collect this data and how we use it is forthcoming.
 
 ### Payload limit size
 
