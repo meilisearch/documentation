@@ -16,17 +16,21 @@ The order in which they are applied has a significant impact on the search resul
 
 By default, ranking rules are executed in the following order:
 
-**1. Typo**
-Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
-
-**2. Words**
+**1. Words**
 Results are sorted by **decreasing number of matched query terms** in each matching document: find documents that contain more occurrences of the query terms first.
 
-::: warning
+::: note
 
-It is now mandatory that all query terms are present in the returned documents. This rule does not impact search results yet. <Badge text="soon" type="warn"/>
+Be aware that the `words` rule works from right to left, so order of the query string does affect the sorting results.
+
+For example, if someone were to search `batman dark knight`, then the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third. All other documents would be ranked last.
+
+In other words, results containing just `dark` and `knight`, or `batman` and `knight`, would be sorted last, equivalent to documents that contain none of the query terms.
 
 :::
+
+**2. Typo**
+Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
 
 **3. Proximity**
 Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
@@ -34,10 +38,7 @@ Results are sorted by **increasing distance between matched query terms**: find 
 **4. Attribute**
 Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**: find documents that contain query terms in more important attributes first.
 
-**5. Words Position**
-Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
-
-**6. Exactness**
+**5. Exactness**
 Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
 
 #### Examples
@@ -79,18 +80,6 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 
 :::
 
-::: tab Words-position
-
-![Image from alias](/ranking-rules/belgium.png)
-
-### Word position
-
-`Gangsta` appears before `Dunkirk` because `Belgium` appears sooner in the attribute.
-
-The `word position` rule sorts the results by increasing matching word's index number.
-
-:::
-
 ::: tab Exactness
 ![Image from alias](/ranking-rules/knight.png)
 
@@ -107,7 +96,7 @@ The `word position` rule sorts the results by increasing matching word's index n
 By default, the built-in rules are executed in the following order to meet most standard needs.
 
 ```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+["words", "typo", "proximity", "attribute", "exactness"]
 ```
 
 Depending on your needs, you might want to change this order of importance. To do so, you can use the [settings route](/reference/api/ranking_rules.md#update-ranking-rules) of your index.
@@ -150,7 +139,6 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
   "attribute",
   "proximity",
   "words",
-  "wordsPosition",
   "exactness",
   "asc(release_date)",
   "desc(movie_ranking)"

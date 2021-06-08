@@ -38,11 +38,10 @@ List the settings.
 
 ```json
 [
-  "typo",
   "words",
+  "typo",
   "proximity",
   "attribute",
-  "wordsPosition",
   "exactness",
   "desc(release_date)"
 ]
@@ -97,7 +96,7 @@ Reset the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an
 An array that contains [built-in ranking rules](/learn/core_concepts/relevancy.md#order-of-the-rules) sorted by order of importance.
 
 ```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+["words", "typo", "proximity", "attribute", "exactness"]
 ```
 
 To remove all ranking rules, which is not recommended in any case, you would send an empty array to the [add or replace ranking rules route](/reference/api/ranking_rules.md#update-ranking-rules).

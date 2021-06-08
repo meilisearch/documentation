@@ -150,7 +150,6 @@ update_ranking_rules_1: |-
         "words",
         "proximity",
         "attribute",
-        "wordsPosition",
         "exactness",
         "asc(release_date)",
         "desc(rank)"
