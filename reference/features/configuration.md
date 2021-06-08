@@ -92,7 +92,7 @@ Set the location of the database file.
 **CLI option**: `--http-addr`
 **Default value**: `"127.0.0.1:7700"`
 
-The address the HTTP server will listen on.
+Set the HTTP address and port the MeiliSearch instance server will use.
 
 ### Master Key
 
@@ -100,9 +100,9 @@ The address the HTTP server will listen on.
 **CLI option**: `--master-key`
 **Default value**: `None`
 
-The master key granting access to all MeiliSearch's API routes. Providing a mandatory key is mandatory when environment is set to `production`.
+Set an instance's master key, automatically protecting all routes except `GET /health`. Providing a key is mandatory when environment is set to `production`.
 
-If no master key is provided all routes will be unprotected and publicly accessible.
+If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
 This is only possible if you are in `development` environment. An error is thrown if you try to start MeiliSearch without any master key when the environment is set to `production`.
 
