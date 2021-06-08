@@ -1,5 +1,5 @@
 
-# Deploy a MeiliSearch instance on amazon web services (AWS)
+# Deploy a MeiliSearch instance on Amazon Web Services (AWS)
 
 Using our **MeiliSearch [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html)**, MeiliSearch can be deployed on AWS in just a few minutes.
 
