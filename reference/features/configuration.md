@@ -44,14 +44,14 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 
 ## Options
 
-#### General
+### General
 
 - [Database path](/reference/features/configuration.md#database-path)
 - [HTTP address & port binding](/reference/features/configuration.md#http-address-port-binding)
 - [Master key](/reference/features/configuration.md#master-key)
 - [Environment](/reference/features/configuration.md#environment)
 
-#### Advanced
+### Advanced
 
 - [Analytics](/reference/features/configuration.md#analytics)
 - [Payload Limit Size](/reference/features/configuration.md#payload-limit-size)
