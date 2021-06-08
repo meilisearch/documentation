@@ -16,7 +16,7 @@ Please be advised that many of the search products described below are constantl
 
 ## Comparisons
 
-### MeiliSearch vs elasticsearch
+### MeiliSearch vs Elasticsearch
 
 Elasticsearch has been designed as a backend search engine and, although it is not at first suited for this purpose, is commonly used to build search bars for the end-users.
 Unlike Elasticsearch, which is a general search engine, MeiliSearch focuses on delivering a specific kind of features.
@@ -27,7 +27,7 @@ MeiliSearch is intended to deliver performant instant search experiences aimed a
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to MeiliSearch.
 MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides a prefix searching capability, makes search intuitive for users, and returns them their results instantly with near-perfect relevance.
 
-### MeiliSearch vs algolia
+### MeiliSearch vs Algolia
 
 MeiliSearch was inspired by Algolia's product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. MeiliSearch is thus a new search engine based on the work of Algolia and recent research papers.
 It provides similar features and reaches the same level of relevance just as quickly as its predecessor.
@@ -64,14 +64,14 @@ Like MeiliSearch, Typesense is a lightweight open-source search engine optimized
 
 #### Lucene derivatives
 
-#### Lucene-solr
+#### Lucene-Solr
 
 Solr is a subproject of Apache Lucene, created in 2004 by Yonik Seeley, and is today one of the most widely used search engines available worldwide. Solr is a search platform, written in Java, and built on top of Lucene. In other words, Solr is an HTTP wrapper around Lucene's Java API, meaning you can leverage all the features of Lucene by using it. In addition, Solr server is combined with Solr Cloud, providing distributed indexing and searching capabilities, thus ensuring high availability and scalability. Data is shared but also automatically replicated.
 Furthermore, Solr is not only a search engine; it is often used as a document-structured NoSQL database. Documents are stored in collections, which can be comparable to tables in a relational database.
 
 Due to its extensible plugin architecture and customizable features, Solr is a search engine with an endless number of use cases even though, since it can index and search documents and email attachments, it is specifically popular for enterprise search.
 
-#### Bleve & tantivy
+#### Bleve & Tantivy
 
 Bleve and Tantivy are search engine projects, respectively written in Golang and Rust, inspired by Apache Lucene and its algorithms (e.g., tf-idf, short for term frequency-inverse document frequency). Such as Lucene, both are libraries to be used for any search project; however they are not ready-to-use APIs.
 
