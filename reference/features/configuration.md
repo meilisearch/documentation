@@ -1,12 +1,10 @@
 # Configuration
 
-Many options are available to configure a MeiliSearch instance. Each of these options is added on MeiliSearch instance launch.
+Options can be passed to a MeiliSearch instance through **environment variables** and **command line options**. 
 
 ## Configuring an instance with command-line flags
 
-## Passing arguments via the command line
-
-Options are added at launch.
+Options and their respective arguments must be passed when launching the instance.
 
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
@@ -18,7 +16,7 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Configuring an instance with environment variables
 
-The format of the environment variables is identical to the command line options with the exception that it is uppercased and `MEILI_` is prepended.
+Environment variables are always identical to the command-line flags, but prepended with `MEILI_` and written in upper case.
 
 ```bash
 export MEILI_DB_PATH=./meilifiles
