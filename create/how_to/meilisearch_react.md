@@ -53,7 +53,7 @@ You will be able to check that MeiliSearch is running by visiting the following 
 
 - [http://localhost:7700/](http://localhost:7700/)
 
-## Create an index in meilisearch
+## Create an index in MeiliSearch
 
 An index is an entity in which documents are stored, like an array of objects with some specific settings attached to it and a unique primary key.
 
