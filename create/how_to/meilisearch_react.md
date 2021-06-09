@@ -143,7 +143,7 @@ Remember to change the path to your JSON file before running this script!
 
 :::
 
-## Prepare the react app
+## Prepare the React app
 
 You will use a standard React App that you can create using CRA or simply by cloning this repository:
 
