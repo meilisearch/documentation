@@ -86,7 +86,7 @@ Database path: "./data.ms"
 Server listening on: "127.0.0.1:7700"
 ```
 
-## Step 2: Run meilisearch as a service
+## Step 2: Run MeiliSearch as a service
 
 In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
 
