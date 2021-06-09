@@ -233,7 +233,7 @@ This code should output this beautiful header with a search form.
 
 ![Decathlon front page](/react-guide/decat_before.png)
 
-## Search results in react
+## Search results in React
 
 Connecting to MeiliSearch from React using the MeiliSearch Javascript SDK is a simple operation that can be done in just a few steps.
 
