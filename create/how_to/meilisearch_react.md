@@ -35,7 +35,7 @@ git clone https://github.com/Giorat/meili_react_demo.git
 cd meili_react_demo
 ```
 
-### Run a new docker image
+### Run a new Docker image
 
 If you cloned the repository, to set up the MeiliSearch instance just execute inside the main folder:
 
