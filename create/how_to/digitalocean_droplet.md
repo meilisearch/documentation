@@ -13,7 +13,7 @@ In any DigitalOcean page, when you are logged in, you will find a menu in the up
 
 ![Create droplet](/digitalocean/01.create.png)
 
-### 2. Select meilisearch snapshot
+### 2. Select MeiliSearch snapshot
 
 By default, DigitalOcean will display the "distributions" tab. Select the "Marketplace" tab and search for "meili". Select it.
 
