@@ -17,7 +17,7 @@ Deploying Meilisearch with Qovery provides:
 
 ## Step-by-step MeiliSearch deployment
 
-### 1. Create a qovery Account
+### 1. Create a Qovery Account
 
 Visit [the Qovery dashboard](https://start.qovery.com) to create an account if you don't already have one.
 
