@@ -2,7 +2,7 @@
 permalink: /open-api-readme
 ---
 
-# Open-api
+# OpenAPI
 
 Every one of MeiliSearch's [API endpoints](/reference/api) is also documented with [OpenAPI v3.0.3](http://spec.openapis.org/oas/v3.0.3).
 
