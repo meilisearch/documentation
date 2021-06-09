@@ -15,7 +15,7 @@ Deploying Meilisearch with Qovery provides:
 - A free SSL.
 - Optional: custom domain.
 
-## Step-by-step meilisearch deployment
+## Step-by-step MeiliSearch deployment
 
 ### 1. Create a qovery Account
 
