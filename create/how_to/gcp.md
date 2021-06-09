@@ -106,7 +106,7 @@ To start the configuration process, connect via SSH to your new MeiliSearch inst
 
 ### 2.2. Run the configuration script
 
-#### 2.2.1 Option 1: Using the google cloud console
+#### 2.2.1 Option 1: Using the Google Cloud Console
 
 Navigate to Compute Engine => VM instances. Click on the name of your instance, and then click on the SSH button (make sure to have pop-ups enabled or the window may be blocked). The connection will be established and the script will automatically run.
 
