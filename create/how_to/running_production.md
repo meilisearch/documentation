@@ -199,7 +199,7 @@ MeiliSearch is now up, deployed in a production environment, using a safe API ke
 
 The only remaining problem is that MeiliSearch processes requests via HTTP without any additional security. The content that is being transmitted over HTTP could easily be read or modified by attackers, and someone could get full or partial access to your data. In order to prevent this to happen, it's important to use the HTTPS, which will enable you to use a SSL/TLS certificate, and securely transmit data.
 
-### 3.2. Set up SSL/TLS for your meilisearch
+### 3.2. Set up SSL/TLS for your MeiliSearch
 
 SSL will let the user or client establish an authenticated connection to MeiliSearch. In this way, a user can verify server's identity before sending sensitive data or making any request to it. Then, data is sent in an encrypted way that only MeiliSearch server will be able to decrypt, providing you a fast, reliable, and automatic layer of security.
 
