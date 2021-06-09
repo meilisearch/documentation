@@ -169,7 +169,7 @@ Yes, as MeiliSearch and its integration tools are opensource, we maintain a [pub
 
 For more accurate features and issues, everything is detailed in the issues of all our [GitHub repositories](https://github.com/meilisearch/MeiliSearch/issues).
 
-## How can I contact the meilisearch team?
+## How can I contact the MeiliSearch team?
 
 See our [contact page](/learn/what_is_meilisearch/contact.md).
 
