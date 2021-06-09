@@ -1,4 +1,4 @@
-# Deploy a meilisearch instance on qovery
+# Deploy a MeiliSearch instance on Qovery
 
 _The following is a guest post by Romaric Philogène, CEO and Co-Founder of Qovery._
 
