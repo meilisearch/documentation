@@ -374,7 +374,7 @@ Secondly, you have to specify the attributes that MeiliSearch can search from in
 
 Lastly, you have to specify the attributes that MeiliSearch can return to the user by the Frontend application with the [displayedAttributes](http://localhost:8080/guides/advanced_guides/field_properties.md#displayed-fields) object.
 
-### Upload the new settings to meilisearch
+### Upload the new settings to MeiliSearch
 
 ```javascript
 const MeiliSearch = require("meilisearch");
