@@ -146,8 +146,8 @@ update_ranking_rules_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     --data '[
-        "typo",
         "words",
+        "typo",
         "proximity",
         "attribute",
         "exactness",
