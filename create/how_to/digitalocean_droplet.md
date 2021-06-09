@@ -126,7 +126,7 @@ A script will run automatically, asking for your settings and desired configurat
 meilisearch-setup
 ```
 
-### 3. Enjoy your ready-to-use meilisearch droplet
+### 3. Enjoy your ready-to-use MeiliSearch droplet
 
 Your MeiliSearch Droplet is ready to be used in **production**.
 
