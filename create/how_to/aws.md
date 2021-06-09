@@ -91,7 +91,7 @@ If you have an existing Key Pair, you can use that. Otherwise, select the option
 
 Once you've downloaded your key pair (and only then), click on **Launch Instances**, then on **View Instances**.
 
-### 9. Enjoy your MiliSearch instance running on AWS!
+### 9. Enjoy your MeiliSearch instance running on AWS!
 
 Your instance may take a minute or two to get up and running (see the **Instance state** column).
 
