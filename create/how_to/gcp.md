@@ -38,7 +38,7 @@ gs://meilisearch-image/meilisearch-v0.20.0-debian-10.vmdk
 
 ![Wait for the image to finish importing](/gcp/03.import-image.png)
 
-### 2. Create a new GCP compute engine instance from the imported image
+### 2. Create a new GCP Compute Engine instance from the imported image
 
 - Open the tab `Images` and click on the name of the image that you just imported, and click on the `[+] Create instance` button.
 
