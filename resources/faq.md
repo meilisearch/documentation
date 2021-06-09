@@ -145,7 +145,7 @@ Your document upload probably failed. To understand what happened, please check 
 Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
 More information in the [asynchronous updates guide](/learn/advanced/asynchronous_updates.md).
 
-## Does meilisearch deliver an interface to search in my documents?
+## Does MeiliSearch deliver an interface to search in my documents?
 
 Yes, a web interface is available on the default address and port of your MeiliSearch instance.
 
