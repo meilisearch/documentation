@@ -75,7 +75,7 @@ Paste it in your browser. If this screen is shown, your MeiliSearch is now ready
 
 ![Test MeiliSearch](/digitalocean/09.test-meili.png)
 
-## Configure production settings in your meilisearch droplet
+## Configure production settings in your MeiliSearch droplet
 
 Configuring your MeiliSearch in a **production** environment on DigitalOcean droplet is very straightforward. Establish an SSH connection with your droplet and a script will guide you through the process.
 
