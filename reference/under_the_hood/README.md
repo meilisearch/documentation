@@ -15,3 +15,5 @@ To better understand some of the algorithms behind our beloved search engine, ch
 [Storage](/reference/under_the_hood/storage.md)
 [Tokenization](/reference/under_the_hood/tokenization.md)
 [Typo Tolerance](/reference/under_the_hood/typotolerance.md)
+
+## This header is a test of our documentation scraper
