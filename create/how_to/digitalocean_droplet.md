@@ -51,7 +51,7 @@ Tags are a very good method to know who created resources, and for organizing re
 
 ![Add tags](/digitalocean/06.add-tags.png)
 
-### 7. Finally click on create droplet
+### 7. Finally click on 'Create Droplet'
 
 ![Create droplet](/digitalocean/07.create-droplet.png)
 
