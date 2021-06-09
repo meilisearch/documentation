@@ -27,7 +27,7 @@ You will now select which AMI or system Image to use to run your instance. Type 
 
 Click on **Select** (right side of the screen) to confirm your choice.
 
-### 3. Size and Specs
+### 3. Size and specs
 
 Select the specifications of the server you want MeiliSearch to run on.
 
