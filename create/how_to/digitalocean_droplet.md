@@ -55,7 +55,7 @@ Tags are a very good method to know who created resources, and for organizing re
 
 ![Create droplet](/digitalocean/07.create-droplet.png)
 
-### 8. Your meilisearch is running (in **development** environment)
+### 8. Your MeiliSearch is running (in **development** environment)
 
 Instance creation in progress...
 
