@@ -1,4 +1,4 @@
-# Deploy a meilisearch instance on digitalocean
+# Deploy a MeiliSearch instance on DigitalOcean
 
 **Table of Contents**:
 
