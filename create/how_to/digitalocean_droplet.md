@@ -65,7 +65,7 @@ Instance creation in progress...
 
 ![Created](/digitalocean/08.created-ip.png)
 
-### 9. Test Meilisearch.
+### 9. Test MeiliSearch.
 
 Copy the public IP address:
 
