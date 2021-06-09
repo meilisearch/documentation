@@ -64,7 +64,7 @@ Tags are used to identify your resources in AWS. **They are not required by Meil
 
 Click on **Next: Configure Security Groups**.
 
-### 7. Security groups: networking and connectivity
+### 7. Security groups: Networking and connectivity
 
 For your MeiliSearch instance to communicate with the outside world, it is very important to allow SSH connections, HTTP, and HTTPS traffic.
 
