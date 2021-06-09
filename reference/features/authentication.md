@@ -13,14 +13,14 @@ MeiliSearch uses three types of keys:
 - The **Master** key grants access to all routes
 - The **Private** key grants access to all routes except the `/keys` routes
 - The **Public** key only grants access to the following routes:
-  - `GET /indexes/:index_uid/search`
-  - `POST /indexes/:index_uid/search`
-  - `GET /indexes/:index_uid/documents`
-  - `GET /indexes/:index_uid/documents/:doc_id`
+  - [`GET /indexes/:index_uid/search`](/reference/api/search#search-in-an-index-with-get-route)
+  - [`POST /indexes/:index_uid/search`](/reference/api/search#search-in-an-index-with-post-route)
+  - [`GET /indexes/:index_uid/documents`](/reference/api/documents#get-documents)
+  - [`GET /indexes/:index_uid/documents/:document_id`](/reference/api/documents#get-one-document)
 
 When a master key is provided, both the private and the public keys are automatically generated. **You cannot create any additional keys**.
 
-The only unprotected route available when using the built-in key-based authorization is `GET /health`.
+The only unprotected route available when using the built-in key-based authorization is [`GET /health`](/reference/api/health).
 
 ## Adding a key
 
@@ -30,7 +30,7 @@ You can specify a key by passing the `MEILI_MASTER_KEY` environment variable, or
 
 After adding the master key, you can retrieve both the private and the public keys on the [keys route](/reference/api/keys.md).
 
-## Using an authenticated MeiliSearch instance
+## Communicating with a protected instance
 
 When using authentication, a key must be added to [the header](/reference/api/README.md#authentication) of each API call.
 
