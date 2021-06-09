@@ -7,10 +7,10 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
 
     - name: Publish
       uses: netlify/actions/build@master
@@ -22,9 +22,9 @@ jobs:
 
   scrape-docs:
     needs: build-deploy
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
     - name: Run docs-scraper
       env:
         HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
