@@ -8,7 +8,7 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 
 [[toc]]
 
-## Part 1: Deploy a meilisearch instance
+## Part 1: Deploy a MeiliSearch instance
 
 ### 1. Import MeiliSearch custom image on your GCP account
 
