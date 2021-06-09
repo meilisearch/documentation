@@ -18,19 +18,21 @@ Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/und
 
 ### Built-in rules
 
-MeiliSearch contains six built-in ranking rules: **typo, words, proximity, attribute, words position, and exactness**, in that default order.
+MeiliSearch contains five built-in ranking rules: **words, typo, proximity, attribute, and exactness**, in that default order.
 
-**1. Typo**
-Results are sorted by **increasing number of typos**. Returns documents that match query terms with fewer typos first.
-
-**2. Words**
+**1. Words**
 Results are sorted by **decreasing number of matched query terms**. Returns documents that contain all query terms first.
 
-::: warning
+::: note
 
-For now, it is mandatory that all query terms are present in returned documents. Therefore, this rule does not impact search results yet. <Badge text="soon" type="warn"/>
+Be aware that the `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
+
+For example, if someone were to search `batman dark knight`, then the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third.
 
 :::
+
+**2. Typo**
+Results are sorted by **increasing number of typos**. Returns documents that match query terms with fewer typos first.
 
 **3. Proximity**
 Results are sorted by **increasing distance between matched query terms**. Returns documents where query terms occur close together and in the same order as the query string first.
@@ -38,11 +40,8 @@ Results are sorted by **increasing distance between matched query terms**. Retur
 **4. Attribute**
 Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
 
-**5. Words position**
-Results are sorted by **the location of the query word in the field**. Returns documents that contain query terms close to the beginning of the field first.
-
-**6. Exactness**
-Results are sorted by **the similarity of the matched words with the query words**. Returns documents containing terms that are more similar to the query terms first.
+**5. Exactness**
+Results are sorted by **the similarity of the matched words with the query words**. Returns documents that contain exactly the same terms as the ones queried first.
 
 #### Examples
 
@@ -80,18 +79,6 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 `If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `description`.
 
 The `attribute` rule sorts the results by [attribute importance](/learn/core_concepts/relevancy.md#attribute-ranking-order).
-
-:::
-
-::: tab Words-position
-
-![Image from alias](/ranking-rules/belgium.png)
-
-### Word position
-
-`Gangsta` appears before `Dunkirk` because `Belgium` appears sooner in the attribute.
-
-The `word position` rule sorts the results by increasing matching word's index number.
 
 :::
 
@@ -144,7 +131,6 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
   "attribute",
   "proximity",
   "words",
-  "wordsPosition",
   "exactness",
   "asc(release_date)",
   "desc(movie_ranking)"
