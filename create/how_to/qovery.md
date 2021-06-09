@@ -26,7 +26,7 @@ Visit [the Qovery dashboard](https://start.qovery.com) to create an account if y
 - Click on the "create a project" button and give a name to your project, e.g. `MeiliSearch`.
 - Click on "next".
 
-### 3. Deploy meilisearch
+### 3. Deploy MeiliSearch
 
 ![meilisearch template](https://github.com/Qovery/public-resources/raw/master/screenshots/meilisearch-template.png)
 
