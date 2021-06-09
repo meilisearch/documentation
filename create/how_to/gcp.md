@@ -10,7 +10,7 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 
 ## Part 1: Deploy a meilisearch instance
 
-### 1. Import meilisearch custom image on your GCP account
+### 1. Import MeiliSearch custom image on your GCP account
 
 - Navigate to `Compute Engine` => `Images`.
 
