@@ -163,7 +163,7 @@ Here is more information about the [relevancy of MeiliSearch](/learn/core_concep
 MeiliSearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.
 All of the ranking rules can be modified via the [dedicated routes in the MeiliSearch API](/reference/api/ranking_rules.md).
 
-## Do you provide a public roadmap for meilisearch and its integration tools?
+## Do you provide a public roadmap for MeiliSearch and its integration tools?
 
 Yes, as MeiliSearch and its integration tools are opensource, we maintain a [public roadmap](https://roadmap.meilisearch.com/) for the general features we plan to do.
 
