@@ -152,10 +152,9 @@ A full document describing why we collect this data and how we use it is forthco
 
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: `--http-payload-size-limit`
+**Default value**: `104857600` (~100MB)
 
-The maximum size, in bytes, of accepted JSON payloads.
-
-**Default value**: `104857600` (+=100MB)
+Set the maximum size, in bytes, of accepted JSON payloads.
 
 ### SSL authentication path
 
