@@ -1,4 +1,4 @@
-# Implement instant search in your react app in 5 minutes
+# Implement instant search in your React app in 5 minutes
 
 _The following is a guest post by Riccardo Giorato._
 
