@@ -6150,10 +6150,10 @@ merge2@^1.2.3, merge2@^1.3.0:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-mermaid@8.10.1:
-  version "8.10.1"
-  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-8.10.1.tgz#9573f702024e2173f4aa07d9b207d750507cf838"
-  integrity sha512-KxwKEJDKy303TQdz5TQMFb/4u+gUL21CefUMGOfuigDh9powcYaNmuJ5BkHmO0jB3Y1z2zlsuKvHZ2CusWH5+A==
+mermaid@8.10.2:
+  version "8.10.2"
+  resolved "https://registry.yarnpkg.com/mermaid/-/mermaid-8.10.2.tgz#e039df2e42faba08743f167fff85bdccff241f76"
+  integrity sha512-Za5MrbAOMbEsyY4ONgGjfYz06sbwF1iNGRzp1sQqpOtvXxjxGu/J1jRJ8QyE9kD/D9zj1/KlRrYegWEvA7eZ5Q==
   dependencies:
     "@braintree/sanitize-url" "^3.1.0"
     d3 "^5.7.0"
@@ -9485,10 +9485,10 @@ vuepress-plugin-img-lazy@^1.0.4:
     markdown-it-img-lazy "^1.0.2"
     markdown-it-imsize "^2.0.1"
 
-vuepress-plugin-meilisearch@^0.10.7:
-  version "0.10.7"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.7.tgz#1b58e1f6cc0a433a7ab0daa6197905e8f4824a22"
-  integrity sha512-YEgcnht4aV/Qjv9oz/QsDcWSNsat12eHPGOiMLCdWB6tbeMD7eV+ux9HFcNL0hvF556J6IgILMFNMxU15qu6Og==
+vuepress-plugin-meilisearch@^0.10.8:
+  version "0.10.8"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.10.8.tgz#c3d3a1e6c499582259cabb7e45a6af063e2a2d5f"
+  integrity sha512-skJt2plp8jfbzIfP831iTlHfIxwxkGqq3iTVyclr7JEUf+q0rpmGGWEX/BcewSgSLfXPhPNxsefIbW8lMkWcAQ==
   dependencies:
     docs-searchbar.js "^1.1.11"
 
@@ -9797,9 +9797,9 @@ write-file-atomic@^3.0.0:
     typedarray-to-buffer "^3.1.5"
 
 ws@^6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
-  integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.2.tgz#dd5cdbd57a9979916097652d78f1cc5faea0c32e"
+  integrity sha512-zmhltoSR8u1cnDsD43TX59mzoMZsLKqUweyYBAIvTngR3shc0W6aOZylZmq/7hqyVxPdi+5Ud2QInblgyE72fw==
   dependencies:
     async-limiter "~1.0.0"
 
