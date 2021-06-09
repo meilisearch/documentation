@@ -110,7 +110,7 @@ To start the configuration process, connect via SSH to your new MeiliSearch inst
 
 Navigate to Compute Engine => VM instances. Click on the name of your instance, and then click on the SSH button (make sure to have pop-ups enabled or the window may be blocked). The connection will be established and the script will automatically run.
 
-#### 2.2.2 Option 2: Add your SSH key to the compute engine metadata
+#### 2.2.2 Option 2: Add your SSH key to the Compute Engine metadata
 
 - Make sure that you have an SSH public key (normally stored in `~/.ssh/id_rsa.pub`). If you haven't created your SSH key or want to generate a new one, you can follow [this guide](https://www.ssh.com/ssh/keygen/).
 
