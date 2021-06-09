@@ -4,7 +4,7 @@
 
 [[toc]]
 
-## Deploy meilisearch on a digitalocean droplet
+## Deploy MeiliSearch on a DigitalOcean droplet
 
 ### 1. Create a new "droplet"
 
