@@ -157,7 +157,7 @@ If it’s your first time accessing the instance via SSH, a script will run auto
 meilisearch-setup
 ```
 
-### 3. Enjoy your ready-to-use meilisearch instance
+### 3. Enjoy your ready-to-use MeiliSearch instance
 
 Your MeiliSearch instance is up and running on GCP and ready to be used in production.
 
