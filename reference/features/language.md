@@ -34,7 +34,7 @@ Yes, but your experience might not be optimized and results might be less releva
 
 ### My language does not use the Roman alphabet. Can I still use MeiliSearch?
 
-Yes—our users work with many different alphabets and writing systems such as Cyrillic, Thai and Japanese.
+Yes—our users work with many different alphabets and writing systems such as Cyrillic, Thai, and Japanese.
 
 ### Does MeiliSearch plan to support additional languages in the future?
 
