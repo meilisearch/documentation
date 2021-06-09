@@ -224,7 +224,7 @@ At this time, the number of CPU cores has no direct impact on index or search sp
 Our new engine (currently in development) **will support multi-core indexing at launch**.
 :::
 
-#### Speeding up meilisearch
+#### Speeding up MeiliSearch
 
 MeiliSearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your MeiliSearch instance is querying slowly, there are two primary methods to speed it up:
 
