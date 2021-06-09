@@ -1,4 +1,4 @@
-# Deploy a milisearch instance on google cloud platform (GCP) compute engine
+# Deploy a MeiliSearch instance on Google Cloud Platform (GCP) Compute Engine
 
 Using our GCP custom image, MeiliSearch can be deployed on GCP in just a few minutes.
 
