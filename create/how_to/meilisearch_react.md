@@ -159,7 +159,7 @@ npx create-react-app meili_react_demo
 cd meili_react_demo
 ```
 
-### Including tailwind CSS
+### Including Tailwind CSS
 
 To speed up the styling process, add Tailwind CSS style directly to index.html:
 
