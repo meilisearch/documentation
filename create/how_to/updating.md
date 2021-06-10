@@ -306,7 +306,7 @@ curl -X GET \
   -o mydocuments.json
 ```
 
-### Step 4: Upload your data to the latest version of meilisearch
+### Step 4: Upload your data to the latest version of MeiliSearch
 
 Finally, [install the latest version of MeiliSearch](/learn/getting_started/installation.md) and upload your data as usual.
 
