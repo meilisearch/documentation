@@ -104,7 +104,7 @@ Set an instance's master key, automatically protecting all routes except `GET /h
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-If no master key is provided in a `production` environment, the MeiliSearch instance will throw an error and refuse to launch. 
+If no master key is provided in a `production` environment, the MeiliSearch instance will throw an error and refuse to launch.
 
 [Learn more about MeiliSearch's use of security keys in this guide.](/reference/features/authentication.md)
 
@@ -130,7 +130,7 @@ The [web interface](/reference/features/web_interface.md#web-interface) is disab
 **CLI option**: `--no-analytics`
 **Default value**: `false`
 
-If set to `true`, deactivates MeiliSearch's built-in analytics and telemetry. 
+If set to `true`, deactivates MeiliSearch's built-in analytics and telemetry.
 
 By default, MeiliSearch collects the following data from all instances that do not explicitly opt-out:
 
@@ -160,12 +160,11 @@ Set the maximum size, in bytes, of accepted JSON payloads.
 
 **Environment variable**: `MEILI_SSL_AUTH_PATH`
 **CLI option**: `--ssl-auth-path`
-
-Enable client authentication, and accept certificates signed by those roots provided in CERTFILE
-
 **Default value**: `None`
 
-### SSL certificates path
+Enable client authentication and accept certificates signed by the roots provided in CERTFILE.
+
+### SSL Certificates Path
 
 **Environment variable**: `MEILI_SSL_CERT_PATH`
 **CLI option**: `--ssl-cert-path`
