@@ -1,5 +1,7 @@
 # MeiliSearch Documentation
 
+<a href="https://app.bors.tech/repositories/28374"><img src="https://bors.tech/images/badge_small.svg" alt="Bors enabled"></a>
+
 This repository is the documentation for the **open-source search engine API [MeiliSearch](https://github.com/meilisearch/meilisearch)**.
 
 ## Contributing
