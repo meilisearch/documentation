@@ -16,7 +16,7 @@ Please be advised that many of the search products described below are constantl
 
 ## Comparisons
 
-### MeiliSearch vs. Elasticsearch
+### MeiliSearch vs Elasticsearch
 
 Elasticsearch has been designed as a backend search engine and, although it is not at first suited for this purpose, is commonly used to build search bars for the end-users.
 Unlike Elasticsearch, which is a general search engine, MeiliSearch focuses on delivering a specific kind of features.
@@ -27,7 +27,7 @@ MeiliSearch is intended to deliver performant instant search experiences aimed a
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to MeiliSearch.
 MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides a prefix searching capability, makes search intuitive for users, and returns them their results instantly with near-perfect relevance.
 
-### MeiliSearch vs. Algolia
+### MeiliSearch vs Algolia
 
 MeiliSearch was inspired by Algolia's product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. MeiliSearch is thus a new search engine based on the work of Algolia and recent research papers.
 It provides similar features and reaches the same level of relevance just as quickly as its predecessor.
@@ -37,9 +37,9 @@ Contrary to Algolia, MeiliSearch is open-source and written in Rust, a systems-l
 One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers.
 MeiliSearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to deploy and maintain than Algolia's.
 
-## A Quick Look at the Search Engine Landscape
+## A quick look at the search engine landscape
 
-### Open Source
+### Open source
 
 #### Lucene
 
@@ -81,7 +81,7 @@ Elasticsearch is a search engine based on the Lucene library and is most popular
 
 Today, Lucene and Elasticsearch are dominant players in the open-source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of MeiliSearch or Algolia.
 
-### Closed Source
+### Closed source
 
 #### Algolia
 

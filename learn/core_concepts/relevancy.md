@@ -34,7 +34,7 @@ Results are sorted by **increasing distance between matched query terms**: find 
 **4. Attribute**
 Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**: find documents that contain query terms in more important attributes first.
 
-**5. Words Position**
+**5. Words position**
 Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
 
 **6. Exactness**
@@ -157,7 +157,7 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 ]
 ```
 
-## Attribute Ranking Order
+## Attribute ranking order
 
 In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `release_date`.
 

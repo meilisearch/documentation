@@ -1,4 +1,4 @@
-# Contact Us
+# Contact us
 
 ## Forum 📋
 
@@ -12,7 +12,7 @@ Prefer the speed and fluidity of chat? Then join our [Slack community](https://s
 
 We think chat and forum discussions are [highly complementary](https://blog.discourse.org/2018/04/effectively-using-discourse-together-with-group-chat/), happily co-existing as two different modes of conversation. Try use the right tool for the job; but most importantly we just want to hear from you, regardless of medium!
 
-## GitHub Issues 🔩
+## GitHub issues 🔩
 
 Bug reports should be added as issues in the corresponding repository, e.g. [meilisearch/MeiliSearch](https://github.com/meilisearch/MeiliSearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
 

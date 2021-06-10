@@ -1,4 +1,4 @@
-# Official SDKs / Libraries
+# Official SDKs / libraries
 
 Our team and community have worked hard to bring MeiliSearch to almost all popular web development languages, frameworks, and deployment options.
 
@@ -18,12 +18,12 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 - [Rust](https://github.com/meilisearch/meilisearch-rust)
 - [Swift](https://github.com/meilisearch/meilisearch-swift)
 
-### Framework Integrations
+### Framework integrations
 
 - Laravel: the official [Laravel-Scout](https://github.com/laravel/scout) package supports MeiliSearch.
 - [Symfony](https://github.com/meilisearch/meilisearch-symfony)
 
-### Front-End Tools
+### Front-end tools
 
 - [Angular](https://github.com/meilisearch/meilisearch-angular)
 - [React](https://github.com/meilisearch/meilisearch-react)
@@ -32,12 +32,12 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 - [docs-searchbar.js](https://github.com/meilisearch/docs-searchbar.js): a search bar integration for all kinds of documentation.
 - [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
 
-### DevOps Tools
+### DevOps tools
 
 - [meilisearch-digitalocean](https://github.com/meilisearch/meilisearch-digitalocean): how to deploy a MeiliSearch instance on DigitalOcean. See this [dedicated page](/create/how_to/digitalocean_droplet.md) to use it.
 - [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes): how to deploy a MeiliSearch instance on Kubernetes.
 
-### Other Tools
+### Other tools
 
 - [docs-scraper](https://github.com/meilisearch/docs-scraper): a scraper tool to automatically read the content of your documentation and store it into MeiliSearch.
 

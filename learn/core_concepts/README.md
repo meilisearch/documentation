@@ -1,4 +1,4 @@
-# Core Concepts
+# Core concepts
 
 This section defines the core concepts of MeiliSearch:
 

@@ -1,6 +1,6 @@
 # Installation
 
-## Download and Launch
+## Download and launch
 
 :::: tabs
 
@@ -108,7 +108,7 @@ MeiliSearch will allocate 100GB on launch. If disk space is an issue on your mac
 For best performance, compile MeiliSearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
 :::
 
-## Cloud Deploy
+## Cloud deploy
 
 To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 
@@ -116,7 +116,7 @@ To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 - [DigitalOcean](/create/how_to/digitalocean_droplet.md)
 - [Qovery](/create/how_to/qovery.md)
 
-## Configuration Options
+## Configuration options
 
 Configuration options are added at launch, either through command line options or through environment variables.
 
@@ -134,6 +134,6 @@ Getting the latest version of MeiliSearch is a straightforward process: simply f
 
 However, please note that **prior to our official release (`v1.0`), databases are not compatible across versions**. Any database created by MeiliSearch `v0.X` can only be read by that version.
 
-### Migrating Your Database to a Later Version
+### Migrating your database to a later version
 
 If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, follow our [dedicated guide](/create/how_to/updating.md).

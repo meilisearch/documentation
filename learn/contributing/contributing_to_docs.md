@@ -1,8 +1,8 @@
-# Contributing to Our Documentation
+# Contributing to our documentation
 
 This documentation website is hosted in a [public GitHub repository](https://github.com/meilisearch/documentation). It is built with [VuePress](https://vuepress.github.io), written in [MarkDown](https://www.markdownguide.org/getting-started/), and deployed on [Netlify](https://www.netlify.com).
 
-## Our Documentation Philosophy
+## Our documentation philosophy
 
 Our documentation aims to be:
 
@@ -11,7 +11,7 @@ Our documentation aims to be:
 - **Thorough**. Behavior that isn't documented or is documented incorrectly, we consider broken.
 - **Open source**. This is a resource by MeiliSearch users, for MeiliSearch users.
 
-## How to Contribute?
+## How to contribute?
 
 ### Issues
 
@@ -24,7 +24,7 @@ On the MeiliSearch documentation team, [GitHub Issues](https://github.com/meilis
 
 We love issues at MeiliSearch, because they help us do our jobs better. Nine times out of ten, the most useful contribution is a simple GitHub issue that points out a problem and proposes a solution.
 
-#### Creating Your First Issue
+#### Creating your first issue
 
 All you need to create an issue is a [GitHub account](https://github.com).
 
@@ -38,7 +38,7 @@ All you need to create an issue is a [GitHub account](https://github.com).
 8. A member of our team should [get back to you](#how-we-review-contributions) shortly with feedback.
 9. Enjoy the feeling of a job well done! 🎉
 
-### Pull Requests
+### Pull requests
 
 Sometimes, it's faster to fix a problem yourself than explain it to us. In those cases, rather than create an [issue](#issues), you should make a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
@@ -52,7 +52,7 @@ Pull requests are particularly good for:
 
 Unless your PR is really small, we recommend you first [create an issue](#creating-your-first-issue) to confirm that it's worth your time and that nobody else is working on it already.
 
-#### Creating Your First PR
+#### Creating your first PR
 
 There are many ways to create pull requests, but we'll cover the simplest method for creating a PR on these docs. Feel free to try it on this page!
 
@@ -68,7 +68,7 @@ All you need to continue is a [GitHub account](https://github.com).
 8. **Congrats, you made your first PR!** Someone from the documentation team will review your pull request shortly. They may ask for changes, so keep an eye on your GitHub notifications.
 9. If everything looks good, your work will be merged into the `master` branch and become part of the official documentation site. You are now a MeiliSearch Contributor! 🚀
 
-## How We Review Contributions
+## How we review contributions
 
 For **reviewing issues**, we consider a couple criteria:
 

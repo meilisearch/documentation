@@ -1,4 +1,4 @@
-# Quick Start
+# Quick start
 
 This quick tour will help you get started with MeiliSearch in only a few steps. In order to make the most of it, you should be somewhat familiar with:
 
@@ -6,7 +6,7 @@ This quick tour will help you get started with MeiliSearch in only a few steps. 
 - [cURL](https://curl.se)
 - [JavaScript syntax](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)
 
-## Download and Launch
+## Download and launch
 
 First of all, let's download and run MeiliSearch.
 
@@ -41,7 +41,7 @@ Now that your MeiliSearch server is up and running, you should be able to commun
 
 Communication to the server is done through a [RESTful API](/reference/api/README.md) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
 
-## Add Documents
+## Add documents
 
 To add documents to MeiliSearch you must provide:
 
@@ -69,7 +69,7 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 [API references](/reference/api/documents.md)
 
-### Checking Updates
+### Checking updates
 
 Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_updates.md), including the document addition process.
 
@@ -119,7 +119,7 @@ MeiliSearch **response**:
 
 [API references](/reference/api/search.md)
 
-### Web Interface
+### Web interface
 
 We also deliver an out-of-the-box [web interface](/reference/features/web_interface.md) in which you can test MeiliSearch interactively.
 
@@ -130,7 +130,7 @@ This will lead you to a web page with a search bar that will allow you to search
 <br>
 <MovieGif />
 
-## Integrate with Your Project
+## Integrate with your project
 
 The only step missing now is adding the search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the search components needed to start searching.
 
@@ -138,7 +138,7 @@ The only step missing now is adding the search bar to your project. The easiest 
 
 `instant-meilisearch` uses [InstantSearch](https://github.com/algolia/instantsearch.js) an open-source library that generates everything you need from a search interface.
 
-#### Let's Try!
+#### Let's try!
 
 - Create an `html` file, for example, `index.html`.
 - Open it in a text editor (e.g. Notepad, Sublime Text, Visual Studio Code).
