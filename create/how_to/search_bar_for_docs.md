@@ -122,7 +122,7 @@ We recommend running the scraper at each new deployment of your documentation, [
 
 If your documentation is not a VuePress application, you can directly go to [this section](#for-all-kinds-of-documentation).
 
-### For a vuepress documentation
+### For VuePress documentation sites
 
 If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the MeiliSearch documentation.
 
