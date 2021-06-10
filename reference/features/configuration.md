@@ -262,10 +262,11 @@ On **Windows**, `getconf` returns a fixed size that will be allocated when launc
 
 **Environment variable**: `MEILI_NO_SENTRY`
 **CLI option**: `--no-sentry`
-
-We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. To deactivate Sentry, set this value to `true`.
-
 **Default value**: `false`
+
+Deactivate Sentry when set to `true`.
+
+We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that help us improve MeiliSearch.
 
 ### Schedule snapshot creation
 
