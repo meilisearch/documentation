@@ -222,49 +222,41 @@ SSL support tickets.
 
 **Environment variable**: `MEILI_MAX_MDB_SIZE`
 **CLI option**: `--max-mdb-size`
+**Default value**: `107374182400` (100 GiB)
 
-The maximum size, in bytes, of the `main` database. The `main` database stores the processed data.
+Set the maximum size of the `main` database, in bytes. The `main` database stores the processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
 
-The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
-You can find out about the `PAGE_SIZE` with the following command:
+The maximum MDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
 
 ```bash
 getconf PAGE_SIZE
 ```
 
-Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can attain.
+On **UNIX** systems (e.g. Linux, MacOS) `getconf` returns the maximum page size.
 
-- On **UNIX** it is the maximum size.
-- On **Windows** it is a fixed size that will be allocated on launch.
-  Because this allocates 100GiB on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
+On **Windows**, `getconf` returns a fixed size that will be allocated when launching the instance.
 
-[To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
-
-**Default value**: `107374182400` (100 GiB)
+[Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
 ### Max UDB size
 
 **Environment variable**: `MEILI_MAX_UDB_SIZE`
 **CLI option**: `--max-udb-size`
+**Default value**: `107374182400` (100 GiB)
 
-The maximum size, in bytes, of the `update` database. The `update` database stores the [pending updates](/learn/advanced/asynchronous_updates.md).
+The maximum size, in bytes, of the `update` database. The `update` database handles the [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `main` database, which only stores processed data.
 
-The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
-You can find out about the `PAGE_SIZE` with the following command:
+The maximum UDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
 
 ```bash
 getconf PAGE_SIZE
 ```
 
-Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can attain.
+On **UNIX** systems (e.g. Linux, MacOS) `getconf` returns the maximum page size.
 
-- On **UNIX** it is the maximum size.
-- On **Windows** it is a fixed size that will be allocated on launch.
-  Because this allocates 100GiB on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
+On **Windows**, `getconf` returns a fixed size that will be allocated when launching the instance.
 
-[To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
-
-**Default value**: `107374182400` (100 GiB)
+[Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
 ### Disable sentry
 
