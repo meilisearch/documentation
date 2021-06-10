@@ -19,7 +19,7 @@ Non-searchable fields are most useful for internal information that's not releva
 Even if you make a field non-searchable, it will remain [stored in the database](#data-storing) and can be made searchable again at a later time.
 :::
 
-### The Searchable attributes list
+### The searchable attributes list
 
 MeiliSearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/learn/core_concepts/relevancy.md#attribute-ranking-order), from most impactful to least.
 
