@@ -1,6 +1,6 @@
 # Version
 
-## Get version of meilisearch
+## Get version of MeiliSearch
 
 <RouteHighlighter method="GET" route="/version"/>
 
