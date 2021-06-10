@@ -179,7 +179,7 @@ Read more about [MeiliSearch authentication](/reference/features/authentication.
 
 :::
 
-### For all documentation sites
+### For all kinds of documentation
 
 If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
 
