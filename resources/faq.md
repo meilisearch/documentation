@@ -11,7 +11,7 @@ If you have any questions we want to hear from you. Your feedback will help us i
 
 [[toc]]
 
-## I have never used a search engine before. Can I use meilisearch anyway?
+## I have never used a search engine before. Can I use MeiliSearch anyway?
 
 Of course! No knowledge of ElasticSearch or Solr is required to use MeiliSearch.
 
