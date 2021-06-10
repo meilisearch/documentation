@@ -34,7 +34,7 @@ To find out more about the relevancy of MeiliSearch, take a look at this detaile
 
 However, MeiliSearch is of course [highly customizable](/reference/api/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
 
-## How to know if meilisearch perfectly fits my use cases?
+## How to know if MeiliSearch perfectly fits my use cases?
 
 Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/learn/getting_started/quick_start.md) to get a quick start!
 
