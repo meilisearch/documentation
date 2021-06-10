@@ -140,7 +140,7 @@ See more [information about the primary key](/learn/core_concepts/documents.md#p
 
 Your document upload probably failed. To understand what happened, please check this [answer](#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
 
-## Is killing a meilisearch process safe?
+## Is killing a MeiliSearch process safe?
 
 Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
 More information in the [asynchronous updates guide](/learn/advanced/asynchronous_updates.md).
