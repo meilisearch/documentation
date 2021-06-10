@@ -1,10 +1,10 @@
-# Under the Hood
+# Under the hood
 
 This section explores how MeiliSearch works under the hood.
 
 This information is not necessary to set up MeiliSearch, but it may help you master some of the intricacies of our engine, or make your own contribution to MeiliSearch.
 
-## Table of Contents
+## Table of contents
 
 To better understand some of the algorithms behind our beloved search engine, check out the following reference articles:
 

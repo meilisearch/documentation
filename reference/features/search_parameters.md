@@ -1,4 +1,4 @@
-# Search Parameters
+# Search parameters
 
 Search parameters let the user customize their search request.
 
@@ -36,7 +36,7 @@ Suppose you would like to search `shifu` in a movie database. You would send the
 
 <CodeSamples id="search_parameter_guide_query_1" />
 
-### Placeholder Search
+### Placeholder search
 
 When `q` isn't specified, a **placeholder search** is performed. Placeholder search allows you to find documents without providing any search terms.
 
@@ -222,7 +222,7 @@ And you would get the following response:
 }
 ```
 
-## Attributes to Retrieve
+## Attributes to retrieve
 
 Attributes to **display** in the returned documents.
 
@@ -240,7 +240,7 @@ If you want to get only the `overview` and `title` field and not the other field
 
 <CodeSamples id="search_parameter_guide_retrieve_1" />
 
-## Attributes to Crop
+## Attributes to crop
 
 Attributes whose values will be cropped if they contain a matched query word.
 
@@ -296,13 +296,13 @@ You will get the following response with the **cropped version in the \_formatte
 }
 ```
 
-## Crop Length
+## Crop length
 
 `cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
 
 Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop).
 
-## Attributes to Highlight
+## Attributes to highlight
 
 Attributes whose values will contain **highlighted matching query words**.
 

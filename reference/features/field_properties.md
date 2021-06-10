@@ -1,4 +1,4 @@
-# Field Properties
+# Field properties
 
 By default, whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
 
@@ -7,7 +7,7 @@ By default, whenever a document is added to MeiliSearch, all new attributes foun
 
 This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
 
-## Searchable Fields
+## Searchable fields
 
 A field can either be **searchable** or **non-searchable**.
 
@@ -19,7 +19,7 @@ Non-searchable fields are most useful for internal information that's not releva
 Even if you make a field non-searchable, it will remain [stored in the database](#data-storing) and can be made searchable again at a later time.
 :::
 
-### The Searchable Attributes List
+### The searchable attributes list
 
 MeiliSearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/learn/core_concepts/relevancy.md#attribute-ranking-order), from most impactful to least.
 
@@ -52,7 +52,7 @@ Suppose that you manage a database of movies with the following fields: `id`, `d
 
 <CodeSamples id="field_properties_guide_searchable_1" />
 
-## Displayed Fields
+## Displayed fields
 
 The fields whose attributes are added to the [displayed-attributes list](/reference/api/displayed_attributes.md) are **displayed in each matching document**.
 

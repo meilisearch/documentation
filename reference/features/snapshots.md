@@ -4,7 +4,7 @@ A snapshot is an exact copy of the database (i.e. the data.ms folder) at the tim
 
 Using this feature, it is possible to schedule snapshot creation at custom intervals and use existing snapshots to restore MeiliSearch.
 
-## Creating Snapshots
+## Creating snapshots
 
 For MeiliSearch to create snapshots, the feature must be enabled by adding the following flag:
 
@@ -36,7 +36,7 @@ During snapshot creation, old snapshots are **automatically overwritten**. This 
 
 [[More about snapshots flags and env variables]](/reference/features/configuration.md#schedule-snapshot-creation)
 
-## Starting from a Snapshot
+## Starting from a snapshot
 
 Because snapshots are exact copies of your database that haven't gone through any processing besides compression, starting a MeiliSearch instance from a snapshot is significantly faster than adding documents manually or starting from a dump.
 
@@ -46,7 +46,7 @@ Using the CLI flag `--import-snapshot`, MeiliSearch will start the server using 
 meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 ```
 
-## Common Problems
+## Common problems
 
 Take note that whenever you launch MeiliSearch from a snapshot, it will *stop processing and throw an error** if it encounters either of the two following situations:
 
@@ -64,10 +64,10 @@ The simplest way to delete your database is with the terminal command `rm -rf da
 
 [[More about snapshots flags and env variables]](/reference/features/configuration.md#schedule-snapshot-creation)
 
-## Use Cases
+## Use cases
 
 **Snapshots are safeguards in case of problems**. If your MeiliSearch instance encounters a problem or if you make a mistake while manipulating your database, restarting your instance with the latest snapshot is an easy way to recover your data.
 
-### Version Compatibility
+### Version compatibility
 
 Since a snapshot is an exact replica of your database, it can only be opened by the same version of MeiliSearch that created it.

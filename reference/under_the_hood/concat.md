@@ -1,6 +1,6 @@
-# Concatenate and Split Queries
+# Concatenate and split queries
 
-## Concatenated Queries
+## Concatenated queries
 
 When your search contains several words, MeiliSearch applies a concatenation algorithm to it.
 
@@ -18,7 +18,7 @@ A search on `The news paper` will also search for the following concatenated que
 This concatenation is done on a **maximum of 3 words**.
 :::
 
-## Split Queries
+## Split queries
 
 When you do a search, it **applies the splitting algorithm to every word** (_string separated by a space_).
 

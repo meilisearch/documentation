@@ -185,7 +185,7 @@ The complexity involved in the indexing process makes it extremely difficult to 
 
 In the future, we hope to provide detailed benchmarks of different use-cases. Until then, read on for more detailed information about optimizing your MeiliSearch instance.
 
-### Memory Usage
+### Memory usage
 
 There are two things that can cause your memory usage (RAM) to spike:
 
@@ -194,7 +194,7 @@ There are two things that can cause your memory usage (RAM) to spike:
 
 To reduce memory use and indexing time, follow this best practice: **always update index settings before adding your documents**. This avoids unnecessary double-indexing.
 
-### Disk Usage
+### Disk usage
 
 The following factors have a great impact on the size of your database (in no particular order):
 
@@ -209,7 +209,7 @@ The following factors have a great impact on the size of your database (in no pa
 Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes) unless they are useful as search criteria.
 :::
 
-### Search Speed
+### Search speed
 
 Because MeiliSearch uses a [memory map](/reference/under_the_hood/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
 
@@ -224,7 +224,7 @@ At this time, the number of CPU cores has no direct impact on index or search sp
 Our new engine (currently in development) **will support multi-core indexing at launch**.
 :::
 
-#### Speeding Up MeiliSearch
+#### Speeding up MeiliSearch
 
 MeiliSearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your MeiliSearch instance is querying slowly, there are two primary methods to speed it up:
 

@@ -1,4 +1,4 @@
-# Prefix Search
+# Prefix search
 
 In MeiliSearch, **you can perform a search with only a single letter as your query**. This is because we follow the philosophy of **prefix search**.
 

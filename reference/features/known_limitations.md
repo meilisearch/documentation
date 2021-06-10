@@ -1,4 +1,4 @@
-# Known Limitations
+# Known limitations
 
 MeiliSearch has known limitations, some of which may be addressed in future versions.
 

@@ -1,4 +1,4 @@
-# Run MeiliSearch in Production: taking it to the next level
+# Run MeiliSearch in production: Taking it to the next level
 
 ## A quick introduction
 
@@ -146,11 +146,11 @@ At this point, MeiliSearch is installed and running. It is protected from eventu
 
 But you probably want to open your MeiliSearch to the outside world, and for now, it is isolated. Let's fix that in a safe way.
 
-## Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS
+## Step 3: Secure and finish your setup using a reverse proxy, domain name, and HTTPS
 
 It's time to safely make your brand new MeiliSearch available to be requested from the outside world. For this purpose, you will use two of the main technologies available on the web: a Reverse Proxy and SSL/TLS.
 
-### 3.1. Creating a Reverse Proxy with [Nginx](https://www.nginx.com/)
+### 3.1. Creating a reverse proxy with [Nginx](https://www.nginx.com/)
 
 A reverse proxy is basically an application that will handle every communication between the outside world and your internal applications. Nginx will receive external HTTP requests and redirect them to MeiliSearch. When MeiliSearch has done its amazing job, it will communicate its response to Nginx, which will then transfer the latter to the user who originally sent the request. This is a common way to isolate and protect any application by adding a robust, secure, and fast gate-keeper such as Nginx, one of the safest and most efficient tools available online, and of course, open-source!
 
@@ -239,7 +239,7 @@ change by editing your web server's configuration.
 
 We recommend that you choose option 2, to redirect HTTP to HTTPS and always use a secure connection. You should be able to request your domain name with SSL as in `https://example.com` or `https://example.com/indexes`.
 
-#### 3.2. Option B: Custom SSL/TLS Certificates
+#### 3.2. Option B: Custom SSL/TLS certificates
 
 When a `Certificate Authority` issues a SSL certificate for you, you receive at least two files with encrypted keys:
 

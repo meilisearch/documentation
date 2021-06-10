@@ -1,4 +1,4 @@
-# Data Types
+# Data types
 
 This guide describes the different data types supported for the fields in a document and how MeiliSearch handles them.
 
@@ -125,7 +125,7 @@ These sentences will be separated by soft and hard spaces exactly as explained i
 
 The `null` type can be pushed into MeiliSearch but it **won't be taken into account for indexing**.
 
-## Possible Tokenization Issues
+## Possible tokenization issues
 
 Even if it behaves exactly as expected, the tokenization process may make less sense in some cases such as:
 

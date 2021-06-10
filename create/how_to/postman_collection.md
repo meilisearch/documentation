@@ -1,4 +1,4 @@
-# Postman Collection for MeiliSearch
+# Postman collection for MeiliSearch
 
 Are you tired to use the `curl` command in your terminal to test MeiliSearch? It can be tedious to re-write every route when wanting to try out an API.
 

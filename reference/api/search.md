@@ -15,7 +15,7 @@ Search for documents matching a specific query in the given index.
 
 This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **improves considerably the speed of the search**.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -102,13 +102,13 @@ Search for documents matching a specific query in the given index.
 
 This route should only be used when no API key is required. If an API key is required, use the POST route instead.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-#### Query Parameters
+#### Query parameters
 
 | Query Parameter                                                                                   | Description                                                                                     | Default Value |
 | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
@@ -129,7 +129,7 @@ This route should only be used when no API key is required. If an API key is req
 
 [Learn more about how to use the search parameters](/reference/features/search_parameters.md).
 
-#### Placeholder Search
+#### Placeholder search
 
 When the `q` parameter is not specified, a [placeholder](/reference/features/search_parameters.md#query-q) search is run instead.
 

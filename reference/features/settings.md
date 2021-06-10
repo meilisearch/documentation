@@ -54,7 +54,7 @@ With the settings in the example above, `the`, `a` and `an` are now ignored by t
 
 Suppose you would like to search `the mask` in a movie database. Since `the` is ignored during search, MeiliSearch will look for every movie containing `mask` and not the millions ones containing `the`. `the` is a less relevant term than `mask` and also a very frequent word in English. By adding `the` to the stop words list, MeiliSearch will ignore this word, and thus be faster to answer without losing in relevancy.
 
-## Attributes For Faceting
+## Attributes for faceting
 
 Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes used as facets. They **must be added to the settings to be usable as [facet filters](/reference/features/search_parameters.md#facet-filters)**.
 

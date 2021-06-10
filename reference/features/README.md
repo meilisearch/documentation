@@ -1,4 +1,4 @@
-# Feature References
+# Feature references
 
 Want to know something about MeiliSearch? Chances are high that it's written down here.
 
@@ -6,7 +6,7 @@ This section is where we document all of MeiliSearch's user-facing features and 
 
 Understanding our reference documentation is easier with background knowledge of MeiliSearch's [core concepts](/learn/core_concepts). If you're a **new user**, you might prefer to start with an [explanation of MeiliSearch's features](/learn/what_is_meilisearch/features.md) or our [quick start guide](/learn/getting_started/quick_start.md).
 
-## Table of Contents
+## Table of contents
 
 [Authentication](/reference/features/authentication.md)
 [Configuration](/reference/features/configuration.md)

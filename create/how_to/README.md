@@ -1,10 +1,10 @@
-# How To
+# How to
 
 Each guide in this section takes the reader through the steps required to solve a real-world problem. Like recipes in a cookbook, they are **repeatable solutions** you can return to many times.
 
 This is not the best section for MeiliSearch beginners. If you'd like to follow a step-by-step guide that introduces you to the basics of MeiliSearch, check out our [quick start guide](/learn/getting_started/quick_start.md).
 
-## Table of Contents
+## Table of contents
 
 **Basics**:
 

@@ -10,7 +10,7 @@ During a dump import, all indexes contained in the indicated `.dump` file are im
 
 Dump imports are [performed at launch](/reference/features/configuration.md#import-dump) using an option. [Batch size](/reference/features/configuration.md#dump-batch-size) can also be set at this time.
 
-## Create a Dump
+## Create a dump
 
 <RouteHighlighter method="POST" route="/dumps"/>
 

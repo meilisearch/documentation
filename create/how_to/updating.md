@@ -1,4 +1,4 @@
-# Update to the Latest MeiliSearch Version
+# Update to the latest MeiliSearch version
 
 Currently, MeiliSearch databases can only be opened by the MeiliSearch version you used to create them. The following guide will walk you through all the steps to **migrate an existing database** from an older version of MeiliSearch to the most recent one.
 

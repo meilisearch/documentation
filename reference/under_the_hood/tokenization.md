@@ -6,7 +6,7 @@ Breaking sentences into smaller chunks requires understanding where one word end
 
 This allows MeiliSearch to function in several different languages with zero setup.
 
-## Deep Dive: The Meili Tokenizer
+## Deep dive: The MeiliSearch tokenizer
 
 ![Tokenizer Architecture](https://user-images.githubusercontent.com/6482087/102896344-8560d200-4466-11eb-8cfe-b4ae8741093b.jpg)
 

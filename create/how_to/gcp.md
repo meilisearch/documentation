@@ -1,10 +1,10 @@
-# Deploy a MeiliSearch Instance on Google Cloud Platform (GCP) Compute Engine
+# Deploy a MeiliSearch instance on Google Cloud Platform (GCP) Compute Engine
 
 Using our GCP custom image, MeiliSearch can be deployed on GCP in just a few minutes.
 
 The following guide will walk you through every step to deploy MeiliSearch in a GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
 
-**Table of Contents**:
+**Table of contents**:
 
 [[toc]]
 
@@ -78,7 +78,7 @@ The server should answer with a `200 OK` status code as shown in the example bel
 
 Configuring your MeiliSearch instance in a production environment is not just straightforward—it's completely automated. Establish an SSH connection with your instance, and a script will guide you through the process.
 
-### 1. Make your domain name point to your Instance IP
+### 1. Make your domain name point to your instance IP
 
 If you want to use a custom domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, you can skip this step.
 
@@ -98,7 +98,7 @@ The server should answer with a `200 OK` status code as shown in the example bel
 ...
 ```
 
-### 2. Set API KEY and SSL (HTTPS)
+### 2. Set API key and SSL (HTTPS)
 
 Meilisearch is currently running in a *development environment*. You haven't set up an API key, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for production.
 
@@ -106,7 +106,7 @@ To start the configuration process, connect via SSH to your new MeiliSearch inst
 
 ### 2.2. Run the configuration script
 
-#### 2.2.1 Option 1: Using the Google Cloud console
+#### 2.2.1 Option 1: Using the Google Cloud Console
 
 Navigate to Compute Engine => VM instances. Click on the name of your instance, and then click on the SSH button (make sure to have pop-ups enabled or the window may be blocked). The connection will be established and the script will automatically run.
 

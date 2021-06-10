@@ -1,4 +1,4 @@
-# Faceted Search
+# Faceted search
 
 **Faceted search** is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories that are called **facets**.
 
@@ -9,7 +9,7 @@ When users perform a search, they are presented with a list of results and a lis
 ![Amazon UI](/faceted-search/facets-amazon.png)
 > Faceted navigation on Amazon: facets are displayed on the left column.
 
-## Filters or Facets?
+## Filters or facets?
 
 Faceted search, also known as faceted navigation, is a technique that combines traditional search with a **faceted classification of items**.
 
@@ -24,7 +24,7 @@ Both faceting and filtering help drill down into a subset of search results. How
 
 Faceting and filtering aim at being complementary;  facets narrows down the set of documents to be searched upon, while filters reduce the number of documents coming out of a search.
 
-## Setting Up Facets
+## Setting up facets
 
 The first step in using facets is to choose which <clientGlossary word="field" label="fields"/> will be used as facets. Fields with common values are the best suited for faceting (e.g., `genres`, `color`, `size` ).
 
@@ -121,7 +121,7 @@ error ❌
 [[["genres:romance"]]]
 ```
 
-#### Logical Connectives
+#### Logical connectives
 
 Inputting a double dimensional array allows you to use **logical connectives**.
 

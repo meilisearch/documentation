@@ -8,7 +8,7 @@
 
 Get stats of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

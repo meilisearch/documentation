@@ -18,7 +18,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -54,7 +54,7 @@ List the settings.
 
 Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index.
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -102,7 +102,7 @@ An array that contains [built-in ranking rules](/learn/core_concepts/relevancy.m
 
 To remove all ranking rules, which is not recommended in any case, you would send an empty array to the [add or replace ranking rules route](/reference/api/ranking_rules.md#update-ranking-rules).
 
-#### Path Variables
+#### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |

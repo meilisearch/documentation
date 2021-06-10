@@ -22,7 +22,7 @@ Consider a situation where "Résumé" and "CV" are set as synonyms.
 
 A search for "cv" would return any documents containing "cv" or "CV", in addition to any that contain "Résumé", "resumé", "resume", etc. unaffected by case or accent marks.
 
-## One-way Association
+## One-way association
 
 Use this when you want one word to be synonymous with another, but not the other way around.
 
@@ -44,7 +44,7 @@ To create a one-way synonym list, this is the JSON syntax that should be [added 
 }
 ```
 
-## Mutual Association
+## Mutual association
 
 By associating one or more synonyms with each other, they will be considered the same in both directions.
 
@@ -67,7 +67,7 @@ To create a mutual association between four words, this is the JSON syntax that 
 }
 ```
 
-## Multi-Word Phrases
+## Multi-word phrases
 
 Take note that **multi-word phrases are treated differently** than associations between individual words.
 
