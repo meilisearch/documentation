@@ -23,7 +23,7 @@ We also provide a lot of tools, including [SDKs](/learn/what_is_meilisearch/sdks
 
 Plus, you can [contact us](#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
 
-## Do I need to configure meilisearch to get it working?
+## Do I need to configure MeiliSearch to get it working?
 
 MeiliSearch configuration works out-of-the-box. It means, by default, MeiliSearch configures necessary settings for providing a powerful and relevant search.
 
