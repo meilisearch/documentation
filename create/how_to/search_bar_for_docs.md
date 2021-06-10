@@ -12,7 +12,7 @@ This tutorial will guide you through the steps of building a relevant and powerf
 2. [Scrape your content](#scrape-your-content)
 3. [Integrate the Search Bar](#integrate-the-search-bar)
 
-## Run a meilisearch instance
+## Run a MeiliSearch instance
 
 First of all, you need your documentation content to be scraped and pushed into a MeiliSearch instance.
 
