@@ -45,7 +45,7 @@ Besides, we published a [comparison between MeiliSearch and other search engines
 MeiliSearch works perfectly with English, kanji, and Romance languages.
 If you have any hesitation about your language handling, please contact us.
 
-## Do you provide a real dataset to test meilisearch?
+## Do you provide a real dataset to test MeiliSearch?
 
 For now, we provide this [movies dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json). More datasets are coming soon!
 
