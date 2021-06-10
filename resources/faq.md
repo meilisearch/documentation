@@ -40,7 +40,7 @@ Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try 
 
 Besides, we published a [comparison between MeiliSearch and other search engines](/learn/what_is_meilisearch/comparison_to_alternatives.md) with the goal of providing an overview of MeiliSearch alternatives.
 
-## Which languages can meilisearch handle?
+## Which languages can MeiliSearch handle?
 
 MeiliSearch works perfectly with English, kanji, and Romance languages.
 If you have any hesitation about your language handling, please contact us.
