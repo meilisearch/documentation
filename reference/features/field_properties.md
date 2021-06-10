@@ -30,7 +30,7 @@ In other words, the `searchableAttributes` list serves two purposes:
 
 There are two possible modes for the `searchableAttributes` list.
 
-#### Default: automatic
+#### Default: Automatic
 
 **By default, all attributes are automatically added to the `searchableAttributes` list in their order of appearance.** This means that the initial order will be based on the order of attributes in the first document indexed, with each new attribute found in subsequent documents added at the end of this list.
 
