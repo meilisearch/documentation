@@ -272,63 +272,66 @@ We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that h
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
-
-To activate scheduled snapshots, set this value to `true`. Disabled by default.
-
-[Read more about snapshots](/reference/features/snapshots.md).
-
 **Default value**: `false`
+
+Activates scheduled snapshots when set to `true`. Disabled by default.
+
+[Learn more about snapshots](/reference/features/snapshots.md).
 
 ### Snapshot destination
 
 **Environment variable**: `MEILI_SNAPSHOT_DIR`
 **CLI option**: `--snapshot-dir`
-
-The directory path where MeiliSearch will create snapshots.
-
 **Default value**: `snapshots/`
 
-### Snapshot interval
+Sets the directory path where MeiliSearch will create snapshots.
+
+### Snapshot Interval
 
 **Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
 **CLI option**: `--snapshot-interval-sec`
-
-Defines the time gap in seconds between each snapshot creation.
-
 **Default value**: `86400` (1 day)
 
-### Import snapshot
+Defines the interval between the creation of each snapshot. Value should be given in seconds.
 
+### Import Snapshot
+
+**Environment variable**: N/A
 **CLI option**: `--import-snapshot`
+**Default value**: `none`
 
-The path of the snapshot file to import.
+Launches an instance with a previously-generated snapshot.
 
-This command will stop the process if:
+This command will throw an error if:
 
 - A database already exists
-- No snapshot exists in the given path.
+- No valid snapshot can be found in the specified path
 
-If this command is not called, no snapshot will be imported.
+This option is not available as an environment variable.
 
 ### Ignore missing snapshot
 
+**Environment variable**: N/A
 **CLI option**: `--ignore-missing-snapshot`
-
-The engine ignores missing snapshots and does not throw an error in this case.
-
-Requires `--import-snapshot` to be defined.
-
 **Default value**: `false`
+
+Prevents a MeiliSearch instance from throwing an error when the path supplied to `--import-snapshot` does not point to a valid snapshot file.
+
+This command will throw an error if `--import-snapshot` is not defined.
+
+This option is not available as an environment variable.
 
 ### Ignore snapshot if DB exists
 
+**Environment variable**: N/A
 **CLI option**: `--ignore-snapshot-if-db-exists`
-
-If a database already exists, MeiliSearch will attempt to launch using that database instead of importing a snapshot. No error is thrown in this case.
-
-Requires `--import-snapshot` to be defined.
-
 **Default value**: `false`
+
+Prevents a MeiliSearch instance with an existing database from throwing an error when `--import-snapshot` is used.
+
+This command will throw an error if `--import-snapshot` is not defined.
+
+This option is not available as an environment variable.
 
 ### Dumps destination
 
