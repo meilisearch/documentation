@@ -45,6 +45,7 @@ meilisearch
 
 ::: tab CLI
 
+<<<<<<< HEAD
 ```bash
 meilisearch --master-key=[YOUR_MASTER_KEY]
 ```
@@ -53,6 +54,8 @@ meilisearch --master-key=[YOUR_MASTER_KEY]
 
 ::::
 
+=======
+>>>>>>> 021d8724 (Update reference/features/authentication.md)
 After setting up the master key, you can retrieve both the private and the public keys with the [keys route](/reference/api/keys.md).
 
 ## Communicating with a protected instance
