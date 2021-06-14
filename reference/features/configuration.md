@@ -47,13 +47,20 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 ### General
 
 - [Database path](/reference/features/configuration.md#database-path)
+- [Environment](/reference/features/configuration.md#environment)
 - [HTTP address & port binding](/reference/features/configuration.md#http-address-port-binding)
 - [Master key](/reference/features/configuration.md#master-key)
-- [Environment](/reference/features/configuration.md#environment)
 
 ### Advanced
 
 - [Analytics](/reference/features/configuration.md#analytics)
+- [Disable Sentry](/reference/features/configuration.md#disable-sentry)
+- [Dumps](/reference/features/configuration.md#dumps-destination)
+  - [Dumps Destination](/reference/features/configuration.md#dumps-destination)
+  - [Import Dump](/reference/features/configuration.md#import-dump)
+  - [Dump Batch Size](/reference/features/configuration.md#dump-batch-size)
+- [Max MDB Size](/reference/features/configuration.md#max-mdb-size)
+- [Max UDB Size](/reference/features/configuration.md#max-udb-size)
 - [Payload Limit Size](/reference/features/configuration.md#payload-limit-size)
 - [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
   - [Schedule Snapchot Creation](/reference/features/configuration.md#schedule-snapshot-creation)
@@ -62,12 +69,6 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
   - [Import Snapshot](/reference/features/configuration.md#import-snapshot)
   - [Ignore Missing Snapshot](/reference/features/configuration.md#ignore-missing-snapshot)
   - [Ignore Snapshot if DB Exists](/reference/features/configuration.md#ignore-snapshot-if-db-exists)
-- [Dumps](/reference/features/configuration.md#dumps-destination)
-  - [Dumps Destination](/reference/features/configuration.md#dumps-destination)
-  - [Import Dump](/reference/features/configuration.md#import-dump)
-  - [Dump Batch Size](/reference/features/configuration.md#dump-batch-size)
-- [Max MDB Size](/reference/features/configuration.md#max-mdb-size)
-- [Max UDB Size](/reference/features/configuration.md#max-udb-size)
 - [SSL Configuration](/reference/features/configuration.md#ssl-authentication-path):
   - [SSL Authentication Path](/reference/features/configuration.md#ssl-authentication-path)
   - [SSL Certificates Path](/reference/features/configuration.md#ssl-certificates-path)
@@ -76,7 +77,6 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
   - [SSL Require Auth](/reference/features/configuration.md#ssl-require-auth)
   - [SSL Resumption](/reference/features/configuration.md#ssl-resumption)
   - [SSL Tickets](/reference/features/configuration.md#ssl-tickets)
-- [Disable Sentry](/reference/features/configuration.md#disable-sentry)
 
 ### Database path
 
@@ -85,6 +85,21 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 **Default value**: `"./data.ms"`
 
 Set the location of the database file.
+
+### Environment
+
+**Environment variable**: `MEILI_ENV`
+**CLI option**: `--env`
+**Default value**: `development`
+
+By default, MeiliSearch runs in `development` mode.
+
+- `production`: setting a [master key](/reference/features/authentication.md) is **mandatory**.
+- `development`: setting a [master key](/reference/features/authentication.md) is **optional**. Log level is automatically set to `info`.
+
+If the server is running in `development` mode, logs are more verbose and providing a master key is not mandatory. This is useful when debugging, but dangerous otherwise since update routes are unprotected.
+
+The [web interface](/reference/features/web_interface.md#web-interface) is disabled in `production` mode.
 
 ### HTTP address & port binding
 
@@ -109,20 +124,6 @@ If no master key is provided in a `production` environment, the MeiliSearch inst
 [Learn more about MeiliSearch's use of security keys in this guide.](/reference/features/authentication.md)
 
 
-### Environment
-
-**Environment variable**: `MEILI_ENV`
-**CLI option**: `--env`
-**Default value**: `development`
-
-By default, MeiliSearch runs in `development` mode.
-
-- `production`: setting a [master key](/reference/features/authentication.md) is **mandatory**.
-- `development`: setting a [master key](/reference/features/authentication.md) is **optional**. Log level is automatically set to `info`.
-
-If the server is running in `development` mode, logs are more verbose and providing a master key is not mandatory. This is useful when debugging, but dangerous otherwise since update routes are unprotected.
-
-The [web interface](/reference/features/web_interface.md#web-interface) is disabled in `production` mode.
 
 ### Analytics
 
@@ -148,75 +149,56 @@ All collected data is used solely for the purpose of improving MeiliSearch.
 
 A full document describing why we collect this data and how we use it is forthcoming.
 
-### Payload limit size
+### Disable Sentry
 
-**Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
-**CLI option**: `--http-payload-size-limit`
-**Default value**: `104857600` (~100MB)
+**Environment variable**: `MEILI_NO_SENTRY`
+**CLI option**: `--no-sentry`
+**Default value**: `false`
 
-Set the maximum size, in bytes, of accepted JSON payloads.
+Deactivates Sentry when set to `true`.
 
-### SSL authentication path
+We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that help us improve MeiliSearch.
 
-**Environment variable**: `MEILI_SSL_AUTH_PATH`
-**CLI option**: `--ssl-auth-path`
-**Default value**: `None`
+### Dumps Destination
 
-Enable client authentication and accept certificates signed by the roots provided in CERTFILE.
+**Environment variable**: `MEILI_DUMPS_DIR`
+**CLI option**: `--dumps-dir`
+**Default value**: `dumps/`
 
-### SSL Certificates Path
+Sets the directory for dump file storage.
 
-**Environment variable**: `MEILI_SSL_CERT_PATH`
-**CLI option**: `--ssl-cert-path`
+[Learn more about creating dumps of MeiliSearch instances](/reference/api/dump.md).
 
-Read server certificates from CERTFILE. This should contain PEM-format certificates in the right order (the first certificate should certify KEYFILE, the last should be a root CA).
+### Import Dump
 
-**Default value**: `None`
+**Environment variable**: N/A
+**CLI option**: `--import-dump`
+**Default value**: `none`
 
-### SSL key path
+Imports a dump located in the specified path. Must be a `.dump` file.
 
-**Environment variable**: `MEILI_SSL_KEY_PATH`
-**CLI option**: `--ssl-key-path`
+The MeiliSearch instance will only be launched once the dump data has been fully indexed.
 
-Read private key from KEYFILE.  This should be a RSA private key or PKCS8-encoded private key, in PEM format.
+This option is not available as an environment variable.
 
-**Default value**: `None`
+### Dump Batch Size
 
-### SSL OCSP path
+**Environment variable**: `MEILI_DUMP_BATCH_SIZE`
+**CLI option**: `--dump-batch-size`
+**Default value**: `1024`
 
-**Environment variable**: `MEILI_SSL_OCSP_PATH`
-**CLI option**: `--ssl-ocsp-path`
+Sets the batch size used in the dump importation process. This number corresponds to the maximum number of documents indexed in each batch. A larger value will take less time but use more memory.
 
-Read DER-encoded OCSP response from OCSPFILE and staple to certificate. *Optional*.
+Bigger batch sizes can speed up the import process, but require more RAM. Setting a larger size than a system can handle might cause a MeiliSearch instance to crash; if this happens, consider reducing the batch size.
 
-**Default value**: `None`
+**Example**
+A dump contains 2600 documents. If `--dump-batch-size` is set to 1000, MeiliSearch will not index all 2600 in one go. Instead, the instance will:
 
-### SSL require auth
+1. First index documents 0 -> 999 (1000 docs)
+2. Then index documents 1000 -> 1999 (1000 docs)
+3. And finally index documents 2000 -> 2599 (600 docs)
 
-**Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
-**CLI option**: `--ssl-require-auth`
-
-Send a fatal alert if the client does not complete client authentication.
-
-**Default value**: `None`
-
-### SSL resumption
-
-**Environment variable**: `MEILI_SSL_RESUMPTION`
-**CLI option**: `--ssl-resumption`
-
-SSL support session resumption.
-
-**Default value**: `None`
-
-### SSL tickets
-
-**Environment variable**: `MEILI_SSL_TICKETS`
-**CLI option**: `--ssl-tickets`
-
-SSL support tickets.
-
-**Default value**: `None`
+[Learn more about MeiliSearch dumps](/reference/features/dumps.md)
 
 ### Max MDB size
 
@@ -258,15 +240,13 @@ On **Windows**, `getconf` returns a fixed size that will be allocated when launc
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
-### Disable sentry
+### Payload Limit Size
 
-**Environment variable**: `MEILI_NO_SENTRY`
-**CLI option**: `--no-sentry`
-**Default value**: `false`
+**Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
+**CLI option**: `--http-payload-size-limit`
+**Default value**: `104857600` (~100MB)
 
-Deactivates Sentry when set to `true`.
-
-We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that help us improve MeiliSearch.
+Set the maximum size, in bytes, of accepted JSON payloads.
 
 ### Schedule snapshot creation
 
@@ -333,43 +313,64 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 This option is not available as an environment variable.
 
-### Dumps destination
+### SSL Authentication Path
 
-**Environment variable**: `MEILI_DUMPS_DIR`
-**CLI option**: `--dumps-dir`
-**Default value**: `dumps/`
+**Environment variable**: `MEILI_SSL_AUTH_PATH`
+**CLI option**: `--ssl-auth-path`
+**Default value**: `None`
 
-Sets the directory for dump file storage.
+Enable client authentication and accept certificates signed by the roots provided in CERTFILE.
 
-[Learn more about creating dumps of MeiliSearch instances](/reference/api/dump.md).
+### SSL Certificates Path
 
-### Import dump
+**Environment variable**: `MEILI_SSL_CERT_PATH`
+**CLI option**: `--ssl-cert-path`
 
-**Environment variable**: N/A
-**CLI option**: `--import-dump`
-**Default value**: `none`
+Read server certificates from CERTFILE. This should contain PEM-format certificates in the right order (the first certificate should certify KEYFILE, the last should be a root CA).
 
-Imports a dump located in the specified path. Must be a `.dump` file.
+**Default value**: `None`
 
-The MeiliSearch instance will only be launched once the dump data has been fully indexed.
+### SSL Key Path
 
-This option is not available as an environment variable.
+**Environment variable**: `MEILI_SSL_KEY_PATH`
+**CLI option**: `--ssl-key-path`
 
-### Dump batch size
+Read private key from KEYFILE.  This should be a RSA private key or PKCS8-encoded private key, in PEM format.
 
-**Environment variable**: `MEILI_DUMP_BATCH_SIZE`
-**CLI option**: `--dump-batch-size`
-**Default value**: `1024`
+**Default value**: `None`
 
-Sets the batch size used in the dump importation process. This number corresponds to the maximum number of documents indexed in each batch. A larger value will take less time but use more memory.
+### SSL OCSP path
 
-Bigger batch sizes can speed up the import process, but require more RAM. Setting a larger size than a system can handle might cause a MeiliSearch instance to crash; if this happens, consider reducing the batch size.
+**Environment variable**: `MEILI_SSL_OCSP_PATH`
+**CLI option**: `--ssl-ocsp-path`
 
-**Example**
-A dump contains 2600 documents. If `--dump-batch-size` is set to 1000, MeiliSearch will not index all 2600 in one go. Instead, the instance will:
+Read DER-encoded OCSP response from OCSPFILE and staple to certificate. *Optional*.
 
-1. First index documents 0 -> 999 (1000 docs)
-2. Then index documents 1000 -> 1999 (1000 docs)
-3. And finally index documents 2000 -> 2599 (600 docs)
+**Default value**: `None`
 
-[Learn more about MeiliSearch dumps](/reference/features/dumps.md)
+### SSL Require Auth
+
+**Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
+**CLI option**: `--ssl-require-auth`
+
+Send a fatal alert if the client does not complete client authentication.
+
+**Default value**: `None`
+
+### SSL Resumption
+
+**Environment variable**: `MEILI_SSL_RESUMPTION`
+**CLI option**: `--ssl-resumption`
+
+SSL support session resumption.
+
+**Default value**: `None`
+
+### SSL Tickets
+
+**Environment variable**: `MEILI_SSL_TICKETS`
+**CLI option**: `--ssl-tickets`
+
+SSL support tickets.
+
+**Default value**: `None`
