@@ -264,7 +264,7 @@ On **Windows**, `getconf` returns a fixed size that will be allocated when launc
 **CLI option**: `--no-sentry`
 **Default value**: `false`
 
-Deactivate Sentry when set to `true`.
+Deactivates Sentry when set to `true`.
 
 We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that help us improve MeiliSearch.
 
