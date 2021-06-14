@@ -28,7 +28,7 @@ When launching a MeiliSearch instance, you have the option of giving it a master
 
 You can specify a key by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
 
-After adding the master key, you can retrieve both the private and the public keys on the [keys route](/reference/api/keys.md).
+After setting up the master key, you can retrieve both the private and the public keys with the [keys route](/reference/api/keys.md).
 
 ## Communicating with a protected instance
 
