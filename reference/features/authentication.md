@@ -18,7 +18,7 @@ MeiliSearch uses three types of keys:
   - [`GET /indexes/:index_uid/documents`](/reference/api/documents#get-documents)
   - [`GET /indexes/:index_uid/documents/:document_id`](/reference/api/documents#get-one-document)
 
-When a master key is provided, both the private and the public keys are automatically generated. **You cannot create any additional keys**.
+Both the private and public keys are automatically generated whenever you set or change the master key. **You cannot create any additional keys**.
 
 The only unprotected route available when using the built-in key-based authorization is [`GET /health`](/reference/api/health).
 
