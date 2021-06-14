@@ -267,7 +267,7 @@ Replace this comment in App.js by the code snippet below:
 `// TODO configure the MeiliSearch Client`
 
 ```javascript
-import MeiliSearch from "meilisearch";
+import { MeiliSearch } from "meilisearch";
 
 const client = new MeiliSearch({
   host: "http://127.0.0.1:7700/",
