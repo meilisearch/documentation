@@ -18,7 +18,7 @@ Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/und
 
 ### Built-in rules
 
-MeiliSearch contains six built-in ranking rules: **typo, words, proximity, attribute, wordsPosition, and exactness**, in that default order.
+MeiliSearch contains six built-in ranking rules: **typo, words, proximity, attribute, words position, and exactness**, in that default order.
 
 **1. Typo**
 Results are sorted by **increasing number of typos**. Returns documents that match query terms with fewer typos first.
@@ -38,7 +38,7 @@ Results are sorted by **increasing distance between matched query terms**. Retur
 **4. Attribute**
 Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
 
-**5. Words Position**
+**5. Words position**
 Results are sorted by **the location of the query word in the field**. Returns documents that contain query terms close to the beginning of the field first.
 
 **6. Exactness**
@@ -156,7 +156,7 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 By default, the built-in rules are executed in the following order.
 
 ```json
-["words", "typo", "proximity", "attribute", "exactness"]
+["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
 ```
 
 Depending on your needs, you might want to change this order of importance. To do so, you can use the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
