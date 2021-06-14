@@ -2,7 +2,7 @@
 
 MeiliSearch uses key-based authentication.
 
-When using MeiliSearch in `production`, authentication is mandatory. You can read more about `production` mode in the [configuration reference](/reference/features/configuration).
+If your [environment](/reference/features/configuration.md#environment) is set to `production`, authentication is mandatory. If it is set to `development` (the default), then authentication is optional.
 
 If a MeiliSearch instance does not use authentication, all routes will be publicly accessible and unprotected.
 
