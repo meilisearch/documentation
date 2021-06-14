@@ -337,37 +337,39 @@ This option is not available as an environment variable.
 
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
-
-Path of the directory where dumps will be created if the [dump route](/reference/api/dump.md#create-a-dump) is called.
-
 **Default value**: `dumps/`
+
+Sets the directory for dump file storage.
+
+[Learn more about creating dumps of MeiliSearch instances](/reference/api/dump.md).
 
 ### Import dump
 
+**Environment variable**: N/A
 **CLI option**: `--import-dump`
+**Default value**: `none`
 
-Import a dump from the specified path. Must be a `.dump` file.
+Imports a dump located in the specified path. Must be a `.dump` file.
 
-As the data contained in the dump needs to be indexed, the process will take an amount of time corresponding to the size of the dump. Only when the import is complete and successful will the MeiliSearch server start.
+The MeiliSearch instance will only be launched once the dump data has been fully indexed.
+
+This option is not available as an environment variable.
 
 ### Dump batch size
 
 **Environment variable**: `MEILI_DUMP_BATCH_SIZE`
 **CLI option**: `--dump-batch-size`
+**Default value**: `1024`
 
 Sets the batch size used in the dump importation process. This number corresponds to the maximum number of documents indexed in each batch. A larger value will take less time but use more memory.
 
-If a dump import process is killed, this means that you do not have enough RAM. Consider reducing your batch size.
-
-If you find that a dump import process is too slow and you have a lot of RAM to spare, consider increasing the batch size, as it will accelerate the indexation. However, if this leads to the dump process failing, you've gone too far and run out of memory. In this case, you should decrease the batch size until you find the right balance between speed and memory overhead.
+Bigger batch sizes can speed up the import process, but require more RAM. Setting a larger size than a system can handle might cause a MeiliSearch instance to crash; if this happens, consider reducing the batch size.
 
 **Example**
-Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. Instead of indexing all 2600 docs in one go, the engine will :
+A dump contains 2600 documents. If `--dump-batch-size` is set to 1000, MeiliSearch will not index all 2600 in one go. Instead, the instance will:
 
-1. Index documents 0 -> 999 (1000 docs)
-2. Index documents 1000 -> 1999 (1000 docs)
-3. Index documents 2000 -> 2599 (600 docs)
+1. First index documents 0 -> 999 (1000 docs)
+2. Then index documents 1000 -> 1999 (1000 docs)
+3. And finally index documents 2000 -> 2599 (600 docs)
 
-**Default value**: `1024`
-
-[Read more about dumps](/reference/features/dumps.md)
+[Learn more about MeiliSearch dumps](/reference/features/dumps.md)
