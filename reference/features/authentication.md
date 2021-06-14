@@ -36,14 +36,10 @@ You can specify the master key by setting the `MEILI_MASTER_KEY` environment var
 
 ::: tab Env
 
-<<<<<<< HEAD
 ```bash
 export MEILI_MASTER_KEY=[YOUR_MASTER_KEY]
 meilisearch
 ```
-=======
-## Adding the master key
->>>>>>> c6bf45fd (Update reference/features/authentication.md)
 
 :::
 
