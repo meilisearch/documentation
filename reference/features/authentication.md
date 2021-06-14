@@ -20,7 +20,7 @@ MeiliSearch uses three types of keys:
 
 Both the private and public keys are automatically generated whenever you set or change the master key. **You cannot create any additional keys**.
 
-The only unprotected route available when using the built-in key-based authorization is [`GET /health`](/reference/api/health).
+The only route accessible to all, regardless of authentication, is [`GET /health`](/reference/api/health).
 
 ## Adding the master key
 
