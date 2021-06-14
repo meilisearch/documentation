@@ -42,4 +42,4 @@ If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` sta
 
 **Changing the master key will automatically generate new private and public keys**. It is not possible to change one key without altering the others.
 
-After changing the master key, it is mandatory to restart the MeiliSearch instance to ensure the renewal of the private and the public keys.
+After changing the master key, it is mandatory to restart the MeiliSearch instance to generate new private and public keys.
