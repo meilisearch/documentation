@@ -22,7 +22,7 @@ Both the private and public keys are automatically generated whenever you set or
 
 The only unprotected route available when using the built-in key-based authorization is [`GET /health`](/reference/api/health).
 
-## Adding a key
+## Adding the master key
 
 When launching a MeiliSearch instance, you have the option of giving it a master key. By doing so, all routes will be protected and will require a key to be accessed.
 
