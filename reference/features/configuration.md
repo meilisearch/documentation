@@ -16,7 +16,7 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Configuring an instance with environment variables
 
-Environment variables are always identical to the command-line flags, but prepended with `MEILI_` and written in upper case.
+Environment variables are always identical to the command-line flags, but prepended with `MEILI_` and written in uppercase.
 
 ```bash
 export MEILI_DB_PATH=./meilifiles
@@ -70,7 +70,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 - [Max UDB Size](/reference/features/configuration.md#max-udb-size)
 - [SSL Configuration](/reference/features/configuration.md#ssl-authentication-path):
   - [SSL Authentication Path](/reference/features/configuration.md#ssl-authentication-path)
-  - [SSL Certicates Path](/reference/features/configuration.md#ssl-certificates-path)
+  - [SSL Certificates Path](/reference/features/configuration.md#ssl-certificates-path)
   - [SSL Key Path](/reference/features/configuration.md#ssl-key-path)
   - [SSL OCSP Path](/reference/features/configuration.md#ssl-ocsp-path)
   - [SSL Require Auth](/reference/features/configuration.md#ssl-require-auth)
@@ -100,7 +100,7 @@ Set the HTTP address and port the MeiliSearch instance server will use.
 **CLI option**: `--master-key`
 **Default value**: `None`
 
-Set an instance's master key, automatically protecting all routes except `GET /health`. Providing a key is mandatory when environment is set to `production`.
+Set an instance's master key, automatically protecting all routes except `GET /health`. Providing a key is mandatory when `environment` is set to `production`.
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
@@ -142,7 +142,7 @@ By default, MeiliSearch collects the following data from all instances that do n
 - Number of updates
 - Number of documents per index
 
-Additionally, a user does not disable analytics, they may also provide an email address and their server provider by setting the environment variables `MEILI_USER_EMAIL` and `MEILI_SERVER_PROVIDER`.
+Additionally, if a user does not disable analytics, they may also provide an email address and their server provider by setting the environment variables `MEILI_USER_EMAIL` and `MEILI_SERVER_PROVIDER`.
 
 All collected data is used solely for the purpose of improving MeiliSearch.
 
@@ -292,7 +292,7 @@ Sets the directory path where MeiliSearch will create snapshots.
 **CLI option**: `--snapshot-interval-sec`
 **Default value**: `86400` (1 day)
 
-Defines the interval between the creation of each snapshot. Value should be given in seconds.
+Defines the interval between the creation of each snapshot. Value must be given in seconds.
 
 ### Import Snapshot
 
