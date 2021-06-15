@@ -45,7 +45,6 @@ meilisearch
 
 ::: tab CLI
 
-<<<<<<< HEAD
 ```bash
 meilisearch --master-key=[YOUR_MASTER_KEY]
 ```
@@ -54,8 +53,6 @@ meilisearch --master-key=[YOUR_MASTER_KEY]
 
 ::::
 
-=======
->>>>>>> 021d8724 (Update reference/features/authentication.md)
 After setting up the master key, you can retrieve both the private and the public keys with the [keys route](/reference/api/keys.md).
 
 ## Communicating with a protected instance
@@ -71,7 +68,6 @@ If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` sta
 **Changing the master key will automatically generate new private and public keys**. It is not possible to change one key without altering the others.
 
 After changing the master key, it is mandatory to restart the MeiliSearch instance to generate new private and public keys.
-<<<<<<< HEAD
 
 ## Deactivating key-based authentication
 
@@ -79,5 +75,3 @@ In order to deactivate MeiliSearch's key-based authentication, restart the insta
 
 - If the master key was set up with command-line flags, relaunch the instance without the `--master-key` option
 - If the master key was configured with environment variables, unset it and relaunch the instance
-=======
->>>>>>> 61f7d2d5 (Update reference/features/authentication.md)
