@@ -5,6 +5,7 @@ This quick tour will help you get started with MeiliSearch in only a few steps. 
 - [The command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal)
 - [cURL](https://curl.se)
 - [JavaScript syntax](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)
+
 ## Download and launch
 
 First of all, let's download and run MeiliSearch.
