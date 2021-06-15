@@ -179,11 +179,11 @@ Until our first stable release (v1.0), MeiliSearch minor versions are not compat
 
 ## What are the recommended requirements for hosting a MeiliSearch instance?
 
-**The short answer: we don't know.**
+**The short answer: we don't know yet!**
 
-The complexity involved in the indexing process makes it extremely difficult to accurately estimate the size and memory use of a MeiliSearch database, even knowing the size of the `.JSON` files beforehand.
+Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a MeiliSearch database. In addition, our engine is improving almost constantly.
 
-In the future, we hope to provide detailed benchmarks of different use-cases. Until then, read on for more detailed information about optimizing your MeiliSearch instance.
+Once our engine is completely stable (v1), we will provide detailed benchmarks with different datasets. Until then, read on to learn how to optimize your MeiliSearch instance.
 
 ### Memory usage
 
