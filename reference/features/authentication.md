@@ -6,6 +6,8 @@ If your [environment](/reference/features/configuration.md#environment) is set t
 
 If a MeiliSearch instance does not use authentication, all routes will be publicly accessible and unprotected.
 
+Authentication is activated by setting a master key.
+
 ## Key types
 
 MeiliSearch uses three types of keys:
@@ -66,3 +68,10 @@ If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` sta
 **Changing the master key will automatically generate new private and public keys**. It is not possible to change one key without altering the others.
 
 After changing the master key, it is mandatory to restart the MeiliSearch instance to generate new private and public keys.
+
+## Deactivating key-based authentication
+
+In order to deactivate MeiliSearch's key-based authentication, restart the instance without providing a master key:
+
+- If the master key was set up with command-line flags, relaunch the instance without the `--master-key` option
+- If the master key was configured with environment variables, unset it and relaunch the instance
