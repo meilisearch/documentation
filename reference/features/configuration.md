@@ -54,29 +54,29 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 ### Advanced
 
 - [Analytics](/reference/features/configuration.md#analytics)
-- [Disable Sentry](/reference/features/configuration.md#disable-sentry)
+- [Disable sentry](/reference/features/configuration.md#disable-sentry)
 - [Dumps](/reference/features/configuration.md#dumps-destination)
-  - [Dumps Destination](/reference/features/configuration.md#dumps-destination)
-  - [Import Dump](/reference/features/configuration.md#import-dump)
-  - [Dump Batch Size](/reference/features/configuration.md#dump-batch-size)
-- [Max MDB Size](/reference/features/configuration.md#max-mdb-size)
-- [Max UDB Size](/reference/features/configuration.md#max-udb-size)
-- [Payload Limit Size](/reference/features/configuration.md#payload-limit-size)
+  - [Dumps destination](/reference/features/configuration.md#dumps-destination)
+  - [Import dump](/reference/features/configuration.md#import-dump)
+  - [Dump batch size](/reference/features/configuration.md#dump-batch-size)
+- [Max MDB size](/reference/features/configuration.md#max-mdb-size)
+- [Max UDB size](/reference/features/configuration.md#max-udb-size)
+- [Payload limit size](/reference/features/configuration.md#payload-limit-size)
 - [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
-  - [Schedule Snapchot Creation](/reference/features/configuration.md#schedule-snapshot-creation)
-  - [Snapshot Destination](/reference/features/configuration.md#snapshot-destination)
-  - [Snapshot Interval](/reference/features/configuration.md#snapshot-interval)
-  - [Import Snapshot](/reference/features/configuration.md#import-snapshot)
-  - [Ignore Missing Snapshot](/reference/features/configuration.md#ignore-missing-snapshot)
-  - [Ignore Snapshot if DB Exists](/reference/features/configuration.md#ignore-snapshot-if-db-exists)
-- [SSL Configuration](/reference/features/configuration.md#ssl-authentication-path):
-  - [SSL Authentication Path](/reference/features/configuration.md#ssl-authentication-path)
-  - [SSL Certificates Path](/reference/features/configuration.md#ssl-certificates-path)
-  - [SSL Key Path](/reference/features/configuration.md#ssl-key-path)
-  - [SSL OCSP Path](/reference/features/configuration.md#ssl-ocsp-path)
-  - [SSL Require Auth](/reference/features/configuration.md#ssl-require-auth)
-  - [SSL Resumption](/reference/features/configuration.md#ssl-resumption)
-  - [SSL Tickets](/reference/features/configuration.md#ssl-tickets)
+  - [Schedule snapshot creation](/reference/features/configuration.md#schedule-snapshot-creation)
+  - [Snapshot destination](/reference/features/configuration.md#snapshot-destination)
+  - [Snapshot interval](/reference/features/configuration.md#snapshot-interval)
+  - [Import snapshot](/reference/features/configuration.md#import-snapshot)
+  - [Ignore missing snapshot](/reference/features/configuration.md#ignore-missing-snapshot)
+  - [Ignore snapshot if DB exists](/reference/features/configuration.md#ignore-snapshot-if-db-exists)
+- [SSL configuration](/reference/features/configuration.md#ssl-authentication-path):
+  - [SSL authentication path](/reference/features/configuration.md#ssl-authentication-path)
+  - [SSL certificates path](/reference/features/configuration.md#ssl-certificates-path)
+  - [SSL key path](/reference/features/configuration.md#ssl-key-path)
+  - [SSL OCSP path](/reference/features/configuration.md#ssl-ocsp-path)
+  - [SSL require auth](/reference/features/configuration.md#ssl-require-auth)
+  - [SSL resumption](/reference/features/configuration.md#ssl-resumption)
+  - [SSL tickets](/reference/features/configuration.md#ssl-tickets)
 
 ### Database path
 
@@ -101,7 +101,7 @@ The main differences between the two environments are:
 
 When the server environment is set to `development`, providing a master key is not mandatory. This is useful when debugging and prototyping, but dangerous otherwise since API update routes are unprotected.
 
-Both logging and the [web interface](/reference/features/web_interface.md#web-interface) are disabled in `production`.
+Logging and the [web interface](/reference/features/web_interface.md#web-interface) are disabled in `production`.
 
 ### HTTP address & port binding
 
@@ -111,19 +111,19 @@ Both logging and the [web interface](/reference/features/web_interface.md#web-in
 
 Sets the HTTP address and port MeiliSearch will use.
 
-### Master Key
+### Master key
 
 **Environment variable**: `MEILI_MASTER_KEY`
 **CLI option**: `--master-key`
 **Default value**: `None`
 
-Sets an instance's master key, automatically protecting all routes except `GET /health`. Providing a key is mandatory when `--env` is set to `production`.
+Sets the instance's master key, automatically protecting all routes except `GET /health`. Providing a key is mandatory when `--env` is set to `production`.
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
 If no master key is provided in a `production` environment, MeiliSearch will throw an error and refuse to launch.
 
-[Learn more about MeiliSearch's use of security keys in this guide.](/reference/features/authentication.md)
+[Learn more about MeiliSearch's use of security keys.](/reference/features/authentication.md)
 
 
 ### Analytics
@@ -148,7 +148,7 @@ If a user does not disable analytics, they may also provide an email address and
 
 All collected data is used solely for the purpose of improving MeiliSearch. A full document describing why we collect this data and how we use it is forthcoming.
 
-### Disable Sentry
+### Disable sentry
 
 **Environment variable**: `MEILI_NO_SENTRY`
 **CLI option**: `--no-sentry`
@@ -158,7 +158,7 @@ Deactivates Sentry when set to `true`.
 
 We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that help us improve MeiliSearch.
 
-### Dumps Destination
+### Dumps destination
 
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
@@ -168,7 +168,7 @@ Sets the directory where MeiliSearch will store dump files.
 
 [Learn more about creating dumps of MeiliSearch instances](/reference/api/dump.md).
 
-### Import Dump
+### Import dump
 
 **Environment variable**: N/A
 **CLI option**: `--import-dump`
@@ -180,7 +180,7 @@ MeiliSearch will only launch once the dump data has been fully indexed. The time
 
 *This option is not available as an environment variable.*
 
-### Dump Batch Size
+### Dump batch size
 
 **Environment variable**: `MEILI_DUMP_BATCH_SIZE`
 **CLI option**: `--dump-batch-size`
@@ -205,7 +205,7 @@ A dump contains 2600 documents. If `--dump-batch-size` is set to 1000, MeiliSear
 **CLI option**: `--max-mdb-size`
 **Default value**: `107374182400` (100 GiB)
 
-Set the maximum size of the `main` database. Value must be given in bytes.
+Sets the maximum size of the `main` database. Value must be given in bytes.
 
 The `main` database stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
 
@@ -243,7 +243,7 @@ On **Windows**, `getconf` returns a fixed size that will be allocated when launc
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
-### Payload Limit Size
+### Payload limit size
 
 **Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
 **CLI option**: `--http-payload-size-limit`
@@ -269,7 +269,7 @@ Activates scheduled snapshots when set to `true`. Disabled by default.
 
 Sets the directory where MeiliSearch will store snapshots.
 
-### Snapshot Interval
+### Snapshot interval
 
 **Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
 **CLI option**: `--snapshot-interval-sec`
@@ -277,7 +277,7 @@ Sets the directory where MeiliSearch will store snapshots.
 
 Defines the interval between each snapshot. Value must be given in seconds.
 
-### Import Snapshot
+### Import snapshot
 
 **Environment variable**: N/A
 **CLI option**: `--import-snapshot`
@@ -316,7 +316,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 *This option is not available as an environment variable.*
 
-### SSL Authentication Path
+### SSL authentication path
 
 **Environment variable**: `MEILI_SSL_AUTH_PATH`
 **CLI option**: `--ssl-auth-path`
@@ -324,7 +324,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 Enables client authentication in the specified path.
 
-### SSL Certificates Path
+### SSL certificates path
 
 **Environment variable**: `MEILI_SSL_CERT_PATH`
 **CLI option**: `--ssl-cert-path`
@@ -335,7 +335,7 @@ Sets the server's SSL certificates.
 Value must be a path to PEM-formatted certificates. The first certificate should certify the KEYFILE supplied by `--ssl-key-path`. The last certificate should be a root CA.
 
 
-### SSL Key Path
+### SSL key path
 
 **Environment variable**: `MEILI_SSL_KEY_PATH`
 **CLI option**: `--ssl-key-path`
@@ -357,7 +357,7 @@ Sets the server's OCSP file. *Optional*
 Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 
 
-### SSL Require Auth
+### SSL require auth
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
 **CLI option**: `--ssl-require-auth`
@@ -368,7 +368,7 @@ Makes SSL authentication mandatory.
 Sends a fatal alert if the client does not complete client authentication.
 
 
-### SSL Resumption
+### SSL resumption
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
 **CLI option**: `--ssl-resumption`
@@ -377,7 +377,7 @@ Sends a fatal alert if the client does not complete client authentication.
 Activates SSL session resumption.
 
 
-### SSL Tickets
+### SSL tickets
 
 **Environment variable**: `MEILI_SSL_TICKETS`
 **CLI option**: `--ssl-tickets`
