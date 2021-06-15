@@ -15,7 +15,7 @@ add_or_update_documents_1: |-
 delete_all_documents_1: |-
 delete_one_document_1: |-
 delete_documents_1: |-
-search_1: |-
+search_post_1: |-
 get_update_1: |-
 get_all_updates_1: |-
 get_keys_1: |-
