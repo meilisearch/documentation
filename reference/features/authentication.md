@@ -26,7 +26,30 @@ The only route accessible to all, regardless of authentication, is [`GET /health
 
 When launching a MeiliSearch instance, you have the option of [setting the master key](/reference/features/configuration.md#master-key). By doing so, all routes will be protected and will require a key to access.
 
-You can specify a key by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
+You can specify the master key by setting the `MEILI_MASTER_KEY` environment variable, or passing the command line argument `--master-key` on launch.
+
+#### Example
+
+:::: tabs
+
+::: tab Env
+
+```bash
+export MEILI_MASTER_KEY=whatever_you_want
+meilisearch
+```
+
+:::
+
+::: tab CLI
+
+```bash
+meilisearch --master-key=whatever_you_want
+```
+
+:::
+
+::::
 
 After setting up the master key, you can retrieve both the private and the public keys with the [keys route](/reference/api/keys.md).
 
