@@ -1,16 +1,16 @@
 # Distinct attribute
 
-The **value** of a field whose attribute is set as a distinct attribute will always be **unique** in the returned documents.
+A distinct attribute is a field whose value is shared by various documents. It is most commonly used to prevent returning several instances of very similar documents.
 
-In such a case, there will **never be two, or more, occurrences of the same value** of that field in the different documents returned by MeiliSearch.
+The value of a field set as a distinct attribute will always be unique among returned documents. This means there will **never be more than one occurrence of the same value** of a distinct attribute field in the different documents returned by MeiliSearch.
 
-When multiple documents have the same value for a distinct attribute, MeiliSearch returns the first one after applying [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules). If documents are equivalent in terms of ranking, MeiliSearch returns the first in terms of `internal_id`.
+When multiple documents have the same value for a distinct attribute, MeiliSearch returns the first result after applying [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules). If two or more documents are equivalent in terms of ranking, MeiliSearch returns the first in terms of `internal_id`.
 
 ### Example
 
-Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations (color or size).
+Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations such as color (e.g. brown, black, blue) or size (e.g. small, medium, large).
 
-As shown below, you have 3 documents that contain information about the same jacket. One of the jackets is brown, one is black, and the last one is blue.
+As shown below, you have three documents for a Lee jeans leather jacket. One of the jackets is brown, one is black, and the last one is blue.
 
 ```json
 [
@@ -38,13 +38,15 @@ As shown below, you have 3 documents that contain information about the same jac
 ]
 ```
 
-You may want to ignore the different colors of an item. To do so, you can set `product_id` as a `distinctAttribute`.
+If a user were to search for a `lee leather jacket`, MeiliSearch would return all three instances by default. This could cause the results to be cluttered with almost identical variations of the same item.
+
+In this case, you may want to ignore the different colors of a product. To do so, you can set `product_id` as a `distinctAttribute`.
 
 <CodeSamples id="distinct_attribute_guide_1" />
 
 By [setting `product_id` as a distinct attribute](/reference/api/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
 
-For this example, querying for `lee leather jacket` would only return the first document found. The response could look like this:
+In this sample dataset, querying for `lee leather jacket` would only return the first document found. The response could look like this:
 
 ```json
 {
