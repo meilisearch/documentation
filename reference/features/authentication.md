@@ -74,4 +74,8 @@ After changing the master key, it is mandatory to restart the MeiliSearch instan
 In order to deactivate MeiliSearch's key-based authentication, restart the instance without providing a master key:
 
 - If the master key was set up with command-line flags, relaunch the instance without the `--master-key` option
+<<<<<<< HEAD
 - If the master key was configured with environment variables, unset it and relaunch the instance
+=======
+- If the master key was configured with environment variables, unset it and relaunch the instance
+>>>>>>> a0312eabe9ec4db0d1896ea3a8acab9c5a729358
