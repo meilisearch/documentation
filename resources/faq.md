@@ -181,7 +181,7 @@ Until our first stable release (v1.0), MeiliSearch minor versions are not compat
 
 **The short answer: we don't know yet!**
 
-Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a MeiliSearch database. In addition, our engine is improving almost constantly.
+Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a MeiliSearch database. At this stage, our engine is changing constantly, which means benchmarks are constantly out of date.
 
 Once our engine is completely stable (v1), we will provide detailed benchmarks with different datasets. Until then, read on to learn how to optimize your MeiliSearch instance.
 
