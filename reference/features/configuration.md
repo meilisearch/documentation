@@ -125,7 +125,6 @@ If no master key is provided in a `production` environment, MeiliSearch will thr
 
 [Learn more about MeiliSearch's use of security keys.](/reference/features/authentication.md)
 
-
 ### Analytics
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
@@ -334,7 +333,6 @@ Sets the server's SSL certificates.
 
 Value must be a path to PEM-formatted certificates. The first certificate should certify the KEYFILE supplied by `--ssl-key-path`. The last certificate should be a root CA.
 
-
 ### SSL key path
 
 **Environment variable**: `MEILI_SSL_KEY_PATH`
@@ -344,7 +342,6 @@ Value must be a path to PEM-formatted certificates. The first certificate should
 Sets the server's SSL keyfiles.
 
 Value must be a path to an RSA private key or PKCS8-encoded private key, both in PEM format.
-
 
 ### SSL OCSP path
 
@@ -356,7 +353,6 @@ Sets the server's OCSP file. *Optional*
 
 Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 
-
 ### SSL require auth
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
@@ -367,7 +363,6 @@ Makes SSL authentication mandatory.
 
 Sends a fatal alert if the client does not complete client authentication.
 
-
 ### SSL resumption
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
@@ -375,7 +370,6 @@ Sends a fatal alert if the client does not complete client authentication.
 **Default value**: `None`
 
 Activates SSL session resumption.
-
 
 ### SSL tickets
 
