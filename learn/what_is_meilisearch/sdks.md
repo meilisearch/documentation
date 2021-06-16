@@ -35,7 +35,9 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ### DevOps tools
 
+- [meilisearch-aws](https://github.com/meilisearch/meilisearch-aws): how to deploy a MeiliSearch instance on AWS. See this [dedicated page](/create/how_to/aws.md) to use it.
 - [meilisearch-digitalocean](https://github.com/meilisearch/meilisearch-digitalocean): how to deploy a MeiliSearch instance on DigitalOcean. See this [dedicated page](/create/how_to/digitalocean_droplet.md) to use it.
+- [meilisearch-gcp](https://github.com/meilisearch/meilisearch-gcp): how to deploy a MeiliSearch instance on GCP. See this [dedicated page](/create/how_to/gcp.md) to use it.
 - [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes): how to deploy a MeiliSearch instance on Kubernetes.
 
 ### Other tools
