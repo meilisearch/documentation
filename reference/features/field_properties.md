@@ -2,8 +2,8 @@
 
 By default, whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
 
-- **The [searchable attributes list](/reference/features/field_properties.md#the-searchable-attributes-list)**: Attributes whose fields are searched for matching query words.
-- **The [displayed attributes list](/reference/features/field_properties.md#displayed-fields)**: Attributes whose fields are displayed in documents.
+- The [searchable attributes list](/reference/features/field_properties.md#the-searchable-attributes-list): attributes whose fields are searched for matching query words.
+- The [displayed attributes list](/reference/features/field_properties.md#displayed-fields): attributes whose fields are displayed in documents.
 
 This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
 
@@ -11,7 +11,7 @@ This means that by default, every field in a document is **searchable** and **di
 
 A field can either be **searchable** or **non-searchable**.
 
-When you perform a search, all searchable fields are searched for matching query words and used to assess document relevancy, while non-searchable fields are ignored entirely. **By default, all fields are searchable.**
+When you perform a search, all searchable fields are checked for matching query words and used to assess document relevancy, while non-searchable fields are ignored entirely. **By default, all fields are searchable.**
 
 Non-searchable fields are most useful for internal information that's not relevant to the search experience, such as URLs, sales numbers, or ratings used exclusively for sorting results.
 
@@ -72,6 +72,6 @@ Suppose you manage a database that contains information about movies. By adding 
 
 ## Data storing
 
-All fields are stored. **This behavior cannot be changed**.
+All fields are stored in the database. **This behavior cannot be changed**.
 
 Thus, if a field is missing from both the displayed-attributes list and the searchable-attributes list, it **will still be stored**. It will be possible to add it to either or both lists at any time.
