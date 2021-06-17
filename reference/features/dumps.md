@@ -32,4 +32,4 @@ If your dataset is very large, it is good practice to index documents in larger 
 
 ## Use cases
 
-Dumps are used to restore your database after updating MeiliSearch or to communicate between MeiliSearch instances without having to worry about their respective versions.
+Dumps are used to restore your database after [updating MeiliSearch](/create/how_to/updating.md) or to copy your database to other MeiliSearch instances without having to worry about their respective versions.
