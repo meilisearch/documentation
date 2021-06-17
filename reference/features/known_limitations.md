@@ -1,27 +1,24 @@
 # Known limitations
 
-MeiliSearch has known limitations, some of which may be addressed in future versions.
-
-Some of these limitations have been made by MeiliSearch developers for relevancy and/or performance, while others are enforced by [LMDB](/reference/under_the_hood/storage.md), the key-value store used by MeiliSearch.
+Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of design trade-offs when balancing relevancy and performance, while others are dictated by [LMDB](/reference/under_the_hood/storage.md), the key-value store we use under the hood.
 
 ## Design limitations
 
 ### Number of query words
 
-The maximum number of words taken into account for each [search query](/reference/features/search_parameters.md#query-q) is 10. If a search query includes more than 10 words, all words after the 10th will be ignored.
+The maximum number of terms taken into account for each [search query](/reference/features/search_parameters.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
 
-This is because large queries can lead to long response times, and MeiliSearch's goal is always to provide a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
+Large queries can lead to long response times and MeiliSearch's goal is to provide a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 
 ### Database size
 
-MeiliSearch uses two databases: the first one for storage and the second one for updates.
-On launch LMDB needs to know the size that it can allocate on disk. This space will be reserved on disk for LMDB, thus MeiliSearch. This space will also be allocated as virtual memory.
+MeiliSearch uses two databases: one for storage and one for updates. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
-The maximum database size is by default __100GiB__ for each database. This size can be modified using the options `--max-mdb-size` & `--max-udb-size` as described in the [configuration guide](/reference/features/configuration.md#max-mdb-size).
+The default maximum database size is __100GiB__. This size can be modified using the options `--max-mdb-size` & `--max-udb-size` as described in the [configuration guide](/reference/features/configuration.md#max-mdb-size).
 
 ### Number of indexes
 
-You can create __up to 200 indexes__ in MeiliSearch. This limit has been hard set for performance reasons.
+You can create __up to 200 indexes__ in MeiliSearch. This limit has been hard-coded for performance reasons.
 
 ### Maximum words per attribute
 
