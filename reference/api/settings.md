@@ -1,8 +1,8 @@
 # All settings
 
-`Settings` is a list of all the **customization** possible for an index.
+Index settings are represented as a [JSON object](https://www.w3schools.com/js/js_json_objects.asp) containing a field for each possible customization option.
 
-It is possible to update all the settings in one go or individually with the dedicated routes. Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
+It is possible to modify all the settings at once using the [`update settings` endpoint](#update-settings), or individually using the dedicated routes.
 
 These are the reference pages for the dedicated routes:
 
