@@ -14,7 +14,7 @@ At any given moment, you can check the status of a particular dump creation proc
 
 <CodeSamples id="get_dump_status_1" />
 
-After your dump creation process is done, the dump file is created and added to the dump folder. By default, this folder is `/dumps` at the root of your MeiliSearch binary, [but this can be customized](/reference/features/configuration#options).
+After your dump creation process is done, the dump file is created and added to the dump folder. By default, this folder is `/dumps` at the root of your MeiliSearch binary, [but this can be customized](/reference/features/configuration#dumps-destination).
 
 Note that **if your dump folder does not already exist when the dump creation process is called, MeiliSearch will create it**.
 
