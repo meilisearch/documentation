@@ -53,10 +53,12 @@ To add documents to MeiliSearch you must provide:
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
 ```json
-{
-  "id": "123",
-  "title": "Superman"
-}
+[
+  {
+    "id": "123",
+    "title": "Superman"
+  }
+]
 ```
 
 > The primary key is `id`, the document's unique identifier is `123`.
