@@ -1,6 +1,6 @@
 # All settings
 
-Index settings are represented as a [JSON object](https://www.w3schools.com/js/js_json_objects.asp) containing a field for each possible customization option.
+Index settings are represented as a [JSON object literal](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), containing a field for each possible customization option.
 
 It is possible to modify all the settings at once using the [`update settings` endpoint](#update-settings), or individually using the dedicated routes.
 
