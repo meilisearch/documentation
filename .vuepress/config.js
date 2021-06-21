@@ -12,7 +12,7 @@ module.exports = {
     smoothScroll: true,
     nav: [
       { text: 'Learn', link: '/learn/' },
-      { text: 'Create', link: '/create/' },
+      { text: 'Create', link: '/create/how_to/' },
       { text: 'Reference', link: '/reference/' },
       {
         text: 'Resources',
@@ -171,7 +171,7 @@ module.exports = {
       ],
       '/create/': [
         {
-          title: '📕 How To',
+          title: '📕 How-to guides',
           path: '/create/how_to/',
           collapsable: false,
           children: [
@@ -185,7 +185,7 @@ module.exports = {
                   path: '/create/how_to/updating',
                 },
                 {
-                  title: 'Run in Production',
+                  title: 'Run in production',
                   path: '/create/how_to/running_production',
                 },
                 {
@@ -223,7 +223,7 @@ module.exports = {
               sidebarDepth: 0,
               children: [
                 {
-                  title: 'Add a Search Bar to Your Docs',
+                  title: 'Add a search bar to your docs',
                   path: '/create/how_to/search_bar_for_docs',
                 },
                 {
@@ -238,7 +238,7 @@ module.exports = {
               sidebarDepth: 0,
               children: [
                 {
-                  title: 'Use HTTP/2 and SSL',
+                  title: 'Set up HTTP/2 and SSL',
                   path: '/create/how_to/http2_ssl',
                 },
               ],
