@@ -53,17 +53,19 @@ To add documents to MeiliSearch you must provide:
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
 ```json
-{
-  "id": "123",
-  "title": "Superman"
-}
+[
+  {
+    "id": "123",
+    "title": "Superman"
+  }
+]
 ```
 
 > The primary key is `id`, the document's unique identifier is `123`.
 
 There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents to an index called `movies`. To follow along, first right-click this link and download the file: [movies.json](https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/datasets/movies/movies.json). Then, move the downloaded file to your working directory.
+Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
 
 <CodeSamples id="getting_started_add_documents_md" />
 

@@ -10,7 +10,7 @@ Some of these limitations have been made by MeiliSearch developers for relevancy
 
 The maximum number of words taken into account for each [search query](/reference/features/search_parameters.md#query-q) is 10. If a search query includes more than 10 words, all words after the 10th will be ignored.
 
-This is because large queries can lead to long response times, and MeiliSearch's goal is always to provide a [fast type-as-you-search experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
+This is because large queries can lead to long response times, and MeiliSearch's goal is always to provide a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 
 ### Database size
 
