@@ -63,7 +63,7 @@ To be processed, all documents must share one common <clientGlossary word="field
 
 There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link and download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
+Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
 
 <CodeSamples id="getting_started_add_documents_md" />
 
