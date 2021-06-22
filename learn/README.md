@@ -2,17 +2,16 @@
 
 Welcome to MeiliSearch's learning center. These resources are aimed at first-time and new users of MeiliSearch. If you're looking for a more detailed or comprehensive resource, have a look at our [reference documentation](/reference).
 
-## Easy to learn, fun to master
+## Our philosophy
 
-MeiliSearch has been developed to provide an **easily integrated search solution** with a **simple and intuitive implementation process**.
+MeiliSearch has been developed to provide an **easily integrated search solution** with a **simple and intuitive implementation process**. If you're an experienced developer looking to dive right in, we encourage you to check out our [API references](/reference/api).
 
-It is our fondest hope that anyone could learn the basics simply by looking at our [API endpoints](/reference/api) or [feature references](/reference/features).
-
-However, if you prefer a more guided or hands-on approach, you're in the right place. We offer helpful descriptions of all of MeiliSearch's [core concepts](/learn/core_concepts), as well as a [getting started guide](/learn/getting_started) that should teach you everything you need to start [creating your own projects](/create).
+However, if you prefer a more guided or hands-on approach, you're not alone! We offer descriptions of all of MeiliSearch's [core concepts](/learn/core_concepts), as well as a [getting started guide](/learn/getting_started) that should teach you everything you need to start creating your own projects.
 
 ## Table of contents
 
 - [🔎 What Is MeiliSearch](/learn/what_is_meilisearch): Get acquainted with MeiliSearch's features, competitors, SDKs, and more.
 - [🚀 Getting Started](/learn/getting_started): Follow a step-by-step tutorial that covers all the basics of MeiliSearch.
 - [💡 Core Concepts](/learn/core_concepts): Learn about search fundamentals like documents, indexes, and relevancy.
-- [📚 Advanced Topics](/learn/advanced): Deepen your understanding of MeiliSearch with articles about some of our advanced features.
+- [📚 Advanced Topics](/learn/advanced): Deepen your understanding of MeiliSearch with articles about some of our features.
+- [👐 Contributing to MeiliSearch](/learn/contributing): Learn how you can contribute to MeiliSearch.
