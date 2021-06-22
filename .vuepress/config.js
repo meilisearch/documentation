@@ -23,6 +23,7 @@ module.exports = {
             text: 'SDKs',
             items: [
               { text: '.Net', link: 'https://github.com/meilisearch/meilisearch-dotnet' },
+              { text: 'Dart', link: 'https://github.com/meilisearch/meilisearch-dart' },
               { text: 'Golang', link: 'https://github.com/meilisearch/meilisearch-go' },
               { text: 'Java', link: 'https://github.com/meilisearch/meilisearch-java' },
               { text: 'JavaScript', link: 'https://github.com/meilisearch/meilisearch-js' },
