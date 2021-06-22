@@ -28,7 +28,7 @@ As the data contained in the dump needs to be indexed, the process will take som
 ./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
 
-If your dataset is very large, it is a good practice to index documents in large batches using the `--dump-batch-size` command-line flag or `MEILI_DUMP_BATCH_SIZE` environment variable. This will speed up the indexing process, but requires more memory and may cause your dump import to fail. [Read more about configuring your dump batch size here](/reference/features/configuration#dump-batch-size). 
+If your dataset is very large, it is a good practice to index documents in large batches using the `--dump-batch-size` command-line flag or `MEILI_DUMP_BATCH_SIZE` environment variable. This will speed up the indexing process, but requires more memory and may cause your dump import to fail. [Read more about configuring your dump batch size here](/reference/features/configuration#dump-batch-size).
 
 ## Use cases
 
