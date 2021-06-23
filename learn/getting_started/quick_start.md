@@ -1,6 +1,8 @@
 # Quick start
 
-This quick tour will help you get started with MeiliSearch in just a few steps. All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) with [cURL](https://curl.se) installed.
+This quick tour will help you get started with MeiliSearch in just a few steps.
+
+All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with MeiliSearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)). You can find instructions to install each of our SDKs further down in the [add documents section](#add-documents) of this guide.
 
 ## Download and launch
 
