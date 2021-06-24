@@ -56,11 +56,11 @@ We did some measurements on the default [movies.json](https://github.com/meilise
 
 This dataset is a JSON file of 8.6 MB and has 19,553 documents. When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122MB.
 
-| Raw JSON | MeiliSearch database size on disk | Real memory size | Private memory size     | Virtual memory size |
-| -------- | --------------------------------- | ---------------- | ----------------------- | ------------------- |
-| 8.6 MB   | 122 MB                            | ≃ 6.3 MB         | 120 MB (≤ size on disk) | 204 Gb (memory map) |
+| Raw JSON | MeiliSearch database size on disk | Resident memory size | Virtual memory size |
+| -------- | --------------------------------- | -------------------- | ------------------- |
+| 9.1 MB   | 320 MB                            | ≃ 426 MB             | 205 Gb (memory map) |
 
-> This means the database is using 6.3 MB of RAM and 122 MB of disk space. Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database. See [Memory Usage](#memory-usage) for more details.
+> This means the database is using 426 MB of RAM and 122 MB of disk space. Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database. See [Memory Usage](#memory-usage) for more details.
 
 It is important to note that **there is no reliable way to predict the final size of a database**. This is true for just about any search engine on the market—we're just the only ones saying it out loud.
 
