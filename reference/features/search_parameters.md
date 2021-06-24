@@ -2,132 +2,163 @@
 
 Search parameters let the user customize their search request.
 
-| Query Parameter                                                                                   | Description                                                                                     | Default Value |
-| ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **[q](/reference/features/search_parameters.md#query-q)**                                     | Query string                                                                                    |     `""`     |
-| **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |      `0`      |
-| **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
-| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
-| **[facetFilters](/reference/features/search_parameters.md#facet-filters)** | Facet names and values to filter on                                  |    `null`     |
-| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                 |    `null`     |
-| **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |      `["*"]`      |
-| **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `null`     |
-| **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |     `200`     |
-| **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `null`     |
-| **[matches](/reference/features/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |    `false`    |
+| Query Parameter                                                                               | Description                                                                                     | Default Value |
+|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|:-------------:|
+| **[q](/reference/features/search_parameters.md#query-q)**                                     | Queried terms                                                                                   | `""`          |
+| **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     | `0`           |
+| **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            | `20`          |
+| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            | `null`        |
+| **[facetFilters](/reference/features/search_parameters.md#facet-filters)**                    | Facet names and values to filter on                                                             | `null`        |
+| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)**    | Facets for which to retrieve the matching count                                                 | `null`        |
+| **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 | `["*"]`       |
+| **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      | `null`        |
+| **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                | `200`         |
+| **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 | `null`        |
+| **[matches](/reference/features/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not | `false`       |
+
+::: warning
+All parameters must be **URL-encoded** when searching an index with a `GET` route.
+
+This is not necessary when using the `POST` route or one of our SDKs.
+:::
+
+## Examples
+
+Results can be paginated using the `limit` and `offset` query parameters.
+
+<CodeSamples id="search_guide_1" />
+
+You can filter results using the `filters` query parameter.
+
+<CodeSamples id="search_guide_2" />
 
 ## Query (q)
 
-This is the string used by the search engine to find relevant documents. Search queries are [tokenized](/reference/under_the_hood/tokenization.md).
+**Parameter**: `q`
+**Expected value**: any string
+**Default value**: `null`
+
+Sets the queried terms.
 
 ::: warning
-MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast type-as-you-search experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search) in a consistent way.
+MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 :::
 
-`q=<String>`
+### Example
 
-- `<String>` (String)
-
-  The query string.
-
-#### Example
-
-Suppose you would like to search `shifu` in a movie database. You would send the following:
+You can search for films mentioning `shifu` by setting the `q` parameter:
 
 <CodeSamples id="search_parameter_guide_query_1" />
 
+This will give you a list of documents that contain that string in at least one of its attributes.
+
+```json
+{
+  "hits": [
+    {
+      "id":"50393",
+      "title":"Kung Fu Panda Holiday",
+      "poster":"https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
+      "overview":"The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+      "release_date":1290729600,
+      "genres":["Animation","Family","TV Movie"]
+    },
+    …
+  ],
+  …
+  "query":"shifu"
+}
+```
+
 ### Placeholder search
 
-When `q` isn't specified, a **placeholder search** is performed. Placeholder search allows you to find documents without providing any search terms.
+When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all documents in an index, sorted by that index's [custom ranking rules](/reference/features/settings#custom-ranking-rule).
 
-Placeholder search returns the documents that best match other search parameters, sorted according to that index's [ranking rules](/reference/features/settings.md#ranking-rules). This feature also supports [faceting](/reference/features/faceted_search.md) and [filtering](/reference/features/filtering.md)
+If the index has no custom ranking rules, the results are returned in the order of their internal database position.
+
+::: tip
+Placeholder searches are particularly effective when combined with [faceting](/reference/features/faceted_search) or [filtering](/reference/features/filtering.md).
+:::
 
 ## Offset
 
-A number of **documents to skip**.
+**Parameter**: `offset`
+**Expected value**: any positive integer
+**Default value**: `0`
 
-`offset=<Integer>`
+`offset` sets the starting point in the search results, effectively skipping over a given number of documents.
 
-- `<Integer>` (Optional, positive integer, defaults to `0`)
+::: tip
+This parameter is often used together with `limit` in order to paginate results.
+:::
 
-  If the value of the parameter `offset` is _n_, _n_ first documents to skip. This is helpful for **pagination**.
+### Example
 
-#### Example
-
-If you want to skip the **first** document, set `offset` to `1`.
+If you want to skip the **first** result in a query, set `offset` to `1`:
 
 <CodeSamples id="search_parameter_guide_offset_1" />
 
 ## Limit
 
-Set a **limit to the number of documents returned** by search queries.
+**Parameter**: `limit`
+**Expected value**: any positive integer
+**Default value**: `20`
 
-`limit=<Integer>`
+`limit` sets the maximum number of items returned by a single query.
 
-- `<Integer>` (Optional, positive integer, defaults to `20`)
+::: tip
+This parameter is often used together with `offset` in order to paginate results.
+:::
 
-  If the value of the parameter `limit` is _n_, there will be _n_ documents in the search query response. This is helpful for **pagination**.
+### Example
 
-#### Example
-
-If you want to get only **two** documents, set `limit` to `2`.
+If you want your query to return only **two** documents, set `limit` to `2`:
 
 <CodeSamples id="search_parameter_guide_limit_1" />
 
 ## Filters
 
-`filters=<String>`
+**Parameter**: `filters`
+**Expected value**: a string containing a query expression
+**Default value**: `null`
 
-Specify a filter to be used with the query. See our [dedicated guide](/reference/features/filtering.md).
+Filters query results using MeiliSearch's query language.
+
+More instructions on our query language and filtering can be found on our [dedicated guide](/reference/features/filtering.md).
+
+### Example
+
+You can limit your search so it only returns results whose `title` field contains the word `Nightshift`:
 
 <CodeSamples id="search_parameter_guide_filter_1" />
 
-```json
-{
-  "id": "569367",
-  "title": "Nightshift",
-  "poster": "https://image.tmdb.org/t/p/w1280/peOeFl8ZTBTCERz5XQZAjYbXYsQ.jpg",
-  "overview": "Amy begins her first night shift in a hotel with a murderous past. Witnessing terrifying events and trapped within a loop, Amy must find a way to escape the flesh obsessed murderer and save residents of the hotel.",
-  "release_date": 1536282000
-}
-```
-
-The parameter should be **URL-encoded**.
-
-<CodeSamples id="search_parameter_guide_filter_2" />
-
 ## Facet filters
 
-If you have [set up faceted attributes](/reference/features/settings.md#attributes-for-faceting), you can filter on [facets](/reference/features/faceted_search.md) to narrow down your results based on criteria.
+**Parameter**: `facetFilters`
+**Expected value**: an array of strings in the following format: `facetName:facetValue`
+**Default value**: `null`
 
-`facetFilters=["facetName:facetValue"]` or `facetFilters=[["facetName:facetValue"]]`
-or a mix of both `facetFilters=["facetName1:facetValue1", ["facetName2:facetValue2"]]`
+Filters search results with [facets](/reference/features/faceted_search.md).
 
-- `["facetName1:facetValue1", ["facetName2:facetValue2"]]` (Array of array of strings or single strings, defaults to `null`)
+Values must be given as an array of strings: `facetFilters=["facetName:facetValue"]`. Nested arrays are allowed: `facetFilters=["facetName:facetValue", ["facetNameA:facetValueA", "facetNameB:facetValueB"]]`.
 
-  Both types of array contain the facet names and values to filter on.
-  A valid array must be an array that contains either a list of strings or arrays of strings and can mix both (e.g. `["director:Mati Diop", ["genres:Comedy", "genres:Romance"]]`).
+These strings must be `facetName:facetValue` pairs. `facetName` corresponds to a faceted attribute and `facetValue` to the value the query results will be filtered on.
 
-  - `facetName`: The name (the attribute) of a field used as a facet (e.g. `director`, `genres`).
-  - `facetValue`: The value of this facet to filter results on (e.g. `Tim Burton`, `Mati Diop`, `Comedy`, `Romance`).
+Facet filters also support logical connectives by using [inner and outer array elements](/reference/features/faceted_search.md#using-facets). You can [learn more about faceted search in our dedicated guide](/reference/features/faceted_search.md).
 
-Facet filters also support logical connectives by using [inner and outer array elements](/reference/features/faceted_search.md#using-facets).
+### Example
 
-[Learn more about facet filters in the dedicated guide](/reference/features/faceted_search.md)
-
-#### Example
-
-Suppose you have declared `director` and `genres` as [faceted attributes](/reference/features/settings.md#attributes-for-faceting), and you want to get movies matching "thriller" classified as either horror **or** mystery **and** directed by Jordan Peele.
+Suppose you are searching for movies, but only want results in `Horror` or `Mystery` `genres` and whose `director` is `Jordan Peele`:
 
 ```SQL
 ("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
 ```
 
-Querying on "thriller", the above example results in the following CURL command:
+After declaring `director` and `genres` as [faceted attributes](/reference/features/settings.md#attributes-for-faceting), you make a query for `thriller`:
 
 <CodeSamples id="faceted_search_walkthrough_facet_filters_1" />
 
-And you would get the following response:
+And get the following response:
 
 ```json
 {
@@ -156,48 +187,45 @@ And you would get the following response:
       "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
     }
   ],
-  ...
+  …
   "query": "thriller"
 }
 ```
 
-## The facets distribution
+## Facets distribution
 
-If you have [set up faceted attributes](/reference/features/settings.md#attributes-for-faceting), you can retrieve the count of matching terms for each [facets](/reference/features/faceted_search.md).
+**Parameter**: `facetsDistribution`
+**Expected value**: an array of `facetName`s or `["*"]`
+**Default value**: `null`
 
-`facetsDistribution=[<facetName>, <facetName>, ...]`
+Adds the count of matching facet terms to the query's returned fields.
 
-This attribute can take two values:
+This argument can take two values:
 
-- `[<facetName>, <facetName>, ...]` (Array of strings)
+- An array of `facetName`s—this will only count the listed facets:  `facetsDistribution=[<facetNameA>, <facetNameB>, ...]`. If a `facetName` does not exist, it will be ignored.
 
-  An array of strings that contains the facets for which to retrieve the matching count. The number of remaining candidates for each specified facet is returned.
-  If a facet name doesn't exist, it will be ignored.
+- An asterisk—this will return a count for all facets: `["*"]`
 
-- `["*"]`
 
-  In that case, a count for all facets is returned.
+### Returned fields
 
-#### Returned fields
+When `facetsDistribution` is set, the returned results contain **two additional fields**:
 
-If the `facetsDistribution` parameter has been set, the returned results will contain **two additional fields**:
+- `facetsDistribution`: The number of remaining candidates for each specified facet
 
-- `facetsDistribution`: The number of remaining candidates for each specified facet.
+- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count reflects all instances of a facet. If `false`, the number is only an approximation.
 
-- `exhaustiveFacetsCount`:
-  Returns `true` if the count in each facet value is **exhaustive** (exact count for each facet value).
-  Otherwise, returns `false` if this count is **approximative** (approximative count for each facet value).
-  The approximative facet count happens when there are too many documents in too many different facet values. In which case, MeiliSearch stops the distribution count to prevent considerably slowing down the request.
+The non-exhaustive facet count happens when there are too many documents in too many different facet values. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
-[Learn more about facet distribution in the dedicated guide](/reference/features/faceted_search.md#the-facets-distribution)
+[Learn more about facet distribution in the dedicated guide.](/reference/features/faceted_search.md#the-facets-distribution)
 
-#### Example
+### Example
 
-Given a movie database, suppose that you want to know what the number of Batman movies per genre is. You would use the following CURL command:
+Given a movie database, suppose that you want to know the number of `Batman` movies per genre:
 
 <CodeSamples id="faceted_search_facets_distribution_1" />
 
-And you would get the following response:
+You would get the following response:
 
 ```json
 {
@@ -224,60 +252,47 @@ And you would get the following response:
 
 ## Attributes to retrieve
 
-Attributes to **display** in the returned documents.
+**Parameter**: `attributesToRetrieve`
+**Expected value**: an array of `attribute`s or `["*"]`
+**Default value**: `["*"]`
 
-`attributesToRetrieve=<Attribute>,<Attribute>,...`
+Configures which attributes will be displayed in the returned documents.
 
-- `<Attribute>` (Optional, string, Defaults to `['*']`)
+If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/features/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
 
-  Comma-separated list of attributes whose fields will be present in the returned documents.
+### Example
 
-  Defaults to to the [displayedAttributes list](/reference/features/settings.md#displayed-attributes) which contains by default all attributes found in the documents.
-
-#### Example
-
-If you want to get only the `overview` and `title` field and not the other fields, set `attributesToRetrieve` to `overview,title`.
+To get only the `overview` and `title` fields and ignore all other attributes, set `attributesToRetrieve` to `"overview", "title"`.
 
 <CodeSamples id="search_parameter_guide_retrieve_1" />
 
 ## Attributes to crop
 
-Attributes whose values will be cropped if they contain a matched query word.
+**Parameter**: `attributesToCrop`
+**Expected value**: an array of `attribute`s or `["*"]`
+**Default value**: `null`
 
-`attributesToCrop=<Attribute:Croplength>,<Attribute:Croplength>,...`
+Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength` ](/reference/features/search_parameters.md#crop-length) parameter.
 
-Attribute can have two values:
+The cropped version of each document will be available in each document's `_formatted` property.
 
-- `<Attribute>` OR `<Attribute:Croplength>` (Optional, string, defaults to empty)
+Values can be supplied individually, one for each attribute you want to crop: `attributesToCrop=["attributeA", "attributeB"]`.
 
-  Comma-separated list of attributes whose values will be cropped if they contain a matched query word.
-  Each attribute can be joined by an optional `cropLength` that overwrites the [cropLength](/reference/features/search_parameters.md#crop-length) parameter.
+Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:25", "attributeNameB:150"]`.
 
-- `['*']`
+Instead of supplying individual `attributes`, you can provide `["*"]` as a value. This will crop the values of all attributes present in the `attributesToRetrieve` list: `attributesToCrop=["*"]`.
 
-  In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToCrop`.
+**Cropping starts at the first occurrence of the search query**. It only keeps `cropLength` characters on each side of the first match, rounded to match word boundaries.
 
-In the case a matched query word is found, the field's value will be cropped around the first matched query word according to the `cropLength` value (default `200` see [cropLength](/reference/features/search_parameters.md#crop-length) to change this value).
+If no query word is present in the cropped field, the crop will start from the first word.
 
-Some working examples:
+### Example
 
-- `attributesToCrop=overview`
-- `attributesToCrop=overview:20`
-- `attributesToCrop=*,overview:20,title:0`
-
-::: tip
-This is especially useful when you have to display content on the front-end in a specific way.
-:::
-
-**Cropping start at the first occurrence of the search query**. It only keeps `cropLength` chars on each side of the first match, rounded to match word boundaries.
-
-#### Example
-
-If you input `shifu` as a search query and set the value of the parameter `cropLength` to `10`:
+If you use `shifu` as a search query and set the value of the parameter `cropLength` to `10`:
 
 <CodeSamples id="search_parameter_guide_crop_1" />
 
-You will get the following response with the **cropped version in the \_formatted object**:
+You will get the following response with the **cropped version in the `_formatted` object**:
 
 ```json
 {
@@ -298,40 +313,35 @@ You will get the following response with the **cropped version in the \_formatte
 
 ## Crop length
 
-`cropLength=<Integer>` (Optional, positive integer, defaults to `200`)
+**Parameter**: `cropLength`
+**Expected value**: a positive integer
+**Default value**: `200`
 
-Number of characters to keep on each side of the start of the matching word. See [attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop).
+Configures the number of characters to keep on each side of the matching word. Often used together with [`attributesToCrop`](/reference/features/search_parameters.md#attributes-to-crop).
 
 ## Attributes to highlight
 
-Attributes whose values will contain **highlighted matching query words**.
+**Parameter**: `attributesToHighlight`
+**Expected value**: an array of `attribute`s or `["*"]`
+**Default value**: `null`
 
-- `attributesToHighlight=[<Attribute>,<Attribute>,...]`
+Highlights matching query words in the selected attributes. Every matching query word in the given attribute's value will be wrapped in an `<em>` tag.
 
-Attribute can have two values:
+Values can be supplied individually, in an array: `attributesToHighlight=["attributeA", "attributeB"]`.
 
-- `<Attribute>` (Optional, string, defaults to empty)
+Instead of single `attributes`, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
-  Comma-separated list of attributes. Every matching query words in the given attribute field will be wrapped around an `<em>` tag.
+The cropped version of each document will be available in its `_formatted` property.
 
-- `"*"`
+If HTML highlighting is not desirable, `matches` can provide finer-grained control of the output.
 
-  In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+### Example
 
-Every matching string sequence in the given attribute's field will be wrapped around an `<em>` tag.
-
-Some working examples:
-
-- `attributesToHighlight=overview`
-- `attributesToHighlight=*,overview`
-
-#### Example
-
-If you choose to highlight the content of `overview`:
+If you want to highlight the content of `overview`:
 
 <CodeSamples id="search_parameter_guide_highlight_1" />
 
-You will get the following response with the **highlighted version in the \_formatted object**:
+You will get the following response with the **highlighted version in the `_formatted` object**:
 
 ```json
 {
@@ -350,31 +360,30 @@ You will get the following response with the **highlighted version in the \_form
 }
 ```
 
-When evaluated in HTML, the **overview attribute in \_formatted** will look like as follows:
-
-The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>**Shifu**</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>**Shifu**</em> and Mr. Ping.
 
 ## Matches
 
-This setting takes a **Boolean value** (`true` or `false`) and defines whether an object that contains information about the matches should be returned or not.
+**Parameter**: `matches`
+**Expected value**: `true` or `false`
+**Default value**: `false`
 
-`matches=<Boolean>`
+Adds an object containing the location of each occurrence of queried terms across all fields. This is useful when you need more customization than offered by the default HTML highlighter.
 
-- `<Boolean>` (Optional, boolean, defaults to `false`)
+Matches can be found in the `\_matchesInfo` object present in each returned result.
 
-  If `true`, returns an array of the search query occurrences in all fields. A search query occurrence is given by a `start` position in the field and the `length` of the occurrence.
+The location is indicated by the `start` position of the match and its length.
 
-::: tip
-This is useful when you need to highlight the results without the default HTML highlighter.
+::: warning
+`start` and `length` return the number of bytes and not the number of characters. For example, `ü` represents two bytes but one character.
 :::
 
-#### Example
+### Example
 
-If you set `matches` to `true`:
+If you set `matches` to `true` and search for `shifu`:
 
 <CodeSamples id="search_parameter_guide_matches_1" />
 
-You will get the following response with the **information about the matches in the \_matchesInfo object**:
+You will get the following response with the **information about the matches in the `\_matchesInfo` object**:
 
 ```json
 {
@@ -397,19 +406,3 @@ You will get the following response with the **information about the matches in 
   }
 }
 ```
-
-::: warning
-`start` and `length` return the number of bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-:::
-
-## Examples
-
-Here are a few examples of what can be achieved with search parameters:
-
-Results can be paginated using the `limit` and `offset` query parameters.
-
-<CodeSamples id="search_guide_1" />
-
-You can filter results using the `filters` query parameter.
-
-<CodeSamples id="search_guide_2" />
