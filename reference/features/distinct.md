@@ -1,6 +1,6 @@
 # Distinct attribute
 
-A distinct attribute is a field whose value is shared by various documents. It is most commonly used to prevent MeiliSearch from returning several instances of similar documents.
+The distinct attribute is a special, user-designated field. It is most commonly used to prevent MeiliSearch from returning a set of several similar documents, instead forcing it to return only one.
 
 The value of a field configured as a distinct attribute will always be unique among returned documents. This means there will **never be more than one occurrence of the same value** of a distinct attribute field in the different documents returned by MeiliSearch.
 
