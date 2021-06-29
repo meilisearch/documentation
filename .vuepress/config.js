@@ -117,6 +117,7 @@ module.exports = {
             '/reference/features/snapshots',
             '/reference/features/stop_words',
             '/reference/features/synonyms',
+            '/reference/features/telemetry',
             '/reference/features/web_interface',
           ],
         },
