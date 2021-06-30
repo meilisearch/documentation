@@ -56,7 +56,7 @@ We did some measurements on the default [movies.json](https://github.com/meilise
 
 This dataset is a JSON file of 8.6 MB and has 19,553 documents. When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122MB.
 
-| Raw JSON | MeiliSearch database size on disk | Resident memory size | Virtual memory size |
+| Raw JSON | MeiliSearch database size on disk | RAM usage | Virtual memory usage |
 | -------- | --------------------------------- | -------------------- | ------------------- |
 | 9.1 MB   | 320 MB                            | ≃ 426 MB             | 205 Gb (memory map) |
 
