@@ -42,6 +42,12 @@ When `q` isn't specified, a **placeholder search** is performed. Placeholder sea
 
 Placeholder search returns the documents that best match other search parameters, sorted according to that index's [ranking rules](/reference/features/settings.md#ranking-rules). This feature also supports [faceting](/reference/features/faceted_search.md) and [filtering](/reference/features/filtering.md)
 
+### Phrase search
+
+You can enclose search terms in double quotes (`"`), in which case MeiliSearch will only return documents containing all terms in the order they were given. This is called a [phrase search](/learn/what_is_meilisearch/features.md#phrase-search).
+
+Phrase searches are case-insensitive and ignore soft separators such as `-`, `,`, and `:`. You can mix them with regular queries: MeiliSearch will first fetch all documents with exact matches and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
+
 ## Offset
 
 A number of **documents to skip**.

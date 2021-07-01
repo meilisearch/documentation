@@ -133,6 +133,10 @@ This route should only be used when no API key is required. If an API key is req
 
 When the `q` parameter is not specified, a [placeholder](/reference/features/search_parameters.md#query-q) search is run instead.
 
+#### Phrase search
+
+Query terms enclosed in double quotes are parsed as [phrase searches](/reference/features/search_parameters.md#query-q).
+
 ### Response
 
 | field                | Description                    |    type    |

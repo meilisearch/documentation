@@ -44,6 +44,12 @@ If you make a search without inputting any query words, MeiliSearch will return 
 
 Placeholder search is not affected by MeiliSearch's [default ranking rules](/reference/features/settings.md#ranking-rules)—only custom rules added by a user. If no custom rules have been set, the results are displayed in the order of their internal database position.
 
+## Phrase search
+
+If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents that  contain all terms in the order they were given.
+
+This is particularly useful when searching for documents that can only have one relevant result, like a book's ISBN code. It is also possible to combine phrase searches with MeiliSearch's basic syntax so only parts of a query are matched strictly.
+
 ## Comprehensive language support
 
 [MeiliSearch is multilingual](/reference/features/language.md)! We aim to support every language represented in our global community.
