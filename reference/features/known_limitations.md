@@ -1,6 +1,6 @@
 # Known limitations
 
-Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of design trade-offs when balancing relevancy and performance, while others are dictated by [LMDB](/reference/under_the_hood/storage.md), the key-value store we use under the hood.
+Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/reference/under_the_hood/storage.md), the key-value store that MeiliSearch uses [under the hood](/reference/under_the_hood).
 
 ## Design limitations
 
