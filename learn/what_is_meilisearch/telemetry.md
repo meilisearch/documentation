@@ -1,16 +1,12 @@
+---
+sidebarDepth: 2
+---
+
 # Telemetry
 
 MeiliSearch collects anonymized data from users in order to improve our product. This can be [deactivated at any time](#how-to-disable-data-collection).
 
 Note that while MeiliSearch is running in [`development` mode](/reference/features/configuration.md#environment), no data is collected.
-
-## Why collect telemetry data?
-
-We collect anonymized data for only two reasons: so that we can improve our product, and so that we can continue working on this project full-time.
-
-In order to better address our users' needs and chart a clear path forward for MeiliSearch, we need reliable quantitative information. The information we collect helps us fix bugs, evaluate the success of certain features, and identify our strengths and weaknesses as a product.
-
-Usage metrics also help us justify our existence to investors so that we can keep the MeiliSearch project alive. They prove what we all believe: that MeiliSearch is a great product that can be of use to a large number of people around the world.
 
 ## What kind of data do we collect?
 
@@ -29,9 +25,17 @@ We use two data-collection tools: [Amplitude](https://amplitude.com/amplitude-an
 
 ::: tip
 
-In the future, we may collect additional metrics relating to new features. To have the most up-to-date info, be sure to check the release notes after each new version. <Badge text="soon" type="warn"/>
+In the future, we may collect additional metrics relating to new features. This page will be kept up-to-date, but for the most precise information be sure to check the release notes after each new version. <Badge text="soon" type="warn"/>
 
 :::
+
+## Why collect telemetry data?
+
+We collect anonymized data for only two reasons: so that we can improve our product, and so that we can continue working on this project full-time.
+
+In order to better address our users' needs and chart a clear path forward for MeiliSearch, we need reliable quantitative information. The information we collect helps us fix bugs, evaluate the success of certain features, and identify our strengths and weaknesses as a product.
+
+We also need to prove that people are actually using MeiliSearch! Usage metrics help us justify our existence to investors so that we can keep this project alive.
 
 ## How to disable data collection
 
@@ -59,11 +63,15 @@ meilisearch
 ::: tab Cloud service
 
 ```bash
-# The following procedure should work for DO, GCP, and AWS
-# First, open /etc/systemd/system/meilisearch.service with a text editor
-# vim /etc/systemd/system/meilisearch.service
+# The following procedure should work for all cloud providers,
+# including DigitalOcean, Google Cloud Platform, and Amazon Web Services.
+# First, open /etc/systemd/system/meilisearch.service with a text editor:
+
+nano /etc/systemd/system/meilisearch.service
+
 # Then add --no-analytics=true at the end of the command in ExecStart
 # Don't forget to save and quit!
+# Finally, run the following two commands:
 
 systemctl daemon-reload
 systemctl restart meilisearch
