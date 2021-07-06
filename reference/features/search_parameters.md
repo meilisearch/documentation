@@ -50,6 +50,10 @@ Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,
 
 You can mix phrase searches with regular queries: MeiliSearch will first fetch all documents with exact matches and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
 
+#### Example
+
+<CodeSamples id="phrase_search_1" />
+
 ## Offset
 
 A number of **documents to skip**.
