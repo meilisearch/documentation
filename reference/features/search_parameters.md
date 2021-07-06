@@ -1,20 +1,14 @@
 # Search parameters
 
-Search parameters let the user customize their search request.
+Search parameters allow you greater control over the results returned by a MeiliSearch query.
 
-| Query Parameter                                                                               | Description                                                                                     | Default Value |
-|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|:-------------:|
-| **[q](/reference/features/search_parameters.md#query-q)**                                     | Queried terms                                                                                   | `""`          |
-| **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     | `0`           |
-| **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            | `20`          |
-| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            | `null`        |
-| **[facetFilters](/reference/features/search_parameters.md#facet-filters)**                    | Facet names and values to filter on                                                             | `null`        |
-| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)**    | Facets for which to retrieve the matching count                                                 | `null`        |
-| **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 | `["*"]`       |
-| **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      | `null`        |
-| **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                | `200`         |
-| **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 | `null`        |
-| **[matches](/reference/features/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not | `false`       |
+For instance, you can paginate results by using `limit` and `offset` parameters:
+
+<CodeSamples id="search_guide_1" />
+
+Or you can request that a search only returns recently released movies by using the `filters` parameter:
+
+<CodeSamples id="search_guide_2" />
 
 ::: warning
 All parameters must be **URL-encoded** when searching an index with a `GET` route.
@@ -22,15 +16,21 @@ All parameters must be **URL-encoded** when searching an index with a `GET` rout
 This is not necessary when using the `POST` route or one of our SDKs.
 :::
 
-## Examples
+## Parameters
 
-Results can be paginated using the `limit` and `offset` query parameters.
-
-<CodeSamples id="search_guide_1" />
-
-You can filter results using the `filters` query parameter.
-
-<CodeSamples id="search_guide_2" />
+| Query Parameter                                                                               | Description                                        | Default Value |
+|-----------------------------------------------------------------------------------------------|----------------------------------------------------|:-------------:|
+| **[q](/reference/features/search_parameters.md#query-q)**                                     | Search terms                                       | `""`          |
+| **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                        | `0`           |
+| **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned               | `20`          |
+| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute's value             | `null`        |
+| **[facetFilters](/reference/features/search_parameters.md#facet-filters)**                    | Filter queries with a faceted attribute            | `null`        |
+| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)**    | Display the count of matches per facet             | `null`        |
+| **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
+| **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
+| **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Maximum field value length                         | `200`         |
+| **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
+| **[matches](/reference/features/search_parameters.md#matches)**                               | Return matching terms location                     | `false`       |
 
 ## Query (q)
 
@@ -38,7 +38,7 @@ You can filter results using the `filters` query parameter.
 **Expected value**: any string
 **Default value**: `null`
 
-Sets the queried terms.
+Sets the search terms.
 
 ::: warning
 MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
@@ -59,13 +59,11 @@ This will give you a list of documents that contain that string in at least one 
       "id":"50393",
       "title":"Kung Fu Panda Holiday",
       "poster":"https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
-      "overview":"The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+      "overview":"The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
       "release_date":1290729600,
       "genres":["Animation","Family","TV Movie"]
     },
-    …
   ],
-  …
   "query":"shifu"
 }
 ```
@@ -77,7 +75,7 @@ When `q` isn't specified, MeiliSearch performs a **placeholder search**. A place
 If the index has no custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder searches are particularly effective when combined with [faceting](/reference/features/faceted_search) or [filtering](/reference/features/filtering.md).
+Placeholder searches are particularly effective when combined with [faceting](/reference/features/faceted_search) and [filtering](/reference/features/filtering.md).
 :::
 
 ## Offset
@@ -86,7 +84,7 @@ Placeholder searches are particularly effective when combined with [faceting](/r
 **Expected value**: any positive integer
 **Default value**: `0`
 
-`offset` sets the starting point in the search results, effectively skipping over a given number of documents.
+Sets the starting point in the search results, effectively skipping over a given number of documents.
 
 ::: tip
 This parameter is often used together with `limit` in order to paginate results.
@@ -104,7 +102,7 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 **Expected value**: any positive integer
 **Default value**: `20`
 
-`limit` sets the maximum number of items returned by a single query.
+Sets the maximum number of items returned by a single query.
 
 ::: tip
 This parameter is often used together with `offset` in order to paginate results.
@@ -122,9 +120,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 **Expected value**: a string containing a query expression
 **Default value**: `null`
 
-Filters query results using MeiliSearch's query language.
-
-More instructions on our query language and filtering can be found on our [dedicated guide](/reference/features/filtering.md).
+Filters query results using [MeiliSearch's query language](reference/features/filtering.md#the-query-language).
 
 ### Example
 
@@ -138,11 +134,13 @@ You can limit your search so it only returns results whose `title` field contain
 **Expected value**: an array of strings in the following format: `facetName:facetValue`
 **Default value**: `null`
 
-Filters search results with [facets](/reference/features/faceted_search.md).
+Uses [facets](/reference/features/faceted_search.md) to filter search results.
 
-Values must be given as an array of strings: `facetFilters=["facetName:facetValue"]`. Nested arrays are allowed: `facetFilters=["facetName:facetValue", ["facetNameA:facetValueA", "facetNameB:facetValueB"]]`.
+Values must be given as an array of strings: `facetFilters=["facetName:facetValue"]`.
 
 These strings must be `facetName:facetValue` pairs. `facetName` corresponds to a faceted attribute and `facetValue` to the value the query results will be filtered on.
+
+You can use nested arrays: `facetFilters=["facetName:facetValue", ["facetNameA:facetValueA", "facetNameB:facetValueB"]]`.
 
 Facet filters also support logical connectives by using [inner and outer array elements](/reference/features/faceted_search.md#using-facets). You can [learn more about faceted search in our dedicated guide](/reference/features/faceted_search.md).
 
@@ -202,10 +200,9 @@ Adds the count of matching facet terms to the query's returned fields.
 
 This argument can take two values:
 
-- An array of `facetName`s—this will only count the listed facets:  `facetsDistribution=[<facetNameA>, <facetNameB>, ...]`. If a `facetName` does not exist, it will be ignored.
+- An array of `facetName`s—this will only count the listed facets:  `facetsDistribution=[<facetNameA>, <facetNameB>, ...]`. If a `facetName` does not exist, it will be ignored
 
 - An asterisk—this will return a count for all facets: `["*"]`
-
 
 ### Returned fields
 
@@ -230,9 +227,9 @@ You would get the following response:
 ```json
 {
   "hits": [
-    ...
+    …
   ],
-  ...
+  …
   "nbHits": 1684,
   "query": "Batman",
   "exhaustiveFacetsCount": true,
@@ -272,7 +269,7 @@ To get only the `overview` and `title` fields and ignore all other attributes, s
 **Expected value**: an array of `attribute`s or `["*"]`
 **Default value**: `null`
 
-Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength` ](/reference/features/search_parameters.md#crop-length) parameter.
+Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](/reference/features/search_parameters.md#crop-length) parameter.
 
 The cropped version of each document will be available in each document's `_formatted` property.
 
@@ -359,7 +356,6 @@ You will get the following response with the **highlighted version in the `_form
   }
 }
 ```
-
 
 ## Matches
 
