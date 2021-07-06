@@ -25,7 +25,7 @@ This is not necessary when using the `POST` route or one of our SDKs.
 | **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute's value             | `null`        |
 | **[facetFilters](/reference/features/search_parameters.md#facet-filters)**                    | Filter queries with a faceted attribute            | `null`        |
-| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)**    | Display the count of matches per facet             | `null`        |
+| **[facetsDistribution](/reference/features/search_parameters.md#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Maximum field value length                         | `200`         |
@@ -120,7 +120,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 **Expected value**: a string containing a query expression
 **Default value**: `null`
 
-Filters query results using [MeiliSearch's query language](reference/features/filtering.md#the-query-language).
+Filters query results using [MeiliSearch's query language](/reference/features/filtering.md#the-query-language).
 
 ### Example
 
