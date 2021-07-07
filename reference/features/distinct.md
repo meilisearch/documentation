@@ -1,12 +1,16 @@
 # Distinct attribute
 
-The distinct attribute is a special, user-designated field. It is most commonly used to prevent MeiliSearch from returning a set of several similar documents, instead forcing it to return only one.
+The [distinct attribute](/reference/api/distinct_attribute.md) is a special, user-designated field. It is most commonly used to prevent MeiliSearch from returning a set of several similar documents, instead forcing it to return only one.
+
+:::note
+There can be only one `distinctAttribute` per index. Trying to set multiple fields as a `distinctAttribute` will return an error.
+:::
 
 The value of a field configured as a distinct attribute will always be unique among returned documents. This means **there will never be more than one occurrence of the same value** in the distinct attribute field among the returned documents.
 
 When multiple documents have the same value for the distinct attribute, MeiliSearch returns only the highest-ranked result after applying [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules). If two or more documents are equivalent in terms of ranking, MeiliSearch returns the first result according to its `internal_id`.
 
-### Example
+## Example
 
 Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items with minor variations such as color or size.
 
@@ -67,3 +71,5 @@ After setting the distinct attribute as shown above, querying for `lee leather j
   "query": "lee leather jacket"
 }
 ```
+
+For more in-depth information on distinct attribute, consult the [API reference](/reference/api/distinct_attribute.md).
