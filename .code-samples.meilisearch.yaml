@@ -404,7 +404,7 @@ faceted_search_walkthrough_filterable_attributes_1: |-
     }'
 faceted_search_walkthrough_filter_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = Jordan Peele"] }'
+  --data '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
 faceted_search_walkthrough_facets_distribution_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
   --data '{  "q": "Batman", "facetsDistribution": ["genres"] }'
