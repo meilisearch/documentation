@@ -8,7 +8,7 @@ When multiple documents have the same value for the distinct attribute, MeiliSea
 
 ### Example
 
-Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items in different variations such as color or size.
+Suppose you have an e-commerce dataset. For an index that contains information about jackets, you may have several identical items with minor variations such as color or size.
 
 As shown below, this dataset contains three documents for a Lee jeans leather jacket. One of the jackets is brown, one is black, and the last one is blue.
 
