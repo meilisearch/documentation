@@ -40,7 +40,7 @@ As shown below, this dataset contains three documents representing different ver
 
 By default, a search for `lee leather jacket` would return all three documents. This might not be desired, since displaying nearly identical variations of the same item can make results appear cluttered.
 
-In this case, you may want to ignore the different colors of a product. To do so, you can set `product_id` as a `distinctAttribute`.
+In this case, you may want to return only one document with the `product_id` corresponding to this Lee jeans leather jacket. To do so, you could set `product_id` as the `distinctAttribute`.
 
 <CodeSamples id="distinct_attribute_guide_1" />
 
