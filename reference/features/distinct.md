@@ -38,7 +38,7 @@ As shown below, this dataset contains three documents representing different ver
 ]
 ```
 
-If a user searched for a `lee leather jacket`, MeiliSearch would return all three instances by default. This could cause the results to be cluttered with almost identical variations of the same item.
+By default, a search for `lee leather jacket` would return all three documents. This might not be desired, since displaying nearly identical variations of the same item can make results appear cluttered.
 
 In this case, you may want to ignore the different colors of a product. To do so, you can set `product_id` as a `distinctAttribute`.
 
