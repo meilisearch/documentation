@@ -4,7 +4,7 @@ The distinct attribute is a special, user-designated field. It is most commonly 
 
 The value of a field configured as a distinct attribute will always be unique among returned documents. This means there will **never be more than one occurrence of the same value** of a distinct attribute field in the different documents returned by MeiliSearch.
 
-When multiple documents have the same value for a distinct attribute, MeiliSearch returns the first result after applying [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules). If two or more documents are equivalent in terms of ranking, MeiliSearch returns the first result according to its `internal_id`.
+When multiple documents have the same value for the distinct attribute, MeiliSearch returns only the highest-ranked result after applying [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules). If two or more documents are equivalent in terms of ranking, MeiliSearch returns the first result according to its `internal_id`.
 
 ### Example
 
