@@ -44,7 +44,7 @@ In this case, you may want to ignore the different colors of a product. To do so
 
 <CodeSamples id="distinct_attribute_guide_1" />
 
-By [setting `product_id` as a distinct attribute](/reference/api/distinct_attribute.md), search requests **will never return more than one jacket with the same `product_id`**.
+By setting `distinctAttribute` to `product_id`, search requests **will never return more than one document with the same `product_id`**.
 
 Once distinct attribute is configured, querying for `lee leather jacket` would only return the first document found. The response could look like this:
 
