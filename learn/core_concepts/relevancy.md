@@ -1,44 +1,48 @@
 # Relevancy
 
-Search responses are sorted according to a set of consecutive rules called **ranking rules**. When a search query is made, MeiliSearch uses a [bucket sort](/reference/under_the_hood/bucket_sort.md) to rank documents. Each rule is applied to all documents that are considered equal according to the previous rule to break the tie.
+**Relevancy** is a term referring to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa.
 
-Ranking rules are **built-in rules applied to the search results** in order to improve their relevancy. To benefit from the ranking rules and make them meet your dataset and needs, it is important to understand how each of them works and how to create new ones.
-
-For a more in-depth explanation of the algorithm and the default ranking rules, [see this issue](https://github.com/meilisearch/MeiliSearch/issues/358).
+MeiliSearch has a number of features for fine-tuning the relevancy of search results. The most important tool among them is **ranking rules**.
 
 ## Ranking rules
 
-Ranking rules determine which documents are returned upon a search query. Each of them has a special use in finding the right results for a given search query.
+In order to ensure relevant results, search responses are sorted according to a set of consecutive rules called **ranking rules**.
 
-The ranking rules are **customizable** which means **existing rules can be deleted and new ones can be added**.
+### Behavior
 
-The order in which they are applied has a significant impact on the search results. The first rules being the most impactful and the last one the least. The default order has been chosen because it meet most standard needs. **This order can be changed in the settings**.
+Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings.md). This array is **fully customizable**, meaning that **existing rules can be deleted, new ones can be added, and all can be reordered freely**.
 
-By default, ranking rules are executed in the following order:
+Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/under_the_hood/bucket_sort.md) to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
+
+**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration has been chosen because it meets most standard needs. [This order can be changed in the settings](/reference/api/ranking_rules.md#update-ranking-rules).
+
+### Built-in rules
+
+MeiliSearch contains six built-in ranking rules: **typo, words, proximity, attribute, words position, and exactness**, in that default order.
 
 **1. Typo**
-Results are sorted by **increasing number of typos**: find documents that match query terms with fewer typos first.
+Results are sorted by **increasing number of typos**. Returns documents that match query terms with fewer typos first.
 
 **2. Words**
-Results are sorted by **decreasing number of matched query terms** in each matching document: find documents that contain more occurrences of the query terms first.
+Results are sorted by **decreasing number of matched query terms**. Returns documents that contain all query terms first.
 
 ::: warning
 
-It is now mandatory that all query terms are present in the returned documents. This rule does not impact search results yet. <Badge text="soon" type="warn"/>
+For now, it is mandatory that all query terms are present in returned documents. Therefore, this rule does not impact search results yet. <Badge text="soon" type="warn"/>
 
 :::
 
 **3. Proximity**
-Results are sorted by **increasing distance between matched query terms**: find documents that contain more query terms found close together (close proximity between two query terms) and appearing in the original order specified in the query string first.
+Results are sorted by **increasing distance between matched query terms**. Returns documents where query terms occur close together and in the same order as the query string first.
 
 **4. Attribute**
-Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**: find documents that contain query terms in more important attributes first.
+Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
 
 **5. Words position**
-Results are sorted by **the position of the query words in the attributes**: find documents that contain query terms earlier in their attributes first.
+Results are sorted by **the location of the query word in the field**. Returns documents that contain query terms close to the beginning of the field first.
 
 **6. Exactness**
-Results are sorted by **the similarity of the matched words with the query words**: find documents that contain exactly the same terms as the ones queried first.
+Results are sorted by **the similarity of the matched words with the query words**. Returns documents containing terms that are more similar to the query terms first.
 
 #### Examples
 
@@ -102,29 +106,19 @@ The `word position` rule sorts the results by increasing matching word's index n
 
 ::::
 
-## Order of the rules
+### Custom rules
 
-By default, the built-in rules are executed in the following order to meet most standard needs.
+For now, MeiliSearch supports two custom rules that can be added to [the ranking rules array](#behavior): one for ascending sort and one for descending sort.
 
-```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
-```
+To add a custom ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name in parentheses.
 
-Depending on your needs, you might want to change this order of importance. To do so, you can use the [settings route](/reference/api/ranking_rules.md#update-ranking-rules) of your index.
+- To apply an **ascending sort** (results sorted by increasing value of the attribute): `asc(attribute_name)`
 
-## Adding your rules
+- To apply a **descending sort** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
 
-New rules can be added to the existing list at any time and placed anywhere in the sequence.
+**The attribute must have a numeric value** in all of the documents contained in that index. **If any value is not a numeric type, the sorting rule won't be applied**.
 
-A custom rule allows you to create an ascending or descending sorting rule on a given attribute. The attribute **must have a numeric value** in the documents. If any value is not a numeric type, the sorting rule won't be applied. Only numbers can be arranged in ascending or descending order.
-
-To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name between round brackets.
-
-- To apply an **ascending sorting** (results sorted by increasing value of the attribute): `asc(attribute_name)`
-
-- To apply a **descending sorting** (results sorted by decreasing value of the attribute): `desc(attribute_name)`
-
-Add this rule to the existing list of ranking rules using the [settings route](/reference/api/ranking_rules.md#update-ranking-rules).
+Add this rule to the existing list of ranking rules using the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 #### Example
 
@@ -156,6 +150,16 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
   "desc(movie_ranking)"
 ]
 ```
+
+## Default order
+
+By default, the built-in rules are executed in the following order.
+
+```json
+["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+```
+
+Depending on your needs, you might want to change this order of importance. To do so, you can use the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 ## Attribute ranking order
 

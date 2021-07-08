@@ -1,4 +1,4 @@
-# How to
+# How-to guides
 
 Each guide in this section takes the reader through the steps required to solve a real-world problem. Like recipes in a cookbook, they are **repeatable solutions** you can return to many times.
 
@@ -9,7 +9,7 @@ This is not the best section for MeiliSearch beginners. If you'd like to follow 
 **Basics**:
 
 - [Update MeiliSearch](/create/how_to/updating.md)
-- [Run MeiliSearch in Production](/create/how_to/running_production.md)
+- [Run MeiliSearch in production](/create/how_to/running_production.md)
 - [Use Postman with MeiliSearch](/create/how_to/postman_collection.md)
 
 **Deploy**:
@@ -21,8 +21,8 @@ This is not the best section for MeiliSearch beginners. If you'd like to follow 
 
 **Front-end Integration**:
 
-- [Integrate a Relevant Search Bar to Your Documentation](/create/how_to/search_bar_for_docs.md)
-- [Implement Instant Search in Your React App in 5 Minutes](/create/how_to/meilisearch_react.md)
+- [Integrate a relevant search bar to your documentation](/create/how_to/search_bar_for_docs.md)
+- [Implement instant search in your React app in 5 Minutes](/create/how_to/meilisearch_react.md)
 
 **Miscellaneous**:
 
