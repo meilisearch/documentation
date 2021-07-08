@@ -8,7 +8,7 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 **Limitation:** The maximum number of terms taken into account for each [search query](/reference/features/search_parameters.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
 
-**Explanation:** Large queries can lead to long response times and MeiliSearch's goal is to provide a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
+**Explanation:** The more terms in a query, the longer it will take MeiliSearch to return matching documents. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 
 ### Database size
 
