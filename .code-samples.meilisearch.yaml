@@ -1,7 +1,12 @@
+# This code-samples file is used by the MeiliSearch documentation
+# Every example written here will be automatically fetched by
+# the documentation on build
+# You can read more at https://github.com/meilisearch/documentation/tree/master/.vuepress/code-samples
+---
 get_one_index_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies'
-list_all_indexes_1: |1-
+list_all_indexes_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes'
 create_an_index_1: |-
