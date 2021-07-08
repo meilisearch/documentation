@@ -44,7 +44,7 @@ Placeholder search returns the documents that best match other search parameters
 
 ### Phrase search
 
-You can enclose search terms in double quotes (`"`), in which case MeiliSearch will only return documents containing all terms in the order they were given. This is called a [phrase search](/learn/what_is_meilisearch/features.md#phrase-search).
+If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
 
 Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/reference/under_the_hood/datatypes.md). Hard separators within a phrase search effectively split the query into different phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
