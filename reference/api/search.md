@@ -41,6 +41,14 @@ This is the preferred route to perform search when an API key is required, as it
 
 [Learn more about how to use the search parameters](/reference/features/search_parameters.md).
 
+#### Placeholder search
+
+When the `q` parameter is not specified, a [placeholder](/reference/features/search_parameters.md#query-q) search is run instead.
+
+#### Phrase search
+
+Query terms enclosed in double quotes are parsed as [phrase searches](/reference/features/search_parameters.md#query-q).
+
 ### Response
 
 | field                | Description                    |    type    |
