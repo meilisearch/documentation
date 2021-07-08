@@ -48,7 +48,7 @@ If you enclose search terms in double quotes (`"`), MeiliSearch will only return
 
 Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/reference/under_the_hood/datatypes.md). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
-You can mix phrase searches with regular queries: MeiliSearch will first fetch all documents with exact matches and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
+You can combine phrase search and normal queries in a single search request. In this case, MeiliSearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
 
 #### Example
 
