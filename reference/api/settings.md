@@ -1,8 +1,8 @@
 # All settings
 
-`Settings` is a list of all the **customization** possible for an index.
+[Index](/learn/core_concepts/indexes.md) settings are represented as a [JSON object literal](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), containing a field for each possible customization option.
 
-It is possible to update all the settings in one go or individually with the dedicated routes. Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
+It is possible to modify all the settings at once using the [`update settings` endpoint](#update-settings), or individually using the dedicated routes.
 
 These are the reference pages for the dedicated routes:
 
@@ -40,7 +40,7 @@ Get the settings of an index.
 | ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#order-of-the-rules) |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **attributesForFaceting** | [Strings] | Attributes to use as [facets](/reference/features/faceted_search.md)         | `[]`                                                                                              |
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
@@ -107,7 +107,7 @@ If the provided index does not exist, it will be created.
 | ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#order-of-the-rules) |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **attributesForFaceting** | [Strings] | Attributes to use as [facets](/reference/features/faceted_search.md)         | `[]`                                                                                              |
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
@@ -139,7 +139,7 @@ All settings will be reset to their default value.
 | ------------------------  | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **synonyms**              | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **stopWords**             | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**          | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#order-of-the-rules) |
+| **rankingRules**          | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **attributesForFaceting** | Attributes to use as [facets](/reference/features/faceted_search.md)         | `[]`                                                                                              |
 | **distinctAttribute**     | Search returns documents with distinct (different) values of a given field       | `null`                                                                                            |
 | **searchableAttributes**  | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |

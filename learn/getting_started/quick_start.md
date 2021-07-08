@@ -1,10 +1,8 @@
 # Quick start
 
-This quick tour will help you get started with MeiliSearch in only a few steps. In order to make the most of it, you should be somewhat familiar with:
+This quick tour will help you get started with MeiliSearch in just a few steps.
 
-- [The command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal)
-- [cURL](https://curl.se)
-- [JavaScript syntax](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)
+All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with MeiliSearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)). You can find instructions to install each of our SDKs further down in the [add documents section](#add-documents) of this guide.
 
 ## Download and launch
 
@@ -53,17 +51,19 @@ To add documents to MeiliSearch you must provide:
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
 ```json
-{
-  "id": "123",
-  "title": "Superman"
-}
+[
+  {
+    "id": "123",
+    "title": "Superman"
+  }
+]
 ```
 
 > The primary key is `id`, the document's unique identifier is `123`.
 
 There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
-Below is an example to showcase how to add documents to an index called `movies`. To follow along, first right-click this link and download the file: [movies.json](https://raw.githubusercontent.com/meilisearch/MeiliSearch/master/datasets/movies/movies.json). Then, move the downloaded file to your working directory.
+Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
 
 <CodeSamples id="getting_started_add_documents_md" />
 

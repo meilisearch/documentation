@@ -22,7 +22,7 @@ meilisearch --schedule-snapshot=true --snapshot-dir mySnapShots/
 
 Now snapshots are created in `mySnapShots/` directory.
 
-The first snapshot is created on launching MeiliSearch. After that, snapshots are created routinely on a set interval until you deactivate snapshots or end the MeiliSearch instance. By default, one snapshot is taken every 24 hours.
+The first snapshot is created on launching MeiliSearch. After that, snapshots are created routinely on a set interval until you deactivate snapshots by ending the MeiliSearch instance. By default, one snapshot is taken every 24 hours.
 
 The amount of time between each new snapshot can be modified with the `--snapshot-interval-sec` flag.
 

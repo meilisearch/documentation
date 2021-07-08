@@ -1,41 +1,77 @@
 # Authentication
 
-MeiliSearch uses a key-based authentication. There are three types of keys:
+MeiliSearch uses key-based authentication.
 
-- The **Master** key grants access to all routes.
-- The **Private** key grants access to all routes except the `/keys` routes.
+If your [environment](/reference/features/configuration.md#environment) is set to `production`, authentication is mandatory. If it is set to `development` (the default), then authentication is optional.
+
+If a MeiliSearch instance does not use authentication, all routes will be publicly accessible and unprotected.
+
+Authentication is activated by setting a master key.
+
+## Key types
+
+MeiliSearch uses three types of keys:
+
+- The **Master** key grants access to all routes
+- The **Private** key grants access to all routes except the `/keys` routes
 - The **Public** key only grants access to the following routes:
-  - `GET /indexes/:index_uid/search`
-  - `POST /indexes/:index_uid/search`
-  - `GET /indexes/:index_uid/documents`
-  - `GET /indexes/:index_uid/documents/:doc_id`
-- Without any key, you can always access `GET /health`
+  - [`GET /indexes/:index_uid/search`](/reference/api/search#search-in-an-index-with-get-route)
+  - [`POST /indexes/:index_uid/search`](/reference/api/search#search-in-an-index-with-post-route)
+  - [`GET /indexes/:index_uid/documents`](/reference/api/documents#get-documents)
+  - [`GET /indexes/:index_uid/documents/:document_id`](/reference/api/documents#get-one-document)
 
-When a master key is provided to MeiliSearch, both the private and the public keys are automatically generated. **You cannot create any additional keys**.
+Both the private and public keys are automatically generated whenever you set or change the master key. **You cannot create any additional keys**.
 
-## Master Key
+The only route accessible to all, regardless of authentication, is [`GET /health`](/reference/api/health).
 
-When launching an instance, you have the option of giving a master key. By doing so, all routes will be protected and will require a key to be accessed.
+## Adding the master key
 
-You can specify it by passing the `MEILI_MASTER_KEY` environment variable, or using the command line argument `--master-key`.
+When launching a MeiliSearch instance, you have the option of [setting the master key](/reference/features/configuration.md#master-key). By doing so, all routes will be protected and will require a key to access.
 
-You can retrieve both the private and the public keys using the master key on the [keys route](/reference/api/keys.md).
+You can specify the master key by setting the `MEILI_MASTER_KEY` environment variable, or passing the command-line argument `--master-key` on launch.
 
-#### No master key
+#### Example
 
-If no master key is provided, all routes can be accessed without requiring any key.
+:::: tabs
 
-## API key
+::: tab Env
 
-If a master key is set, on each API call, a key must be added to [the header](/reference/api/README.md#authentication).
+```bash
+export MEILI_MASTER_KEY=[YOUR_MASTER_KEY]
+meilisearch
+```
 
-If no or a wrong API key is provided in the header you will have no access to any route and you will receive the
-`HTTP/1.1 403 Forbidden` status code.
+:::
 
-## Reset key
+::: tab CLI
 
-Since both the private and the public keys are generated based on your master key, changing the master key will result in the modification of the two other keys.
+```bash
+meilisearch --master-key=[YOUR_MASTER_KEY]
+```
 
-After having changed your master key, it is mandatory to restart the MeiliSearch server to ensure the renewal of the private and the public keys.
+:::
 
-**All keys will be changed**. Therefore, it is not possible to change only one of the keys.
+::::
+
+After setting up the master key, you can retrieve both the private and the public keys with the [keys route](/reference/api/keys.md).
+
+## Communicating with a protected instance
+
+When using authentication, a key must be added to [the header](/reference/api/README.md#authentication) of each API call.
+
+We strongly discourage using the master key for API calls. It is intended only for retrieving the public and private keys.
+
+If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` status code. You will receive the same error if you fail to provide a key when querying a protected route.
+
+## Changing a key
+
+**Changing the master key will automatically generate new private and public keys**. It is not possible to change one key without altering the others.
+
+After changing the master key, it is mandatory to restart the MeiliSearch instance to generate new private and public keys.
+
+## Deactivating key-based authentication
+
+In order to deactivate MeiliSearch's key-based authentication, restart the instance without providing a master key:
+
+- If the master key was set up with command-line flags, relaunch the instance without the `--master-key` option
+- If the master key was configured with environment variables, unset it and relaunch the instance
