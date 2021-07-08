@@ -46,7 +46,7 @@ Placeholder search is not affected by MeiliSearch's [default ranking rules](/ref
 
 ## Phrase search
 
-If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents that contain all terms in the order they were given.
+If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
 
 Phrase search is particularly useful when looking for a single result, such as searching for a book by ISBN. It is also possible to combine phrase searches with MeiliSearch's basic syntax so only parts of a query are matched strictly.
 
