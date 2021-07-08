@@ -10,13 +10,11 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 **Explanation:** Large queries can lead to long response times and MeiliSearch's goal is to provide a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 
-
 ### Database size
 
 **Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-mdb-size` & `--max-udb-size` as described in the [configuration reference](/reference/features/configuration.md#max-mdb-size).
 
 **Explanation:** MeiliSearch uses two databases: one for storage and one for updates. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
-
 
 ### Number of indexes
 
