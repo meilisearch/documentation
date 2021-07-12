@@ -253,7 +253,7 @@ You would get the following response:
 **Expected value**: an array of `attribute`s or `["*"]`
 **Default value**: `["*"]`
 
-Configures which attributes will be displayed in the returned documents.
+Configures which attributes will be retrieved in the returned documents.
 
 If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/features/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
 
