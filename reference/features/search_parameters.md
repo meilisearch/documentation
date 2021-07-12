@@ -210,7 +210,7 @@ When `facetsDistribution` is set, search results contain **two additional fields
 
 - `facetsDistribution`: The number of remaining candidates for each specified facet
 
-- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count reflects all instances of a facet. If `false`, the number is only an approximation.
+- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`).
 
 The non-exhaustive facet count happens when there are too many documents in too many different facet values. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
