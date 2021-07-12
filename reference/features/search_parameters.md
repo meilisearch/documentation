@@ -273,7 +273,6 @@ Crops the selected attributes' values in the returned results to the length indi
 
 When this parameter is set, a field called `_formatted` will be added to `hits`. The cropped version of each document will be available there.
 
-Values can be supplied individually, one for each attribute you want to crop: `attributesToCrop=["attributeA", "attributeB"]`.
 
 Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:25", "attributeNameB:150"]`.
 
