@@ -75,7 +75,7 @@ When `q` isn't specified, MeiliSearch performs a **placeholder search**. A place
 If the index has no custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder searches are particularly effective when combined with [faceting](/reference/features/faceted_search) and [filtering](/reference/features/filtering.md).
+Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/faceted_search).
 :::
 
 ## Offset
