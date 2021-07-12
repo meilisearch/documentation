@@ -321,23 +321,27 @@ Configures the number of characters to keep on each side of the matching word. O
 **Expected value**: an array of `attribute`s or `["*"]`
 **Default value**: `null`
 
-Highlights matching query words in the selected attributes. Every matching query word in the given attribute's value will be wrapped in an `<em>` tag.
+Highlights matching query terms in the given attributes. When this parameter is set, the `_formatted` object is added to the response for each document, within which you can find the highlighted text.
 
-Values can be supplied individually, in an array: `attributesToHighlight=["attributeA", "attributeB"]`.
+Values can be supplied as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
 
-Instead of single `attributes`, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
 The cropped version of each document will be available in its `_formatted` property.
 
-If HTML highlighting is not desirable, `matches` can provide finer-grained control of the output.
+::: tip
+The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. Neither this tag nor this behavior can be modified.
+
+If a different type of highlighting is desired, we recommend [the `matches` parameter](#matches), which provides much finer control over the output.
+:::
 
 ### Example
 
-If you want to highlight the content of `overview`:
+If you wanted to highlight query matches that appear within the `overview` attribute:
 
 <CodeSamples id="search_parameter_guide_highlight_1" />
 
-You will get the following response with the **highlighted version in the `_formatted` object**:
+You would get the following response with the **highlighted version in the `_formatted` object**:
 
 ```json
 {
@@ -362,14 +366,13 @@ You will get the following response with the **highlighted version in the `_form
 **Expected value**: `true` or `false`
 **Default value**: `false`
 
-Adds an object containing the location of each occurrence of queried terms across all fields. This is useful when you need more customization than offered by the default HTML highlighter.
+Adds an object to the search response (`_matchesInfo`) containing the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight).
 
-Matches can be found in the `\_matchesInfo` object present in each returned result.
 
-The location is indicated by the `start` position of the match and its length.
+The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
 ::: warning
-`start` and `length` return the number of bytes and not the number of characters. For example, `ü` represents two bytes but one character.
+`start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
 :::
 
 ### Example
@@ -378,7 +381,7 @@ If you set `matches` to `true` and search for `shifu`:
 
 <CodeSamples id="search_parameter_guide_matches_1" />
 
-You will get the following response with the **information about the matches in the `\_matchesInfo` object**:
+You would get the following response with **information about the matches in the `_matchesInfo` object**:
 
 ```json
 {
