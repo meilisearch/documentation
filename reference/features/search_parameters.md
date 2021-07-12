@@ -2,7 +2,7 @@
 
 Search parameters allow you greater control over the results returned by a MeiliSearch query.
 
-For instance, you can paginate results by using `limit` and `offset` parameters:
+For example, you can paginate results by using `limit` and `offset` parameters:
 
 <CodeSamples id="search_guide_1" />
 
