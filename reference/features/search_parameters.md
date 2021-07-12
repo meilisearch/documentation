@@ -11,7 +11,7 @@ Or you can request that a search only returns recently released movies by using 
 <CodeSamples id="search_guide_2" />
 
 ::: warning
-All parameters must be **URL-encoded** when searching an index with a `GET` route.
+If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
 
 This is not necessary when using the `POST` route or one of our SDKs.
 :::
