@@ -271,7 +271,7 @@ To get only the `overview` and `title` fields and ignore all other attributes, s
 
 Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](/reference/features/search_parameters.md#crop-length) parameter.
 
-The cropped version of each document will be available in each document's `_formatted` property.
+When this parameter is set, a field called `_formatted` will be added to `hits`. The cropped version of each document will be available there.
 
 Values can be supplied individually, one for each attribute you want to crop: `attributesToCrop=["attributeA", "attributeB"]`.
 
