@@ -120,7 +120,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 **Expected value**: a string containing a query expression
 **Default value**: `null`
 
-Filters query results using [MeiliSearch's query language](/reference/features/filtering.md#the-query-language).
+Filters query results. The string value must use MeiliSearch's [filter syntaxes](/reference/features/filtering.md#the-query-language).
 
 ### Example
 
