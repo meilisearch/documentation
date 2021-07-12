@@ -50,7 +50,7 @@ You can search for films mentioning `shifu` by setting the `q` parameter:
 
 <CodeSamples id="search_parameter_guide_query_1" />
 
-This will give you a list of documents that contain that string in at least one of its attributes.
+This will give you a list of documents that contain your query terms in at least one attribute.
 
 ```json
 {
