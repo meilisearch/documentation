@@ -124,7 +124,7 @@ Filters query results. The string value must use MeiliSearch's [filter syntaxes]
 
 ### Example
 
-You can limit your search so it only returns results whose `title` field contains the word `Nightshift`:
+You can filter your search so it only returns results whose `title` field has the value `Nightshift`:
 
 <CodeSamples id="search_parameter_guide_filter_1" />
 
