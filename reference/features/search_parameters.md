@@ -87,7 +87,7 @@ Placeholder search is particularly useful for setting up a [faceted search UI](/
 Sets the starting point in the search results, effectively skipping over a given number of documents.
 
 ::: tip
-This parameter is often used together with `limit` in order to paginate results.
+This parameter can be used together with `limit` in order to paginate results.
 :::
 
 ### Example
