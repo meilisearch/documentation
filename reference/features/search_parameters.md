@@ -13,7 +13,7 @@ Or you can request that a search only returns recently released movies by using 
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
 
-This is not necessary when using the `POST` route or one of our SDKs.
+This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
 :::
 
 ## Parameters
