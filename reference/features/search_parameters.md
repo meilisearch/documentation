@@ -102,7 +102,7 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 **Expected value**: any positive integer
 **Default value**: `20`
 
-Sets the maximum number of items returned by a single query.
+Sets the maximum number of documents returned by a single query.
 
 ::: tip
 This parameter is often used together with `offset` in order to paginate results.
