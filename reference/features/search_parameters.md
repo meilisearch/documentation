@@ -266,7 +266,7 @@ To get only the `overview` and `title` fields and ignore all other attributes, s
 ## Attributes to crop
 
 **Parameter**: `attributesToCrop`
-**Expected value**: an array of `attribute`s or `["*"]`
+**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
 **Default value**: `null`
 
 Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](/reference/features/search_parameters.md#crop-length) parameter.
