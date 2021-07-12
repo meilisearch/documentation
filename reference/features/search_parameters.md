@@ -206,7 +206,7 @@ This argument can take two values:
 
 ### Returned fields
 
-When `facetsDistribution` is set, the returned results contain **two additional fields**:
+When `facetsDistribution` is set, search results contain **two additional fields**:
 
 - `facetsDistribution`: The number of remaining candidates for each specified facet
 
