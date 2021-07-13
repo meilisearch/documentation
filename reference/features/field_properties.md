@@ -2,8 +2,8 @@
 
 By default, whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
 
-- The [`searchableAttributes` list](/reference/features/field_properties.md#the-searchableattributes-list): attributes whose fields are searched for matching query words.
-- The [`displayedAttributes` list](/reference/features/field_properties.md#displayed-fields): attributes whose fields are displayed in documents.
+- [`searchableAttributes`](/reference/features/field_properties.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
+- [`displayedAttributes`](/reference/features/field_properties.md#displayed-fields): attributes whose fields are displayed in documents.
 
 This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
 
@@ -74,4 +74,4 @@ Suppose you manage a database that contains information about movies. By adding 
 
 All fields are stored in the database. **This behavior cannot be changed**.
 
-Thus, if a field is missing from both the `displayedAttributes` list and the `searchableAttributes` list, it **will still be stored**. It will be possible to add it to either or both lists at any time.
+Thus, even if a field is missing from both the `displayedAttributes` list and the `searchableAttributes` list, **it is still stored in the database** and can be added to either or both lists at any time.
