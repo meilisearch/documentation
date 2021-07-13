@@ -327,7 +327,6 @@ Values can be supplied as an array of attributes: `attributesToHighlight=["attri
 
 Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
-The cropped version of each document will be available in its `_formatted` property.
 
 ::: tip
 The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. Neither this tag nor this behavior can be modified.
