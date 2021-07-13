@@ -32,6 +32,6 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 ### Payload size
 
-**Limitation:** The default limit for the payload size is around __100MB__.
+**Limitation:** The default limit for the payload size is __~100MB__.
 
-**Explanation:** [This limit can be modified](/reference/features/configuration.md#payload-limit-size).
+**Explanation:** MeiliSearch memory consumption can be an issue in some systems and keeping payload sizes relatively small ensures an optimal experience for most users. [This limit can be modified](/reference/features/configuration.md#payload-limit-size) if you want to take full advantage of particularly powerful hardware.
