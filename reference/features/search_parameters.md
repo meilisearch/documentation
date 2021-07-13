@@ -70,7 +70,7 @@ This will give you a list of documents that contain your query terms in at least
 
 ### Placeholder search
 
-When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all documents in an index, sorted by that index's [custom ranking rules](/reference/features/settings#custom-ranking-rule).
+When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings#custom-ranking-rule).
 
 If the index has no custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -196,7 +196,7 @@ And get the following response:
 **Expected value**: an array of `facetName`s or `["*"]`
 **Default value**: `null`
 
-Adds the count of matching facet terms to the query's returned fields.
+Returns the number of documents matching the current search query for each given facet.
 
 This argument can take two values:
 
@@ -212,7 +212,7 @@ When `facetsDistribution` is set, search results contain **two additional fields
 
 - `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`).
 
-The non-exhaustive facet count happens when there are too many documents in too many different facet values. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
+When `exhaustiveFacetsCount` is false, it is usually because the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
 [Learn more about facet distribution in the dedicated guide.](/reference/features/faceted_search.md#the-facets-distribution)
 
@@ -259,7 +259,7 @@ If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes`
 
 ### Example
 
-To get only the `overview` and `title` fields and ignore all other attributes, set `attributesToRetrieve` to `"overview", "title"`.
+To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["overview", "title"]`.
 
 <CodeSamples id="search_parameter_guide_retrieve_1" />
 
@@ -274,9 +274,9 @@ Crops the selected attributes' values in the returned results to the length indi
 When this parameter is set, a field called `_formatted` will be added to `hits`. The cropped version of each document will be available there.
 
 
-Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:25", "attributeNameB:150"]`.
+Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:25", "attributeNameB:150"]`. The custom crop length set in this way has priority over the `cropLength` parameter.
 
-Instead of supplying individual `attributes`, you can provide `["*"]` as a value. This will crop the values of all attributes present in the `attributesToRetrieve` list: `attributesToCrop=["*"]`.
+Instead of supplying individual `attributes`, you can provide `["*"]` as a value: `attributesToCrop=["*"]`. This will crop the values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
 
 **Cropping starts at the first occurrence of the search query**. It only keeps `cropLength` characters on each side of the first match, rounded to match word boundaries.
 
@@ -284,11 +284,11 @@ If no query word is present in the cropped field, the crop will start from the f
 
 ### Example
 
-If you use `shifu` as a search query and set the value of the parameter `cropLength` to `10`:
+If you use `shifu` as a search query and set the value of the `cropLength` parameter to `10`:
 
 <CodeSamples id="search_parameter_guide_crop_1" />
 
-You will get the following response with the **cropped version in the `_formatted` object**:
+You will get the following response with the **cropped text in the `_formatted` object**:
 
 ```json
 {
@@ -313,12 +313,12 @@ You will get the following response with the **cropped version in the `_formatte
 **Expected value**: a positive integer
 **Default value**: `200`
 
-Configures the number of characters to keep on each side of the matching word. Often used together with [`attributesToCrop`](/reference/features/search_parameters.md#attributes-to-crop).
+Configures the number of characters to keep on each side of the matching query term when using the [`attributesToCrop`](/reference/features/search_parameters.md#attributes-to-crop) parameter. Note that this means there can be up to `2 * cropLength` characters in the cropped field.
 
 ## Attributes to highlight
 
 **Parameter**: `attributesToHighlight`
-**Expected value**: an array of `attribute`s or `["*"]`
+**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
 **Default value**: `null`
 
 Highlights matching query terms in the given attributes. When this parameter is set, the `_formatted` object is added to the response for each document, within which you can find the highlighted text.
