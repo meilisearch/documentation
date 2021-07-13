@@ -2,14 +2,6 @@
 
 Search parameters allow you greater control over the results returned by a MeiliSearch query.
 
-For example, you can paginate results by using `limit` and `offset` parameters:
-
-<CodeSamples id="search_guide_1" />
-
-Or you can request that a search only returns recently released movies by using the `filters` parameter:
-
-<CodeSamples id="search_guide_2" />
-
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
 
