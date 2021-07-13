@@ -33,7 +33,19 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 Sets the search terms.
 
 ::: warning
-MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
+MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/reference/features/known_limitations.md#number-of-query-words).
+
+Additionally, keep in mind queries go through a normalization process that strips accents and diacritics, as well as making all terms lowercase.
+:::
+
+### Placeholder search
+
+When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings#custom-ranking-rule).
+
+If the index has no custom ranking rules, the results are returned in the order of their internal database position.
+
+::: tip
+Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/faceted_search).
 :::
 
 ### Example
@@ -59,16 +71,6 @@ This will give you a list of documents that contain your query terms in at least
   "query":"shifu"
 }
 ```
-
-### Placeholder search
-
-When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings#custom-ranking-rule).
-
-If the index has no custom ranking rules, the results are returned in the order of their internal database position.
-
-::: tip
-Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/faceted_search).
-:::
 
 ## Offset
 
@@ -194,7 +196,7 @@ This argument can take two values:
 
 - An array of `facetName`s—this will only count the listed facets:  `facetsDistribution=[<facetNameA>, <facetNameB>, ...]`. If a `facetName` does not exist, it will be ignored
 
-- An asterisk—this will return a count for all facets: `["*"]`
+- An asterisk—this will return a count for all facets defined in `attributesForFaceting`.
 
 ### Returned fields
 
@@ -204,7 +206,7 @@ When `facetsDistribution` is set, search results contain **two additional fields
 
 - `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`).
 
-When `exhaustiveFacetsCount` is false, it is usually because the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
+When `exhaustiveFacetsCount` is false, it is because the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
 [Learn more about facet distribution in the dedicated guide.](/reference/features/faceted_search.md#the-facets-distribution)
 
@@ -265,7 +267,6 @@ Crops the selected attributes' values in the returned results to the length indi
 
 When this parameter is set, a field called `_formatted` will be added to `hits`. The cropped version of each document will be available there.
 
-
 Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:25", "attributeNameB:150"]`. The custom crop length set in this way has priority over the `cropLength` parameter.
 
 Instead of supplying individual `attributes`, you can provide `["*"]` as a value: `attributesToCrop=["*"]`. This will crop the values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
@@ -319,7 +320,6 @@ Values can be supplied as an array of attributes: `attributesToHighlight=["attri
 
 Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
-
 ::: tip
 The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. Neither this tag nor this behavior can be modified.
 
@@ -358,7 +358,6 @@ You would get the following response with the **highlighted version in the `_for
 **Default value**: `false`
 
 Adds an object to the search response (`_matchesInfo`) containing the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight).
-
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
