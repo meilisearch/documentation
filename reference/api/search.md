@@ -50,7 +50,7 @@ This is the preferred route to perform search when an API key is required, as it
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
 | **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#the-facets-distribution)** | `object`
+| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#facets-distribution)** | `object`
 | **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
 | **processingTimeMs** | Processing time of the query   |  `number`  |
 | **query**            | Query originating the response |  `string`  |
@@ -117,7 +117,7 @@ This route should only be used when no API key is required. If an API key is req
 | **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
 | **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
 | **[facetFilters](/reference/features/search_parameters.md#facet-filters)** | Facet names and values to filter on                                                                                |    `null`     |
-| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                                    |    `null`     |
+| **[facetsDistribution](/reference/features/search_parameters.md#facets-distribution)** | Facets for which to retrieve the matching count                                                    |    `null`     |
 | **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |    `["*"]`      |
 | **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `null`     |
 | **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |    `200`      |
@@ -142,7 +142,7 @@ When the `q` parameter is not specified, a [placeholder](/reference/features/sea
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
 | **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#the-facets-distribution)** | `object`
+| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#facets-distribution)** | `object`
 | **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
 | **processingTimeMs** | Processing time of the query   |  `number`  |
 | **query**            | Query originating the response |  `string`  |
