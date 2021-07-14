@@ -308,6 +308,8 @@ You will get the following response with the **cropped text in the `_formatted` 
 
 Configures the number of characters to keep on each side of the matching query term when using the [`attributesToCrop`](/reference/features/search_parameters.md#attributes-to-crop) parameter. Note that this means there can be up to `2 * cropLength` characters in the cropped field.
 
+If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
+
 ## Attributes to highlight
 
 **Parameter**: `attributesToHighlight`
