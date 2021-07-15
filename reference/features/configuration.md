@@ -136,7 +136,7 @@ If no master key is provided in a `development` environment, all routes will be 
 
 Deactivates MeiliSearch's built-in telemetry when set to `true`.
 
-By default, MeiliSearch collects the following data from all instances that do not explicitly opt-out:
+MeiliSearch collects the following data from all instances that do not explicitly opt-out:
 
 - Application version
 - Environment (development or production)
