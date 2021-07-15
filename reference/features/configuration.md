@@ -1,10 +1,12 @@
 # Configuration
 
-You can configure MeiliSearch with **environment variables** and **command line options**.
+You can configure MeiliSearch with **environment variables** and **command-line options**.
 
-## Configuring an instance with command-line flags
+The configuration options described here affect your entire MeiliSearch instance, not just a single index. For index settings, see [settings](/reference/features/settings.md).
 
-Pass options and their respective values as command-line flags when launching a MeiliSearch instance.
+## Configuring an instance with command-line options
+
+Pass command-line options and their respective values when launching a MeiliSearch instance.
 
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
@@ -30,9 +32,9 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Usage
 
-Command-line flags take precedence over environment variables. If an option is specified both as a flag and as an environment variable, MeiliSearch will use the command-line flag and its respective value.
+Command-line options take precedence over environment variables. If the same configuration option is specified both as a command-line option and as an environment variable, MeiliSearch will use the command-line option and its respective value.
 
-All options must specify a value. Using a command-line flag or environment variable without specifying a value will throw an error and interrupt the launch process.
+**All configuration options must specify a value.** Using a command-line option or environment variable without specifying a value will throw an error and interrupt the launch process.
 
 ```bash
 ./meilisearch --schedule-snapshot
@@ -117,11 +119,12 @@ Sets the HTTP address and port MeiliSearch will use.
 **CLI option**: `--master-key`
 **Default value**: `None`
 
-Sets the instance's master key, automatically protecting all routes except `GET /health`. Providing a key is mandatory when `--env` is set to `production`.
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md).
+
+Providing a master key is mandatory when `--env` is set to `production`; if none is given, then MeiliSearch will throw an error and refuse to launch.
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-If no master key is provided in a `production` environment, MeiliSearch will throw an error and refuse to launch.
 
 [Learn more about MeiliSearch's use of security keys.](/reference/features/authentication.md)
 
@@ -131,7 +134,7 @@ If no master key is provided in a `production` environment, MeiliSearch will thr
 **CLI option**: `--no-analytics`
 **Default value**: `false`
 
-Deactivates MeiliSearch's built-in analytics and telemetry when set to `true`.
+Deactivates MeiliSearch's built-in telemetry when set to `true`.
 
 By default, MeiliSearch collects the following data from all instances that do not explicitly opt-out:
 
@@ -163,9 +166,9 @@ We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that h
 **CLI option**: `--dumps-dir`
 **Default value**: `dumps/`
 
-Sets the directory where MeiliSearch will store dump files.
+Sets the directory where MeiliSearch will create dump files.
 
-[Learn more about creating dumps of MeiliSearch instances](/reference/api/dump.md).
+[Learn more about creating dumps](/reference/api/dump.md).
 
 ### Import dump
 
@@ -173,7 +176,7 @@ Sets the directory where MeiliSearch will store dump files.
 **CLI option**: `--import-dump`
 **Default value**: `none`
 
-Imports a dump located in the specified path. Path must point to a `.dump` file.
+Imports the dump file located at the specified path. Path must point to a `.dump` file.
 
 MeiliSearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file and the value of `--dump-batch-size`.
 
@@ -256,7 +259,7 @@ Sets the maximum size of accepted JSON payloads. Value must be given in bytes.
 **CLI option**: `--schedule-snapshot`
 **Default value**: `false`
 
-Activates scheduled snapshots when set to `true`. Disabled by default.
+Activates scheduled snapshots when set to `true`. Snapshots are disabled by default.
 
 [Learn more about snapshots](/reference/features/snapshots.md).
 
@@ -282,12 +285,14 @@ Defines the interval between each snapshot. Value must be given in seconds.
 **CLI option**: `--import-snapshot`
 **Default value**: `None`
 
-Launches an instance by importing a previously-generated snapshot.
+Launches MeiliSearch after importing a previously-generated snapshot at the given filepath.
 
 This command will throw an error if:
 
 - A database already exists
 - No valid snapshot can be found in the specified path
+
+This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively. 
 
 *This option is not available as an environment variable.*
 
@@ -297,7 +302,7 @@ This command will throw an error if:
 **CLI option**: `--ignore-missing-snapshot`
 **Default value**: `false`
 
-Prevents a MeiliSearch instance from throwing an error when `--import-snapshot` does not point to a valid snapshot file.
+Prevents a MeiliSearch instance from throwing an error when [`--import-snapshot`](#import-snapshot) does not point to a valid snapshot file.
 
 This command will throw an error if `--import-snapshot` is not defined.
 
@@ -309,7 +314,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 **CLI option**: `--ignore-snapshot-if-db-exists`
 **Default value**: `false`
 
-Prevents a MeiliSearch instance with an existing database from throwing an error when using `--import-snapshot`.
+Prevents a MeiliSearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and MeiliSearch will launch using the existing database.
 
 This command will throw an error if `--import-snapshot` is not defined.
 
