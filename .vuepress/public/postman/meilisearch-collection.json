@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "7149d425-b8e7-460a-a34a-cab56d2d843f",
-		"name": "MeiliSearch v0.20",
+		"_postman_id": "4fef8fb4-c923-40d0-80da-4fd09c8f88bd",
+		"name": "MeiliSearch v0.21",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -71,7 +71,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austin\",              \"genre\": \"romance\" },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\" },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
+							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austin\",              \"genre\": \"romance\",    \"price\": 3.5 },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" , \"price\": 10.0 },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\",    \"price\": 25.99 },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -257,18 +257,13 @@
 									"disabled": true
 								},
 								{
-									"key": "filters",
+									"key": "filter",
 									"value": "genre=\"fantasy\"",
 									"disabled": true
 								},
 								{
 									"key": "matches",
 									"value": "true",
-									"disabled": true
-								},
-								{
-									"key": "facetFilters",
-									"value": "[[\"genre:fantasy\"]]",
 									"disabled": true
 								},
 								{
@@ -294,7 +289,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"q\": \"\",\n    \"attributesToRetrieve\": [\"title\", \"author\"],\n    \"attributesToHighlight\": [\"*\"]\n}"
+							"raw": "{\n    \"q\": \"pride\",\n    \"attributesToHighlight\": [\"title\"]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/search",
@@ -434,7 +429,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"title\"\n}"
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"number\"\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes",
@@ -594,7 +589,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "\"title\""
+									"raw": "\"genre\""
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/distinct-attribute",
@@ -929,12 +924,12 @@
 							"response": []
 						},
 						{
-							"name": "Get attributes for faceting",
+							"name": "Get filterable attributes",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/filterable-attributes",
 									"host": [
 										"{{url}}"
 									],
@@ -942,14 +937,14 @@
 										"indexes",
 										"{{indexUID}}",
 										"settings",
-										"attributes-for-faceting"
+										"filterable-attributes"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Update attributes for faceting",
+							"name": "Update filterable attributes",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -958,7 +953,7 @@
 									"raw": "[\"genre\"]"
 								},
 								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/filterable-attributes",
 									"host": [
 										"{{url}}"
 									],
@@ -966,19 +961,19 @@
 										"indexes",
 										"{{indexUID}}",
 										"settings",
-										"attributes-for-faceting"
+										"filterable-attributes"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Reset attributes for faceting",
+							"name": "Reset filterable attributes",
 							"request": {
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/indexes/{{indexUID}}/settings/attributes-for-faceting",
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/filterable-attributes",
 									"host": [
 										"{{url}}"
 									],
@@ -986,7 +981,7 @@
 										"indexes",
 										"{{indexUID}}",
 										"settings",
-										"attributes-for-faceting"
+										"filterable-attributes"
 									]
 								}
 							},
@@ -1026,7 +1021,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchableAttributes\": [\"name\", \"genre\"],\n\t\"stopWords\": [\"of\", \"the\"],\n    \"distinctAttribute\": \"name\",\n    \"synonyms\": {\n        \"HP\": [\"Harry Potter\"],\n        \"harry potter\": [\"HP\"]\n    }\n}"
+							"raw": "{\n\t\"searchableAttributes\": [\"title\", \"author\"],\n\t\"stopWords\": [\"of\", \"the\"],\n    \"displayedAttributes\": [\"title\", \"author\", \"genre\"],\n    \"filterableAttributes\": [\"genre\", \"price\"]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/settings",
@@ -1278,7 +1273,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://0.0.0.0:7700"
+			"value": "http://localhost:7700/"
 		},
 		{
 			"key": "indexUID",
