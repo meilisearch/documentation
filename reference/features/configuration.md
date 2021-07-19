@@ -18,7 +18,9 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Configuring an instance with environment variables
 
-Environment variables are always identical to the command-line flags, but prepended with `MEILI_` and written in uppercase. Some options (e.g. `--import-snapshots`) are not available as environment variables.
+In order to configure a MeiliSearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
+
+Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. Some options (e.g. `--import-snapshots`) are not available as environment variables.
 
 ```bash
 export MEILI_DB_PATH=./meilifiles
@@ -86,7 +88,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 **CLI option**: `--db-path`
 **Default value**: `"./data.ms"`
 
-Sets the location of the database file.
+Designates the location where database files will be created and retrieved.
 
 ### Environment
 
@@ -96,14 +98,22 @@ Sets the location of the database file.
 
 Configures the instance's environment. Value must be either `production` or `development`.
 
-The main differences between the two environments are:
+`production`:
 
-- `production`: setting a [master key](/reference/features/authentication.md) is **mandatory**. Logging is disabled
-- `development`: setting a [master key](/reference/features/authentication.md) is **optional**. Log level is automatically set to `info`
+- Setting a [master key](/reference/features/authentication.md) is **mandatory**
+- Logging is disabled
+- The [web interface](/reference/features/web_interface.md#web-interface) is disabled
 
-When the server environment is set to `development`, providing a master key is not mandatory. This is useful when debugging and prototyping, but dangerous otherwise since API update routes are unprotected.
+`development`:
 
-Logging and the [web interface](/reference/features/web_interface.md#web-interface) are disabled in `production`.
+- Setting a [master key](/reference/features/authentication.md) is **optional**
+- Logs are printed to the standard output
+- The web interface is enabled
+
+::: tip
+When the server environment is set to `development`, providing a master key is not mandatory. This is useful when debugging and prototyping, but dangerous otherwise since API routes are unprotected.
+:::
+
 
 ### HTTP address & port binding
 
@@ -140,7 +150,7 @@ MeiliSearch collects the following data from all instances that do not explicitl
 
 - Application version
 - Environment (development or production)
-- Number of days since the first start (segment development/production
+- Number of days instance has been active since creation
 - Database size
 - Last update time
 - Number of updates
