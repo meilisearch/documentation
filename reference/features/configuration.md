@@ -223,7 +223,7 @@ Sets the maximum size of the `main` database. Value must be given in bytes.
 
 The `main` database stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
 
-On **UNIX** systems (e.g. Linux, MacOS) `--max-mdb-size` will always use the maximum page size.
+On **UNIX** systems (e.g. Linux, MacOS) `--max-mdb-size` will use the maximum page size by default.
 
 On **Windows**, `--max-mdb-size` must be a fixed value allocated at launch. By default, this is `100GiB`, but this option allows users to change that value.
 
@@ -245,7 +245,7 @@ Sets the maximum size of the `update` database. Value must be given in bytes.
 
 The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `main` database, which only stores processed data.
 
-On **UNIX** systems (e.g. Linux, MacOS) `--max-udb-size` will always use the maximum page size.
+On **UNIX** systems (e.g. Linux, MacOS) `--max-udb-size` will use the maximum page size by default.
 
 On **Windows**, `--max-udb-size` must be a fixed value allocated at launch. By default this is `100GiB`, but this option allows users to change that value.
 
