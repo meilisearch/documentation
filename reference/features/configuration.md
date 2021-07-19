@@ -116,7 +116,6 @@ Configures the instance's environment. Value must be either `production` or `dev
 When the server environment is set to `development`, providing a master key is not mandatory. This is useful when debugging and prototyping, but dangerous otherwise since API routes are unprotected.
 :::
 
-
 ### HTTP address & port binding
 
 **Environment variable**: `MEILI_HTTP_ADDR`
@@ -224,15 +223,15 @@ Sets the maximum size of the `main` database. Value must be given in bytes.
 
 The `main` database stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
 
+On **UNIX** systems (e.g. Linux, MacOS) `--max-mdb-size` will always use the maximum page size.
+
+On **Windows**, `--max-mdb-size` must be a fixed value allocated at launch. By default, this is `100GiB`, but this option allows users to change that value.
+
 The maximum MDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
 
 ```bash
 getconf PAGE_SIZE
 ```
-
-On **UNIX** systems (e.g. Linux, MacOS) `getconf` returns the maximum page size.
-
-On **Windows**, `getconf` returns a fixed size that will be allocated when launching the instance.
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
@@ -246,15 +245,15 @@ Sets the maximum size of the `update` database. Value must be given in bytes.
 
 The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `main` database, which only stores processed data.
 
+On **UNIX** systems (e.g. Linux, MacOS) `--max-udb-size` will always use the maximum page size.
+
+On **Windows**, `--max-udb-size` must be a fixed value allocated at launch. By default this is `100GiB`, but this option allows users to change that value.
+
 The maximum UDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
 
 ```bash
 getconf PAGE_SIZE
 ```
-
-On **UNIX** systems (e.g. Linux, MacOS) `getconf` returns the maximum page size.
-
-On **Windows**, `getconf` returns a fixed size that will be allocated when launching the instance.
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
