@@ -16,6 +16,8 @@ Pass command-line options and their respective values when launching a MeiliSear
 Server is listening on: http://127.0.0.1:7700
 ```
 
+In the previous example, `./meilisearch` is the command that launches a MeiliSearch instance and `--http-addr` is the option that sets the URL and port this instance will use. **All command-line options are prepended with `--`.**
+
 ## Configuring an instance with environment variables
 
 In order to configure a MeiliSearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
@@ -57,7 +59,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 
 ### Advanced
 
-- [Analytics](/reference/features/configuration.md#analytics)
+- [Disable analytics](/reference/features/configuration.md#disable-analytics)
 - [Disable sentry](/reference/features/configuration.md#disable-sentry)
 - [Dumps](/reference/features/configuration.md#dumps-destination)
   - [Dumps destination](/reference/features/configuration.md#dumps-destination)
@@ -86,7 +88,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 
 **Environment variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
-**Default value**: `"./data.ms"`
+**Default value**: `"data.ms/"`
 
 Designates the location where database files will be created and retrieved.
 
@@ -131,14 +133,17 @@ Sets the HTTP address and port MeiliSearch will use.
 
 Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md).
 
+::: note
+You must supply an alphanumeric string when using this option.
+:::
+
 Providing a master key is mandatory when `--env` is set to `production`; if none is given, then MeiliSearch will throw an error and refuse to launch.
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-
 [Learn more about MeiliSearch's use of security keys.](/reference/features/authentication.md)
 
-### Analytics
+### Disable analytics
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
@@ -155,8 +160,6 @@ MeiliSearch collects the following data from all instances that do not explicitl
 - Last update time
 - Number of updates
 - Number of documents per index
-
-If a user does not disable analytics, they may also provide an email address and their server provider by setting the environment variables `MEILI_USER_EMAIL` and `MEILI_SERVER_PROVIDER`.
 
 All collected data is used solely for the purpose of improving MeiliSearch. A full document describing why we collect this data and how we use it is forthcoming.
 
@@ -302,7 +305,7 @@ This command will throw an error if:
 - A database already exists
 - No valid snapshot can be found in the specified path
 
-This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively. 
+This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively.
 
 *This option is not available as an environment variable.*
 
