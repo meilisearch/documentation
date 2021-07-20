@@ -235,7 +235,13 @@ In general, we recommend the former. However, if you need to reduce the size of 
 
 - **More relevancy rules => a larger database**
   - The proximity [ranking rule](/learn/core_concepts/relevancy.md#ranking-rules) alone can be responsible for almost 80% of database size
-- [Faceting](/reference/features/faceted_search.md) also consumes a large amount of disk space
+- Adding many attributes to [filterableAttributes](/reference/features/settings.md#attributes-for-faceting) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
 - [Stop words](/reference/features/stop_words.md) are essential to reducing database size
 - Not all attributes need to be [searchable](/reference/features/field_properties.md#searchable-fields). Avoid indexing unique IDs.
+
+## Why does MeiliSearch send data to Amplitude? Does MeiliSearch track its users?
+
+**MeiliSearch will never track or identify individual users**. That being said, we do use Amplitude and Sentry to collect anonymous data about user trends and bug reports.
+
+You can read more about what metrics we collect, why we collect them, and how to disable it on our [telemetry page](/learn/what_is_meilisearch/telemetry.md). Transparency is very important to us, so if you feel we are lacking in this area please [open an issue](https://github.com/meilisearch/documentation/issues/new/choose) and let us know! ❤️
