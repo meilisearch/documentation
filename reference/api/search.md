@@ -41,6 +41,14 @@ This is the preferred route to perform search when an API key is required, as it
 
 [Learn more about how to use the search parameters](/reference/features/search_parameters.md).
 
+#### Placeholder search
+
+When no search query is specified, a [placeholder search](/reference/features/search_parameters.md#query-q) is run instead.
+
+#### Phrase search
+
+Query terms enclosed in double quotes are treated as [phrase searches](/reference/features/search_parameters.md#query-q).
+
 ### Response
 
 | field                | Description                    |    type    |
@@ -131,7 +139,11 @@ This route should only be used when no API key is required. If an API key is req
 
 #### Placeholder search
 
-When the `q` parameter is not specified, a [placeholder](/reference/features/search_parameters.md#query-q) search is run instead.
+When no search query is specified, a [placeholder search](/reference/features/search_parameters.md#query-q) is run instead.
+
+#### Phrase search
+
+Query terms enclosed in double quotes are treated as [phrase searches](/reference/features/search_parameters.md#query-q).
 
 ### Response
 
