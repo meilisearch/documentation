@@ -108,6 +108,7 @@ module.exports = {
               title: 'Errors',
               path: '/errors/',
             },
+            '/reference/features/filters_and_facets',
             '/reference/features/faceted_search',
             '/reference/features/field_properties',
             '/reference/features/filtering',
