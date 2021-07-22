@@ -15,8 +15,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[q](/reference/features/search_parameters.md#query-q)**                                     | Search terms                                       | `""`          |
 | **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned               | `20`          |
-| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute's value             | `null`        |
-| **[facetFilters](/reference/features/search_parameters.md#facet-filters)**                    | Filter queries with a faceted attribute            | `null`        |
+| **[filter](/reference/features/search_parameters.md#filter)**                                 | Filter queries by an attribute's value             | `null`        |
 | **[facetsDistribution](/reference/features/search_parameters.md#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
