@@ -120,107 +120,65 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 
 <CodeSamples id="search_parameter_guide_limit_1" />
 
-## Filters
+## Filter
 
-**Parameter**: `filters`
-**Expected value**: a string containing a query expression
+**Parameter**: `filter`
+**Expected value**: a string or an array of strings containing a filter expression
 **Default value**: `null`
 
-Filters query results. The string value must use MeiliSearch's [filter syntaxes](/reference/features/filtering.md#the-query-language).
+Filters search results using attributes added to the `filterableAttributes` list.
+
+[Read our guide on filtering, faceted search and filter expressions.](/reference/features/filters_and_facets.md)
+
+::: warning
+`filter` has been introduced in v0.21 and replaces `filters` and `facetFilters`.
+:::
 
 ### Example
 
-You can filter your search so it only returns results whose `title` field has the value `Nightshift`:
-
-<CodeSamples id="search_parameter_guide_filter_1" />
-
-## Facet filters
-
-**Parameter**: `facetFilters`
-**Expected value**: an array of strings in the following format: `facetName:facetValue`
-**Default value**: `null`
-
-Uses [facets](/reference/features/faceted_search.md) to filter search results.
-
-Values must be given as an array of strings: `facetFilters=["facetName:facetValue"]`.
-
-These strings must be `facetName:facetValue` pairs. `facetName` corresponds to a faceted attribute and `facetValue` to the value the query results will be filtered on.
-
-You can use nested arrays: `facetFilters=["facetName:facetValue", ["facetNameA:facetValueA", "facetNameB:facetValueB"]]`.
-
-Facet filters also support logical connectives by using [inner and outer array elements](/reference/features/faceted_search.md#using-facets). You can [learn more about faceted search in our dedicated guide](/reference/features/faceted_search.md).
-
-### Example
-
-Suppose you are searching for movies, but only want results in `Horror` or `Mystery` `genres` and whose `director` is `Jordan Peele`:
+A filter expression can be written in string syntax using logical connectives:
 
 ```SQL
-("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
+("genres = horror OR genres = mystery) AND director = 'Jordan Peele']"
 ```
 
-After declaring `director` and `genres` as [faceted attributes](/reference/features/settings.md#attributes-for-faceting), you make a query for `thriller`:
+The same filter could be written as an array:
 
-<CodeSamples id="faceted_search_walkthrough_facet_filters_1" />
-
-And get the following response:
-
-```json
-{
-  "hits": [
-    {
-      "id": 458723,
-      "title": "Us",
-      "director": "Jordan Peele",
-      "tagline": "Watch yourself",
-      "genres": [
-        "Thriller",
-        "Horror",
-        "Mystery"
-      ],
-      "overview": "Husband and wife Gabe and Adelaide Wilson take their kids to their beach house expecting to unplug and unwind with friends. But as night descends, their serenity turns to tension and chaos when some shocking visitors arrive uninvited.",
-    },
-    {
-      "id": 419430,
-      "title": "Get Out",
-      "director": "Jordan Peele",
-      "genres": [
-        "Mystery",
-        "Thriller",
-        "Horror"
-      ],
-      "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
-    }
-  ],
-  …
-  "query": "thriller"
-}
 ```
+[["genres = horror", "genres = mystery"], "director = 'Jordan Peele']
+```
+
+This filter could then be used in a search query:
+
+<CodeSamples id="faceted_search_walkthrough_filter_1" />
 
 ## Facets distribution
 
 **Parameter**: `facetsDistribution`
-**Expected value**: an array of `facetName`s or `["*"]`
+**Expected value**: an array of `attribute`s or `["*"]`
 **Default value**: `null`
 
 Returns the number of documents matching the current search query for each given facet.
 
 This argument can take two values:
 
-- An array of `facetName`s—this will only count the listed facets:  `facetsDistribution=[<facetNameA>, <facetNameB>, ...]`. If a `facetName` does not exist, it will be ignored
-
-- An asterisk—this will return a count for all facets defined in `attributesForFaceting`.
+- An array of `attribute`s: `facetsDistribution=["attributeA", "attributeB", …]`. If an `attribute` is not on the `filterableAttributes` list, it will be ignored
+- An asterisk—this will return a count for all facets present in `filterableAttributes`.
 
 ### Returned fields
 
 When `facetsDistribution` is set, search results contain **two additional fields**:
 
 - `facetsDistribution`: The number of remaining candidates for each specified facet
-
-- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`).
+- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`)
 
 When `exhaustiveFacetsCount` is false, it is because the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
-[Learn more about facet distribution in the dedicated guide.](/reference/features/faceted_search.md#the-facets-distribution)
+::: warning
+`exhaustiveFacetsCount` is not currently implemented in MeiliSearch v0.21.
+:::
+
+[Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filters_and_facets.md#facets-distribution)
 
 ### Example
 
