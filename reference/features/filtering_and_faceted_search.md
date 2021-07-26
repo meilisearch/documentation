@@ -53,7 +53,6 @@ Once you have configured `filterableAttributes`, you can start using [the `filte
 Both `filters` and `facetFilters` have been removed from v0.21.
 :::
 
-
 ### Conditions
 
 Conditions are essentially the essential building blocks of filters. They are always written in the `attribute OPERATOR value` format where:
@@ -281,7 +280,6 @@ Using `facetsDistribution` will add an extra field to the returned search result
 In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results  available for each category.
 
 ![IMDb facets](/faceted-search/facets-imdb.png)
-
 
 #### Using facet distribution
 
