@@ -1,18 +1,20 @@
 # Filtering and faceted search
 
-MeiliSearch allows you to create filters that let users have more fine-grained control over their search, quickly excluding documents that do not match their needs.
+You can use MeiliSearch's filters to refine search results and create faceted search interfaces.
 
 ## Configuring filters
 
-Filters use document fields to filter results.
+Filters use document fields to establish filtering criteria.
 
-To set up a field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/).
+To set up a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
 
-This step is mandatory and cannot be done at search time. Filters need to be properly processed and prepared by MeiliSearch before they can be used, a process that takes as much time as indexing all your documents.
+**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by MeiliSearch before they can be used, an operation that takes as much time as indexing all your documents.
 
 ::: warning
 By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
 :::
+
+Filters work with both numeric and string values. Empty fields or fields containing an empty array will be ignored. Fields containing object values will not be accepted and throw an error.
 
 ### Example
 
@@ -31,19 +33,19 @@ Suppose you have a collection of movies containing the following fields:
       ],
       "overview": "Husband and wife Gabe and Adelaide Wilson take their […]",
   },
-  ...
+  …
 ]
 ```
 
-If you want to be able to filter results based on the `director` and `genre` attributes, you must add them to the `filterableAttributes` list.
+If you want to be able to filter results based on the `director` and `genre` attributes, you must add them to the [`filterableAttributes`](/reference/api/filterable_attributes.md) list.
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
 ## Using filters
 
-Once you have updated `filterableAttributes`, you can filter any search by using [the `filter` search parameter](/). As a reminder, search parameters are added to a query when a user is searching for a document.
+Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/features/search_parameters#filter). As a reminder, search parameters are added to a query when a user is searching for a document.
 
-`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be a string, an array, or a mix of both.
+`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
 
 ::: warning
 `filter` is a new search parameter introduced in MeiliSearch v0.21. It combines functionality previously present in v0.20's `filters` and `facetFilters`.
@@ -51,15 +53,14 @@ Once you have updated `filterableAttributes`, you can filter any search by using
 Both `filters` and `facetFilters` have been removed from v0.21.
 :::
 
+
 ### Conditions
 
-Conditions are essentially the primitives of filters and are always written as `attribute OPERATOR value` where:
+Conditions are essentially the essential building blocks of filters. They are always written in the `attribute OPERATOR value` format where:
 
-- `attribute`: the attribute of the field you want to filter on;
-- `OPERATOR`: the comparison operator that can be one of `=`, `!=`, `>`, `>=`, `<`, or `<=`;
-- `value`: the value condition for the filter.
-
-Conditions and their elements are case-insensitive.
+- `attribute` is the attribute of the field you want to filter on
+- `OPERATOR` is the comparison operator and can be `=`, `!=`, `>`, `>=`, `<`, or `<=`
+- `value` is the value condition for the filter
 
 ::: note
 `>`, `>=`, `<`, and `<=` only operate on numeric values and will ignore all other types of values.
@@ -67,29 +68,26 @@ Conditions and their elements are case-insensitive.
 When operating on strings, `=` and `!=` are **case-insensitive**.
 :::
 
-A basic condition could request only documents of the `horror` `genre`:
+#### Examples
+
+A basic condition could request movies containing to the `horror` genre:
 
 ```
 genres = horror
 ```
 
-String values containing whitespace must be enclosed in single quotes:
+Note that string values containing whitespace must be enclosed in single or double quotes:
 
 ```
-director = `Jordan Peele`
+director = 'Jordan Peele'
+director = "Tim Burton"
 ```
 
-are either double-quoted, single-quoted or a single unquoted word: `title = "Scream"`, `title = 'Scream'` and `title = Scream` are all valid syntaxes, `title = The Avengers` is not.
-
-Another condition could request only documents released after 1995-03-18:
+Another condition could request movies released after 1995-03-18:
 
 ```
 release_date > 795484800
 ```
-
-::: warning
-At the moment, filters do not work on `null`, objects and arrays containing only empty fields.
-:::
 
 ::: warning
 As no specific schema is enforced at indexing, the filtering engine will try to coerce the type of `value`. This can lead to undefined behaviour when big floats are coerced into integers and reciprocally. For this reason, it is best to have homogeneous typing across fields, especially if numbers tend to become large.
@@ -97,7 +95,7 @@ As no specific schema is enforced at indexing, the filtering engine will try to 
 
 ### Filter expressions
 
-You can build filter expressions by grouping basic conditions. Filter expressions can be strings, arrays or a mix of both.
+You can build filter expressions by grouping basic conditions. Filter expressions can be written as strings, arrays or a mix of both.
 
 #### Creating filter expressions with strings
 
@@ -105,58 +103,54 @@ String expressions combine conditions using three logical connectives—`AND`, `
 
 - `NOT` only returns documents that do not satisfy a condition : `NOT genres = horror`
 - `AND` operates by connecting two conditions and only returns documents that satisfy both of them: `genres = horror AND director = 'Jordan Peele'`
-- `OR` connects two conditions and returns results that contain either of them: `genres = horror OR genres = comedy`
+- `OR` connects two conditions and returns results that satisfy at least one of them: `genres = horror OR genres = comedy`
 
-::: note
-String expressions are read left to right. `NOT` takes precedence over `AND` and `AND takes` precedence over `OR`.
+::: tip
+String expressions are read left to right. `NOT` takes precedence over `AND` and `AND` takes precedence over `OR`. You can use parentheses to ensure expressions are correctly parsed.
 
-This means `genre = horror OR genre = comedy AND release_date > 795484800` will be parsed as `genre = horror OR (genre = comedy AND release_date > 795484800)`. Translated into English, this filter returns only horror movies **or** comedies released after march 1995.
+For instance, if you want your results to include only `comedy` and `horror` movies released after March 1995, the parentheses in the following query are mandatory:
+
+`(genre = horror OR genre = comedy) AND release_date > 795484800`
+
+Failing to add these parentheses would cause the same query to be parsed as:
+
+`genre = horror OR (genre = comedy AND release_date > 795484800)`
+
+Translated into English, this faulty filter would return only comedies released after March 1995 or horror movies regardless of their `release_date`.
 :::
 
 #### Creating filter expressions with arrays
 
-Array expressions establish logical connectives by nesting arrays. Array expressions can have a maximum depth of two—arrays with three or more levels of nesting will throw an error.
+Array expressions establish logical connectives by nesting arrays of strings. Array expressions can have a maximum depth of two—arrays with three or more levels of nesting will throw an error.
 
-Outer array elements are connected by an `AND` operator. This expression returns horror movies directed by Jordan Peele: `["genres = horror", "director = 'Jordan Peele']`.
+Outer array elements are connected by an `AND` operator. This expression returns `horror` movies directed by `Jordan Peele`: `["genres = horror", "director = 'Jordan Peele']`.
 
-Inner array elements are connected by an `OR` operator. This expression returns either horror or comedy films: `[["genres = horror", "genres = comedy"]]`.
+Inner array elements are connected by an `OR` operator. This expression returns either `horror` or `comedy` films: `[["genres = horror", "genres = comedy"]]`.
 
-Inner and outer arrays can be freely combined. This expression returns horror and comedy movies directed by Jordan Peele: `[["genres = horror", "genres = comedy"], "director = 'Jordan Peele'"]`.
+Inner and outer arrays can be freely combined. This expression returns both `horror` and `comedy` movies directed by `Jordan Peele`: `[["genres = horror", "genres = comedy"], "director = 'Jordan Peele'"]`.
 
 #### Combining arrays and strings
 
-You can also create filter expressions that use both array and string syntax.
+You can also create filter expressions that use both the array and the string syntax.
 
-The following filter expressed as a string returns only movies not directed by Jordan Peele that belong to both the comedy and horror genres or only to the thriller genre:
-
-```
-"((genres = comedy AND genres = horror) OR genres = thriller) AND director != 'Jordan Peele'"
-```
-
-The same filter could be written with a mixed expression:
+The following filter is written as a string and only returns movies not directed by `Jordan Peele` that belong to the `comedy` or `horror` genres:
 
 ```
-[["genres = comedy AND genres = horror", "genres = thriller"], "NOT director = 'Jordan Peele'"]
+"(genres = comedy OR genres = horror) AND director != 'Jordan Peele'"
+```
+
+You can write the same filter using mixing arrays and strings:
+
+```
+[["genres = comedy, genres = horror"], "NOT director = 'Jordan Peele'"]
 ```
 
 ### Example
 
-Suppose that you have this collection of movies:
+Suppose that you have dataset containing several movies in the following format:
 
 ```json
 [
-    {
-        "id": "495925",
-        "title": "Doraemon the Movie:Nobita's Treasure Island",
-        "director": "Fujiko Fujio",
-        "poster": "https://image.tmdb.org/t/p/w1280/cmJ71gdZxCqkMUvGwWgSg3MK7pC.jpg",
-        "overview": "The story is based on Robert Louis Stevenson's Treasure Island novel.",
-        "release_date": 1520035200,
-        "genres": [
-            "Animation"
-        ],
-        "rating": 3
-    },
     {
         "id": "329996",
         "title": "Dumbo",
@@ -199,15 +193,14 @@ Suppose that you have this collection of movies:
             "Thriller"
         ],
         "rating": 4
-
     },
     …
 ]
 ```
 
-In order to be able to filter a query's results,  you must first configure your index by adding `director`, `release_date`, `genres`, and `rating` to the `filterableAttributes` index setting.
+If you want to enable filtering using `director`, `release_date`, `genres`, and `rating`, you must add these attributes to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
 
-Once that is done, you can restrict a search so it only returns movies released after March 18th 1995 with the following filter:
+You can then restrict a search so it only returns movies released after 18 March 1995 with the following filter:
 
 ```SQL
 release_data > 795484800
@@ -217,19 +210,19 @@ You can use this filter when searching for recent `Avengers` movies:
 
 <CodeSamples id="filtering_guide_1" />
 
-If you are interested in further narrowing down your results, you can add a second condition specifying you only want recent movies directed by either `Tim Burton` or `Christopher Nolan`:
+You can combine multiple conditions. For instance, you can limit your search so it only includes recent movies directed by either `Tim Burton` or `Christopher Nolan`:
 
 ```SQL
 release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")
 ```
 
-Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without any constraint on its release date. This happens because `AND` takes precedence over `OR`.
+Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without constraints on its release date. This happens because `AND` takes precedence over `OR`.
 
 You can use this filter when searching for `batman` movies:
 
 <CodeSamples id="filtering_guide_2" />
 
-Note that filtering on string is case insensitive.
+Note that filtering on string is case-insensitive.
 
 If you only want well-rated movies that weren't directed by `Tim Burton`, you can use this filter:
 
@@ -243,11 +236,11 @@ Querying on `Planet of the Apes`, the above example results in the following com
 
 ## Faceted search
 
-**Faceted search** is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories that are called **facets**. Facets are essentially a subcategory of filter.
+**Faceted search** is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories or **facets**. Facets are essentially a subcategory of filter.
 
 A faceted search system provides users with a simple way to narrow down search results by selecting facets. A faceted navigation system is an **intuitive interface to display and navigate through content**. The facets are placed in the UI as filters which users can apply to refine the results in real-time.
 
-When users perform a search, they are presented with a list of results and a list of facets (i.e., categories) as below:
+This is common in e-commerce sites like Amazon: when users perform a search, they are presented not only with a list of results, but also with a list of facets which you can see on the sidebar in the image below:
 
 ![Amazon UI](/faceted-search/facets-amazon.png)
 
@@ -275,7 +268,7 @@ You can then use this filter to search for `thriller`:
 
 ### Facets distribution
 
-When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using `facetsDistribution` in combination with `filter` when searching.
+When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/features/search_parameters.md#facets-distribution) in combination with `filter` when searching.
 
 ::: note
 MeiliSearch v0.21 does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
@@ -283,27 +276,20 @@ MeiliSearch v0.21 does not differentiate between facets and filters. This means 
 `facetsDistribution` will be renamed in a future release. We will update this page when that happens.
 :::
 
-Using `facetsDistribution` will add an extra field to the returned search results containing the number of matching documents distributed amongst all the values of a given facet.
+Using `facetsDistribution` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
 
-In the example below, [IMDb](https://www.imdb.com) displays numbers in parentheses representing the count of search results each facet is associated with.
+In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results  available for each category.
 
 ![IMDb facets](/faceted-search/facets-imdb.png)
 
-Users have a visual clue about the range of categories available in the UI, which allows them to  know how many search results are found for each category.
-
-`facetsDistribution` also adds `exhaustiveFacetsCount` to the returned results. `exhaustiveFacetsCount` is a boolean value that informs the user whether or not the facets distribution is matching the reality or if it is an approximation.
-
-The approximative facet count happens when there are too many documents in too many different facet values. In which case, MeiliSearch stops the distribution count to prevent considerably slowing down the request.
-
-::: warning
-`exhaustiveFacetsCount` is not currently implemented in MeiliSearch v0.21.
-:::
 
 #### Using facet distribution
 
-`facetsDistribution` is a search parameter and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
+[`facetsDistribution` is a search parameter](/reference/features/search_parameters.md#facets-distribution) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
-Using `facetsDistribution` adds a `facetsDistribution` key to the returned object. This key contains an object for every facet given. For each of these facets, another object containing all the different values and the count of matching document found with this value. Note that zero values will not be returned, e.g. if there are no `romance` movies matching the query, `romance` is not displayed.
+Using the `facetsDistribution` search parameter adds two new keys to the returned object: `facetsDistribution` and `exhaustiveFacetsCount`.
+
+`facetsDistribution` contains an object for every facet given. For each of these facets, another object containing all the different values and the count of matching document found with this value. Note that zero values will not be returned, e.g. if there are no `romance` movies matching the query, `romance` is not displayed.
 
 ```json
 {
@@ -317,6 +303,12 @@ Using `facetsDistribution` adds a `facetsDistribution` key to the returned objec
 }
 ```
 
+`exhaustiveFacetsCount` is a boolean value that informs the user whether the facet count is exact or just an approximation. For performance reasons, MeiliSearch chooses to use approximate facet count values when there are too many documents across many different fields.
+
+::: warning
+`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21.
+:::
+
 ##### Example
 
 You can write a search query that gives you the distribution of `batman` movies per genre:
@@ -328,16 +320,6 @@ This query would return not only the matching movies, but also the `facetsDistri
 ```json
 {
   "hits": [
-    {
-      "id": 2661,
-      "title": "Batman",
-      "director": "Leslie H. Martinson",
-      "genres": [
-        "Adventure",
-        "Comedy"
-      ],
-      …
-    },
     …
   ],
   …

@@ -6,7 +6,7 @@ Attributes that can be used as [filters for filtering and faceted search](/refer
 
 Filterable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings).
 
-[Learn more about filtering and faceted search.](/reference/features/filtering_and_faceted_search.md)
+[Learn more about filtering and faceted search in our dedicated guide.](/reference/features/filtering_and_faceted_search.md)
 
 ## Get filterable attributes
 
@@ -48,7 +48,7 @@ Update an index's [filterable attributes list](/reference/features/filtering_and
 
 An array of strings containing the attributes that can be used as filters at query time.
 
-[You can read more about this setting at the feature reference page.](/reference/features/settings.md#filterable-attributes).
+[You can read more about this setting at the feature reference page.](/reference/features/settings.md#filterable-attributes)
 
 ### Example
 

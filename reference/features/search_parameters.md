@@ -125,7 +125,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 **Expected value**: a string or an array of strings containing a filter expression
 **Default value**: `null`
 
-Filters search results using attributes added to the `filterableAttributes` list.
+Uses filter expressions to refine search results. Attributes to be used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
 
 [Read our guide on filtering, faceted search and filter expressions.](/reference/features/filtering_and_faceted_search.md)
 
@@ -166,7 +166,7 @@ This argument can take two values:
 
 ### Returned fields
 
-When `facetsDistribution` is set, search results contain **two additional fields**:
+When `facetsDistribution` is set, the search results object contains **two additional fields**:
 
 - `facetsDistribution`: The number of remaining candidates for each specified facet
 - `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`)
@@ -174,7 +174,7 @@ When `facetsDistribution` is set, search results contain **two additional fields
 When `exhaustiveFacetsCount` is false, it is because the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
 ::: warning
-`exhaustiveFacetsCount` is not currently implemented in MeiliSearch v0.21.
+`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21.
 :::
 
 [Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filtering_and_faceted_search.md#facets-distribution)
