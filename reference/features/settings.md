@@ -56,13 +56,13 @@ Suppose you would like to search `the mask` in a movie database. Since `the` is 
 
 ## Filterable attributes
 
-List of <clientGlossary word="attribute" label="attributes"/> that can be used for [filtering and faceted search](/references/features/filters_and_facets.md).
+List of <clientGlossary word="attribute" label="attributes"/> that can be used for [filtering and faceted search](/reference/features/filtering_and_faceted_search.md).
 
 By default, `filterableAttributes` is `null`. It expects an array of `attribute`s whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored. An error will be thrown if the field's value is an object.
 
 Used in conjunction with the [filters search parameter](/reference/features/search_parameters.md#filter).
 
-[Learn more about filtering and faceted search in our dedicated guide.](/reference/features/filters_and_facets.md)
+[Learn more about filtering and faceted search in our dedicated guide.](/reference/features/filtering_and_faceted_search.md)
 
 #### Example
 

@@ -2,17 +2,17 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-Attributes that can be used as [filters for filtering and faceted search](/reference/features/filters_and_facets.md).
+Attributes that can be used as [filters for filtering and faceted search](/reference/features/filtering_and_faceted_search.md).
 
 Filterable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings).
 
-[Learn more about filtering and faceted search.](/reference/features/filters_and_facets.md)
+[Learn more about filtering and faceted search.](/reference/features/filtering_and_faceted_search.md)
 
 ## Get filterable attributes
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Get an index's [`filterableAttributes`](/reference/features/filters_and_facets.md).
+Get an index's [`filterableAttributes`](/reference/features/filtering_and_faceted_search.md).
 
 ### Path variables
 
@@ -36,7 +36,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Update an index's [filterable attributes list](/reference/features/filters_and_facets.md).
+Update an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md).
 
 ### Path variables
 
@@ -68,7 +68,7 @@ This `updateId` allows you to [track the current update](/reference/api/updates.
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/filterable-attributes"/>
 
-Reset an index's [filterable attributes list](/reference/features/filters_and_facets.md) back to its default value.
+Reset an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md) back to its default value.
 
 ### Default value
 

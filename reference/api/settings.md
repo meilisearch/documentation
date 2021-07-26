@@ -9,7 +9,7 @@ These are the reference pages for the dedicated routes:
 - [Synonyms](/reference/api/synonyms.md)
 - [Stop-words](/reference/api/stop_words.md)
 - [Ranking rules](/reference/api/ranking_rules.md)
-- [Attributes For Faceting](/reference/api/attributes_for_faceting.md)
+- [Filterable attributes](/reference/api/filterable_attributes.md)
 - [Distinct attribute](/reference/api/distinct_attribute.md)
 - [Searchable attributes](/reference/api/searchable_attributes.md)
 - [Displayed attributes](/reference/api/displayed_attributes.md)
@@ -41,7 +41,7 @@ Get the settings of an index.
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
 | **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
-| **attributesForFaceting** | [Strings] | Attributes to use as [facets](/reference/features/faceted_search.md)         | `[]`                                                                                              |
+| **filterableAttributes** | [Strings] | Attributes to use as [facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
 | **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                         |
@@ -67,7 +67,7 @@ List the settings.
     "exactness",
     "desc(release_date)"
   ],
-  "attributesForFaceting": ["genres"],
+  "filterableAttributes": ["genres"],
   "distinctAttribute": null,
   "searchableAttributes": ["title", "description", "genre"],
   "displayedAttributes": [
@@ -108,7 +108,7 @@ If the provided index does not exist, it will be created.
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
 | **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
-| **attributesForFaceting** | [Strings] | Attributes to use as [facets](/reference/features/faceted_search.md)         | `[]`                                                                                              |
+| **filterableAttributes** | [Strings] | Attributes to use as [facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
@@ -140,7 +140,7 @@ All settings will be reset to their default value.
 | **synonyms**              | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **stopWords**             | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
 | **rankingRules**          | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
-| **attributesForFaceting** | Attributes to use as [facets](/reference/features/faceted_search.md)         | `[]`                                                                                              |
+| **filterableAttributes** | Attributes to use as [facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
 | **distinctAttribute**     | Search returns documents with distinct (different) values of a given field       | `null`                                                                                            |
 | **searchableAttributes**  | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
 | **displayedAttributes**   | Fields displayed in the returned documents documents                             | `["*"]` (all attributes)                                                                          |

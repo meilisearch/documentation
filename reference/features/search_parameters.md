@@ -44,7 +44,7 @@ When `q` isn't specified, MeiliSearch performs a **placeholder search**. A place
 If the index has no custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/faceted_search).
+Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search).
 :::
 
 ### Example
@@ -127,7 +127,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 
 Filters search results using attributes added to the `filterableAttributes` list.
 
-[Read our guide on filtering, faceted search and filter expressions.](/reference/features/filters_and_facets.md)
+[Read our guide on filtering, faceted search and filter expressions.](/reference/features/filtering_and_faceted_search.md)
 
 ::: warning
 `filter` has been introduced in v0.21 and replaces `filters` and `facetFilters`.
@@ -177,7 +177,7 @@ When `exhaustiveFacetsCount` is false, it is because the search matches contain 
 `exhaustiveFacetsCount` is not currently implemented in MeiliSearch v0.21.
 :::
 
-[Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filters_and_facets.md#facets-distribution)
+[Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filtering_and_faceted_search.md#facets-distribution)
 
 ### Example
 

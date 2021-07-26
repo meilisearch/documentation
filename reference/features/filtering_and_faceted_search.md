@@ -251,7 +251,7 @@ When users perform a search, they are presented with a list of results and a lis
 
 ![Amazon UI](/faceted-search/facets-amazon.png)
 
-### Facets and filters
+### Filters or facets
 
 Since MeiliSearch v0.21, there is no difference between facets and filters. They function and behave in the exact same way. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
 
@@ -263,7 +263,7 @@ Once they have been configured, you can search for facets with the `filter` sear
 
 #### Example
 
-Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/reference/features/settings.md#attributes-for-faceting), and you want to get movies classified as either `horror` **or** `mystery` **and** directed by `Jordan Peele`.
+Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/reference/features/settings.md#filterable-attributes), and you want to get movies classified as either `horror` **or** `mystery` **and** directed by `Jordan Peele`.
 
 ```SQL
 "(genres = horror OR genres = mystery) AND director = 'Jordan Peele'"
@@ -273,7 +273,7 @@ You can then use this filter to search for `thriller`:
 
 <CodeSamples id="faceted_search_facet_filters_1" />
 
-### Facet distribution
+### Facets distribution
 
 When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using `facetsDistribution` in combination with `filter` when searching.
 

@@ -32,15 +32,15 @@ Read more about synonyms in [this dedicated guide](/reference/features/synonyms.
 
 ## Filters
 
-Meilisearch allows you to define [filters](/reference/features/filtering.md) so you can filter through the results based on criteria.
+Meilisearch allows you to define [filters](/reference/features/filtering_and_faceted_search.md) so you can filter through the results based on criteria.
 
 ## Faceting
 
-[Faceted search](/reference/features/faceted_search.md) allows you to classify search results into categories and to build intuitive navigation interfaces.
+[Faceted search](/reference/features/filtering_and_faceted_search.md) allows you to classify search results into categories and to build intuitive navigation interfaces.
 
 ## Placeholder search
 
-If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). This feature is called **placeholder search**. It is particularly effective when used with other features such as [faceting or filtering](/reference/features/faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category.
+If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). This feature is called **placeholder search**. It is particularly effective when used with other features such as [faceting or filtering](/reference/features/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category.
 
 Placeholder search is not affected by MeiliSearch's [default ranking rules](/reference/features/settings.md#ranking-rules)—only custom rules added by a user. If no custom rules have been set, the results are displayed in the order of their internal database position.
 
