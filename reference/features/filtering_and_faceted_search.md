@@ -241,7 +241,6 @@ Querying on `Planet of the Apes`, the above example results in the following com
 
 <CodeSamples id="filtering_guide_4" />
 
-
 ## Faceted search
 
 **Faceted search** is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories that are called **facets**. Facets are essentially a subcategory of filter.
