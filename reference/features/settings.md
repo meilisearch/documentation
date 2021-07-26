@@ -56,15 +56,17 @@ Suppose you would like to search `the mask` in a movie database. Since `the` is 
 
 ## Filterable attributes
 
-Filterable <clientGlossary word="attribute" label="attributes"/> are attributes that can be used for filtering at query time. They **must be added to the settings to be usable as [filters](/reference/features/search_parameters.md#filter)**.
+List of <clientGlossary word="attribute" label="attributes"/> that can be used for [filtering and faceted search](/references/features/filters_and_facets.md).
 
-`filterableAttributes` default value is `null`. It expects an array of `attribute`s whose corresponding values are numeric or strings. `null` fields or fields that contain empty arrays are ignored, but no error will be thrown. Errors will be thrown if the field's value is an object.
+By default, `filterableAttributes` is `null`. It expects an array of `attribute`s whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored. An error will be thrown if the field's value is an object.
 
-[Learn more about filtering and faceted search](/reference/features/filters_and_facets.md)
+Used in conjunction with the [filters search parameter](/reference/features/search_parameters.md#filter).
+
+[Learn more about filtering and faceted search in our dedicated guide.](/reference/features/filters_and_facets.md)
 
 #### Example
 
-To be able to filter a  search on `director` and `genres` in a movie database, you must declare these attributes as filterable:
+To be able to filter a  search on `director` and `genres` in a movie database, you must first declare these attributes as filterable:
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
