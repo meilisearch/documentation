@@ -1,0 +1,95 @@
+# Filterable attributes
+
+_Child route of the [settings route](/reference/api/settings.md)._
+
+Attributes that can be used as [filters for filtering and faceted search](/reference/features/filters_and_facets.md).
+
+Filterable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings).
+
+[Learn more about filtering and faceted search.](/reference/features/filters_and_facets.md)
+
+## Get filterable attributes
+
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/filterable-attributes" />
+
+Get an index's [`filterableAttributes`](/reference/features/filters_and_facets.md).
+
+### Path variables
+
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
+
+### Example
+
+<CodeSamples id="get_filterable_attributes_1" />
+
+#### Response: `200 Ok`
+
+List the settings.
+
+```json
+["genres", "director"]
+```
+
+## Update filterable attributes
+
+<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/filterable-attributes" />
+
+Update an index's [filterable attributes list](/reference/features/filters_and_facets.md).
+
+### Path variables
+
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
+
+### Body
+
+An array of strings containing the attributes that can be used as filters at query time.
+
+[You can read more about this setting at the feature reference page.](/reference/features/settings.md#filterable-attributes).
+
+### Example
+
+<CodeSamples id="update_filterable_attributes_1" />
+
+#### Response: `202 Accepted`
+
+```json
+{
+  "updateId": 1
+}
+```
+
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
+
+## Reset filterable attributes
+
+<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/filterable-attributes"/>
+
+Reset an index's [filterable attributes list](/reference/features/filters_and_facets.md) back to its default value.
+
+### Default value
+
+An empty array (`[]`).
+
+### Path variables
+
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
+
+### Example
+
+<CodeSamples id="reset_filterable_attributes_1" />
+
+#### Response: `202 Accepted`
+
+```json
+{
+  "updateId": 1
+}
+```
+
+This `updateId` allows you to [track the current update](/reference/api/updates.md).
