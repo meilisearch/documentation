@@ -74,3 +74,8 @@
 
 # Move FAQ and Open API
 /reference/open-api                                 /open-api-readme
+
+# Group filters and facets content
+/reference/api/attributes_for_faceting.html         /reference/api/filterable_attributes.html
+/reference/feature/filtering.html                   /reference/api/filtering_and_faceted_search.html
+/reference/feature/faceted_search.html                   /reference/api/filtering_and_faceted_search.html
