@@ -2,11 +2,9 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-Attributes that can be used as [filters for filtering and faceted search](/reference/features/filtering_and_faceted_search.md).
+Attributes that can be used as filters for filtering and faceted search. [You can learn more about filtering and faceted search in our dedicated guide.](/reference/features/filtering_and_faceted_search.md)
 
-Filterable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings).
-
-[Learn more about filtering and faceted search in our dedicated guide.](/reference/features/filtering_and_faceted_search.md)
+Filterable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
 
 ## Get filterable attributes
 
@@ -36,7 +34,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Update an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md).
+Update an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md). This is a slow process that will take as much time as indexing the dataset.
 
 ### Path variables
 

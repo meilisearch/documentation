@@ -14,7 +14,7 @@ These are the reference pages for the dedicated routes:
 - [Searchable attributes](/reference/api/searchable_attributes.md)
 - [Displayed attributes](/reference/api/displayed_attributes.md)
 
-[Learn more about the settings in this guide](/reference/features/settings.md)
+[Learn more about the settings in this guide.](/reference/features/settings.md)
 
 ::: note
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
@@ -26,7 +26,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 Get the settings of an index.
 
-[Learn more about the settings](/reference/features/settings.md).
+[Learn more about the settings.](/reference/features/settings.md)
 
 #### Path variables
 
@@ -46,7 +46,7 @@ Get the settings of an index.
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
 | **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                         |
 
-[Learn more about the settings in this guide](/reference/features/settings.md)
+[Learn more about the settings in this guide.](/reference/features/settings.md)
 
 ### Example
 
@@ -91,9 +91,10 @@ List the settings.
 Update the settings of an index.
 
 Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
-[Learn more about the settings in this guide](/reference/features/settings.md).
 
 If the provided index does not exist, it will be created.
+
+[Learn more about the settings in this guide.](/reference/features/settings.md)
 
 #### Path variables
 

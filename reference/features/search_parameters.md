@@ -122,10 +122,10 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 ## Filter
 
 **Parameter**: `filter`
-**Expected value**: a string or an array of strings containing a filter expression
-**Default value**: `null`
+**Expected value**: a filter expression written as a string or an array of strings
+**Default value**: `[]`
 
-Uses filter expressions to refine search results. Attributes to be used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
+Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
 
 [Read our guide on filtering, faceted search and filter expressions.](/reference/features/filtering_and_faceted_search.md)
 
@@ -135,19 +135,19 @@ Uses filter expressions to refine search results. Attributes to be used as filte
 
 ### Example
 
-A filter expression can be written in string syntax using logical connectives:
+You can write a filter expression in string syntax using logical connectives:
 
 ```SQL
 ("genres = horror OR genres = mystery) AND director = 'Jordan Peele']"
 ```
 
-The same filter could be written as an array:
+You can write the same filter as an array:
 
 ```
 [["genres = horror", "genres = mystery"], "director = 'Jordan Peele']
 ```
 
-This filter could then be used in a search query:
+You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
@@ -159,10 +159,14 @@ This filter could then be used in a search query:
 
 Returns the number of documents matching the current search query for each given facet.
 
-This argument can take two values:
+This parameter can take two values:
 
-- An array of `attribute`s: `facetsDistribution=["attributeA", "attributeB", …]`. If an `attribute` is not on the `filterableAttributes` list, it will be ignored
-- An asterisk—this will return a count for all facets present in `filterableAttributes`.
+- An array of attributes: `facetsDistribution=["attributeA", "attributeB", …]`
+- An asterisk—this will return a count for all facets present in `filterableAttributes`
+
+::: note
+If an attribute used on `facetsDistribution` has not been added to the `filterableAttributes` list, it will be ignored.
+:::
 
 ### Returned fields
 
@@ -171,7 +175,7 @@ When `facetsDistribution` is set, the search results object contains **two addit
 - `facetsDistribution`: The number of remaining candidates for each specified facet
 - `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`)
 
-When `exhaustiveFacetsCount` is false, it is because the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
+`exhaustiveFacetsCount` is `false` when the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
 ::: warning
 `exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21.
@@ -189,9 +193,6 @@ You would get the following response:
 
 ```json
 {
-  "hits": [
-    …
-  ],
   …
   "nbHits": 1684,
   "query": "Batman",
