@@ -178,7 +178,7 @@ When `facetsDistribution` is set, the search results object contains **two addit
 `exhaustiveFacetsCount` is `false` when the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
 ::: warning
-`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21.
+`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21 and will always return `false`.
 :::
 
 [Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filtering_and_faceted_search.md#facets-distribution)
@@ -196,7 +196,7 @@ You would get the following response:
   …
   "nbHits": 1684,
   "query": "Batman",
-  "exhaustiveFacetsCount": true,
+  "exhaustiveFacetsCount": false,
   "facetsDistribution": {
     "genres": {
       "action": 273,

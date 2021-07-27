@@ -273,7 +273,7 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
 
 ```json
 {
-  "exhaustiveFacetsCount": true,
+  "exhaustiveFacetsCount": false,
   "facetsDistribution" : {
     "genres" : {
       "horror": 50,
@@ -286,7 +286,7 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
 `exhaustiveFacetsCount` is a boolean value that informs the user whether the facet count is exact or just an approximation. For performance reasons, MeiliSearch chooses to use approximate facet count values when there are too many documents across several different fields.
 
 ::: warning
-`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21.
+`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21 and will always return `false`.
 :::
 
 ##### Example
