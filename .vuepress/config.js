@@ -142,7 +142,7 @@ module.exports = {
                 '/reference/api/synonyms',
                 '/reference/api/stop_words',
                 '/reference/api/ranking_rules',
-                '/reference/api/attributes_for_faceting',
+                '/reference/api/filterable_attributes',
                 '/reference/api/distinct_attribute',
                 '/reference/api/searchable_attributes',
                 '/reference/api/displayed_attributes',
