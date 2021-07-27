@@ -186,7 +186,7 @@ If you want to enable filtering using `director`, `release_date`, `genres`, and 
 You can then restrict a search so it only returns movies released after 18 March 1995 with the following filter containing a single condition:
 
 ```SQL
-release_data > 795484800
+release_date > 795484800
 ```
 
 You can use this filter when searching for recent `Avengers` movies:
