@@ -1,12 +1,12 @@
 # Configuration
 
-Many options are available to configure a MeiliSearch instance. Each of these options is added on MeiliSearch instance launch.
+You can configure MeiliSearch with **environment variables** and **command-line options**.
 
-Options can be either communicated through **environment variables** or **command line options**. If both are provided for the same option, the command line option value is kept.
+The configuration options described here affect your entire MeiliSearch instance, not just a single index. For index settings, see [settings](/reference/features/settings.md).
 
-## Passing arguments via the command line
+## Configuring an instance with command-line options
 
-Options are added at launch.
+Pass command-line options and their respective values when launching a MeiliSearch instance.
 
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
@@ -16,9 +16,13 @@ Options are added at launch.
 Server is listening on: http://127.0.0.1:7700
 ```
 
-## Passing arguments via the environment variables
+In the previous example, `./meilisearch` is the command that launches a MeiliSearch instance and `--http-addr` is the option that sets the URL and port this instance will use. **All command-line options are prepended with `--`.**
 
-The format of the environment variables is identical to the command line options with the exception that it is uppercased and `MEILI_` is prepended.
+## Configuring an instance with environment variables
+
+In order to configure a MeiliSearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
+
+Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. Some options (e.g. `--import-snapshots`) are not available as environment variables.
 
 ```bash
 export MEILI_DB_PATH=./meilifiles
@@ -32,342 +36,362 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Usage
 
-All options should have a value specified. Adding a command-line flag or environment variable without a value will throw an error.
+Command-line options take precedence over environment variables. If the same configuration option is specified both as a command-line option and as an environment variable, MeiliSearch will use the command-line option and its respective value.
 
-Command-line flags take precedence over environment variables. If an option is specified both as a flag and an environment variable, the command-line flag and its respective value will be used.
+**All configuration options must specify a value.** Using a command-line option or environment variable without specifying a value will throw an error and interrupt the launch process.
 
-**Example**:
-`meilisearch --schedule-snapshot` throws an error.
-`meilisearch --schedule-snapshot=true` activates snapshots scheduling properly.
+```bash
+./meilisearch --schedule-snapshot
+```
+
+```bash
+error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value but none was supplied
+```
 
 ## Options
 
-#### General
+### General
 
 - [Database path](/reference/features/configuration.md#database-path)
+- [Environment](/reference/features/configuration.md#environment)
 - [HTTP address & port binding](/reference/features/configuration.md#http-address-port-binding)
 - [Master key](/reference/features/configuration.md#master-key)
-- [Environment](/reference/features/configuration.md#environment)
 
-#### Advanced
+### Advanced
 
-- [Analytics](/reference/features/configuration.md#analytics)
-- [Payload Limit Size](/reference/features/configuration.md#payload-limit-size)
-- [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
-  - [Schedule Snapchot Creation](/reference/features/configuration.md#schedule-snapshot-creation)
-  - [Snapshot Destination](/reference/features/configuration.md#snapshot-destination)
-  - [Snapshot Interval](/reference/features/configuration.md#snapshot-interval)
-  - [Import Snapshot](/reference/features/configuration.md#import-snapshot)
-  - [Ignore Missing Snapshot](/reference/features/configuration.md#ignore-missing-snapshot)
-  - [Ignore Snapshot if DB Exists](/reference/features/configuration.md#ignore-snapshot-if-db-exists)
+- [Disable analytics](/reference/features/configuration.md#disable-analytics)
+- [Disable sentry](/reference/features/configuration.md#disable-sentry)
 - [Dumps](/reference/features/configuration.md#dumps-destination)
-  - [Dumps Destination](/reference/features/configuration.md#dumps-destination)
-  - [Import Dump](/reference/features/configuration.md#import-dump)
-  - [Dump Batch Size](/reference/features/configuration.md#dump-batch-size)
-- [Max MDB Size](/reference/features/configuration.md#max-mdb-size)
-- [Max UDB Size](/reference/features/configuration.md#max-udb-size)
-- [SSL Configuration](/reference/features/configuration.md#ssl-authentication-path):
-  - [SSL Authentication Path](/reference/features/configuration.md#ssl-authentication-path)
-  - [SSL Certicates Path](/reference/features/configuration.md#ssl-certificates-path)
-  - [SSL Key Path](/reference/features/configuration.md#ssl-key-path)
-  - [SSL OCSP Path](/reference/features/configuration.md#ssl-ocsp-path)
-  - [SSL Require Auth](/reference/features/configuration.md#ssl-require-auth)
-  - [SSL Resumption](/reference/features/configuration.md#ssl-resumption)
-  - [SSL Tickets](/reference/features/configuration.md#ssl-tickets)
-- [Disable Sentry](/reference/features/configuration.md#disable-sentry)
+  - [Dumps destination](/reference/features/configuration.md#dumps-destination)
+  - [Import dump](/reference/features/configuration.md#import-dump)
+  - [Dump batch size](/reference/features/configuration.md#dump-batch-size)
+- [Max MDB size](/reference/features/configuration.md#max-mdb-size)
+- [Max UDB size](/reference/features/configuration.md#max-udb-size)
+- [Payload limit size](/reference/features/configuration.md#payload-limit-size)
+- [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
+  - [Schedule snapshot creation](/reference/features/configuration.md#schedule-snapshot-creation)
+  - [Snapshot destination](/reference/features/configuration.md#snapshot-destination)
+  - [Snapshot interval](/reference/features/configuration.md#snapshot-interval)
+  - [Import snapshot](/reference/features/configuration.md#import-snapshot)
+  - [Ignore missing snapshot](/reference/features/configuration.md#ignore-missing-snapshot)
+  - [Ignore snapshot if DB exists](/reference/features/configuration.md#ignore-snapshot-if-db-exists)
+- [SSL configuration](/reference/features/configuration.md#ssl-authentication-path):
+  - [SSL authentication path](/reference/features/configuration.md#ssl-authentication-path)
+  - [SSL certificates path](/reference/features/configuration.md#ssl-certificates-path)
+  - [SSL key path](/reference/features/configuration.md#ssl-key-path)
+  - [SSL OCSP path](/reference/features/configuration.md#ssl-ocsp-path)
+  - [SSL require auth](/reference/features/configuration.md#ssl-require-auth)
+  - [SSL resumption](/reference/features/configuration.md#ssl-resumption)
+  - [SSL tickets](/reference/features/configuration.md#ssl-tickets)
 
 ### Database path
 
 **Environment variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
+**Default value**: `"data.ms/"`
 
-Defines the location for the database files.
-
-**Default value**: `"./data.ms"`
-
-### HTTP address & port binding
-
-**Environment variable**: `MEILI_HTTP_ADDR`
-**CLI option**: `--http-addr`
-
-The address the HTTP server will listen on.
-
-**Default value**: `"127.0.0.1:7700"`
-
-### Master key
-
-**Environment variable**: `MEILI_MASTER_KEY`
-**CLI option**: `--master-key`
-
-The master key allowing you to do everything on the server. If no master key is provided all routes will be accessible without keys. This is only possible if you are in `development` environment. An error is thrown if you try to start MeiliSearch without any master key when the environment is set to `production`.
-
-[Learn more about the permission and authentication in this guide.](/reference/features/authentication.md)
-
-**Default value**: `None`
-
-### Analytics
-
-**Environment variable**: `MEILI_NO_ANALYTICS`
-**CLI option**: `--no-analytics`
-
-Deactivates analytics.
-
-Analytics allow us to know how many users are using MeiliSearch and the following:
-
-- The application version.
-- The environment: development/production.
-- The number of days since the first start: Segment development/production.
-- The user email: (*Optional*) If the user wants to have alerts.
-- The server provider: (*Optional*).
-- The database size.
-- The last update time.
-- The number of updates.
-- The number of documents per index.
-
-**Default value**: `false`
+Designates the location where database files will be created and retrieved.
 
 ### Environment
 
 **Environment variable**: `MEILI_ENV`
 **CLI option**: `--env`
-
-By default, MeiliSearch runs in `development` mode.
-
-- `production`: the [master key](/reference/features/authentication.md) is **mandatory**.
-- `development`: the [master key](/reference/features/authentication.md) is **optional**, and logs are output in "info" mode (_console output_).
-
-If the server is running in development mode more logs will be displayed, and the master key can be avoided which implies that there is no security on the updates routes.
-This is useful to debug when integrating the engine with another service.
-In production mode, the [web interface](/reference/features/web_interface.md#web-interface) is disabled.
-
 **Default value**: `development`
 
-### Payload limit size
+Configures the instance's environment. Value must be either `production` or `development`.
 
-**Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
-**CLI option**: `--http-payload-size-limit`
+`production`:
 
-The maximum size, in bytes, of accepted JSON payloads.
+- Setting a [master key](/reference/features/authentication.md) is **mandatory**
+- Logging is disabled
+- The [web interface](/reference/features/web_interface.md#web-interface) is disabled
 
-**Default value**: `104857600` (+=100MB)
+`development`:
 
-### SSL authentication path
+- Setting a [master key](/reference/features/authentication.md) is **optional**
+- Logs are printed to the standard output
+- The web interface is enabled
 
-**Environment variable**: `MEILI_SSL_AUTH_PATH`
-**CLI option**: `--ssl-auth-path`
+::: tip
+When the server environment is set to `development`, providing a master key is not mandatory. This is useful when debugging and prototyping, but dangerous otherwise since API routes are unprotected.
+:::
 
-Enable client authentication, and accept certificates signed by those roots provided in CERTFILE
+### HTTP address & port binding
 
+**Environment variable**: `MEILI_HTTP_ADDR`
+**CLI option**: `--http-addr`
+**Default value**: `"127.0.0.1:7700"`
+
+Sets the HTTP address and port MeiliSearch will use.
+
+### Master key
+
+**Environment variable**: `MEILI_MASTER_KEY`
+**CLI option**: `--master-key`
 **Default value**: `None`
 
-### SSL certificates path
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md).
 
-**Environment variable**: `MEILI_SSL_CERT_PATH`
-**CLI option**: `--ssl-cert-path`
+::: note
+You must supply an alphanumeric string when using this option.
+:::
 
-Read server certificates from CERTFILE. This should contain PEM-format certificates in the right order (the first certificate should certify KEYFILE, the last should be a root CA).
+Providing a master key is mandatory when `--env` is set to `production`; if none is given, then MeiliSearch will throw an error and refuse to launch.
 
-**Default value**: `None`
+If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-### SSL key path
+[Learn more about MeiliSearch's use of security keys.](/reference/features/authentication.md)
 
-**Environment variable**: `MEILI_SSL_KEY_PATH`
-**CLI option**: `--ssl-key-path`
+### Disable analytics
 
-Read private key from KEYFILE.  This should be a RSA private key or PKCS8-encoded private key, in PEM format.
+**Environment variable**: `MEILI_NO_ANALYTICS`
+**CLI option**: `--no-analytics`
+**Default value**: `false`
 
-**Default value**: `None`
+Deactivates MeiliSearch's built-in telemetry when set to `true`.
 
-### SSL OCSP path
+MeiliSearch collects the following data from all instances that do not explicitly opt-out:
 
-**Environment variable**: `MEILI_SSL_OCSP_PATH`
-**CLI option**: `--ssl-ocsp-path`
+- Application version
+- Environment (development or production)
+- Number of days instance has been active since creation
+- Database size
+- Last update time
+- Number of updates
+- Number of documents per index
 
-Read DER-encoded OCSP response from OCSPFILE and staple to certificate. *Optional*.
-
-**Default value**: `None`
-
-### SSL require auth
-
-**Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
-**CLI option**: `--ssl-require-auth`
-
-Send a fatal alert if the client does not complete client authentication.
-
-**Default value**: `None`
-
-### SSL resumption
-
-**Environment variable**: `MEILI_SSL_RESUMPTION`
-**CLI option**: `--ssl-resumption`
-
-SSL support session resumption.
-
-**Default value**: `None`
-
-### SSL tickets
-
-**Environment variable**: `MEILI_SSL_TICKETS`
-**CLI option**: `--ssl-tickets`
-
-SSL support tickets.
-
-**Default value**: `None`
-
-### Max MDB size
-
-**Environment variable**: `MEILI_MAX_MDB_SIZE`
-**CLI option**: `--max-mdb-size`
-
-The maximum size, in bytes, of the `main` database. The `main` database stores the processed data.
-
-The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
-You can find out about the `PAGE_SIZE` with the following command:
-
-```bash
-getconf PAGE_SIZE
-```
-
-Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can attain.
-
-- On **UNIX** it is the maximum size.
-- On **Windows** it is a fixed size that will be allocated on launch.
-  Because this allocates 100GiB on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
-
-[To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
-
-**Default value**: `107374182400` (100 GiB)
-
-### Max UDB size
-
-**Environment variable**: `MEILI_MAX_UDB_SIZE`
-**CLI option**: `--max-udb-size`
-
-The maximum size, in bytes, of the `update` database. The `update` database stores the [pending updates](/learn/advanced/asynchronous_updates.md).
-
-The size must be a modulo value of your OS `PAGE_SIZE` otherwise it will throw an error.
-You can find out about the `PAGE_SIZE` with the following command:
-
-```bash
-getconf PAGE_SIZE
-```
-
-Depending on the OS, it is either the size that will be allocated on launch or the maximum size the database can attain.
-
-- On **UNIX** it is the maximum size.
-- On **Windows** it is a fixed size that will be allocated on launch.
-  Because this allocates 100GiB on MeiliSearch launch, a Windows user can use this option to decrease the size of the database.
-
-[To know more about storage in MeiliSearch look at this guide](/reference/under_the_hood/storage.md)
-
-**Default value**: `107374182400` (100 GiB)
+All collected data is used solely for the purpose of improving MeiliSearch. A full document describing why we collect this data and how we use it is forthcoming.
 
 ### Disable sentry
 
 **Environment variable**: `MEILI_NO_SENTRY`
 **CLI option**: `--no-sentry`
-
-We use [Sentry](https://sentry.io) to get bug reports and diagnostics, and improve MeiliSearch experience. To deactivate Sentry, set this value to `true`.
-
 **Default value**: `false`
 
-### Schedule snapshot creation
+Deactivates Sentry when set to `true`.
 
-**Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
-**CLI option**: `--schedule-snapshot`
-
-To activate scheduled snapshots, set this value to `true`. Disabled by default.
-
-[Read more about snapshots](/reference/features/snapshots.md).
-
-**Default value**: `false`
-
-### Snapshot destination
-
-**Environment variable**: `MEILI_SNAPSHOT_DIR`
-**CLI option**: `--snapshot-dir`
-
-The directory path where MeiliSearch will create snapshots.
-
-**Default value**: `snapshots/`
-
-### Snapshot interval
-
-**Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
-**CLI option**: `--snapshot-interval-sec`
-
-Defines the time gap in seconds between each snapshot creation.
-
-**Default value**: `86400` (1 day)
-
-### Import snapshot
-
-**CLI option**: `--import-snapshot`
-
-The path of the snapshot file to import.
-
-This command will stop the process if:
-
-- A database already exists
-- No snapshot exists in the given path.
-
-If this command is not called, no snapshot will be imported.
-
-### Ignore missing snapshot
-
-**CLI option**: `--ignore-missing-snapshot`
-
-The engine ignores missing snapshots and does not throw an error in this case.
-
-Requires `--import-snapshot` to be defined.
-
-**Default value**: `false`
-
-### Ignore snapshot if DB exists
-
-**CLI option**: `--ignore-snapshot-if-db-exists`
-
-If a database already exists, MeiliSearch will attempt to launch using that database instead of importing a snapshot. No error is thrown in this case.
-
-Requires `--import-snapshot` to be defined.
-
-**Default value**: `false`
+We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that help us improve MeiliSearch.
 
 ### Dumps destination
 
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
-
-Path of the directory where dumps will be created if the [dump route](/reference/api/dump.md#create-a-dump) is called.
-
 **Default value**: `dumps/`
+
+Sets the directory where MeiliSearch will create dump files.
+
+[Learn more about creating dumps](/reference/api/dump.md).
 
 ### Import dump
 
+**Environment variable**: N/A
 **CLI option**: `--import-dump`
+**Default value**: `none`
 
-Import a dump from the specified path. Must be a `.dump` file.
+Imports the dump file located at the specified path. Path must point to a `.dump` file.
 
-As the data contained in the dump needs to be indexed, the process will take an amount of time corresponding to the size of the dump. Only when the import is complete and successful will the MeiliSearch server start.
+MeiliSearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file and the value of `--dump-batch-size`.
+
+*This option is not available as an environment variable.*
 
 ### Dump batch size
 
 **Environment variable**: `MEILI_DUMP_BATCH_SIZE`
 **CLI option**: `--dump-batch-size`
-
-Sets the batch size used in the dump importation process. This number corresponds to the maximum number of documents indexed in each batch. A larger value will take less time but use more memory.
-
-If a dump import process is killed, this means that you do not have enough RAM. Consider reducing your batch size.
-
-If you find that a dump import process is too slow and you have a lot of RAM to spare, consider increasing the batch size, as it will accelerate the indexation. However, if this leads to the dump process failing, you've gone too far and run out of memory. In this case, you should decrease the batch size until you find the right balance between speed and memory overhead.
-
-**Example**
-Imagine you set `--dump-batch-size 1000` and your dump contains 2600 documents. Instead of indexing all 2600 docs in one go, the engine will :
-
-1. Index documents 0 -> 999 (1000 docs)
-2. Index documents 1000 -> 1999 (1000 docs)
-3. Index documents 2000 -> 2599 (600 docs)
-
 **Default value**: `1024`
 
-[Read more about dumps](/reference/features/dumps.md)
+Sets the maximum number of documents indexed in a batch when importing a dump file.
+
+Bigger batch sizes can speed up the import process, but will use more RAM. Setting a larger batch size than a system can handle might cause MeiliSearch to crash; if this happens, consider reducing the batch size.
+
+**Example**
+A dump contains 2600 documents. If `--dump-batch-size` is set to 1000, MeiliSearch will not index all 2600 documents in one go. Instead, the instance will:
+
+1. First index documents 0 -> 999 (1000 docs)
+2. Then index documents 1000 -> 1999 (1000 docs)
+3. And finally index documents 2000 -> 2599 (600 docs)
+
+[Learn more about MeiliSearch dumps](/reference/features/dumps.md)
+
+### Max MDB size
+
+**Environment variable**: `MEILI_MAX_MDB_SIZE`
+**CLI option**: `--max-mdb-size`
+**Default value**: `107374182400` (100 GiB)
+
+Sets the maximum size of the `main` database. Value must be given in bytes.
+
+The `main` database stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
+
+On **UNIX** systems (e.g. Linux, MacOS) `--max-mdb-size` will use the maximum page size by default.
+
+On **Windows**, `--max-mdb-size` must be a fixed value allocated at launch. By default, this is `100GiB`, but this option allows users to change that value.
+
+The maximum MDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
+
+```bash
+getconf PAGE_SIZE
+```
+
+[Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
+
+### Max UDB size
+
+**Environment variable**: `MEILI_MAX_UDB_SIZE`
+**CLI option**: `--max-udb-size`
+**Default value**: `107374182400` (100 GiB)
+
+Sets the maximum size of the `update` database. Value must be given in bytes.
+
+The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `main` database, which only stores processed data.
+
+On **UNIX** systems (e.g. Linux, MacOS) `--max-udb-size` will use the maximum page size by default.
+
+On **Windows**, `--max-udb-size` must be a fixed value allocated at launch. By default this is `100GiB`, but this option allows users to change that value.
+
+The maximum UDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
+
+```bash
+getconf PAGE_SIZE
+```
+
+[Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
+
+### Payload limit size
+
+**Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
+**CLI option**: `--http-payload-size-limit`
+**Default value**: `104857600` (~100MB)
+
+Sets the maximum size of accepted JSON payloads. Value must be given in bytes.
+
+### Schedule snapshot creation
+
+**Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
+**CLI option**: `--schedule-snapshot`
+**Default value**: `false`
+
+Activates scheduled snapshots when set to `true`. Snapshots are disabled by default.
+
+[Learn more about snapshots](/reference/features/snapshots.md).
+
+### Snapshot destination
+
+**Environment variable**: `MEILI_SNAPSHOT_DIR`
+**CLI option**: `--snapshot-dir`
+**Default value**: `snapshots/`
+
+Sets the directory where MeiliSearch will store snapshots.
+
+### Snapshot interval
+
+**Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
+**CLI option**: `--snapshot-interval-sec`
+**Default value**: `86400` (1 day)
+
+Defines the interval between each snapshot. Value must be given in seconds.
+
+### Import snapshot
+
+**Environment variable**: N/A
+**CLI option**: `--import-snapshot`
+**Default value**: `None`
+
+Launches MeiliSearch after importing a previously-generated snapshot at the given filepath.
+
+This command will throw an error if:
+
+- A database already exists
+- No valid snapshot can be found in the specified path
+
+This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively.
+
+*This option is not available as an environment variable.*
+
+### Ignore missing snapshot
+
+**Environment variable**: N/A
+**CLI option**: `--ignore-missing-snapshot`
+**Default value**: `false`
+
+Prevents a MeiliSearch instance from throwing an error when [`--import-snapshot`](#import-snapshot) does not point to a valid snapshot file.
+
+This command will throw an error if `--import-snapshot` is not defined.
+
+*This option is not available as an environment variable.*
+
+### Ignore snapshot if DB exists
+
+**Environment variable**: N/A
+**CLI option**: `--ignore-snapshot-if-db-exists`
+**Default value**: `false`
+
+Prevents a MeiliSearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and MeiliSearch will launch using the existing database.
+
+This command will throw an error if `--import-snapshot` is not defined.
+
+*This option is not available as an environment variable.*
+
+### SSL authentication path
+
+**Environment variable**: `MEILI_SSL_AUTH_PATH`
+**CLI option**: `--ssl-auth-path`
+**Default value**: `None`
+
+Enables client authentication in the specified path.
+
+### SSL certificates path
+
+**Environment variable**: `MEILI_SSL_CERT_PATH`
+**CLI option**: `--ssl-cert-path`
+**Default value**: `None`
+
+Sets the server's SSL certificates.
+
+Value must be a path to PEM-formatted certificates. The first certificate should certify the KEYFILE supplied by `--ssl-key-path`. The last certificate should be a root CA.
+
+### SSL key path
+
+**Environment variable**: `MEILI_SSL_KEY_PATH`
+**CLI option**: `--ssl-key-path`
+**Default value**: `None`
+
+Sets the server's SSL keyfiles.
+
+Value must be a path to an RSA private key or PKCS8-encoded private key, both in PEM format.
+
+### SSL OCSP path
+
+**Environment variable**: `MEILI_SSL_OCSP_PATH`
+**CLI option**: `--ssl-ocsp-path`
+**Default value**: `None`
+
+Sets the server's OCSP file. *Optional*
+
+Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
+
+### SSL require auth
+
+**Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
+**CLI option**: `--ssl-require-auth`
+**Default value**: `None`
+
+Makes SSL authentication mandatory.
+
+Sends a fatal alert if the client does not complete client authentication.
+
+### SSL resumption
+
+**Environment variable**: `MEILI_SSL_RESUMPTION`
+**CLI option**: `--ssl-resumption`
+**Default value**: `None`
+
+Activates SSL session resumption.
+
+### SSL tickets
+
+**Environment variable**: `MEILI_SSL_TICKETS`
+**CLI option**: `--ssl-tickets`
+**Default value**: `None`
+
+Activates SSL tickets.

@@ -153,7 +153,7 @@ In a typical dataset, some fields are more relevant to search than others. A `ti
 
 By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the indexed documents. However, it can also be set manually.
 
-For a more detailed look at this subject, see our reference page for [the searchable attributes list](/reference/features/field_properties.md#the-searchable-attributes-list).
+For a more detailed look at this subject, see our reference page for [the searchable attributes list](/reference/features/field_properties.md#the-searchableattributes-list).
 
 #### Example
 

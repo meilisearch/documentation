@@ -1,4 +1,4 @@
-# Run MeiliSearch in production: Taking it to the next level
+# Run MeiliSearch in production: taking it to the next level
 
 ## A quick introduction
 

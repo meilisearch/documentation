@@ -2,8 +2,8 @@
 
 By default, whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
 
-- **The [searchable attributes list](/reference/features/field_properties.md#the-searchable-attributes-list)**: Attributes whose fields are searched for matching query words.
-- **The [displayed attributes list](/reference/features/field_properties.md#displayed-fields)**: Attributes whose fields are displayed in documents.
+- [`searchableAttributes`](/reference/features/field_properties.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
+- [`displayedAttributes`](/reference/features/field_properties.md#displayed-fields): attributes whose fields are displayed in documents.
 
 This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
 
@@ -11,7 +11,7 @@ This means that by default, every field in a document is **searchable** and **di
 
 A field can either be **searchable** or **non-searchable**.
 
-When you perform a search, all searchable fields are searched for matching query words and used to assess document relevancy, while non-searchable fields are ignored entirely. **By default, all fields are searchable.**
+When you perform a search, all searchable fields are checked for matching query words and used to assess document relevancy, while non-searchable fields are ignored entirely. **By default, all fields are searchable.**
 
 Non-searchable fields are most useful for internal information that's not relevant to the search experience, such as URLs, sales numbers, or ratings used exclusively for sorting results.
 
@@ -19,7 +19,7 @@ Non-searchable fields are most useful for internal information that's not releva
 Even if you make a field non-searchable, it will remain [stored in the database](#data-storing) and can be made searchable again at a later time.
 :::
 
-### The searchable attributes list
+### The `searchableAttributes` list
 
 MeiliSearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/learn/core_concepts/relevancy.md#attribute-ranking-order), from most impactful to least.
 
@@ -54,7 +54,7 @@ Suppose that you manage a database of movies with the following fields: `id`, `d
 
 ## Displayed fields
 
-The fields whose attributes are added to the [displayed-attributes list](/reference/api/displayed_attributes.md) are **displayed in each matching document**.
+The fields whose attributes are added to the [`displayedAttributes` list](/reference/api/displayed_attributes.md) are **displayed in each matching document**.
 
 Documents returned upon search contain only displayed fields.
 
@@ -72,6 +72,6 @@ Suppose you manage a database that contains information about movies. By adding 
 
 ## Data storing
 
-All fields are stored. **This behavior cannot be changed**.
+All fields are stored in the database. **This behavior cannot be changed**.
 
-Thus, if a field is missing from both the displayed-attributes list and the searchable-attributes list, it **will still be stored**. It will be possible to add it to either or both lists at any time.
+Thus, even if a field is missing from both the `displayedAttributes` list and the `searchableAttributes` list, **it is still stored in the database** and can be added to either or both lists at any time.
