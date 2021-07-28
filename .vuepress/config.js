@@ -256,6 +256,7 @@ module.exports = {
         pattern: '**/*.md',
         strictExt: true,
         ignorePattern: ['errors', 'document_structure'],
+        exitLevel: 'warn',
       },
     ],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
