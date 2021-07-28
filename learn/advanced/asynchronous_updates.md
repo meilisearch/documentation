@@ -1,14 +1,26 @@
 # Asynchronous updates
 
-MeiliSearch updates are processed **asynchronously**. This means that requests are not handled as soon as they are received—instead, MeiliSearch places these operations in a queue and processes them in the order they were requested.
+Index updates are processed **asynchronously**. This means that update requests are not handled as soon as they are received—instead, MeiliSearch places these operations in a queue and processes them in the order they were received.
 
-## Async flow
+## Which operations are async?
 
-1. When you make a write request (_create/update/delete_), MeiliSearch stores the received operation in a queue and returns an `updateId`
-2. Each write request is processed in the order it has been received
-3. You can check your request's status by using the [`/updates`](/reference/api/updates.md) route and the `updateId` you received when you made the write request
-4. Once the request has been properly handled and finalized, MeiliSearch marks it as `processed`
-5. Requests marked as `processed` are not deleted and will remain visible in [the operation list](reference/api/updates.md#get-all-update-status)
+Every operation that might take a long time to be processed is handled asynchronously.
+
+For example, it is possible updating the `filterableAttributes` index setting will require as much time as generating a new index, so MeiliSearch puts it in the update queue and processes the update request as soon as the instance can allocate the adequate resources.
+
+Currently, these are MeiliSearch's asynchronous operations:
+
+- Updating index settings
+- Adding documents to an index
+- Updating documents in an index
+- Deleting documents from an index
+
+## Update workflow
+
+1. When you make an update request, MeiliSearch puts it in the update queue, sets the request `status` to `enqueued` and returns an `updateId`
+2. When the queue reaches your update request, MeiliSearch begins processing it and changes the request `status` to `processing`
+3. Once the update has been finalized, MeiliSearch marks it as `processed`, if it was successful, or `failed`, in case the update failed
+4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/updates.md#get-all-update-status)
 
 <mermaid>
 sequenceDiagram
@@ -25,26 +37,19 @@ sequenceDiagram
   M->>-Q: dequeue update 2
 </mermaid>
 
-### Which operations are async?
-
-Every operation that might take a long time to be processed (that is, every potentially compute-expensive operation) is asynchronous. These include:
-
-- Updating index settings
-- Adding, updating, and deleting documents
-
 ### Dumps
 
 While dumps and updates are both asynchronous processes, they use separate queues and behave differently. For instance, creating a new dump will freeze the update queue until the dump has been generated.
 
-[You can read more about dumps in our dedicated guide.](/reference/features/dump.md)
+[You can read more about dumps in our dedicated guide.](/reference/features/dumps.md)
 
 ## Understanding updates
 
-After you have requested an update operation, you can use the update API endpoint to query the status of your request.
+After you have requested an update, you can use the [update API endpoint](/reference/api/updates.md) to find out the status of your request. To do so, you will need your request's `updateId`.
 
 ### Response
 
-The response will always include the following fields:
+The response you get from the [update API endpoint](/reference/api/updates.md) will always include the following fields:
 
 - `status`: the state of the operation (`enqueued`, `processing`, `processed`, or `failed`)
 - `updateId`: the id of the update
@@ -58,9 +63,9 @@ Updates marked as `processed` return additional fields:
 
 Finally, failed updates contain an extra `error` field:
 
-- `error`: a string describing [the error that occurred](https://docs.meilisearch.com/errors/)
+- `error`: a string describing [why the update failed](https://docs.meilisearch.com/errors/)
 
-### Request `status`
+### Update `status`
 
 Update responses always contain a field indicating the request's current `status`. This field can have one of four possible values:
 
@@ -71,9 +76,9 @@ Update responses always contain a field indicating the request's current `status
 
 ### Examples
 
-You add a new document to your instance using the documents API endpoint and receive an `updateId`.
+Suppose you add a new document to your instance using the [documents API endpoint](/reference/api/documents.md#add-or-replace-documents) and receive an `updateId`.
 
-When you query the update endpoint using this id, you get the following message:
+When you query the update endpoint using this id, you see that it has been enqueued:
 
 ```json
 {
@@ -87,7 +92,7 @@ When you query the update endpoint using this id, you get the following message:
 }
 ```
 
-Later, you use check the request's status one more time. It was successfully processed:
+Later, you check the request's status one more time. It was successfully processed:
 
 ```json
 {
@@ -122,21 +127,21 @@ Had the update failed, the response would have included an error message:
 
 ## Terminate MeiliSearch while a task is being processed
 
-Terminating a MeiliSearch instance in the middle of an update is completely safe and will never adversely affect the database.
+**Terminating a MeiliSearch instance in the middle of an update is completely safe** and will never adversely affect the database
 
-MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or if the transaction is interrupted before reaching its end, nothing is committed to the database.
+MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or is interrupted before reaching its end, nothing is committed to the database.
 
-You can use the `status` field returned by [the update route](/reference/api/updates.md) to determine if a process has been committed to an instance or not.
+What happens to an update task when MeiliSearch is terminated changes depending on the request's `status`:
 
-What happens to an update request when MeiliSearch is terminated changes slightly depending on the request's `status`:
-
-- `enqueued`: if MeiliSearch is killed and then restarted, the task will remain enqueued and be processed eventually
-- `processing`: if MeiliSearch is killed, there will be no consequences, since no part of the task has been committed to the database. After restarting, MeiliSearch will treat the task as `enqueued`
-- `processed`: this request was successfully completed and has been permanently added to the instance. If MeiliSearch is terminated, there will be no data loss
+- `enqueued`: the task will remain enqueued and will be processed as usual
+- `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting, MeiliSearch will treat the task as `enqueued`
+- `processed`: there will be no data loss since the request was successfully completed
 - `failed`: the update failed and nothing has been added to the database
+
+You can use [the update route](/reference/api/updates.md) to determine an update's `status`.
 
 ### Example
 
 Suppose you have use the update documents endpoint to add 100 documents in one batch to MeiliSearch.
 
-If you terminate the instance after 99 documents have successfully been added, then none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. Either all documents are added, or none are.
+If you terminate the instance after 99 documents have been successfully added, none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. **Either all documents are added, or none are.***
