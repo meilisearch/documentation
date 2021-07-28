@@ -40,12 +40,12 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 ### Placeholder search
 
-When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings#custom-ranking-rule).
+When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule).
 
 If the index has no custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/faceted_search).
+Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/faceted_search.md).
 :::
 
 ### Example
