@@ -51,7 +51,6 @@ Once you have configured `filterableAttributes`, you can start using [the `filte
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
 
-
 ### Conditions
 
 Conditions are a filter's basic building blocks. They are always written in the `attribute OPERATOR value` format, where:
@@ -94,6 +93,10 @@ As no specific schema is enforced at indexing, the filtering engine will try to 
 ### Filter expressions
 
 You can build filter expressions by grouping basic conditions. Filter expressions can be written as strings, arrays, or a mix of both.
+
+::: warning
+The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-index-with-get-route) only accepts string filter expressions.
+:::
 
 #### Creating filter expressions with strings
 
