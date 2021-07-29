@@ -2,6 +2,8 @@
 
 You can use MeiliSearch's filters to refine search results and create faceted search interfaces.
 
+While filters are more general conditions and comparisons, faceted search is a specific use-case of filters. Facet filters are useful when creating interfaces to help users navigate a great number of results across many broad categories.
+
 ## Configuring filters
 
 Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria.
@@ -216,7 +218,7 @@ Querying on `Planet of the Apes`, the above example results in the following com
 
 ## Faceted search
 
-**Faceted search** is a feature provided out-of-the-box by MeiliSearch. Faceting allows classifying search results into categories or **facets**. Facets are essentially a type of filter.
+MeiliSearch filters can be used to build **faceted search** interfaces. This type of interface allows users to refine search results based on broad categories or **facets**. For example, a clothing webshop can use faceted search to allow users to easily explore items of a certain size or belonging to a specific brand.
 
 Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**. Facets are used in the UI as filters which users can apply to refine the results in real-time.
 
