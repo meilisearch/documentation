@@ -1,5 +1,5 @@
 ---
-permalink: /faq
+permalink: /faq.html
 ---
 
 # FAQ
@@ -204,7 +204,7 @@ The following factors have a great impact on the size of your database (in no pa
 - The number of faceted fields
 - The size of each update
 - The number of different words present in the dataset
-  
+
 :::tip
 Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes) unless they are useful as search criteria.
 :::
