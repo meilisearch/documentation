@@ -138,7 +138,7 @@ Uses filter expressions to refine search results. Attributes used as filter crit
 You can write a filter expression in string syntax using logical connectives:
 
 ```SQL
-("genres = horror OR genres = mystery) AND director = 'Jordan Peele']"
+"(genres = horror OR genres = mystery) AND director = 'Jordan Peele'"
 ```
 
 You can write the same filter as an array:
