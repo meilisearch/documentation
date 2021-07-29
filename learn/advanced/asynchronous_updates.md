@@ -61,9 +61,7 @@ Updates marked as `processed` return additional fields:
 - `duration`: the number of seconds taken to complete the operation
 - `processedAt`: the date when the operation was processed
 
-Finally, failed updates contain an extra `error` field:
-
-- `error`: a string describing [why the update failed](https://docs.meilisearch.com/errors/)
+Finally, if an update fails due to an [error](https://docs.meilisearch.com/errors/), all error fields will be appended to the response.
 
 ### Update `status`
 
@@ -86,7 +84,6 @@ When you query the update endpoint using this id, you see that it has been enque
   "updateId": 1,
   "type": {
     "name": "DocumentsAddition",
-    "number": 19653
   },
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z"
 }
@@ -116,7 +113,6 @@ Had the update failed, the response would have included an error message:
   "updateId": 1,
   "type": {
     "name": "DocumentsAddition",
-    "number": 19653
   },
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
   "duration": 0.000048524,
