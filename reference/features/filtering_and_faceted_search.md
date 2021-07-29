@@ -226,7 +226,7 @@ This is common in ecommerce sites like Amazon: when users perform a search, they
 
 ### Filters or facets
 
-Since MeiliSearch v0.21, there is no difference between facets and filters. They function and behave in the exact same way. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
+In MeiliSearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
 
 ### Using facets
 
