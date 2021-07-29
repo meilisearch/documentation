@@ -47,11 +47,6 @@ Once you have configured `filterableAttributes`, you can start using [the `filte
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
 
-::: warning
-`filter` is a new search parameter introduced in MeiliSearch v0.21. It combines functionality previously present in v0.20's `filters` and `facetFilters`.
-
-Both `filters` and `facetFilters` have been removed from v0.21.
-:::
 
 ### Conditions
 
