@@ -377,7 +377,7 @@ The beginning of a matching term within a field is indicated by `start`, and its
 
 ::: warning
 - `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-- the `_matchesInfo` returned by MeiliSearch cannot be used for arrays and objects, only for strings.
+- `matchesInfo` cannot be used with arrays and objects, only strings.
 :::
 
 ### Example
