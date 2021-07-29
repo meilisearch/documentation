@@ -17,7 +17,7 @@ These are the reference pages for the dedicated routes:
 [Learn more about the settings in this guide](/reference/features/settings.md)
 
 ::: note
-Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+When you update a setting, you are overwriting its default value. To reset any setting to its original value, you can use the `DELETE` route.
 :::
 
 ## Get settings
@@ -90,10 +90,14 @@ List the settings.
 
 Update the settings of an index.
 
+Passing `null` to an index setting will reset it to its default value.
+
 Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
+
 [Learn more about the settings in this guide](/reference/features/settings.md).
 
 If the provided index does not exist, it will be created.
+
 
 #### Path variables
 
