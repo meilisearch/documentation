@@ -8,7 +8,9 @@ Filters use [document fields](/learn/core_concepts/documents.md#fields) to estab
 
 To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
 
-**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by MeiliSearch before they can be used, an operation that takes as much time as indexing all your documents.
+**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by MeiliSearch before they can be used.
+
+Updating `filterableAttributes` requires recreating the entire index. This may take a significant amount of time depending on your dataset size.
 
 ::: warning
 By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.

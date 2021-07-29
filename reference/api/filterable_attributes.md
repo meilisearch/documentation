@@ -34,7 +34,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Update an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md). This is a slow process that will take as much time as indexing the dataset.
+Update an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md). This will re-index all documents in the index.
 
 ### Path variables
 
