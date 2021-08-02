@@ -47,7 +47,7 @@ If you want to filter results based on the `director` and `genres` attributes, y
 
 ## Using filters
 
-Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/features/search_parameters#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
+Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/features/search_parameters.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
 
