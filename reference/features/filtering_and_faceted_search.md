@@ -41,7 +41,7 @@ Suppose you have a collection of movies containing the following fields:
 ]
 ```
 
-If you want to filter results based on the `director` and `genre` attributes, you must add them to the [`filterableAttributes` list](/reference/api/filterable_attributes.md):
+If you want to filter results based on the `director` and `genres` attributes, you must add them to the [`filterableAttributes` list](/reference/api/filterable_attributes.md):
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
@@ -111,11 +111,11 @@ String expressions are read left to right. `NOT` takes precedence over `AND` and
 
 For instance, if you want your results to only include `comedy` and `horror` movies released after March 1995, the parentheses in the following query are mandatory:
 
-`(genre = horror OR genre = comedy) AND release_date > 795484800`
+`(genres = horror OR genres = comedy) AND release_date > 795484800`
 
 Failing to add these parentheses will cause the same query to be parsed as:
 
-`genre = horror OR (genre = comedy AND release_date > 795484800)`
+`genres = horror OR (genres = comedy AND release_date > 795484800)`
 
 Translated into English, the above expression will only return comedies released after March 1995 or horror movies regardless of their `release_date`.
 :::
