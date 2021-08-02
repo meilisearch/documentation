@@ -69,7 +69,7 @@ List the settings.
   ],
   "filterableAttributes": ["genres"],
   "distinctAttribute": null,
-  "searchableAttributes": ["title", "description", "genre"],
+  "searchableAttributes": ["title", "description", "genres"],
   "displayedAttributes": [
     "title",
     "description",
