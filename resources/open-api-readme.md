@@ -1,5 +1,5 @@
 ---
-permalink: /open-api-readme
+permalink: /open-api-readme.html
 ---
 
 # OpenAPI

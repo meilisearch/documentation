@@ -17,8 +17,8 @@ module.exports = {
       {
         text: 'Resources',
         items: [
-          { text: 'FAQ', link: '/resources/faq' },
-          { text: 'Open API', link: '/resources/open-api-readme' },
+          { text: 'FAQ', link: '/faq' },
+          { text: 'Open API', link: '/open-api-readme' },
           {
             text: 'SDKs',
             items: [
