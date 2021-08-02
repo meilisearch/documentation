@@ -235,7 +235,7 @@ In general, we recommend the former. However, if you need to reduce the size of 
 
 - **More relevancy rules => a larger database**
   - The proximity [ranking rule](/learn/core_concepts/relevancy.md#ranking-rules) alone can be responsible for almost 80% of database size
-- Adding many attributes to [filterableAttributes](/reference/features/settings.md#attributes-for-faceting) also consumes a large amount of disk space
+- Adding many attributes to [filterableAttributes](/reference/features/settings.md#filterable-attributes) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
 - [Stop words](/reference/features/stop_words.md) are essential to reducing database size
 - Not all attributes need to be [searchable](/reference/features/field_properties.md#searchable-fields). Avoid indexing unique IDs.

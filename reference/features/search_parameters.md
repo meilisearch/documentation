@@ -15,8 +15,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[q](/reference/features/search_parameters.md#query-q)**                                     | Search terms                                       | `""`          |
 | **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned               | `20`          |
-| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute's value             | `null`        |
-| **[facetFilters](/reference/features/search_parameters.md#facet-filters)**                    | Filter queries with a faceted attribute            | `null`        |
+| **[filter](/reference/features/search_parameters.md#filter)**                                 | Filter queries by an attribute's value             | `null`        |
 | **[facetsDistribution](/reference/features/search_parameters.md#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
@@ -45,7 +44,9 @@ When `q` isn't specified, MeiliSearch performs a **placeholder search**. A place
 If the index has no custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/faceted_search.md).
+
+Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search).
+
 :::
 
 ### Example
@@ -120,107 +121,65 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 
 <CodeSamples id="search_parameter_guide_limit_1" />
 
-## Filters
+## Filter
 
-**Parameter**: `filters`
-**Expected value**: a string containing a query expression
-**Default value**: `null`
+**Parameter**: `filter`
+**Expected value**: a filter expression written as a string or an array of strings
+**Default value**: `[]`
 
-Filters query results. The string value must use MeiliSearch's [filter syntaxes](/reference/features/filtering.md#the-query-language).
+Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
 
-### Example
-
-You can filter your search so it only returns results whose `title` field has the value `Nightshift`:
-
-<CodeSamples id="search_parameter_guide_filter_1" />
-
-## Facet filters
-
-**Parameter**: `facetFilters`
-**Expected value**: an array of strings in the following format: `facetName:facetValue`
-**Default value**: `null`
-
-Uses [facets](/reference/features/faceted_search.md) to filter search results.
-
-Values must be given as an array of strings: `facetFilters=["facetName:facetValue"]`.
-
-These strings must be `facetName:facetValue` pairs. `facetName` corresponds to a faceted attribute and `facetValue` to the value the query results will be filtered on.
-
-You can use nested arrays: `facetFilters=["facetName:facetValue", ["facetNameA:facetValueA", "facetNameB:facetValueB"]]`.
-
-Facet filters also support logical connectives by using [inner and outer array elements](/reference/features/faceted_search.md#using-facets). You can [learn more about faceted search in our dedicated guide](/reference/features/faceted_search.md).
+[Read our guide on filtering, faceted search and filter expressions.](/reference/features/filtering_and_faceted_search.md)
 
 ### Example
 
-Suppose you are searching for movies, but only want results in `Horror` or `Mystery` `genres` and whose `director` is `Jordan Peele`:
+You can write a filter expression in string syntax using logical connectives:
 
 ```SQL
-("genres:Horror" OR "genres:Mystery") AND "director:Jordan Peele"
+"(genres = horror OR genres = mystery) AND director = 'Jordan Peele'"
 ```
 
-After declaring `director` and `genres` as [faceted attributes](/reference/features/settings.md#attributes-for-faceting), you make a query for `thriller`:
+You can write the same filter as an array:
 
-<CodeSamples id="faceted_search_walkthrough_facet_filters_1" />
-
-And get the following response:
-
-```json
-{
-  "hits": [
-    {
-      "id": 458723,
-      "title": "Us",
-      "director": "Jordan Peele",
-      "tagline": "Watch yourself",
-      "genres": [
-        "Thriller",
-        "Horror",
-        "Mystery"
-      ],
-      "overview": "Husband and wife Gabe and Adelaide Wilson take their kids to their beach house expecting to unplug and unwind with friends. But as night descends, their serenity turns to tension and chaos when some shocking visitors arrive uninvited.",
-    },
-    {
-      "id": 419430,
-      "title": "Get Out",
-      "director": "Jordan Peele",
-      "genres": [
-        "Mystery",
-        "Thriller",
-        "Horror"
-      ],
-      "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
-    }
-  ],
-  …
-  "query": "thriller"
-}
 ```
+[["genres = horror", "genres = mystery"], "director = 'Jordan Peele']
+```
+
+You can then use the filter in a search query:
+
+<CodeSamples id="faceted_search_walkthrough_filter_1" />
 
 ## Facets distribution
 
 **Parameter**: `facetsDistribution`
-**Expected value**: an array of `facetName`s or `["*"]`
+**Expected value**: an array of `attribute`s or `["*"]`
 **Default value**: `null`
 
 Returns the number of documents matching the current search query for each given facet.
 
-This argument can take two values:
+This parameter can take two values:
 
-- An array of `facetName`s—this will only count the listed facets:  `facetsDistribution=[<facetNameA>, <facetNameB>, ...]`. If a `facetName` does not exist, it will be ignored
+- An array of attributes: `facetsDistribution=["attributeA", "attributeB", …]`
+- An asterisk—this will return a count for all facets present in `filterableAttributes`
 
-- An asterisk—this will return a count for all facets defined in `attributesForFaceting`.
+::: note
+If an attribute used on `facetsDistribution` has not been added to the `filterableAttributes` list, it will be ignored.
+:::
 
 ### Returned fields
 
-When `facetsDistribution` is set, search results contain **two additional fields**:
+When `facetsDistribution` is set, the search results object contains **two additional fields**:
 
 - `facetsDistribution`: The number of remaining candidates for each specified facet
+- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`)
 
-- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`).
+`exhaustiveFacetsCount` is `false` when the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
-When `exhaustiveFacetsCount` is false, it is because the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
+::: warning
+`exhaustiveFacetsCount` is not currently implemented and will always return `false`.
+:::
 
-[Learn more about facet distribution in the dedicated guide.](/reference/features/faceted_search.md#the-facets-distribution)
+[Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filtering_and_faceted_search.md#facets-distribution)
 
 ### Example
 
@@ -232,13 +191,10 @@ You would get the following response:
 
 ```json
 {
-  "hits": [
-    …
-  ],
   …
   "nbHits": 1684,
   "query": "Batman",
-  "exhaustiveFacetsCount": true,
+  "exhaustiveFacetsCount": false,
   "facetsDistribution": {
     "genres": {
       "action": 273,
@@ -376,8 +332,9 @@ Adds an object to the search response (`_matchesInfo`) containing the location o
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
 ::: warning
-- `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-- `matchesInfo` cannot be used with arrays and objects, only strings.
+`start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
+
+`matchesInfo` cannot be used with arrays and objects, only strings.
 :::
 
 ### Example
