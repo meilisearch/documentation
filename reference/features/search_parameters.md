@@ -376,7 +376,8 @@ Adds an object to the search response (`_matchesInfo`) containing the location o
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
 ::: warning
-`start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
+- `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
+- `matchesInfo` cannot be used with arrays and objects, only strings.
 :::
 
 ### Example
