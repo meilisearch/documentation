@@ -1,8 +1,8 @@
 # Filtering and faceted search
 
-You can use MeiliSearch's filters to refine search results and create faceted search interfaces.
+You can use MeiliSearch's filters to refine search results.
 
-While filters are more general conditions and comparisons, faceted search is a specific use-case of filters. Facet filters are useful when creating interfaces to help users navigate a great number of results across many broad categories.
+Filters have several use-cases, such as restricting the results a specific user has access to or creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
 
 ## Configuring filters
 
@@ -41,13 +41,13 @@ Suppose you have a collection of movies containing the following fields:
 ]
 ```
 
-If you want to filter results based on the `director` and `genre` attributes, you must add them to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
+If you want to filter results based on the `director` and `genre` attributes, you must add them to the [`filterableAttributes` list](/reference/api/filterable_attributes.md):
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
 ## Using filters
 
-Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/features/search_parameters#filter). Search parameters are added to a query when a user searches for a document.
+Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/features/search_parameters#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
 
@@ -122,7 +122,7 @@ Translated into English, the above expression will only return comedies released
 
 #### Creating filter expressions with arrays
 
-Array expressions establish logical connectives by nesting arrays of strings. Array expressions can have a maximum depth of two—arrays with three or more levels of nesting will throw an error.
+Array expressions establish logical connectives by nesting arrays of strings. They can have a maximum depth of two—array filter expressions with three or more levels of nesting will throw an error.
 
 Outer array elements are connected by an `AND` operator. The following expression returns `horror` movies directed by `Jordan Peele`:
 
@@ -144,7 +144,7 @@ Inner and outer arrays can be freely combined. The following expression returns 
 
 #### Combining arrays and strings
 
-You can also create filter expressions that use both the array and the string syntax.
+You can also create filter expressions that use both array and string syntax.
 
 The following filter is written as a string and only returns movies not directed by `Jordan Peele` that belong to the `comedy` or `horror` genres:
 
@@ -152,7 +152,7 @@ The following filter is written as a string and only returns movies not directed
 "(genres = comedy OR genres = horror) AND director != 'Jordan Peele'"
 ```
 
-You can write the same filter using mixing arrays and strings:
+You can write the same filter mixing arrays and strings:
 
 ```
 [["genres = comedy, genres = horror"], "NOT director = 'Jordan Peele'"]
@@ -160,7 +160,7 @@ You can write the same filter using mixing arrays and strings:
 
 ### Example
 
-Suppose that you have dataset containing several movies in the following format:
+Suppose that you have a dataset containing several movies in the following format:
 
 ```json
 [
@@ -215,7 +215,7 @@ If you only want well-rated movies that weren't directed by `Tim Burton`, you ca
 rating >= 3 AND (NOT director = "Tim Burton")
 ```
 
-Querying on `Planet of the Apes`, the above example results in the following command:
+You can use this filter when searching for `Planet of the Apes`:
 
 <CodeSamples id="filtering_guide_4" />
 
@@ -235,7 +235,7 @@ In MeiliSearch, facets are a specific use-case of filters. The question of wheth
 
 ### Using facets
 
-Like filters, facets must be added to the `filterableAttributes` list in the index's settings before they can be used.
+Like any other filter, attributes you want to use as facets must be added to the `filterableAttributes` list in the index's settings before they can be used.
 
 Once they have been configured, you can search for facets with the `filter` search parameter.
 
@@ -256,7 +256,7 @@ You can then use this filter to search for `thriller`:
 When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/features/search_parameters.md#facets-distribution) in combination with `filter` when searching.
 
 ::: note
-MeiliSearch v0.21 does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
+MeiliSearch does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
 :::
 
 Using `facetsDistribution` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
@@ -271,7 +271,7 @@ In the example below, [IMDb](https://www.imdb.com) displays the facet count in p
 
 Using the `facetsDistribution` search parameter adds two new keys to the returned object: `facetsDistribution` and `exhaustiveFacetsCount`.
 
-`facetsDistribution` contains an object for every given facet. For each of these facets, another object containing all the different values and the count of matching documents. Note that zero values will not be returned, e.g. if there are no `romance` movies matching the query, `romance` is not displayed.
+`facetsDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
 
 ```json
 {
@@ -288,7 +288,7 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
 `exhaustiveFacetsCount` is a boolean value that informs the user whether the facet count is exact or just an approximation. For performance reasons, MeiliSearch chooses to use approximate facet count values when there are too many documents across several different fields.
 
 ::: warning
-`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21 and will always return `false`.
+`exhaustiveFacetsCount` is not currently implemented in and will always return `false`.
 :::
 
 ##### Example

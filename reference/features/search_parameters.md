@@ -129,10 +129,6 @@ Uses filter expressions to refine search results. Attributes used as filter crit
 
 [Read our guide on filtering, faceted search and filter expressions.](/reference/features/filtering_and_faceted_search.md)
 
-::: warning
-`filter` has been introduced in v0.21 and replaces `filters` and `facetFilters`.
-:::
-
 ### Example
 
 You can write a filter expression in string syntax using logical connectives:
@@ -178,7 +174,7 @@ When `facetsDistribution` is set, the search results object contains **two addit
 `exhaustiveFacetsCount` is `false` when the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
 
 ::: warning
-`exhaustiveFacetsCount` is not implemented in MeiliSearch v0.21 and will always return `false`.
+`exhaustiveFacetsCount` is not currently implemented and will always return `false`.
 :::
 
 [Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filtering_and_faceted_search.md#facets-distribution)
