@@ -16,17 +16,23 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 **Explanation:** MeiliSearch uses two databases: one for storage and one for updates. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
-### Number of indexes
-
-**Limitation:** You can create __up to 200 indexes__ in MeiliSearch.
-
-**Explanation:** This limit has been hard-coded for performance reasons.
-
 ### Maximum words per attribute
 
 **Limitation:** MeiliSearch can index a maximum of __1000 words per attribute__. If an attribute contains more than 1000 words, only the first 1000 words will be indexed and the rest will be silently ignored.
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
+
+### Maximum number of documents in an index
+
+**Limitation:** An index can contain no more than 4,294,967,296 documents.
+
+**Explanation:** This is the largest possible value for a 32-bit unsigned integer and thus the maximum size of documents MeiliSearch can compute.
+
+### Maximum size of individual `filterableAttributes` values
+
+**Limitation:** Individual `filterableAttributes` values are limited to 500 bytes.
+
+**Explanation:** MeiliSearch stores `filterableAttributes` as keys, whose length is limited to approximately 500 bytes. Note that this only applies to individual `filterableAttributes` values, not to the list itself.
 
 ## Other limitations
 
