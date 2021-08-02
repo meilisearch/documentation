@@ -12,17 +12,18 @@ module.exports = {
     smoothScroll: true,
     nav: [
       { text: 'Learn', link: '/learn/' },
-      { text: 'Create', link: '/create/' },
+      { text: 'Create', link: '/create/how_to/' },
       { text: 'Reference', link: '/reference/' },
       {
         text: 'Resources',
         items: [
-          { text: 'FAQ', link: '/resources/faq' },
-          { text: 'Open API', link: '/resources/open-api-readme' },
+          { text: 'FAQ', link: '/faq' },
+          { text: 'Open API', link: '/open-api-readme' },
           {
             text: 'SDKs',
             items: [
               { text: '.Net', link: 'https://github.com/meilisearch/meilisearch-dotnet' },
+              { text: 'Dart', link: 'https://github.com/meilisearch/meilisearch-dart' },
               { text: 'Golang', link: 'https://github.com/meilisearch/meilisearch-go' },
               { text: 'Java', link: 'https://github.com/meilisearch/meilisearch-java' },
               { text: 'JavaScript', link: 'https://github.com/meilisearch/meilisearch-js' },
@@ -171,7 +172,7 @@ module.exports = {
       ],
       '/create/': [
         {
-          title: '📕 How To',
+          title: '📕 How-to guides',
           path: '/create/how_to/',
           collapsable: false,
           children: [
@@ -185,7 +186,7 @@ module.exports = {
                   path: '/create/how_to/updating',
                 },
                 {
-                  title: 'Run in Production',
+                  title: 'Run in production',
                   path: '/create/how_to/running_production',
                 },
                 {
@@ -223,7 +224,7 @@ module.exports = {
               sidebarDepth: 0,
               children: [
                 {
-                  title: 'Add a Search Bar to Your Docs',
+                  title: 'Add a search bar to your docs',
                   path: '/create/how_to/search_bar_for_docs',
                 },
                 {
@@ -238,7 +239,7 @@ module.exports = {
               sidebarDepth: 0,
               children: [
                 {
-                  title: 'Use HTTP/2 and SSL',
+                  title: 'Set up HTTP/2 and SSL',
                   path: '/create/how_to/http2_ssl',
                 },
               ],
@@ -255,6 +256,7 @@ module.exports = {
         pattern: '**/*.md',
         strictExt: true,
         ignorePattern: ['errors', 'document_structure'],
+        exitLevel: 'warn',
       },
     ],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],

@@ -39,12 +39,14 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 ### Placeholder search
 
-When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings#custom-ranking-rule).
+When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule).
 
 If the index has no custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder search is particularly useful for setting up a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search).
+
+Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search).
+
 :::
 
 ### Example
@@ -330,7 +332,8 @@ Adds an object to the search response (`_matchesInfo`) containing the location o
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
 ::: warning
-`start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
+- `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
+- `matchesInfo` cannot be used with arrays and objects, only strings.
 :::
 
 ### Example

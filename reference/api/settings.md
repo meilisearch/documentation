@@ -1,8 +1,8 @@
 # All settings
 
-`Settings` is a list of all the **customization** possible for an index.
+[Index](/learn/core_concepts/indexes.md) settings are represented as a [JSON object literal](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), containing a field for each possible customization option.
 
-It is possible to update all the settings in one go or individually with the dedicated routes. Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
+It is possible to modify all the settings at once using the [`update settings` endpoint](#update-settings), or individually using the dedicated routes.
 
 These are the reference pages for the dedicated routes:
 
@@ -17,7 +17,7 @@ These are the reference pages for the dedicated routes:
 [Learn more about the settings in this guide.](/reference/features/settings.md)
 
 ::: note
-Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+When you update a setting, you overwrite its default value. Use the `DELETE` route to reset any setting to its original value.
 :::
 
 ## Get settings
@@ -89,6 +89,8 @@ List the settings.
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
 
 Update the settings of an index.
+
+Passing `null` to an index setting will reset it to its default value.
 
 Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
 

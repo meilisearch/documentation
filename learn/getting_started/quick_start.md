@@ -1,10 +1,8 @@
 # Quick start
 
-This quick tour will help you get started with MeiliSearch in only a few steps. In order to make the most of it, you should be somewhat familiar with:
+This quick tour will help you get started with MeiliSearch in just a few steps.
 
-- [The command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal)
-- [cURL](https://curl.se)
-- [JavaScript syntax](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)
+All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with MeiliSearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)). You can find instructions to install each of our SDKs further down in the [add documents section](#add-documents) of this guide.
 
 ## Download and launch
 
@@ -128,7 +126,6 @@ We also deliver an out-of-the-box [web interface](/reference/features/web_interf
 To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
-<br>
 <br>
 <MovieGif />
 
