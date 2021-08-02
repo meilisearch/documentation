@@ -6,7 +6,7 @@ Index updates are processed **asynchronously**. This means that update requests 
 
 Every operation that might take a long time to be processed is handled asynchronously.
 
-For example, it is possible updating the `filterableAttributes` index setting will require as much time as generating a new index, so MeiliSearch puts it in the update queue and processes the update request as soon as the instance can allocate the adequate resources.
+For example, updating the `filterableAttributes` index setting will require as much time as re-indexing all the documents in this index. Because of that, MeiliSearch adds your update request to the update queue and processes it as soon as possible.
 
 Currently, these are MeiliSearch's asynchronous operations:
 
