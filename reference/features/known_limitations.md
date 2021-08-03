@@ -28,11 +28,11 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 **Explanation:** This is the largest possible value for a 32-bit unsigned integer and thus the maximum size of documents MeiliSearch can compute.
 
-### Maximum size of individual `filterableAttributes` values
+### Length of individual `filterableAttributes` values
 
 **Limitation:** Individual `filterableAttributes` values are limited to 500 bytes.
 
-**Explanation:** MeiliSearch stores `filterableAttributes` as keys, whose length is limited to approximately 500 bytes. Note that this only applies to individual `filterableAttributes` values, not to the list itself.
+**Explanation:** MeiliSearch stores `filterableAttributes` as keys in LMDB, a datatype whose size is limited to approximately 500 bytes. Note that this only applies to individual `filterableAttributes` values, not to the list itself.
 
 ## Other limitations
 
