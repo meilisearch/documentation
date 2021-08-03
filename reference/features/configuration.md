@@ -64,7 +64,6 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 - [Dumps](/reference/features/configuration.md#dumps-destination)
   - [Dumps destination](/reference/features/configuration.md#dumps-destination)
   - [Import dump](/reference/features/configuration.md#import-dump)
-  - [Dump batch size](/reference/features/configuration.md#dump-batch-size)
 - [Max MDB size](/reference/features/configuration.md#max-mdb-size)
 - [Max UDB size](/reference/features/configuration.md#max-udb-size)
 - [Payload limit size](/reference/features/configuration.md#payload-limit-size)
@@ -190,28 +189,9 @@ Sets the directory where MeiliSearch will create dump files.
 
 Imports the dump file located at the specified path. Path must point to a `.dump` file.
 
-MeiliSearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file and the value of `--dump-batch-size`.
+MeiliSearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file.
 
 *This option is not available as an environment variable.*
-
-### Dump batch size
-
-**Environment variable**: `MEILI_DUMP_BATCH_SIZE`
-**CLI option**: `--dump-batch-size`
-**Default value**: `1024`
-
-Sets the maximum number of documents indexed in a batch when importing a dump file.
-
-Bigger batch sizes can speed up the import process, but will use more RAM. Setting a larger batch size than a system can handle might cause MeiliSearch to crash; if this happens, consider reducing the batch size.
-
-**Example**
-A dump contains 2600 documents. If `--dump-batch-size` is set to 1000, MeiliSearch will not index all 2600 documents in one go. Instead, the instance will:
-
-1. First index documents 0 -> 999 (1000 docs)
-2. Then index documents 1000 -> 1999 (1000 docs)
-3. And finally index documents 2000 -> 2599 (600 docs)
-
-[Learn more about MeiliSearch dumps](/reference/features/dumps.md)
 
 ### Max MDB size
 
