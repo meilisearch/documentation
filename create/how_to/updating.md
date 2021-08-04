@@ -223,7 +223,7 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 ```json
 {
   "uid": "20200929-114144097",
-  "status": "done"
+  "status": "done",
   "startedAt": "2020-09-29T11:41:44.392327Z",
   "finishedAt": "2020-09-29T11:41:50.792147Z"
 }
@@ -241,7 +241,7 @@ curl -L https://install.meilisearch.com | sh
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
-> Importing a dump is the same process as indexing documents. This can take time and cause a spike in memory usage.
+Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
 Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
 

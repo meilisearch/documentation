@@ -8,7 +8,7 @@ During a [dump export](/reference/api/dump.md#create-a-dump), all indexes of the
 
 During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same uid as an index in the dump file will be overwritten.
 
-Dump imports are [performed at launch](/reference/features/configuration.md#import-dump) using an option.
+Dump imports must be performed when launching a MeiliSearch instance [using the `import-dump` command-line option](/reference/features/configuration.md#import-dump).
 
 ## Create a dump
 
@@ -50,7 +50,7 @@ The returned status could be:
 ```json
 {
   "uid": "20200929-114144097",
-  "status": "done"
+  "status": "done",
   "startedAt": "2020-09-29T11:41:44.392327Z",
   "finishedAt": "2020-09-29T11:41:50.792147Z"
 }

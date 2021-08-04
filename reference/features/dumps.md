@@ -10,7 +10,7 @@ To create a dump of your dataset, you need to use the appropriate HTTP route: [`
 
 The above code triggers a dump creation process.
 
-You can check the status of a particular dump creation process using the previously received dump uid, like so: [`GET /dumps/:dump_uid/status`](/reference/api/dump.md#get-dump-status). Using this route, you can know whether your dump is still processing, has already been created, or has encountered a problem.
+You can check the status of a particular dump creation process using the previously received `dump uid`: [`GET /dumps/:dump_uid/status`](/reference/api/dump.md#get-dump-status). Using this route, you can check whether your dump is still processing, has already been created, or has encountered a problem.
 
 <CodeSamples id="get_dump_status_1" />
 
@@ -18,7 +18,7 @@ After your dump creation process is done, the dump file is created and added to 
 
 Note that **if your dump folder does not already exist when the dump creation process is called, MeiliSearch will create it**.
 
-If you shut down an instance after creating a dump, you will not be able to use the dumps endpoint for its status once the instance is running once again. This has no effect on the dump file.
+If you restart MeiliSearch after creating a dump, you will not be able to use the dumps endpoint to find out that dump's `status`. This has no effect on the dump file itself.
 
 ::: note
 If a dump file is visible in the file system, the dump process was successfully completed. MeiliSearch will never create a partial dump file if you interrupt an instance while it is generating a dump.
