@@ -42,8 +42,10 @@ If you'd like to restore your searchable attributes list to this default behavio
 
 You may want to make some attributes non-searchable, or change the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order) after documents have been indexed. To do so, simply place the attributes in the desired order and send the updated list using the [update searchable attributes endpoint](/reference/api/searchable_attributes.md#update-searchable-attributes).
 
+After manually updating the `searchableAttributes` list, **subsequent new attributes will no longer be automatically added** unless the settings are [reset](/reference/api/searchable_attributes.md#reset-searchable-attributes).
+
 ::: warning
-Be aware that after manually updating the `searchableAttributes` list, subsequent new attributes will no longer be automatically added unless the settings are [reset](/reference/api/searchable_attributes.md#reset-searchable-attributes).
+Manually updating `searchableAttributes` will change the order of the returned documents' fields. This will be fixed in a future MeiliSearch release.
 :::
 
 #### Example

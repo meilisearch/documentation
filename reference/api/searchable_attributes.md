@@ -42,6 +42,10 @@ List the settings.
 
 Update the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
 
+::: warning
+Manually updating `searchableAttributes` will change the order of the returned documents' fields. This will be fixed in a future MeiliSearch release.
+:::
+
 #### Path variables
 
 | Variable      | Description   |
