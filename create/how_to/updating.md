@@ -115,7 +115,7 @@ In this guide, we will:
 ### Step 1: Set all fields as displayed attributes
 
 ::: note
-This step is not mandatory when creating dumps in MeiliSearch v0.21 and above.
+If your dump was created in MeiliSearch v0.21 or or above, continue to step 2.
 :::
 
 When creating dumps, MeiliSearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/reference/features/field_properties.md#displayed-fields) in order to be saved in the dump.
