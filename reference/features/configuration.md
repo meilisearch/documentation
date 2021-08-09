@@ -189,18 +189,18 @@ MeiliSearch will only launch once the dump data has been fully indexed. The time
 
 **Environment variable**: MEILI_LOG_LEVEL
 **CLI option**: `--log-level`
-**Default value**: `INFO`
+**Default value**: `'INFO'`
 
-Defines the level of detail MeiliSearch's logs should contain.
+Defines how much detail should be present in MeiliSearch's logs.
 
-MeiliSearch outputs different information depending on the value of `--log-level`:
+MeiliSearch currently supports four log levels, listed in order of increasing verbosity:
 
-- ERROR: logs only contain information on events that prevent MeiliSearch from functioning correctly
-- WARN: logs contain information on unexpected events that do not immediately impact an instance's functioning
-- INFO: displays high-level information on all search engine events. This is the default value of `--log-level`
-- DEBUG: more verbose than INFO, DEBUG displays additional information on all search engine events. Useful when diagnosing issues and debugging
+- `'ERROR'`: only log unexpected events indicating MeiliSearch is not functioning as expected
+- `'WARN:'` log all unexpected events, regardless of their severity
+- `'INFO:'` log all events. This is the default value of `--log-level`
+- `'DEBUG'`: log all events and including detailed information on MeiliSearch's internal processes. Useful when diagnosing issues and debugging
 
-### Max Index size
+### Max index size
 
 **Environment variable**: `MEILI_MAX_INDEX_SIZE`
 **CLI option**: `--max-index-size`
@@ -229,7 +229,6 @@ getconf PAGE_SIZE
 **Default value**: `107374182400` (100 GiB)
 
 Sets the maximum size of the `update` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
-
 
 The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the index database, which only stores processed data.
 
