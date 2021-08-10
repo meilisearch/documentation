@@ -43,7 +43,7 @@ List the settings.
 Update the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
 
 ::: warning
-Manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response.
+Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
 :::
 
 #### Path variables
