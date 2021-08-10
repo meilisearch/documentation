@@ -60,11 +60,11 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 ### Advanced
 
 - [Disable analytics](/reference/features/configuration.md#disable-analytics)
-- [Disable sentry](/reference/features/configuration.md#disable-sentry)
 - [Dumps](/reference/features/configuration.md#dumps-destination)
   - [Dumps destination](/reference/features/configuration.md#dumps-destination)
   - [Import dump](/reference/features/configuration.md#import-dump)
-- [Max MDB size](/reference/features/configuration.md#max-mdb-size)
+- [Log level](/reference/features/configuration.md#log-level)
+- [Max index size](/reference/features/configuration.md#max-index-size)
 - [Max UDB size](/reference/features/configuration.md#max-udb-size)
 - [Payload limit size](/reference/features/configuration.md#payload-limit-size)
 - [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
@@ -159,17 +159,9 @@ MeiliSearch collects the following data from all instances that do not explicitl
 - Number of updates
 - Number of documents per index
 
-All collected data is used solely for the purpose of improving MeiliSearch. A full document describing why we collect this data and how we use it is forthcoming.
+All collected data is used solely for the purpose of improving MeiliSearch.
 
-### Disable sentry
-
-**Environment variable**: `MEILI_NO_SENTRY`
-**CLI option**: `--no-sentry`
-**Default value**: `false`
-
-Deactivates Sentry when set to `true`.
-
-We use [Sentry](https://sentry.io) to receive bug reports and diagnostics that help us improve MeiliSearch.
+[You can read more about our policy on data collection in our telemetry page.](/learn/what_is_meilisearch/telemetry.md)
 
 ### Dumps destination
 
@@ -193,25 +185,30 @@ MeiliSearch will only launch once the dump data has been fully indexed. The time
 
 *This option is not available as an environment variable.*
 
-### Max MDB size
+### Log level
 
-**Environment variable**: `MEILI_MAX_MDB_SIZE`
-**CLI option**: `--max-mdb-size`
+**Environment variable**: MEILI_LOG_LEVEL
+**CLI option**: `--log-level`
+**Default value**: `'INFO'`
+
+Defines how much detail should be present in MeiliSearch's logs.
+
+MeiliSearch currently supports four log levels, listed in order of increasing verbosity:
+
+- `'ERROR'`: only log unexpected events indicating MeiliSearch is not functioning as expected
+- `'WARN:'` log all unexpected events, regardless of their severity
+- `'INFO:'` log all events. This is the default value of `--log-level`
+- `'DEBUG'`: log all events and including detailed information on MeiliSearch's internal processes. Useful when diagnosing issues and debugging
+
+### Max index size
+
+**Environment variable**: `MEILI_MAX_INDEX_SIZE`
+**CLI option**: `--max-index-size`
 **Default value**: `107374182400` (100 GiB)
 
-Sets the maximum size of the `main` database. Value must be given in bytes.
+Sets the maximum size of the index. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-The `main` database stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
-
-On **UNIX** systems (e.g. Linux, MacOS) `--max-mdb-size` will use the maximum page size by default.
-
-On **Windows**, `--max-mdb-size` must be a fixed value allocated at launch. By default, this is `100GiB`, but this option allows users to change that value.
-
-The maximum MDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
-
-```bash
-getconf PAGE_SIZE
-```
+The `index` stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
@@ -221,19 +218,9 @@ getconf PAGE_SIZE
 **CLI option**: `--max-udb-size`
 **Default value**: `107374182400` (100 GiB)
 
-Sets the maximum size of the `update` database. Value must be given in bytes.
+Sets the maximum size of the `update` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `main` database, which only stores processed data.
-
-On **UNIX** systems (e.g. Linux, MacOS) `--max-udb-size` will use the maximum page size by default.
-
-On **Windows**, `--max-udb-size` must be a fixed value allocated at launch. By default this is `100GiB`, but this option allows users to change that value.
-
-The maximum UDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
-
-```bash
-getconf PAGE_SIZE
-```
+The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `index` database, which only stores processed data.
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
@@ -243,7 +230,7 @@ getconf PAGE_SIZE
 **CLI option**: `--http-payload-size-limit`
 **Default value**: `104857600` (~100MB)
 
-Sets the maximum size of accepted JSON payloads. Value must be given in bytes.
+Sets the maximum size of accepted JSON payloads. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
 ### Schedule snapshot creation
 
