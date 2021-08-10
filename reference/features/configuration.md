@@ -210,16 +210,6 @@ Sets the maximum size of the index. Value must be given in bytes or explicitly s
 
 The `index` stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
 
-On **UNIX** systems (e.g. Linux, MacOS) `--max-index-size` will use the maximum page size by default.
-
-On **Windows**, `--max-index-size` must be a fixed value allocated at launch. By default, this is `100GiB`, but this option allows users to change that value.
-
-The maximum index size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
-
-```bash
-getconf PAGE_SIZE
-```
-
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
 ### Max UDB size
@@ -231,16 +221,6 @@ getconf PAGE_SIZE
 Sets the maximum size of the `update` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
 The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `index` database, which only stores processed data.
-
-On **UNIX** systems (e.g. Linux, MacOS) `--max-udb-size` will use the maximum page size by default.
-
-On **Windows**, `--max-udb-size` must be a fixed value allocated at launch. By default this is `100GiB`, but this option allows users to change that value.
-
-The maximum UDB size must be a modulo value of the OS's `PAGE_SIZE`. To find the OS's `PAGE_SIZE`, use the following command:
-
-```bash
-getconf PAGE_SIZE
-```
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 

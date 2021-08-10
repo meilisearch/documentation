@@ -95,11 +95,7 @@ cargo build --release
 :::
 
 ::: tab Windows
-To install MeiliSearch on Windows, use Docker or compile from the source.
-
-A common compilation error (`"link.exe not found"`) can be solved by installing [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/) (scroll down and click on **Tools for Visual Studio 2019**).
-
-MeiliSearch will allocate 100GB on launch. If disk space is an issue on your machine, adjust the [index](/reference/features/configuration.md#max-index-size) and [update database](/reference/features/configuration.md#max-udb-size) maximums accordingly.
+To install MeiliSearch on Windows, use Docker or compile from source.
 :::
 
 ::::
