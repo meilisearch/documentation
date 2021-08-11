@@ -26,13 +26,13 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 **Limitation:** An index can contain no more than 4,294,967,296 documents.
 
-**Explanation:** This is the largest possible value for a 32-bit unsigned integer and thus the maximum size of documents MeiliSearch can compute.
+**Explanation:** This is the largest possible value for a 32-bit unsigned integer. Since  MeiliSearch's engine uses unsigned integers to identify documents internally, this is the maximum number of documents that can be stored in an index.
 
 ### Length of individual `filterableAttributes` values
 
 **Limitation:** Individual `filterableAttributes` values are limited to 500 bytes.
 
-**Explanation:** MeiliSearch stores `filterableAttributes` as keys in LMDB, a datatype whose size is limited to approximately 500 bytes. Note that this only applies to individual `filterableAttributes` values, not to the list itself.
+**Explanation:** MeiliSearch stores `filterableAttributes` values as keys in LMDB, a datatype whose size is limited to approximately 500 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 500 bytes.
 
 ## Other limitations
 
