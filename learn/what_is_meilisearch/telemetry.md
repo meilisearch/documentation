@@ -6,8 +6,6 @@ sidebarDepth: 2
 
 MeiliSearch collects anonymized data from users in order to improve our product. This can be [deactivated at any time](#how-to-disable-data-collection).
 
-Note that while MeiliSearch is running in [`development` mode](/reference/features/configuration.md#environment), no data is collected.
-
 ## What kind of data do we collect?
 
 We use two data-collection tools: [Amplitude](https://amplitude.com/amplitude-analytics) and [Sentry](https://sentry.io/welcome/). Both can be disabled by [following the below procedure](#how-to-disable-data-collection).

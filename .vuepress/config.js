@@ -17,8 +17,8 @@ module.exports = {
       {
         text: 'Resources',
         items: [
-          { text: 'FAQ', link: '/resources/faq' },
-          { text: 'Open API', link: '/resources/open-api-readme' },
+          { text: 'FAQ', link: '/faq' },
+          { text: 'Open API', link: '/open-api-readme' },
           {
             text: 'SDKs',
             items: [
@@ -109,9 +109,8 @@ module.exports = {
               title: 'Errors',
               path: '/errors/',
             },
-            '/reference/features/faceted_search',
             '/reference/features/field_properties',
-            '/reference/features/filtering',
+            '/reference/features/filtering_and_faceted_search',
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
@@ -144,7 +143,7 @@ module.exports = {
                 '/reference/api/synonyms',
                 '/reference/api/stop_words',
                 '/reference/api/ranking_rules',
-                '/reference/api/attributes_for_faceting',
+                '/reference/api/filterable_attributes',
                 '/reference/api/distinct_attribute',
                 '/reference/api/searchable_attributes',
                 '/reference/api/displayed_attributes',
