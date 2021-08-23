@@ -18,7 +18,7 @@ MeiliSearch works out-of-the-box with default settings that meet the needs of mo
 
 The returned results are **sorted according to a set of consecutive rules called [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules)**. You can delete existing rules, add new ones, or even change the order in which they are executed.
 
-You can also **configure the [search parameters](/reference/features/search_parameters.md)** to refine your search even further. We support [filters](/reference/features/filtering.md) and [faceting](/reference/features/faceted_search.md).
+You can also **configure the [search parameters](/reference/features/search_parameters.md)** to refine your search even further. We support [filters](/reference/features/filtering_and_faceted_search.md) and [faceting](/reference/features/filtering_and_faceted_search.md#faceted-search).
 
 ### Front-facing search
 
