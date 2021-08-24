@@ -127,7 +127,6 @@ To do so, open your web browser and enter MeiliSearch address (in our case: `htt
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
 <br>
-<br>
 <MovieGif />
 
 ## Integrate with your project
