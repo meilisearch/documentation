@@ -17,14 +17,14 @@ export default {
 
 video{
   width: 754px;
-  height: 812px;
+  height: auto;
 }
 
 /*  Large devices (desktops, less than 1200px) */
 @media (max-width: 1199.98px) {
   video{
    width: 617px;
-   height: 663px;
+   height: auto;
   }
  }
 
@@ -32,7 +32,7 @@ video{
 @media (max-width: 991.98px) {
   video{
     width: 420px;
-    height: 451px;
+    height: auto;
   }
  }
 
@@ -40,7 +40,7 @@ video{
 @media (max-width: 767.98px) {
   video{
     width: 495px;
-    height: 531px;
+    height: auto;
   }
 
 }
@@ -49,7 +49,7 @@ video{
 @media (max-width: 575.98px) {
   video{
     width: 370px;
-    height: 398px;
+    height: auto;
   }
  }
 

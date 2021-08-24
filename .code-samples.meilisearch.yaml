@@ -1,7 +1,12 @@
+# This code-samples file is used by the MeiliSearch documentation
+# Every example written here will be automatically fetched by
+# the documentation on build
+# You can read more at https://github.com/meilisearch/documentation/tree/master/.vuepress/code-samples
+---
 get_one_index_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies'
-list_all_indexes_1: |1-
+list_all_indexes_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes'
 create_an_index_1: |-
@@ -84,11 +89,10 @@ update_settings_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "rankingRules": [
-            "typo",
             "words",
+            "typo",
             "proximity",
             "attribute",
-            "wordsPosition",
             "exactness",
             "desc(release_date)",
             "desc(rank)"
@@ -149,11 +153,10 @@ update_ranking_rules_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     --data '[
-        "typo",
         "words",
+        "typo",
         "proximity",
         "attribute",
-        "wordsPosition",
         "exactness",
         "asc(release_date)",
         "desc(rank)"
@@ -171,19 +174,19 @@ update_distinct_attribute_1: |-
 reset_distinct_attribute_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
-get_attributes_for_faceting_1: |-
+get_filterable_attributes_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting'
-update_attributes_for_faceting_1: |-
+    -X GET 'http://localhost:7700/indexes/movies/settings/filterable-attributes'
+update_filterable_attributes_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting' \
+    -X POST 'http://localhost:7700/indexes/movies/settings/filterable-attributes' \
     --data '[
         "genres",
         "director"
     ]'
-reset_attributes_for_faceting_1: |-
+reset_filterable_attributes_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/attributes-for-faceting'
+    -X DELETE 'http://localhost:7700/indexes/movies/settings/filterable-attributes'
 get_searchable_attributes_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
@@ -253,16 +256,16 @@ field_properties_guide_displayed_1: |-
     }'
 filtering_guide_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "Avengers", "filters": "release_date > 795484800" }'
+  --data '{ "q": "Avengers", "filter": "release_date > 795484800" }'
 filtering_guide_2: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q":"Batman",  "filters": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
+  --data '{ "q":"Batman",  "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
 filtering_guide_3: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "horror", "filters": "director = \"Jordan Peele\"" }'
+  --data '{ "q": "horror", "filter": "director = \"Jordan Peele\"" }'
 filtering_guide_4: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "Planet of the Apes", "filters": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
+  --data '{ "q": "Planet of the Apes", "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
 search_parameter_guide_query_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "shifu" }'
@@ -280,16 +283,16 @@ search_parameter_guide_crop_1: |-
     --data '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
 search_parameter_guide_highlight_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "attributesToHighlight": ["overview"] }'
+    --data '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'
 search_parameter_guide_filter_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "n", "filters": "title = Nightshift" }'
+  --data '{ "q": "n", "filter": "title = Nightshift" }'
 search_parameter_guide_filter_2: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "filters": "title=\"Kung Fu Panda\"" }'
+    --data '{ "q": "shifu", "filter": "title=\"Kung Fu Panda\"" }'
 search_parameter_guide_matches_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "shifu", "attributesToHighlight": ["overview"], "matches": true }'
+  --data '{ "q": "winter feast", "matches": true }'
 settings_guide_synonyms_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/tops/settings' \
@@ -314,11 +317,10 @@ settings_guide_ranking_rules_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
         "rankingRules": [
-            "typo",
             "words",
+            "typo",
             "proximity",
             "attribute",
-            "wordsPosition",
             "exactness",
             "asc(release_date)",
             "desc(rank)"
@@ -367,7 +369,7 @@ search_guide_1: |-
     --data '{ "q": "shifu", "limit": 5, "offset": 10 }'
 search_guide_2: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "Avengers", "filters": "release_date > 795484800" }'
+  --data '{ "q": "Avengers", "filter": "release_date > 795484800" }'
 getting_started_add_documents_md: |-
   ```bash
   curl \
@@ -383,31 +385,32 @@ faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
-        "attributesForFaceting": [
+        "filterableAttributes": [
             "director",
             "genres"
         ]
     }'
-faceted_search_facet_filters_1: |-
+faceted_search_filter_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "thriller", "facetFilters": [["genres:Horror", "genres:Mystery"], "director:Jordan Peele"] }'
+  --data '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
 faceted_search_facets_distribution_1: |-
-  curl --get 'http://localhost:7700/indexes/movies/search' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     --data '{ "q": "Batman", "facetsDistribution": ["genres"] }'
-faceted_search_walkthrough_attributes_for_faceting_1: |-
+faceted_search_walkthrough_filterable_attributes_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     --data '{
-        "attributesForFaceting": [
+        "filterableAttributes": [
             "director",
             "producer",
             "genres",
             "production_companies"
         ]
     }'
-faceted_search_walkthrough_facet_filters_1: |-
+faceted_search_walkthrough_filter_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "thriller", "facetFilters": [["genres:Horror", "genres:Mystery"], "director:Jordan Peele"] }'
+  --data '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
 faceted_search_walkthrough_facets_distribution_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
   --data '{  "q": "Batman", "facetsDistribution": ["genres"] }'
@@ -415,3 +418,6 @@ post_dump_1: |-
   curl -X POST 'http://localhost:7700/dumps'
 get_dump_status_1: |-
   curl -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
+phrase_search_1: |-
+  curl -X POST 'http://localhost:7700/indexes/movies/search' \
+  --data '{ "q": "\"african american\" horror" }'
