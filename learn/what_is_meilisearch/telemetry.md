@@ -15,6 +15,8 @@ We use two data-collection tools: [Amplitude](https://amplitude.com/amplitude-an
 - Amount of time the MeiliSearch instance has been running
 - MeiliSearch version
 - Technical specs of the device running MeiliSearch
+- Database size per instance
+- Number of documents per instance
 
 **Sentry** collects information about errors that occur while using MeiliSearch—in other words, bug reports and diagnostics.
 
