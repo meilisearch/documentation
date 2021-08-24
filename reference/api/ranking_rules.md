@@ -38,11 +38,10 @@ List the settings.
 
 ```json
 [
-  "typo",
   "words",
+  "typo",
   "proximity",
   "attribute",
-  "wordsPosition",
   "exactness",
   "desc(release_date)"
 ]
@@ -102,7 +101,7 @@ To remove a ranking rule, use the [add or replace ranking rules route](/referenc
 An array that contains the [built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) in the following order:
 
 ```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+["words", "typo", "proximity", "attribute", "exactness"]
 ```
 
 #### Path Variables

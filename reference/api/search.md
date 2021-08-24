@@ -28,18 +28,25 @@ This is the preferred route to perform search when an API key is required, as it
 | **q**                     | `String`               | Query string \_(mandatory)                                                                      | `""`                                                                                          |
 | **offset**                | `Integer`              | Number of documents to skip                                                                     | `0`                                                                                             |
 | **limit**                 | `Integer`              | Maximum number of documents returned                                                            | `20`                                                                                            |
-| **filters**               | `String`               | Filter queries by an attribute value                                                            | `null`                                                                                          |
-| **facetFilters**          | `[Strings OR [Strings]]` | Facet names and values to filter on                                                            | `null`                                                                                          |
+| **filter**               | `String` OR [Strings OR [Strings]] | Filter queries by an attribute value                                                            | `null`                                                                                          |
 | **facetsDistribution**    | `[Strings]`            | Facets for which to retrieve the matching count                                                 | `null`                                                                                          |
 | **attributesToRetrieve**  | `[Strings]`            | Attributes to display in the returned documents                                                 | `["*"]`                                                                                           |
 | **attributesToCrop**     | `[Strings]`            | Attributes whose values have to be cropped                                                       | `null`                                                                                          |
 | **cropLength**            | `Integer`              | Length used to crop field values                                                                | `200`                                                                                           |
 | **attributesToHighlight** | `[Strings]`            | Attributes whose values will contain highlighted matching terms                                 | `null`                                                                                          |
 | **matches**               | `Boolean`              | Defines whether an object that contains information about the matches should be returned or not | `false`                                                                                         |
-> `filters` accept a query string. You can find more about the filter syntax on [our dedicated page](/reference/features/filtering.md).
+> `filter` accepts a query string. You can find more about the filter syntax on [our dedicated page](/reference/features/filtering_and_faceted_search.md).
 > `cropLength` is automatically rounded to match word boundaries.
 
 [Learn more about how to use the search parameters](/reference/features/search_parameters.md).
+
+#### Placeholder search
+
+When no search query is specified, a [placeholder search](/reference/features/search_parameters.md#query-q) is run instead.
+
+#### Phrase search
+
+Query terms enclosed in double quotes are treated as [phrase searches](/reference/features/search_parameters.md#query-q).
 
 ### Response
 
@@ -50,7 +57,7 @@ This is the preferred route to perform search when an API key is required, as it
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
 | **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#the-facets-distribution)** | `object`
+| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#facets-distribution)** | `object`
 | **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
 | **processingTimeMs** | Processing time of the query   |  `number`  |
 | **query**            | Query originating the response |  `string`  |
@@ -115,23 +122,26 @@ This route should only be used when no API key is required. If an API key is req
 | **[q](/reference/features/search_parameters.md#query-q)**                                     | Query string                                                                                    |    `""`     |
 | **[offset](/reference/features/search_parameters.md#offset)**                                 | Number of documents to skip                                                                     |     `0`       |
 | **[limit](/reference/features/search_parameters.md#limit)**                                   | Maximum number of documents returned                                                            |     `20`      |
-| **[filters](/reference/features/search_parameters.md#filters)**                               | Filter queries by an attribute value                                                            |    `null`     |
-| **[facetFilters](/reference/features/search_parameters.md#facet-filters)** | Facet names and values to filter on                                                                                |    `null`     |
-| **[facetsDistribution](/reference/features/search_parameters.md#the-facets-distribution)** | Facets for which to retrieve the matching count                                                    |    `null`     |
+| **[filter](/reference/features/search_parameters.md#filter)**                               | Filter queries by an attribute value                                                            |    `null`     |
+| **[facetsDistribution](/reference/features/search_parameters.md#facets-distribution)** | Facets for which to retrieve the matching count                                                    |    `null`     |
 | **[attributesToRetrieve](/reference/features/search_parameters.md#attributes-to-retrieve)**   | Attributes to display in the returned documents                                                 |    `["*"]`      |
 | **[attributesToCrop](/reference/features/search_parameters.md#attributes-to-crop)**           | Attributes whose values have to be cropped                                                      |    `null`     |
 | **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Length used to crop field values                                                                |    `200`      |
 | **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Attributes whose values will contain highlighted matching terms                                 |    `null`     |
 | **[matches](/reference/features/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |   `false`     |
 
-> `filters` accept a query string. You can find about the filter syntax on [our dedicated page](/reference/features/filtering.md).
+> `filter` accepts a query string. You can find about the filter syntax on [our dedicated page](/reference/features/filtering_and_faceted_search.md).
 > `cropLength` is automatically rounded to match word boundaries.
 
 [Learn more about how to use the search parameters](/reference/features/search_parameters.md).
 
 #### Placeholder search
 
-When the `q` parameter is not specified, a [placeholder](/reference/features/search_parameters.md#query-q) search is run instead.
+When no search query is specified, a [placeholder search](/reference/features/search_parameters.md#query-q) is run instead.
+
+#### Phrase search
+
+Query terms enclosed in double quotes are treated as [phrase searches](/reference/features/search_parameters.md#query-q).
 
 ### Response
 
@@ -142,7 +152,7 @@ When the `q` parameter is not specified, a [placeholder](/reference/features/sea
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
 | **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#the-facets-distribution)** | `object`
+| **facetsDistribution** | **[Distribution of the given facets](/reference/features/search_parameters.md#facets-distribution)** | `object`
 | **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
 | **processingTimeMs** | Processing time of the query   |  `number`  |
 | **query**            | Query originating the response |  `string`  |
