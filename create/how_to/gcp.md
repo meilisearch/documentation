@@ -20,7 +20,7 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 
 ![Fill in image info](/gcp/02.image-info.png)
 
-- Give it a name (`meilisearch-v0-20-0`).
+- Give it a name (`meilisearch-v0-21-0`).
 
 - For the `Source` field select `Virtual disk (VMDK, VHD)`.
 
@@ -29,7 +29,7 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 - Copy the following URI in the `Cloud Storage file` field.
 
 ```
-gs://meilisearch-image/meilisearch-v0.20.0-debian-10.vmdk
+gs://meilisearch-image/meilisearch-v0.21.0-debian-10.vmdk
 ```
 
 - **The other fields are not required.**
@@ -52,7 +52,7 @@ gs://meilisearch-image/meilisearch-v0.20.0-debian-10.vmdk
 
 - In the `Boot disk` section, click the `Change` button.
 
-- From the `Custom images` tab, select the image that you just imported in the previous steps (meilisearch-v0-20-0) from the drop down menu. Don't forget to set the `Size` of the disk to an amount corresponding to your needs. When you are done, click on `Select`.
+- From the `Custom images` tab, select the image that you just imported in the previous steps (meilisearch-v0-21-0) from the drop down menu. Don't forget to set the `Size` of the disk to an amount corresponding to your needs. When you are done, click on `Select`.
 
 ![Boot disk](/gcp/06.boot-disk.png)
 
