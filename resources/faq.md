@@ -28,7 +28,7 @@ Plus, you can [contact us](#how-can-i-contact-the-meilisearch-team) if you need 
 MeiliSearch configuration works out-of-the-box. It means, by default, MeiliSearch configures necessary settings for providing a powerful and relevant search.
 
 For example, without requiring any configuration, MeiliSearch is typo tolerant.
-Type `craete an inedx` in the search bar of this documentation to experience the typo tolerance of our search engine.
+Type `craete an index` in the search bar of this documentation to experience the typo tolerance of our search engine.
 
 To find out more about the relevancy of MeiliSearch, take a look at this detailed [explanation](/learn/core_concepts/relevancy.md#ranking-rules).
 
