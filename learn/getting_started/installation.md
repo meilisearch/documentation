@@ -95,7 +95,10 @@ cargo build --release
 :::
 
 ::: tab Windows
-To install MeiliSearch on Windows, use Docker or compile from source.
+To install MeiliSearch on Windows, you can:
+- use Docker
+- download the available binary provided as [a release asset](https://github.com/meilisearch/MeiliSearch/releases)
+- compile from source
 :::
 
 ::::
