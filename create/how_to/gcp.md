@@ -20,7 +20,7 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 
 ![Fill in image info](/gcp/02.image-info.png)
 
-- Give it a name (`meilisearch-vX-X-X`).
+- Give it a name (`meilisearch-example`).
 
 - For the `Source` field select `Virtual disk (VMDK, VHD)`.
 
