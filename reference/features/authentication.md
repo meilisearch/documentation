@@ -67,7 +67,7 @@ If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` sta
 
 <CodeSamples id="authentication_header_1" />
 
-**Response**
+#### Response
 
 ```json
 {
