@@ -227,10 +227,6 @@ module.exports = {
                   title: 'Add a search bar to your docs',
                   path: '/create/how_to/search_bar_for_docs',
                 },
-                {
-                  title: 'Add to a React app',
-                  path: '/create/how_to/meilisearch_react',
-                },
               ],
             },
             {
