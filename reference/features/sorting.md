@@ -34,7 +34,7 @@ Though MeiliSearch focuses on ordering results by their relevancy, you can set d
 
 [new code sample]
 
-### Sorting results
+## Sorting results
 
 [describe using `sort` search parameter]
 
