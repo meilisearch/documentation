@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "4fef8fb4-c923-40d0-80da-4fd09c8f88bd",
-		"name": "MeiliSearch v0.21",
+		"_postman_id": "78737b6a-08bc-4dcb-941f-990aefdf1bcf",
+		"name": "MeiliSearch v0.22",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -268,7 +268,12 @@
 								},
 								{
 									"key": "facetsDistribution",
-									"value": "[\"genre\"]",
+									"value": "genre",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "price",
 									"disabled": true
 								}
 							]
@@ -289,7 +294,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"q\": \"pride\",\n    \"attributesToHighlight\": [\"title\"]\n}"
+							"raw": "{\n    \"q\": \"\",\n    \"attributesToHighlight\": [\"title\"]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/search",
@@ -986,6 +991,70 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Get sortable attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/sortable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"sortable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update sortable attributes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"price\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/sortable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"sortable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset sortable attributes",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/sortable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"sortable-attributes"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -1021,7 +1090,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"searchableAttributes\": [\"title\", \"author\"],\n\t\"stopWords\": [\"of\", \"the\"],\n    \"displayedAttributes\": [\"title\", \"author\", \"genre\"],\n    \"filterableAttributes\": [\"genre\", \"price\"]\n}"
+							"raw": "{\n\t\"searchableAttributes\": [\"title\", \"author\"],\n\t\"stopWords\": [\"of\", \"the\"],\n    \"displayedAttributes\": [\"title\", \"author\", \"genre\", \"price\"],\n    \"filterableAttributes\": [\"genre\", \"price\"],\n    \"sortableAttributes\": [\"price\"]\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/settings",
