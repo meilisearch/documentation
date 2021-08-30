@@ -21,7 +21,7 @@ errors:
   - code: missing_document_id
     description: "A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones."
   - code: invalid_filter
-    description: "The filter provided with the search is invalid. Check our [guide on filtering](https://docs.meilisearch.com/reference/features/filtering.html) to troubleshoot."
+    description: "The filter provided with the search is invalid. Check our [guide on filtering](https://docs.meilisearch.com/reference/features/filtering_and_faceted_search.html) to troubleshoot."
   - code: bad_request
     description: "The request is invalid, check the error message for more information."
   - code: document_not_found
