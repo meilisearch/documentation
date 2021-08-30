@@ -77,5 +77,5 @@
 
 # Group filters and facets content
 /reference/api/attributes_for_faceting.html         /reference/api/filterable_attributes.html
-/reference/feature/filtering.html                   /reference/api/filtering_and_faceted_search.html
-/reference/feature/faceted_search.html              /reference/api/filtering_and_faceted_search.html
+/reference/feature/filtering.html                   /reference/feature/filtering_and_faceted_search.html
+/reference/feature/faceted_search.html              /reference/feature/filtering_and_faceted_search.html
