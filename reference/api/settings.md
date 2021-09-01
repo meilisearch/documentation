@@ -13,6 +13,7 @@ These are the reference pages for the dedicated routes:
 - [Distinct attribute](/reference/api/distinct_attribute.md)
 - [Searchable attributes](/reference/api/searchable_attributes.md)
 - [Displayed attributes](/reference/api/displayed_attributes.md)
+- [Sortable attributes](/reference/api/sortable_attributes.md)
 
 [Learn more about the settings in this guide.](/reference/features/settings.md)
 
@@ -40,11 +41,12 @@ Get the settings of an index.
 | ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 | **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order)       |
+| **filterableAttributes**  | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                         |
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
-| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                         |
+| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                          |
+| **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
 
 [Learn more about the settings in this guide.](/reference/features/settings.md)
 
@@ -115,6 +117,7 @@ If the provided index does not exist, it will be created.
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
+| **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
 
 ### Example
 
@@ -147,6 +150,7 @@ All settings will be reset to their default value.
 | **distinctAttribute**     | Search returns documents with distinct (different) values of a given field       | `null`                                                                                            |
 | **searchableAttributes**  | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
 | **displayedAttributes**   | Fields displayed in the returned documents documents                             | `["*"]` (all attributes)                                                                          |
+| **sortableAttributes**    | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
 
 [Learn more about the settings](/reference/features/settings.md).
 

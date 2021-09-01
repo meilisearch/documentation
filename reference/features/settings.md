@@ -11,6 +11,7 @@ This page describes all the **settings** available in MeiliSearch and how to **c
 | **[distinctAttribute](/reference/features/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                      |
 | **[searchableAttributes](/reference/features/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                       |
 | **[displayedAttributes](/reference/features/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                       |
+| **[sortableAttributes](/reference/features/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
 
 ## Synonyms
 
@@ -190,3 +191,21 @@ Documents returned upon search contain only displayed fields.
 By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `genre` and `release_date`.
 
 <CodeSamples id="settings_guide_displayed_1" />
+
+## Sortable attributes
+
+List of <clientGlossary word="attribute" label="attributes"/> that can be used for [sorting](/reference/features/sorting.md).
+
+By default, `sortableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
+
+::: tip
+Configuring `sortableAttributes` is necessary in order to use the [`sort` search parameter](/reference/features/search_parameters.md#sort).
+:::
+
+[Learn more about sorting in our dedicated guide.](/reference/features/sorting.md)
+
+#### Example
+
+To be able to sort search results according to attributes `price` and `author` in an ecommerce bookshop, you must first add these attributes them to the `sortableAttributes` list:
+
+<CodeSamples id="settings_guide_sortable_1" />
