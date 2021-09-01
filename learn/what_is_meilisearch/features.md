@@ -38,6 +38,10 @@ MeiliSearch allows you to define [filters](/reference/features/filtering_and_fac
 
 [Faceted search](/reference/features/filtering_and_faceted_search.md) allows you to classify search results into categories and to build intuitive navigation interfaces.
 
+## Sorting
+
+[Sort search results](/reference/features/sorting.md) at query time based on term relevancy or any other document field.
+
 ## Placeholder search
 
 If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). This feature is called **placeholder search**.
