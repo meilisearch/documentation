@@ -22,6 +22,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Maximum field value length                         | `200`         |
 | **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[matches](/reference/features/search_parameters.md#matches)**                               | Return matching terms location                     | `false`       |
+| **[sort](/reference/features/search_parameters.md#sort)**                                     | Change result sorting order                        | `null`        |
 
 ## Query (q)
 
@@ -365,4 +366,35 @@ You would get the following response with **information about the matches in the
     ]
   }
 }
+```
+
+## Sort
+
+**Parameter**: `sort`
+**Expected value**: a list of attributes written as an array or a comma-separated string
+**Default value**: `null`
+
+Sorts search results according to the specified attributes and indicated order.
+
+Each attribute in the list must be followed by a colon (`:`) and the preferred sorting order: either ascending (`asc`) or descending (`desc`).
+
+When using the `POST` route, `sort` expects an array of strings.
+
+When using the `GET` route, `sort` expects the list as a comma-separated string.
+
+Read more about sorting search results in our dedicated guide.
+
+### Example
+
+You can search for science fictions books ordered from the cheapest to the most expensive:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/books/search' \
+  --data '{
+    "q": "science fiction",
+    "sort": [
+      "price:asc"
+    ]
+  }'
 ```
