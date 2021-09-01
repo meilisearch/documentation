@@ -99,6 +99,7 @@ To install MeiliSearch on Windows, you can:
 
 - use Docker
 - [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
+- use the installation script (cf `cURL` tab) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
 - compile from source
 :::
 
