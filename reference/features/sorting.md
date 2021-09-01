@@ -21,7 +21,7 @@ To sort results at search time, there are three main steps to follow:
 MeiliSearch allows you to sort results based on document fields. Only fields  containing either numbers or strings can be used for sorting.
 
 ::: warning
-If a sortable attribute has values of different types across documents, MeiliSearch will give precedence to numbers over strings. This can lead to unexpected behavior when sorting, so we recommend you only use sort with whose values will always be of the same type. 
+If a sortable attribute has values of different types across documents, MeiliSearch will give precedence to numbers over strings. This can lead to unexpected behavior when sorting, so we recommend you only use sort with whose values will always be of the same type.
 :::
 
 ### Adding attributes to `sortableAttributes`
@@ -36,28 +36,28 @@ Suppose you have collection of books containing the following fields:
 
 ```json
 [
-	{
+  {
     "id": 1,
     "title": "Solaris",
     "author": "Stanislaw Lem",
     "genres": ["science fiction"],
     "price": 5.00
   },
-	{
+  {
     "id": 2,
     "title": "The Parable of the Sower",
     "author": "Octavia E. Butler",
     "genres": ["science fiction"],
     "price": 10.00
   },
-	{
+  {
     "id": 3,
     "title": "The Dispossessed",
     "author": "Ursula K. Le Guin",
     "genres": ["science fiction", "anarchism"],
     "price": 3.00
   },
-	{
+  {
     "id": 4,
     "title": "Gender Trouble",
     "author": "Judith Butler",
@@ -83,7 +83,7 @@ curl \
 
 #### Customize ranking rule order
 
-This is an optional step. 
+This is an optional step.
 
 MeiliSearch tries to balance its ranking rules so the top results are both relevant and follow the sorting order requested with the `sort` search parameter. This is the default configuration of MeiliSearch's ranking rules:
 
@@ -98,7 +98,7 @@ MeiliSearch tries to balance its ranking rules so the top results are both relev
 ]
 ```
 
-You can use the `rankingRules` index setting to alter this order. 
+You can use the `rankingRules` index setting to alter this order.
 
 Placing the `sort` ranking rule higher in the list will cause results to emphasize sorting over relevancy: your results will more closely follow the sorting order you configured, but might not be as relevant.
 
@@ -150,21 +150,21 @@ This query would make sure you only retrieved science fiction books ordered from
 
 ```json
 [
-	{
+  {
     "id": 3,
     "title": "The Dispossessed",
     "author": "Ursula K. Le Guin",
     "genres": ["science fiction", "anarchism"],
     "price": 3.00
   },
-	{
+  {
     "id": 1,
     "title": "Solaris",
     "author": "Stanislaw Lem",
     "genres": ["science fiction"],
     "price": 5.00
   },
-	{
+  {
     "id": 2,
     "title": "The Parable of the Sower",
     "author": "Octavia E. Butler",
@@ -191,14 +191,14 @@ This query would only return documents matching the query term `"butler"` and en
 
 ```json
 [
-	{
+  {
     "id": 2,
     "title": "The Parable of the Sower",
     "author": "Octavia E. Butler",
     "genres": ["science fiction"],
     "price": 10.00
   },
-	{
+  {
     "id": 4,
     "title": "Gender Trouble",
     "author": "Judith Butler",
