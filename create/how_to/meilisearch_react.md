@@ -1,5 +1,11 @@
 # Implement instant search in your React app in 5 minutes
 
+::: danger
+This guide is completely obsolete as of v0.21 and requires a full rewrite. The information presented here is not compatible with the recent versions of React and MeiliSearch.
+
+We have temporarily removed this article from the sidebar so it is not easily accessible to external users. Once the guide has been brought up-to-date, remember to update VuePress's config file.
+:::
+
 _The following is a guest post by Riccardo Giorato._
 
 ![Decathlon front page](/react-guide/decatlon.png)
