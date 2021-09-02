@@ -8,7 +8,7 @@ MeiliSearch collects anonymized data from users in order to improve our product.
 
 ## What kind of data do we collect?
 
-We use two data-collection tools: [Amplitude](https://amplitude.com/amplitude-analytics) and [Sentry](https://sentry.io/welcome/). Both can be disabled by [following the below procedure](#how-to-disable-data-collection).
+We use [Amplitude](https://amplitude.com/amplitude-analytics) to collect usage data. You can disable it by [following the below procedure](#how-to-disable-data-collection).
 
 **Amplitude** collects the following datapoints:
 
@@ -18,14 +18,10 @@ We use two data-collection tools: [Amplitude](https://amplitude.com/amplitude-an
 - Database size per instance
 - Number of documents per instance
 
-**Sentry** collects information about errors that occur while using MeiliSearch—in other words, bug reports and diagnostics.
-
 **We will absolutely never identify users, track users, or collect private information**, including IP address, email, or website URLs. All of our data collection is **GDPR-compliant** and **secure**.
 
 ::: tip
-
 In the future, we may collect additional metrics relating to new features. This page will be kept up-to-date, but for the most precise information be sure to check the release notes after each new version. <Badge text="soon" type="warn"/>
-
 :::
 
 ## Why collect telemetry data?
