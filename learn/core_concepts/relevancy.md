@@ -127,10 +127,10 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ```json
 [
-  "typo",
-  "attribute",
-  "proximity",
   "words",
+  "typo",
+  "proximity",
+  "attribute",
   "exactness",
   "asc(release_date)",
   "desc(movie_ranking)"
@@ -142,7 +142,13 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 By default, the built-in rules are executed in the following order.
 
 ```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "exactness"
+]
 ```
 
 Depending on your needs, you might want to change this order of importance. To do so, you can use the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
