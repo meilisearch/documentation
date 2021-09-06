@@ -374,27 +374,24 @@ You would get the following response with **information about the matches in the
 **Expected value**: a list of attributes written as an array or a comma-separated string
 **Default value**: `null`
 
-Sorts search results according to the specified attributes and indicated order.
+Sorts search results at query time according to the specified attributes and indicated order.
 
 Each attribute in the list must be followed by a colon (`:`) and the preferred sorting order: either ascending (`asc`) or descending (`desc`).
+
+::: note
+Attribute order is meaningful. The first attributes in a list will be given precedence over those that come later.
+
+For example, `sort="price:asc,author:desc` will prioritize `price` over `author` when sorting results.
+:::
 
 When using the `POST` route, `sort` expects an array of strings.
 
 When using the `GET` route, `sort` expects the list as a comma-separated string.
 
-Read more about sorting search results in our dedicated guide.
+[Read more about sorting search results in our dedicated guide.](/reference/features/sorting.md)
 
 ### Example
 
-You can search for science fictions books ordered from the cheapest to the most expensive:
+You can search for science fiction books ordered from cheapest to most expensive:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/books/search' \
-  --data '{
-    "q": "science fiction",
-    "sort": [
-      "price:asc"
-    ]
-  }'
-```
+<CodeSamples id="search_parameter_guide_sort_1" />

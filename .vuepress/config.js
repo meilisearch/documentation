@@ -148,6 +148,7 @@ module.exports = {
                 '/reference/api/distinct_attribute',
                 '/reference/api/searchable_attributes',
                 '/reference/api/displayed_attributes',
+                '/reference/api/sortable_attributes',
               ],
             },
             '/reference/api/stats',

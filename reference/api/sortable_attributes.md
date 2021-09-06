@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-Attributes that can be used together with the `sort` search parameter. [You can learn more about sorting in our dedicated guide.](/reference/features/sorting.md)
+Attributes that can be used together with the [`sort` search parameter](/reference/features/search_parameters.md#sort). [You can learn more about sorting in our dedicated guide.](/reference/features/sorting.md)
 
 Sortable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
 
@@ -20,21 +20,26 @@ Get an index's [`sortableAttributes`](/reference/features/sorting.md).
 
 ### Example
 
-<CodeSamples id="get_sortable_attributes_1" />
+<CodeSamples id="sortable_attributes_get_1" />
 
 #### Response: `200 Ok`
 
 List the settings.
 
 ```json
-["price", "author"]
+[
+  "price", 
+  "author"
+]
 ```
 
 ## Update sortable attributes
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/sortable-attributes" />
 
-Update an index's [sortable attributes list](/reference/features/sorting.md). This will re-index all documents in the index.
+Update an index's sortable attributes list. This will re-index all documents in the index.
+
+[You can read more about sorting at query time on our dedicated guide.](/reference/features/sorting.md)
 
 ### Path variables
 
@@ -44,13 +49,13 @@ Update an index's [sortable attributes list](/reference/features/sorting.md). Th
 
 ### Body
 
-An array of strings containing the attributes that can be used as filters at query time.
+An array of strings containing the attributes that can be used to sort search results at query time.
 
 [You can read more about this setting at the feature reference page.](/reference/features/settings.md#sortable-attributes)
 
 ### Example
 
-<CodeSamples id="update_sortable_attributes_1" />
+<CodeSamples id="sortable_attributes_update_1" />
 
 #### Response: `202 Accepted`
 
@@ -66,7 +71,7 @@ This `updateId` allows you to [track the current update](/reference/api/updates.
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/sortable-attributes"/>
 
-Reset an index's [sortable attributes list](/reference/features/filtering_and_faceted_search.md) back to its default value.
+Reset an index's sortable attributes list back to its default value.
 
 ### Default value
 
@@ -80,7 +85,7 @@ An empty array (`[]`).
 
 ### Example
 
-<CodeSamples id="reset_sortable_attributes_1" />
+<CodeSamples id="sortable_attributes_reset_1" />
 
 #### Response: `202 Accepted`
 

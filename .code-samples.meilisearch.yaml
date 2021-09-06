@@ -155,6 +155,7 @@ update_ranking_rules_1: |-
     --data '[
         "words",
         "typo",
+        "sort",
         "proximity",
         "attribute",
         "exactness",
@@ -421,3 +422,63 @@ get_dump_status_1: |-
 phrase_search_1: |-
   curl -X POST 'http://localhost:7700/indexes/movies/search' \
   --data '{ "q": "\"african american\" horror" }'
+sorting_guide_update_sortable_attributes_1: |-
+  curl \
+  -X POST 'http://localhost:7700/indexes/books/settings' \
+  --data '{
+      "sortableAttributes": [
+          "author",
+          "price"
+      ]
+  }'
+sorting_guide_update_ranking_rules_1: |-
+  curl \
+  -X POST 'http://localhost:7700/indexes/books/settings/ranking-rules' \
+  --data '[
+    "words",
+    "typo",
+    "proximity",
+    "attribute",
+    "sort",
+    "exactness"
+  ]'
+sorting_guide_sort_parameter_1: |-
+  curl \
+  -X POST 'http://localhost:7700/indexes/books/search' \
+  --data '{
+    "q": "science fiction",
+    "sort": [
+      "price:asc"
+    ]
+  }'
+sorting_guide_sort_parameter_2: |-
+  curl \
+  -X POST 'http://localhost:7700/indexes/books/search' \
+  --data '{
+    "q": "butler",
+    "sort": [
+      "author:desc"
+    ]
+  }'
+sortable_attributes_get_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/sortable-attributes'
+sortable_attributes_update_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
+    --data '[
+        "price",
+        "author"
+    ]'
+sortable_attributes_reset_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/sortable-attributes'
+search_parameter_guide_sort_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/search' \
+    --data '{
+      "q": "science fiction",
+      "sort": [
+        "price:asc"
+      ]
+    }'

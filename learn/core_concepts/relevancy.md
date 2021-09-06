@@ -138,9 +138,10 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 ```json
 [
   "typo",
+  "words",
+  "sort",
   "attribute",
   "proximity",
-  "words",
   "exactness",
   "release_date:asc",
   "movie_ranking:desc"
@@ -149,11 +150,11 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ### Sorting and custom ranking rules
 
-MeiliSearch allows users to define sorting order at query time by using the `sort` search parameter. There is a great deal of overlap between sorting and ranking rules, but the two do have different uses.
+MeiliSearch allows users to define [sorting order at query time](/reference/features/sorting.md) by using the [`sort` search parameter](/reference/features/search_parameters.md#sort). There is some overlap between sorting and ranking rules, but the two do have different uses.
 
-In general, `sort` will be most useful when you want to give users the choice of defining what type of results they want to see first. A good use-case for `sort` is giving the users of a webshop the option to sort by descending or ascending price.
+In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is giving the users of a webshop the option to sort by descending or ascending product price.
 
-Custom ranking rules, instead, are always active after configured and are useful when you want to highlight certain results. A good use-case for custom ranking rules is a webshop promoting products on sale.
+Custom ranking rules, instead, are always active after configured and are useful when you want to highlight certain results. A good use-case for custom ranking rules is a webshop promoting discounted products.
 
 ## Default order
 
