@@ -18,7 +18,7 @@ Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/und
 
 ### Built-in rules
 
-MeiliSearch contains five built-in ranking rules: **words, typo, sort, proximity, attribute, and exactness**, in that default order.
+MeiliSearch contains six built-in ranking rules: **words, typo, sort, proximity, attribute, and exactness**, in that default order.
 
 #### 1. Words
 
@@ -36,10 +36,10 @@ Results are sorted by **increasing number of typos**. Returns documents that mat
 
 #### 3. Sort
 
-Results are sorted according to parameters decided at query time. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant, but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant, but might not follow the order defined by the user.
+Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant, but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant, but might not always follow the order defined by the user.
 
 ::: note
-Differently from other ranking rules, this rule is only active for queries containing the `sort` search parameter with a valid value. If a search request does not contain `sort`, this rule will be ignored.
+Differently from other ranking rules, sort is only active for queries containing the `sort` search parameter. If a search request does not contain `sort` or if its value is invalid, this rule will be ignored.
 :::
 
 #### 4. Proximity
@@ -152,9 +152,9 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 MeiliSearch allows users to define [sorting order at query time](/reference/features/sorting.md) by using the [`sort` search parameter](/reference/features/search_parameters.md#sort). There is some overlap between sorting and ranking rules, but the two do have different uses.
 
-In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is giving the users of a webshop the option to sort by descending or ascending product price.
+In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 
-Custom ranking rules, instead, are always active after configured and are useful when you want to highlight certain results. A good use-case for custom ranking rules is a webshop promoting discounted products.
+Custom ranking rules, instead, are always active after configured and will be useful when you want to promote certain types of results. A good use-case for custom ranking rules is ensuring discounted products in a webshop always feature among the top results.
 
 ## Default order
 

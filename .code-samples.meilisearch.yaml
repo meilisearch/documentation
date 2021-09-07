@@ -159,8 +159,8 @@ update_ranking_rules_1: |-
         "proximity",
         "attribute",
         "exactness",
-        "asc(release_date)",
-        "desc(rank)"
+        "release_date:asc",
+        "rank:desc"
     ]'
 reset_ranking_rules_1: |-
   curl \
@@ -323,8 +323,8 @@ settings_guide_ranking_rules_1: |-
             "proximity",
             "attribute",
             "exactness",
-            "asc(release_date)",
-            "desc(rank)"
+            "release_date:asc",
+            "rank:desc"
         ]
     }'
 settings_guide_distinct_1: |-

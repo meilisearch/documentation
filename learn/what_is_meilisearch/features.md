@@ -40,7 +40,7 @@ MeiliSearch allows you to define [filters](/reference/features/filtering_and_fac
 
 ## Sorting
 
-[Sort search results](/reference/features/sorting.md) at query time and let users choose what results they want to see first.
+[Sort search results](/reference/features/sorting.md) at query time and let users choose which types of results they want to see first.
 
 ## Placeholder search
 

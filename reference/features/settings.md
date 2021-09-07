@@ -206,6 +206,6 @@ Configuring `sortableAttributes` is necessary in order to use the [`sort` search
 
 #### Example
 
-To be able to sort search results according to attributes `price` and `author` in an ecommerce bookshop, you must first add these attributes them to the `sortableAttributes` list:
+To be able to sort search results according to the attributes `price` and `author` in a webshop, you must first add them to the `sortableAttributes` list:
 
 <CodeSamples id="settings_guide_sortable_1" />
