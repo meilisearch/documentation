@@ -18,7 +18,7 @@ To allow your users to sort results at search time you must:
 
 ### Select attributes for sorting
 
-MeiliSearch allows you to sort results based on document fields. Only fields  containing numbers or strings can be used for sorting.
+MeiliSearch allows you to sort results based on document fields. Only fields containing numbers or strings can be used for sorting.
 
 ::: warning
 If a field has values of different types across documents, MeiliSearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.

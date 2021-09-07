@@ -45,7 +45,7 @@ Get the settings of an index.
 | **filterableAttributes**  | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                         |
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
-| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                          |
+| **displayedAttributes**   | [Strings] | Fields allowed to be displayed in the returned documents                                     | `["*"]` (all attributes)                                                                          |
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
 
 [Learn more about the settings in this guide.](/reference/features/settings.md)
