@@ -322,6 +322,7 @@ settings_guide_ranking_rules_1: |-
             "typo",
             "proximity",
             "attribute",
+            "sort",
             "exactness",
             "release_date:asc",
             "rank:desc"
