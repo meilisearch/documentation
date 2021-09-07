@@ -245,3 +245,19 @@ In general, we recommend the former. However, if you need to reduce the size of 
 **MeiliSearch will never track or identify individual users**. That being said, we do use Amplitude and Sentry to collect anonymous data about user trends and bug reports.
 
 You can read more about what metrics we collect, why we collect them, and how to disable it on our [telemetry page](/learn/what_is_meilisearch/telemetry.md). Transparency is very important to us, so if you feel we are lacking in this area please [open an issue](https://github.com/meilisearch/documentation/issues/new/choose) and let us know! ❤️
+
+## Why does MeiliSearch crash when I try to add documents?
+
+Most crashes during indexation are a result of a machine running out of RAM. This happens when your dataset exceeds the computer's available memory.
+
+We recommend adding new documents in smaller batches or, when possible, increasing your machine's RAM.
+
+This is a known issue that we are actively trying to improve.
+
+## How can I speed up indexation when adding new documents?
+
+There are two main ways of increasing indexation speed:
+
+1. Indexation is a memory-intensive and multi-threaded operation. The more memory and processor cores available, the faster will MeiliSearch index new documents
+
+2. **Bigger HTTP payloads are processed more quickly than smaller payloads**; that is, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine. If you believe your  
