@@ -113,7 +113,7 @@ To add a custom ranking rule, you have to communicate the attribute name followe
 
 - To apply a **descending sort** (results sorted by decreasing value of the attribute): `attribute_name:desc`
 
-**The attribute must have a numeric value** in all of the documents contained in that index. **If any value is not a numeric type, the sorting rule won't be applied**.
+**The attribute must have either a numeric or a string value** in all of the documents contained in that index.
 
 Add this rule to the existing list of ranking rules using the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
