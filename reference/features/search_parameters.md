@@ -22,7 +22,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Maximum field value length                         | `200`         |
 | **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[matches](/reference/features/search_parameters.md#matches)**                               | Return matching terms location                     | `false`       |
-| **[sort](/reference/features/search_parameters.md#sort)**                                     | Sort queries by an attribute's value                        | `null`        |
+| **[sort](/reference/features/search_parameters.md#sort)**                                     | Sort search results by an attribute's value                        | `null`        |
 
 ## Query (q)
 
