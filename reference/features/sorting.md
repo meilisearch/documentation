@@ -83,7 +83,7 @@ If you are using this dataset in a webshop, you might want to allow your users t
 
 ### Customize ranking rule order (optional)
 
-When users sort results at search time, [MeiliSearch's ranking rules](/learn/core_concepts/relevancy.md) are set up so the top matches balance following the requested sorting order while still remaining very relevant. You might need to alter this behavior depending on your application's needs.
+When users sort results at search time, [MeiliSearch's ranking rules](/learn/core_concepts/relevancy.md) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
 
 This is the default configuration of MeiliSearch's ranking rules:
 
@@ -91,24 +91,20 @@ This is the default configuration of MeiliSearch's ranking rules:
 [
   "words",
   "typo",
-  "sort",
   "proximity",
   "attribute",
+  "sort",
   "exactness"
 ]
 ```
 
-`"sort"` is in third place. This means MeiliSearch will first look for results matching all search terms, then results with fewer typos and only after that will take `"sort"` in consideration.
+`"sort"` is in fifth place. This means it acts as a tie-breaker rule: MeiliSearch will first place results closely matching search terms at the top of the returned documents list and only then will apply the `"sort"` parameters as requested by the user. In other words, by default MeiliSearch provides a very relevant sorting.
 
-You can use the `rankingRules` index setting to change this order.
-
-Placing the `sort` ranking rule higher in the list will emphasize exhaustive sorting over relevant sorting: your results will more closely follow the sorting order your user chose, but might not be as relevant.
-
-Placing the `sort` ranking rule lower in the list will emphasize relevant sorting over exhaustive sorting: your first results will be more relevant, but they might not follow the desired sorting order as closely.
+Placing `"sort"` ranking rule higher in the list will emphasize exhaustive sorting over relevant sorting: your results will more closely follow the sorting order your user chose, but will not be as relevant.
 
 #### Example
 
-If your users care more about finding the exact book they are searching for than they care about finding cheaper products, you can place `sort` lower in the ranking rules:
+If your users care more about finding cheaper books than they care about finding specific matches to their queries, you can place `sort` much higher in the ranking rules:
 
 <CodeSamples id="sorting_guide_update_ranking_rules_1" />
 

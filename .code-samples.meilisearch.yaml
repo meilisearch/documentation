@@ -155,9 +155,9 @@ update_ranking_rules_1: |-
     --data '[
         "words",
         "typo",
-        "sort",
         "proximity",
         "attribute",
+        "sort",
         "exactness",
         "release_date:asc",
         "rank:desc"
@@ -436,10 +436,10 @@ sorting_guide_update_ranking_rules_1: |-
   -X POST 'http://localhost:7700/indexes/books/settings/ranking-rules' \
   --data '[
     "words",
+    "sort",
     "typo",
     "proximity",
     "attribute",
-    "sort",
     "exactness"
   ]'
 sorting_guide_sort_parameter_1: |-

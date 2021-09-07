@@ -86,7 +86,14 @@ Built-in ranking rules that **ensure relevancy in search results**. Ranking rule
 Default value (the ranking rules in the default order):
 
 ```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+[
+  "words", 
+  "typo", 
+  "proximity", 
+  "attribute", 
+  "sort",
+  "exactness"
+]
 ```
 
 [Read this guide to know more about what each ranking rules does](/learn/core_concepts/relevancy.md)

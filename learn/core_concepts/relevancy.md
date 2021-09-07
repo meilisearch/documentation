@@ -18,7 +18,7 @@ Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/und
 
 ### Built-in rules
 
-MeiliSearch contains six built-in ranking rules: **words, typo, sort, proximity, attribute, and exactness**, in that default order.
+MeiliSearch contains six built-in ranking rules: **words, typo, proximity, attribute, sort, and exactness**, in that default order.
 
 #### 1. Words
 
@@ -34,21 +34,21 @@ For example, if someone were to search `batman dark knight`, then the `words` ru
 
 Results are sorted by **increasing number of typos**. Returns documents that match query terms with fewer typos first.
 
-#### 3. Sort
+#### 3. Proximity
+
+Results are sorted by **increasing distance between matched query terms**. Returns documents where query terms occur close together and in the same order as the query string first.
+
+#### 4. Attribute
+
+Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
+
+#### 5. Sort
 
 Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant, but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant, but might not always follow the order defined by the user.
 
 ::: note
 Differently from other ranking rules, sort is only active for queries containing the `sort` search parameter. If a search request does not contain `sort` or if its value is invalid, this rule will be ignored.
 :::
-
-#### 4. Proximity
-
-Results are sorted by **increasing distance between matched query terms**. Returns documents where query terms occur close together and in the same order as the query string first.
-
-#### 5. Attribute
-
-Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
 
 #### 6. Exactness
 
@@ -137,11 +137,11 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ```json
 [
-  "typo",
   "words",
-  "sort",
-  "attribute",
+  "typo",
   "proximity",
+  "attribute",
+  "sort",
   "exactness",
   "release_date:asc",
   "movie_ranking:desc"
@@ -162,11 +162,11 @@ By default, the built-in rules are executed in the following order.
 
 ```json
 [
-  "typo", 
   "words", 
-  "sort", 
+  "typo", 
   "proximity", 
   "attribute", 
+  "sort", 
   "exactness"
 ]
 ```

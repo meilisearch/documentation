@@ -40,9 +40,9 @@ List the settings.
 [
   "words",
   "typo",
-  "sort",
   "proximity",
   "attribute",
+  "sort",
   "exactness",
   "release_date:desc"
 ]
@@ -105,9 +105,9 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 [
   "words", 
   "typo", 
-  "sort",
   "proximity", 
   "attribute", 
+  "sort",
   "exactness"
 ]
 ```
