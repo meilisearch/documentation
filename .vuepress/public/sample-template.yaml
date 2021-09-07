@@ -84,3 +84,11 @@ add_movies_json_1: |-
 post_dump_1: |-
 get_dump_status_1: |-
 phrase_search_1: |-
+sorting_guide_update_sortable_attributes_1: |-
+sorting_guide_update_ranking_rules_1: |-
+sorting_guide_sort_parameter_1: |-
+sorting_guide_sort_parameter_2: |-
+sortable_attributes_get_1: |-
+sortable_attributes_update_1: |-
+sortable_attributes_reset_1: |-
+search_parameter_guide_sort_1: |-
