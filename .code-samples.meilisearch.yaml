@@ -430,13 +430,11 @@ phrase_search_1: |-
   --data '{ "q": "\"african american\" horror" }'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/books/settings' \
-  --data '{
-      "sortableAttributes": [
-          "author",
-          "price"
-      ]
-  }'
+  -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
+  --data '[
+    "author",
+    "price"
+  ]'
 sorting_guide_update_ranking_rules_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/books/settings/ranking-rules' \
