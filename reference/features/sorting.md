@@ -18,7 +18,7 @@ To allow your users to sort results at search time you must:
 
 ### Select attributes for sorting
 
-MeiliSearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting. 
+MeiliSearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
 
 Currently, fields containing nested arrays and objects will be silently ignored.
 
@@ -109,7 +109,7 @@ After configuring `sortableAttributes`, you can use the [`sort` search parameter
 
 ### Using `sort`
 
-`sort` expects a list of attributes that have been added to the `sortableAttributes` list. 
+`sort` expects a list of attributes that have been added to the `sortableAttributes` list.
 
 **Attributes must be given as** `attribute:sorting_order`. In other words, each attribute must be followed by a colon (`:`) and a sorting order: either ascending (`asc`) or descending (`desc`).
 
