@@ -18,7 +18,9 @@ To allow your users to sort results at search time you must:
 
 ### Select attributes for sorting
 
-MeiliSearch allows you to sort results based on document fields. Only fields containing numbers or strings can be used for sorting.
+MeiliSearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting. 
+
+Currently, fields containing nested arrays and objects will be silently ignored.
 
 ::: warning
 If a field has values of different types across documents, MeiliSearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
@@ -54,20 +56,13 @@ Suppose you have collection of books containing the following fields:
   },
   {
     "id": 3,
-    "title": "The Dispossessed",
-    "author": "Ursula K. Le Guin",
-    "genres": ["science fiction", "anarchism"],
-    "price": 3.00
-  },
-  {
-    "id": 4,
     "title": "Gender Trouble",
     "author": "Judith Butler",
     "genres": ["feminism", "philosophy"],
     "price": 10.00
   },
   {
-    "id": 5,
+    "id": 4,
     "title": "Wild Seed",
     "author": "Octavia E. Butler",
     "genres": ["fantasy"],
@@ -112,7 +107,13 @@ If your users care more about finding cheaper books than they care about finding
 
 After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/features/search_parameters.md#sort) to control the sorting order of your search results.
 
-`sort` expects a list of attributes that have been added to the `sortableAttributes` list. The attribute must be followed by a colon (`:`) and the sorting order: either ascending (`asc`) or descending (`desc`):
+### Using `sort`
+
+`sort` expects a list of attributes that have been added to the `sortableAttributes` list. 
+
+**Attributes must be given as** `attribute:sorting_order`. In other words, each attribute must be followed by a colon (`:`) and a sorting order: either ascending (`asc`) or descending (`desc`).
+
+When using the `POST` route, `sort` expects an array of strings:
 
 ```json
 "sort": [
@@ -121,15 +122,19 @@ After configuring `sortableAttributes`, you can use the [`sort` search parameter
 ]
 ```
 
-When using the `POST` route, `sort` expects an array of strings. We strongly recommend using `POST` over `GET` routes.
+When using the `GET` route, `sort` expects a comma-separated string:
 
-When using the `GET` route, `sort` expects a comma-separated string: `sort="price:desc,author:asc"`.
+```
+sort="price:desc,author:asc"
+```
+
+We strongly recommend using `POST` over `GET` routes whenever possible.
 
 The order of `sort` values matter: the higher an attribute is in the search parameter value, the more MeiliSearch will prioritize it over attributes placed lower. In our example, if multiple documents have the same value for `price`, MeiliSearch will decide the order between these similarly-priced documents based on their `author`.
 
 #### Example
 
-Suppose you are searching for books in a webshop and want to see the cheapest science fiction titles. This query searches for `"science fiction"` books ordered from cheapest to most expensive:
+Suppose you are searching for books in a webshop and want to see the cheapest science fiction titles. This query searches for `"science fiction"` books sorted from cheapest to most expensive:
 
 <CodeSamples id="sorting_guide_sort_parameter_1" />
 
@@ -137,13 +142,6 @@ With our example dataset, the results look like this:
 
 ```json
 [
-  {
-    "id": 3,
-    "title": "The Dispossessed",
-    "author": "Ursula K. Le Guin",
-    "genres": ["science fiction", "anarchism"],
-    "price": 3.00
-  },
   {
     "id": 1,
     "title": "Solaris",
