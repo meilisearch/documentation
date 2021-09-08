@@ -20,7 +20,7 @@ Get an index's [`sortableAttributes`](/reference/features/sorting.md).
 
 ### Example
 
-<CodeSamples id="sortable_attributes_get_1" />
+<CodeSamples id="get_sortable_attributes_1" />
 
 #### Response: `200 Ok`
 
@@ -55,7 +55,7 @@ An array of strings containing the attributes that can be used to sort search re
 
 ### Example
 
-<CodeSamples id="sortable_attributes_update_1" />
+<CodeSamples id="update_sortable_attributes_1" />
 
 #### Response: `202 Accepted`
 
@@ -85,7 +85,7 @@ An empty array (`[]`).
 
 ### Example
 
-<CodeSamples id="sortable_attributes_reset_1" />
+<CodeSamples id="reset_sortable_attributes_1" />
 
 #### Response: `202 Accepted`
 

@@ -466,17 +466,17 @@ sorting_guide_sort_parameter_2: |-
       "author:desc"
     ]
   }'
-sortable_attributes_get_1: |-
+get_sortable_attributes_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/books/settings/sortable-attributes'
-sortable_attributes_update_1: |-
+update_sortable_attributes_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
     --data '[
         "price",
         "author"
     ]'
-sortable_attributes_reset_1: |-
+reset_sortable_attributes_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/sortable-attributes'
 search_parameter_guide_sort_1: |-
