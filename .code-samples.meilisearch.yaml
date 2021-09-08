@@ -116,8 +116,8 @@ update_settings_1: |-
             "an"
         ],
         "sortableAttributes": [
-          "price",
-          "author"
+          "title",
+          "release_date"
         ],
         "synonyms": {
             "wolverine": ["xmen", "logan"],
