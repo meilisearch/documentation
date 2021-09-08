@@ -47,7 +47,7 @@ Results are sorted according to the **[attribute ranking order](/learn/core_conc
 Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant, but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant, but might not always follow the order defined by the user.
 
 ::: note
-Differently from other ranking rules, sort is only active for queries containing the `sort` search parameter. If a search request does not contain `sort` or if its value is invalid, this rule will be ignored.
+Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](https://docs.meilisearch.com/reference/features/search_parameters.html#sort). If a search request does not contain `sort` or if its value is invalid, this rule will be ignored.
 :::
 
 #### 6. Exactness
