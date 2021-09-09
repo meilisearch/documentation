@@ -162,6 +162,7 @@ By default, the built-in rules are executed in the following order.
 
 ```json
 [
+
   "words", 
   "typo", 
   "proximity", 
