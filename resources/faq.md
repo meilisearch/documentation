@@ -250,7 +250,9 @@ You can read more about what metrics we collect, why we collect them, and how to
 
 Most crashes during indexation are a result of a machine running out of RAM. This happens when your computer does not have enough memory to process your dataset.
 
-We recommend adding new documents in smaller batches or, when possible, increasing your machine's RAM.
+Indexation also uses disk space. If the indexer runs out of available disk space, MeiliSearch will crash.
+
+In both cases, we recommend adding new documents in smaller batches. Alternatively, you can try increasing your machine's RAM and/or available disk space.
 
 This is a known issue that we are actively trying to improve.
 

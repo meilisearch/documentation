@@ -18,6 +18,6 @@ Crashes caused by memory overconsumption can still happen in two cases:
 
 ## Multi-threading
 
-The indexer never uses more than half of the available processor cores. For example, if your machine has twelve cores, the indexer will use six of them at most. This ensures that MeiliSearch is always ready to perform searches, even while you are updating an index.
+In machines with multi-core processors, the indexer avoids using more than half of the available processing units. For example, if your machine has twelve cores, the indexer will use six of them at most. This ensures MeiliSearch is always ready to perform searches, even while you are updating an index.
 
 Multi-threading is unfortunately not possible in machines with only one processor core.
