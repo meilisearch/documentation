@@ -139,10 +139,10 @@ The only step missing now is adding the search bar to your project. The easiest 
 
 #### Let's try!
 
-1. Create an `html` file, for example, `index.html`.
-2. Open it in a text editor (e.g. Notepad, Sublime Text, Visual Studio Code).
-3. Copy-paste any of the code examples below and save the file.
-4. Open `index.html` in your browser (double click on it in your folder).
+1. Create an `html` file, for example, `index.html`
+2. Open it in a text editor (e.g. Notepad, Sublime Text, Visual Studio Code)
+3. Copy-paste any of the code examples below and save the file
+4. Open `index.html` in your browser (double click on it in your folder)
 
 ::: note
 _We use browser builds for ease of integration. It is possible to do this with `npm` or `yarn`. Please refer to [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) for documentation._
