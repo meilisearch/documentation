@@ -64,7 +64,7 @@ This dataset is a JSON file of 8.6 MB and has 19,553 documents. When we index th
 
 ::: warning
 
-These metrics can strongly change depending on the machine where your index.
+These metrics are highly dependent on the machine that is running MeiliSearch. Running this test in significantly underpowered machines is likely to give different results.
 
 :::
 
