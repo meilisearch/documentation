@@ -423,4 +423,4 @@ phrase_search_1: |-
   --data '{ "q": "\"african american\" horror" }'
 authentication_header_1: |-
   $ curl -X GET 'http://127.0.0.1:7700/keys' \
-  --header "X-Meili-API-Key: mast
+  --header "X-Meili-API-Key: masterKey"
