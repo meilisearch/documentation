@@ -14,7 +14,7 @@ Crashes caused by memory overconsumption can still happen in two cases:
 
 1. `sysinfo` may not be able to calculate the amount of available RAM for certain OSes. MeiliSearch still makes an educated estimate and adapts its the behavior based on that, but crashes may still happen in this case. [Follow this link for an exhaustive list of OSes supported by `sysinfo`](https://docs.rs/sysinfo/0.20.0/sysinfo/#supported-oses).
 
-2. Lower-end machines might struggle when processing huge datasets. Splitting your data payload into smaller batches can help in this case. [For more information, consult the FAQ.](/faq.md#why-does-meilisearch-crash-when-i-try-to-add-documents)
+2. Lower-end machines might struggle when processing huge datasets. Splitting your data payload into smaller batches can help in this case. [For more information, consult the FAQ.](/resources/faq.md#why-does-meilisearch-crash-when-i-try-to-add-documents)
 
 ## Multi-threading
 
