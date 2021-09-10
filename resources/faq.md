@@ -47,7 +47,9 @@ If you have any hesitation about your language handling, please contact us.
 
 ## Do you provide a real dataset to test MeiliSearch?
 
-For now, we provide this [movies dataset](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json). More datasets are coming soon!
+In this documentation, we provide this <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a> dataset.
+
+More datasets and setting configurations are available [in this repository](https://github.com/meilisearch/datasets/).
 
 ## I did a call to an API route, and I only got an `updateId` as a response. What does it mean?
 
