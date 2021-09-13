@@ -1,5 +1,5 @@
 ---
-permalink: /faq
+permalink: /faq.html
 ---
 
 # FAQ
@@ -28,7 +28,7 @@ Plus, you can [contact us](#how-can-i-contact-the-meilisearch-team) if you need 
 MeiliSearch configuration works out-of-the-box. It means, by default, MeiliSearch configures necessary settings for providing a powerful and relevant search.
 
 For example, without requiring any configuration, MeiliSearch is typo tolerant.
-Type `craete an inedx` in the search bar of this documentation to experience the typo tolerance of our search engine.
+Type `craete an index` in the search bar of this documentation to experience the typo tolerance of our search engine.
 
 To find out more about the relevancy of MeiliSearch, take a look at this detailed [explanation](/learn/core_concepts/relevancy.md#ranking-rules).
 
@@ -204,7 +204,7 @@ The following factors have a great impact on the size of your database (in no pa
 - The number of faceted fields
 - The size of each update
 - The number of different words present in the dataset
-  
+
 :::tip
 Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes) unless they are useful as search criteria.
 :::
@@ -235,7 +235,31 @@ In general, we recommend the former. However, if you need to reduce the size of 
 
 - **More relevancy rules => a larger database**
   - The proximity [ranking rule](/learn/core_concepts/relevancy.md#ranking-rules) alone can be responsible for almost 80% of database size
-- [Faceting](/reference/features/faceted_search.md) also consumes a large amount of disk space
+- Adding many attributes to [filterableAttributes](/reference/features/settings.md#filterable-attributes) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
 - [Stop words](/reference/features/stop_words.md) are essential to reducing database size
 - Not all attributes need to be [searchable](/reference/features/field_properties.md#searchable-fields). Avoid indexing unique IDs.
+
+## Why does MeiliSearch send data to Amplitude? Does MeiliSearch track its users?
+
+**MeiliSearch will never track or identify individual users**. That being said, we do use Amplitude to collect anonymous data about user trends and bug reports.
+
+You can read more about what metrics we collect, why we collect them, and how to disable it on our [telemetry page](/learn/what_is_meilisearch/telemetry.md). Transparency is very important to us, so if you feel we are lacking in this area please [open an issue](https://github.com/meilisearch/documentation/issues/new/choose) and let us know! ❤️
+
+## Why does MeiliSearch crash when I try to add documents?
+
+Most crashes during indexation are a result of a machine running out of RAM. This happens when your computer does not have enough memory to process your dataset.
+
+Indexation also uses disk space. If the indexer runs out of available disk space, MeiliSearch will crash.
+
+In both cases, we recommend adding new documents in smaller batches. Alternatively, you can try increasing your machine's RAM and/or available disk space.
+
+This is a known issue that we are actively trying to improve.
+
+## How can I speed up indexation when adding new documents?
+
+You can improve indexation speed in two ways:
+
+1. Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster will MeiliSearch index new documents**.
+
+2. **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine.

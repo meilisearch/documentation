@@ -15,14 +15,14 @@ MeiliSearch uses three types of keys:
 - The **Master** key grants access to all routes
 - The **Private** key grants access to all routes except the `/keys` routes
 - The **Public** key only grants access to the following routes:
-  - [`GET /indexes/:index_uid/search`](/reference/api/search#search-in-an-index-with-get-route)
-  - [`POST /indexes/:index_uid/search`](/reference/api/search#search-in-an-index-with-post-route)
-  - [`GET /indexes/:index_uid/documents`](/reference/api/documents#get-documents)
-  - [`GET /indexes/:index_uid/documents/:document_id`](/reference/api/documents#get-one-document)
+  - [`GET /indexes/:index_uid/search`](/reference/api/search.md#search-in-an-index-with-get-route)
+  - [`POST /indexes/:index_uid/search`](/reference/api/search.md#search-in-an-index-with-post-route)
+  - [`GET /indexes/:index_uid/documents`](/reference/api/documents.md#get-documents)
+  - [`GET /indexes/:index_uid/documents/:document_id`](/reference/api/documents.md#get-one-document)
 
 Both the private and public keys are automatically generated whenever you set or change the master key. **You cannot create any additional keys**.
 
-The only route accessible to all, regardless of authentication, is [`GET /health`](/reference/api/health).
+The only route accessible to all, regardless of authentication, is [`GET /health`](/reference/api/health.md).
 
 ## Adding the master key
 
@@ -62,6 +62,19 @@ When using authentication, a key must be added to [the header](/reference/api/RE
 We strongly discourage using the master key for API calls. It is intended only for retrieving the public and private keys.
 
 If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` status code. You will receive the same error if you fail to provide a key when querying a protected route.
+
+### Example
+
+<CodeSamples id="authentication_header_1" />
+
+#### Response
+
+```json
+{
+  "private": "8c222193c4dff5a19689d637416820bc623375f2ad4c31a2e3a76e8f4c70440d",
+  "public": "948413b6667024a0704c2023916c21eaf0a13485a586c43e4d2df520852a4fb8"
+}
+```
 
 ## Changing a key
 

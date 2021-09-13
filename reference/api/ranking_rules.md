@@ -38,13 +38,13 @@ List the settings.
 
 ```json
 [
-  "typo",
   "words",
+  "typo",
   "proximity",
   "attribute",
-  "wordsPosition",
+  "sort",
   "exactness",
-  "desc(release_date)"
+  "release_date:desc"
 ]
 ```
 
@@ -64,11 +64,11 @@ Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of a
 
 An array that contain ranking rules sorted by order of importance.
 
-To add your own ranking rule, you have to communicate either `asc` for ascending order or `desc` for descending order followed by the field name in brackets.
+To add your own ranking rule, you have to communicate an attribute followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
 
-- To apply an **ascending sort** (results sorted by increasing value): `asc(attribute_name)`
+- To apply an **ascending sort** (results sorted by increasing value): `attribute_name:asc`
 
-- To apply a **descending sort** (results sorted by decreasing value): `desc(attribute_name)`
+- To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
 [More information about the body](/reference/features/settings.md#ranking-rules).
 
@@ -102,7 +102,14 @@ To remove a ranking rule, use the [add or replace ranking rules route](/referenc
 An array that contains the [built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) in the following order:
 
 ```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+[
+  "words", 
+  "typo", 
+  "proximity", 
+  "attribute", 
+  "sort",
+  "exactness"
+]
 ```
 
 #### Path Variables

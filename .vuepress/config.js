@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.20',
+  title: 'MeiliSearch Documentation v0.22',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -17,8 +17,8 @@ module.exports = {
       {
         text: 'Resources',
         items: [
-          { text: 'FAQ', link: '/resources/faq' },
-          { text: 'Open API', link: '/resources/open-api-readme' },
+          { text: 'FAQ', link: '/faq' },
+          { text: 'Open API', link: '/open-api-readme' },
           {
             text: 'SDKs',
             items: [
@@ -50,6 +50,7 @@ module.exports = {
             '/learn/what_is_meilisearch/philosophy',
             '/learn/what_is_meilisearch/sdks',
             '/learn/what_is_meilisearch/comparison_to_alternatives',
+            '/learn/what_is_meilisearch/telemetry',
             '/learn/what_is_meilisearch/contact',
           ],
         },
@@ -108,14 +109,14 @@ module.exports = {
               title: 'Errors',
               path: '/errors/',
             },
-            '/reference/features/faceted_search',
             '/reference/features/field_properties',
-            '/reference/features/filtering',
+            '/reference/features/filtering_and_faceted_search',
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
             '/reference/features/settings',
             '/reference/features/snapshots',
+            '/reference/features/sorting',
             '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',
@@ -143,10 +144,11 @@ module.exports = {
                 '/reference/api/synonyms',
                 '/reference/api/stop_words',
                 '/reference/api/ranking_rules',
-                '/reference/api/attributes_for_faceting',
+                '/reference/api/filterable_attributes',
                 '/reference/api/distinct_attribute',
                 '/reference/api/searchable_attributes',
                 '/reference/api/displayed_attributes',
+                '/reference/api/sortable_attributes',
               ],
             },
             '/reference/api/stats',
@@ -227,10 +229,6 @@ module.exports = {
                   title: 'Add a search bar to your docs',
                   path: '/create/how_to/search_bar_for_docs',
                 },
-                {
-                  title: 'Add to a React app',
-                  path: '/create/how_to/meilisearch_react',
-                },
               ],
             },
             {
@@ -256,6 +254,7 @@ module.exports = {
         pattern: '**/*.md',
         strictExt: true,
         ignorePattern: ['errors', 'document_structure'],
+        exitLevel: 'warn',
       },
     ],
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],

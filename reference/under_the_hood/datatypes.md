@@ -71,7 +71,7 @@ A numeric type (`integer`, `float`) is converted to a human-readable decimal num
 
 You can add [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules) to create an ascending or descending sorting rule on a given attribute that has a numeric value in the documents.
 
-You can also create [filters](/reference/features/filtering.md). The `>`, `>=`, `<`, and `<=` relational operators apply only to numerical values.
+You can also create [filters](/reference/features/filtering_and_faceted_search.md). The `>`, `>=`, `<`, and `<=` relational operators apply only to numerical values.
 
 ### Boolean
 

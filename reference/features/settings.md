@@ -2,15 +2,16 @@
 
 This page describes all the **settings** available in MeiliSearch and how to **configure** them.
 
-| Variable                                                                              | Description                                                                      | Default value                                                                                     |
-| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **[synonyms](/reference/features/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **[stopWords](/reference/features/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **[attributesForFaceting](/reference/features/settings.md#attributes-for-faceting)** | Attributes to use as facets                                 |    `null`     |
+| Variable                                                                          | Description                                                                      | Default value                                                                               |
+|-----------------------------------------------------------------------------------|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| **[synonyms](/reference/features/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                        |
+| **[stopWords](/reference/features/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                        |
+| **[filterableAttributes](/reference/features/settings.md#filterable-attributes)** | List of attributes that can be used for filtering                                | `null`                                                                                      |
 | **[rankingRules](/reference/features/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
-| **[distinctAttribute](/reference/features/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **[searchableAttributes](/reference/features/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                             |
-| **[displayedAttributes](/reference/features/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                             |
+| **[distinctAttribute](/reference/features/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                      |
+| **[searchableAttributes](/reference/features/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                       |
+| **[displayedAttributes](/reference/features/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                       |
+| **[sortableAttributes](/reference/features/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
 
 ## Synonyms
 
@@ -54,26 +55,21 @@ With the settings in the example above, `the`, `a` and `an` are now ignored by t
 
 Suppose you would like to search `the mask` in a movie database. Since `the` is ignored during search, MeiliSearch will look for every movie containing `mask` and not the millions ones containing `the`. `the` is a less relevant term than `mask` and also a very frequent word in English. By adding `the` to the stop words list, MeiliSearch will ignore this word, and thus be faster to answer without losing in relevancy.
 
-## Attributes for faceting
+## Filterable attributes
 
-Faceted <clientGlossary word="attribute" label="attributes"/> are the attributes used as facets. They **must be added to the settings to be usable as [facet filters](/reference/features/search_parameters.md#facet-filters)**.
+List of <clientGlossary word="attribute" label="attributes"/> that can be used for [filtering and faceted search](/reference/features/filtering_and_faceted_search.md).
 
-`attributesForFaceting=[<Attribute>, ...]`
+By default, `filterableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
 
-- `[<Attribute>, ...]` (Array of strings, defaults to `null`)
-
-  An array of strings that contains the attributes to use as facets.
-
-::: warning
-  Only fields of data type **string** or **array of strings** can be used for faceting.
-  A `null` value will be ignored. In any other case, an error will be thrown.
+::: tip
+Configuring `filterableAttributes` is necessary in order to use the [`filter` search parameter](/reference/features/search_parameters.md#filter).
 :::
 
-[Learn more about faceted attributes](/reference/features/faceted_search.md)
+[Learn more about filtering and faceted search in our dedicated guide.](/reference/features/filtering_and_faceted_search.md)
 
 #### Example
 
-To be able to facet search on `director` and `genres` in a movie database, you would declare faceted attributes as follows:
+To be able to filter search results on `director` and `genres` in a movie database, you must first add these attributes to the `filterableAttributes` list:
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
@@ -90,7 +86,14 @@ Built-in ranking rules that **ensure relevancy in search results**. Ranking rule
 Default value (the ranking rules in the default order):
 
 ```json
-["typo", "words", "proximity", "attribute", "wordsPosition", "exactness"]
+[
+  "words", 
+  "typo", 
+  "proximity", 
+  "attribute", 
+  "sort",
+  "exactness"
+]
 ```
 
 [Read this guide to know more about what each ranking rules does](/learn/core_concepts/relevancy.md)
@@ -195,3 +198,21 @@ Documents returned upon search contain only displayed fields.
 By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `genre` and `release_date`.
 
 <CodeSamples id="settings_guide_displayed_1" />
+
+## Sortable attributes
+
+List of <clientGlossary word="attribute" label="attributes"/> that can be used for [sorting](/reference/features/sorting.md).
+
+By default, `sortableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
+
+::: tip
+Configuring `sortableAttributes` is necessary in order to use the [`sort` search parameter](/reference/features/search_parameters.md#sort).
+:::
+
+[Learn more about sorting in our dedicated guide.](/reference/features/sorting.md)
+
+#### Example
+
+To be able to sort search results according to the attributes `price` and `author` in a webshop, you must first add them to the `sortableAttributes` list:
+
+<CodeSamples id="settings_guide_sortable_1" />
