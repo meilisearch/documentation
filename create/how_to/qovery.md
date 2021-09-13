@@ -17,8 +17,9 @@ Qovery provides **free hosting** for individual developers and include the follo
 Visit the [Qovery dashboard](https://start.qovery.com) to create an account if you don't already have one.
 
 ### 2. Create a project
-* Click on **Create project** and give a name to your project.
-* Click on **Next**.
+
+* Click on **Create project** and give a name to your project
+* Click on **Next**
 
 ![Create a project](https://hub.qovery.com/img/heroku/heroku-2.png)
 
