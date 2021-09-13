@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.21',
+  title: 'MeiliSearch Documentation v0.22',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -116,6 +116,7 @@ module.exports = {
             '/reference/features/search_parameters',
             '/reference/features/settings',
             '/reference/features/snapshots',
+            '/reference/features/sorting',
             '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',
@@ -147,6 +148,7 @@ module.exports = {
                 '/reference/api/distinct_attribute',
                 '/reference/api/searchable_attributes',
                 '/reference/api/displayed_attributes',
+                '/reference/api/sortable_attributes',
               ],
             },
             '/reference/api/stats',
