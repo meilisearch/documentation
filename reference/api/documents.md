@@ -108,7 +108,7 @@ If the provided index does not exist, it will be created.
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
+| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the index _(optional)_ |     none      |
 
 If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
