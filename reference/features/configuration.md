@@ -199,6 +199,7 @@ MeiliSearch currently supports four log levels, listed in order of increasing ve
 - `'WARN:'` log all unexpected events, regardless of their severity
 - `'INFO:'` log all events. This is the default value of `--log-level`
 - `'DEBUG'`: log all events and including detailed information on MeiliSearch's internal processes. Useful when diagnosing issues and debugging
+- `'TRACE'`: log all events, details, and even more detailed information on MeiliSearch's internal processes. We do not advise using this level as it is overkill. Consider using `DEBUG` instead.
 
 ### Max index size
 
