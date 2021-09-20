@@ -32,7 +32,6 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 - [Vue](https://github.com/meilisearch/meilisearch-vue)
 - [Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch): helps you integrate a great search experience with minimum efforts.
 - [docs-searchbar.js](https://github.com/meilisearch/docs-searchbar.js): a search bar integration for all kinds of documentation.
-- [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
 
 ### DevOps tools
 
@@ -43,6 +42,11 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 - [meilisearch-gcp](https://github.com/meilisearch/meilisearch-gcp)
   - Guide: [How to deploy a MeiliSearch instance on Google Cloud Platform](/create/how_to/gcp.md)
 - [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes)
+
+### Platform Plugins
+
+- [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
+- [Strapi plugin](https://github.com/meilisearch/strapi-plugin-meilisearch/)
 
 ### Other tools
 
