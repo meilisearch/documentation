@@ -10,10 +10,10 @@ Documents function as **containers for organizing data**, and are the basic buil
 
 ### Important terms
 
-- **Document**: an object which contains data in the form of one or more fields.
-- **[Field][fields]**: a set of two data items that are linked together: an **attribute** and a **value**.
+- **Document**: an object which contains data in the form of one or more fields
+- **[Field][fields]**: a set of two data items that are linked together: an **attribute** and a **value**
 - **Attribute**: the first part of a field. Acts as a name or description for its associated value.
-- **Value**: the second part of a field, consisting of data of any valid `JSON` type.
+- **Value**: the second part of a field, consisting of data of any valid `JSON` type
 - **[Primary Field][primary-field]**: A special field that is mandatory in all documents. It contains the primary key and document identifier.
 - **[Primary Key][primary-key]**: the attribute of the primary field. **All documents in the same index must possess the same primary key.** Its associated value is the document identifier.
 - **[Document Identifier][document-id]**: the value of the primary field. **Every document in a given index must have a unique identifier**.
@@ -22,7 +22,7 @@ Documents function as **containers for organizing data**, and are the basic buil
 
 Documents are represented as `JSON objects`: key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting `JSON objects`](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting MeiliSearch documents. For example, **an attribute must be a string**, while **a value must be a valid [`JSON` data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
 
-As an example, let's say you are making an **[index][indexes]** that contains information about movies. A sample document might look like this:
+As an example, let's say you are creating an **[index][indexes]** that contains information about movies. A sample document might look like this:
 
 ```json
 {
@@ -68,10 +68,10 @@ At this time, there are two field properties: [<clientGlossary word="searchable"
 
 To clarify, a field may be:
 
-- searchable but not displayed
-- displayed but not searchable
-- both displayed and searchable (default)
-- neither displayed nor searchable
+- Searchable but not displayed
+- Displayed but not searchable
+- Both displayed and searchable (default)
+- Neither displayed nor searchable
 
 In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/reference/features/field_properties.md#data-storing) in the document.
 
@@ -116,7 +116,7 @@ There are several ways to set the primary key for an index:
 
 - You can set it manually [on index creation](/reference/api/indexes.md#create-an-index)
 - You can set it manually [on document addition](/reference/api/documents.md#add-or-replace-documents)
-- If no primary key is set, MeiliSearch automatically [guesses the primary key](/learn/core_concepts/documents.md#meilisearch-guesses-your-primary-key) when you add documents.
+- If no primary key is set, MeiliSearch automatically [guesses the primary key](/learn/core_concepts/documents.md#meilisearch-guesses-your-primary-key) when you add documents
 
 #### MeiliSearch guesses your primary key
 
@@ -152,7 +152,7 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-Take note that the document addition request in MeiliSearch is <clientGlossary word="atomic"/>. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
+Take note that the document addition request in MeiliSearch is <clientGlossary word="atomic"/>. This means that **even if a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
 
 ## Upload
 
@@ -164,7 +164,7 @@ To upload more documents in one go, it is possible to [change the payload size l
 ./meilisearch --http-payload-size-limit=1048576000
 ```
 
-> The above code sets the payload limit to 1GB, instead of the 100MB default.
+The above code sets the payload limit to 1GB, instead of the 100MB default.
 
 **MeiliSearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase the size of your batch as this could cause MeiliSearch to crash.
 

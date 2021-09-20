@@ -11,9 +11,9 @@ An index is defined by an `uid` and contains the following information:
 
 #### Example
 
-Suppose you manage a database that contains information about movies. You would probably want to have multiple categories: one for movie descriptions, one for actors, one for costumes and one for reviews. Each of these categories would be represented by an index in MeiliSearch.
+Suppose you manage a database that contains information about movies. You would probably want to have multiple categories for movie descriptions, actors, costumes, and reviews. Each of these categories would be represented by an index in MeiliSearch.
 
-Each index holds information about the fields found in the documents, how they get handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
+Each index holds information about the fields found in the documents, how they are handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
 
 For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
 
@@ -23,11 +23,8 @@ An index is created the first time documents are added to it or manually using t
 
 #### Example
 
-In a new MeiliSearch instance without any index, let's add documents using the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents).
-We provide `movies` as our index. Because that index was not previously created, using the following code will:
-
-1. Create the `movie` index.
-2. Add the documents to it.
+Let's use the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents) to add documents to a new MeiliSearch instance without an index.
+We will create an index called `movies`. The code below will create the `movies` index and add the documents to it.
 
 <CodeSamples id="add_or_replace_documents_1" />
 
@@ -35,7 +32,9 @@ We provide `movies` as our index. Because that index was not previously created,
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
-The uid is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
+The uid is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you **cannot**:
+ -create another index with the same `uid` 
+ -change the `uid`
 
 ```json
 {
@@ -57,9 +56,9 @@ The primary key's attribute name **must** be known by the index. You can [set a 
 
 Each index applies its own relevancy rules. All indexes are created with the same built-in <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance will be deduced from their order of appearance in the document.
 
-For example, if in your first document attributes are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
+So if your document lists attributes in the following order: `id, title, description, release_date`, any document with the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
-On top of that, you can add your custom rules to the ranking rules. For example, you may want to rank your movies either by release date or popularity, or both and so on. **Rules are customizable** so the results meet your user's needs as close as possible.
+You can **customize the rules** to ensure they meeet your user's needs. For example, you may want to rank your movies either by release date or popularity, or both and so on. 
 
 [Learn more about ranking rules](/learn/core_concepts/relevancy.md)
 
@@ -77,7 +76,7 @@ Sometimes you may want to ignore certain words in documents and search queries. 
 
 By adding words to a stop words list, these specific terms will be ignored during search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/learn/core_concepts/relevancy.md#ranking-rules) or in a good [position](/learn/core_concepts/relevancy.md#ranking-rules). This will also greatly improve the response time because all the documents that contain only those words will not be used for documents sorting.
 
-For example, suppose you would perform the following search query: `the great gatsby`. Having the word `the` in a film review wouldn't make the review more relevant. By adding `the` to the stop word list, performance would be increased and search results more relevant.
+For example, suppose you search for: `the great gatsby`. Having `the` in a film review wouldn't make the review more relevant, but adding `the` to the stop word list would improve performance show more relevant search results.
 
 [Learn more about stop words](/reference/features/stop_words.md)
 
