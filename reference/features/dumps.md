@@ -1,6 +1,9 @@
 # Dumps
 
 A dump is a compressed file containing an export of your MeiliSearch instance. It contains all your indexes, documents, and settings, but in a raw unprocessed form. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to create an identical dataset. A dump can be imported when launching MeiliSearch, but be advised that it may take some time to index all the documents within.
+::: note
+We do not recommend using dumps from a new MeiliSearch version to import an older version.
+:::
 
 ## Creating a dump
 
