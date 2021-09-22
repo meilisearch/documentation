@@ -35,7 +35,7 @@ meilisearch
 :::
 
 ::: tab Docker
-If you are new to Docker, you can learn more about setting it up on the [official documentation](https://docs.docker.com/get-docker/). 
+If you are new to Docker, you can learn more about setting it up on the [official documentation](https://docs.docker.com/get-docker/).
 Using **Docker** you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 This command starts the **latest stable release** of MeiliSearch.
