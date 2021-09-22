@@ -33,9 +33,10 @@ As the data contained in the dump needs to be indexed, the process will take som
 ```bash
 ./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
+
 ::: note
 We do not recommend using dumps from a new MeiliSearch version to import an older version.
-For example, you **should not** import a dump from MeiliSearh v0.22.0 to MeiliSearch v0.21.0.
+For example, you **should not** import a dump from MeiliSearh v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearh v0.21.0 to MeiliSearh v0.21.0 or higher will work.
 :::
 
 ## Use cases
