@@ -4,6 +4,10 @@ Currently, MeiliSearch databases can only be opened by the MeiliSearch version y
 
 If you already have a MeiliSearch database with some data you don’t want to lose, you are in the right place!
 
+:::note
+If you have already **installed the latest version and manually indexed your data and settings**, you can ignore this guide.
+:::
+
 ## Verify your database version
 
 Before we begin, you need to **verify the version of MeiliSearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a MeiliSearch instance:
@@ -110,7 +114,8 @@ In this guide, we will:
 
 1. [Set all fields as displayed attributes](#step-1-set-all-fields-as-displayed-attributes)
 2. [Create a dump using the MeiliSearch version that's compatible with your database](#step-2-create-the-dump)
-3. [Import the dump using the most recent MeiliSearch version](#step-3-import-the-dump)
+3. [Delete the data.ms folder](#step-3-delete-the-datams-folder)
+4. [Import the dump using the most recent MeiliSearch version](#step-4-import-the-dump)
 
 ### Step 1: Set all fields as displayed attributes
 
@@ -150,6 +155,10 @@ Now that all fields are displayed, proceed to the next step.
 ### Step 2: Create the dump
 
 Before creating your dump, make sure that your [dump directory](/reference/features/configuration.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your MeiliSearch directory.
+
+::: note
+If you are running MeiliSearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found at the root directory, `cd /`.
+:::
 
 If you're unsure where your MeiliSearch directory is located, try this:
 
@@ -233,15 +242,16 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 }
 ```
 
-### Step 3: Import the dump
+### Step 3: Delete the data.ms folder
+
+To delete the old MeiliSearch version, you need to delete data.ms. data.ms should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+
+### Step 4: Import the dump
 
 Now that you’ve got your dump, [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/reference/features/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
 
 ```bash
-# install MeiliSearch
-curl -L https://install.meilisearch.com | sh
-
-# launch MeiliSearch and import the specified dump file
+# launch the latest versions of MeiliSearch and import the specified dump file
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
@@ -254,6 +264,14 @@ Congratulations! You have successfully migrated your MeiliSearch database to the
 ## Updating from v0.14.0 or below
 
 Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as `.JSON` files.
+
+In this guide, we will:
+
+1. [Save your settings](#step-1-save-your-settings)
+2. [Set all fields as displayed attributes](#step-2-set-all-fields-as-displayed-attributes)
+3. [Save your documents](#step-3-save-your-documents)
+4. [Delete the data.ms folder](#step-4-delete-the-datams-folder)
+5. [Upload your data to the latest version of MeiliSearch](#step-5-upload-your-data-to-the-latest-version-of-meilisearch)
 
 If you don’t need to preserve index settings, skip directly to [step two](#step-2-set-all-fields-as-displayed-attributes).
 
@@ -313,7 +331,11 @@ curl -X GET \
   -o mydocuments.json
 ```
 
-### Step 4: Upload your data to the latest version of MeiliSearch
+### Step 4: Delete the data.ms folder
+
+To delete the old MeiliSearch version, you need to delete data.ms. data.ms should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+
+### Step 5: Upload your data to the latest version of MeiliSearch
 
 Finally, [install the latest version of MeiliSearch](/learn/getting_started/installation.md) and upload your data as usual.
 
