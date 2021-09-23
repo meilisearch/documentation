@@ -35,6 +35,11 @@
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-rust/main/.code-samples.meilisearch.yaml"
   },
   {
+    "language": "swift",
+    "label": "Swift",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-swift/main/.code-samples.meilisearch.yaml"
+  },
+  {
     "language": "dart",
     "label": "Dart",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dart/main/.code-samples.meilisearch.yaml"
