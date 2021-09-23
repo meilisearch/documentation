@@ -18,7 +18,7 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 ### Maximum words per attribute
 
-**Limitation:** MeiliSearch can index a maximum of __1000 words per attribute__. If an attribute contains more than 1000 words, only the first 1000 words will be indexed and the rest will be silently ignored.
+**Limitation:** MeiliSearch can index a maximum of __1000 positions per attribute__. Any words exceeding the 1000 position limit will be silently ignored.
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
 

@@ -54,11 +54,34 @@ An attribute functions a bit like a variable in most programming languages, i.e.
 
 Every field has a [data type](/reference/under_the_hood/datatypes.md) dictated by its value. Every value must be a valid [`JSON` data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-Take note that in the case of strings, the value **[can contain at most 1000 words](/reference/features/known_limitations.md#maximum-words-per-attribute)**. If it contains more than 1000 words, only the first 1000 will be indexed.
-
 You can also apply [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
 If you would like to adjust how a field gets handled by MeiliSearch, you can do so in the [settings](/reference/features/settings.md#settings).
+
+Take note that in the case of strings, the value **[can contain at most 1000 positions](/reference/features/known_limitations.md#maximum-words-per-attribute)**. Words exceeding the 1000 position limit will be ignored.
+
+### Example
+
+If your query is `Hello World`
+
+- `Hello` takes the position `0` of the attribute
+- `World` takes the position `1` of the attribute
+
+If your query is `Hello, World`
+
+- `Hello` takes the position `0` of the attribute
+- `,` takes the position `8` of the attribute
+- `World` takes the position `9` of the attribute
+
+`,` takes 8 spaces as it is a hard separator, you can read more about it [here](https://docs.meilisearch.com/reference/under_the_hood/datatypes.html#string).
+
+If your query is `Hello - World`
+
+- `Hello` takes the position `0` of the attribute
+- `-` takes the position `1` of the attribute
+- `World` takes the position `2` of the attribute
+
+`-` takes 1 space as it is a soft separator, you can read more about it [here](https://docs.meilisearch.com/reference/under_the_hood/datatypes.html#string).
 
 ### Field properties
 
