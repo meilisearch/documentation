@@ -244,7 +244,7 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 
 ### Step 3: Delete the database folder
 
-To delete the old MeiliSearch version, you need to delete data.ms. data.ms should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old MeiliSearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
 
 ### Step 4: Import the dump
 
