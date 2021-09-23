@@ -114,7 +114,7 @@ In this guide, we will:
 
 1. [Set all fields as displayed attributes](#step-1-set-all-fields-as-displayed-attributes)
 2. [Create a dump using the MeiliSearch version that's compatible with your database](#step-2-create-the-dump)
-3. [Delete the data.ms folder](#step-3-delete-the-datams-folder)
+3. [Delete the database folder](#step-3-delete-the-database-folder)
 4. [Import the dump using the most recent MeiliSearch version](#step-4-import-the-dump)
 
 ### Step 1: Set all fields as displayed attributes
@@ -242,7 +242,7 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 }
 ```
 
-### Step 3: Delete the data.ms folder
+### Step 3: Delete the database folder
 
 To delete the old MeiliSearch version, you need to delete data.ms. data.ms should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
 
@@ -251,7 +251,7 @@ To delete the old MeiliSearch version, you need to delete data.ms. data.ms shoul
 Now that you’ve got your dump, [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/reference/features/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
 
 ```bash
-# launch the latest versions of MeiliSearch and import the specified dump file
+# launch the latest version of MeiliSearch and import the specified dump file
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
@@ -270,7 +270,7 @@ In this guide, we will:
 1. [Save your settings](#step-1-save-your-settings)
 2. [Set all fields as displayed attributes](#step-2-set-all-fields-as-displayed-attributes)
 3. [Save your documents](#step-3-save-your-documents)
-4. [Delete the data.ms folder](#step-4-delete-the-datams-folder)
+4. [Delete the database folder](#step-4-delete-the-database-folder)
 5. [Upload your data to the latest version of MeiliSearch](#step-5-upload-your-data-to-the-latest-version-of-meilisearch)
 
 If you don’t need to preserve index settings, skip directly to [step two](#step-2-set-all-fields-as-displayed-attributes).
@@ -293,14 +293,14 @@ Repeat this process for all indexes you wish to migrate.
 
 To prevent data loss, all fields must be set as [displayed](/reference/features/field_properties.md#displayed-fields).
 
-By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
+By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
 ```bash
 curl -X GET \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-If the response is `'["*"]'`, you can move on to the [next step](#step-2-create-the-dump).
+If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
 
 If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
@@ -331,7 +331,7 @@ curl -X GET \
   -o mydocuments.json
 ```
 
-### Step 4: Delete the data.ms folder
+### Step 4: Delete the database folder
 
 To delete the old MeiliSearch version, you need to delete data.ms. data.ms should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
 
