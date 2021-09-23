@@ -33,7 +33,7 @@ We will create an index called `movies`. The code below will create the `movies`
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
 The uid is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you **cannot**:
- -create another index with the same `uid` 
+ -create another index with the same `uid`
  -change the `uid`
 
 ```json
@@ -58,7 +58,7 @@ Each index applies its own relevancy rules. All indexes are created with the sam
 
 So if your document lists attributes in the following order: `id, title, description, release_date`, any document with the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
-You can **customize the rules** to ensure they meeet your user's needs. For example, you may want to rank your movies either by release date or popularity, or both and so on. 
+You can **customize the rules** to ensure they meeet your user's needs. For example, you may want to rank your movies either by release date or popularity, or both and so on.
 
 [Learn more about ranking rules](/learn/core_concepts/relevancy.md)
 

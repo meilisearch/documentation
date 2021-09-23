@@ -18,7 +18,8 @@ Whenever a search query is made, MeiliSearch uses [bucket sort](/reference/under
 
 ### Built-in rules
 
-MeiliSearch contains six built-in ranking rules in the following order: 
+MeiliSearch contains six built-in ranking rules in the following order:
+
 1. Words
 2. Typo
 3. Proximity
