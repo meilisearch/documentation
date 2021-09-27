@@ -102,13 +102,11 @@ Configures the instance's environment. Value must be either `production` or `dev
 `production`:
 
 - Setting a [master key](/reference/features/authentication.md) is **mandatory**
-- Logging is disabled
 - The [web interface](/reference/features/web_interface.md#web-interface) is disabled
 
 `development`:
 
 - Setting a [master key](/reference/features/authentication.md) is **optional**
-- Logs are printed to the standard output
 - The web interface is enabled
 
 ::: tip
