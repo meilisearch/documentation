@@ -123,9 +123,9 @@ Had the update failed, the response would have included an error message:
 
 ## Terminate MeiliSearch while a task is being processed
 
-**Terminating a MeiliSearch instance in the middle of an update is completely safe** and will never adversely affect the database
+**Terminating a MeiliSearch instance in the middle of an update is completely safe** and will never adversely affect the database.
 
-MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or is interrupted before reaching its end, nothing is committed to the database.
+MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>. This means that all operations concerning a specific task are bundled in one transaction. If any of these operations fail or are interrupted before reaching the end, nothing is committed to the database.
 
 What happens to an update task when MeiliSearch is terminated changes depending on the request's `status`:
 

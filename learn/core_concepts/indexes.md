@@ -4,7 +4,7 @@ An index is an entity that gathers a set of documents with its own settings.
 
 It can be comparable to a table in `SQL`, or a collection in MongoDB.
 
-An index is defined by an `uid` and contains the following information:
+An index is defined by a `uid` and contains the following information:
 
 - One <clientGlossary word="primary key"/>
 - Default settings that can be configured as needed: relevancy rules, synonyms, stop words, and field properties.
@@ -35,7 +35,7 @@ We provide `movies` as our index. Because that index was not previously created,
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
-The uid is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
+The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
 {
@@ -73,7 +73,7 @@ Since synonyms are linked to a given index, they won't apply to any other index 
 
 ## Stop words
 
-Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e., `the` or `of` in English).
+Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e., `the`, `or`, `of` in English).
 
 By adding words to a stop words list, these specific terms will be ignored during search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/learn/core_concepts/relevancy.md#ranking-rules) or in a good [position](/learn/core_concepts/relevancy.md#ranking-rules). This will also greatly improve the response time because all the documents that contain only those words will not be used for documents sorting.
 
