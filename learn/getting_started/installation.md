@@ -35,7 +35,6 @@ meilisearch
 :::
 
 ::: tab Docker
-If you are new to Docker, you can learn more about setting it up on the [official documentation](https://docs.docker.com/get-docker/).
 Using **Docker** you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 This command starts the **latest stable release** of MeiliSearch.
@@ -46,8 +45,8 @@ docker run -it --rm \
     -v $(pwd)/data.ms:/data.ms \
     getmeili/meilisearch
 ```
-
 Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
+If you are new to Docker, you can learn more about it on the [official documentation](https://docs.docker.com/get-docker/).
 :::
 
 ::: tab APT
@@ -96,13 +95,14 @@ cargo build --release
 :::
 
 ::: tab Windows
-If you are new to the Windows CMD, you can learn more about it [here](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
+
 To install MeiliSearch on Windows, you can:
 
 - use Docker
 - [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
 - compile from source
-:::
+
+If you are new to the Windows CMD, you can learn more about it [here](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
 
 ::::
 
