@@ -20,7 +20,7 @@ Types:
 
 String is the primary type for indexing data in MeiliSearch. It enables to create the content in which to search. Strings are processed as detailed below.
 
-> String tokenization is the process of splitting a string into a list of individual terms that are called tokens.
+String tokenization is the process of **splitting a string into a list of individual terms that are called tokens.**
 
 A string is passed to a tokenizer and is then broken into separate string tokens. A token is a **word**.
 

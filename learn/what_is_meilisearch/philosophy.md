@@ -14,7 +14,7 @@ For end-users, the search experience aims to feel simple so they can focus on th
 
 MeiliSearch works out-of-the-box with default settings that meet the needs of most projects. However, searching is still highly customizable.
 
-> It wouldn't be a search engine if there wasn't a notion of relevancy in the results returned.
+It wouldn't be a search engine if there wasn't a notion of relevancy in the results returned.
 
 The returned results are **sorted according to a set of consecutive rules called [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules)**. You can delete existing rules, add new ones, or even change the order in which they are executed.
 

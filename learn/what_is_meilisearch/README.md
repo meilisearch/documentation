@@ -14,7 +14,7 @@ Our solution delivers an **instant search experience** including **typo handling
 
 ![crates.io demo gif](/crates-io-demo.gif)
 
-> Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
+Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
 
 ## Features
 

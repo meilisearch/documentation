@@ -167,7 +167,7 @@ To make sure that everything is running smoothly, do a final HTTP call to the `/
 curl -v https://<your-domain-name>/health
 ```
 
-> Note that this time, we're using HTTPS.
+Note that this time, **we're using HTTPS.**
 
 The server should answer with a `200 OK` status code as shown in the example below:
 

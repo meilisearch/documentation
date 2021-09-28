@@ -164,7 +164,9 @@ To upload more documents in one go, it is possible to [change the payload size l
 ./meilisearch --http-payload-size-limit=1048576000
 ```
 
-> The above code sets the payload limit to 1GB, instead of the 100MB default.
+::: note
+The above code sets the payload limit to 1GB, instead of the 100MB default.
+:::
 
 **MeiliSearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase the size of your batch as this could cause MeiliSearch to crash.
 

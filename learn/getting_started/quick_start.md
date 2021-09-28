@@ -46,7 +46,7 @@ To add documents to MeiliSearch you must provide:
 - [Documents](/learn/core_concepts/documents.md) in the form of an array of `JSON objects`.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
-> _If the index does not exist, MeiliSearch creates it when you first add documents._
+**If the index does not exist, MeiliSearch creates it when you first add documents.**
 
 To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
@@ -59,7 +59,7 @@ To be processed, all documents must share one common <clientGlossary word="field
 ]
 ```
 
-> The primary key is `id`, the document's unique identifier is `123`.
+The **primary key** is `id`, the **document's unique identifier** is `123`.
 
 There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
 
