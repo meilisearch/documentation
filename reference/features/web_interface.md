@@ -2,7 +2,7 @@
 
 After adding documents to your MeiliSearch, it is possible to try out the search engine with the integrated web interface. This only works in a [development environment](/reference/features/configuration.md#environment).
 
-The web interface is served on the address and port specified in the command line argument `--listen`. If not specified, [the default address and port is used](/reference/features/configuration.md#http-address-port-binding).
+The web interface is served on the address and port specified in the command line argument `--http-addr`. If not specified, [the default address and port is used](/reference/features/configuration.md#http-address-port-binding).
 
 ::: warning
 Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/reference/features/configuration.md#environment).
