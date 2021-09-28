@@ -279,43 +279,43 @@ field_properties_guide_displayed_1: |-
     }'
 filtering_guide_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "Avengers", "filter": "release_date > 795484800" }'
+  --data-binary '{ "q": "Avengers", "filter": "release_date > 795484800" }'
 filtering_guide_2: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q":"Batman",  "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
+  --data-binary '{ "q":"Batman",  "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
 filtering_guide_3: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "horror", "filter": "director = \"Jordan Peele\"" }'
+  --data-binary '{ "q": "horror", "filter": "director = \"Jordan Peele\"" }'
 filtering_guide_4: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "Planet of the Apes", "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
+  --data-binary '{ "q": "Planet of the Apes", "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
 search_parameter_guide_query_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu" }'
+    --data-binary '{ "q": "shifu" }'
 search_parameter_guide_offset_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "offset": 1 }'
+    --data-binary '{ "q": "shifu", "offset": 1 }'
 search_parameter_guide_limit_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "shifu", "limit": 2 }'
+  --data-binary '{ "q": "shifu", "limit": 2 }'
 search_parameter_guide_retrieve_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "shifu", "attributesToRetrieve": ["overview", "title"] }'
+  --data-binary '{ "q": "shifu", "attributesToRetrieve": ["overview", "title"] }'
 search_parameter_guide_crop_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
+    --data-binary '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
 search_parameter_guide_highlight_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'
+    --data-binary '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'
 search_parameter_guide_filter_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "n", "filter": "title = Nightshift" }'
+  --data-binary '{ "q": "n", "filter": "title = Nightshift" }'
 search_parameter_guide_filter_2: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "filter": "title=\"Kung Fu Panda\"" }'
+    --data-binary '{ "q": "shifu", "filter": "title=\"Kung Fu Panda\"" }'
 search_parameter_guide_matches_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "winter feast", "matches": true }'
+  --data-binary '{ "q": "winter feast", "matches": true }'
 settings_guide_synonyms_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/tops/settings' \
@@ -385,7 +385,8 @@ settings_guide_displayed_1: |-
     }'
 add_movies_json_1: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
-    --data @movies.json
+  -H 'Content-Type: application/json' \
+    --data-binary @movies.json
 documents_guide_add_movie_1: |-
   curl -X POST `http://localhost:7700/indexes/movies/documents` \
   -H 'Content-Type: application/json' \
@@ -397,20 +398,21 @@ documents_guide_add_movie_1: |-
     ]'
 search_guide_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-    --data '{ "q": "shifu", "limit": 5, "offset": 10 }'
+    --data-binary '{ "q": "shifu", "limit": 5, "offset": 10 }'
 search_guide_2: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "Avengers", "filter": "release_date > 795484800" }'
+  --data-binary '{ "q": "Avengers", "filter": "release_date > 795484800" }'
 getting_started_add_documents_md: |-
   ```bash
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
-    --data @movies.json
+    -H 'Content-Type: application/json' \
+    --data-binary @movies.json
   ```
 getting_started_search_md: |-
   ```bash
   curl 'http://127.0.0.1:7700/indexes/movies/search' \
-  --data '{ "q": "botman" }'
+  --data-binary '{ "q": "botman" }'
   ```
 faceted_search_update_settings_1: |-
   curl \
@@ -444,16 +446,17 @@ faceted_search_walkthrough_filterable_attributes_1: |-
     }'
 faceted_search_walkthrough_filter_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
+  --data-binary '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
 faceted_search_walkthrough_facets_distribution_1: |-
   curl 'http://localhost:7700/indexes/movies/search' \
-  --data '{  "q": "Batman", "facetsDistribution": ["genres"] }'
+  --data-binary '{  "q": "Batman", "facetsDistribution": ["genres"] }'
 post_dump_1: |-
   curl -X POST 'http://localhost:7700/dumps'
 get_dump_status_1: |-
   curl -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
 phrase_search_1: |-
   curl -X POST 'http://localhost:7700/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
 authentication_header_1: |-
   $ curl -X GET 'http://127.0.0.1:7700/keys' \
