@@ -69,7 +69,7 @@ If your query is `Hello World`:
 - `Hello` takes the position `0` of the attribute
 - `World` takes the position `1` of the attribute
 
-If your query is `Hello, World`
+If your query is `Hello, World`:
 
 - `Hello` takes the position `0` of the attribute
 - `,` takes the position `8` of the attribute
