@@ -77,7 +77,7 @@ If your query is `Hello, World`:
 
 `,` takes 8 spaces as it is a hard separator, you can read more about it [here](https://docs.meilisearch.com/reference/under_the_hood/datatypes.html#string).
 
-If your query is `Hello - World`
+If your query is `Hello - World`:
 
 - `Hello` takes the position `0` of the attribute
 - `-` takes the position `1` of the attribute
