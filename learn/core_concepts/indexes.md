@@ -76,7 +76,7 @@ Sometimes you may want to ignore certain words in documents and search queries. 
 
 By adding words to a stop words list, these specific terms will be ignored during search. It will avoid documents being considered highly relevant because of the presence of some words in an important [attribute](/learn/core_concepts/relevancy.md#ranking-rules) or in a good [position](/learn/core_concepts/relevancy.md#ranking-rules). This will also greatly improve the response time because all the documents that contain only those words will not be used for documents sorting.
 
-For example, suppose you search for: `the great gatsby`. Having `the` in a film review wouldn't make the review more relevant, but adding `the` to the stop word list would improve performance show more relevant search results.
+For example, suppose you search for `the great gatsby`. Having `the` in a film review wouldn't make the review more relevant, but adding `the` to the stop word list would improve performance show more relevant search results.
 
 [Learn more about stop words](/reference/features/stop_words.md)
 
