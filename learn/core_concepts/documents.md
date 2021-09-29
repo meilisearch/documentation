@@ -156,7 +156,7 @@ Take note that the document addition request in MeiliSearch is <clientGlossary w
 
 ## Upload
 
-By default, MeiliSearch limits the size of `JSON` payloads—and therefore document uploads—to 100MB.
+By default, MeiliSearch limits the size of all payloads (JSON, CSV, NDJSON) —and therefore document uploads—to 100MB.
 
 To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 

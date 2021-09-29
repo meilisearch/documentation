@@ -14,7 +14,7 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
 #### Content type
 
-Every request and response body is in `JSON`.
+ Requests can be in JSON, CSV, or NDJSON but responses are always in JSON.
 
 It is **not required** to have `Content-Type: application/json` in the header. Any content-type is accepted.
 
@@ -49,7 +49,7 @@ Please read about [authentication keys](/reference/features/authentication.md) a
 
 **404 - Not Found**: The requested resource doesn't exist.
 
-All errors contain a `JSON` body that explains the error.
+All errors contain a JSON body that explains the error.
 
 Response body:
 

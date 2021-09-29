@@ -72,7 +72,7 @@ If you are curious about how the asynchronous part of MeiliSearch works, you can
 
 ## I am trying to add my documents but I keep receiving a `400 - Invalid data` response.
 
-MeiliSearch API only accepts JSON format.
+MeiliSearch API accepts JSON, CSV, and NDJSON formats.
 In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
 
 The `400 - Invalid data` response probably means that your data is not in an expected format.
