@@ -16,7 +16,10 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
  Requests can be in JSON, CSV, or NDJSON but responses are always in JSON.
 
-It is **not required** to have `Content-Type: application/json` in the header. Any content-type is accepted.
+You **need** to have one of the following accepted Content-Type headers: 
+- `Content-Type: application/json` for JSON
+- `Content-Type: application/x-ndjson` for NDJSON
+- `Content-Type: text/csv` for CSV
 
 #### Authentication
 
