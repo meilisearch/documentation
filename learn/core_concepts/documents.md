@@ -62,7 +62,9 @@ Take note that in the case of strings, the value **[can contain at most 1000 pos
 
 ### Example
 
-If your query is `Hello World`
+Suppose your have three similar queries: `Hello World`, `Hello, World`, and `Hello - World`. Due to how our tokenizer works, each one of them will be processed differently.
+
+If your query is `Hello World`:
 
 - `Hello` takes the position `0` of the attribute
 - `World` takes the position `1` of the attribute
