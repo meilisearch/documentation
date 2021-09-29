@@ -43,7 +43,7 @@ Communication to the server is done through a [RESTful API](/reference/api/READM
 
 To add documents to MeiliSearch you must provide:
 
-- [Documents](/learn/core_concepts/documents.md) in the form of an array of `JSON objects`.
+- [Documents](/learn/core_concepts/documents.md) in the form of an array of JSON objects.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
 > _If the index does not exist, MeiliSearch creates it when you first add documents._
