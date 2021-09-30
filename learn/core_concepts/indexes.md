@@ -24,6 +24,7 @@ An index is created the first time documents are added to it or manually using t
 #### Example
 
 Let's use the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents) to add documents to a new MeiliSearch instance without an index.
+
 We will create an index called `movies`. The code below will create the `movies` index and add the documents to it.
 
 <CodeSamples id="add_or_replace_documents_1" />
