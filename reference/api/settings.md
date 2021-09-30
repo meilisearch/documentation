@@ -6,14 +6,14 @@ It is possible to modify all the settings at once using the [`update settings` e
 
 These are the reference pages for the dedicated routes:
 
-- [Synonyms](/reference/api/synonyms.md)
-- [Stop-words](/reference/api/stop_words.md)
-- [Ranking rules](/reference/api/ranking_rules.md)
-- [Filterable attributes](/reference/api/filterable_attributes.md)
-- [Distinct attribute](/reference/api/distinct_attribute.md)
-- [Searchable attributes](/reference/api/searchable_attributes.md)
 - [Displayed attributes](/reference/api/displayed_attributes.md)
+- [Distinct attribute](/reference/api/distinct_attribute.md)
+- [Filterable attributes](/reference/api/filterable_attributes.md)
+- [Ranking rules](/reference/api/ranking_rules.md)
+- [Searchable attributes](/reference/api/searchable_attributes.md)
 - [Sortable attributes](/reference/api/sortable_attributes.md)
+- [Stop-words](/reference/api/stop_words.md)
+- [Synonyms](/reference/api/synonyms.md)
 
 [Learn more about the settings in this guide.](/reference/features/settings.md)
 
@@ -39,14 +39,14 @@ Get the settings of an index.
 
 | Variable                  | Type      | Description                                                                      | Default value                                                                                     |
 | ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order)       |
-| **filterableAttributes**  | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                         |
+| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
 | **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
-| **displayedAttributes**   | [Strings] | Fields allowed to be displayed in the returned documents                                     | `["*"]` (all attributes)                                                                          |
+| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
+| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
+| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
 [Learn more about the settings in this guide.](/reference/features/settings.md)
 
@@ -106,18 +106,18 @@ If the provided index does not exist, it will be created.
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-#### Body
+### Body
 
 | Variable                  | Type      | Description                                                                      | Default value                                                                                     |
 | ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
-| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
+| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
+| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
+| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
+| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
 ### Example
 
@@ -141,16 +141,16 @@ Reset the settings of an index.
 
 All settings will be reset to their default value.
 
-| Variable                  | Description                                                                      | Default value                                                                                     |
-| ------------------------  | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **synonyms**              | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **stopWords**             | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
-| **rankingRules**          | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
-| **filterableAttributes** | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
-| **distinctAttribute**     | Search returns documents with distinct (different) values of a given field       | `null`                                                                                            |
-| **searchableAttributes**  | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                          |
-| **displayedAttributes**   | Fields displayed in the returned documents documents                             | `["*"]` (all attributes)                                                                          |
-| **sortableAttributes**    | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
+| Variable                  | Type      | Description                                                                      | Default value                                                                                     |
+| ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
+| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
+| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/reference/features/filtering_and_faceted_search.md)         | `[]`                                                                                              |
+| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
+| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
+| **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
+| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
 [Learn more about the settings](/reference/features/settings.md).
 
