@@ -33,10 +33,7 @@ We will create an index called `movies`. The code below will create the `movies`
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
-The uid is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you **cannot**:
-
- - Create another index with the same `uid`
- - Change the `uid`
+The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you **cannot create another index with the same `uid`or change the `uid`.**
 
 ```json
 {
@@ -58,9 +55,9 @@ The primary key's attribute name **must** be known by the index. You can [set a 
 
 Each index applies its own relevancy rules. All indexes are created with the same built-in <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance will be deduced from their order of appearance in the document.
 
-For example, suppose your documents list attributes in the following order: 
+For example, suppose your documents list attributes in the following order:
 
-```id, title, description, release_date``` 
+```id, title, description, release_date```
 
 A document containing matches in its `title` field will be considered more relevant than a document only containing matches in  its `description`.
 

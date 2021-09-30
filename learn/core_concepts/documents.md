@@ -152,7 +152,7 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-Take note that the document addition request in MeiliSearch is <clientGlossary word="atomic"/>. This means that **even if a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
+Note that document addition in MeiliSearch is <clientGlossary word="atomic"/>. **If the indexer finds a document with an invalid id, it will throw an error and no documents will be added to your index**.
 
 ## Upload
 
