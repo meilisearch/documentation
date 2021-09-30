@@ -10,6 +10,8 @@ Welcome to the MeiliSearch documentation. Here you'll find everything you need t
 
 **Prefer to learn by reading**? You're not alone. Check out articles covering the most important [core concepts](/learn/core_concepts) of MeiliSearch.
 
+**Announcing a cloud-hosted MeiliSearch:** Join the closed beta by filling out this [form](https://meilisearch.typeform.com/to/FtnzvZfh)
+
 **Other helpful links**:
 
 - [Install MeiliSearch](/learn/getting_started/installation.md)
