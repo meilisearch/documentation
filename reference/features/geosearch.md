@@ -106,14 +106,7 @@ You can use geosearch in combination with filters to make sure you only receive 
 
 Before using geosearch for filtering, you must add the `_geo` attribute to the `filterableAttributes` list:
 
-```sh
-  curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
-    -H 'Content-type:application/json'
-    --data-binary '[
-        "_geo",
-    ]'
-```
+<CodeSamples id="geosearch_guide_filter_settings_1" />
 
 Note that MeiliSearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
@@ -137,10 +130,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 The `_geoRadius` filter rule can be used like any other filter. We can search for places to eat near the centre of Milan:
 
-```sh
-  curl 'http://localhost:7700/indexes/restaurants/search' \
-    --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000)" }'
-```
+<CodeSamples id="geosearch_guide_filter_usage_1" />
 
 With our example dataset, the results look like this:
 
@@ -173,10 +163,7 @@ With our example dataset, the results look like this:
 
 It is possible to use `_geoRadius` together with other filters. We can narrow down our previous search so it only includes pizzerias:
 
-```sh
-  curl 'http://localhost:7700/indexes/restaurants/search' \
-    --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000) AND type = pizza" }'
-```
+<CodeSamples id="geosearch_guide_filter_usage_2" />
 
 ```json
 [
@@ -202,14 +189,7 @@ You can use geosearch to sort results according to how close or far they are fro
 
 Before using geosearch for sorting, you must add the `_geo` attribute to the `sortableAttributes` list:
 
-```sh
-  curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \
-    -H 'Content-type:application/json'
-    --data-binary '[
-        "_geo",
-    ]'
-```
+<CodeSamples id="geosearch_guide_sort_settings_1" />
 
 Note that MeiliSearch will rebuild your index whenever you update `sortableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
@@ -241,15 +221,11 @@ Ascending sort will promote items closer to the specified location. Conversely, 
 If you need to exclude results outside a certain geographic area, use the `geoRadius` filter rule.
 :::
 
-### Example
+### Examples
 
 The `_geoPoint` sorting function can be used like any other sorting rule. We can order documents based on how close they are to the Eiffel Tower:
 
-```sh
-  curl 'http://localhost:7700/indexes/restaurants/search' \
-    -H 'Content-type:application/json'
-    --data-binary '{ "sort": "_geoPoint(48.8583701,2.2922926)" }'
-```
+<CodeSamples id="geosearch_guide_sort_usage_1" />
 
 With our example dataset, the results look like this:
 
@@ -293,11 +269,7 @@ With our example dataset, the results look like this:
 
 `_geoPoint` also works when used together with other sorting rules. We can sort restaurants based on both how close they are to us and how well-rated they are: 
 
-```sh
-  curl 'http://localhost:7700/indexes/restaurants/search' \
-    -H 'Content-type:application/json'
-    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926)", "rating:desc"] }'
-```
+<CodeSamples id="geosearch_guide_sort_usage_2" />
 
 ```json
 [

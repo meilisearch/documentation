@@ -489,3 +489,33 @@ search_parameter_guide_sort_1: |-
         "price:asc"
       ]
     }'
+geosearch_guide_filter_settings_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
+    -H 'Content-type:application/json' \
+    --data-binary '[
+        "_geo",
+    ]'
+geosearch_guide_filter_usage_1: |-
+  curl 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000)" }'
+geosearch_guide_filter_usage_2: |-
+  curl 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json'
+    --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000) AND type = pizza" }'
+geosearch_guide_filter_settings_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \
+    -H 'Content-type:application/json'
+    --data-binary '[
+        "_geo",
+    ]'
+geosearch_guide_sort_usage_1: |-
+  curl 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json'
+    --data-binary '{ "sort": "_geoPoint(48.8583701,2.2922926)" }'
+geosearch_guide_sort_usage_2: |-
+  curl 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json'
+    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926)", "rating:desc"] }'
