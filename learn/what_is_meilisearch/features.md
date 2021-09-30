@@ -46,7 +46,7 @@ MeiliSearch allows you to define [filters](/reference/features/filtering_and_fac
 
 If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule) and [sorting rules](https://docs.meilisearch.com/reference/features/sorting.html#sorting). This feature is called **placeholder search**.
 
-Placeholder searches are particularly effective when used with other features such as [faceting or filtering](/reference/features/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category. You can read more about it [here](https://docs.meilisearch.com/reference/features/search_parameters.html#placeholder-search).
+Placeholder searches are particularly effective when used with other features such as [faceting or filtering](/reference/features/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category. You can read more about it on our article on [search parameters](https://docs.meilisearch.com/reference/features/search_parameters.html#placeholder-search).
 
 ## Phrase search
 
