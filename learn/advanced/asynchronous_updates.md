@@ -138,6 +138,6 @@ You can use [the update route](/reference/api/updates.md) to determine an update
 
 ### Example
 
-Suppose you have use the update documents endpoint to add 100 documents in one batch to MeiliSearch.
+Suppose you have used the update documents endpoint to add 100 documents in one batch to MeiliSearch.
 
-If you terminate the instance after 99 documents have been successfully added, none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. **Either all documents are added, or none are.***
+If you terminate the instance after 99 documents have been successfully added, none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. **Either all documents are added, or none are.**

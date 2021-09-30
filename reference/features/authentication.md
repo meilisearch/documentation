@@ -63,6 +63,19 @@ We strongly discourage using the master key for API calls. It is intended only f
 
 If an invalid key is provided, you will receive the `HTTP/1.1 403 Forbidden` status code. You will receive the same error if you fail to provide a key when querying a protected route.
 
+### Example
+
+<CodeSamples id="authentication_header_1" />
+
+#### Response
+
+```json
+{
+  "private": "8c222193c4dff5a19689d637416820bc623375f2ad4c31a2e3a76e8f4c70440d",
+  "public": "948413b6667024a0704c2023916c21eaf0a13485a586c43e4d2df520852a4fb8"
+}
+```
+
 ## Changing a key
 
 **Changing the master key will automatically generate new private and public keys**. It is not possible to change one key without altering the others.

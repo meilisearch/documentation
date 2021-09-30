@@ -58,9 +58,15 @@ This dataset is a JSON file of 8.6 MB and has 19,553 documents. When we index th
 
 | Raw JSON | MeiliSearch database size on disk | RAM usage | Virtual memory usage |
 | -------- | --------------------------------- | -------------------- | ------------------- |
-| 9.1 MB   | 320 MB                            | ≃ 426 MB             | 205 Gb (memory map) |
+| 9.1 MB   | 224 MB                            | ≃ 305 MB             | 205 Gb (memory map) |
 
-> This means the database is using 426 MB of RAM and 122 MB of disk space. Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database. See [Memory Usage](#memory-usage) for more details.
+> This means the database is using 305 MB of RAM and 224 MB of disk space. Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database. See [Memory Usage](#memory-usage) for more details.
+
+::: warning
+
+These metrics are highly dependent on the machine that is running MeiliSearch. Running this test in significantly underpowered machines is likely to give different results.
+
+:::
 
 It is important to note that **there is no reliable way to predict the final size of a database**. This is true for just about any search engine on the market—we're just the only ones saying it out loud.
 

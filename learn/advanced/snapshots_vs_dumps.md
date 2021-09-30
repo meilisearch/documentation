@@ -16,12 +16,17 @@ The documents in a snapshot are already "indexed" and ready to go, greatly incre
 
 As a result, importing a dump requires MeiliSearch to re-index all of your documents. This process requires an amount of time and memory corresponding to the size of the database (the number of documents, their size, and the complexity of any index settings).
 
+::: note
+We do not recommend using dumps from a new MeiliSearch version to import an older version.
+For example, you **should not** import a dump from MeiliSearh v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearh v0.21.0 to MeiliSearh v0.21.0 or higher will work.
+:::
+
 ### Conclusion
 
 To summarize:
 
 - **Snapshots are highly efficient, but not portable** between different versions of MeiliSearch.
-- **Dumps are highly portable, but not very efficient**.
+- **Dumps are portable, but not very efficient**.
   - Frequently launching MeiliSearch from a dump would cause your performance to suffer.
 
 For more information, have a look at the reference documentation for [snapshots](/reference/features/snapshots.md) and [dumps](/reference/features/dumps.md).

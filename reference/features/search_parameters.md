@@ -22,6 +22,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[cropLength](/reference/features/search_parameters.md#crop-length)**                        | Maximum field value length                         | `200`         |
 | **[attributesToHighlight](/reference/features/search_parameters.md#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[matches](/reference/features/search_parameters.md#matches)**                               | Return matching terms location                     | `false`       |
+| **[sort](/reference/features/search_parameters.md#sort)**                                     | Sort search results by an attribute's value                        | `null`        |
 
 ## Query (q)
 
@@ -366,3 +367,31 @@ You would get the following response with **information about the matches in the
   }
 }
 ```
+
+## Sort
+
+**Parameter**: `sort`
+**Expected value**: a list of attributes written as an array or as a comma-separated string
+**Default value**: `null`
+
+Sorts search results at query time according to the specified attributes and indicated order.
+
+Each attribute in the list must be followed by a colon (`:`) and the preferred sorting order: either ascending (`asc`) or descending (`desc`).
+
+::: note
+Attribute order is meaningful. The first attributes in a list will be given precedence over those that come later.
+
+For example, `sort="price:asc,author:desc` will prioritize `price` over `author` when sorting results.
+:::
+
+When using the `POST` route, `sort` expects an array of strings.
+
+When using the `GET` route, `sort` expects the list as a comma-separated string.
+
+[Read more about sorting search results in our dedicated guide.](/reference/features/sorting.md)
+
+### Example
+
+You can search for science fiction books ordered from cheapest to most expensive:
+
+<CodeSamples id="search_parameter_guide_sort_1" />
