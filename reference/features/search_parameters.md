@@ -150,6 +150,22 @@ You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
+### Filtering results within a geographic location
+
+`filter` accepts one special built-in rule when you want to restrict results to a geographic area: `_geoRadius`. It requires three parameters:
+
+```json
+_geoRadius(lat, lng, distance_in_meters)
+```
+
+`lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+
+<CodeSamples id="geosearch_guide_filter_usage_1" />
+
+`_geoRadius` can be freely combined with other filter expressions:
+
+<CodeSamples id="geosearch_guide_filter_usage_2" />
+
 ## Facets distribution
 
 **Parameter**: `facetsDistribution`
