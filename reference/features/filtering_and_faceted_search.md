@@ -14,11 +14,15 @@ To use a document field as a filter, you must first add its attribute to the [`f
 
 Updating `filterableAttributes` requires recreating the entire index. This may take a significant amount of time depending on your dataset size.
 
-::: warning
+::: note
 By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
 :::
 
-Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. Fields containing object values will throw an error.
+Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
+
+::: warning
+MeiliSearch does not support filtering on nested arrays and objects [yet](https://roadmap.meilisearch.com/c/105-filter-on-nested-objects). Therefore, fields containing nested arrays and objects will be silently ignored.
+:::
 
 ### Example
 
