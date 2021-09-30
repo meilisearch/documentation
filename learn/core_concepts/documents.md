@@ -53,13 +53,8 @@ NDJSON objects consist of individual lines where each individual line is valid J
 The above JSON document would look like this in NDJSON:
 
 ```ndjson
-{
-  "id": "1564saqw12ss"
-  "title": "Kung Fu Panda"
-  "genre": "Children's Animation"
-  "release-year": 2008
-  "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]
-}
+
+{ "id": "1564saqw12ss", "title": "Kung Fu Panda", "genre": "Children's Animation", "release-year": 2008, "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]}
 ```
 
 #### CSV objects
@@ -72,6 +67,7 @@ The above JSON document would look like this in CSV:
   "id","title","genre","release-year","cast"
   "1564saqw12ss","Kung Fu Panda","Children's Animation",2008,""
 ```
+Since CSV does not support arrays, the cast cannot be converted to CSV. 
 
 ### Limitations and requirements
 
