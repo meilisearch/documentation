@@ -216,7 +216,7 @@ _geoPoint(0.0, 0.0):asc
 Ascending sort will promote items closer to the specified location. Conversely, descending sort will promote items more distant to the specified location.
 
 ::: note
-`_geoPoint` changes the order of returned search results, but does not influence the query in any other way. 
+`_geoPoint` changes the order of returned search results, but does not influence the query in any other way.
 
 If you need to exclude results outside a certain geographic area, use the `geoRadius` filter rule.
 :::
@@ -267,7 +267,7 @@ With our example dataset, the results look like this:
 ]
 ```
 
-`_geoPoint` also works when used together with other sorting rules. We can sort restaurants based on both how close they are to us and how well-rated they are: 
+`_geoPoint` also works when used together with other sorting rules. We can sort restaurants based on both how close they are to us and how well-rated they are:
 
 <CodeSamples id="geosearch_guide_sort_usage_2" />
 
