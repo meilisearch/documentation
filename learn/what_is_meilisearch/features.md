@@ -44,7 +44,7 @@ MeiliSearch allows you to define [filters](/reference/features/filtering_and_fac
 
 ## Placeholder search
 
-If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). This feature is called **placeholder search**.
+If you do a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). This feature is called **placeholder search**.
 
 Placeholder searches are particularly effective when used with other features such as [faceting or filtering](/reference/features/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category.
 
@@ -54,7 +54,7 @@ Placeholder search is not affected by MeiliSearch's [default ranking rules](/ref
 
 If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
 
-Phrase search is particularly useful when looking for a single result, such as searching for a book by ISBN. It is also possible to combine phrase searches with MeiliSearch's basic syntax so only parts of a query are matched strictly.
+Phrase search is particularly useful when looking for a single result, such as searching for a book by ISBN. It is also possible to combine phrase searches with MeiliSearch's basic syntax, so only parts of a query are matched strictly.
 
 ## Comprehensive language support
 
