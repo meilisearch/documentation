@@ -27,7 +27,7 @@ You can improve indexation speed in two ways:
 
 1. Indexation is a memory-intensive and multi-threaded operation. This means that the more memory and processor cores available, the faster will MeiliSearch index new documents.
 
-2. Bigger HTTP payloads are processed more quickly than smaller payloads. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but you can change this value if necessary. That said, the bigger the payload, the higher the memory consumption. An instance may crash if it requires more RAM than is currently available in a machine.
+2. Bigger HTTP payloads are processed more quickly than smaller payloads. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](https://docs.meilisearch.com/reference/features/configuration.html#options). That said, the bigger the payload, the higher the memory consumption. An instance may crash if it requires more RAM than is currently available in a machine.
 
 ## I have never used a search engine before. Can I use MeiliSearch anyway?
 
