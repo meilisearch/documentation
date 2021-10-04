@@ -223,6 +223,20 @@ You can use this filter when searching for `Planet of the Apes`:
 
 <CodeSamples id="filtering_guide_4" />
 
+## Filtering with `_geoRadius`
+
+When your documents contain geolocation data, you can use the `_geoRadius` built-in filter rule:
+
+```json
+_geoRadius(lat, lng, distance_in_meters)
+```
+
+`lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+
+<CodeSamples id="geosearch_guide_filter_usage_1" />
+
+[You can read more about geosearch and filtering in our dedicated guide.](/references/features/geosearch.md#filtering-results-with-georadius)
+
 ## Faceted search
 
 MeiliSearch filters can be used to build **faceted search** interfaces. This type of interface allows users to refine search results based on broad categories or **facets**. For example, a clothing webshop can use faceted search to allow users to easily explore items of a certain size or belonging to a specific brand.

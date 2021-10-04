@@ -150,7 +150,7 @@ You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
-### Filtering results within a geographic location
+### Filtering results `_geoRadius`
 
 `filter` accepts one special built-in rule when you want to restrict results to a geographic area: `_geoRadius`. It requires three parameters:
 
