@@ -104,7 +104,7 @@ To install MeiliSearch on Windows, you can:
 - [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
 - compile from source
 
-If you are new to the Windows CMD, you can learn more about it [here](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
+If you are new to the Windows CMD, you can follow this [guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/) to get started.
 
 ::::
 
