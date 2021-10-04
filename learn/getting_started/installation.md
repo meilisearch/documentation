@@ -47,7 +47,8 @@ docker run -it --rm \
 ```
 
 Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
-If you are new to Docker, you can learn more about it on the [official documentation](https://docs.docker.com/get-docker/).
+
+You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
 :::
 
 ::: tab APT
