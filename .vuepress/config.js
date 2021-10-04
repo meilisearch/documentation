@@ -89,7 +89,7 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Contributing to the Docs',
+              title: 'Contributing to the docs',
               path: '/learn/contributing/contributing_to_docs',
             },
           ],
@@ -174,7 +174,7 @@ module.exports = {
       ],
       '/create/': [
         {
-          title: '📕 How-to guides',
+          title: '📕 How-to Guides',
           path: '/create/how_to/',
           collapsable: false,
           children: [
