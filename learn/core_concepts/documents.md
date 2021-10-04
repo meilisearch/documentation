@@ -59,7 +59,7 @@ The above JSON document would look like this in NDJSON:
 
 #### CSV objects
 
-CSV objects are separated by delimiters that could be a space, semicolon, or some other character, though the comma is most common. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
+CSV files express data as a sequence of values separated by a delimiter character. Though the comma is the most common delimiter, spaces, tabs, and semicolons are valid alternatives. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
 
 The above JSON document would look like this in CSV:
 
