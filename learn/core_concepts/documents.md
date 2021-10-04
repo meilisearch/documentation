@@ -52,7 +52,7 @@ NDJSON objects consist of individual lines where each individual line is valid J
 
 The above JSON document would look like this in NDJSON:
 
-```ndjson
+```json
 
 { "id": "1564saqw12ss", "title": "Kung Fu Panda", "genre": "Children's Animation", "release-year": 2008, "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]}
 ```
