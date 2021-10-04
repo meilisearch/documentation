@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "78737b6a-08bc-4dcb-941f-990aefdf1bcf",
-		"name": "MeiliSearch v0.22",
+		"_postman_id": "db49a344-4533-4a86-beed-a965c38e3c73",
+		"name": "MeiliSearch v0.23",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -160,9 +160,20 @@
 				},
 				{
 					"name": "Delete documents",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "[1, 2]"
@@ -283,6 +294,11 @@
 				},
 				{
 					"name": "Search in index",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -396,6 +412,11 @@
 				},
 				{
 					"name": "Create index",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -423,6 +444,11 @@
 				},
 				{
 					"name": "Create index with primary key",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -450,6 +476,11 @@
 				},
 				{
 					"name": "Udpate index ",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -525,9 +556,20 @@
 						},
 						{
 							"name": "Update ranking rules",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "[\n\t\"typo\"\n]\n"
@@ -589,9 +631,20 @@
 						},
 						{
 							"name": "Update distinct attribute",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "\"genre\""
@@ -653,9 +706,20 @@
 						},
 						{
 							"name": "Update searchable attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "[\"title\", \"author\"]"
@@ -717,9 +781,20 @@
 						},
 						{
 							"name": "Update displayed attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "[\"title\"]"
@@ -874,6 +949,11 @@
 						},
 						{
 							"name": "Update stop-words",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
 							"request": {
 								"method": "POST",
 								"header": [
@@ -950,9 +1030,20 @@
 						},
 						{
 							"name": "Update filterable attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "[\"genre\"]"
@@ -1014,9 +1105,20 @@
 						},
 						{
 							"name": "Update sortable attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
 								"body": {
 									"mode": "raw",
 									"raw": "[\"price\"]"
@@ -1079,6 +1181,11 @@
 				},
 				{
 					"name": "Update settings",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1260,15 +1367,6 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"uid\": \"{{indexUID}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{url}}/dumps",
 							"host": [
