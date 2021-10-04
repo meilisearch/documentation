@@ -411,3 +411,15 @@ When using the `GET` route, `sort` expects the list as a comma-separated string.
 You can search for science fiction books ordered from cheapest to most expensive:
 
 <CodeSamples id="search_parameter_guide_sort_1" />
+
+### Sorting results with `_geoPoint`
+
+When dealing with documents containing geolocation data, you can use `_geoPoint` to sor` results based on their distance from a specific geographic location.
+
+`_geoPoint` is a built-in sorting function. It requires two arguments, `lat` and `lng`, both of which must be written as integers. You must also indicate whether the sort should be ascending (i.e. results closer to the specified location will appear on top) or descending:
+
+<CodeSamples id="geosearch_guide_sort_usage_1" />
+
+Results from queries using `_geoPoint` will always include a `geoDistance` field indicating the distance between the document location and the `_geoPoint`.
+
+[You can read more about sorting and geosearch in our dedicated guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)

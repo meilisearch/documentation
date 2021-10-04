@@ -181,7 +181,7 @@ It is possible to use `_geoRadius` together with other filters. We can narrow do
 ]
 ```
 
-## Sorting results with geosearch
+## Sorting results with `_geoPoint`
 
 You can use geosearch to sort results according to how close or far they are from a specific location.
 

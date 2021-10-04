@@ -196,3 +196,15 @@ There is a lot of overlap between sorting and configuring [custom ranking rules]
 Sorting is most useful when you want your users to be able to alter the order of returned results at query time. For example, webshop users might want to order results by price depending on what they are searching and to change whether they see the most expensive or the cheapest products first.
 
 Custom ranking rules, instead, establish a default sorting rule that is enforced in every search. This approach can be useful when you want to promote certain results above all others, regardless of a user's preferences. For example, you might want a webshop to always feature discounted products first, no matter what a user is searching for.
+
+## Sorting with `_geoPoint`
+
+When handling documents with geolocation data, MeiliSearch allows you to use the `_geoPoint` sorting function. Doing so will cause results to be sorted according to how distant or close they are to the specified geographic location:
+
+<CodeSamples id="geosearch_guide_sort_usage_1" />
+
+`_geoPoint` requires two arguments, `lat` and `lng`, both of which must be written as integers. You must also indicate whether the sort should be ascending (i.e. results closer to the specified location will appear on top) or descending.
+
+Results from queries using `_geoPoint` will always include a `geoDistance` field indicating the distance between the document location and the `_geoPoint`.
+
+[You can read more about geosearch in our dedicated guide.](/reference/features/geosearch.md)
