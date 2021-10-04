@@ -16,7 +16,7 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
  Requests can be in JSON, CSV, or NDJSON. Responses are always in JSON.
 
-You **need** to have one of the following accepted Content-Type headers:
+You **must** specify a Content-Type header. MeiliSearch currently supports the following formats:
 
 - `Content-Type: application/json` for JSON
 - `Content-Type: application/x-ndjson` for NDJSON
