@@ -43,7 +43,7 @@ MeiliSearch currently delivers a search engine and is not in a position to provi
 
 #### Lucene
 
-Java-based Apache Lucene is a free and open-source search library for indexing and searching full-text documents. It was created in 1999 by Doug Cutting, who had previously written search engines at Xerox's Palo Alto Research Center (PARC) and Apple. Lucene was developed to build web search applications such as Google and DuckDuckGo still uses it for some specific searches.
+Apache Lucene is a free and open-source search library used for indexing and searching full-text documents. It was created in 1999 by Doug Cutting, who had previously written search engines at Xerox's Palo Alto Research Center (PARC) and Apple. Written in Java, Lucene was developed to build web search applications such as Google and DuckDuckGo, the last of which still uses it for some specific searches.
 
 Lucene has since been divided into several projects:
 
