@@ -68,7 +68,7 @@ The above JSON document would look like this in CSV:
   "1564saqw12ss","Kung Fu Panda","Children's Animation",2008,""
 ```
 
-Since CSV does not support arrays, the cast cannot be converted to CSV.
+Since CSV does not support arrays or nested objects, the cast cannot be converted to CSV.
 
 ### Limitations and requirements
 
