@@ -174,7 +174,7 @@ module.exports = {
       ],
       '/create/': [
         {
-          title: '📕 How-to Guides',
+          title: '📕 How-to guides',
           path: '/create/how_to/',
           collapsable: false,
           children: [
