@@ -18,15 +18,15 @@ Documents function as **containers for organizing data**, and are the basic buil
 - **[Primary Key][primary-key]**: the attribute of the primary field. **All documents in the same index must possess the same primary key.** Its associated value is the document identifier.
 - **[Document Identifier][document-id]**: the value of the primary field. **Every document in a given index must have a unique identifier**.
 
-### Formatting
+### Dataset format
 
-Though MeiliSearch stores documents in JSON, you can provide:
+You can provide your dataset in the following formats:
 
-- [JSON objects](#json-objects)
-- [NDJSON objects](#ndjson-objects)
-- [CSV objects](#csv-objects)
+- [JSON](#json-objects)
+- [NDJSON](#ndjson-objects)
+- [CSV](#csv-objects)
 
-#### JSON objects
+#### JSON 
 
 Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting MeiliSearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
 
@@ -46,7 +46,7 @@ In the above example, `"id"`, `"title"`, `"genre"`, `"release-year"`, and `"cast
 Each attribute must be associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`.
 At minimum, the document must contain one field with the **[primary key][primary-key]** attribute and a unique **[document id][document-id]** as its value. Above, that's: `"id": "1564saqw12ss"`.
 
-#### NDJSON objects
+#### NDJSON 
 
 NDJSON objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to MeiliSearch documents.
 
@@ -57,7 +57,7 @@ The above JSON document would look like this in NDJSON:
 { "id": "1564saqw12ss", "title": "Kung Fu Panda", "genre": "Children's Animation", "release-year": 2008, "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]}
 ```
 
-#### CSV objects
+#### CSV 
 
 CSV files express data as a sequence of values separated by a delimiter character. Though the comma is the most common delimiter, spaces, tabs, and semicolons are valid alternatives. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
 
@@ -68,7 +68,7 @@ The above JSON document would look like this in CSV:
   "1564saqw12ss","Kung Fu Panda","Children's Animation",2008,""
 ```
 
-Since CSV does not support arrays or nested objects, the cast cannot be converted to CSV.
+Since CSV does not support arrays or nested objects, the `cast` cannot be converted to CSV.
 
 ### Limitations and requirements
 
@@ -188,7 +188,7 @@ Take note that the document addition request in MeiliSearch is <clientGlossary w
 
 ## Upload
 
-By default, MeiliSearch limits the size of all payloads (JSON, CSV, NDJSON) —and therefore document uploads—to 100MB.
+By default, MeiliSearch limits the size of all payloads —and therefore document uploads—to 100MB.
 
 To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
