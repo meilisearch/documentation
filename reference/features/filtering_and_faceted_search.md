@@ -225,17 +225,21 @@ You can use this filter when searching for `Planet of the Apes`:
 
 ## Filtering with `_geoRadius`
 
-When your documents contain geolocation data, you can use the `_geoRadius` built-in filter rule:
+If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their their geographic position.
 
-```json
+`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+
+```
 _geoRadius(lat, lng, distance_in_meters)
 ```
 
-`lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
+
+### Example
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-[You can read more about geosearch and filtering in our dedicated guide.](/references/features/geosearch.md#filtering-results-with-georadius)
+[You can read more about filtering results with `_geoRadius` in our geosearch guide.](/references/features/geosearch.md#filtering-results-with-georadius)
 
 ## Faceted search
 

@@ -199,12 +199,36 @@ Custom ranking rules, instead, establish a default sorting rule that is enforced
 
 ## Sorting with `_geoPoint`
 
-When handling documents with geolocation data, MeiliSearch allows you to use the `_geoPoint` sorting function. Doing so will cause results to be sorted according to how distant or close they are to the specified geographic location:
+If your documents contain `_geo` data, you can use `_geoPoint` to sort results based on their distance from a geographic position.
+
+`_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
+
+```json
+{
+  "sort": ["_geoPoint(0.0, 0.0):asc"]
+}
+```
+
+Queries using `_geoPoint` will always include a `geoDistance` field containing the distance in meters between the document location and the `_geoPoint`:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "_geo": {
+      "lat": 45.4777599, 
+      "lng": 9.1967508
+    },
+    "_geoDistance": 1532
+  }
+]
+```
+
+[You can read more about location-based sorting in our geosearch guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)
+
+### Example
+
+The following query will sort results based on how close they are to the Eiffel Tower:
 
 <CodeSamples id="geosearch_guide_sort_usage_1" />
-
-`_geoPoint` requires two arguments, `lat` and `lng`, both of which must be written as integers. You must also indicate whether the sort should be ascending (i.e. results closer to the specified location will appear on top) or descending.
-
-Results from queries using `_geoPoint` will always include a `geoDistance` field indicating the distance between the document location and the `_geoPoint`.
-
-[You can read more about geosearch in our dedicated guide.](/reference/features/geosearch.md)

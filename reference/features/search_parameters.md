@@ -152,7 +152,9 @@ You can then use the filter in a search query:
 
 ### Filtering results `_geoRadius`
 
-`filter` accepts one special built-in rule when you want to restrict results to a geographic area: `_geoRadius`. It requires three parameters:
+If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their their geographic position.
+
+`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
 ```json
 _geoRadius(lat, lng, distance_in_meters)
@@ -161,10 +163,6 @@ _geoRadius(lat, lng, distance_in_meters)
 `lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
-
-`_geoRadius` can be freely combined with other filter expressions:
-
-<CodeSamples id="geosearch_guide_filter_usage_2" />
 
 ## Facets distribution
 
@@ -414,12 +412,26 @@ You can search for science fiction books ordered from cheapest to most expensive
 
 ### Sorting results with `_geoPoint`
 
-When dealing with documents containing geolocation data, you can use `_geoPoint` to sor` results based on their distance from a specific geographic location.
+When dealing with documents containing geolocation data, you can use `_geoPoint` to sort results based on their distance from a specific geographic location.
 
-`_geoPoint` is a built-in sorting function. It requires two arguments, `lat` and `lng`, both of which must be written as integers. You must also indicate whether the sort should be ascending (i.e. results closer to the specified location will appear on top) or descending:
+`_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
 
 <CodeSamples id="geosearch_guide_sort_usage_1" />
 
-Results from queries using `_geoPoint` will always include a `geoDistance` field indicating the distance between the document location and the `_geoPoint`.
+Queries using `_geoPoint` will always include a `geoDistance` field containing the distance in meters between the document location and the `_geoPoint`:
 
-[You can read more about sorting and geosearch in our dedicated guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "_geo": {
+      "lat": 45.4777599, 
+      "lng": 9.1967508
+    },
+    "_geoDistance": 1532
+  }
+]
+```
+
+[You can read more about location-based sorting in our dedicated guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)
