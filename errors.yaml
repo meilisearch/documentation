@@ -43,7 +43,7 @@ errors:
   - code: invalid_content_type
     description: "The Content-Type header is not supported by MeiliSearch. Currently, MeiliSearch only supports JSON, CSV, and NDJSON."
   - code: missing_content_type
-    description: "The payload does not  contain a Content-Type header. Currently, MeiliSearch only supports JSON, CSV, and NDJSON."
+    description: "The payload does not contain a Content-Type header. Currently, MeiliSearch only supports JSON, CSV, and NDJSON."
   - code: malformed_payload  
     description: "The Content-Type header does not match the payload or the format is invalid."
   - code: missing_payload
