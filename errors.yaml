@@ -47,7 +47,7 @@ errors:
   - code: malformed_payload  
     description: "The Content-Type header does not match the payload or the format is invalid."
   - code: missing_payload
-    description: "The Content-Type was specified, but no file was sent to the server or the file itself is empty."  
+    description: "The Content-Type header was specified, but no request body was sent to the server or the request body is empty."  
   - code: dump_already_in_progress
     description: "A dump creation is already in progress and a new one can't be triggered until the previous dump creation is not finished."
   - code: dump_process_failed
