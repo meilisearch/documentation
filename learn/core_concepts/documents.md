@@ -22,11 +22,11 @@ Documents function as **containers for organizing data**, and are the basic buil
 
 You can provide your dataset in the following formats:
 
-- [JSON](#json-objects)
-- [NDJSON](#ndjson-objects)
-- [CSV](#csv-objects)
+- [JSON](#json)
+- [NDJSON](#ndjson)
+- [CSV](#csv)
 
-#### JSON 
+#### JSON
 
 Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting MeiliSearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
 
@@ -46,29 +46,39 @@ In the above example, `"id"`, `"title"`, `"genre"`, `"release-year"`, and `"cast
 Each attribute must be associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`.
 At minimum, the document must contain one field with the **[primary key][primary-key]** attribute and a unique **[document id][document-id]** as its value. Above, that's: `"id": "1564saqw12ss"`.
 
-#### NDJSON 
+#### NDJSON
 
 NDJSON objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to MeiliSearch documents.
+
+Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and can handle nested structures.  
 
 The above JSON document would look like this in NDJSON:
 
 ```json
 
-{ "id": "1564saqw12ss", "title": "Kung Fu Panda", "genre": "Children's Animation", "release-year": 2008, "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]}
+{ 
+  "id": "1564saqw12ss", 
+  "title": "Kung Fu Panda", 
+  "genre": "Children's Animation", 
+  "release-year": 2008, 
+  "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]
+  }
 ```
 
-#### CSV 
+#### CSV
 
 CSV files express data as a sequence of values separated by a delimiter character. Though the comma is the most common delimiter, spaces, tabs, and semicolons are valid alternatives. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
+
+Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
 
 The above JSON document would look like this in CSV:
 
 ```csv
-  "id","title","genre","release-year","cast"
-  "1564saqw12ss","Kung Fu Panda","Children's Animation",2008,""
+  "id:string","title:string","genre:string","release-year:number"
+  "1564saqw12ss","Kung Fu Panda","Children's Animation","2008"
 ```
 
-Since CSV does not support arrays or nested objects, the `cast` cannot be converted to CSV.
+Since CSV does not support arrays or nested objects, `cast` cannot be converted to CSV.
 
 ### Limitations and requirements
 

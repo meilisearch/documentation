@@ -16,11 +16,13 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
  Requests can be in JSON, CSV, or NDJSON. Responses are always in JSON.
 
-You **must** specify a Content-Type header. MeiliSearch currently supports the following formats:
+MeiliSearch currently supports the following formats:
 
 - `Content-Type: application/json` for JSON
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
+
+You **don't need** to specify a header for `GET` and `DELETE` routes. Routes that require the payload (`--data-binary`) **only accept JSON headers.** `PUT` and `POST` document routes accept all headers.
 
 #### Authentication
 
