@@ -111,6 +111,7 @@ module.exports = {
             },
             '/reference/features/field_properties',
             '/reference/features/filtering_and_faceted_search',
+            '/reference/features/geosearch',
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
