@@ -239,7 +239,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-[You can read more about filtering results with `_geoRadius` in our geosearch guide.](/references/features/geosearch.md#filtering-results-with-georadius)
+[You can read more about filtering results with `_geoRadius` in our geosearch guide.](/reference/features/geosearch.md#filtering-results-with-georadius)
 
 ## Faceted search
 
