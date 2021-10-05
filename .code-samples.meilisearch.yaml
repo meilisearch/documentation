@@ -514,8 +514,8 @@ geosearch_guide_sort_settings_1: |-
 geosearch_guide_sort_usage_1: |-
   curl 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json'
-    --data-binary '{ "sort": "_geoPoint(48.8583701,2.2922926)" }'
+    --data-binary '{ "sort": "_geoPoint(48.8583701,2.2922926):asc" }'
 geosearch_guide_sort_usage_2: |-
   curl 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json'
-    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926)", "rating:desc"] }'
+    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
