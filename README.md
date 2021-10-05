@@ -8,7 +8,7 @@ This repository is the documentation for the **open-source search engine API [Me
 
 Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you! If you think something is missing or could be improved, issues are highly appreciated.
 
-Before contributing with a pull request, please claim an [issue]((https://github.com/meilisearch/documentation/issues)) for yourself. To do so, comment an issue and let us know why we should assign the issue to you.
+Before contributing with a pull request, please claim an [issue](https://github.com/meilisearch/documentation/issues) for yourself. To do so, comment an issue and let us know why we should assign the issue to you.
 When you have been assigned an issue, you're welcome to contibute.
 
 To contribute, clone this repository, commit your changes and open a pull request.
