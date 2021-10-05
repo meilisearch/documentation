@@ -45,7 +45,7 @@ errors:
   - code: missing_content_type
     description: "The payload does not contain a Content-Type header. Currently, MeiliSearch only supports JSON, CSV, and NDJSON."
   - code: malformed_payload  
-    description: "The Content-Type header does not match the payload or the format is invalid."
+    description: "The Content-Type header does not match the request body payload format or the format is invalid."
   - code: missing_payload
     description: "The Content-Type header was specified, but no request body was sent to the server or the request body is empty."  
   - code: dump_already_in_progress
