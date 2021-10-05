@@ -14,7 +14,7 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 
 [Step 2: Run MeiliSearch as a service](/create/how_to/running_production.md#step-2-run-meilisearch-as-a-service)
 
-+ [2.1 Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
++ [2.1. Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
 + [2.2. Enable and start service](/create/how_to/running_production.md#_2-2-enable-and-start-service)
 
 [Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
@@ -33,7 +33,7 @@ For this tutorial, we will be using a Debian 10 server, running on DigitalOcean.
 + An up-to-date server that runs Debian 10
 + An ssh keypair to connect to that machine
 
-> *TIPS:* learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
+> *TIPS:* learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or Windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
 
 ## Step 1: Install MeiliSearch
 
@@ -146,11 +146,11 @@ At this point, MeiliSearch is installed and running. It is protected from eventu
 
 But you probably want to open your MeiliSearch to the outside world, and for now, it is isolated. Let's fix that in a safe way.
 
-## Step 3: Secure and finish your setup using a reverse proxy, domain name, and HTTPS
+## Step 3: Secure and finish your setup using a Reverse Proxy, domain name, and HTTPS
 
 It's time to safely make your brand new MeiliSearch available to be requested from the outside world. For this purpose, you will use two of the main technologies available on the web: a Reverse Proxy and SSL/TLS.
 
-### 3.1. Creating a reverse proxy with [Nginx](https://www.nginx.com/)
+### 3.1. Creating a Reverse Proxy with [Nginx](https://www.nginx.com/)
 
 A reverse proxy is basically an application that will handle every communication between the outside world and your internal applications. Nginx will receive external HTTP requests and redirect them to MeiliSearch. When MeiliSearch has done its amazing job, it will communicate its response to Nginx, which will then transfer the latter to the user who originally sent the request. This is a common way to isolate and protect any application by adding a robust, secure, and fast gate-keeper such as Nginx, one of the safest and most efficient tools available online, and of course, open-source!
 
