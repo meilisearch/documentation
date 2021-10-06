@@ -80,6 +80,10 @@ The above JSON document would look like this in CSV:
 
 Since CSV does not support arrays or nested objects, `cast` cannot be converted to CSV.
 
+::: tip
+If you don't specify the data type for an attribute, it will default to `:string`.
+:::
+
 ### Limitations and requirements
 
 Documents have a **soft maximum of 1000 fields**; beyond that the [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective, leading to undefined behavior.
