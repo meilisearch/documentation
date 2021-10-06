@@ -22,7 +22,7 @@ MeiliSearch currently supports the following formats:
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
 
-You **don't need** to specify a header for `GET` and `DELETE` routes. Routes that require the payload (`--data-binary`) **only accept JSON headers.** `PUT` and `POST` document routes accept all headers.
+You **don't need** to specify a header for `GET` and `DELETE` routes. Routes that require a payload **only accept JSON headers.** `PUT` and `POST` document routes accept all headers.
 
 #### Authentication
 
