@@ -50,7 +50,7 @@ At minimum, the document must contain one field with the **[primary key][primary
 
 NDJSON objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to MeiliSearch documents.
 
-Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and can handle nested structures.  
+Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.  
 
 The above JSON document would look like this in NDJSON:
 
