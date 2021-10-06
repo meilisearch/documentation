@@ -12,7 +12,6 @@ To learn more about distinct attributes, refer to our [dedicated guide](/referen
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
-
 ## Get distinct attribute
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/distinct-attribute" />
