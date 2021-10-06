@@ -237,6 +237,8 @@ _geoRadius(lat, lng, distance_in_meters)
 
 ### Example
 
+When using a dataset of restaurants containing geopositioning data, we can filter our search so it only includes places within two kilometres of our location:
+
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
 [You can read more about filtering results with `_geoRadius` in our geosearch guide.](/reference/features/geosearch.md#filtering-results-with-georadius)
