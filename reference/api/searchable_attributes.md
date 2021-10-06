@@ -6,11 +6,11 @@ The values associated with attributes in the `searchableAttributes` list are **s
 
 Searchable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-::: note
+To learn more about searchable attributes, refer to our [dedicated guide](/reference/features/field_properties.md#searchable-fields).
+
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
-
-[Learn more about searchable fields](/reference/features/field_properties.md#searchable-fields).
 
 ## Get searchable attributes
 
