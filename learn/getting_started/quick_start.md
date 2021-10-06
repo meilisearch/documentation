@@ -81,7 +81,15 @@ See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md)
 
 ## Search
 
-Now that your documents have been ingested into MeiliSearch, you are able to search them.
+Before you start querying, we recommend that you check the status of your index. You can do that using:
+
+<CodeSamples id="get_update_1" />
+
+Once the update shows `processed`, you can start searching.
+
+::: warning
+Attempting to search before all documents are indexed **will result in undefined behavior**.
+:::
 
 MeiliSearch [offers many parameters](/reference/features/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
