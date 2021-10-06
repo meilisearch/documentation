@@ -67,7 +67,7 @@ The above JSON document would look like this in NDJSON:
 
 #### CSV
 
-CSV files express data as a sequence of values separated by a delimiter character. Though the comma is the most common delimiter, spaces, tabs, and semicolons are valid alternatives. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
+CSV files express data as a sequence of values separated by a delimiter character. Currently, MeiliSearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
 
 Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
 
