@@ -9,4 +9,4 @@ These articles are conceptual explorations of important—but difficult—topics
 ## Table of contents
 
 - [Asynchronous updates](/learn/advanced/asynchronous_updates.md)
-- [Snapshots vs. Dumps](/learn/advanced/snapshots_vs_dumps.md)
+- [Snapshots vs. dumps](/learn/advanced/snapshots_vs_dumps.md)
