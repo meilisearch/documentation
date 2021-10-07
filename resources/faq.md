@@ -248,20 +248,18 @@ You can read more about what metrics we collect, why we collect them, and how to
 
 ## Why does MeiliSearch crash when I try to add documents?
 
-Most crashes during indexation are a result of a machine running out of RAM. This happens when your computer does not have enough memory to process your dataset.
+Most crashes that happen during indexation are a result of a machine running out of RAM. This happens when your computer does not have enough memory to process your dataset.
 
-Indexation also uses disk space. If the indexer runs out of available disk space, MeiliSearch will crash.
+Additionally, indexation uses disk space. MeiliSearch may also crash if it runs out of disk space while indexing new documents.
 
-In both cases, we recommend adding new documents in smaller batches. Alternatively, you can try increasing your machine's RAM and/or available disk space or converting your dataset into a more performant format such as CSV or NDJSON.
-
-This is a known issue that we are actively trying to improve.
+In both cases, we recommend adding new documents in smaller batches. Alternatively, you can try increasing your machine's RAM and/or available disk space, or converting your dataset into a more lightweight format such as CSV or NDJSON.
 
 ## How can I speed up indexation when adding new documents?
 
 You can improve indexation speed in three ways:
 
-1. Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster will MeiliSearch index new documents**
+1. Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster MeiliSearch will index new documents**
 
 2. **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine
 
-3. Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to significant performance improvement
+3. Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance
