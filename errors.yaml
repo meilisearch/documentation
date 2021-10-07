@@ -47,5 +47,5 @@ errors:
   - code: dump_process_failed
     description: "An error occured during dump creation process, task aborted."
   - code: invalid_ranking_rule
-    description: "One or more of the provided ranking rules are invalid. For more information on ranking rules usage, read our [relevancy guide](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules)"
+    description: "The provided ranking rules are invalid. For more information on ranking rule configuration, check our [relevancy guide](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules)"
 ...
