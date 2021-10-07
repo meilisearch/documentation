@@ -152,7 +152,7 @@ You can then use the filter in a search query:
 
 ### Filtering results `_geoRadius`
 
-If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their their geographic position.
+If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
 
 `_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 

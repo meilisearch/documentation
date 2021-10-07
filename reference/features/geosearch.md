@@ -4,7 +4,7 @@ MeiliSearch allows you to filter and sort results based on their geographic loca
 
 ## Preparing documents for location-based search
 
-In order to start filtering and sorting matches based on their geographic location, you must make sure that all documents in your index contain a valid `_geo` field.
+In order to start filtering and sorting documents based on their geographic location, you must make sure they contain a valid `_geo` field.
 
 `_geo` is a reserved field. If you include it in your documents, MeiliSearch expects its value to conform to a specific format.
 
