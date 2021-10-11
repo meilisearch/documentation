@@ -230,7 +230,7 @@ The `update` database handles [pending updates](/learn/advanced/asynchronous_upd
 **CLI option**: `--http-payload-size-limit`
 **Default value**: `104857600` (~100MB)
 
-Sets the maximum size of accepted JSON payloads. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
 ### Schedule snapshot creation
 

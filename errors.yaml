@@ -40,12 +40,18 @@ errors:
     description: "The payload sent to the server was too large. Check out this [guide](https://docs.meilisearch.com/reference/features/configuration.html#payload-limit-size) to customize the maximum payload size accepted by MeiliSearch."
   - code: unretrievable_document
     description: "The document exists in store, but there was an error retrieving it. This probably comes from an inconsistent state in the database."
-  - code: unsupported_media_type
-    description: "The payload content type is not supported by MeiliSearch. Currently, MeiliSearch supports only JSON payloads."
+  - code: invalid_content_type
+    description: "The Content-Type header is not supported by MeiliSearch. Currently, MeiliSearch only supports JSON, CSV, and NDJSON."
+  - code: missing_content_type
+    description: "The payload does not contain a Content-Type header. Currently, MeiliSearch only supports JSON, CSV, and NDJSON."
+  - code: malformed_payload  
+    description: "The Content-Type header does not match the request body payload format or the format is invalid."
+  - code: missing_payload
+    description: "The Content-Type header was specified, but no request body was sent to the server or the request body is empty."  
   - code: dump_already_in_progress
     description: "A dump creation is already in progress and a new one can't be triggered until the previous dump creation is not finished."
   - code: dump_process_failed
-    description: "An error occured during dump creation process, task aborted."
+    description: "An error occurred during dump creation process, task aborted."
   - code: invalid_geo_field
     description: "The provided `_geo` field of one or more documents is invalid. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](https://docs.meilisearch.com/reference/features/geosearch.html)."
 ...
