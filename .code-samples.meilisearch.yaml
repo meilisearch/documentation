@@ -430,7 +430,7 @@ phrase_search_1: |-
   --data '{ "q": "\"african american\" horror" }'
 authentication_header_1: |-
   $ curl -X GET 'http://127.0.0.1:7700/keys' \
-  --header "X-Meili-API-Key: mast
+  --header "X-Meili-API-Key: masterKey"
 sorting_guide_update_sortable_attributes_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
@@ -489,3 +489,33 @@ search_parameter_guide_sort_1: |-
         "price:asc"
       ]
     }'
+geosearch_guide_filter_settings_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
+    -H 'Content-type:application/json' \
+    --data-binary '[
+        "_geo",
+    ]'
+geosearch_guide_filter_usage_1: |-
+  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000)" }'
+geosearch_guide_filter_usage_2: |-
+  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json'
+    --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000) AND type = pizza" }'
+geosearch_guide_sort_settings_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \
+    -H 'Content-type:application/json'
+    --data-binary '[
+        "_geo",
+    ]'
+geosearch_guide_sort_usage_1: |-
+  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json'
+    --data-binary '{ "sort": "_geoPoint(48.8583701,2.2922926):asc" }'
+geosearch_guide_sort_usage_2: |-
+  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json'
+    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
