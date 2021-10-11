@@ -196,3 +196,39 @@ There is a lot of overlap between sorting and configuring [custom ranking rules]
 Sorting is most useful when you want your users to be able to alter the order of returned results at query time. For example, webshop users might want to order results by price depending on what they are searching and to change whether they see the most expensive or the cheapest products first.
 
 Custom ranking rules, instead, establish a default sorting rule that is enforced in every search. This approach can be useful when you want to promote certain results above all others, regardless of a user's preferences. For example, you might want a webshop to always feature discounted products first, no matter what a user is searching for.
+
+## Sorting with `_geoPoint`
+
+If your documents contain `_geo` data, you can use `_geoPoint` to sort results based on their distance from a geographic position.
+
+`_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
+
+```json
+{
+  "sort": ["_geoPoint(0.0, 0.0):asc"]
+}
+```
+
+Queries using `_geoPoint` will always include a `geoDistance` field containing the distance in meters between the document location and the `_geoPoint`:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "_geo": {
+      "lat": 45.4777599, 
+      "lng": 9.1967508
+    },
+    "_geoDistance": 1532
+  }
+]
+```
+
+[You can read more about location-based sorting in our geosearch guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)
+
+### Example
+
+The following query will sort results based on how close they are to the Eiffel Tower:
+
+<CodeSamples id="geosearch_guide_sort_usage_1" />
