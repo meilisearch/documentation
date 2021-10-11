@@ -76,7 +76,7 @@ For **reviewing issues**, we consider a couple criteria:
 2. Is our documentation the best place for this information? Sometimes an idea for new content might work better on our blog than the docs, or it might be more effective to link to an external resource than write it ourselves.
 3. Can we reproduce this error?
 
-If multiple people create similar issues (or upvote 👍 an issue to show suport), that makes us more likely to divert resources towards that task.
+If multiple people create similar issues (or upvote 👍 an issue to show support), that makes us more likely to divert resources towards that task.
 
 For **reviewing contributor PRs**, we start by making sure the PR is up to our **quality standard**.
 
