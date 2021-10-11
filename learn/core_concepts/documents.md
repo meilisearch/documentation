@@ -62,7 +62,7 @@ The above JSON document would look like this in NDJSON:
   "genre": "Children's Animation", 
   "release-year": 2008, 
   "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]
-  }
+}
 ```
 
 #### CSV
