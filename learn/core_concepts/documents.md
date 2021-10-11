@@ -55,7 +55,6 @@ Compared to JSON, NDJSON has better writing performance and is less CPU and memo
 The above JSON document would look like this in NDJSON:
 
 ```json
-
 { 
   "id": "1564saqw12ss", 
   "title": "Kung Fu Panda", 
