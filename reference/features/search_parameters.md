@@ -62,15 +62,19 @@ This will give you a list of documents that contain your query terms in at least
 {
   "hits": [
     {
-      "id":"50393",
-      "title":"Kung Fu Panda Holiday",
-      "poster":"https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
-      "overview":"The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
-      "release_date":1290729600,
-      "genres":["Animation","Family","TV Movie"]
-    },
+      "id": "50393",
+      "title": "Kung Fu Panda Holiday",
+      "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
+      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
+      "release_date": 1290729600,
+      "genres": [
+        "Animation",
+        "Family",
+        "TV Movie"
+      ]
+    }
   ],
-  "query":"shifu"
+  "query": "shifu"
 }
 ```
 
@@ -218,7 +222,7 @@ You would get the following response:
       "fantasy": 67,
       "comedy": 475,
       "mystery": 70,
-      "thriller": 217,
+      "thriller": 217
     }
   }
 }

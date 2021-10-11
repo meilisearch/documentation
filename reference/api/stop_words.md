@@ -31,7 +31,11 @@ Get the [stop-words](/reference/features/stop_words.md) list of an index.
 #### Response: `200 Ok`
 
 ```json
-["of", "the", "to"]
+[
+  "of",
+  "the",
+  "to"
+]
 ```
 
 ## Update stop-words
@@ -61,9 +65,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -91,9 +93,7 @@ Empty array: `[]`
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
