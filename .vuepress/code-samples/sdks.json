@@ -7,31 +7,41 @@
   {
     "language": "javascript",
     "label": "JavaScript",
-    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-js/master/.code-samples.meilisearch.yaml"
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-js/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "python",
     "label": "Python",
-    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-python/master/.code-samples.meilisearch.yaml"
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-python/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "php",
     "label": "PHP",
-    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-php/master/.code-samples.meilisearch.yaml"
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-php/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "ruby",
     "label": "Ruby",
-    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-ruby/master/.code-samples.meilisearch.yaml"
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-ruby/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "go",
     "label": "Go",
-    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/master/.code-samples.meilisearch.yaml"
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "rust",
     "label": "Rust",
-    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-rust/master/.code-samples.meilisearch.yaml"
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-rust/main/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "swift",
+    "label": "Swift",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-swift/main/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "dart",
+    "label": "Dart",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dart/main/.code-samples.meilisearch.yaml"
   }
 ]
