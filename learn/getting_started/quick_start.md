@@ -309,7 +309,7 @@ The code above comes in multiple parts:
 
 - The `<body>` of the page is the entry point for React. `instant-meilisearch` adds the search bar and search results here by manipulating the DOM.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
-- The `<script>` containing JavaScript initalize React and renders the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
+- The `<script>` containing JavaScript initialize React and renders the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
 
 To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
 
