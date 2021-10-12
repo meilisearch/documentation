@@ -131,7 +131,7 @@ Array expressions establish logical connectives by nesting arrays of strings. Th
 Outer array elements are connected by an `AND` operator. The following expression returns `horror` movies directed by `Jordan Peele`:
 
 ```
-["genres = horror", "director = 'Jordan Peele']
+["genres = horror", "director = 'Jordan Peele'"]
 ```
 
 Inner array elements are connected by an `OR` operator. The following expression returns either `horror` or `comedy` films:
