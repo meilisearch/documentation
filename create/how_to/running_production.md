@@ -51,7 +51,7 @@ curl -L https://install.meilisearch.com | sh
 ```
 
 > The different options to achieve a MeiliSearch installation are detailed in **[this guide](/learn/getting_started/installation.md#download-and-launch)**.
-> It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your achitecture in the best possible way.
+> It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your architecture in the best possible way.
 
 You can always check the latest MeiliSearch stable version, and get MeiliSearch for the Operating System of your choice, by visiting the following link:
 
