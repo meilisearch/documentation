@@ -19,6 +19,7 @@ Welcome to the MeiliSearch documentation. Here you'll find everything you need t
 - [Deploy MeiliSearch on AWS](create/how_to/aws.md)
 - [Deploy MeiliSearch on GCP](create/how_to/gcp.md)
 - [Deploy MeiliSearch on DigitalOcean](create/how_to/digitalocean_droplet.md)
+- [Deploy MeiliSearch on Qovery](create/how_to/qovery.md)
 
 ## Version Compatibility
 
