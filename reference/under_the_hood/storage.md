@@ -52,9 +52,9 @@ MeiliSearch will always demand a certain amount of space to use as a [memory map
 
 ## Measured disk usage
 
-We did some measurements on the default <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a> dataset that you can find in the [getting started guide](/learn/getting_started/quick_start.md#add-documents).
+The following measurements were taken using <a id="downloadMovie" href="/movies.json" download="movies.json">an 8.6 MB JSON dataset containing 19,553 documents</a>. 
 
-This dataset is a JSON file of 8.6 MB and has 19,553 documents. When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122MB.
+After indexed, the dataset size in LMDB is about 122MB.
 
 | Raw JSON | MeiliSearch database size on disk | RAM usage | Virtual memory usage |
 | -------- | --------------------------------- | -------------------- | ------------------- |
