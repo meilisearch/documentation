@@ -161,7 +161,7 @@ module.exports = {
         {
           title: '🛠️ Under the Hood',
           path: '/reference/under_the_hood/',
-          collapsable: true,
+          collapsable: false,
           children: [
             '/reference/under_the_hood/bucket_sort',
             '/reference/under_the_hood/concat',
