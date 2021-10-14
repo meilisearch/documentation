@@ -35,7 +35,7 @@ meilisearch
 :::
 
 ::: tab Docker
-Using **Docker** you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags).
+Using **Docker** you can choose to run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 This command starts the **latest stable release** of MeiliSearch.
 
@@ -100,12 +100,12 @@ cargo build --release
 
 To install MeiliSearch on Windows, you can:
 
-- use Docker
+- use Docker (see "Docker" tab above)
 - [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
-- use the installation script (cf `cURL` tab) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
-- compile from source
+- use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
+- compile from source (see "Source" tab above)
 
-If you are new to the Windows CMD, you can follow this [guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/) to get started.
+To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
 
 ::::
 
