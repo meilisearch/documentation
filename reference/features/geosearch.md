@@ -134,9 +134,7 @@ _geoRadius(lat, lng, distance_in_meters)
 `_geoRadius` must always be used with the [`filter` search parameter](/reference/features/search_parameters.md#filter). The following filter expression would only include results within 1km of the Eiffel Tower:
 
 ```json
-{
-  "filter": "_geoRadius(48.8583701, 2.2922926, 1000)"
-}
+{ "filter": "_geoRadius(48.8583701, 2.2922926, 1000)" }
 ```
 
 If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, MeiliSearch will return an [`invalid_filter`](/errors) error.
@@ -232,7 +230,9 @@ The following sorting rule orders results according to how close they are to the
 
 ```json
 {
-  "sort": ["_geoPoint(48.8583701, 2.2922926):asc"]
+  "sort": [
+    "_geoPoint(48.8583701, 2.2922926):asc"
+  ]
 }
 ```
 

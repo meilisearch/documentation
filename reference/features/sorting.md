@@ -225,7 +225,9 @@ If your documents contain `_geo` data, you can use `_geoPoint` to sort results b
 
 ```json
 {
-  "sort": ["_geoPoint(0.0, 0.0):asc"]
+  "sort": [
+    "_geoPoint(0.0, 0.0):asc"
+  ]
 }
 ```
 

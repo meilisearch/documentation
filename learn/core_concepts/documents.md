@@ -63,7 +63,10 @@ The above JSON document would look like this in NDJSON:
   "title": "Kung Fu Panda", 
   "genre": "Children's Animation", 
   "release-year": 2008, 
-  "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]
+  "cast": [
+    { "Jack Black": "Po" },
+    { "Jackie Chan": "Monkey" }
+  ]
 }
 ```
 
