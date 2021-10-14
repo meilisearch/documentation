@@ -29,7 +29,7 @@ Suppose we have a JSON array containing a few restaurants:
   {
     "id": 1,
     "name": "Nàpiz' Milano",
-    "address": "Viale Vittorio Veneto, 30, 20124, Milano, Italia",
+    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
     "type": "pizza",
     "rating": 9
   },
@@ -100,7 +100,7 @@ If your dataset is formatted as CSV, the file header must have a `_geo` column. 
 
 ```csv
 "id:number", "name:string", "address:string", "type:string", "rating:number", "_geo:string"
-"1", "Nàpiz Milano", "Viale Vittorio Veneto, 30, 20124, Milano, Italia","pizzeria", 9, "45.4777599,9.1967508"
+"1", "Nàpiz Milano", "Viale Vittorio Veneto, 30, 20124, Milan, Italy","pizzeria", 9, "45.4777599,9.1967508"
 "2", "Bouillon Pigalle", "22 Bd de Clichy, 75018 Paris, France", "french", 8, "48.8826517,2.3352748"
 "3", "Artico Gelateria Tradizionale", "Via Dogana, 1, 20123 Milan, Italy", "ice cream", 10, "48.8826517,2.3352748"
 ```
