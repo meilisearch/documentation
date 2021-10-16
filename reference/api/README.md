@@ -75,7 +75,7 @@ If you're having trouble understanding an error, take a look at the [complete li
 
 ## Asynchronous updates
 
-MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `uid` attribute:
+MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only a `uid` attribute:
 
 ```json
 {

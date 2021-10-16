@@ -51,10 +51,10 @@ In this documentation, we provide this <a id="downloadMovie" href="/movies.json"
 
 More datasets and setting configurations are available [in this repository](https://github.com/meilisearch/datasets/).
 
-## I did a call to an API route, and I only got an `uid` as a response. What does it mean?
+## I did a call to an API route, and I only got a `uid` as a response. What does it mean?
 
 MeiliSearch is an **asynchronous API**.
-It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only an `uid` attribute. For example:
+It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only a `uid` attribute. For example:
 
 ```json
 {
@@ -158,7 +158,7 @@ See more [information about the primary key](/learn/core_concepts/documents.md#p
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
-Your document upload probably failed. To understand what happened, please check this [answer](#i-did-a-call-to-an-api-route-and-i-only-got-an-uid-as-a-response-what-does-it-mean).
+Your document upload probably failed. To understand what happened, please check this [answer](#i-did-a-call-to-an-api-route-and-i-only-got-a-uid-as-a-response-what-does-it-mean).
 
 ## Is killing a MeiliSearch process safe?
 

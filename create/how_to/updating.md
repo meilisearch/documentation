@@ -142,7 +142,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an `uid`:
+This command should return a `uid`:
 
 ```json
 {
@@ -309,7 +309,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an `uid`:
+This command should return a `uid`:
 
 ```json
 {
