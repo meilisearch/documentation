@@ -99,7 +99,11 @@ An attribute functions a bit like a variable in most programming languages, i.e.
 
 Every field has a [data type](/reference/under_the_hood/datatypes.md) dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-Take note that, in the case of strings, a value **[can contain at most 65535 positions](/reference/features/known_limitations.md#maximum-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
+Take note that, in the case of strings, a value **[can contain at most 65535 positions](/reference/features/known_limitations.md#maximum-words-per-attribute). Words exceeding the 65535 position limit will be ignored.**
+
+::: warning
+Previously, this limit was 1000 positions. This change will allow you to increase the size of `data.ms` between v0.23 and v0.24.
+:::
 
 You can also apply [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
