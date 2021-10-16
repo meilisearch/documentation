@@ -138,10 +138,12 @@ If the provided index does not exist, it will be created.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+  "uid": 1
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current update](/reference/api/updates.md).
 
 ## Reset settings
 
@@ -177,7 +179,9 @@ All settings will be reset to their default value.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+  "uid": 1
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current update](/reference/api/updates.md).

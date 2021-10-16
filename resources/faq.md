@@ -51,19 +51,21 @@ In this documentation, we provide this <a id="downloadMovie" href="/movies.json"
 
 More datasets and setting configurations are available [in this repository](https://github.com/meilisearch/datasets/).
 
-## I did a call to an API route, and I only got an `updateId` as a response. What does it mean?
+## I did a call to an API route, and I only got an `uid` as a response. What does it mean?
 
 MeiliSearch is an **asynchronous API**.
-It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only an `updateId` attribute. For example:
+It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only an `uid` attribute. For example:
 
 ```json
-{ "updateId": 2 }
+{
+  "uid": 2
+}
 ```
 
 This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
 
 ::: tip
-You can check the status of the operation using the `updateId` via the [get update status route](/reference/api/updates.md#get-an-update-status).
+You can check the status of the operation using the `uid` via the [get update status route](/reference/api/updates.md#get-an-update-status).
 In addition, MeiliSearch delivers a global route to [track all your update status](/reference/api/updates.md#get-all-update-status).
 **This way, you will be informed if your action was processed or not, and <u>why</u>**.
 :::
@@ -156,7 +158,7 @@ See more [information about the primary key](/learn/core_concepts/documents.md#p
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
-Your document upload probably failed. To understand what happened, please check this [answer](#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
+Your document upload probably failed. To understand what happened, please check this [answer](#i-did-a-call-to-an-api-route-and-i-only-got-an-uid-as-a-response-what-does-it-mean).
 
 ## Is killing a MeiliSearch process safe?
 

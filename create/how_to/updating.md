@@ -142,10 +142,12 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an updateId:
+This command should return an `uid`:
 
 ```json
-{ "updateId": 1 }
+{
+  "uid": 1
+}
 ```
 
 Now that all fields are displayed, proceed to the next step.
@@ -307,10 +309,12 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an updateId:
+This command should return an `uid`:
 
 ```json
-{ "updateId": 1 }
+{
+  "uid": 1
+}
 ```
 
 Now that all fields are displayed, proceed to the next step.

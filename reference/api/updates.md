@@ -4,7 +4,7 @@ The `updates` route gives information about the progress of the [asynchronous pr
 
 ## Get an update status
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/updates/:updateId"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/updates/:uid"/>
 
 Get the status of an [update](/learn/advanced/asynchronous_updates.md) in a given [index](/learn/core_concepts/indexes.md).
 
@@ -13,7 +13,7 @@ Get the status of an [update](/learn/advanced/asynchronous_updates.md) in a give
 | Variable      | Description           |
 | ------------- | --------------------- |
 | **index_uid** | The index UID         |
-| **updateId**  | The update identifier |
+| **uid**  | The update identifier |
 
 ### Example
 
@@ -26,7 +26,7 @@ Here is an example response representing [an update that has already been proces
 ```json
 {
   "status": "processed",
-  "updateId": 1,
+  "uid": 1,
   "type": {
     "name": "DocumentsAddition",
     "number": 4
@@ -59,14 +59,14 @@ Here is an example response representing an [enqueued update](/learn/advanced/as
 
 ```json
 [
-  {
-    "status": "enqueued",
-    "updateId": 0,
-    "type": {
-      "name": "DocumentsAddition",
-      "number": 30
-    },
-    "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
-  }
+    {
+        "status": "enqueued",
+        "uid": 0,
+        "type": {
+            "name": "DocumentsAddition",
+            "number": 30
+        },
+        "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
+    }
 ]
 ```

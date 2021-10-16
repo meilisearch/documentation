@@ -17,7 +17,7 @@ Currently, these are MeiliSearch's asynchronous operations:
 
 ## Update workflow
 
-1. When you make an update request, MeiliSearch puts it in the update queue, sets the request `status` to `enqueued` and returns an `updateId`
+1. When you make an update request, MeiliSearch puts it in the update queue, sets the request `status` to `enqueued` and returns an `uid`
 2. When the queue reaches your update request, MeiliSearch begins processing it and changes the request `status` to `processing`
 3. Once the update has been finalized, MeiliSearch marks it as `processed`, if it was successful, or `failed`, in case the update failed
 4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/updates.md#get-all-update-status)
@@ -30,14 +30,14 @@ While dumps and updates are both asynchronous processes, they use separate queue
 
 ## Understanding updates
 
-After you have requested an update, you can use the [update API endpoint](/reference/api/updates.md) to find out the status of your request. To do so, you will need your request's `updateId`.
+After you have requested an update, you can use the [update API endpoint](/reference/api/updates.md) to find out the status of your request. To do so, you will need your request's `uid`.
 
 ### Response
 
 The response you get from the [update API endpoint](/reference/api/updates.md) will always include the following fields:
 
 - `status`: the state of the operation (`enqueued`, `processing`, `processed`, or `failed`)
-- `updateId`: the id of the update
+- `uid`: the id of the update
 - `type`: the type of the operation, including its name and number
 - `enqueuedAt`: the date when the operation was added to the queue
 
@@ -59,15 +59,15 @@ Update responses always contain a field indicating the request's current `status
 
 ### Examples
 
-Suppose you add a new document to your instance using the [documents API endpoint](/reference/api/documents.md#add-or-replace-documents) and receive an `updateId`.
+Suppose you add a new document to your instance using the [documents API endpoint](/reference/api/documents.md#add-or-replace-documents) and receive an `uid`.
 
 When you query the update endpoint using this id, you see that it has been enqueued:
 
 ```json
 {
   "status": "enqueued",
-  "updateId": 1,
-  "type": { "name": "DocumentsAddition" },
+  "uid": 1,
+  "type": {"name": "DocumentsAddition",},
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z"
 }
 ```
@@ -77,7 +77,7 @@ Later, you check the request's status one more time. It was successfully process
 ```json
 {
   "status": "processed",
-  "updateId": 1,
+  "uid": 1,
   "type": {
     "name": "DocumentsAddition",
     "number": 19653
@@ -93,13 +93,9 @@ Had the update failed, the response would have included an error object:
 ```json
 {
   "status": "failed",
-  "updateId": 0,
-  "type": { "name": "DocumentsAddition" },
-  "error": {
-    "message": "The primary key inference process failed because the engine did not find any fields containing `id` substring in their name. If your document identifier does not contain any `id` substring, you can set the primary key of the index.",
-    "code": "primary_key_inference_failed",
-    "type": "invalid_request",
-    "link": "https://docs.meilisearch.com/errors#primary_key_inference_failed"
+  "uid": 1,
+  "type": {
+    "name": "DocumentsAddition",
   },
   "duration": 0,
   "enqueuedAt": "2021-11-11T13:31:12.051786Z",

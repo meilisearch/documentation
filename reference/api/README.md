@@ -75,13 +75,15 @@ If you're having trouble understanding an error, take a look at the [complete li
 
 ## Asynchronous updates
 
-MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `updateId` attribute:
+MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `uid` attribute:
 
 ```json
-{ "updateId": 2 }
+{
+  "uid": 2
+}
 ```
 
 This successful response indicates that the operation has been queued or is currently executing.
-You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md).
+You can check the status of the operation via the `uid` and the [get update status route](/reference/api/updates.md).
 
 See more information about [asynchronous updates](/learn/advanced/asynchronous_updates.md).
