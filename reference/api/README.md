@@ -42,7 +42,7 @@ Please read about [authentication keys](/reference/features/authentication.md) a
 
 **201 - Created**: The resource has been created (synchronous)
 
-**202 - Accepted**: The update has been pushed in the update queue (asynchronous)
+**202 - Accepted**: The task has been pushed in the task queue (asynchronous)
 
 **204 - No Content**: The resource has been deleted or no content has been returned
 

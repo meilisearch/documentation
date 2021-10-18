@@ -1,6 +1,6 @@
 # Asynchronous updates
 
-Index updates are processed **asynchronously**. This means that update requests are not handled as soon as they are received—instead, MeiliSearch places these operations in a queue and processes them in the order they were received.
+Index updates are processed **asynchronously**. This means that task requests are not handled as soon as they are received—instead, MeiliSearch places these operations in a queue and processes them in the order they were received.
 
 ## Which operations are async?
 
@@ -17,9 +17,9 @@ Currently, these are MeiliSearch's asynchronous operations:
 
 ## Task workflow
 
-1. When you make an update request, MeiliSearch puts it in the task queue, sets the request `status` to `enqueued` and returns a `uid`
-2. When the queue reaches your update request, MeiliSearch begins processing it and changes the request `status` to `processing`
-3. Once the update has been finalized, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, in case the update failed. The final status of a `processed` task is `succeeded` or `failed`.
+1. When you make a task request, MeiliSearch puts it in the task queue, sets the request `status` to `enqueued` and returns a `uid`
+2. When the queue reaches your task request, MeiliSearch begins processing it and changes the request `status` to `processing`
+3. Once the task has been finalized, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, in case the task failed. The final status of a `processed` task is `succeeded` or `failed`.
 4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/tasks.md#get-all-task-status)
 
 ### Dumps
@@ -69,10 +69,10 @@ Finally, if a task fails due to an [error](https://docs.meilisearch.com/errors/)
 
 Task responses always contain a field indicating the request's current `status`. This field can have one of four possible values:
 
-- `enqueued`: the update request has been received and will be processed soon
-- `processing`: the update is being processed
-- `processed`: the update has been successfully processed
-- `failed`: a failure occurred when processing the update
+- `enqueued`: the task request has been received and will be processed soon
+- `processing`: the task is being processed
+- `processed`: the task has been successfully processed
+- `failed`: a failure occurred when processing the task
 
 The **final status of a `processed` task is `succeeded` or `failed`.**
 
