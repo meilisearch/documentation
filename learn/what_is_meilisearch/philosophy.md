@@ -32,4 +32,4 @@ As a result, we are fully committed to the philosophy of [prefix search](https:/
 
 MeiliSearch should **not be your main data store**. MeiliSearch should contain only the data you want your users to search through. The more data MeiliSearch contains, the less relevant it is.
 
-MeiliSearch queries should be sent directly from the front-end. The more proxies there are between MeiliSearch and the end-user, the slower the queries and search-experience will be.
+MeiliSearch queries should be sent directly from the front-end. The more proxies there are between MeiliSearch and the end-user, the slower the queries and search experience will be.
