@@ -131,7 +131,7 @@ Array expressions establish logical connectives by nesting arrays of strings. Th
 Outer array elements are connected by an `AND` operator. The following expression returns `horror` movies directed by `Jordan Peele`:
 
 ```
-["genres = horror", "director = 'Jordan Peele']
+["genres = horror", "director = 'Jordan Peele'"]
 ```
 
 Inner array elements are connected by an `OR` operator. The following expression returns either `horror` or `comedy` films:
@@ -222,6 +222,26 @@ rating >= 3 AND (NOT director = "Tim Burton")
 You can use this filter when searching for `Planet of the Apes`:
 
 <CodeSamples id="filtering_guide_4" />
+
+## Filtering with `_geoRadius`
+
+If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
+
+`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+
+```
+_geoRadius(lat, lng, distance_in_meters)
+```
+
+`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
+
+### Example
+
+When using a dataset of restaurants containing geopositioning data, we can filter our search so it only includes places within two kilometres of our location:
+
+<CodeSamples id="geosearch_guide_filter_usage_1" />
+
+[You can read more about filtering results with `_geoRadius` in our geosearch guide.](/reference/features/geosearch.md#filtering-results-with-georadius)
 
 ## Faceted search
 

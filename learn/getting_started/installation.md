@@ -47,6 +47,8 @@ docker run -it --rm \
 ```
 
 Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
+
+You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
 :::
 
 ::: tab APT
@@ -95,13 +97,15 @@ cargo build --release
 :::
 
 ::: tab Windows
+
 To install MeiliSearch on Windows, you can:
 
 - use Docker
 - [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
 - use the installation script (cf `cURL` tab) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
 - compile from source
-:::
+
+If you are new to the Windows CMD, you can follow this [guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/) to get started.
 
 ::::
 

@@ -43,7 +43,7 @@ Communication to the server is done through a [RESTful API](/reference/api/READM
 
 To add documents to MeiliSearch you must provide:
 
-- [Documents](/learn/core_concepts/documents.md) in the form of an array of `JSON objects`.
+- [Documents](/learn/core_concepts/documents.md) in the form of an array of JSON objects.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
 > _If the index does not exist, MeiliSearch creates it when you first add documents._
@@ -309,7 +309,7 @@ The code above comes in multiple parts:
 
 - The `<body>` of the page is the entry point for React. `instant-meilisearch` adds the search bar and search results here by manipulating the DOM.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
-- The `<script>` containing JavaScript initalize React and renders the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
+- The `<script>` containing JavaScript initialize React and renders the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
 
 To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
 
