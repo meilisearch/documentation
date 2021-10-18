@@ -8,7 +8,7 @@ We always aim for a simple and intuitive experience for both developers and end-
 
 For developers, we're proud to say that MeiliSearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/api).
 
-For end-users, the search experience aims to feel simple so they can focus on the results. MeiliSearch aims to deliver an intuitive search-as-you-type experience, with a sub 50 millisecond response time.
+For end-users, MeiliSearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results.
 
 ### Highly customizable
 
