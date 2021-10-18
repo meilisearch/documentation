@@ -73,9 +73,28 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_updates.md), including the document addition process.
 
-Asynchronous actions return a JSON object that contains only a `uid` attribute. This is a **successful response**, indicating that the operation has been taken into account, but may not have been executed yet.
+Asynchronous actions return the following JSON object in the stated order:
 
-You can check the status of the operation via the `uid` and the [get task status route](/reference/api/tasks.md). Checking the task status of an operation is never mandatory, but can prove useful in tracing the origin of errors or unexpected behavior.
+| Field      | Type    | Description                     |
+|------------|---------|---------------------------------|
+| uid        | integer | Unique sequential identifier           |
+| indexUid   | string | Unique index identifier |
+| status     | string  | Status of the task. Value is `enqueued` |
+| enqueuedAt | string | Represent the date and time as `ISO-8601` format when the task has been enqueued |
+
+Here's an example of the response on creating an index:
+
+```json
+{
+    "uid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "createIndex",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+To view additional details on the task's progress, you can use the [get task status route](/reference/api/tasks.md).
 
 See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
 

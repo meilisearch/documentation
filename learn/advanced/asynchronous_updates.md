@@ -49,15 +49,6 @@ The response from the [task API endpoint](/reference/api/tasks.md) will always i
 | `startedAt` | string | Represents the date and time as `ISO-8601` format when the task has been dequeued and started being `processed`. Default is set to `null`|
 | `finishedAt` | string | Represents the date and time as `ISO-8601` format when the task has `failed` or `succeeded`. Default is set to `null` |
 
-Summarized `task` Object for `202 Accepted`
-
-| Field      | Type    | Description                     |
-|------------|---------|---------------------------------|
-| uid        | integer | Unique sequential identifier           |
-| indexUid   | string | Unique index identifier |
-| status     | string  | Status of the task. Value is `enqueued` |
-| enqueuedAt | string | Represent the date and time as `ISO-8601` format when the task has been enqueued |
-
 Tasks marked as `processed` return additional fields:
 
 - `duration`: the number of seconds taken to complete the operation

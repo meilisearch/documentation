@@ -2,7 +2,82 @@
 
 The `tasks` route gives information about the progress of the [asynchronous processes](/learn/advanced/asynchronous_updates.md).
 
-## Get task status
+:::note
+The task `uid` is incremented **globally.**
+:::
+
+## Get all tasks
+
+List all tasks globally regardless of the indexes involved. It is useful for visualizing all the tasks.
+
+#### Path variables
+
+### Example
+
+#### Response: `200 Ok`
+
+```json
+{
+    "results": [
+        {
+            "uid": 1,
+            "indexUid": "movies_reviews",
+            "status": "enqueued",
+            "type": "documentsAddition",
+            "duration": null,
+            "enqueuedAt": "2021-08-12T10:00:00.000000Z",
+            "startedProcessingAt": null,
+            "finishedAt": null
+        },
+        {
+            "uid": 0,
+            "indexUid": "movies",
+            "status": "succeeded",
+            "type": "documentsAddition",
+            "details": {
+                "numberOfDocuments": 100
+            },
+            "duration": "PT16S",
+            "enqueuedAt": "2021-08-11T09:25:53.000000Z",
+            "startedAt": "2021-08-11T10:03:00.000000Z",
+            "finishedAt": "2021-08-11T10:03:16.000000Z"
+        }
+    ]
+}
+```
+
+:::note
+By default, **task unique identifiers (`uid`) are sorted in `desc` order.** This means that the most recent `task` objects appear first.
+:::
+
+## Get task status by `uid`
+
+<RouteHighlighter method="GET" route="/tasks/:uid"/>
+
+Get the status of a [task](/learn/advanced/asynchronous_updates.md) **regardless of [index](/learn/core_concepts/indexes.md).**
+
+#### Path variables
+
+### Example
+
+#### Response: `200 Ok`
+
+Here is an example response representing [a task that has already been processed](/learn/advanced/asynchronous_updates.md#understanding-tasks).
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentsAddition",
+    "duration": null,
+    "enqueuedAt": "2021-08-12T10:00:00.000000Z",
+    "startedAt": null,
+    "finishedAt": null
+}
+```
+
+## Get task status of an index
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/tasks/:uid"/>
 
@@ -25,24 +100,31 @@ Here is an example response representing [a task that has already been processed
 
 ```json
 {
-    "uid": 0,
-    "indexUid": "movies",
-    "status": "succeeded",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "exactness"
-        ]
-    },
-    "duration": "PT1S",
-    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
-    "startedAt": "2021-08-10T14:29:18.000000Z",
-    "finishedAt": "2021-08-10T14:29:19.000000Z"
+    "results": [
+        {
+            "uid": 1,
+            "indexUid": "movies",
+            "status": "enqueued",
+            "type": "documentsAddition",
+            "duration": null,
+            "enqueuedAt": "2021-08-12T10:00:00.000000Z",
+            "startedAt": null,
+            "finishedAt": null
+        },
+        {
+            "uid": 0,
+            "indexUid": "movies",
+            "status": "succeeded",
+            "type": "documentsAddition",
+            "details": {
+                "numberofDocuments": 100
+            },
+            "duration": "PT16S",
+            "enqueuedAt": "2021-08-11T09:25:53.000000Z",
+            "startedAt": "2021-08-11T10:03:00.000000Z",
+            "finishedAt": "2021-08-11T10:03:16.000000Z"
+        }
+    ]
 }
 ```
 
@@ -68,23 +150,30 @@ Here is an example response representing an [enqueued task](/learn/advanced/asyn
 
 ```json
 {
-    "uid": 0,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "exactness"
-        ]
-    },
-    "duration": null,
-    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
-    "startedAt": null,
-    "finishedAt": null
+    "results": [
+        {
+            "uid": 1,
+            "indexUid": "movies_reviews",
+            "status": "enqueued",
+            "type": "documentsAddition",
+            "duration": null,
+            "enqueuedAt": "2021-08-12T10:00:00.000000Z",
+            "startedProcessingAt": null,
+            "finishedAt": null
+        },
+        {
+            "uid": 0,
+            "indexUid": "movies",
+            "status": "succeeded",
+            "type": "documentsAddition",
+            "details": {
+                "numberOfDocuments": 100
+            },
+            "duration": "PT16S",
+            "enqueuedAt": "2021-08-11T09:25:53.000000Z",
+            "startedAt": "2021-08-11T10:03:00.000000Z",
+            "finishedAt": "2021-08-11T10:03:16.000000Z"
+        }
+    ]
 }
 ```

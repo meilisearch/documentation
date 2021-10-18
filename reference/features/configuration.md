@@ -65,7 +65,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
   - [Import dump](/reference/features/configuration.md#import-dump)
 - [Log level](/reference/features/configuration.md#log-level)
 - [Max index size](/reference/features/configuration.md#max-index-size)
-- [Max UDB size](/reference/features/configuration.md#max-udb-size)
+- [Max TASK_DB size](/reference/features/configuration.md#max-task-db-size)
 - [Payload limit size](/reference/features/configuration.md#payload-limit-size)
 - [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
   - [Schedule snapshot creation](/reference/features/configuration.md#schedule-snapshot-creation)
@@ -210,10 +210,10 @@ The `index` stores processed data and is different from the `update` database, w
 
 [Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
 
-### Max UDB size
+### Max TASK_DB size
 
-**Environment variable**: `MEILI_MAX_UDB_SIZE`
-**CLI option**: `--max-udb-size`
+**Environment variable**: `MEILI_MAX_TASK_DB_SIZE`
+**CLI option**: `--max-task-db-size`
 **Default value**: `107374182400` (100 GiB)
 **Expected value**: an integer
 
