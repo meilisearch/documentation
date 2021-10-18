@@ -20,7 +20,7 @@ Currently, these are MeiliSearch's asynchronous operations:
 1. When you make an update request, MeiliSearch puts it in the task queue, sets the request `status` to `enqueued` and returns a `uid`
 2. When the queue reaches your update request, MeiliSearch begins processing it and changes the request `status` to `processing`
 3. Once the update has been finalized, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, in case the update failed. The final status of a `processed` task is `succeeded` or `failed`.
-4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/updates.md#get-all-update-status)
+4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/tasks.md#get-all-task-status)
 
 ### Dumps
 
@@ -30,11 +30,11 @@ While dumps and tasks are both asynchronous processes, they use separate queues 
 
 ## Understanding tasks
 
-After you have requested an update, you can use the [task API endpoint](/reference/api/updates.md) to find out the status of your request. To do so, you will need your request's `uid`.
+After you have requested a task, you can use the [task API endpoint](/reference/api/tasks.md) to find out the status of your request. To do so, you will need your request's `uid`.
 
 ### Response
 
-The response from the [task API endpoint](/reference/api/updates.md) will always include the following fields in the stated order:
+The response from the [task API endpoint](/reference/api/tasks.md) will always include the following fields in the stated order:
 
 | Field   | Type    | Description                     |
 |---------|---------|---------------------------------|
@@ -175,7 +175,7 @@ What happens to an update task when MeiliSearch is terminated changes depending 
 - `processed`: there will be no data loss since the request was successfully completed
 - `failed`: the update failed and nothing has been added to the database
 
-You can use [the update route](/reference/api/updates.md) to determine an update's `status`.
+You can use [the task route](/reference/api/tasks.md) to determine a task's `status`.
 
 ### Example
 

@@ -72,7 +72,7 @@ An array of strings that contains attributes of an index to display.
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).
 
 ## Reset displayed attributes
 
@@ -102,4 +102,4 @@ All attributes found in the documents added to the index.
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).

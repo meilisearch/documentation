@@ -143,7 +143,7 @@ If the provided index does not exist, it will be created.
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).
 
 ## Reset settings
 
@@ -184,4 +184,4 @@ All settings will be reset to their default value.
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).

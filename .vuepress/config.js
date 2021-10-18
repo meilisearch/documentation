@@ -131,7 +131,7 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
-            '/reference/api/updates',
+            '/reference/api/tasks',
             '/reference/api/keys',
             {
               title: 'Settings',

@@ -65,8 +65,8 @@ It means that in many cases (e.g., documents addition), you will receive as serv
 This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
 
 ::: tip
-You can check the status of the operation using the `uid` via the [get update status route](/reference/api/updates.md#get-an-update-status).
-In addition, MeiliSearch delivers a global route to [track all your update status](/reference/api/updates.md#get-all-update-status).
+You can check the status of the operation using the `uid` via the [get task status route](/reference/api/tasks.md#get-task-status).
+In addition, MeiliSearch delivers a global route to [track all your task statuses](/reference/api/tasks.md#get-all-task-status).
 **This way, you will be informed if your action was processed or not, and <u>why</u>**.
 :::
 

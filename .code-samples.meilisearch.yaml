@@ -77,12 +77,12 @@ search_post_1: |-
 search_get_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/search?q=american%20ninja'
-get_update_1: |-
+get_task_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates/1'
-get_all_updates_1: |-
+    -X GET 'http://localhost:7700/indexes/movies/tasks/1'
+get_all_tasks_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates'
+    -X GET 'http://localhost:7700/indexes/movies/tasks'
 get_keys_1: |-
   curl \
     -H "X-Meili-API-Key: 123" \

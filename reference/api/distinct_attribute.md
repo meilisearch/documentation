@@ -68,7 +68,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).
 
 ## Reset distinct attribute
 
@@ -96,4 +96,4 @@ Reset the [distinct attribute](/reference/features/settings.md#distinct-attribut
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).

@@ -84,6 +84,6 @@ MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you wi
 ```
 
 This successful response indicates that the operation has been queued or is currently executing.
-You can check the status of the operation via the `uid` and the [get update status route](/reference/api/updates.md).
+You can check the status of the operation via the `uid` and the [get task status route](/reference/api/tasks.md).
 
 See more information about [asynchronous updates](/learn/advanced/asynchronous_updates.md).

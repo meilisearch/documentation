@@ -84,7 +84,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).
 
 ## Reset ranking rules
 
@@ -130,4 +130,4 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).

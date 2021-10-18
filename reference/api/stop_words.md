@@ -70,7 +70,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).
 
 ## Reset stop-words
 
@@ -100,4 +100,4 @@ Empty array: `[]`
 }
 ```
 
-This `uid` allows you to [track the current update](/reference/api/updates.md).
+This `uid` allows you to [track the current task](/reference/api/tasks.md).
