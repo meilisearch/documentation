@@ -20,6 +20,11 @@
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-php/main/.code-samples.meilisearch.yaml"
   },
   {
+    "language": "java",
+    "label": "Java",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-java/main/.code-samples.meilisearch.yaml"
+  },
+  {
     "language": "ruby",
     "label": "Ruby",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-ruby/main/.code-samples.meilisearch.yaml"
@@ -43,10 +48,5 @@
     "language": "dart",
     "label": "Dart",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dart/main/.code-samples.meilisearch.yaml"
-  },
-  {
-    "language": "java",
-    "label": "Java",
-    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-java/main/.code-samples.meilisearch.yaml"
   }
 ]
