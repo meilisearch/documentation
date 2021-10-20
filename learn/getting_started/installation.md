@@ -40,10 +40,14 @@ Using **Docker** you can choose to run [any available tags](https://hub.docker.c
 This command starts the **latest stable release** of MeiliSearch.
 
 ```bash
+# Fetch the latest version of MeiliSearch image from DockerHub
+docker pull getmeili/meilisearch:latest
+
+# Launch MeiliSearch
 docker run -it --rm \
     -p 7700:7700 \
     -v $(pwd)/data.ms:/data.ms \
-    getmeili/meilisearch
+    getmeili/meilisearch:latest
 ```
 
 Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
