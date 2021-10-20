@@ -65,11 +65,15 @@ An array of strings containing the attributes that can be used to sort search re
 
 ```json
 {
-  "uid": 1
+    "uid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `uid` allows you to [track the current task](/reference/api/tasks.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
 
 ## Reset sortable attributes
 
@@ -95,8 +99,12 @@ An empty array (`[]`).
 
 ```json
 {
-  "uid": 1
+    "uid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `uid` allows you to [track the current task](/reference/api/tasks.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).

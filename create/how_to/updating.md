@@ -142,11 +142,15 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return a `uid`:
+This command should return:
 
 ```json
 {
-  "uid": 1
+    "uid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -309,11 +313,15 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return a `uid`:
+This command should return:
 
 ```json
 {
-  "uid": 1
+    "uid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 

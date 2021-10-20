@@ -75,15 +75,18 @@ If you're having trouble understanding an error, take a look at the [complete li
 
 ## Asynchronous updates
 
-MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only a `uid` attribute:
+MeiliSearch returns a summarized version of the `task` object on write requests:
 
 ```json
 {
-  "uid": 2
+    "uid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This successful response indicates that the operation has been queued or is currently executing.
-You can check the status of the operation via the `uid` and the [get task status route](/reference/api/tasks.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
 
 See more information about [asynchronous updates](/learn/advanced/asynchronous_updates.md).
