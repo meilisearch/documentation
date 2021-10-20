@@ -31,7 +31,7 @@ Get the [distinct attribute](/reference/features/settings.md#distinct-attribute)
 #### Response: `200 Ok`
 
 ```json
-"movie_id"
+"skuid"
 ```
 
 ## Update distinct attribute
