@@ -40,14 +40,14 @@ The response from the [task API endpoint](/reference/api/tasks.md) will always i
 |---------|---------|---------------------------------|
 | `uid`      | integer | The unique sequential identifier of the task          |
 | `indexUid` | string | The unique index identifier |
-| `status`  | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`                                |
-| `type`    | string  | The type of the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll` |
-| `details` | object |  Details information of the task payload. `numberOfDocuments` represents the number of deduplicate documents processed for `documentsAddition`, `documentsPartial` and `documentsDeletion` type. Details contains any settings object depending of the `task` payload for a `settingsUpdate`. `clearAll`, `indexCreation`, `indexUpdate`, `indexDeletion` does not provide a `details` object. |
-| `error` | object | The error object containing error details and context when a task has a `failed` status. See <https://github.com/meilisearch/specifications/pull/61>|
- | `duration` | string | The total elapsed time the engine was in the `processing` state expressed as an `ISO-8601` duration format.  |
-| `enqueuedAt` | string | Represents the date and time as `ISO-8601` format when the task has been `enqueued` |
-| `startedAt` | string | Represents the date and time as `ISO-8601` format when the task has been dequeued and started being `processed`. Default is set to `null`|
-| `finishedAt` | string | Represents the date and time as `ISO-8601` format when the task has `failed` or `succeeded`. Default is set to `null` |
+| `status`  | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`.                                |
+| `type`    | string  | The type of the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll`. |
+| `details` | object |  Detailed information on the task payload. `numberOfDocuments` represents the number of duplicate documents processed for `documentsAddition`, `documentsPartial` and `documentsDeletion` type. Details contains any settings object depending of the `task` payload for a `settingsUpdate`. `clearAll`, `indexCreation`, `indexUpdate`, `indexDeletion` do not provide a `details` object. |
+| `error` | object | The error object containing error details and context when a task has a `failed` status |
+ | `duration` | string | The total elapsed time the engine was in the `processing` state expressed as in the `ISO-8601` duration format  |
+| `enqueuedAt` | string | Represents the date and time in the `ISO-8601` format when the task has been `enqueued` |
+| `startedAt` | string | Represents the date and time in the `ISO-8601` format when the task has been dequeued and started being `processed`. The default is `null`. |
+| `finishedAt` | string | Represents the date and time i9n the `ISO-8601` format when the task has `failed` or `succeeded`. The default is `null`. |
 
 Tasks marked as `processed` return additional fields:
 

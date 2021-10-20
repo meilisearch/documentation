@@ -79,8 +79,8 @@ Asynchronous actions return the following response in the stated order:
 |------------|---------|---------------------------------|
 | uid        | integer | Unique sequential identifier           |
 | indexUid   | string | Unique index identifier |
-| status     | string  | Status of the task. Value is `enqueued` |
-| enqueuedAt | string | Represent the date and time as `ISO-8601` format when the task has been enqueued |
+| status     | string  | Status of the task. Value is `enqueued`. |
+| enqueuedAt | string | Represents the date and time in the `ISO-8601` format when the task has been `enqueued`. |
 
 This response is a summarized version of the [`task` object](/learn/advanced/asynchronous_updates.md#response).
 
