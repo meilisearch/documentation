@@ -77,6 +77,8 @@ Asynchronous actions return a JSON object that contains only an `updateId` attri
 
 You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md). Checking the update status of an operation is never mandatory, but can prove useful in tracing the origin of errors or unexpected behavior.
 
+You can also check the status of the all the updates,
+
 <CodeSamples id="get_all_updates_1" />
 
 MeiliSearch **response**:
