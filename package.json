@@ -16,8 +16,8 @@
     "style:fix": "yarn lint:fix && yarn marklint:fix",
     "lint": "npx eslint . --ext .js,.vue",
     "lint:fix": "npx eslint . --ext .js,.vue --fix",
-    "marklint:fix": "markdownlint '**/*.md' --config .markdownlintrc.jsonc --fix",
-    "marklint": "markdownlint '**/*.md' --config .markdownlintrc.jsonc"
+    "marklint:fix": "markdownlint '**/*.md' --config .markdownlint.jsonc --fix",
+    "marklint": "markdownlint '**/*.md' --config .markdownlint.jsonc"
   },
   "repository": {
     "type": "git",
