@@ -20,7 +20,7 @@ Currently, these are MeiliSearch's asynchronous operations:
 1. When you make a task request, MeiliSearch puts it in the task queue, sets the request `status` to `enqueued` and returns a `uid`
 2. When the queue reaches your task request, MeiliSearch begins processing it and changes the request `status` to `processing`
 3. Once the task has been finalized, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, in case the task failed. The final status of a `processed` task is `succeeded` or `failed`.
-4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/tasks.md#get-all-task-status)
+4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/tasks.md#get-all-tasks)
 
 ### Dumps
 

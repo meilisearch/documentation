@@ -66,7 +66,7 @@ This kind of **successful response** indicates that the operation has been taken
 
 ::: tip
 You can check the status of the operation using the `uid` via the get task status route.
-In addition, MeiliSearch delivers a global route to [track all your task statuses](/reference/api/tasks.md#get-all-task-status).
+In addition, MeiliSearch delivers a global route to [track all your task statuses](/reference/api/tasks.md#get-all-tasks).
 **This way, you will be informed if your action was processed or not, and <u>why</u>**.
 :::
 
