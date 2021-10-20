@@ -30,7 +30,7 @@ While dumps and tasks are both asynchronous processes, they use separate queues 
 
 ## Understanding tasks
 
-After you have requested a task, you can use the [task API endpoint](/reference/api/tasks.md) to find out the status of your request. To do so, you will need your request's `uid`.
+After you have requested an asynchronous operation, you can use the [task API endpoint](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need your request's `uid`.
 
 ### Response
 
@@ -78,17 +78,8 @@ When you query the task endpoint using this id, you see that it has been enqueue
     "uid": 0,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "exactness"
-        ]
-    },
+    "type": "documentsAddition",
+    "details": { "numberOfDocuments": 67493},
     "duration": null,
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
     "startedAt": null,
@@ -103,17 +94,8 @@ Later, you check the request's status one more time. It was successfully process
     "uid": 0,
     "indexUid": "movies",
     "status": "succeeded",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "exactness"
-        ]
-    },
+    "type": "documentsAddition",
+    "details": { "numberOfDocuments": 67493},
     "duration": "PT1S",
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
     "startedAt": "2021-08-10T14:29:18.000000Z",
@@ -128,23 +110,13 @@ Had the task failed, the response would have included an error message:
     "uid": 0,
     "indexUid": "movies",
     "status": "failed",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "wordsPosition",
-            "exactness"
-        ]
-    },
+    "type": "documentsAddition",
+    "details": { "numberOfDocuments": 67493},
     "error": {
-        "message": "invalid criterion wordsPosition",
+        "message": "Document does not have a `:primaryKey` attribute: `:documentRepresentation`.",
         "code": "internal",
-        "type": "internal_error",
-        "link": "https://docs.meilisearch.com/errors#internal",
+        "type": "missing_document_id",
+        "link": "https://docs.meilisearch.com/errors#missing-document-id",
     },
     "duration": "PT1S",
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
@@ -155,11 +127,11 @@ Had the task failed, the response would have included an error message:
 
 ## Terminate MeiliSearch while a task is being processed
 
-**Terminating a MeiliSearch instance in the middle of a task is completely safe** and will never adversely affect the database.
+**Terminating a MeiliSearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
 
 MeiliSearch's asynchronous tasks are atomic. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or is interrupted before reaching its end, nothing is committed to the database.
 
-What happens to an update task when MeiliSearch is terminated changes depending on the request's `status`:
+What happens to an asynchronous operation when MeiliSearch is terminated changes depending on the request's `status`:
 
 - `enqueued`: the task will remain enqueued and will be processed as usual
 - `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting, MeiliSearch will treat the task as `enqueued`
