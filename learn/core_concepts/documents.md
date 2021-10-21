@@ -1,6 +1,6 @@
 # Documents
 
-A **document** is an object composed of one or more **<clientGlossary word="field" label="fields"/>**. Each field consists of an **<clientGlossary word="attribute" />** and its associated **<clientGlossary word="value" />**.
+A **document** is an object composed of one or more **fields**. Each field consists of an **attribute** and its associated **value**.
 
 Documents function as **containers for organizing data**, and are the basic building blocks of a MeiliSearch database. To search for a document, it must first be added to an [index][indexes].
 
@@ -85,15 +85,15 @@ If you don't specify the data type for an attribute, it will default to `:string
 
 ### Limitations and requirements
 
-Documents have a **soft maximum of 1000 fields**; beyond that the [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective, leading to undefined behavior.
+Documents have a **soft maximum of 1000 fields**; beyond that the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective, leading to undefined behavior.
 
-Additionally, every document must have at minimum one field containing the **[<clientGlossary word="primary key" />][primary-key]** and a **[unique id][document-id]**.
+Additionally, every document must have at minimum one field containing the **[primary key][primary-key]** and a **[unique id][document-id]**.
 
 If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
 
 ## Fields
 
-A <clientGlossary word="field" /> is a set of two data items linked together: an <clientGlossary word="attribute" /> and a value. Documents are made up of fields.
+A field is a set of two data items linked together: an attribute and a value. Documents are made up of fields.
 
 An attribute functions a bit like a variable in most programming languages, i.e. it is a name that allows you to store, access, and describe some data. That data is the attribute's **value**.
 
@@ -101,7 +101,7 @@ Every field has a [data type](/reference/under_the_hood/datatypes.md) dictated b
 
 Take note that in the case of strings, the value **[can contain at most 1000 words](/reference/features/known_limitations.md#maximum-words-per-attribute)**. If it contains more than 1000 words, only the first 1000 will be indexed.
 
-You can also apply [<clientGlossary word="ranking rules" />](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
+You can also apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
 If you would like to adjust how a field gets handled by MeiliSearch, you can do so in the [settings](/reference/features/settings.md#settings).
 
@@ -109,7 +109,7 @@ If you would like to adjust how a field gets handled by MeiliSearch, you can do 
 
 A field may also possess **[field properties](/reference/features/field_properties.md)**. Field properties determine the characteristics and behavior of the data added to that field.
 
-At this time, there are two field properties: [<clientGlossary word="searchable" />](/reference/features/field_properties.md#searchable-fields) and [<clientGlossary word="displayed" />](/reference/features/field_properties.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
+At this time, there are two field properties: [searchable](/reference/features/field_properties.md#searchable-fields) and [displayed](/reference/features/field_properties.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
 
 To clarify, a field may be:
 
@@ -122,7 +122,7 @@ In the latter case, the field will be completely ignored when a search is perfor
 
 ## Primary field
 
-The <clientGlossary word="primary field" /> is a special <clientGlossary word="field" /> that must be present in all documents. Its attribute is the [<clientGlossary word="primary key" />][primary-key] and its value is the [<clientGlossary word="document id" />][document-id].
+The primary field is a special field that must be present in all documents. Its attribute is the [primary key][primary-key] and its value is the [document id][document-id].
 
 The primary field serves the important role of uniquely identifying each document stored in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
 
@@ -151,7 +151,7 @@ Aside from the primary key, **documents in the same index are not required to sh
 
 ### Primary key
 
-The <clientGlossary word="primary key" />  is a **mandatory <clientGlossary word="attribute" /> linked to a unique <clientGlossary word="value" />:** the [<clientGlossary word="document id" />][document-id]. It is part of the [<clientGlossary word="primary field" />][primary-field].
+The primary key  is a **mandatory attribute linked to a unique value** the [document id][document-id]. It is part of the [primary field][primary-field].
 
 Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in a document, **the document will not be stored.**
 
@@ -177,7 +177,7 @@ Manually adding the primary key can be accomplished by using its name as a param
 
 ### Document Id
 
-The <clientGlossary word="document id" /> is the <clientGlossary word="value" /> associated to the <clientGlossary word="primary key"/>. It is part of the <clientGlossary word="primary field" />, and acts as a unique identifier for each of the documents of a given index.
+The document id is the value associated to the primary key. It is part of the primary field, and acts as a unique identifier for each of the documents of a given index.
 
 This unique value ensures that two documents in the same index cannot be exactly alike. If two documents in the same index have the same id, then they are treated as the same document and the more recent one will replace the older.
 
@@ -197,7 +197,7 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-Take note that the document addition request in MeiliSearch is <clientGlossary word="atomic"/>. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
+Take note that the document addition request in MeiliSearch is atomic. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
 
 ## Upload
 

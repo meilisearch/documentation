@@ -243,7 +243,7 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 ## Attributes to crop
 
 **Parameter**: `attributesToCrop`
-**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
+**Expected value**: an array of attribute or `["*"]`
 **Default value**: `null`
 
 Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](/reference/features/search_parameters.md#crop-length) parameter.
@@ -296,7 +296,7 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 ## Attributes to highlight
 
 **Parameter**: `attributesToHighlight`
-**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
+**Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
 Highlights matching query terms in the given attributes. When this parameter is set, the `_formatted` object is added to the response for each document, within which you can find the highlighted text.

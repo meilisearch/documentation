@@ -6,7 +6,7 @@ It can be comparable to a table in `SQL`, or a collection in MongoDB.
 
 An index is defined by an `uid` and contains the following information:
 
-- One <clientGlossary word="primary key"/>
+- One primary key
 - Default settings that can be configured as needed: relevancy rules, synonyms, stop words, and field properties.
 
 #### Example
@@ -47,7 +47,7 @@ The uid is set at [index creation time](/reference/api/indexes.md#create-an-inde
 
 ## Primary key
 
-An index is a collection of documents. All documents have a primary key, which is a mandatory <clientGlossary word="field"/>. This field is composed of a primary key <clientGlossary word="attribute"/> name and a unique value. All documents in a given index share the same primary key attribute but a different unique value.
+An index is a collection of documents. All documents have a primary key, which is a mandatory field. This field is composed of a primary key attribute name and a unique value. All documents in a given index share the same primary key attribute but a different unique value.
 
 The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/learn/core_concepts/documents.md#setting-the-primary-key).
 
@@ -55,7 +55,7 @@ The primary key's attribute name **must** be known by the index. You can [set a 
 
 ## Relevancy rules
 
-Each index applies its own relevancy rules. All indexes are created with the same built-in <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance will be deduced from their order of appearance in the document.
+Each index applies its own relevancy rules. All indexes are created with the same built-in ranking rules executed in a default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance will be deduced from their order of appearance in the document.
 
 For example, if in your first document attributes are listed as follows: `id, title, description, release_date`, any document containing the matching query in `title` will be considered more relevant than a document containing it in `description`.
 
