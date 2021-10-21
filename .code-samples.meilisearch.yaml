@@ -182,15 +182,15 @@ reset_ranking_rules_1: |-
     -X DELETE 'http://localhost:7700/indexes/movies/settings/ranking-rules'
 get_distinct_attribute_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
+    -X GET 'http://localhost:7700/indexes/shoes/settings/distinct-attribute'
 update_distinct_attribute_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/distinct-attribute' \
+    -X POST 'http://localhost:7700/indexes/shoes/settings/distinct-attribute' \
     -H 'Content-Type: application/json' \
-    --data-binary '"movie_id"'
+    --data-binary '"skuid"'
 reset_distinct_attribute_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/indexes/movies/settings/distinct-attribute'
+    -X DELETE 'http://localhost:7700/indexes/shoes/settings/distinct-attribute'
 get_filterable_attributes_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings/filterable-attributes'

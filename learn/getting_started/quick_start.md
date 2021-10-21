@@ -77,6 +77,26 @@ Asynchronous actions return a JSON object that contains only an `updateId` attri
 
 You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md). Checking the update status of an operation is never mandatory, but can prove useful in tracing the origin of errors or unexpected behavior.
 
+You can also check the status of all updates for a given index:
+
+<CodeSamples id="get_all_updates_1" />
+
+The response to this command will depend on the status of updates for your index. Here is an example response showing a document addition request waiting to be processed:
+
+```json
+[
+    {
+        "status": "enqueued",
+        "updateId": 0,
+        "type": {
+            "name": "DocumentsAddition",
+            "number": 30
+        },
+        "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
+    }
+]
+```
+
 See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md) or the [updates API reference](/reference/api/updates.md) for more information.
 
 ## Search
