@@ -39,7 +39,7 @@ List all [indexes](/learn/core_concepts/indexes.md).
 
 Get information about an [index](/learn/core_concepts/indexes.md).
 
-#### Path variables
+### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -66,13 +66,17 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 Create an [index](/learn/core_concepts/indexes.md).
 
-This route takes as parameter an unique `uid` and **optionally** the [primary key](/learn/core_concepts/indexes.md#primary-key).
+This route requires a unique `uid`.
+
+You can optionally supply the document attribute that will serve as this index's [primary key](/learn/core_concepts/indexes.md#primary-key).
 
 ::: note
 An index is automatically created when adding [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not already exist.
 :::
 
-#### Body
+Creating an index is an asynchronous task. [You can read more about asynchronous processes in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+
+### Body
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
@@ -90,14 +94,15 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 <CodeSamples id='create_an_index_1' />
 
-#### Response: `201 created`
+#### Response: `202 accepted`
 
 ```json
 {
-  "uid": "movies",
-  "primaryKey": "movie_id",
-  "createdAt": "2019-11-20T09:40:33.711476Z",
-  "updatedAt": "2019-11-20T09:40:33.711476Z"
+  "uid": 0,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "indexCreation",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
 
@@ -105,37 +110,41 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
 
-Update an [index](/learn/core_concepts/indexes.md).
+Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
 
-#### Path variables
+If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use [the get index route](/reference/api/indexes.md#get-one-index) to verify it.
+
+::: note
+It is not possible to change an index's `uid`.
+:::
+
+This is an asynchronous task. [You can read more about asynchronous processes in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+
+### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-#### Body
+### Body
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
 | **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
 
-The `uid` of an index cannot be changed.
-The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/reference/api/indexes.md#get-one-index)).
-
-[There are many ways in MeiliSearch to set the primary key](/learn/core_concepts/documents.md#primary-key).
-
 ### Example
 
 <CodeSamples id='update_an_index_1' />
 
-#### Response: `200 Ok`
+#### Response: `202 Accepted`
 
 ```json
 {
-  "uid": "movie_review",
-  "primaryKey": "movie_review_id",
-  "createdAt": "2019-11-20T09:40:33.711324Z",
-  "updatedAt": "2019-11-20T10:16:42.761858Z"
+  "uid": 1,
+  "indexUid": "movie_review",
+  "status": "enqueued",
+  "type": "indexUpdate",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
 
@@ -145,7 +154,9 @@ The `primaryKey` can be added if it does not already exist (to know if it has be
 
 Delete an [index](/learn/core_concepts/indexes.md).
 
-#### Path variables
+This is an asynchronous task. [You can read more about asynchronous processes in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+
+### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
@@ -155,4 +166,14 @@ Delete an [index](/learn/core_concepts/indexes.md).
 
 <CodeSamples id='delete_an_index_1' />
 
-#### Response: `204 No Content`
+#### Response: `202 Accepted`
+
+```json
+{
+  "uid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "indexDeletion",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+}
+```
