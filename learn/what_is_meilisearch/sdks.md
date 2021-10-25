@@ -43,7 +43,7 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
   - Guide: [How to deploy a MeiliSearch instance on Google Cloud Platform](/create/how_to/gcp.md)
 - [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes)
 
-### Platform Plugins
+### Platform plugins
 
 - [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
 - [Strapi plugin](https://github.com/meilisearch/strapi-plugin-meilisearch/)

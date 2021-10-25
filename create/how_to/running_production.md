@@ -14,12 +14,12 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 
 [Step 2: Run MeiliSearch as a service](/create/how_to/running_production.md#step-2-run-meilisearch-as-a-service)
 
-+ [2.1 Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
++ [2.1. Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
 + [2.2. Enable and start service](/create/how_to/running_production.md#_2-2-enable-and-start-service)
 
-[Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
 
-+ [3.1. Creating a Reverse Proxy with Nginx](/create/how_to/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
++ [3.1. Creating a reverse proxy with Nginx](/create/how_to/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
 + [3.2. Set up SSL/TLS for your MeiliSearch](/create/how_to/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
 
 [Conclusion](/create/how_to/running_production.md#conclusion)
@@ -33,7 +33,7 @@ For this tutorial, we will be using a Debian 10 server, running on DigitalOcean.
 + An up-to-date server that runs Debian 10
 + An ssh keypair to connect to that machine
 
-> *TIPS:* learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
+> *TIPS:* learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or Windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
 
 ## Step 1: Install MeiliSearch
 

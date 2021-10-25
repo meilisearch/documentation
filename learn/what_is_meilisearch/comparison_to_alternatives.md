@@ -1,6 +1,6 @@
 # Comparison to alternatives
 
-## Table of Contents
+## Table of contents
 
 [[toc]]
 
