@@ -105,6 +105,16 @@ cat your_file.json | jq
 
 :::
 
+## What do the different error types mean?
+
+MeiliSearch has the following types of errors:
+
+| Type            | Description                                                                                       |
+|-----------------|---------------------------------------------------------------------------------------------------|
+| invalid_request | This type of error is due to an error in the user input. It is accompanied by the HTTP code `4xx`. |
+| internal        | This type of error is due to machine or configuration constraints. It can be due to limits being reached, such as the size of the disk, the size limit of an index, etc. It can also be an unexpected error. It is accompanied by the HTTP code `5xx`.  |
+| auth   | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx`. |
+
 ## My document upload failed with the `document id is missing` error.
 
 ::: note TLDR;
