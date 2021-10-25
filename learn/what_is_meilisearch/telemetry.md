@@ -127,7 +127,7 @@ This list is liable to change with every new version of MeiliSearch. It's not be
 | `pagination.max_limit`                  | Highest value given for the `limit` parameter                                               | 60
 | `pagination.max_offset`                 | Highest value given for the `offset` parameter                                              | 1000
 | `primary_key`                           | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
-| `payload_type`                          | All `payload_type` encountered                                                              | ["csv", "json"]
+| `payload_type`                          | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                        | `true` if a document addition or update request triggered index creation, otherwise `false` | true
 | `ranking_rules.sort_position`           | Position of the `sort` ranking rule                                                         | 5
 | `sortable_attributes.total`             | Number of sortable attributes                                                               | 3
