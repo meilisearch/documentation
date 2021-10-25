@@ -161,7 +161,7 @@ MeiliSearch collects the following data from all instances that do not explicitl
 
 All collected data is used solely for the purpose of improving MeiliSearch.
 
-[You can read more about our policy on data collection in our telemetry page.](/learn/what_is_meilisearch/telemetry.md)
+[Read more about our policy on data collection on our telemetry page.](/learn/what_is_meilisearch/telemetry.md)
 
 ### Dumps destination
 
