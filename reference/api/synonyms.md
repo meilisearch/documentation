@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-`Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
+`Synonyms` is an object containing words and their respective synonyms. A synonym in MeiliSearch is considered equal to its associated word in a search query.
 
 Synonyms can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
