@@ -32,13 +32,13 @@ It's [Hacktoberfest month](https://blog.meilisearch.com/contribute-hacktoberfest
 
 ```bash
 # Clone the repository
-$ git clone git@github.com:meilisearch/documentation.git meilisearch-documentation
+git clone git@github.com:meilisearch/documentation.git meilisearch-documentation
 # Open the newly created directory
 cd meilisearch-documentation
 # Install dependencies
-$ yarn install
+yarn install
 # Run MeiliSearch documentation on https://localhost:8080
-$ yarn dev
+yarn dev
 ```
 
 ### Testing
@@ -46,7 +46,7 @@ $ yarn dev
 A complete test can be done using the following command:
 
 ```bash
-$ yarn test
+yarn test
 ```
 
 The tests are triggered on build and on any pull request to master.
@@ -56,7 +56,7 @@ The tests are triggered on build and on any pull request to master.
 Making changes to the documentation without creating any dead links can be a tedious task. Before submitting any pull request, you can check the dead links.
 
 ```bash
-$ yarn check-links
+yarn check-links
 ```
 
 #### Checking Styling
@@ -66,13 +66,13 @@ The documentation follows styling rules. The following files will be checked: `*
 You can check out and fix the styling errors.
 
 ```bash
-$ yarn style:fix
+yarn style:fix
 ```
 
 You can test if the code is well-formatted without fixing it.
 
 ```bash
-$ yarn style
+yarn style
 ```
 
 ### Deployment
@@ -82,7 +82,7 @@ The documentation is deployed as a static website. The master branch is automati
 You can build the static website using the following command:
 
 ```bash
-$ yarn build
+yarn build
 # The website is now available in .vuepress/dist and you can serve it using any webserver.
 ```
 
