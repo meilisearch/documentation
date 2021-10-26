@@ -70,4 +70,6 @@ errors:
     description: "The provided document does not contain any field with the substring `id`. Please add `id` to one of your fields so it can be used as the primary key during inference."
   - code: index_primary_key_already_exists
     description: "The requested index already has a primary key that cannot be changed."
+  - code: invalid_document_id
+    description: "The provided document identifier does not meet the format requirements. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_)."
 ...
