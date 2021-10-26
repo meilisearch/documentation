@@ -4,7 +4,7 @@ A dump is a compressed file containing an export of your MeiliSearch instance. I
 
 ## Creating a dump
 
-To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). Using that route will trigger a dump creation process. Creating a dump is an asynchronous task that takes time based on the size of your dataset. A dump uid (unique identifier) is returned to help you track the process.
+To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). Using that route will trigger a dump creation process. Creating a dump is an asynchronous task that takes time based on the size of your dataset. A dump uid (unique identifier) is returned to help you track the process. The dump `uid` is the timestamp at which the dump was triggered.
 
 <CodeSamples id="post_dump_1" />
 
@@ -15,6 +15,8 @@ You can check the status of a particular dump creation process using the previou
 <CodeSamples id="get_dump_status_1" />
 
 After your dump creation process is done, the dump file is created and added to the dump folder. By default, this folder is `/dumps` at the root of your MeiliSearch binary, [but this can be customized](/reference/features/configuration.md#dumps-destination).
+
+There is no dump queue, **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors/#dump_already_in_progress). While a dump is processing, the **update queue is paused.** During this time, **no write operations can occur on the database.** This is also true of snapshots.
 
 Note that **if your dump folder does not already exist when the dump creation process is called, MeiliSearch will create it**.
 
