@@ -272,12 +272,27 @@ Additionally, indexation uses disk space. MeiliSearch may also crash if it runs 
 
 In both cases, we recommend adding new documents in smaller batches. Alternatively, you can try increasing your machine's RAM and/or available disk space, or converting your dataset into a more lightweight format such as CSV or NDJSON.
 
-## How can I speed up indexation when adding new documents?
+## How can I speed up indexation when adding documents?
 
-You can improve indexation speed in three ways:
+If you encounter some performance issues during indexation we recommend trying the following points:
 
-1. Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster MeiliSearch will index new documents**
+- Make sure you are using the latest [stable version of MeiliSearch](https://github.com/meilisearch/MeiliSearch/releases) that might include optimizations regarding the performance.
 
-2. **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine
+- Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster MeiliSearch will index new documents**. Also increasing the RAM can help, but the best is to use a machine with several cores.
 
-3. Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance
+- **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine.
+
+- **MeiliSearch should not be your main database**. It means you should only insert the documents you want to retrieve using the search, and no more. The more you add documents, the more the indexation and search time will increase.
+
+- By default, all the fields of your documents are considered as "searchable". We strongly recommend changing this by [setting the `searchablaAttributes`](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) with the exhaustive list of fields you want to search in. The less there are fields to index, the more the indexation time will decrease.
+For example, with the following documents, you only need to put `title` and `author` as `searchableAttributes`, because you might not want to perform the search in `id` or `genre` fields.
+```json
+[
+  { "id": 1, "title": "Pride and Prejudice", "author": "Jane Austin", "genre": "romance" },
+  { "id": 2, "title": "Le Petit Prince", "author": "Antoine de Saint-Exupéry", "genre": "adventure" }
+]
+```
+
+- The first time you push your documents, we recommend pushing your settings first, and then, add your documents. Not the contrary. It will drastically decrease the time of indexation. `searchableAttributes` described in the previous point is part of these settings.
+
+- Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance. Be aware converting your JSON dataset into CSV will not work for array fields.
