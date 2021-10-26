@@ -270,11 +270,16 @@ Most crashes that happen during indexation are a result of a machine running out
 
 Additionally, indexation uses disk space. MeiliSearch may also crash if it runs out of disk space while indexing new documents.
 
-In both cases, we recommend adding new documents in smaller batches. Alternatively, you can try increasing your machine's RAM and/or available disk space, or converting your dataset into a more lightweight format such as CSV or NDJSON.
+The core team is aware of these issues. We are sorry for this and we are doing our best to constantly fix this problem.
+
+In both cases, we recommend
+- adding new documents in smaller batches.
+- increasing your machine's RAM and/or available disk space.
+- following the points described in the next question related to the indexation speed up, except increasing the size of the batches of course (3th point).
 
 ## How can I speed up indexation when adding documents?
 
-If you encounter some performance issues during indexation we recommend trying the following points:
+If you encounter some performance issues during the indexation we recommend trying the following points:
 
 - Make sure you are using the latest [stable version of MeiliSearch](https://github.com/meilisearch/MeiliSearch/releases) that might include optimizations regarding the performance.
 
