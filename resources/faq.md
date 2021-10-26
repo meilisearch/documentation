@@ -272,7 +272,8 @@ Additionally, indexation uses disk space. MeiliSearch may also crash if it runs 
 
 The core team is aware of these issues. We are sorry for this and we are doing our best to constantly fix this problem.
 
-In both cases, we recommend
+In both cases, we recommend:
+
 - adding new documents in smaller batches.
 - increasing your machine's RAM and/or available disk space.
 - following the points described in the next question related to the indexation speed up, except increasing the size of the batches of course (3th point).
@@ -291,6 +292,7 @@ If you encounter some performance issues during the indexation we recommend tryi
 
 - By default, all the fields of your documents are considered as "searchable". We strongly recommend changing this by [setting the `searchablaAttributes`](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) with the exhaustive list of fields you want to search in. The less there are fields to index, the more the indexation time will decrease.
 For example, with the following documents, you only need to put `title` and `author` as `searchableAttributes`, because you might not want to perform the search in `id` or `genre` fields.
+
 ```json
 [
   { "id": 1, "title": "Pride and Prejudice", "author": "Jane Austin", "genre": "romance" },
