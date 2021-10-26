@@ -60,8 +60,6 @@ search_parameter_guide_limit_1: |-
 search_parameter_guide_retrieve_1: |-
 search_parameter_guide_crop_1: |-
 search_parameter_guide_highlight_1: |-
-search_parameter_guide_filter_1: |-
-search_parameter_guide_filter_2: |-
 search_parameter_guide_matches_1: |-
 settings_guide_synonyms_1: |-
 settings_guide_stop_words_1: |-
@@ -70,16 +68,12 @@ settings_guide_distinct_1: |-
 settings_guide_searchable_1: |-
 settings_guide_displayed_1: |-
 documents_guide_add_movie_1: |-
-search_guide_1: |-
-search_guide_2: |-
 getting_started_add_documents_md: |-
 getting_started_search_md: |-
 faceted_search_update_settings_1: |-
 faceted_search_filter_1: |-
 faceted_search_facets_distribution_1: |-
-faceted_search_walkthrough_filterable_attributes_1: |-
 faceted_search_walkthrough_filter_1: |-
-faceted_search_walkthrough_facets_distribution_1: |-
 add_movies_json_1: |-
 post_dump_1: |-
 get_dump_status_1: |-
