@@ -299,25 +299,27 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 **Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
 **Default value**: `null`
 
-Highlights matching query terms in the given attributes. When this parameter is set, the `_formatted` object is added to the response for each document, within which you can find the highlighted text.
+Highlights matching query terms in the specified attributes. Both string and numeric values, whether inside arrays and objects or not, are highlighted.
 
-Values can be supplied as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
+Parameter values must be given as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
 
 Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
 
-::: tip
-The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. Neither this tag nor this behavior can be modified.
+When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-If a different type of highlighting is desired, we recommend [the `matches` parameter](#matches), which provides much finer control over the output.
+::: tip
+The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. It is not possible to change the tag or its attributes.
+
+If you need finer control over the highlights and their format, we recommend using [the `matches` search parameter](#matches).
 :::
 
 ### Example
 
-If you wanted to highlight query matches that appear within the `overview` attribute:
+The following query highlights matches terms present in the `overview` attribute:
 
 <CodeSamples id="search_parameter_guide_highlight_1" />
 
-You would get the following response with the **highlighted version in the `_formatted` object**:
+The highlighted version can be found in the returned document's `_formatted` object:
 
 ```json
 {
