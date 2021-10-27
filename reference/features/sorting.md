@@ -44,28 +44,37 @@ Suppose you have collection of books containing the following fields:
     "id": 1,
     "title": "Solaris",
     "author": "Stanislaw Lem",
-    "genres": ["science fiction"],
+    "genres": [
+      "science fiction"
+    ],
     "price": 5.00
   },
   {
     "id": 2,
     "title": "The Parable of the Sower",
     "author": "Octavia E. Butler",
-    "genres": ["science fiction"],
+    "genres": [
+      "science fiction"
+    ],
     "price": 10.00
   },
   {
     "id": 3,
     "title": "Gender Trouble",
     "author": "Judith Butler",
-    "genres": ["feminism", "philosophy"],
+    "genres": [
+      "feminism",
+      "philosophy"
+    ],
     "price": 10.00
   },
   {
     "id": 4,
     "title": "Wild Seed",
     "author": "Octavia E. Butler",
-    "genres": ["fantasy"],
+    "genres": [
+      "fantasy"
+    ],
     "price": 5.00
   },
   …
@@ -146,14 +155,18 @@ With our example dataset, the results look like this:
     "id": 1,
     "title": "Solaris",
     "author": "Stanislaw Lem",
-    "genres": ["science fiction"],
+    "genres": [
+      "science fiction"
+    ],
     "price": 5.00
   },
   {
     "id": 2,
     "title": "The Parable of the Sower",
     "author": "Octavia E. Butler",
-    "genres": ["science fiction"],
+    "genres": [
+      "science fiction"
+    ],
     "price": 10.00
   }
 ]
@@ -169,23 +182,30 @@ It is common to search books based on an author's name. `sort` can help grouping
     "id": 2,
     "title": "The Parable of the Sower",
     "author": "Octavia E. Butler",
-    "genres": ["science fiction"],
+    "genres": [
+      "science fiction"
+    ],
     "price": 10.00
   },
   {
     "id": 5,
     "title": "Wild Seed",
     "author": "Octavia E. Butler",
-    "genres": ["fantasy"],
+    "genres": [
+      "fantasy"
+    ],
     "price": 5.00
   },
   {
     "id": 4,
     "title": "Gender Trouble",
     "author": "Judith Butler",
-    "genres": ["feminism", "philosophy"],
+    "genres": [
+      "feminism",
+      "philosophy"
+    ],
     "price": 10.00
-  },
+  }
 ]
 ```
 
@@ -205,7 +225,9 @@ If your documents contain `_geo` data, you can use `_geoPoint` to sort results b
 
 ```json
 {
-  "sort": ["_geoPoint(0.0, 0.0):asc"]
+  "sort": [
+    "_geoPoint(0.0, 0.0):asc"
+  ]
 }
 ```
 

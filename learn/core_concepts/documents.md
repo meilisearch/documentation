@@ -38,7 +38,10 @@ As an example, let's say you are making an **[index][indexes]** that contains in
   "title": "Kung Fu Panda",
   "genre": "Children's Animation",
   "release-year": 2008,
-  "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]
+  "cast": [
+    { "Jack Black": "Po" },
+    { "Jackie Chan": "Monkey" }
+  ]
 }
 ```
 
@@ -60,7 +63,10 @@ The above JSON document would look like this in NDJSON:
   "title": "Kung Fu Panda", 
   "genre": "Children's Animation", 
   "release-year": 2008, 
-  "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]
+  "cast": [
+    { "Jack Black": "Po" },
+    { "Jackie Chan": "Monkey" }
+  ]
 }
 ```
 

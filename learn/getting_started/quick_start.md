@@ -127,8 +127,8 @@ MeiliSearch **response**:
       "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
       "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
       "release_date": "2018-01-12"
-    }
-    ...
+    },
+    …
   ],
   "offset": 0,
   "limit": 20,

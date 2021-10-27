@@ -32,9 +32,17 @@ Get the list of [synonyms](/reference/features/synonyms.md) of an index.
 
 ```json
 {
-  "wolverine": ["xmen", "logan"],
-  "logan": ["wolverine", "xmen"],
-  "wow": ["world of warcraft"]
+  "wolverine": [
+    "xmen",
+    "logan"
+  ],
+  "logan": [
+    "wolverine",
+    "xmen"
+  ],
+  "wow": [
+    "world of warcraft"
+  ]
 }
 ```
 
@@ -63,9 +71,7 @@ An object that contains all synonyms and their associated words.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -93,9 +99,7 @@ Empty object : `{}`
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
