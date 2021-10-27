@@ -152,7 +152,8 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-Note that document addition in MeiliSearch is <clientGlossary word="atomic"/>. **If the indexer finds a document with an invalid id, it will throw an error and no documents will be added to your index**.
+::: warning Beware forbidden characters in document ids
+Document addition in MeiliSearch is <clientGlossary word="atomic"/>: it either fails completely or succeeds completely, with zero risk of partial success or database corruption. This means that **if the indexer finds even a single document with an invalid document id, it will throw an error and no documents will be added to your index.**
 
 ## Upload
 
