@@ -49,6 +49,8 @@ Results are sorted by **increasing distance between matched query terms**. Retur
 
 Results are sorted according to the **[attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)**. Returns documents that contain query terms in more important attributes first.
 
+Also, note the documents with attributes containing the query words at the beginning of the attribute will be considered more relevant than documents containing the query words at the end of the attributes.
+
 #### 5. Sort
 
 Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant, but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant, but might not always follow the order defined by the user.
@@ -169,7 +171,6 @@ By default, the built-in rules are executed in the following order.
 
 ```json
 [
-
   "words", 
   "typo", 
   "proximity", 

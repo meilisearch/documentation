@@ -1,6 +1,6 @@
 # Typo tolerance
 
-MeiliSearch **is [typo tolerant](/reference/under_the_hood/typotolerance.md#typo-tolerance-rules)**; this means **it understands your search even if there are typos or spelling mistakes** to a certain extend.
+MeiliSearch **is [typo tolerant](/reference/under_the_hood/typotolerance.md#typo-tolerance-rules)**; this means **it understands your search even if there are typos or spelling mistakes** to a certain extent.
 
 #### Example
 
@@ -11,21 +11,21 @@ On a movie dataset, let's search for `botman`.
   "hits": [
     {
       "title": "Batman: Hush",
-      ...
+      …
     },
     {
       "title": "Batman vs. Teenage Mutant Ninja Turtles",
-      ...
+      …
     },
     {
       "title": "Batman Ninja",
-      ...
+      …
     },
     {
       "title": "Batman: Gotham by Gaslight",
-      ...
+      …
     },
-    ...
+    …
   ],
   "offset": 0,
   "limit": 20,

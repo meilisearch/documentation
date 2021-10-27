@@ -4,6 +4,10 @@ Currently, MeiliSearch databases can only be opened by the MeiliSearch version y
 
 If you already have a MeiliSearch database with some data you don’t want to lose, you are in the right place!
 
+:::note
+If you have already **installed the latest version and manually indexed your data and settings**, you can ignore this guide.
+:::
+
 ## Verify your database version
 
 Before we begin, you need to **verify the version of MeiliSearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a MeiliSearch instance:
@@ -22,9 +26,9 @@ The response should look something like this:
 
 ```json
 {
-  "commitSha":"stringOfLettersAndNumbers",
-  "commitDate":"YYYY-MM-DDTimestamp",
-  "pkgVersion":"x.y.z"
+  "commitSha": "stringOfLettersAndNumbers",
+  "commitDate": "YYYY-MM-DDTimestamp",
+  "pkgVersion": "x.y.z"
 }
 ```
 
@@ -110,7 +114,8 @@ In this guide, we will:
 
 1. [Set all fields as displayed attributes](#step-1-set-all-fields-as-displayed-attributes)
 2. [Create a dump using the MeiliSearch version that's compatible with your database](#step-2-create-the-dump)
-3. [Import the dump using the most recent MeiliSearch version](#step-3-import-the-dump)
+3. [Delete the database folder](#step-3-delete-the-database-folder)
+4. [Import the dump using the most recent MeiliSearch version](#step-4-import-the-dump)
 
 ### Step 1: Set all fields as displayed attributes
 
@@ -140,9 +145,7 @@ curl -X DELETE \
 This command should return an updateId:
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 Now that all fields are displayed, proceed to the next step.
@@ -150,6 +153,10 @@ Now that all fields are displayed, proceed to the next step.
 ### Step 2: Create the dump
 
 Before creating your dump, make sure that your [dump directory](/reference/features/configuration.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your MeiliSearch directory.
+
+::: note
+If you are running MeiliSearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found in the configuration file directory, `cd /var/opt/meilisearch/dumps`.
+:::
 
 If you're unsure where your MeiliSearch directory is located, try this:
 
@@ -233,15 +240,16 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 }
 ```
 
-### Step 3: Import the dump
+### Step 3: Delete the database folder
+
+To delete the old MeiliSearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+
+### Step 4: Import the dump
 
 Now that you’ve got your dump, [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/reference/features/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
 
 ```bash
-# install MeiliSearch
-curl -L https://install.meilisearch.com | sh
-
-# launch MeiliSearch and import the specified dump file
+# launch the latest version of MeiliSearch and import the specified dump file
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
@@ -254,6 +262,14 @@ Congratulations! You have successfully migrated your MeiliSearch database to the
 ## Updating from v0.14.0 or below
 
 Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as `.JSON` files.
+
+In this guide, we will:
+
+1. [Save your settings](#step-1-save-your-settings)
+2. [Set all fields as displayed attributes](#step-2-set-all-fields-as-displayed-attributes)
+3. [Save your documents](#step-3-save-your-documents)
+4. [Delete the database folder](#step-4-delete-the-database-folder)
+5. [Upload your data to the latest version of MeiliSearch](#step-5-upload-your-data-to-the-latest-version-of-meilisearch)
 
 If you don’t need to preserve index settings, skip directly to [step two](#step-2-set-all-fields-as-displayed-attributes).
 
@@ -275,14 +291,14 @@ Repeat this process for all indexes you wish to migrate.
 
 To prevent data loss, all fields must be set as [displayed](/reference/features/field_properties.md#displayed-fields).
 
-By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before creating a dump. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
+By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
 ```bash
 curl -X GET \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-If the response is `'["*"]'`, you can move on to the [next step](#step-2-create-the-dump).
+If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
 
 If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
@@ -294,9 +310,7 @@ curl -X DELETE \
 This command should return an updateId:
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 Now that all fields are displayed, proceed to the next step.
@@ -313,7 +327,11 @@ curl -X GET \
   -o mydocuments.json
 ```
 
-### Step 4: Upload your data to the latest version of MeiliSearch
+### Step 4: Delete the database folder
+
+To delete the old MeiliSearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+
+### Step 5: Upload your data to the latest version of MeiliSearch
 
 Finally, [install the latest version of MeiliSearch](/learn/getting_started/installation.md) and upload your data as usual.
 

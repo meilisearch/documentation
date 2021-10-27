@@ -15,8 +15,12 @@ Consider a situation where "Résumé" and "CV" are set as synonyms.
 
 ```json
 {
-  "Résumé": ["CV"],
-  "CV": ["Résumé"]
+  "Résumé": [
+    "CV"
+  ],
+  "CV": [
+    "Résumé"
+  ]
 }
 ```
 
@@ -40,7 +44,9 @@ To create a one-way synonym list, this is the JSON syntax that should be [added 
 
 ```json
 {
-  "phone": ["iphone"]
+  "phone": [
+    "iphone"
+  ]
 }
 ```
 
@@ -60,10 +66,26 @@ To create a mutual association between four words, this is the JSON syntax that 
 
 ```json
 {
-  "shoe": ["boot", "slipper", "sneakers"],
-  "boot": ["shoe", "slipper", "sneakers"],
-  "slipper": ["shoe", "boot", "sneakers"],
-  "sneakers": ["shoe", "boot", "slipper"]
+  "shoe": [
+    "boot",
+    "slipper",
+    "sneakers"
+  ],
+  "boot": [
+    "shoe",
+    "slipper",
+    "sneakers"
+  ],
+  "slipper": [
+    "shoe",
+    "boot",
+    "sneakers"
+  ],
+  "sneakers": [
+    "shoe",
+    "boot",
+    "slipper"
+  ]
 }
 ```
 
@@ -84,8 +106,12 @@ Suppose you set "San Francisco" and "SF" as synonyms with a [mutual association]
 
 ```json
 {
-  "san francisco": ["sf"],
-  "sf": ["san francisco"]
+  "san francisco": [
+    "sf"
+  ],
+  "sf": [
+    "san francisco"
+  ]
 }
 ```
 

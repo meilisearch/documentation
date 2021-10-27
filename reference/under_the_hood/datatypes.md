@@ -29,8 +29,8 @@ A string is passed to a tokenizer and is then broken into separate string tokens
 
 For Latin-based languages, there are two kinds of **space separators**:
 
-- **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@'`
-- **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')'`
+- **Soft spaces** (distance: 1): whitespaces, quotes, `'-' | '_' | '\'' | ':' | '/' | '\\' | '@' | '"' | '+' | '~' | '=' | '^' | '*' | '#'`
+- **Hard spaces** (distance: 8): `'.' | ';' | ',' | '!' | '?' | '(' | ')' | '[' | ']' | '{' | '}'| '|'`
 
 Distance plays an essential role in determining whether documents are relevant since [one of the ranking rules is the **proximity** rule](/learn/core_concepts/relevancy.md). The proximity rule sorts the results by increasing distance between matched query terms. Then, two words separated by a soft space are closer and thus considered **more relevant** than two words separated by a hard space.
 
@@ -88,7 +88,13 @@ After the tokenizing process, each word is indexed and stored in the global dict
 The following input:
 
 ```json
-[["Bruce Willis", "Vin Diesel"], "Kung Fu Panda"]
+[
+  [
+    "Bruce Willis",
+    "Vin Diesel"
+  ],
+  "Kung Fu Panda"
+]
 ```
 
 Will be processed as if all elements were arranged at the same level:

@@ -43,7 +43,7 @@ Communication to the server is done through a [RESTful API](/reference/api/READM
 
 To add documents to MeiliSearch you must provide:
 
-- [Documents](/learn/core_concepts/documents.md) in the form of an array of `JSON objects`.
+- [Documents](/learn/core_concepts/documents.md) in the form of an array of JSON objects.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
 > _If the index does not exist, MeiliSearch creates it when you first add documents._
@@ -77,6 +77,26 @@ Asynchronous actions return a JSON object that contains only an `updateId` attri
 
 You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md). Checking the update status of an operation is never mandatory, but can prove useful in tracing the origin of errors or unexpected behavior.
 
+You can also check the status of all updates for a given index:
+
+<CodeSamples id="get_all_updates_1" />
+
+The response to this command will depend on the status of updates for your index. Here is an example response showing a document addition request waiting to be processed:
+
+```json
+[
+    {
+        "status": "enqueued",
+        "updateId": 0,
+        "type": {
+            "name": "DocumentsAddition",
+            "number": 30
+        },
+        "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
+    }
+]
+```
+
 See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md) or the [updates API reference](/reference/api/updates.md) for more information.
 
 ## Search
@@ -107,8 +127,8 @@ MeiliSearch **response**:
       "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
       "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
       "release_date": "2018-01-12"
-    }
-    ...
+    },
+    …
   ],
   "offset": 0,
   "limit": 20,
@@ -309,7 +329,7 @@ The code above comes in multiple parts:
 
 - The `<body>` of the page is the entry point for React. `instant-meilisearch` adds the search bar and search results here by manipulating the DOM.
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch` in [React](https://reactjs.org/).
-- The `<script>` containing JavaScript initalize React and renders the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
+- The `<script>` containing JavaScript initialize React and renders the code that will be rendered in the body. Customization of `instant-meilisearch` happens here as well.
 
 To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
 

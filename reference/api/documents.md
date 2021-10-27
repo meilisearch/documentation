@@ -108,7 +108,7 @@ If the provided index does not exist, it will be created.
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
+| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the index _(optional)_ |     none      |
 
 If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
@@ -135,9 +135,7 @@ The body is composed of a **JSON array** of documents.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -190,9 +188,7 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -216,9 +212,7 @@ Delete all documents in the specified index.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -243,9 +237,7 @@ Delete one document based on its unique id.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -277,9 +269,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).

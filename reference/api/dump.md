@@ -38,7 +38,7 @@ Get the status of a dump creation process using the uid returned after calling t
 The returned status could be:
 
 - `in_progress`: Dump creation is in progress.
-- `failed`: An error occured during dump process, and the task was aborted.
+- `failed`: An error occurred during dump process, and the task was aborted.
 - `done`: Dump creation is finished and was successful.
 
 ### Example

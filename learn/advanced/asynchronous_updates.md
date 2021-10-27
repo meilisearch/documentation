@@ -82,9 +82,7 @@ When you query the update endpoint using this id, you see that it has been enque
 {
   "status": "enqueued",
   "updateId": 1,
-  "type": {
-    "name": "DocumentsAddition",
-  },
+  "type": { "name": "DocumentsAddition" },
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z"
 }
 ```
@@ -111,9 +109,7 @@ Had the update failed, the response would have included an error message:
 {
   "status": "failed",
   "updateId": 1,
-  "type": {
-    "name": "DocumentsAddition",
-  },
+  "type": { "name": "DocumentsAddition" },
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
   "duration": 0.000048524,
   "processedAt": "2019-12-07T21:10:20.511525620Z",
@@ -138,6 +134,6 @@ You can use [the update route](/reference/api/updates.md) to determine an update
 
 ### Example
 
-Suppose you have use the update documents endpoint to add 100 documents in one batch to MeiliSearch.
+Suppose you have used the update documents endpoint to add 100 documents in one batch to MeiliSearch.
 
-If you terminate the instance after 99 documents have been successfully added, none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. **Either all documents are added, or none are.***
+If you terminate the instance after 99 documents have been successfully added, none of the 100 documents will be present in the dataset when you restart MeiliSearch. The same is true if the 100th document raises an error. **Either all documents are added, or none are.**

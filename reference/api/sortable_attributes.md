@@ -60,9 +60,7 @@ An array of strings containing the attributes that can be used to sort search re
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -90,9 +88,7 @@ An empty array (`[]`).
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).

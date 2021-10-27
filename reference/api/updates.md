@@ -59,14 +59,14 @@ Here is an example response representing an [enqueued update](/learn/advanced/as
 
 ```json
 [
-    {
-        "status": "enqueued",
-        "updateId": 0,
-        "type": {
-            "name": "DocumentsAddition",
-            "number": 30
-        },
-        "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
-    }
+  {
+    "status": "enqueued",
+    "updateId": 0,
+    "type": {
+      "name": "DocumentsAddition",
+      "number": 30
+    },
+    "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
+  }
 ]
 ```

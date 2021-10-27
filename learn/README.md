@@ -10,8 +10,8 @@ However, if you prefer a more guided or hands-on approach, you're not alone! We 
 
 ## Table of contents
 
-- [🔎 What Is MeiliSearch](/learn/what_is_meilisearch): Get acquainted with MeiliSearch's features, competitors, SDKs, and more.
-- [🚀 Getting Started](/learn/getting_started): Follow a step-by-step tutorial that covers all the basics of MeiliSearch.
-- [💡 Core Concepts](/learn/core_concepts): Learn about search fundamentals like documents, indexes, and relevancy.
-- [📚 Advanced Topics](/learn/advanced): Deepen your understanding of MeiliSearch with articles about some of our features.
+- [🔎 What is MeiliSearch](/learn/what_is_meilisearch): Get acquainted with MeiliSearch's features, competitors, SDKs, and more.
+- [🚀 Getting started](/learn/getting_started): Follow a step-by-step tutorial that covers all the basics of MeiliSearch.
+- [💡 Core concepts](/learn/core_concepts): Learn about search fundamentals like documents, indexes, and relevancy.
+- [📚 Advanced topics](/learn/advanced): Deepen your understanding of MeiliSearch with articles about some of our features.
 - [👐 Contributing to MeiliSearch](/learn/contributing): Learn how you can contribute to MeiliSearch.

@@ -4,7 +4,7 @@
 
 Hopefully, you already know that [MeiliSearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
 
-Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/getting_started/quick_start.md): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
+Running a MeiliSearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/getting_started/quick_start.md): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to MeiliSearch, we suggest that you take a tour around the documentation.
 
 Using MeiliSearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy MeiliSearch in production** and ensure it is **safe and ready to use**?
 
@@ -14,12 +14,12 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 
 [Step 2: Run MeiliSearch as a service](/create/how_to/running_production.md#step-2-run-meilisearch-as-a-service)
 
-+ [2.1 Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
++ [2.1. Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
 + [2.2. Enable and start service](/create/how_to/running_production.md#_2-2-enable-and-start-service)
 
-[Step 3: Secure and finish your setup. Using a Reverse Proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
 
-+ [3.1. Creating a Reverse Proxy with Nginx](/create/how_to/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
++ [3.1. Creating a reverse proxy with Nginx](/create/how_to/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
 + [3.2. Set up SSL/TLS for your MeiliSearch](/create/how_to/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
 
 [Conclusion](/create/how_to/running_production.md#conclusion)
@@ -33,7 +33,7 @@ For this tutorial, we will be using a Debian 10 server, running on DigitalOcean.
 + An up-to-date server that runs Debian 10
 + An ssh keypair to connect to that machine
 
-> *TIPS:* learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
+> *TIPS:* learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or Windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
 
 ## Step 1: Install MeiliSearch
 
@@ -51,7 +51,7 @@ curl -L https://install.meilisearch.com | sh
 ```
 
 > The different options to achieve a MeiliSearch installation are detailed in **[this guide](/learn/getting_started/installation.md#download-and-launch)**.
-> It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your achitecture in the best possible way.
+> It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your architecture in the best possible way.
 
 You can always check the latest MeiliSearch stable version, and get MeiliSearch for the Operating System of your choice, by visiting the following link:
 
