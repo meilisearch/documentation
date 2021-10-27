@@ -13,14 +13,22 @@ Documents function as **containers for organizing data**, and are the basic buil
 - **Document**: an object which contains data in the form of one or more fields.
 - **[Field][fields]**: a set of two data items that are linked together: an **attribute** and a **value**.
 - **Attribute**: the first part of a field. Acts as a name or description for its associated value.
-- **Value**: the second part of a field, consisting of data of any valid `JSON` type.
+- **Value**: the second part of a field, consisting of data of any valid JSON type.
 - **[Primary Field][primary-field]**: A special field that is mandatory in all documents. It contains the primary key and document identifier.
 - **[Primary Key][primary-key]**: the attribute of the primary field. **All documents in the same index must possess the same primary key.** Its associated value is the document identifier.
 - **[Document Identifier][document-id]**: the value of the primary field. **Every document in a given index must have a unique identifier**.
 
-### Formatting
+### Dataset format
 
-Documents are represented as `JSON objects`: key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting `JSON objects`](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting MeiliSearch documents. For example, **an attribute must be a string**, while **a value must be a valid [`JSON` data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
+You can provide your dataset in the following formats:
+
+- [JSON](#json)
+- [NDJSON](#ndjson)
+- [CSV](#csv)
+
+#### JSON
+
+Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting MeiliSearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
 
 As an example, let's say you are making an **[index][indexes]** that contains information about movies. A sample document might look like this:
 
@@ -30,13 +38,56 @@ As an example, let's say you are making an **[index][indexes]** that contains in
   "title": "Kung Fu Panda",
   "genre": "Children's Animation",
   "release-year": 2008,
-  "cast": [ {"Jack Black": "Po"}, {"Jackie Chan": "Monkey"} ]
+  "cast": [
+    { "Jack Black": "Po" },
+    { "Jackie Chan": "Monkey" }
+  ]
 }
 ```
 
 In the above example, `"id"`, `"title"`, `"genre"`, `"release-year"`, and `"cast"` are **attributes**.
 Each attribute must be associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`.
 At minimum, the document must contain one field with the **[primary key][primary-key]** attribute and a unique **[document id][document-id]** as its value. Above, that's: `"id": "1564saqw12ss"`.
+
+#### NDJSON
+
+NDJSON objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to MeiliSearch documents.
+
+Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.  
+
+The above JSON document would look like this in NDJSON:
+
+```json
+{ 
+  "id": "1564saqw12ss", 
+  "title": "Kung Fu Panda", 
+  "genre": "Children's Animation", 
+  "release-year": 2008, 
+  "cast": [
+    { "Jack Black": "Po" },
+    { "Jackie Chan": "Monkey" }
+  ]
+}
+```
+
+#### CSV
+
+CSV files express data as a sequence of values separated by a delimiter character. Currently, MeiliSearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
+
+Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
+
+The above JSON document would look like this in CSV:
+
+```csv
+  "id:string","title:string","genre:string","release-year:number"
+  "1564saqw12ss","Kung Fu Panda","Children's Animation","2008"
+```
+
+Since CSV does not support arrays or nested objects, `cast` cannot be converted to CSV.
+
+::: tip
+If you don't specify the data type for an attribute, it will default to `:string`.
+:::
 
 ### Limitations and requirements
 
@@ -52,7 +103,7 @@ A <clientGlossary word="field" /> is a set of two data items linked together: an
 
 An attribute functions a bit like a variable in most programming languages, i.e. it is a name that allows you to store, access, and describe some data. That data is the attribute's **value**.
 
-Every field has a [data type](/reference/under_the_hood/datatypes.md) dictated by its value. Every value must be a valid [`JSON` data type](https://www.w3schools.com/js/js_json_datatypes.asp).
+Every field has a [data type](/reference/under_the_hood/datatypes.md) dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
 Take note that in the case of strings, the value **[can contain at most 1000 words](/reference/features/known_limitations.md#maximum-words-per-attribute)**. If it contains more than 1000 words, only the first 1000 will be indexed.
 
@@ -158,7 +209,7 @@ Take note that the document addition request in MeiliSearch is <clientGlossary w
 
 ## Upload
 
-By default, MeiliSearch limits the size of `JSON` payloads—and therefore document uploads—to 100MB.
+By default, MeiliSearch limits the size of all payloads—and therefore document uploads—to 100MB.
 
 To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 

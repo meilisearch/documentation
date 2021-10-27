@@ -26,9 +26,9 @@ The response should look something like this:
 
 ```json
 {
-  "commitSha":"stringOfLettersAndNumbers",
-  "commitDate":"YYYY-MM-DDTimestamp",
-  "pkgVersion":"x.y.z"
+  "commitSha": "stringOfLettersAndNumbers",
+  "commitDate": "YYYY-MM-DDTimestamp",
+  "pkgVersion": "x.y.z"
 }
 ```
 
@@ -145,9 +145,7 @@ curl -X DELETE \
 This command should return an updateId:
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 Now that all fields are displayed, proceed to the next step.
@@ -157,7 +155,7 @@ Now that all fields are displayed, proceed to the next step.
 Before creating your dump, make sure that your [dump directory](/reference/features/configuration.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your MeiliSearch directory.
 
 ::: note
-If you are running MeiliSearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found at the root directory, `cd /`.
+If you are running MeiliSearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found in the configuration file directory, `cd /var/opt/meilisearch/dumps`.
 :::
 
 If you're unsure where your MeiliSearch directory is located, try this:
@@ -312,9 +310,7 @@ curl -X DELETE \
 This command should return an updateId:
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 Now that all fields are displayed, proceed to the next step.

@@ -64,7 +64,7 @@ Access the following file
 And add your sample file to the list:
 ```json
 [
-  ...
+  …
   {
     "language": "sdk-language",
     "label": "sdk-label",

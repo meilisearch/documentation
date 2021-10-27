@@ -34,7 +34,12 @@ Get the [displayed attributes](/reference/features/settings.md#displayed-attribu
 List the settings.
 
 ```json
-["title", "description", "genre", "release_date"]
+[
+  "title",
+  "description",
+  "genre",
+  "release_date"
+]
 ```
 
 ## Update displayed attributes
@@ -62,9 +67,7 @@ An array of strings that contains attributes of an index to display.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -92,9 +95,7 @@ All attributes found in the documents added to the index.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).

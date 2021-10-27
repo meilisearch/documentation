@@ -22,6 +22,12 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
 
+### Maximum attributes per document
+
+**Limitation:** MeiliSearch can index a maximum of **65,536 attributes per document**. If a document contains more than 65,536 attributes, an error will be thrown.
+
+**Explanation:** This limit is enforced for performance and storage reasons. Overly large internal data structures—resulting from documents with too many fields—lead to overly large databases on disk, and slower search performance.
+
 ### Maximum number of documents in an index
 
 **Limitation:** An index can contain no more than 4,294,967,296 documents.

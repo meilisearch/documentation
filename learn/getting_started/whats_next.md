@@ -8,14 +8,14 @@ MeiliSearch was built on a few core concepts. If you haven't already done so, we
 
 You can find the API references here:
 
-- [API References](/reference/api/README.md)
+- [API references](/reference/api/README.md)
 
 And additional resources here:
 
 - [SDKs](/learn/what_is_meilisearch/sdks.md)
 - [FAQ](/resources/faq.md)
-- [Advanced Topics](/learn/advanced)
-- [How-To Guides](/create/how_to)
-- [Postman Collection](/create/how_to/postman_collection.md): it can be tedious to re-write every route when wanting to try out an API. Try out MeiliSearch with our collection in Postman
+- [Advanced topics](/learn/advanced)
+- [How-to guides](/create/how_to)
+- [Postman collection](/create/how_to/postman_collection.md): it can be tedious to re-write every route when wanting to try out an API. Try out MeiliSearch with our collection in Postman
 
 More tutorials are currently in development and will be available soon.

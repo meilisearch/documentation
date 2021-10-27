@@ -102,13 +102,11 @@ Configures the instance's environment. Value must be either `production` or `dev
 `production`:
 
 - Setting a [master key](/reference/features/authentication.md) is **mandatory**
-- Logging is disabled
 - The [web interface](/reference/features/web_interface.md#web-interface) is disabled
 
 `development`:
 
 - Setting a [master key](/reference/features/authentication.md) is **optional**
-- Logs are printed to the standard output
 - The web interface is enabled
 
 ::: tip
@@ -198,7 +196,8 @@ MeiliSearch currently supports four log levels, listed in order of increasing ve
 - `'ERROR'`: only log unexpected events indicating MeiliSearch is not functioning as expected
 - `'WARN:'` log all unexpected events, regardless of their severity
 - `'INFO:'` log all events. This is the default value of `--log-level`
-- `'DEBUG'`: log all events and including detailed information on MeiliSearch's internal processes. Useful when diagnosing issues and debugging
+- `'DEBUG'`: log all events and include detailed information on MeiliSearch's internal processes. Useful when diagnosing issues and debugging
+- `'TRACE'`: log all events and include even more detailed information on MeiliSearch's internal processes. We do not advise using this level as it is extremely verbose. Use `DEBUG` before considering `TRACE`.
 
 ### Max index size
 
@@ -230,7 +229,7 @@ The `update` database handles [pending updates](/learn/advanced/asynchronous_upd
 **CLI option**: `--http-payload-size-limit`
 **Default value**: `104857600` (~100MB)
 
-Sets the maximum size of accepted JSON payloads. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
 ### Schedule snapshot creation
 

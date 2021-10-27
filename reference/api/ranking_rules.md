@@ -79,9 +79,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -125,9 +123,7 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
