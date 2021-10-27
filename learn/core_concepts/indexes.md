@@ -11,7 +11,7 @@ An index is defined by an `uid` and contains the following information:
 
 #### Example
 
-Suppose you manage a database that contains information about movies. You would probably want to have multiple categories for movie descriptions, actors, costumes, and reviews. Each of these categories would be represented by an index in MeiliSearch.
+Suppose you manage [a database that contains information about movies](https://imdb.com/). You would probably want to keep multiple types of documents, such as movies, TV shows, actors, directors, and more. Each of these categories would be represented by an index in MeiliSearch.
 
 Each index holds information about the fields found in the documents, how they are handled by MeiliSearch, and their order of importance. Besides, an index defines its own synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
 
