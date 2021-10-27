@@ -61,7 +61,7 @@ Response body:
 
 ```json
 {
-    "message": "Index movies not found.",
+    "message": "Index `movies` not found.",
     "code": "index_not_found",
     "type": "invalid_request",
     "link": "https://docs.meilisearch.com/errors#index_not_found"
