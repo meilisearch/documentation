@@ -2,10 +2,6 @@
 
 `Stats` gives extended information and metrics about indexes and the MeiliSearch database.
 
-::: note
-`databaseSize` is expressed in **bytes**.
-:::
-
 ## Get stat of an index
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
@@ -43,6 +39,10 @@ Get stats of an index.
 <RouteHighlighter method="GET" route="/stats"/>
 
 Get stats of all indexes.
+
+::: note
+`databaseSize` is expressed in **bytes**.
+:::
 
 ### Example
 
