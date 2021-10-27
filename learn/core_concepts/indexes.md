@@ -55,7 +55,7 @@ The primary key's attribute name **must** be known by the index. You can [set a 
 
 Each index applies its own relevancy rules. All indexes are created with the same built-in <clientGlossary word="ranking rules"/> executed in a default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance will be deduced from their order of appearance in the document.
 
-For example, suppose your documents list attributes in the following order:
+For example, suppose your first document lists attributes in the following order:
 
 ```id, title, description, release_date```
 
