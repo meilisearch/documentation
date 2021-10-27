@@ -79,7 +79,7 @@ Sometimes you may want to ignore certain words in documents and search queries. 
 
 Words added to the [stop words list](/reference/features/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
 
-For example, suppose you search for `the great gatsby`. Having `the` in a film review wouldn't make the review more relevant, but adding `the` to the stop word list would improve performance show more relevant search results.
+For example, suppose you want to search for `the great gatsby`. You would prefer to receive documents containing the terms `great gatsby`, rather than documents containing the terms `the great`, or just `the`. In this case, adding `the` to the stop word list would improve performance and make search results more relevant.
 
 [Learn more about stop words](/reference/features/stop_words.md)
 
