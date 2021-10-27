@@ -57,7 +57,9 @@ Each index applies its own relevancy rules. All indexes are created with the sam
 
 For example, suppose your first document lists attributes in the following order:
 
-```id, title, description, release_date```
+```
+id, title, description, release_date
+```
 
 A document containing matches in its `title` field will be considered more relevant than a document only containing matches in  its `description`.
 
