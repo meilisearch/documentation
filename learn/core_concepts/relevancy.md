@@ -14,7 +14,7 @@ Each index possesses a list of ranking rules stored as an array in the [settings
 
 Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/under_the_hood/bucket_sort.md) algorithm to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
 
-**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it with the `ranking rule` setting](/reference/api/ranking_rules.md#update-ranking-rules).
+**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/api/ranking_rules.md#update-ranking-rules).
 
 ### Built-in rules
 
