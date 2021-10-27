@@ -135,7 +135,7 @@ The server should answer with a `200 OK` status code as shown in the example bel
 
 ### 2. Set API key and SSL (HTTPS)
 
-MeiliSearch is currently running in a *development environment*. You haven't set up an **API key**, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for production.
+MeiliSearch is currently running in a **development** environment. You haven't set up an **API key**, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for **production**.
 
 To start the configuration process, connect via SSH to your new MeiliSearch instance and follow the instructions that appear.
 

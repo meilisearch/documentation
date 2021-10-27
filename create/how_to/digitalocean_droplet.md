@@ -105,7 +105,7 @@ HTTP/1.1 200 OK
 
 ### 2. Set API key and SSL (HTTPS)
 
-MeiliSearch is currently running in a *development environment*. You haven't set up an API key, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for production.
+MeiliSearch is currently running in a **development** environment. You haven't set up an API key, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for **production**.
 To start the configuration process, connect via SSH to your new MeiliSearch Droplet and follow the instructions:
 
 ### 2.1. Run the configuration script
