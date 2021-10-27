@@ -273,9 +273,7 @@ This command will throw an error if:
 
 This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively.
 
-::: note
-This option is not available as an environment variable.
-:::
+*This option is not available as an environment variable.*
 
 ### Ignore missing snapshot
 
