@@ -286,7 +286,7 @@ filtering_guide_2: |-
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q":"Batman",  "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
-filtering_guide_4: |-
+filtering_guide_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
@@ -546,3 +546,7 @@ geosearch_guide_sort_usage_2: |-
   curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
+add_movies_json_1: |-
+  curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
+    -H 'Content-Type: application/json' \
+    --data-binary @movies.json

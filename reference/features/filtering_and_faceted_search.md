@@ -221,7 +221,7 @@ rating >= 3 AND (NOT director = "Tim Burton")
 
 You can use this filter when searching for `Planet of the Apes`:
 
-<CodeSamples id="filtering_guide_4" />
+<CodeSamples id="filtering_guide_3" />
 
 ## Filtering with `_geoRadius`
 
