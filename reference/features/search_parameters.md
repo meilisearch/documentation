@@ -315,11 +315,11 @@ If you need finer control over the formatted output, we recommend using [the `ma
 
 ### Example
 
-The following query highlights matches terms present in the `overview` attribute:
+The following query highlights matches present in the `overview` attribute:
 
 <CodeSamples id="search_parameter_guide_highlight_1" />
 
-The highlighted version can be found in the returned document's `_formatted` object:
+The highlighted version can then be found in the returned document's `_formatted` object:
 
 ```json
 {
