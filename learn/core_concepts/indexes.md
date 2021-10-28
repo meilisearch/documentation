@@ -4,7 +4,7 @@ An index is an entity that gathers a set of documents with its own settings.
 
 It can be comparable to a table in `SQL`, or a collection in MongoDB.
 
-An index is defined by an `uid` and contains the following information:
+An index is defined by a `uid` and contains the following information:
 
 - One <clientGlossary word="primary key"/>
 - Default settings that can be configured as needed: relevancy rules, synonyms, stop words, and field properties.
@@ -33,7 +33,7 @@ We will create an index called `movies`. The code below will create the `movies`
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
-The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you **cannot create another index with the same `uid`or change the `uid`.**
+The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
 {
@@ -77,7 +77,7 @@ Since synonyms are linked to a given index, they won't apply to any other index 
 
 ## Stop words
 
-Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (i.e., `the` or `of` in English).
+Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (for example, `the` or `of` in English).
 
 Words added to the [stop words list](/reference/features/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
 

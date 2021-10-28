@@ -92,11 +92,9 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [documentId](/learn/core_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
+If you send an already existing document (same [document id](/learn/core_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
 
 For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
-
-If the provided index does not exist, it will be created.
 
 #### Path variables
 

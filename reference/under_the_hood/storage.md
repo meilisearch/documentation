@@ -1,6 +1,6 @@
 # Storage
 
-::: tip TLDR
+::: tip
 
 - If the database does not shrink after deleting documents or indexes, it is expected behavior. You are not losing space, MeiliSearch is keeping this space for performance reasons.
 - You should have the same amount of RAM than the space taken on disk by MeiliSearch for optimal performances.
