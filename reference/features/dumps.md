@@ -16,7 +16,7 @@ You can check the status of a particular dump creation process using the previou
 
 After your dump creation process is done, the dump file is created and added to the dump folder. By default, this folder is `/dumps` at the root of your MeiliSearch binary, [but this can be customized](/reference/features/configuration.md#dumps-destination).
 
-There is no dump queue, **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors/#dump_already_in_progress). While a dump is processing, the **update queue is paused.** During this time, **no write operations can occur on the database.** This is also true of snapshots.
+There is no dump queue, **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **update queue is paused.** During this time, **no write operations can occur on the database.** This is also true of snapshots.
 
 Note that **if your dump folder does not already exist when the dump creation process is called, MeiliSearch will create it**.
 
