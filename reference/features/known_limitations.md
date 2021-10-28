@@ -20,9 +20,6 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 **Limitation:** MeiliSearch can index a maximum of __65535 positions per attribute__. Any words exceeding the 65535 position limit will be silently ignored.
 
-::: warning
-Previously, this limit was 1000 positions. This change will allow you to increase the size of `data.ms` between v0.23 and v0.24.
-:::
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
 
