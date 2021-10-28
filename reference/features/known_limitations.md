@@ -26,7 +26,7 @@ Previously, this limit was 1000 positions. This change will allow you to increas
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
 
-### Example
+#### Example
 
 Suppose your have three similar queries: `Hello World`, `Hello, World`, and `Hello - World`. Due to how our tokenizer works, each one of them will be processed differently.
 
