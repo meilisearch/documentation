@@ -40,6 +40,10 @@ Get stats of an index.
 
 Get stats of all indexes.
 
+::: note
+`databaseSize` is expressed in **bytes**.
+:::
+
 ### Example
 
 <CodeSamples id="get_indexes_stats_1" />
