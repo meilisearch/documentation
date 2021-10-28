@@ -27,7 +27,9 @@ You **don't need** to specify a header for `GET` and `DELETE` routes. Routes tha
 #### Authentication
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
+
 <CodeSamples id="authentication_header_1" />
+
 Please read about [authentication keys](/reference/features/authentication.md) and [how to manage them](/reference/api/keys.md) for more information.
 
 `X-Meili-API-Key: $API_KEY`
