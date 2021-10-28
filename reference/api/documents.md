@@ -182,6 +182,7 @@ The body is composed of a **JSON array** of documents.
 ### Example
 
 <CodeSamples id="add_or_update_documents_1" />
+
 This document is an update of the document found in [add or replace document](/reference/api/documents.md#add-or-replace-documents).
 The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
