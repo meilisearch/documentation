@@ -76,7 +76,7 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **index_uid**  | The index unique identifier (_mandatory_)                  |
+| **uid**        | The index unique identifier (_mandatory_)                  |
 | **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
 
 ```json
