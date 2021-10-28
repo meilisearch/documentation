@@ -28,7 +28,7 @@ Previously, this limit was 1000 positions. This change will allow you to increas
 
 #### Example
 
-Suppose your have three similar queries: `Hello World`, `Hello, World`, and `Hello - World`. Due to how our tokenizer works, each one of them will be processed differently.
+Suppose you have three similar queries: `Hello World`, `Hello, World`, and `Hello - World`. Due to how our tokenizer works, each one of them will be processed differently and take up a different number of "positions" in our internal database.
 
 If your query is `Hello World`:
 
