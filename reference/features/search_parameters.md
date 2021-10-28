@@ -299,18 +299,18 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 **Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
 **Default value**: `null`
 
-Highlights matching query terms in the specified attributes. Both string and numeric values, whether inside arrays and objects or not, are highlighted.
-
-Parameter values must be given as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
-
-Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+Highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` highlights matches in fields containing strings, numeric values, arrays, and objects.
 
 When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-::: tip
-The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. It is not possible to change the tag or its attributes.
+Parameter values must be given as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
 
-If you need finer control over the highlights and their format, we recommend using [the `matches` search parameter](#matches).
+Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](/reference/features/search_parameters.md#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
+
+::: tip
+It is not possible to change the `<em>` tag or its attributes.
+
+If you need finer control over the formatted output, we recommend using [the `matches` search parameter](#matches).
 :::
 
 ### Example
