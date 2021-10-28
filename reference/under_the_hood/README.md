@@ -8,10 +8,11 @@ This information is not necessary to set up MeiliSearch, but it may help you mas
 
 To better understand some of the algorithms behind our beloved search engine, check out the following reference articles:
 
-[Bucket sort](/reference/under_the_hood/bucket_sort.md)
-[Concatenate and split queries](/reference/under_the_hood/concat.md)
-[Data types](/reference/under_the_hood/datatypes.md)
-[Prefix search](/reference/under_the_hood/prefix.md)
+[Bucket Sort](/reference/under_the_hood/bucket_sort.md)
+[Concatenate and Split Queries](/reference/under_the_hood/concat.md)
+[Data Types](/reference/under_the_hood/datatypes.md)
+[Indexation](/reference/under_the_hood/indexation.md)
+[Prefix Search](/reference/under_the_hood/prefix.md)
 [Storage](/reference/under_the_hood/storage.md)
 [Tokenization](/reference/under_the_hood/tokenization.md)
 [Typo tolerance](/reference/under_the_hood/typotolerance.md)
