@@ -6,26 +6,33 @@ MeiliSearch has a number of features for fine-tuning the relevancy of search res
 
 ## Ranking rules
 
-In order to ensure relevant results, search responses are sorted according to a set of consecutive rules called **ranking rules**.
+In order to ensure relevant results, search responses are sorted based on a set of consecutive rules called **ranking rules**.
 
 ### Behavior
 
-Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings.md). This array is **fully customizable**, meaning that **existing rules can be deleted, new ones can be added, and all can be reordered freely**.
+Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings.md). This array is **fully customizable**, meaning you can **delete existing rules, add new ones, and reorder them as needed**.
 
-Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/under_the_hood/bucket_sort.md) to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
+Whenever a search query is made, MeiliSearch uses a [bucket sort](/reference/under_the_hood/bucket_sort.md) algorithm to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
 
-**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration has been chosen because it meets most standard needs. [This order can be changed in the settings](/reference/api/ranking_rules.md#update-ranking-rules).
+**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/api/ranking_rules.md#update-ranking-rules).
 
 ### Built-in rules
 
-MeiliSearch contains six built-in ranking rules: **words, typo, proximity, attribute, sort, and exactness**, in that default order.
+MeiliSearch contains six built-in ranking rules in the following order:
+
+1. Words
+2. Typo
+3. Proximity
+4. Attribute
+5. Sort
+6. Exactness
 
 #### 1. Words
 
 Results are sorted by **decreasing number of matched query terms**. Returns documents that contain all query terms first.
 
 ::: note
-Be aware that the `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
+The `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
 
 For example, if someone were to search `batman dark knight`, then the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third.
 :::
@@ -123,7 +130,7 @@ Add this rule to the existing list of ranking rules using the [update ranking ru
 
 Let's say you have a movie dataset. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
 
-The following example will create a rule that makes older movies more relevant than more recent ones. A movie released in 1999 will appear before a movie released in 2020.
+The following example will create a rule that makes older movies more relevant than recent ones. A movie released in 1999 will appear before a movie released in 2020.
 
 ```
 release_date:asc
