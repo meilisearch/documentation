@@ -4,7 +4,7 @@ A dump is a compressed file containing an export of your MeiliSearch instance. I
 
 ## Creating a dump
 
-To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). Using that route will trigger a dump creation process. Creating a dump is an asynchronous task that takes time based on the size of your dataset. A dump uid (unique identifier) is returned to help you track the process.
+To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). Using that route will trigger a dump creation process. Creating a dump is an asynchronous task that takes time based on the size of your dataset. A dump `uid` (unique identifier) is returned to help you track the process.
 
 <CodeSamples id="post_dump_1" />
 
@@ -36,7 +36,7 @@ As the data contained in the dump needs to be indexed, the process will take som
 
 ::: note
 We do not recommend using dumps from a new MeiliSearch version to import an older version.
-For example, you **should not** import a dump from MeiliSearh v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearh v0.21.0 to MeiliSearh v0.21.0 or higher will work.
+For example, you **should not** import a dump from MeiliSearch v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearch v0.21.0 to MeiliSearch v0.21.0 or higher will work.
 :::
 
 ## Use cases

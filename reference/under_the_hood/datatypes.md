@@ -88,7 +88,13 @@ After the tokenizing process, each word is indexed and stored in the global dict
 The following input:
 
 ```json
-[["Bruce Willis", "Vin Diesel"], "Kung Fu Panda"]
+[
+  [
+    "Bruce Willis",
+    "Vin Diesel"
+  ],
+  "Kung Fu Panda"
+]
 ```
 
 Will be processed as if all elements were arranged at the same level:

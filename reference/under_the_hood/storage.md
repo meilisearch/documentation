@@ -1,6 +1,6 @@
 # Storage
 
-::: tip TLDR
+::: tip
 
 - If the database does not shrink after deleting documents or indexes, it is expected behavior. You are not losing space, MeiliSearch is keeping this space for performance reasons.
 - You should have the same amount of RAM than the space taken on disk by MeiliSearch for optimal performances.
@@ -14,7 +14,7 @@ Writing a database is hard, and we do not want to reinvent the wheel, so MeiliSe
 
 The storage engine of MeiliSearch is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
 
-We chose LMDB after we successfully (or not) tried MeiliSearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for Meilisearch.
+We chose LMDB after we successfully (or not) tried MeiliSearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for MeiliSearch.
 
 ### Memory mapping
 
@@ -52,9 +52,9 @@ MeiliSearch will always demand a certain amount of space to use as a [memory map
 
 ## Measured disk usage
 
-We did some measurements on the default [movies.json](https://github.com/meilisearch/MeiliSearch/blob/master/datasets/movies/movies.json) dataset that you can find in the [getting started guide](/learn/getting_started/quick_start.md#add-documents).
+The following measurements were taken using <a id="downloadMovie" href="/movies.json" download="movies.json">an 8.6 MB JSON dataset containing 19,553 documents</a>.
 
-This dataset is a JSON file of 8.6 MB and has 19,553 documents. When we index this file in MeiliSearch, the amount of disk space taken by LMDB is 122MB.
+After indexed, the dataset size in LMDB is about 122MB.
 
 | Raw JSON | MeiliSearch database size on disk | RAM usage | Virtual memory usage |
 | -------- | --------------------------------- | -------------------- | ------------------- |

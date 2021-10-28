@@ -15,7 +15,5 @@ Get health of MeiliSearch server.
 #### Response: `200 OK`
 
 ```json
-{
-  "status": "available"
-}
+{ "status": "available" }
 ```

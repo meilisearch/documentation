@@ -1,6 +1,6 @@
 # Tokenization
 
-**Tokenization** is the act of taking a sentence or phrase and splitting it into smaller units of language, called tokens. It is the first step of document indexing in the Meilisearch engine, and is a critical factor in the quality of search results.
+**Tokenization** is the act of taking a sentence or phrase and splitting it into smaller units of language, called tokens. It is the first step of document indexing in the MeiliSearch engine, and is a critical factor in the quality of search results.
 
 Breaking sentences into smaller chunks requires understanding where one word ends and another begins, making tokenization a highly complex and language-dependant task. MeiliSearch's solution to this problem is a **modular tokenizer** that follows different processes, called **pipelines**, based on the language it detects.
 
@@ -14,12 +14,12 @@ When you add documents to a MeiliSearch index, the tokenization process is handl
 
 We can break down the tokenization process like so:
 
-1. Crawl the document(s) and determine the primary language for each field.
-2. Go back over the documents field-by-field, running the corresponding tokenization pipeline, if it exists.
+1. Crawl the document(s) and determine the primary language for each field
+2. Go back over the documents field-by-field, running the corresponding tokenization pipeline, if it exists
 
 Pipelines include many language-specific operations. Currently, we have two pipelines:
 
 1. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
-2. A default MeiliSearch pipeline that separates words based on categories. Works with a variety of languages.
+2. A default MeiliSearch pipeline that separates words based on categories. Works with a variety of languages
 
 For more details, check out the [feature specification](https://github.com/meilisearch/specifications/blob/master/text/0001-script-based-tokenizer.md).

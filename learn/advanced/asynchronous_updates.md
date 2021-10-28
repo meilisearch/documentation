@@ -82,9 +82,7 @@ When you query the update endpoint using this id, you see that it has been enque
 {
   "status": "enqueued",
   "updateId": 1,
-  "type": {
-    "name": "DocumentsAddition",
-  },
+  "type": { "name": "DocumentsAddition" },
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z"
 }
 ```
@@ -111,9 +109,7 @@ Had the update failed, the response would have included an error message:
 {
   "status": "failed",
   "updateId": 1,
-  "type": {
-    "name": "DocumentsAddition",
-  },
+  "type": { "name": "DocumentsAddition" },
   "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
   "duration": 0.000048524,
   "processedAt": "2019-12-07T21:10:20.511525620Z",
@@ -123,9 +119,9 @@ Had the update failed, the response would have included an error message:
 
 ## Terminate MeiliSearch while a task is being processed
 
-**Terminating a MeiliSearch instance in the middle of an update is completely safe** and will never adversely affect the database
+**Terminating a MeiliSearch instance in the middle of an update is completely safe** and will never adversely affect the database.
 
-MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or is interrupted before reaching its end, nothing is committed to the database.
+MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>. This means that all operations concerning a specific task are bundled in one transaction. If any of these operations fail or are interrupted before reaching the end, nothing is committed to the database.
 
 What happens to an update task when MeiliSearch is terminated changes depending on the request's `status`:
 

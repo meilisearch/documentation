@@ -62,15 +62,19 @@ This will give you a list of documents that contain your query terms in at least
 {
   "hits": [
     {
-      "id":"50393",
-      "title":"Kung Fu Panda Holiday",
-      "poster":"https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
-      "overview":"The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
-      "release_date":1290729600,
-      "genres":["Animation","Family","TV Movie"]
-    },
+      "id": "50393",
+      "title": "Kung Fu Panda Holiday",
+      "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
+      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
+      "release_date": 1290729600,
+      "genres": [
+        "Animation",
+        "Family",
+        "TV Movie"
+      ]
+    }
   ],
-  "query":"shifu"
+  "query": "shifu"
 }
 ```
 
@@ -150,6 +154,20 @@ You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
+### Filtering results `_geoRadius`
+
+If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
+
+`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+
+```json
+_geoRadius(lat, lng, distance_in_meters)
+```
+
+`lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
+
+<CodeSamples id="geosearch_guide_filter_usage_1" />
+
 ## Facets distribution
 
 **Parameter**: `facetsDistribution`
@@ -204,7 +222,7 @@ You would get the following response:
       "fantasy": 67,
       "comedy": 475,
       "mystery": 70,
-      "thriller": 217,
+      "thriller": 217
     }
   }
 }
@@ -335,7 +353,7 @@ The beginning of a matching term within a field is indicated by `start`, and its
 ::: warning
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
 
-`matchesInfo` cannot be used with arrays and objects, only strings.
+`matches` does not work with array or object values—only strings.
 :::
 
 ### Example
@@ -395,3 +413,29 @@ When using the `GET` route, `sort` expects the list as a comma-separated string.
 You can search for science fiction books ordered from cheapest to most expensive:
 
 <CodeSamples id="search_parameter_guide_sort_1" />
+
+### Sorting results with `_geoPoint`
+
+When dealing with documents containing geolocation data, you can use `_geoPoint` to sort results based on their distance from a specific geographic location.
+
+`_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
+
+<CodeSamples id="geosearch_guide_sort_usage_1" />
+
+Queries using `_geoPoint` will always include a `geoDistance` field containing the distance in meters between the document location and the `_geoPoint`:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "_geo": {
+      "lat": 45.4777599, 
+      "lng": 9.1967508
+    },
+    "_geoDistance": 1532
+  }
+]
+```
+
+[You can read more about location-based sorting in our dedicated guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)

@@ -8,7 +8,7 @@ New integrations are constantly in development. If you'd like to contribute, [se
 
 You can use MeiliSearch API wrappers in your favorite language. These libraries support all API routes.
 
-- [.Net](https://github.com/meilisearch/meilisearch-dotnet)
+- [.NET](https://github.com/meilisearch/meilisearch-dotnet)
 - [Dart](https://github.com/meilisearch/meilisearch-dart)
 - [Golang](https://github.com/meilisearch/meilisearch-go)
 - [Java](https://github.com/meilisearch/meilisearch-java)
@@ -43,7 +43,7 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
   - Guide: [How to deploy a MeiliSearch instance on Google Cloud Platform](/create/how_to/gcp.md)
 - [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes)
 
-### Platform Plugins
+### Platform plugins
 
 - [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
 - [Strapi plugin](https://github.com/meilisearch/strapi-plugin-meilisearch/)

@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.22',
+  title: 'MeiliSearch Documentation v0.23',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -22,7 +22,7 @@ module.exports = {
           {
             text: 'SDKs',
             items: [
-              { text: '.Net', link: 'https://github.com/meilisearch/meilisearch-dotnet' },
+              { text: '.NET', link: 'https://github.com/meilisearch/meilisearch-dotnet' },
               { text: 'Dart', link: 'https://github.com/meilisearch/meilisearch-dart' },
               { text: 'Golang', link: 'https://github.com/meilisearch/meilisearch-go' },
               { text: 'Java', link: 'https://github.com/meilisearch/meilisearch-java' },
@@ -41,7 +41,7 @@ module.exports = {
     sidebar: {
       '/learn/': [
         {
-          title: '🔎 What Is MeiliSearch?',
+          title: '🔎 What is MeiliSearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
           sidebarDepth: 0,
@@ -55,7 +55,7 @@ module.exports = {
           ],
         },
         {
-          title: '🚀 Getting Started',
+          title: '🚀 Getting started',
           path: '/learn/getting_started/',
           collapsable: false,
           children: [
@@ -65,7 +65,7 @@ module.exports = {
           ],
         },
         {
-          title: '💡 Core Concepts',
+          title: '💡 Core concepts',
           path: '/learn/core_concepts/',
           collapsable: false,
           children: [
@@ -75,7 +75,7 @@ module.exports = {
           ],
         },
         {
-          title: '📚 Advanced Topics',
+          title: '📚 Advanced topics',
           path: '/learn/advanced/',
           collapsable: false,
           children: [
@@ -89,7 +89,7 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Contributing to the Docs',
+              title: 'Contributing to the docs',
               path: '/learn/contributing/contributing_to_docs',
             },
           ],
@@ -97,7 +97,7 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '⭐ Feature References',
+          title: '⭐ Feature references',
           path: '/reference/features/',
           collapsable: false,
           children: [
@@ -111,6 +111,7 @@ module.exports = {
             },
             '/reference/features/field_properties',
             '/reference/features/filtering_and_faceted_search',
+            '/reference/features/geosearch',
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
@@ -123,7 +124,7 @@ module.exports = {
           ],
         },
         {
-          title: '📒 API References',
+          title: '📒 API references',
           path: '/reference/api/',
           collapsable: false,
           children: [
@@ -141,14 +142,14 @@ module.exports = {
                   title: 'All Settings',
                   path: '/reference/api/settings',
                 },
-                '/reference/api/synonyms',
-                '/reference/api/stop_words',
-                '/reference/api/ranking_rules',
-                '/reference/api/filterable_attributes',
-                '/reference/api/distinct_attribute',
-                '/reference/api/searchable_attributes',
                 '/reference/api/displayed_attributes',
+                '/reference/api/distinct_attribute',
+                '/reference/api/filterable_attributes',
+                '/reference/api/ranking_rules',
+                '/reference/api/searchable_attributes',
                 '/reference/api/sortable_attributes',
+                '/reference/api/stop_words',
+                '/reference/api/synonyms',
               ],
             },
             '/reference/api/stats',
@@ -158,9 +159,9 @@ module.exports = {
           ],
         },
         {
-          title: '🛠️ Under the Hood',
+          title: '🛠️ Under the hood',
           path: '/reference/under_the_hood/',
-          collapsable: true,
+          collapsable: false,
           children: [
             '/reference/under_the_hood/bucket_sort',
             '/reference/under_the_hood/concat',

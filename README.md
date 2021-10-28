@@ -8,7 +8,21 @@ This repository is the documentation for the **open-source search engine API [Me
 
 Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you! If you think something is missing or could be improved, issues are highly appreciated.
 
+Before contributing, please leave a comment on an [issue](https://github.com/meilisearch/documentation/issues) letting us know you're interested. Only submit a Pull Request after you have been assigned a corresponding issue.
+
+See something wrong that's not on the list? Great! Open a new issue describing the problem and tell us you want to work on it.
+
 To contribute, clone this repository, commit your changes and open a pull request.
+
+### Hacktoberfest
+
+It's [Hacktoberfest month](https://blog.meilisearch.com/contribute-hacktoberfest-2021/)! 🥳
+
+🚀 If your PR gets accepted it will count into your participation to Hacktoberfest!
+
+✅ To be accepted it has either to have been merged, approved or tagged with the `hacktoberfest-accepted` label.
+
+🧐 Don't forget to check the [quality standards](https://hacktoberfest.digitalocean.com/resources/qualitystandards)! Low-quality PRs might get marked as `spam` or `invalid`, and will not count toward your participation in Hacktoberfest.
 
 ### Requirements
 
@@ -18,13 +32,13 @@ To contribute, clone this repository, commit your changes and open a pull reques
 
 ```bash
 # Clone the repository
-$ git clone git@github.com:meilisearch/documentation.git meilisearch-documentation
+git clone git@github.com:meilisearch/documentation.git meilisearch-documentation
 # Open the newly created directory
 cd meilisearch-documentation
 # Install dependencies
-$ yarn install
+yarn install
 # Run MeiliSearch documentation on https://localhost:8080
-$ yarn dev
+yarn dev
 ```
 
 ### Testing
@@ -32,7 +46,7 @@ $ yarn dev
 A complete test can be done using the following command:
 
 ```bash
-$ yarn test
+yarn test
 ```
 
 The tests are triggered on build and on any pull request to master.
@@ -42,7 +56,7 @@ The tests are triggered on build and on any pull request to master.
 Making changes to the documentation without creating any dead links can be a tedious task. Before submitting any pull request, you can check the dead links.
 
 ```bash
-$ yarn check-links
+yarn check-links
 ```
 
 #### Checking Styling
@@ -52,13 +66,13 @@ The documentation follows styling rules. The following files will be checked: `*
 You can check out and fix the styling errors.
 
 ```bash
-$ yarn style:fix
+yarn style:fix
 ```
 
 You can test if the code is well-formatted without fixing it.
 
 ```bash
-$ yarn style
+yarn style
 ```
 
 ### Deployment
@@ -68,7 +82,7 @@ The documentation is deployed as a static website. The master branch is automati
 You can build the static website using the following command:
 
 ```bash
-$ yarn build
+yarn build
 # The website is now available in .vuepress/dist and you can serve it using any webserver.
 ```
 

@@ -14,9 +14,15 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
 #### Content type
 
-Every request and response body is in `JSON`.
+ Requests can be in JSON, CSV, or NDJSON. Responses are always in JSON.
 
-It is **not required** to have `Content-Type: application/json` in the header. Any content-type is accepted.
+MeiliSearch currently supports the following formats:
+
+- `Content-Type: application/json` for JSON
+- `Content-Type: application/x-ndjson` for NDJSON
+- `Content-Type: text/csv` for CSV
+
+You **don't need** to specify a header for `GET` and `DELETE` routes. Routes that require a payload **only accept JSON headers.** `PUT` and `POST` document routes accept all headers.
 
 #### Authentication
 
@@ -49,7 +55,7 @@ Please read about [authentication keys](/reference/features/authentication.md) a
 
 **404 - Not Found**: The requested resource doesn't exist.
 
-All errors contain a `JSON` body that explains the error.
+All errors contain a JSON body that explains the error.
 
 Response body:
 
@@ -69,9 +75,7 @@ If you're having trouble understanding an error, take a look at the [complete li
 MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `updateId` attribute:
 
 ```json
-{
-  "updateId": 2
-}
+{ "updateId": 2 }
 ```
 
 This successful response indicates that the operation has been queued or is currently executing.

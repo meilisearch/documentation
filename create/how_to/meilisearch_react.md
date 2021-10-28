@@ -112,7 +112,7 @@ const MeiliSearch = require("meilisearch");
 
 ## Index documents
 
-MeiliSearch receives documents in JSON format and stores them for searching purposes. These documents are composed of fields that can hold any type of data.
+MeiliSearch receives documents in JSON, CSV, or NDJSON format and stores them for searching purposes. These documents are composed of fields that can hold any type of data.
 
 For this tutorial, you can download this dataset full of sportswear items:
 
