@@ -42,7 +42,7 @@ If your query is `Hello, World`:
 - `World` takes the position `9` of the attribute
 
 ::: note
-`,` takes 8 spaces as it is a hard separator, you can read more about word separators in our [article about datatypes](https://docs.meilisearch.com/reference/under_the_hood/datatypes.html#string).
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](https://docs.meilisearch.com/reference/under_the_hood/datatypes.html#string).
 :::
 
 If your query is `Hello - World`:
