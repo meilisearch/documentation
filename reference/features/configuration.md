@@ -88,7 +88,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 **Environment variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
 **Default value**: `"data.ms/"`
-**Expected value**: a file path
+**Expected value**: a filepath
 
 Designates the location where database files will be created and retrieved.
 
@@ -173,7 +173,7 @@ All collected data is used solely for the purpose of improving MeiliSearch.
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
 **Default value**: `dumps/`
-**Expected value**: a file path
+**Expected value**: a filepath pointing to a valid directory
 
 Sets the directory where MeiliSearch will create dump files.
 
@@ -184,7 +184,7 @@ Sets the directory where MeiliSearch will create dump files.
 **Environment variable**: N/A
 **CLI option**: `--import-dump`
 **Default value**: `none`
-**Expected value**: a file path pointing a `.dump` file
+**Expected value**: a filepath pointing to a `.dump` file
 
 Imports the dump file located at the specified path. Path must point to a `.dump` file.
 
@@ -197,7 +197,7 @@ MeiliSearch will only launch once the dump data has been fully indexed. The time
 **Environment variable**: MEILI_LOG_LEVEL
 **CLI option**: `--log-level`
 **Default value**: `'INFO'`
-**Expected value**: one of `ERROR`, `WARN`, `INFO`, or `DEBUG`
+**Expected value**: one of `ERROR`, `WARN`, `INFO`, `DEBUG`, OR `TRACE`
 
 Defines how much detail should be present in MeiliSearch's logs.
 
@@ -259,7 +259,7 @@ Activates scheduled snapshots when set to `true`. Snapshots are disabled by defa
 **Environment variable**: `MEILI_SNAPSHOT_DIR`
 **CLI option**: `--snapshot-dir`
 **Default value**: `snapshots/`
-**Expected value**: a file path
+**Expected value**: a filepath pointing to a valid directory
 
 Sets the directory where MeiliSearch will store snapshots.
 
@@ -277,7 +277,7 @@ Defines the interval between each snapshot. Value must be given in seconds.
 **Environment variable**: N/A
 **CLI option**: `--import-snapshot`
 **Default value**: `None`
-**Expected value**: a file path
+**Expected value**: a filepath pointing to a snapshot file
 
 Launches MeiliSearch after importing a previously-generated snapshot at the given filepath.
 
@@ -321,7 +321,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 **Environment variable**: `MEILI_SSL_AUTH_PATH`
 **CLI option**: `--ssl-auth-path`
 **Default value**: `None`
-**Expected value**: a file path
+**Expected value**: a filepath
 
 Enables client authentication in the specified path.
 
@@ -330,7 +330,7 @@ Enables client authentication in the specified path.
 **Environment variable**: `MEILI_SSL_CERT_PATH`
 **CLI option**: `--ssl-cert-path`
 **Default value**: `None`
-**Expected value**: a file path
+**Expected value**: a filepath pointing to a valid SSL certificate
 
 Sets the server's SSL certificates.
 
@@ -341,7 +341,7 @@ Value must be a path to PEM-formatted certificates. The first certificate should
 **Environment variable**: `MEILI_SSL_KEY_PATH`
 **CLI option**: `--ssl-key-path`
 **Default value**: `None`
-**Expected value**: a file path
+**Expected value**: a filepath pointing to a valid SSL keyfile
 
 Sets the server's SSL keyfiles.
 
@@ -352,7 +352,7 @@ Value must be a path to an RSA private key or PKCS8-encoded private key, both in
 **Environment variable**: `MEILI_SSL_OCSP_PATH`
 **CLI option**: `--ssl-ocsp-path`
 **Default value**: `None`
-**Expected value**: a file path
+**Expected value**: a filepath pointing to a valid OCSP certificate
 
 Sets the server's OCSP file. *Optional*
 
