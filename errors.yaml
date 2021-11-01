@@ -25,7 +25,7 @@ errors:
   - code: invalid_document_id
     description: "The provided document identifier does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_)."
   - code: invalid_filter
-    description: "The filter provided with the search is invalid. This maybe due to syntax errors in the `filter` parameter, using reserved fields as filter expressions, or not adding the filtering attributes to `filterableAttributes`. Check our [guide on filtering](https://docs.meilisearch.com/reference/features/filtering_and_faceted_search.html) to troubleshoot."
+    description: "The filter provided with the search is invalid. This may be due to syntax errors in the `filter` parameter, using reserved fields as filter expressions, or neglecting to add the filtering attributes to `filterableAttributes`. For troubleshooting, check our [guide on filtering](https://docs.meilisearch.com/reference/features/filtering_and_faceted_search.html)."
   - code: invalid_sort
     description: "The sort value is invalid. This maybe due to syntax errors in the `sort` parameter, using reserved fields as sort expressions, or not adding the sorting attributes to `sortableAttributes`. Check our [guide on sorting](https://docs.meilisearch.com/reference/features/sorting.html) for more information."
   - code: bad_request
