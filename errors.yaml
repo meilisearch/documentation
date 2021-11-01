@@ -23,7 +23,7 @@ errors:
   - code: missing_document_id
     description: "A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones."
   - code: invalid_document_id
-    description: "The provided document identifier does not meet the format requirements. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_)."
+    description: "The provided document identifier does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_)."
   - code: invalid_filter
     description: "The filter provided with the search is invalid. This maybe due to syntax errors in the `filter` parameter, using reserved fields as filter expressions, or not adding the filtering attributes to `filterableAttributes`. Check our [guide on filtering](https://docs.meilisearch.com/reference/features/filtering_and_faceted_search.html) to troubleshoot."
   - code: invalid_sort
