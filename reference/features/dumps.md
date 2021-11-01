@@ -18,7 +18,7 @@ The above code triggers a dump creation process. It also returns an object conta
 }
 ```
 
-You can use the returned `uid` (unique identifier based on the timestamp at which the dump was triggered) to track its progress with the [get dump status route](/reference/api/dump.md#get-dump-status). The returned status could be:
+You can use the returned `uid` (unique identifier indicating when the dump was triggered) to track its progress with the [get dump status route](/reference/api/dump.md#get-dump-status). The returned status could be:
 
 - `in_progress`: Dump creation is in progress
 - `failed`: An error occurred during dump process, and the task was aborted
