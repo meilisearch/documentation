@@ -4,7 +4,7 @@ A dump is a compressed file containing an export of your MeiliSearch instance. I
 
 ## Creating a dump
 
-To create a dump of your dataset, use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). The dump creation process is an asynchronous task that takes time based on the size of your dataset.
+To create a dump of your dataset, use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). The dump creation process is an asynchronous task that takes time proportional to the size of your dataset.
 
 <CodeSamples id="post_dump_1" />
 
