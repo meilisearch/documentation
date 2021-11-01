@@ -26,7 +26,7 @@ You can use the returned `uid` (unique identifier indicating when the dump was t
 
 <CodeSamples id="get_dump_status_1" />
 
-**The response:**
+The above code sample returns an object with the following details about the dump:
 
 ```
 {
