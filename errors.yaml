@@ -27,7 +27,7 @@ errors:
   - code: invalid_filter
     description: "The filter provided with the search is invalid. This may be due to syntax errors in the `filter` parameter, using reserved fields as filter expressions, or neglecting to add the filtering attributes to `filterableAttributes`. For troubleshooting, check our [guide on filtering](https://docs.meilisearch.com/reference/features/filtering_and_faceted_search.html)."
   - code: invalid_sort
-    description: "The sort value is invalid. This maybe due to syntax errors in the `sort` parameter, using reserved fields as sort expressions, or not adding the sorting attributes to `sortableAttributes`. Check our [guide on sorting](https://docs.meilisearch.com/reference/features/sorting.html) for more information."
+    description: "The sort value is invalid. This may be due to syntax errors in the `sort` parameter, using reserved fields as sort expressions, or neglecting to add the sorting attributes to `sortableAttributes`. For troubleshooting, check our [guide on sorting](https://docs.meilisearch.com/reference/features/sorting.html)."
   - code: bad_request
     description: "The request is invalid, check the error message for more information."
   - code: document_not_found
