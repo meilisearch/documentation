@@ -65,7 +65,7 @@ errors:
   - code: invalid_api_key
     description: "The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](https://docs.meilisearch.com/reference/features/authentication.html)."
   - code: invalid_store_file
-    description: "The `data.ms` folder is an inconsistent state. Your .mdb file is corrupted or the `data.ms` folder has been replaced by a file."  
+    description: "The `data.ms` folder is in an invalid state. Your `.mdb` file is corrupted or the `data.ms` folder has been replaced by a file."
   - code: no_space_left_on_device
     description: "The host system partition has reached its maximum capacity and can no longer accept writes." 
   - code: database_size_limit_reached
