@@ -67,7 +67,7 @@ errors:
   - code: invalid_store_file
     description: "The `data.ms` folder is an inconsistent state. Your .mdb file is corrupted or the `data.ms` folder has been replaced by a file."  
   - code: no_space_left_on_device
-    description: " The host system partition has reached its maximum capacity and can no longer accept writes." 
+    description: "The host system partition has reached its maximum capacity and can no longer accept writes." 
   - code: database_size_limit_reached
     description: "The requested database has reached its maximum limit, no further documents can be added. Check out this [guide](https://docs.meilisearch.com/reference/features/configuration.html#max-udb-size) to customize the maximum database size accepted by MeiliSearch."
   - code: index_primary_key_already_exists
