@@ -46,7 +46,7 @@ If the index has no sort or custom ranking rules, the results are returned in th
 
 ::: tip
 
-Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search). Your user can still sort results without interacting with the search bar.
+Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
 
 :::
 
