@@ -66,7 +66,6 @@ Response body:
     "type": "invalid_request",
     "link": "https://docs.meilisearch.com/errors#index_not_found"
 }
-
 ```
 
 If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `code` values and descriptions.
