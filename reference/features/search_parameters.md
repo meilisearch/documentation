@@ -40,7 +40,7 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 ### Placeholder search
 
-When `q` isn't specified, MeiliSearch performs a **placeholder search**. Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.** The sort and custom ranking rules are taken into account as they don't require the `q` parameter.
+When `q` isn't specified, MeiliSearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
