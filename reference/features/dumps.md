@@ -37,7 +37,7 @@ You can use the returned `uid` (unique identifier indicating when the dump was t
 }
 ```
 
-After the dump creation process is done, the dump file is created and added to the dump directory. By default, this folder is `/dumps` at the root of your MeiliSearch binary, [but this can be customized](/reference/features/configuration.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, MeiliSearch will create it**.
+After dump creation is finished, the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your  MeiliSearch binary. You can customize [this using the `--dumps-dir` configuration option](/reference/features/configuration.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, MeiliSearch will create it.**
 
 If a dump file is visible in the file system, the dump process was successfully completed. **MeiliSearch will never create a partial dump file** , even if you interrupt an instance while it is generating a dump.
 
