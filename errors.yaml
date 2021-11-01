@@ -19,7 +19,7 @@ errors:
   - code: primary_key_already_present
     description: "This error is thrown when trying to modify the primary key of an index, when it has been already set. See [guide on primary keys](https://docs.meilisearch.com/learn/core_concepts/documents.html#structure)."
   - code: document_fields_limit_reached
-    description: "This document exceeds the maximum limit of 65,535 fields."
+    description: "A document exceeds the maximum limit of 65,535 fields."
   - code: missing_document_id
     description: "A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones."
   - code: invalid_document_id
