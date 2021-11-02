@@ -90,7 +90,7 @@ For more information about configuring MeiliSearch, read our [configuration refe
 
 We, the MeiliSearch team, provide an email address so that users can request the complete removal of their data from all of our tools.
 
-To do so, send an email to [privacy@meilisearch.com](mailto:privacy@meilisearch.com) containing the unique identifier generated for your MeiliSearch installation (`Instance uuid` when launching MeiliSearch). Any questions regarding the management of the data we collect can also be sent to this email address.
+To do so, send an email to [privacy@meilisearch.com](mailto:privacy@meilisearch.com) containing the unique identifier generated for your MeiliSearch installation (`Instance UID` when launching MeiliSearch). Any questions regarding the management of the data we collect can also be sent to this email address.
 
 ## Exhaustive list of all collected data
 
