@@ -75,9 +75,7 @@ If you're having trouble understanding an error, take a look at the [complete li
 MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `updateId` attribute:
 
 ```json
-{
-  "updateId": 2
-}
+{ "updateId": 2 }
 ```
 
 This successful response indicates that the operation has been queued or is currently executing.

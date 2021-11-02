@@ -1,6 +1,6 @@
 # Typo tolerance
 
-MeiliSearch **is [typo tolerant](/reference/under_the_hood/typotolerance.md#typo-tolerance-rules)**; this means **it understands your search even if there are typos or spelling mistakes** to a certain extent.
+MeiliSearch **is [typo tolerant](/reference/under_the_hood/typotolerance.md#typo-tolerance-rules)**; this means **it understands your search even if there are typos or spelling mistakes**.
 
 #### Example
 
@@ -11,21 +11,21 @@ On a movie dataset, let's search for `botman`.
   "hits": [
     {
       "title": "Batman: Hush",
-      ...
+      …
     },
     {
       "title": "Batman vs. Teenage Mutant Ninja Turtles",
-      ...
+      …
     },
     {
       "title": "Batman Ninja",
-      ...
+      …
     },
     {
       "title": "Batman: Gotham by Gaslight",
-      ...
+      …
     },
-    ...
+    …
   ],
   "offset": 0,
   "limit": 20,
@@ -54,7 +54,7 @@ There are some rules about what can be considered "similar". These rules are **b
 
 This means that "saturday", which is 7 characters long use the second rule, and every document containing words that only have **one typo** will match. For example:
 
-- "saturday" is accepted because it is the same word.
-- "sat" is not accepted because the query word is not a prefix of it (it is the opposite).
-- "satuday" is accepted because it contains **one typo**.
-- "s**u**tuday" is not accepted because it contains **two typos**.
+- "saturday" is accepted because it is the same word
+- "sat" is not accepted because the query word is not a prefix of it (it is the opposite)
+- "satuday" is accepted because it contains **one typo**
+- "s**u**tuday" is not accepted because it contains **two typos**

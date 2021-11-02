@@ -47,8 +47,12 @@ Here is an example of a basic configuration file:
 ```json
 {
   "index_uid": "docs",
-  "start_urls": ["https://www.example.com/doc/"],
-  "sitemap_urls": ["https://www.example.com/sitemap.xml"],
+  "start_urls": [
+    "https://www.example.com/doc/"
+  ],
+  "sitemap_urls": [
+    "https://www.example.com/sitemap.xml"
+  ],
   "stop_urls": [],
   "selectors": {
     "lvl0": {

@@ -92,11 +92,9 @@ Documents are ordered by MeiliSearch depending on the hash of their id.
 
 Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [documentId](/learn/core_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields previously in the document not present in the new document are removed.
+If you send an already existing document (same [document id](/learn/core_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
 
 For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
-
-If the provided index does not exist, it will be created.
 
 #### Path variables
 
@@ -135,9 +133,7 @@ The body is composed of a **JSON array** of documents.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -190,9 +186,7 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -216,9 +210,7 @@ Delete all documents in the specified index.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -243,9 +235,7 @@ Delete one document based on its unique id.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -277,9 +267,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).

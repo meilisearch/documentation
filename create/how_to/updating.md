@@ -26,9 +26,9 @@ The response should look something like this:
 
 ```json
 {
-  "commitSha":"stringOfLettersAndNumbers",
-  "commitDate":"YYYY-MM-DDTimestamp",
-  "pkgVersion":"x.y.z"
+  "commitSha": "stringOfLettersAndNumbers",
+  "commitDate": "YYYY-MM-DDTimestamp",
+  "pkgVersion": "x.y.z"
 }
 ```
 
@@ -145,9 +145,7 @@ curl -X DELETE \
 This command should return an updateId:
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 Now that all fields are displayed, proceed to the next step.
@@ -312,9 +310,7 @@ curl -X DELETE \
 This command should return an updateId:
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 Now that all fields are displayed, proceed to the next step.

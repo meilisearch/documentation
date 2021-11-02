@@ -166,6 +166,7 @@ module.exports = {
             '/reference/under_the_hood/bucket_sort',
             '/reference/under_the_hood/concat',
             '/reference/under_the_hood/datatypes',
+            '/reference/under_the_hood/indexation',
             '/reference/under_the_hood/prefix',
             '/reference/under_the_hood/storage',
             '/reference/under_the_hood/tokenization',

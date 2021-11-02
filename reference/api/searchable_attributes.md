@@ -33,7 +33,11 @@ Get the [searchable attributes](/reference/features/field_properties.md#searchab
 List the settings.
 
 ```json
-["title", "description", "genre"]
+[
+  "title",
+  "description",
+  "genre"
+]
 ```
 
 ## Update searchable attributes
@@ -69,9 +73,7 @@ A match in title will make a document more relevant than another document with a
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -99,9 +101,7 @@ All attributes found in the documents added to the index.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).

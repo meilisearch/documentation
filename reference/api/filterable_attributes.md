@@ -27,7 +27,10 @@ Get an index's [`filterableAttributes`](/reference/features/filtering_and_facete
 List the settings.
 
 ```json
-["genres", "director"]
+[
+  "genres",
+  "director"
+]
 ```
 
 ## Update filterable attributes
@@ -55,9 +58,7 @@ An array of strings containing the attributes that can be used as filters at que
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -85,9 +86,7 @@ An empty array (`[]`).
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
