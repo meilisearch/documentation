@@ -12,33 +12,33 @@ We use [Segment](https://segment.com/), a platform for data collection and manag
 
 ## What kind of data do we collect?
 
-In general, our data collection is focused on the following categories:
+Our data collection is focused on the following categories:
 
-- **System**: technical specs of the device and OS running MeiliSearch, MeiliSearch version, etc.
-- **Performance**: success rate of search requests, latency, etc.
-- **Usage**: adoption of new features, usage rate of features we're considering changing, etc.
+- **System** metrics, such as the technical specs of the device running MeiliSearch, the software version, and the OS
+- **Performance** metrics, such as the success rate of search requests and the average latency
+- **Usage** metrics, aimed at evaluating our newest features. These change with each new version
+
+See below for the [complete list of metrics we currently collect](#exhaustive-list-of-all-collected-data).
 
 **We will never:**
 
 - Identify or track users
-- Collect private information such as IP addresses, email addresses, or website URLs
-- Store data from the content of documents added to MeiliSearch
-
-See below for an [exhaustive list of metrics we collect](#exhaustive-list-of-all-collected-data).
+- Collect personal information such as IP addresses, email addresses, or website URLs
+- Store data from documents added to a MeiliSearch instance
 
 ## Why collect telemetry data?
 
 We collect telemetry data for only two reasons: so that we can improve our product, and so that we can continue working on this project full-time.
 
-In order to create a better product, we need reliable quantitative information. The information we collect helps us fix bugs, evaluate the success of features, and better understand our users' needs.
+In order to create a better product, we need reliable quantitative information. The data we collect helps us fix bugs, evaluate the success of features, and better understand our users' needs.
 
 We also need to prove that people are actually using MeiliSearch. Usage metrics help us justify our existence to investors so that we can keep this project alive.
 
 ## Why should you trust us?
 
-The short answer: you shouldn't. We feel that it is perfectly understandable, and in fact wise, to be distrustful of tech companies when it comes to your private data. That is why we attempt to maintain [complete transparency about our data collection](#exhaustive-list-of-all-collected-data), provide an [opt-out](#how-to-disable-data-collection), and allow [deletion of collected data](#how-to-delete-all-collected-data) at any time. We believe that this is the only way.
+The short answer: you shouldn't. We feel that it is understandable, and in fact wise, to be distrustful of tech companies when it comes to your private data. That is why we attempt to maintain [complete transparency about our data collection](#exhaustive-list-of-all-collected-data), provide an [opt-out](#how-to-disable-data-collection), and enable users to [request the deletion of all their collected data](#how-to-delete-all-collected-data) at any time. In the absence of global data protection laws, we believe that this is the only ethical way to approach data collection.
 
-**Don't trust us—hold us accountable.** No company is perfect. If you ever feel that we are being anything less than 100% transparent or collecting data that is infringing on your personal privacy, please let us know by emailing our dedicated account: [privacy@meilisearch.com](mailto:privacy@meilisearch.com). Similarly, if you discover a data rights initiative or data protection tool that you think is relevant to us, please share it. We are passionate about this subject and take it very seriously.
+**Hold us accountable.** No company is perfect. If you ever feel that we are being anything less than 100% transparent or collecting data that is infringing on your personal privacy, please let us know by emailing our dedicated account: [privacy@meilisearch.com](mailto:privacy@meilisearch.com). Similarly, if you discover a data rights initiative or data protection tool that you think is relevant to us, please share it. We are passionate about this subject and take it very seriously.
 
 ## How to disable data collection
 
