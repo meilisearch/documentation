@@ -52,8 +52,9 @@ apt install curl -y
 curl -L https://install.meilisearch.com | sh
 ```
 
-> The different options to achieve a MeiliSearch installation are detailed in **[this guide](/learn/getting_started/installation.md#download-and-launch)**.
-> It is important to know that there are different ways to get MeiliSearch running on your machine. As an open source project, you can always compile the latest stable release of MeiliSearch from the source code to ensure the binary uses your architecture in the best possible way.
+The different MeiliSearch installation options are detailed in [this guide](/learn/getting_started/installation.md#download-and-launch).
+
+**There are many different ways to get MeiliSearch running on your machine.** As an open-source project, you can always compile the latest stable release of MeiliSearch from its source code to ensure the binary uses your architecture in the best possible way.
 
 You can always check the latest MeiliSearch stable version, and get MeiliSearch for the Operating System of your choice, by visiting the following link:
 
@@ -319,5 +320,3 @@ Your SSL certificates should be working and Nginx should be able to find them. E
 You have followed the main steps to provide a safe and stable service. Your MeiliSearch instance should be up and running, in a safe environment and ready to stay available even when the most common issues occur. In addition, it is protected by a reverse proxy with your own domain name and API key, so your data and configuration are accessible only to trusted clients. Communication with your server is now encrypted. Furthermore, its identity will be verified every time before sending sensitive data in a fast and automated manner.
 
 You are now ready to start using your **production-ready MeiliSearch instance**!
-
-MeiliSearch is a **database** which means that it needs a file system it can write to, and which must be persistent.
