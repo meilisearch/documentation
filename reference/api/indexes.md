@@ -76,8 +76,8 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **uid**        | The index unique identifier (_mandatory_)                  |
-| **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
+| **index_uid**  | The index unique identifier (_mandatory_)                  |
+| **primaryKey** | The primary key of the documents |
 
 ```json
 {
@@ -117,7 +117,7 @@ Update an [index](/learn/core_concepts/indexes.md).
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
+| **primaryKey** | The primary key of the documents |
 
 The `uid` of an index cannot be changed.
 The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/reference/api/indexes.md#get-one-index)).
