@@ -69,7 +69,7 @@ errors:
   - code: no_space_left_on_device
     description: "The host system partition has reached its maximum capacity and can no longer accept writes." 
   - code: database_size_limit_reached
-    description: "The requested database has reached its maximum limit; no further documents can be added. For information on customizing the maximum database size accepted by MeiliSearch, check out this [guide](https://docs.meilisearch.com/reference/features/configuration.html#max-udb-size)."
+    description: "The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by MeiliSearch, check out this [guide](https://docs.meilisearch.com/reference/features/configuration.html#max-udb-size)."
   - code: index_primary_key_already_exists
     description: "The requested index already has a primary key that cannot be changed."
 ...
