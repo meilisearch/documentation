@@ -48,7 +48,7 @@ If your query is `Hello - World`:
 - `World` takes the position `2` of the attribute
 
 ::: note
-`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](https://docs.meilisearch.com/reference/under_the_hood/datatypes.html#string).
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/reference/under_the_hood/datatypes.md#string).
 :::
 
 ### Maximum attributes per document
