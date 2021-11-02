@@ -53,7 +53,7 @@ errors:
   - code: missing_payload
     description: "The Content-Type header was specified, but no request body was sent to the server or the request body is empty."  
   - code: dump_already_processing
-    description: "Dump creation is already in progress. A new dump creation process can be triggered when the current one is complete."
+description: "Dump creation is already in progress. A new dump creation process can be triggered after the current one has been completed."
   - code: dump_not_found
     description: "The requested dump could not be found."  
   - code: dump_process_failed
