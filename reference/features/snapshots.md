@@ -48,7 +48,7 @@ meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 
 ## Common problems
 
-Take note that whenever you launch MeiliSearch from a snapshot, it will *stop processing and throw an error** if it encounters either of the two following situations:
+Take note that whenever you launch MeiliSearch from a snapshot, it will **stop processing and throw an error** if it encounters either of the two following situations:
 
 1. A database already exists (i.e. you have a non-empty `data.ms` folder in the same directory as your MeiliSearch binary)
 2. No snapshot is found at the given path

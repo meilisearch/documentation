@@ -13,7 +13,7 @@ Other than the differences mentioned above, the two routes are strictly equivale
 
 Search for documents matching a specific query in the given index.
 
-This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **improves considerably the speed of the search**.
+This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
 #### Path variables
 
@@ -77,22 +77,17 @@ Query terms enclosed in double quotes are treated as [phrase searches](/referenc
       "id": "2770",
       "title": "American Pie 2",
       "poster": "https://image.tmdb.org/t/p/w1280/q4LNgUnRfltxzp3gf1MAGiK5LhV.jpg",
-      "overview": "The whole gang are back and as close as ever. They decide to
-      get even closer by spending the summer together at a beach house. They
-      decide to hold the biggest...",
+      "overview": "The whole gang are back and as close as ever. They decide to get even closer by spending the summer together at a beach house. They decide to hold the biggest…",
       "release_date": 997405200
     },
     {
       "id": "190859",
       "title": "American Sniper",
       "poster": "https://image.tmdb.org/t/p/w1280/svPHnYE7N5NAGO49dBmRhq0vDQ3.jpg",
-      "overview": "U.S. Navy SEAL Chris Kyle takes his sole mission—protect his
-      comrades—to heart and becomes one of the most lethal snipers in American
-      history. His pinpoint accuracy not only saves countless lives but also
-      makes him a prime...",
+      "overview": "U.S. Navy SEAL Chris Kyle takes his sole mission—protect his comrades—to heart and becomes one of the most lethal snipers in American history. His pinpoint accuracy not only saves countless lives but also makes him a prime…",
       "release_date": 1418256000
     },
-    ...
+    …
   ],
   "offset": 0,
   "limit": 20,
@@ -174,22 +169,17 @@ Query terms enclosed in double quotes are treated as [phrase searches](/referenc
       "id": "2770",
       "title": "American Pie 2",
       "poster": "https://image.tmdb.org/t/p/w1280/q4LNgUnRfltxzp3gf1MAGiK5LhV.jpg",
-      "overview": "The whole gang are back and as close as ever. They decide to
-      get even closer by spending the summer together at a beach house. They
-      decide to hold the biggest...",
+      "overview": "The whole gang are back and as close as ever. They decide to get even closer by spending the summer together at a beach house. They decide to hold the biggest…",
       "release_date": 997405200
     },
     {
       "id": "190859",
       "title": "American Sniper",
       "poster": "https://image.tmdb.org/t/p/w1280/svPHnYE7N5NAGO49dBmRhq0vDQ3.jpg",
-      "overview": "U.S. Navy SEAL Chris Kyle takes his sole mission—protect his
-      comrades—to heart and becomes one of the most lethal snipers in American
-      history. His pinpoint accuracy not only saves countless lives but also
-      makes him a prime...",
+      "overview": "U.S. Navy SEAL Chris Kyle takes his sole mission—protect his comrades—to heart and becomes one of the most lethal snipers in American history. His pinpoint accuracy not only saves countless lives but also makes him a prime…",
       "release_date": 1418256000
     },
-    ...
+    …
   ],
   "offset": 0,
   "limit": 20,

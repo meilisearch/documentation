@@ -8,5 +8,5 @@ These articles are conceptual explorations of important—but difficult—topics
 
 ## Table of contents
 
-- [Asynchronous Updates](/learn/advanced/asynchronous_updates.md)
-- [Snapshots vs. Dumps](/learn/advanced/snapshots_vs_dumps.md)
+- [Asynchronous updates](/learn/advanced/asynchronous_updates.md)
+- [Snapshots vs. dumps](/learn/advanced/snapshots_vs_dumps.md)

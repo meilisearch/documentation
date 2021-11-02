@@ -8,7 +8,7 @@ We always aim for a simple and intuitive experience for both developers and end-
 
 For developers, we're proud to say that MeiliSearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/api).
 
-For end-users, the search experience aims to feel simple so they can focus on the results. MeiliSearch aims to deliver an intuitive search-as-you-type experience, with a response time lower than 50 milliseconds.
+For end-users, MeiliSearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results.
 
 ### Highly customizable
 
@@ -32,4 +32,4 @@ As a result, we are fully committed to the philosophy of [prefix search](https:/
 
 MeiliSearch should **not be your main data store**. MeiliSearch should contain only the data you want your users to search through. The more data MeiliSearch contains, the less relevant it is.
 
-MeiliSearch queries should be sent directly from the front-end. The more proxy there is between MeiliSearch and the end-user, the less fast queries and thus search-experience will be.
+MeiliSearch queries should be sent directly from the front-end. The more proxies there are between MeiliSearch and the end-user, the slower the queries and search experience will be.
