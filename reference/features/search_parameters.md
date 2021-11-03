@@ -299,7 +299,7 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 **Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
 **Default value**: `null`
 
-Highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` highlights matches in fields containing strings, numeric values, arrays, and objects.
+Highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` only works on values of the following types: string, number, array, object.
 
 When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
@@ -319,7 +319,7 @@ The following query highlights matches present in the `overview` attribute:
 
 <CodeSamples id="search_parameter_guide_highlight_1" />
 
-The highlighted version can then be found in the returned document's `_formatted` object:
+The highlighted version of the text would then be found in the `_formatted` object included in each returned document:
 
 ```json
 {
