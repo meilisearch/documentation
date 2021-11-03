@@ -4,24 +4,49 @@ A dump is a compressed file containing an export of your MeiliSearch instance. I
 
 ## Creating a dump
 
-To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). Using that route will trigger a dump creation process. Creating a dump is an asynchronous task that takes time based on the size of your dataset. A dump uid (unique identifier) is returned to help you track the process.
+To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). he dump creation process is an asynchronous task that takes time proportional to the size of your dataset.
 
 <CodeSamples id="post_dump_1" />
 
-The above code triggers a dump creation process.
+The above code triggers a dump creation process. It also returns an object containing information about the dump:
 
-You can check the status of a particular dump creation process using the previously received `dump uid`: [`GET /dumps/:dump_uid/status`](/reference/api/dump.md#get-dump-status). Using this route, you can check whether your dump is still processing, has already been created, or has encountered a problem.
+```
+{
+  "uid": "20200929-114144097",
+  "status": "in_progress",
+  "startedAt": "2020-09-29T11:41:44.392327Z"
+}
+```
+
+You can use the returned `uid` (unique identifier indicating when the dump was triggered) to track its progress with the [get dump status route](/reference/api/dump.md#get-dump-status). The returned status could be:
+
+- `in_progress`: Dump creation is in progress
+- `failed`: An error occurred during dump process, and the task was aborted
+- `done`: Dump creation is finished and was successful
 
 <CodeSamples id="get_dump_status_1" />
 
-After your dump creation process is done, the dump file is created and added to the dump folder. By default, this folder is `/dumps` at the root of your MeiliSearch binary, [but this can be customized](/reference/features/configuration.md#dumps-destination).
+The above code sample returns an object with the following details about the dump:
 
-Note that **if your dump folder does not already exist when the dump creation process is called, MeiliSearch will create it**.
+```
+{
+  "uid": "20200929-114144097",
+  "status": "done",
+  "startedAt": "2020-09-29T11:41:44.392327Z",
+  "finishedAt": "2020-09-29T11:41:50.792147Z"
+}
+```
 
-If you restart MeiliSearch after creating a dump, you will not be able to use the dumps endpoint to find out that dump's `status`. This has no effect on the dump file itself.
+After dump creation is finished, the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your  MeiliSearch binary. You can customize [this using the `--dumps-dir` configuration option](/reference/features/configuration.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, MeiliSearch will create it.**
+
+If a dump file is visible in the file system, the dump process was successfully completed. **MeiliSearch will never create a partial dump file** , even if you interrupt an instance while it is generating a dump.
 
 ::: note
-If a dump file is visible in the file system, the dump process was successfully completed. MeiliSearch will never create a partial dump file if you interrupt an instance while it is generating a dump.
+Unlike [updates](/learn/advanced/asynchronous_updates.md), dumps have no queue. **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **update queue is paused and no write operations can occur on the database.** This is also true of [snapshots](/reference/features/snapshots.md#snapshots).
+:::
+
+::: warning
+If you restart MeiliSearch after creating a dump, you will not be able to use the dumps endpoint to find out that dump's `status`. This has no effect on the dump file itself.
 :::
 
 ## Importing a dump
@@ -36,7 +61,7 @@ As the data contained in the dump needs to be indexed, the process will take som
 
 ::: note
 We do not recommend using dumps from a new MeiliSearch version to import an older version.
-For example, you **should not** import a dump from MeiliSearh v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearh v0.21.0 to MeiliSearh v0.21.0 or higher will work.
+For example, you **should not** import a dump from MeiliSearch v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearch v0.21.0 to MeiliSearch v0.21.0 or higher will work.
 :::
 
 ## Use cases

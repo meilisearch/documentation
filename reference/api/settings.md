@@ -69,9 +69,15 @@ List the settings.
     "exactness",
     "desc(release_date)"
   ],
-  "filterableAttributes": ["genres"],
+  "filterableAttributes": [
+    "genres"
+  ],
   "distinctAttribute": null,
-  "searchableAttributes": ["title", "description", "genres"],
+  "searchableAttributes": [
+    "title",
+    "description",
+    "genres"
+  ],
   "displayedAttributes": [
     "title",
     "description",
@@ -80,8 +86,14 @@ List the settings.
   ],
   "stopWords": null,
   "synonyms": {
-    "wolverine": ["xmen", "logan"],
-    "logan": ["wolverine", "xmen"]
+    "wolverine": [
+      "xmen",
+      "logan"
+    ],
+    "logan": [
+      "wolverine",
+      "xmen"
+    ]
   }
 }
 ```
@@ -126,9 +138,7 @@ If the provided index does not exist, it will be created.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
@@ -167,9 +177,7 @@ All settings will be reset to their default value.
 #### Response: `202 Accepted`
 
 ```json
-{
-  "updateId": 1
-}
+{ "updateId": 1 }
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).

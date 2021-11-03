@@ -27,6 +27,9 @@ You **don't need** to specify a header for `GET` and `DELETE` routes. Routes tha
 #### Authentication
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
+
+<CodeSamples id="authentication_header_1" />
+
 Please read about [authentication keys](/reference/features/authentication.md) and [how to manage them](/reference/api/keys.md) for more information.
 
 `X-Meili-API-Key: $API_KEY`
@@ -75,9 +78,7 @@ If you're having trouble understanding an error, take a look at the [complete li
 MeiliSearch is an **asynchronous API**. It means that, in a lot of cases, you will receive as server response a simple JSON with only an `updateId` attribute:
 
 ```json
-{
-  "updateId": 2
-}
+{ "updateId": 2 }
 ```
 
 This successful response indicates that the operation has been queued or is currently executing.

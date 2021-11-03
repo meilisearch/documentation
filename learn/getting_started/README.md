@@ -7,9 +7,9 @@ It is **not** to provide exhaustive or universal instructions on how to use Meil
 ## Table of contents:
 
 - [Installation](/learn/getting_started/installation.md)
-- [Quick Start Guide](/learn/getting_started/quick_start.md)
+- [Quick start guide](/learn/getting_started/quick_start.md)
   - [Download and launch MeiliSearch](/learn/getting_started/quick_start.md#download-and-launch)
   - [Add documents](/learn/getting_started/quick_start.md#add-documents)
   - [Search!](/learn/getting_started/quick_start.md#search)
-  - [Integrate with Your Project](/learn/getting_started/quick_start.md#integrate-with-your-project)
+  - [Integrate with your project](/learn/getting_started/quick_start.md#integrate-with-your-project)
 - [What's next?](/learn/getting_started/whats_next.md)

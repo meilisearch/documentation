@@ -31,15 +31,15 @@ Suppose you have a collection of movies containing the following fields:
 ```json
 [
   {
-      "id": "458723",
-      "title": "Us",
-      "director": "Jordan Peele",
-      "genres": [
-        "Thriller",
-        "Horror",
-        "Mystery"
-      ],
-      "overview": "Husband and wife Gabe and Adelaide Wilson take their […]",
+    "id": "458723",
+    "title": "Us",
+    "director": "Jordan Peele",
+    "genres": [
+      "Thriller",
+      "Horror",
+      "Mystery"
+    ],
+    "overview": "Husband and wife Gabe and Adelaide Wilson take their…"
   },
   …
 ]
@@ -168,22 +168,22 @@ Suppose that you have a dataset containing several movies in the following forma
 
 ```json
 [
-    …
-    {
-        "id": "458723",
-        "title": "Us",
-        "director": "Jordan Peele",
-        "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
-        "overview": "Husband and wife Gabe and Adelaide Wilson take their…",
-        "release_date": 1552521600,
-        "genres": [
-            "Comedy",
-            "Horror",
-            "Thriller"
-        ],
-        "rating": 4
-    },
-    …
+  …
+  {
+    "id": "458723",
+    "title": "Us",
+    "director": "Jordan Peele",
+    "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
+    "overview": "Husband and wife Gabe and Adelaide Wilson take their…",
+    "release_date": 1552521600,
+    "genres": [
+      "Comedy",
+      "Horror",
+      "Thriller"
+    ],
+    "rating": 4
+  },
+  …
 ]
 ```
 
@@ -303,7 +303,7 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
   "facetsDistribution" : {
     "genres" : {
       "horror": 50,
-      "comedy": 34,
+      "comedy": 34
     }
   }
 }
@@ -337,7 +337,7 @@ This query would return not only the matching movies, but also the `facetsDistri
       "fantasy": 67,
       "comedy": 475,
       "mystery": 70,
-      "thriller": 217,
+      "thriller": 217
     }
   }
 }

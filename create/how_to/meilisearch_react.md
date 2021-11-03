@@ -14,7 +14,7 @@ _The following is a guest post by Riccardo Giorato._
 
 In this quick tutorial, you'll learn how to easily create a search page with instant and reliable results thanks to the power of **MeiliSearch**.
 
-> MeiliSearch is an open source, high-relevancy search engine, built in [Rust](https://www.rust-lang.org/).
+MeiliSearch is an open source, high-relevancy search engine, built in [Rust](https://www.rust-lang.org/).
 
 We will cover the basic steps to get the search running and move on to more advanced topics at the end.
 

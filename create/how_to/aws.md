@@ -33,8 +33,11 @@ Select the specifications of the server you want MeiliSearch to run on.
 
 ![Size and specs](/aws/03.size-and-specs.png)
 
-> We recommend prioritizing memory allocation for better MeiliSearch performance.
-> Note that the **free tier** is sufficient for tests or prototypes, but not recommended for large datasets.
+We recommend prioritizing memory allocation for better MeiliSearch performance.
+
+::: tip
+The **free tier** is sufficient for tests or prototypes, but not recommended for large datasets.
+:::
 
 Once you've made your choice, click on **Next: Configure instance details** to continue.
 
@@ -73,7 +76,7 @@ For your MeiliSearch instance to communicate with the outside world, it is very 
 
 ![Security Groups: Networking and connectivity](/aws/07.security.png)
 
-> By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP adresses that are allowed to request your MeiliSearch instance, go to the **Source** column and select the **Custom** option.
+By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP adresses that are allowed to request your MeiliSearch instance, go to the **Source** column and select the **Custom** option.
 
 You can also **use an existing security group**, if preferred.
 
@@ -101,7 +104,7 @@ Once the instance is ready, use your web browser to navigate to the **Public IPv
 
 ![Enjoy](/aws/10.enjoy.png)
 
-> Your MeiliSearch instance is now ready to use!
+Your MeiliSearch instance is now ready to use!
 
 Keep in mind that your MeiliSearch instance is currently running in a *development environment*, which is unsafe for production usage. If you want to set up a *production environment*, continue to the [next section](#part-2-configure-production-settings).
 
@@ -135,9 +138,9 @@ The server should answer with a `200 OK` status code as shown in the example bel
 
 ### 2. Set API key and SSL (HTTPS)
 
-Meilisearch is currently running in a *development environment*. You haven't set up an **API key**, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for production.
+MeiliSearch is currently running in a **development** environment. You haven't set up an **API key**, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for **production**.
 
-To start the configuration process, connect via SSH to your new MeiliSearch Instance and follow the instructions that appear.
+To start the configuration process, connect via SSH to your new MeiliSearch instance and follow the instructions that appear.
 
 ### 2.1. Secure your key pair
 
@@ -194,7 +197,7 @@ To check if everything is running smoothly, do another HTTP call to the `/health
 curl -v https://<your-domain-name>/health
 ```
 
-> Note that this time, we're using HTTPS.
+Note that this time, **we're using HTTPS.**
 
 The server should answer with a `200 OK` status code as shown in the example below:
 

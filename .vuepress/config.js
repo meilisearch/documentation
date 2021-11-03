@@ -41,7 +41,7 @@ module.exports = {
     sidebar: {
       '/learn/': [
         {
-          title: '🔎 What Is MeiliSearch?',
+          title: '🔎 What is MeiliSearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
           sidebarDepth: 0,
@@ -55,7 +55,7 @@ module.exports = {
           ],
         },
         {
-          title: '🚀 Getting Started',
+          title: '🚀 Getting started',
           path: '/learn/getting_started/',
           collapsable: false,
           children: [
@@ -65,7 +65,7 @@ module.exports = {
           ],
         },
         {
-          title: '💡 Core Concepts',
+          title: '💡 Core concepts',
           path: '/learn/core_concepts/',
           collapsable: false,
           children: [
@@ -75,7 +75,7 @@ module.exports = {
           ],
         },
         {
-          title: '📚 Advanced Topics',
+          title: '📚 Advanced topics',
           path: '/learn/advanced/',
           collapsable: false,
           children: [
@@ -89,7 +89,7 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Contributing to the Docs',
+              title: 'Contributing to the docs',
               path: '/learn/contributing/contributing_to_docs',
             },
           ],
@@ -97,7 +97,7 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '⭐ Feature References',
+          title: '⭐ Feature references',
           path: '/reference/features/',
           collapsable: false,
           children: [
@@ -124,7 +124,7 @@ module.exports = {
           ],
         },
         {
-          title: '📒 API References',
+          title: '📒 API references',
           path: '/reference/api/',
           collapsable: false,
           children: [
@@ -159,13 +159,14 @@ module.exports = {
           ],
         },
         {
-          title: '🛠️ Under the Hood',
+          title: '🛠️ Under the hood',
           path: '/reference/under_the_hood/',
           collapsable: false,
           children: [
             '/reference/under_the_hood/bucket_sort',
             '/reference/under_the_hood/concat',
             '/reference/under_the_hood/datatypes',
+            '/reference/under_the_hood/indexation',
             '/reference/under_the_hood/prefix',
             '/reference/under_the_hood/storage',
             '/reference/under_the_hood/tokenization',

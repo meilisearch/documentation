@@ -57,9 +57,7 @@ MeiliSearch is an **asynchronous API**.
 It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only an `updateId` attribute. For example:
 
 ```json
-{
-  "updateId": 2
-}
+{ "updateId": 2 }
 ```
 
 This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
@@ -87,13 +85,21 @@ Most common errors:
 Wrong:
 
 ```json
-{ "id": 123, "title": "Pride and Prejudice" }
+{
+  "id": 123,
+  "title": "Pride and Prejudice"
+}
 ```
 
 Good:
 
 ```json
-[{ "id": 123, "title": "Pride and Prejudice" }]
+[
+  {
+    "id": 123,
+    "title": "Pride and Prejudice"
+  }
+]
 ```
 
 :::tip

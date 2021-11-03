@@ -40,13 +40,13 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 ### Placeholder search
 
-When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule).
+When `q` isn't specified, MeiliSearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
 
-If the index has no custom ranking rules, the results are returned in the order of their internal database position.
+If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
 
-Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search).
+Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
 
 :::
 
@@ -62,15 +62,19 @@ This will give you a list of documents that contain your query terms in at least
 {
   "hits": [
     {
-      "id":"50393",
-      "title":"Kung Fu Panda Holiday",
-      "poster":"https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
-      "overview":"The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
-      "release_date":1290729600,
-      "genres":["Animation","Family","TV Movie"]
-    },
+      "id": "50393",
+      "title": "Kung Fu Panda Holiday",
+      "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
+      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
+      "release_date": 1290729600,
+      "genres": [
+        "Animation",
+        "Family",
+        "TV Movie"
+      ]
+    }
   ],
-  "query":"shifu"
+  "query": "shifu"
 }
 ```
 
@@ -218,7 +222,7 @@ You would get the following response:
       "fantasy": 67,
       "comedy": 475,
       "mystery": 70,
-      "thriller": 217,
+      "thriller": 217
     }
   }
 }
@@ -243,7 +247,7 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 ## Attributes to crop
 
 **Parameter**: `attributesToCrop`
-**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
+**Expected value**: an array of attribute or `["*"]`
 **Default value**: `null`
 
 Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](/reference/features/search_parameters.md#crop-length) parameter.
@@ -296,7 +300,7 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 ## Attributes to highlight
 
 **Parameter**: `attributesToHighlight`
-**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
+**Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
 Highlights matching query terms in the given attributes. When this parameter is set, the `_formatted` object is added to the response for each document, within which you can find the highlighted text.
@@ -349,7 +353,7 @@ The beginning of a matching term within a field is indicated by `start`, and its
 ::: warning
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
 
-`matchesInfo` cannot be used with arrays and objects, only strings.
+`matches` does not work with array or object values—only strings.
 :::
 
 ### Example
