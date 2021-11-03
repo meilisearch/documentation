@@ -44,7 +44,9 @@ This is the preferred route to perform search when an API key is required, as it
 
 #### Placeholder search
 
-When no search query is specified, a [placeholder search](/reference/features/search_parameters.md#query-q) is run instead.
+Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy.md#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules) are taken into account.
+
+If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 #### Phrase search
 
