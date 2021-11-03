@@ -91,7 +91,7 @@ Our restaurant dataset looks like this once we add geopositioning data:
 ```
 
 ::: warning
-Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause MeiliSearch to throw an [`invalid_geo_field`](/errors) error. In this case, the update will fail and no documents will be added or modified.
+Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause MeiliSearch to throw an [`invalid_geo_field`](https://docs.meilisearch.com/errors/#invalid_geo_field) error. In this case, the update will fail and no documents will be added or modified.
 :::
 
 ### Using `_geo` with CSV
@@ -139,12 +139,12 @@ _geoRadius(lat, lng, distance_in_meters)
 }
 ```
 
-If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, MeiliSearch will return an [`invalid_filter`](/errors) error.
+If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, MeiliSearch will return an [`invalid_filter`](https://docs.meilisearch.com/errors/#invalid_filter) error.
 
 [You can read more about using `filter` in our dedicated guide.](/reference/features/filtering_and_faceted_search.md#using-filters)
 
 ::: warning
-`_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_filter`](/errors) error.
+`_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_filter`](https://docs.meilisearch.com/errors/#invalid_filter) error.
 :::
 
 ### Examples
@@ -236,12 +236,12 @@ The following sorting rule orders results according to how close they are to the
 }
 ```
 
-If either `lat` or `lng` is invalid or missing, MeiliSearch will return an [`invalid_sort`](/errors) error. An error will also be thrown if you fail to indicate a sorting order.
+If either `lat` or `lng` is invalid or missing, MeiliSearch will return an [`invalid_sort`](https://docs.meilisearch.com/errors/#invalid_sort) error. An error will also be thrown if you fail to indicate a sorting order.
 
 [You can read more about sorting in our dedicated guide.](/reference/features/sorting.md#sorting-results-at-search-time)
 
 ::: warning
-`_geo`, `_geoDistance`, and `_geoRadius` are not valid `sort` values. Trying to use any of them with the `sort` search parameter will result in an [`invalid_sort`](/errors) error.
+`_geo`, `_geoDistance`, and `_geoRadius` are not valid `sort` values. Trying to use any of them with the `sort` search parameter will result in an [`invalid_sort`](https://docs.meilisearch.com/errors/#invalid_sort) error.
 :::
 
 ### Examples

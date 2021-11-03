@@ -15,7 +15,7 @@ errors:
   - code: missing_primary_key
     description: "All documents must be identified with a unique key. MeiliSearch will try to infer the document field to use it as a primary key. If it can't infer it, the primary key must be specified manually, and this error is returned. See  our [guide on primary keys](https://docs.meilisearch.com/learn/core_concepts/documents.html#structure)."
   - code: primary_key_inference_failed 
-    description: "The provided document does not contain any fields with the substring `id`. [Manually designate the primary key](https://docs.meilisearch.com/learn/core_concepts/documents.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference."
+    description: "The first provided document contains no fields with the substring `id`. [Manually designate the primary key](https://docs.meilisearch.com/learn/core_concepts/documents.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key."
   - code: primary_key_already_present
     description: "This error is thrown when trying to modify the primary key of an index, when it has been already set. See [guide on primary keys](https://docs.meilisearch.com/learn/core_concepts/documents.html#structure)."
   - code: document_fields_limit_reached
