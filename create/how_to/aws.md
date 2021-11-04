@@ -15,7 +15,7 @@ The following guide will walk you through every step to deploy MeiliSearch in an
 
 After logging into your [AWS Console](https://aws.amazon.com/console), navigate to the **Compute** service. Then go to **EC2**, and finally open your **Instances** console.
 
-![Launch an instance from AWS console](/aws/01.launch-instances.png)
+![Launching an instance from AWS console](/aws/01.launch-instances.png)
 
 In the top-right corner, click on the **Launch instances** button to start the process of configuring your MeiliSearch instance.
 
@@ -23,7 +23,7 @@ In the top-right corner, click on the **Launch instances** button to start the p
 
 You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the searchbar and select the **Community AMIs** tab on the left sidebar.
 
-![Choose MeiliSearch AMI from Community AMIs](/aws/02.select-ami.png)
+![Choosing MeiliSearch AMI from Community AMIs](/aws/02.select-ami.png)
 
 Click on **Select** (right side of the screen) to confirm your choice.
 
@@ -31,7 +31,7 @@ Click on **Select** (right side of the screen) to confirm your choice.
 
 Select the specifications of the server you want MeiliSearch to run on.
 
-![Size and specs](/aws/03.size-and-specs.png)
+![Selecting the size and specs of the server](/aws/03.size-and-specs.png)
 
 We recommend prioritizing memory allocation for better MeiliSearch performance.
 
@@ -53,7 +53,7 @@ Simply click on **Next: Add Storage** to keep going.
 
 Choose the storage **device** and **size** for your MeiliSearch instance.
 
-![Storage](/aws/05.storage.png)
+![Choosing the storage device and size](/aws/05.storage.png)
 
 The amount of storage space required can [vary drastically](/reference/under_the_hood/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).
 
@@ -63,7 +63,7 @@ When you're ready, click on **Next: Add Tags** to continue.
 
 Tags are used to identify your resources in AWS. **They are not required by MeiliSearch**.
 
-![Tags](/aws/06.tags.png)
+![Add Tags step](/aws/06.tags.png)
 
 Click on **Next: Configure Security Groups**.
 
@@ -74,7 +74,7 @@ For your MeiliSearch instance to communicate with the outside world, it is very 
 - Click on **Add rule** and select **HTTP** from the drop-down menu. This will open the HTTP port (80).
 - Click on **Add rule** and select **HTTPS** from the drop-down menu. This will open the HTTPS port (443).
 
-![Security Groups: Networking and connectivity](/aws/07.security.png)
+![Adding HTTP rules to the instance](/aws/07.security.png)
 
 By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP adresses that are allowed to request your MeiliSearch instance, go to the **Source** column and select the **Custom** option.
 
@@ -88,7 +88,7 @@ Once you have reviewed your instance configuration, there is one last step befor
 
 Click on **Launch** and a pop-up window will ask you to select a **key pair**. This key pair is very important as it will be your private key to access the instance via SSH, which is required to [configure your MeiliSearch instance in a production environment](#part-2-configure-production-settings).
 
-![Key Pair](/aws/08.key-pair.png)
+![Selecting the key pair](/aws/08.key-pair.png)
 
 If you have an existing Key Pair, you can use that. Otherwise, select the option **Create a new key pair** and give it a name. Then, click on **Download Key Pair** and store this file somewhere safe.
 
@@ -98,11 +98,11 @@ Once you've downloaded your key pair (and only then), click on **Launch Instance
 
 Your instance may take a minute or two to get up and running (see the **Instance state** column).
 
-![Launch](/aws/09.launch.png)
+![Launching the instance](/aws/09.launch.png)
 
 Once the instance is ready, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS**. You should see the MeiliSearch [web interface](/reference/features/web_interface.md).
 
-![Enjoy](/aws/10.enjoy.png)
+![The MeiliSearch web interface](/aws/10.enjoy.png)
 
 Your MeiliSearch instance is now ready to use!
 
@@ -120,7 +120,7 @@ Configuring your MeiliSearch instance in a production environment is not just st
 
 If you want to use your own domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, **you can skip this step**.
 
-![Domain to  MeiliSearch](/aws/11.domain.png)
+![Domain to MeiliSearch](/aws/11.domain.png)
 
 Your domain name should now be linked to your MeiliSearch instance. Run a health check to verify that your instance is running and your DNS is well configured:
 

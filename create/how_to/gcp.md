@@ -14,11 +14,11 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 
 - Navigate to `Compute Engine` => `Images`.
 
-![Compute Engine - Images](/gcp/01.compute-engine.png)
+![Navigating to Images](/gcp/01.compute-engine.png)
 
 - Click on `[+] CREATE IMAGE`.
 
-![Fill in image info](/gcp/02.image-info.png)
+![Filling in Create Image info](/gcp/02.image-info.png)
 
 - Give it a name (`meilisearch-example`).
 
@@ -36,13 +36,13 @@ gs://meilisearch-image/meilisearch-v0.23.1-debian-10.vmdk
 
 - Click on `Create`. You may have to wait up to 6 minutes while the MeiliSearch custom image imports to your account.
 
-![Wait for the image to finish importing](/gcp/03.import-image.png)
+![Waiting for the image to finish importing](/gcp/03.import-image.png)
 
 ### 2. Create a new GCP Compute Engine instance from the imported image
 
 - Open the tab `Images` and click on the name of the image that you just imported, and click on the `[+] Create instance` button.
 
-![Create instance](/gcp/04.create-instance.png)
+![Creating instance](/gcp/04.create-instance.png)
 
 - Give your instance a name
 

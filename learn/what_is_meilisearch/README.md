@@ -12,9 +12,9 @@ Our solution delivers an **instant search experience** including **typo handling
 
 ## Demo
 
-![crates.io demo gif](/crates-io-demo.gif)
+![Search bar updating results](/crates-io-demo.gif)
 
-Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)
+Meilisearch helps the Rust community find crates on [crates.meilisearch.com] )https://crates.meilisearch.com).
 
 ## Features
 
@@ -51,4 +51,4 @@ Instead of showing you examples, why not just invite you to test MeiliSearch int
 
 There's no need to write a single line of front-end code. All you need to do is follow [this guide](/reference/features/web_interface.md) to give the search engine a try!
 
-![web interface](/web-interface.png)
+![MeiliSearch web interface](/web-interface.png)

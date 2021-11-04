@@ -4,6 +4,8 @@ You might have noticed the search bar in this documentation.
 
 ![MeiliSearch docs search bar demo](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
 
+MeiliSearch Documentation's search bar.
+
 And you are probably wanting the same for your own documentation!
 
 This tutorial will guide you through the steps of building a relevant and powerful search bar for your documentation 🚀
@@ -131,6 +133,7 @@ If your documentation is not a VuePress application, you can directly go to [thi
 If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the MeiliSearch documentation.
 
 ![VuePress plugin example](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
+*Search bar using the Vuepress plugin.*
 
 In your VuePress project:
 
