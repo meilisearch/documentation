@@ -34,6 +34,12 @@ Get stats of an index.
 }
 ```
 
+### Field distribution
+
+The `fieldDistribution` object is returned when you call the stats route. In the above code sample, it shows every field in the `movies` index along with the total number of documents in `movies` that contain that field.
+
+`fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.  
+
 ## Get stats of all indexes
 
 <RouteHighlighter method="GET" route="/stats"/>
@@ -78,3 +84,9 @@ Get stats of all indexes.
   }
 }
 ```
+
+### Field distribution
+
+The `fieldDistribution` object is returned when you call the stats route. In the above code sample, it shows every field in the `movies` and `rangemovies` indexes along with the total number of documents in the database that contain that field.
+
+`fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.  
