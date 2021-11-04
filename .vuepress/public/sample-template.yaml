@@ -17,7 +17,6 @@ delete_one_document_1: |-
 delete_documents_1: |-
 search_post_1: |-
 get_update_1: |-
-getting_started_get_update: |-
 get_all_updates_1: |-
 get_keys_1: |-
 get_settings_1: |-
@@ -74,6 +73,7 @@ documents_guide_add_movie_1: |-
 search_guide_1: |-
 search_guide_2: |-
 getting_started_add_documents_md: |-
+getting_started_get_update: |-
 getting_started_search_md: |-
 faceted_search_update_settings_1: |-
 faceted_search_filter_1: |-
