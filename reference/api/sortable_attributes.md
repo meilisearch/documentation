@@ -2,9 +2,13 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-Attributes that can be used together with the [`sort` search parameter](/reference/features/search_parameters.md#sort). [You can learn more about sorting in our dedicated guide.](/reference/features/sorting.md)
-
 Sortable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
+
+Attributes that can be used together with the [`sort` search parameter](/reference/features/search_parameters.md#sort). To learn more about sortable attributes, refer to our [dedicated guide](/reference/features/sorting.md)
+
+::: warning
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get sortable attributes
 
