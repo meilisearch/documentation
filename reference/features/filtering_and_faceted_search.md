@@ -264,7 +264,7 @@ Like any other filter, attributes you want to use as facets must be added to the
 Once they have been configured, you can search for facets with the `filter` search parameter.
 
 :::warning
-Please note that **synonyms don't work for facets.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
+Please note that **synonyms don't apply to facets.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
 :::
 
 #### Example
