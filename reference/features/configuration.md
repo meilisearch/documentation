@@ -152,19 +152,9 @@ If no master key is provided in a `development` environment, all routes will be 
 
 Deactivates MeiliSearch's built-in telemetry when set to `true`.
 
-MeiliSearch collects the following data from all instances that do not explicitly opt-out:
+MeiliSearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving MeiliSearch, and can be [deleted at any time](/learn/what_is_meilisearch/telemetry.md#how-to-delete-all-collected-data).
 
-- Application version
-- Environment (development or production)
-- Number of days instance has been active since creation
-- Database size
-- Last update time
-- Number of updates
-- Number of documents per index
-
-All collected data is used solely for the purpose of improving MeiliSearch.
-
-[You can read more about our policy on data collection in our telemetry page.](/learn/what_is_meilisearch/telemetry.md)
+[Read more about our policy on data collection](/learn/what_is_meilisearch/telemetry.md), or take a look at [the comprehensive list of all datapoints we collect](/learn/what_is_meilisearch/telemetry.md#exhaustive-list-of-all-collected-data).
 
 ### Dumps destination
 
