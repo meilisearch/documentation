@@ -111,7 +111,7 @@ This list is liable to change with every new version of MeiliSearch. It's not be
 | `system.ram_size`                       | Total RAM capacity. Expressed in `Kb`                                                       | 16777216
 | `system.disk_size`                      | Total capacity of the largest disk. Expressed in `Bytes`                                       | 1048576000
 | `system.server_prodiver`                | Users can tell us on which provider MeiliSearch is hosted by filling the `MEILI_SERVER_PROVIDER` env var. This is also filled by our cloud deploy scripts, e.g. [GCP cloud-config.yaml](https://github.com/meilisearch/cloud-scripts/blob/56a7c2630c1a508e5ad0c0ba1d8cfeb8d2fa9ae0/scripts/providers/gcp/cloud-config.yaml#L33) | gcp
-| `stats.database_size`                   | Database size. Expressed in `Kb`                                                            | 2621440
+| `stats.database_size`                   | Database size. Expressed in `Bytes`                                                            | 2621440
 | `stats.indexes_number`                  | Number of indexes                                                                           | 2
 | `start_since_days`                | Number of days since instance was launched                                                  | 365
 | `user_agent`                            | User-agent header encountered during API calls                                              | ["MeiliSearch Ruby (2.1)", "Ruby (3.0)"]
