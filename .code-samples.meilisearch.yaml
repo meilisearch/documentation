@@ -74,6 +74,9 @@ search_get_1: |-
 get_update_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/updates/1'
+get_update_2: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/updates/0' 
 get_all_updates_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/updates'
