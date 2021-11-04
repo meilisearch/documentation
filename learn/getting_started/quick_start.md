@@ -83,7 +83,7 @@ See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md)
 
 Before you start querying, we recommend that you check the status of your index. You can do that using:
 
-<CodeSamples id="get_update_2" />
+<CodeSamples id="getting_started_get_update" />
 
 Once the update shows `processed`, you can start searching.
 
