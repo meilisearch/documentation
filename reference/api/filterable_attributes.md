@@ -2,9 +2,13 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-Attributes that can be used as filters for filtering and faceted search. [You can learn more about filtering and faceted search in our dedicated guide.](/reference/features/filtering_and_faceted_search.md)
-
 Filterable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
+
+Attributes that can be used as filters for filtering and faceted search. To learn more about filterable attributes, refer to our [dedicated guide](/reference/features/filtering_and_faceted_search.md).
+
+::: warning
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get filterable attributes
 

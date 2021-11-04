@@ -6,11 +6,11 @@ _Child route of the [settings route](/reference/api/settings.md)._
 
 Distinct attribute can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-::: note
+To learn more about distinct attributes, refer to our [dedicated guide](/reference/features/settings.md#distinct-attribute).
+
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
-
-[Learn more about distinct attribute](/reference/features/settings.md#distinct-attribute).
 
 ## Get distinct attribute
 

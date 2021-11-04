@@ -6,9 +6,9 @@ Ranking rules are built-in rules that allow you to **customize the relevancy of 
 
 Ranking rules can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-[Learn more about ranking rules](/learn/core_concepts/relevancy.md).
+To learn more about ranking rules, refer to our [dedicated guide](/learn/core_concepts/relevancy.md).
 
-::: note
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
