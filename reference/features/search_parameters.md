@@ -303,9 +303,7 @@ Highlights matching query terms in the specified attributes by enclosing them in
 
 When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-Parameter values must be given as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
-
-Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](/reference/features/search_parameters.md#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
+You can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](/reference/features/search_parameters.md#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
 
 ::: tip
 It is not possible to change the `<em>` tag or its attributes.
