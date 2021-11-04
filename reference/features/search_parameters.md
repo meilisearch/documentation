@@ -303,25 +303,25 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 **Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
-Highlights matching query terms in the given attributes. When this parameter is set, the `_formatted` object is added to the response for each document, within which you can find the highlighted text.
+Highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` only works on values of the following types: string, number, array, object.
 
-Values can be supplied as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
+When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+You can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](/reference/features/search_parameters.md#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
 
 ::: tip
-The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. Neither this tag nor this behavior can be modified.
+It is not possible to change the `<em>` tag or its attributes.
 
-If a different type of highlighting is desired, we recommend [the `matches` parameter](#matches), which provides much finer control over the output.
+If you need finer control over the formatted output, we recommend using [the `matches` search parameter](#matches).
 :::
 
 ### Example
 
-If you wanted to highlight query matches that appear within the `overview` attribute:
+The following query highlights matches present in the `overview` attribute:
 
 <CodeSamples id="search_parameter_guide_highlight_1" />
 
-You would get the following response with the **highlighted version in the `_formatted` object**:
+The highlighted version of the text would then be found in the `_formatted` object included in each returned document:
 
 ```json
 {
@@ -334,7 +334,7 @@ You would get the following response with the **highlighted version in the `_for
     "id": "50393",
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>Shifu</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>Shifu</em> and Mr. Ping.",
+    "overview": "The <em>Winter Feast</em> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <em>Winter Feast</em> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
     "release_date": 1290729600
   }
 }
