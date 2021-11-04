@@ -104,11 +104,12 @@ The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-i
 
 #### Creating filter expressions with strings
 
-String expressions combine conditions using three logical connectives—`AND`, `OR` and `NOT`— and parentheses:
+String expressions combine conditions using the following filter operators and parentheses:
 
 - `NOT` only returns documents that do not satisfy a condition : `NOT genres = horror`
 - `AND` operates by connecting two conditions and only returns documents that satisfy both of them: `genres = horror AND director = 'Jordan Peele'`
 - `OR` connects two conditions and returns results that satisfy at least one of them: `genres = horror OR genres = comedy`
+- `TO` is equivalent to `>= AND <=`. The expression `release_date 795484800 TO 972129600` translates to `release_date >= 795484800 AND release_date <= 972129600`
 
 ::: tip
 String expressions are read left to right. `NOT` takes precedence over `AND` and `AND` takes precedence over `OR`. You can use parentheses to ensure expressions are correctly parsed.
