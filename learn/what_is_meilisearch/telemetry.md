@@ -108,7 +108,7 @@ This list is liable to change with every new version of MeiliSearch. It's not be
 | `system.distribution`                   | Distribution on which MeiliSearch is launched                                               | Arch Linux
 | `system.kernel_version`                 | Kernel version on which MeiliSearch is launched                                             | 5.14.10
 | `system.cores`                          | Number of cores                                                                             | 24
-| `system.ram_size`                       | Total RAM capacity. Expressed in `Kb`                                                       | 16777216
+| `system.ram_size`                       | Total RAM capacity. Expressed in `KB`                                                       | 16777216
 | `system.disk_size`                      | Total capacity of the largest disk. Expressed in `Bytes`                                       | 1048576000
 | `system.server_prodiver`                | Users can tell us on which provider MeiliSearch is hosted by filling the `MEILI_SERVER_PROVIDER` env var. This is also filled by our cloud deploy scripts, e.g. [GCP cloud-config.yaml](https://github.com/meilisearch/cloud-scripts/blob/56a7c2630c1a508e5ad0c0ba1d8cfeb8d2fa9ae0/scripts/providers/gcp/cloud-config.yaml#L33) | gcp
 | `stats.database_size`                   | Database size. Expressed in `Bytes`                                                            | 2621440
