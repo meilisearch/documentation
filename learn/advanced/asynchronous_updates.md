@@ -61,7 +61,7 @@ Updates marked as `processed` return additional fields:
 - `duration`: the number of seconds taken to complete the operation
 - `processedAt`: the date when the operation was processed
 
-Finally, if an update fails due to an [error](https://docs.meilisearch.com/errors/), all error fields will be appended to the response.
+Finally, if an update fails due to an error, all error fields will be appended to the response.
 
 ### Update `status`
 

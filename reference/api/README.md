@@ -64,14 +64,14 @@ Response body:
 
 ```json
 {
-  "message": "Index movies not found",
-  "errorCode": "index_not_found",
-  "errorType": "invalid_request_error",
-  "errorLink": "https://docs.meilisearch.com/errors#index_not_found"
+  "message": "Index `movies` not found.",
+  "code": "index_not_found",
+  "type": "invalid_request",
+  "link": "https://docs.meilisearch.com/errors#index_not_found"
 }
 ```
 
-If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `errorCode` values and descriptions.
+If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `code` values and descriptions.
 
 ## Asynchronous updates
 
