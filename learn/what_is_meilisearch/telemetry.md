@@ -36,7 +36,7 @@ We also need to prove that people are actually using MeiliSearch. Usage metrics 
 
 ## Why should you trust us?
 
-Don't trust us—hold us accountable. We feel that it is understandable, and in fact wise, to be distrustful of tech companies when it comes to your private data. That is why we attempt to maintain [complete transparency about our data collection](#exhaustive-list-of-all-collected-data), provide an [opt-out](#how-to-disable-data-collection), and enable users to [request the deletion of all their collected data](#how-to-delete-all-collected-data) at any time. In the absence of global data protection laws, we believe that this is the only ethical way to approach data collection.
+**Don't trust us—hold us accountable.** We feel that it is understandable, and in fact wise, to be distrustful of tech companies when it comes to your private data. That is why we attempt to maintain [complete transparency about our data collection](#exhaustive-list-of-all-collected-data), provide an [opt-out](#how-to-disable-data-collection), and enable users to [request the deletion of all their collected data](#how-to-delete-all-collected-data) at any time. In the absence of global data protection laws, we believe that this is the only ethical way to approach data collection.
 
 No company is perfect. If you ever feel that we are being anything less than 100% transparent or collecting data that is infringing on your personal privacy, please let us know by emailing our dedicated account: [privacy@meilisearch.com](mailto:privacy@meilisearch.com). Similarly, if you discover a data rights initiative or data protection tool that you think is relevant to us, please share it. We are passionate about this subject and take it very seriously.
 
