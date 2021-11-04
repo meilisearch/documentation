@@ -6,9 +6,9 @@ The stop-words route lets you add a list of words that will be ignored in search
 
 Stop-words can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-[Learn more about stop words](/reference/features/stop_words.md)
+To learn more about stop words, refer to our [dedicated guide](/reference/features/stop_words.md).
 
-::: note
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 

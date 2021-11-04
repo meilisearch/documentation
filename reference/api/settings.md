@@ -15,9 +15,9 @@ These are the reference pages for the dedicated routes:
 - [Stop-words](/reference/api/stop_words.md)
 - [Synonyms](/reference/api/synonyms.md)
 
-[Learn more about the settings in this guide.](/reference/features/settings.md)
+To learn more about settings, refer to our [dedicated guide.](/reference/features/settings.md)
 
-::: note
+::: warning
 When you update a setting, you overwrite its default value. Use the `DELETE` route to reset any setting to its original value.
 :::
 

@@ -35,6 +35,11 @@
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/main/.code-samples.meilisearch.yaml"
   },
   {
+    "language": "c#",
+    "label": "C#",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dotnet/main/.code-samples.meilisearch.yaml"
+  },
+  {
     "language": "rust",
     "label": "Rust",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-rust/main/.code-samples.meilisearch.yaml"
