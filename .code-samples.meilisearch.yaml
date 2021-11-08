@@ -413,9 +413,6 @@ getting_started_add_documents_md: |-
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
   ```
-getting_started_get_update: |-
-  curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates/0' 
 getting_started_search_md: |-
   ```bash
   curl \
