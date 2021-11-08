@@ -1,6 +1,16 @@
 # Stats
 
-`Stats` gives extended information and metrics about indexes and the MeiliSearch database.
+`Stats` gives extended information and metrics about indexes and the MeiliSearch database. It returns the following details:
+
+### Number of documents
+
+### Is indexing
+
+### Field distribution
+
+The `fieldDistribution` object shows every field in the individual index or the entire database along with the total number of documents in the index that contain that field.
+
+`fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, **if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.**  
 
 ## Get stat of an index
 
@@ -34,11 +44,7 @@ Get stats of an index.
 }
 ```
 
-### Field distribution
-
-The `fieldDistribution` object is returned when you call the stats route. In the above code sample, it shows every field in the `movies` index along with the total number of documents in `movies` that contain that field.
-
-`fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.  
+ In the above code sample, `fieldDistribution` shows every field in the `movies` index along with the total number of documents in `movies` that contain that field.
 
 ## Get stats of all indexes
 
@@ -85,8 +91,4 @@ Get stats of all indexes.
 }
 ```
 
-### Field distribution
-
-The `fieldDistribution` object is returned when you call the stats route. In the above code sample, it shows every field in the `movies` and `rangemovies` indexes along with the total number of documents in the database that contain that field.
-
-`fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.  
+In the above code sample, `fieldDistribution` shows every field in the `movies` and `rangemovies` indexes along with the total number of documents in the database that contain that field.
