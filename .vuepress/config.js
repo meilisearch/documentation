@@ -81,7 +81,7 @@ module.exports = {
           children: [
             '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
-            '/learn/advanced/updating.md'
+            '/learn/advanced/updating.md',
           ],
         },
         {
