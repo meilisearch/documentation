@@ -56,7 +56,7 @@ For example, with the following documents, you only need to put `title` and `aut
 
 In some cases, MeiliSearch can be stopped by the OS. Most of these crashes happen during indexation and are a result of a machine running out of RAM. This happens when your computer does not have enough memory to process your dataset.
 
-The core team is aware of these issues. We are sorry for this and we are doing our best to constantly fix these problems.
+The core team is aware of these issues. We are sorry for this and we are doing our best to fix these problems.
 
 We recommend:
 
