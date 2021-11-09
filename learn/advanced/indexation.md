@@ -46,7 +46,7 @@ For example, with the following documents, you only need to put `title` and `aut
 
 - The first time you push your documents, we recommend pushing your settings first, and then, add your documents. Not the contrary. It will drastically decrease the time of indexation. `searchableAttributes` described in the previous point is part of these settings.
 
-- Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance. Be aware converting your JSON dataset into CSV will not work for array fields.
+- Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance. Be aware converting your JSON dataset into CSV will not work for array and objects fields.
 
 - Do not run MeiliSearch in machine using a HDD (Hard Disk Drive). Most of the recent cloud providers do not offer this kind of service anymore, but it can still happen.
 
