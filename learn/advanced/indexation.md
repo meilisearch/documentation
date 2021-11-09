@@ -14,7 +14,7 @@ Crashes caused by memory overconsumption can still happen in two cases:
 
 1. `sysinfo` may not be able to calculate the amount of available RAM for certain OSes. MeiliSearch still makes an educated estimate and adapts its the behavior based on that, but crashes may still happen in this case. [Follow this link for an exhaustive list of OSes supported by `sysinfo`](https://docs.rs/sysinfo/0.20.0/sysinfo/#supported-oses).
 
-2. Lower-end machines might struggle when processing huge datasets. Splitting your data payload into smaller batches can help in this case. [For more information, consult the FAQ.](/resources/faq.md#why-does-meilisearch-crash-when-i-try-to-add-documents)
+2. Lower-end machines might struggle when processing huge datasets. Splitting your data payload into smaller batches can help in this case. [For more information, consult the section below](/reference/under_the_hood/indexation.md#memory-crashes).
 
 ## Multi-threading
 
@@ -47,6 +47,10 @@ For example, with the following documents, you only need to put `title` and `aut
 - The first time you push your documents, we recommend pushing your settings first, and then, add your documents. Not the contrary. It will drastically decrease the time of indexation. `searchableAttributes` described in the previous point is part of these settings.
 
 - Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance. Be aware converting your JSON dataset into CSV will not work for array fields.
+
+- Do not run MeiliSearch in machine using a HDD (Hard Disk Drive). Most of the recent cloud providers do not offer this kind of service anymore, but it can still happen.
+
+- Ensure your cloud provider does not limit your I/O operations, like AWS does with their [Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html) for example.
 
 ## Memory crashes
 
