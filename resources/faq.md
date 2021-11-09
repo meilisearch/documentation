@@ -209,7 +209,7 @@ The following factors have a great impact on the size of your database (in no pa
 - The number of documents
 - The size of documents
 - The number of searchable fields
-- The number of faceted fields
+- The number of filterable fields
 - The size of each update
 - The number of different words present in the dataset
 
