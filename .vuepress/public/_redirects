@@ -81,4 +81,4 @@
 /reference/features/faceted_search.html              /reference/features/filtering_and_faceted_search.html
 
 #move updating MeiliSearch
-/create/how_to/updating.md)                          /learn/advanced/updating.md 
+/create/how_to/updating.md                           /learn/advanced/updating.md
