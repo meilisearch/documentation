@@ -238,6 +238,10 @@ Configures which attributes will be retrieved in the returned documents.
 
 If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/features/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
 
+::: note
+If a field is not added to `displayedAttributes`, it will not be retrieved on search, even if it is present in the `attributesToRetrieve` parameter.
+:::
+
 ### Example
 
 To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["overview", "title"]`.
