@@ -46,6 +46,10 @@ List the settings.
 
 Update the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
 
+::: note
+Updating `searchableAttributes` does not impact [`fieldDistribution`](/reference/api/stats.md#field-distribution).
+:::
+
 ::: warning
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
 :::

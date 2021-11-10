@@ -2,11 +2,15 @@
 
 `Stats` gives extended information and metrics about indexes and the MeiliSearch database. It returns the following details:
 
-### Number of documents
+#### Number of documents
 
-### Is indexing
+The `numberOfDocuments` field shows the total number of documents in an index.
 
-### Field distribution
+#### Is indexing
+
+The `isIndexing` field returns a Boolean. `true` means the index is indexing. `false` means the index has finished indexing.
+
+#### Field distribution
 
 The `fieldDistribution` object shows every field in the individual index or the entire database along with the total number of documents in the index that contain that field.
 

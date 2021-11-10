@@ -48,6 +48,10 @@ List the settings.
 
 Update the [displayed attributes](/reference/features/settings.md#displayed-attributes) of an index.
 
+::: note
+Updating `displayedAttributes` does not impact [`fieldDistribution`](/reference/api/stats.md#field-distribution).
+:::
+
 #### Path variables
 
 | Variable      | Description   |
