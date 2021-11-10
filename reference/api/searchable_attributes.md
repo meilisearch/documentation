@@ -47,7 +47,7 @@ List the settings.
 Update the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
 
 ::: note
-Updating `searchableAttributes` does not impact [`fieldDistribution`](/reference/api/stats.md#field-distribution).
+Updating `searchableAttributes` does not impact [`fieldDistribution`](/reference/api/stats.md#_3-field-distribution).
 :::
 
 ::: warning
