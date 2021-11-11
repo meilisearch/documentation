@@ -35,9 +35,6 @@ export default {
     }
   },
   computed: {
-    count() {
-      return this.$store.state.count
-    },
     tabsLanguage() {
       return this.$store.state.tabsLanguage
     },
@@ -51,8 +48,11 @@ export default {
     * Storage of the state is done in `./store.js`
     */
     updateLanguage: function (event) {
-      const tabsLanguage = event.target.id.replace('tab-', '')
-      this.$store.commit('changeTabsLanguage', tabsLanguage)
+      const classList = [...event.target.classList] // transform DOMTokenList to Array type to make it iterable.
+      if (classList.includes('el-tabs__item')) { // check if clicked element is a tab
+        const tabsLanguage = event.target.id.replace('tab-', '')
+        this.$store.commit('changeTabsLanguage', tabsLanguage)
+      }
     },
   },
 }

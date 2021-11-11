@@ -1,14 +1,14 @@
 const vuepressmd = require('@vuepress/markdown')()
 
-function codeBlockWrapper(sample, language) {
-  return `\`\`\` ${language}\n${sample}\n\`\`\``
+function codeBlockWrapper(sample, codeBlockLanguage) {
+  return `\`\`\` ${codeBlockLanguage}\n${sample}\n\`\`\``
 }
 
-function renderCodeSample({ sample, sampleId, language }) {
+function renderCodeSample({ sampleBody, sampleId, codeBlockLanguage }) {
   if (!sampleId.match(/.*_md$/)) {
-    sample = codeBlockWrapper(sample, language)
+    sampleBody = codeBlockWrapper(sampleBody, codeBlockLanguage)
   }
-  const htmlRender = vuepressmd.render(sample)
+  const htmlRender = vuepressmd.render(sampleBody)
   return htmlRender.html
 }
 
@@ -21,24 +21,28 @@ module.exports = function (fetchedSamples) {
       ]
     }
   **/
-  return fetchedSamples.reduce((acc, languageSample) => {
-    for (const sampleId in languageSample.samples) {
-      const previousSamples = acc[sampleId] || []
-      if (languageSample.samples[sampleId]) { // if the sample is not empty (""), null, false or undefined it is added
-        acc[sampleId] = [
-          ...previousSamples,
-          {
-            language: languageSample.language, // markdown code block language highlight ex: ```javascript ````
-            label: languageSample.label, // name of the tab ex: curl
-            code: renderCodeSample({
-              sample: languageSample.samples[sampleId],
-              sampleId,
-              language: languageSample.language,
-            }), // code rendered in HTML
-          },
-        ]
-      }
+  return fetchedSamples.reduce((allSamples, sampleSet) => {
+    const { samples, language, label } = sampleSet
+
+    for (const sampleId in samples) {
+      const previousSamples = allSamples[sampleId] || []
+
+      const sampleBody = samples[sampleId] || 'This code sample has not been added yet :('
+      const codeBlockLanguage = samples[sampleId] ? language : ''
+
+      allSamples[sampleId] = [
+        ...previousSamples,
+        {
+          language, // language identifier. Ex: csharp
+          label, // label appearing on the tab
+          code: renderCodeSample({ // render in HTML
+            sampleBody,
+            sampleId,
+            codeBlockLanguage, // code block language ex: ```javascript ````
+          }),
+        },
+      ]
     }
-    return acc
+    return allSamples
   }, {})
 }

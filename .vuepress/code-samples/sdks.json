@@ -35,7 +35,7 @@
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/main/.code-samples.meilisearch.yaml"
   },
   {
-    "language": "c#",
+    "language": "csharp",
     "label": "C#",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dotnet/main/.code-samples.meilisearch.yaml"
   },
