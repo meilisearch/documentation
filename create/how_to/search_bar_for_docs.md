@@ -131,8 +131,7 @@ If your documentation is not a VuePress application, you can directly go to [thi
 
 If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the MeiliSearch documentation.
 
-![VuePress plugin example](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
-*Search bar using the Vuepress plugin.*
+![Search bar using the Vuepress plugin](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
 
 In your VuePress project:
 
@@ -190,6 +189,7 @@ Read more about [MeiliSearch authentication](/reference/features/authentication.
 If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
 
 ![Docxtemplater search bar updating results](/tuto-searchbar-for-docs/docxtemplater-searchbar-demo.gif)
+
 *[Docxtemplater](https://docxtemplater.com/) searchbar demo*
 
 ```html
