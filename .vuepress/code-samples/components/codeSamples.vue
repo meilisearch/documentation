@@ -32,17 +32,28 @@ export default {
   data() {
     return {
       samples: undefined,
+      preferedLanguage: undefined,
     }
   },
   computed: {
     tabsLanguage() {
-      return this.$store.state.tabsLanguage
+      this.resolvePreferedTabsLanguage()
+      return this.preferedLanguage
     },
   },
   created() {
     this.samples = CODE_SAMPLES[this.id]
   },
   methods: {
+    /*
+    * Check if the prefered language found in the store has an existing matching code-sample-id.
+    * If not, defaults to the first language it finds in the list (often bash).
+    */
+    resolvePreferedTabsLanguage: function () {
+      const languages = this.samples.map(sample => sample.language)
+      const storedTabsLanguage = this.$store.state.tabsLanguage
+      this.preferedLanguage = languages.includes(storedTabsLanguage) ? storedTabsLanguage : languages[0]
+    },
     /*
     * Updates the tabs language state with the current active tab language.
     * Storage of the state is done in `./store.js`

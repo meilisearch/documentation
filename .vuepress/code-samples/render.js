@@ -1,12 +1,13 @@
 const vuepressmd = require('@vuepress/markdown')()
 
-function codeBlockWrapper(sample, codeBlockLanguage) {
-  return `\`\`\` ${codeBlockLanguage}\n${sample}\n\`\`\``
+function codeBlockWrapper(sample, language) {
+  // remove if the text is `This code sample has not been added yet :(`
+  return `\`\`\` ${language}\n${sample}\n\`\`\``
 }
 
-function renderCodeSample({ sampleBody, sampleId, codeBlockLanguage }) {
+function renderCodeSample({ sampleBody, sampleId, language }) {
   if (!sampleId.match(/.*_md$/)) {
-    sampleBody = codeBlockWrapper(sampleBody, codeBlockLanguage)
+    sampleBody = codeBlockWrapper(sampleBody, language)
   }
   const htmlRender = vuepressmd.render(sampleBody)
   return htmlRender.html
@@ -25,23 +26,24 @@ module.exports = function (fetchedSamples) {
     const { samples, language, label } = sampleSet
 
     for (const sampleId in samples) {
-      const previousSamples = allSamples[sampleId] || []
+      const sampleBody = samples[sampleId]
 
-      const sampleBody = samples[sampleId] || 'This code sample has not been added yet :('
-      const codeBlockLanguage = samples[sampleId] ? language : ''
+      if (sampleBody) {
+        const previousSamples = allSamples[sampleId] || []
 
-      allSamples[sampleId] = [
-        ...previousSamples,
-        {
-          language, // language identifier. Ex: csharp
-          label, // label appearing on the tab
-          code: renderCodeSample({ // render in HTML
-            sampleBody,
-            sampleId,
-            codeBlockLanguage, // code block language ex: ```javascript ````
-          }),
-        },
-      ]
+        allSamples[sampleId] = [
+          ...previousSamples,
+          {
+            language, // language identifier. Ex: csharp
+            label, // label appearing on the tab
+            code: renderCodeSample({ // render in HTML
+              sampleBody,
+              sampleId,
+              language, // code block language ex: ```javascript ````
+            }),
+          },
+        ]
+      }
     }
     return allSamples
   }, {})
