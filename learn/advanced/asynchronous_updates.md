@@ -109,7 +109,7 @@ Had the update failed, the response would have included an error message:
 {
   "status": "failed",
   "updateId": 0,
-  "type": {
+"type": { "name": "DocumentsAddition" },
     "name": "DocumentsAddition"
   },
   "error": {
