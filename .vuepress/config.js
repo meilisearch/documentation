@@ -93,6 +93,7 @@ module.exports = {
             '/learn/getting_started/installation',
             '/learn/getting_started/quick_start',
             '/learn/getting_started/whats_next',
+            '/learn/getting_started/main_features.md',
           ],
         },
         {
