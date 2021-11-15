@@ -103,17 +103,22 @@ Later, you check the request's status one more time. It was successfully process
 }
 ```
 
-Had the update failed, the response would have included an error message:
+Had the update failed, the response would have included an error object:
 
 ```json
 {
   "status": "failed",
-  "updateId": 1,
+  "updateId": 0,
   "type": { "name": "DocumentsAddition" },
-  "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
-  "duration": 0.000048524,
-  "processedAt": "2019-12-07T21:10:20.511525620Z",
-  "error": "document id is missing"
+  "error": {
+    "message": "The primary key inference process failed because the engine did not find any fields containing `id` substring in their name. If your document identifier does not contain any `id` substring, you can set the primary key of the index.",
+    "code": "primary_key_inference_failed",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#primary_key_inference_failed"
+  },
+  "duration": 0,
+  "enqueuedAt": "2021-11-11T13:31:12.051786Z",
+  "processedAt": "2021-11-11T13:31:12.052899Z"
 }
 ```
 
