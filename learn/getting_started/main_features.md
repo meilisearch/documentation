@@ -1,5 +1,14 @@
 # Main Features
 
+Possible chapters:
+
+- Download and install
+- Add documents
+- Updates
+- Search
+- Configure options / Refine search? (covers some? of the settings the user can modify)
+- Backup
+
 This section will go over some of the main features of MeiliSearch to help you get started.
 
 Once you have everything set up, you can change the default settings .... need a better sentence to summarize the whole thing.
@@ -7,6 +16,9 @@ Once you have everything set up, you can change the default settings .... need a
 - Rename the subheadings and add or remove some of them?
 - Rename the page
 - Does everything need to be on one page?
+- Web interface?
+
+## Search
 
 ## Displayed attributes
 
@@ -18,13 +30,23 @@ MeiliSearch allows you to refine your search using filters. You can use any of t
 
 ## Ranking rules
 
+Should this be part of Search?
+
 ## Searchable attributes
+
+By default, all attribute are searched for matching query words but you can configure the settings to change that.
 
 ## Sortable attributes
 
+You can use any (not any-do we need the details here?) of the document fields for sorting by adding them to the `sortableAttributes`.
+
+Will the countries dataset work here?
+
 ## Geosearch
 
-MeiliSearch allows you to filter and sort results based on their geographic location.
+MeiliSearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field.
+
+Use the countries dataset for this example. 
 
 ## Dumps and snapshots
 
