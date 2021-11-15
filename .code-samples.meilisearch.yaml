@@ -525,7 +525,7 @@ geosearch_guide_filter_settings_1: |-
     -X POST 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '[
-        "_geo",
+        "_geo"
     ]'
 geosearch_guide_filter_usage_1: |-
   curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
