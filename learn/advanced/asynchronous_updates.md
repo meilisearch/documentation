@@ -103,15 +103,13 @@ Later, you check the request's status one more time. It was successfully process
 }
 ```
 
-Had the update failed, the response would have included an error message:
+Had the update failed, the response would have included an error object:
 
 ```json
 {
   "status": "failed",
   "updateId": 0,
-"type": { "name": "DocumentsAddition" },
-    "name": "DocumentsAddition"
-  },
+  "type": { "name": "DocumentsAddition" },
   "error": {
     "message": "The primary key inference process failed because the engine did not find any fields containing `id` substring in their name. If your document identifier does not contain any `id` substring, you can set the primary key of the index.",
     "code": "primary_key_inference_failed",
