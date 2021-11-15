@@ -46,7 +46,7 @@ Will the countries dataset work here?
 
 MeiliSearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field.
 
-Use the countries dataset for this example. 
+Use the countries dataset for this example.
 
 ## Dumps and snapshots
 
