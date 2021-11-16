@@ -32,7 +32,7 @@ If you encounter some performance issues during the indexation we recommend tryi
 
 - **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine.
 
-- **MeiliSearch should not be your main database**. It means you should only insert the documents you want to retrieve using the search, and no more. The more you add documents, the more the indexation and search time will increase.
+4. **MeiliSearch should not be your main database**. By this we mean you should only index documents you want to retrieve when searching. The more documents you add, the longer will indexation and search take.
 
 - By default, all the fields of your documents are considered as "searchable". We strongly recommend changing this by [setting the `searchablaAttributes`](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) with the exhaustive list of fields you want to search in. The less there are fields to index, the more the indexation time will decrease.
 For example, with the following documents, you only need to put `title` and `author` as `searchableAttributes`, because you might not want to perform the search in `id` or `genre` fields.
