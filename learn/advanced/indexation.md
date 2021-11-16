@@ -54,7 +54,7 @@ For example, if indexing the `id` and `genre` fields has little impact on the qu
 
 ## Memory crashes
 
-In some cases, MeiliSearch can be stopped by the OS. Most of these crashes happen during indexation and are a result of a machine running out of RAM. This happens when your computer does not have enough memory to process your dataset.
+In some cases, the OS will interrupt MeiliSearch and stop all its processes. Most of these crashes happen during indexation and are a result of a machine running out of RAM. This means your computer does not have enough memory to process your dataset.
 
 We are aware of this issue and actively trying to resolve it. If you are struggling with memory-related crashes, we recommend:
 
