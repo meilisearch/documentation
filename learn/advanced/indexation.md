@@ -44,7 +44,7 @@ For example, if indexing the `id` and `genre` fields has little impact on the qu
 ]
 ```
 
-- The first time you push your documents, we recommend pushing your settings first, and then, add your documents. Not the contrary. It will drastically decrease the time of indexation. `searchableAttributes` described in the previous point is part of these settings.
+6. When creating a new index, first [configure its settings](/reference/features/settings.md) and only then add your documents. Following this order will significantly reduce indexation time
 
 7. Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance
 
