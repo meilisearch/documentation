@@ -26,7 +26,7 @@ Multi-threading is unfortunately not possible in machines with only one processo
 
 If you encounter some performance issues during the indexation we recommend trying the following points:
 
-- Make sure you are using the latest [stable version of MeiliSearch](https://github.com/meilisearch/MeiliSearch/releases) that might include optimizations regarding the performance.
+1. Make sure you are using the latest [stable version of MeiliSearch](https://github.com/meilisearch/MeiliSearch/releases). Our latest releases often include performance optimizations that can significantly increase indexation speed.
 
 2. Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster MeiliSearch will index new documents**. In general, using a machine with many processor cores will be more effective than increasing RAM.
 
