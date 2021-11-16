@@ -111,6 +111,16 @@ cat your_file.json | jq
 
 :::
 
+## What do the different error types mean?
+
+MeiliSearch has the following types of errors:
+
+| Type            | Description                                                                                       |
+|-----------------|---------------------------------------------------------------------------------------------------|
+| invalid_request | This is due to an error in the user input. It is accompanied by the HTTP code `4xx`. |
+| internal        | This is due to machine or configuration constraints. The most common cause is reaching or exceeding hard limits, such as the size of the disk, the size limit of an index, etc. It is accompanied by the HTTP code `5xx`.  |
+| auth            | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx`. |
+
 ## My document upload failed with the `document id is missing` error.
 
 ::: note TLDR;
@@ -248,11 +258,11 @@ In general, we recommend the former. However, if you need to reduce the size of 
 - [Stop words](/reference/features/stop_words.md) are essential to reducing database size
 - Not all attributes need to be [searchable](/reference/features/field_properties.md#searchable-fields). Avoid indexing unique IDs.
 
-## Why does MeiliSearch send data to Amplitude? Does MeiliSearch track its users?
+## Why does MeiliSearch send data to Segment? Does MeiliSearch track its users?
 
-**MeiliSearch will never track or identify individual users**. That being said, we do use Amplitude to collect anonymous data about user trends and bug reports.
+**MeiliSearch will never track or identify individual users**. That being said, we do use Segment to collect anonymous data about user trends, feature usage, and bugs.
 
-You can read more about what metrics we collect, why we collect them, and how to disable it on our [telemetry page](/learn/what_is_meilisearch/telemetry.md). Transparency is very important to us, so if you feel we are lacking in this area please [open an issue](https://github.com/meilisearch/documentation/issues/new/choose) and let us know! ❤️
+You can read more about what metrics we collect, why we collect them, and how to disable it on our [telemetry page](/learn/what_is_meilisearch/telemetry.md). Issues of transparency and privacy are very important to us, so if you feel we are lacking in this area please [open an issue](https://github.com/meilisearch/documentation/issues/new/choose) or send an email to our dedicated email address: [privacy@meilisearch.com](mailto:privacy@meilisearch.com).
 
 ## Why does MeiliSearch crash when I try to add documents?
 

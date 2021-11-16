@@ -18,9 +18,38 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 ### Maximum words per attribute
 
-**Limitation:** MeiliSearch can index a maximum of __1000 words per attribute__. If an attribute contains more than 1000 words, only the first 1000 words will be indexed and the rest will be silently ignored.
+**Limitation:** MeiliSearch can index a maximum of __65535 positions per attribute__. Any words exceeding the 65535 position limit will be silently ignored.
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
+
+#### Example
+
+Suppose you have three similar queries: `Hello World`, `Hello, World`, and `Hello - World`. Due to how our tokenizer works, each one of them will be processed differently and take up a different number of "positions" in our internal database.
+
+If your query is `Hello World`:
+
+- `Hello` takes the position `0` of the attribute
+- `World` takes the position `1` of the attribute
+
+If your query is `Hello, World`:
+
+- `Hello` takes the position `0` of the attribute
+- `,` takes the position `8` of the attribute
+- `World` takes the position `9` of the attribute
+
+::: note
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](/reference/under_the_hood/datatypes.md#string).
+:::
+
+If your query is `Hello - World`:
+
+- `Hello` takes the position `0` of the attribute
+- `-` takes the position `1` of the attribute
+- `World` takes the position `2` of the attribute
+
+::: note
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/reference/under_the_hood/datatypes.md#string).
+:::
 
 ### Maximum attributes per document
 
