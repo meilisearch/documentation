@@ -34,7 +34,7 @@ If you encounter some performance issues during the indexation we recommend tryi
 
 4. **MeiliSearch should not be your main database**. By this we mean you should only index documents you want to retrieve when searching. The more documents you add, the longer will indexation and search take.
 
-- By default, all the fields of your documents are considered as "searchable". We strongly recommend changing this by [setting the `searchablaAttributes`](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) with the exhaustive list of fields you want to search in. The less there are fields to index, the more the indexation time will decrease.
+5. By default, all the fields of your documents are considered as "searchable". We strongly recommend changing this by [setting the `searchablaAttributes`](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) with the exhaustive list of fields you want to search in. The fewer fields MeiliSearch needs to index, the faster is the indexation process.
 For example, with the following documents, you only need to put `title` and `author` as `searchableAttributes`, because you might not want to perform the search in `id` or `genre` fields.
 
 ```json
