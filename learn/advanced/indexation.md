@@ -28,7 +28,7 @@ If you encounter some performance issues during the indexation we recommend tryi
 
 - Make sure you are using the latest [stable version of MeiliSearch](https://github.com/meilisearch/MeiliSearch/releases) that might include optimizations regarding the performance.
 
-- Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster MeiliSearch will index new documents**. Also increasing the RAM can help, but the best is to use a machine with several cores.
+2. Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster MeiliSearch will index new documents**. In general, using a machine with many processor cores will be more effective than increasing RAM.
 
 - **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine.
 
