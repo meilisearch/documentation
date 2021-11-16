@@ -270,4 +270,4 @@ Crashes that occur when trying to add documents are connected to MeiliSearch's i
 
 ## How can I speed up indexation when adding documents?
 
-Please check out [this whole section](/reference/under_the_hood/indexation.md#speed-up-the-indexation-time) to improve your indexation time.
+Indexation is one of MeiliSearch's most resource-intensive processes. For more information on how to optimize it, take a look at [our dedicated indexation guide](/reference/under_the_hood/indexation.md#speed-up-the-indexation-time).
