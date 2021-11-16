@@ -15,7 +15,7 @@ The following guide will walk you through every step to deploy MeiliSearch in an
 
 After logging into your [AWS Console](https://aws.amazon.com/console), navigate to the **Compute** service. Then go to **EC2**, and finally open your **Instances** console.
 
-![Launching an instance from AWS console](/aws/01.launch-instances.png)
+![AWS instance](/aws/01.launch-instances.png)
 
 In the top-right corner, click on the **Launch instances** button to start the process of configuring your MeiliSearch instance.
 
@@ -23,7 +23,7 @@ In the top-right corner, click on the **Launch instances** button to start the p
 
 You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the searchbar and select the **Community AMIs** tab on the left sidebar.
 
-![Choosing MeiliSearch AMI from Community AMIs](/aws/02.select-ami.png)
+![MeiliSearch AMI](/aws/02.select-ami.png)
 
 Click on **Select** (right side of the screen) to confirm your choice.
 
@@ -31,7 +31,7 @@ Click on **Select** (right side of the screen) to confirm your choice.
 
 Select the specifications of the server you want MeiliSearch to run on.
 
-![Selecting the size and specs of the server](/aws/03.size-and-specs.png)
+![Selecting an instance type](/aws/03.size-and-specs.png)
 
 We recommend prioritizing memory allocation for better MeiliSearch performance.
 
@@ -45,7 +45,7 @@ Once you've made your choice, click on **Next: Configure instance details** to c
 
 Here you can specify [details of your Instance](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html). Since **this section is not required to run MeiliSearch**, we won't cover it in this guide.
 
-![Instance details (optional)](/aws/04.instance-details.png)
+![Configuring instance details](/aws/04.instance-details.png)
 
 Simply click on **Next: Add Storage** to keep going.
 
@@ -53,9 +53,9 @@ Simply click on **Next: Add Storage** to keep going.
 
 Choose the storage **device** and **size** for your MeiliSearch instance.
 
-![Choosing the storage device and size](/aws/05.storage.png)
+![Storage](/aws/05.storage.png)
 
-The amount of storage space required can [vary drastically](/reference/under_the_hood/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).
+The amount of storage space required can [vary drastically](/reference/under_the_hood/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).  We have the **Volume Type** set to **General Purpose SSD (gp2)**.
 
 When you're ready, click on **Next: Add Tags** to continue.
 
@@ -71,12 +71,13 @@ Click on **Next: Configure Security Groups**.
 
 For your MeiliSearch instance to communicate with the outside world, it is very important to allow SSH connections, HTTP, and HTTPS traffic.
 
+- Click on **Add rule** and select **SSH** from the drop-down menu. This will open the SSH port (22).
 - Click on **Add rule** and select **HTTP** from the drop-down menu. This will open the HTTP port (80).
 - Click on **Add rule** and select **HTTPS** from the drop-down menu. This will open the HTTPS port (443).
 
-![Adding HTTP rules to the instance](/aws/07.security.png)
+![Adding SSH and HTTP rules to the instance](/aws/07.security.png)
 
-By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP adresses that are allowed to request your MeiliSearch instance, go to the **Source** column and select the **Custom** option.
+By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP adresses that are allowed to request your MeiliSearch instance, go to the **Source** column and select the **Custom** option. The **Source** is set to **Anywhere** by default.
 
 You can also **use an existing security group**, if preferred.
 
