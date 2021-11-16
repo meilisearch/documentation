@@ -100,7 +100,7 @@ Your instance may take a minute or two to get up and running (see the **Instance
 
 ![Launching the instance](/aws/09.launch.png)
 
-Once the instance is ready, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS**. You should see the MeiliSearch [web interface](/reference/features/web_interface.md).
+Once the **Instance state** is **Running**, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS** displayed in your AWS instances dashboard. You should see the MeiliSearch [web interface](/reference/features/web_interface.md).
 
 ![The MeiliSearch web interface](/aws/10.enjoy.png)
 
