@@ -59,6 +59,6 @@ In some cases, MeiliSearch can be stopped by the OS. Most of these crashes happe
 We are aware of this issue and actively trying to resolve it. If you are struggling with memory-related crashes, we recommend:
 
 
-- adding new documents in smaller batches.
-- increasing your machine's RAM.
-- following the points described in the previous section related to the indexation speed up, except increasing the size of the batches of course (3th point).
+- Adding new documents in smaller batches
+- Increasing your machine's RAM
+- Improving indexation performance as described in the previous section. Notable exception: increasing payload size, as recommended on item #3, is not advised if you are experiencing memory-related issues
