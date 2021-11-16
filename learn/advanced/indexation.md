@@ -48,7 +48,7 @@ For example, if indexing the `id` and `genre` fields has little impact on the qu
 
 7. Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance
 
-- Do not run MeiliSearch in machine using a HDD (Hard Disk Drive). Most of the recent cloud providers do not offer this kind of service anymore, but it can still happen.
+8. Always prefer machines using SSDs (Solid State Drives). We strongly recommend not running MeiliSearch in HDDs (Hard Disk Drives).
 
 - Ensure your cloud provider does not limit your I/O operations, like AWS does with their [Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html) for example.
 
