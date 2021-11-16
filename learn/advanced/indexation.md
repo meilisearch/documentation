@@ -58,7 +58,6 @@ In some cases, MeiliSearch can be stopped by the OS. Most of these crashes happe
 
 We are aware of this issue and actively trying to resolve it. If you are struggling with memory-related crashes, we recommend:
 
-We recommend:
 
 - adding new documents in smaller batches.
 - increasing your machine's RAM.
