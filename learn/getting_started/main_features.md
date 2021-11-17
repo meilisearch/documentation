@@ -171,6 +171,12 @@ MeiliSearch allows you to filter and sort results based on their geographic loca
 
 Use the countries dataset for this example.
 
+## Stop words and synonyms
+
+MeiliSearch allows you to create a list of words that is ignored in your search queries. Adding a stop words list improves the speed, and relevancy of your search.
+
+A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant.
+
 ## Dumps and snapshots
 
 - I copied this section mostly from Data backup: snapshots vs. dumps under Advanced topics. I think this section gives enough detail for an introduction. If we keep this here, do we get rid of it from Advanced topics?
