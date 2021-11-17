@@ -17,11 +17,20 @@ MeiliSearch 101:
 - Backup
 - Authentication (do we need to talk about this at this stage?)
 
+Questions:
+
+1. Do we add warnings and notes at this stage?
+2. Do we add links to detailed explanations at every instance? Or do we add them only once at the bottom of each section?
+3. What should the feature examples look like? Do we start with a presenting a use case? Suppose you want to blah blah and demonstrate how MeiliSearch does it? Add a code sample
+4. Do we want a section at the start briefly explaining MeiliSearch terms and any other terms? Documents, indexes, attributes, any other terms that used getting started?
+
 This section will go over some of the main features of MeiliSearch to help you get started.
 
 Once you have everything set up, you can change the default settings .... need a better sentence to summarize the whole thing.
 
 ## Download and install
+
+- Do we need to include all the tabs from Download and launch here?
 
 First of all, let's download and run MeiliSearch.
 
@@ -76,6 +85,7 @@ Here is a list of [all the options and how to use them](/reference/features/conf
 ## Search
 
 - mention search parameters?
+- mention placeholder and phrase search?
 
 Before you start querying, we recommend that you check the status of your index. You can do that using:
 
