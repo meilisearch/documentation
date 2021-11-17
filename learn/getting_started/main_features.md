@@ -121,6 +121,10 @@ MeiliSearch **response**:
 }
 ```
 
+## Web interface
+
+## Integrate your project
+
 ## Distinct attributes
 
 MeiliSearch lets you set one field per index as the distinct attribute. The distinct attribute will always be unique among returned documents. This means there will never be more than one occurrence of the same value in the distinct attribute field among the returned documents.
@@ -128,6 +132,8 @@ MeiliSearch lets you set one field per index as the distinct attribute. The dist
 ## Settings
 
 ### Displayed attributes
+
+- Can we use the web interface to show how the different attributes work? Adding gifs or images for demonstration?
 
 By default, all attributes are displayed in each matching document but you can update the settings to change that.
 
