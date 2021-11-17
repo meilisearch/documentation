@@ -130,10 +130,9 @@ The body is composed of a **JSON array** of documents.
 
 ### Example
 
-\
 Adding a document without specifying the primary key:
 
-<CodeSamples id="add_or_replace_documents_with_primaryKey_1" />
+<CodeSamples id="add_or_replace_documents_1" />
 
 Adding the same document but with `reference_number` as primary key:
 
@@ -188,14 +187,15 @@ The body is composed of a **JSON array** of documents.
 
 ### Example
 
-<CodeSamples id="add_or_update_documents_1" />
+<CodeSamples id="add_or_update_documents_with_primaryKey_1" />
 
 Adding the document for the first time with `reference_number` as primary key.
 
 <CodeSamples id="add_or_update_documents_1" />
 
-This document is an update of the document found in [add or replace document](/reference/api/documents.md#add-or-replace-documents).
-The documents are matched because they have the same `primaryKey` value `reference_number: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
+Updating the document added in the previous example.
+
+The documents are matched because they have the same [document id](learn/core_concepts/documents.html#document-id): `"reference_number": 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
 
