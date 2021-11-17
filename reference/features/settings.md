@@ -1,6 +1,6 @@
 # Settings
 
-This page describes all the **settings** available in MeiliSearch and how to **configure** them.
+This page describes the **index-level settings** available in MeiliSearch and how to customize them.
 
 | Variable                                                                          | Description                                                                      | Default value                                                                               |
 |-----------------------------------------------------------------------------------|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
