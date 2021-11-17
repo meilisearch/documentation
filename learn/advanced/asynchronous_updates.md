@@ -22,21 +22,6 @@ Currently, these are MeiliSearch's asynchronous operations:
 3. Once the update has been finalized, MeiliSearch marks it as `processed`, if it was successful, or `failed`, in case the update failed
 4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/updates.md#get-all-update-status)
 
-<mermaid>
-sequenceDiagram
-  participant C as Client
-  participant Q as Queue
-  participant M as MeiliSearch
-  C->>Q: enqueue first update
-  Q-->>C: return updateId: 1
-  Q-->>+M: begin update 1
-  C->>Q: enqueue second update
-  Q-->>C: return updateId: 2
-  M->>-Q: dequeue update 1
-  Q-->>+M: begin update 2
-  M->>-Q: dequeue update 2
-</mermaid>
-
 ### Dumps
 
 While dumps and updates are both asynchronous processes, they use separate queues and behave differently. For instance, creating a new dump will freeze the update queue until the dump has been generated.
