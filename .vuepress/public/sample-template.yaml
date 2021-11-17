@@ -11,7 +11,9 @@ delete_an_index_1: |-
 get_one_document_1: |-
 get_documents_1: |-
 add_or_replace_documents_1: |-
+add_or_replace_documents_with_primaryKey_1: |-
 add_or_update_documents_1: |-
+add_or_update_documents_with_primaryKey_1: |-
 delete_all_documents_1: |-
 delete_one_document_1: |-
 delete_documents_1: |-
