@@ -195,7 +195,7 @@ Adding the document for the first time with `reference_number` as primary key.
 
 Updating the document added in the previous example.
 
-The documents are matched because they have the same [document id](learn/core_concepts/documents.html#document-id): `"reference_number": 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
+The documents are matched because they have the same [document id](/learn/core_concepts/documents.md#document-id): `"reference_number": 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
 
