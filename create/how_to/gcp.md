@@ -29,7 +29,7 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 - Copy the following URI in the `Cloud Storage file` field.
 
 ```
-gs://meilisearch-image/meilisearch-v0.23.1-debian-10.vmdk
+gs://meilisearch-image/meilisearch-v0.24.0-debian-10.vmdk
 ```
 
 - **The other fields are not required.**
