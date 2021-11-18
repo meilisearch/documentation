@@ -201,3 +201,7 @@ For a more detailed look at this subject, see our reference page for [the search
 ```
 
 With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `description` or `release_date`. If you searched "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.
+
+:::note
+The `attribute` rule's position in [`rankingRules`](#default-order) determines how the results are sorted. Meaning, **if `attribute` is at the bottom of the ranking rules list, it will have almost no impact on your search results.**
+:::
