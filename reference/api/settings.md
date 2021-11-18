@@ -139,7 +139,7 @@ If the provided index does not exist, it will be created.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -184,7 +184,7 @@ All settings will be reset to their default value.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",

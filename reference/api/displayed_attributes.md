@@ -68,7 +68,7 @@ An array of strings that contains attributes of an index to display.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -102,7 +102,7 @@ All attributes found in the documents added to the index.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",

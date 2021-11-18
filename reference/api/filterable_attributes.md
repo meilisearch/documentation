@@ -63,7 +63,7 @@ An array of strings containing the attributes that can be used as filters at que
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -97,7 +97,7 @@ An empty array (`[]`).
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",

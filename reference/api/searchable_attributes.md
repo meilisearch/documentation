@@ -74,7 +74,7 @@ A match in title will make a document more relevant than another document with a
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -108,7 +108,7 @@ All attributes found in the documents added to the index.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",

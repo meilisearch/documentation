@@ -66,7 +66,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -100,7 +100,7 @@ Empty array: `[]`
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",

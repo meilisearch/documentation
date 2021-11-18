@@ -134,7 +134,7 @@ The body is composed of a **JSON array** of documents.
 
 ```json
 {
-    "uid": 0,
+    "uid":1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentsAddition",
@@ -194,7 +194,7 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentsAddition",
@@ -224,7 +224,7 @@ Delete all documents in the specified index.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentsDeletion",
@@ -255,7 +255,7 @@ Delete one document based on its unique id.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentsDeletion",
@@ -295,7 +295,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentsDeletion",

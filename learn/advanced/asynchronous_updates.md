@@ -40,14 +40,14 @@ The response from the [task API endpoint](/reference/api/tasks.md) will always i
 |---------|---------|---------------------------------|
 | `uid`      | integer | The unique sequential identifier of the task          |
 | `indexUid` | string | The unique index identifier |
-| `status`  | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`.                                |
-| `type`    | string  | The type of the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll`. |
-| `details` | object |  Detailed information on the task payload. `numberOfDocuments` represents the number of duplicate documents processed for `documentsAddition`, `documentsPartial` and `documentsDeletion` type. Details contains any settings object depending of the `task` payload for a `settingsUpdate`. `clearAll`, `indexCreation`, `indexUpdate`, `indexDeletion` do not provide a `details` object. |
-| `error` | object | The error object containing error details and context when a task has a `failed` status |
- | `duration` | string | The total elapsed time the engine was in the `processing` state expressed as in the `ISO-8601` duration format  |
+| `status`  | string  | The status of the task, possible values are `enqueued`, `processing`, `succeeded`, `failed`.                                |
+| `type`    | string  | The type of task, possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll`. |
+| `details` | object |  Contains detailed information on the task payload. `numberOfDocuments` represents the number of duplicate documents processed for `documentsAddition`, `documentsPartial` and `documentsDeletion` type. Details contains any settings object depending on the `task` payload for a `settingsUpdate`. `clearAll`, `indexCreation`, `indexUpdate`, `indexDeletion` do not provide a `details` object. |
+| `error` | object | Shows error details and context when a task has a `failed` status |
+ | `duration` | string | Represents the total elapsed time the engine was in the `processing` state in the `ISO-8601` duration format  |
 | `enqueuedAt` | string | Represents the date and time in the `ISO-8601` format when the task has been `enqueued` |
 | `startedAt` | string | Represents the date and time in the `ISO-8601` format when the task has been dequeued and started being `processed`. The default is `null`. |
-| `finishedAt` | string | Represents the date and time i9n the `ISO-8601` format when the task has `failed` or `succeeded`. The default is `null`. |
+| `finishedAt` | string | Represents the date and time in the `ISO-8601` format when the task has `failed` or `succeeded`. The default is `null`. |
 
 Tasks marked as `processed` return additional fields:
 
@@ -75,7 +75,7 @@ When you query the task endpoint using this id, you see that it has been enqueue
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentsAddition",
@@ -91,7 +91,7 @@ Later, you check the request's status one more time. It was successfully process
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "succeeded",
     "type": "documentsAddition",
@@ -107,7 +107,7 @@ Had the task failed, the response would have included an error message:
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "failed",
     "type": "documentsAddition",

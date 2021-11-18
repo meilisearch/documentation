@@ -94,7 +94,7 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexCreation",

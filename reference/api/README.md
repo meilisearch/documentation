@@ -79,7 +79,7 @@ MeiliSearch returns a summarized version of the `task` object on write requests:
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",

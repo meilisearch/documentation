@@ -80,7 +80,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -130,7 +130,7 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",

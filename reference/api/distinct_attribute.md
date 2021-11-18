@@ -64,7 +64,7 @@ If the field does not exist, no error will be thrown.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -96,7 +96,7 @@ Reset the [distinct attribute](/reference/features/settings.md#distinct-attribut
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
