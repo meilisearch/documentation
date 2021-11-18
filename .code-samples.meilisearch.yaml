@@ -393,6 +393,16 @@ settings_guide_displayed_1: |-
             "release_date"
         ]
     }'
+settings_guide_sortable_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "sortableAttributes": [
+        "price",
+        "author"
+      ]
+    }'
 add_movies_json_1: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
   -H 'Content-Type: application/json' \
