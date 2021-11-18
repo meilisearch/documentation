@@ -20,9 +20,9 @@ MeiliSearch 101:
 Questions:
 
 1. Do we add warnings and notes at this stage?
-2. Do we add links to detailed explanations at every instance? Or do we add them only once at the bottom of each section?
+2. Do we add links to detailed explanations at every instance? Or do we add them only once at the bottom of each section? I think we should add them once at the bottom of each section 
 3. What should the feature examples look like? Do we start with a presenting a use case? Suppose you want to blah blah and demonstrate how MeiliSearch does it? Add a code sample
-4. Do we want a section at the start briefly explaining MeiliSearch terms and any other terms? Documents, indexes, attributes, any other terms that used getting started?
+4. Do we want a section at the start briefly explaining MeiliSearch terms and any other terms? Documents, indexes, attributes, any other terms used in getting started?
 
 This section will go over some of the main features of MeiliSearch to help you get started.
 
@@ -32,104 +32,20 @@ Once you have everything set up, you can change the default settings .... need a
 
 - Do we need to include all the tabs from Download and launch here?
 
-First of all, let's download and run MeiliSearch.
-
-```bash
-curl -L https://install.meilisearch.com | sh
-./meilisearch
-```
-
-You should see the following response:
-
-```
-888b     d888          d8b 888 d8b  .d8888b.                                    888
-8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
-88888b.d88888              888     Y88b.                                        888
-888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
-
-Database path:       "./data.ms"
-Server listening on: "127.0.0.1:7700"
-```
-
-You can download & run MeiliSearch [in many different ways (i.e: docker, apt, homebrew, ...)](/learn/getting_started/installation.md).
-
 ## Cloud deploy
 
 - Need details
 - Is this a subheading of download and install?
 
-To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
-
-- [AWS](/create/how_to/aws.md)
-- [DigitalOcean](/create/how_to/digitalocean_droplet.md)
-- [Qovery](/create/how_to/qovery.md)
-
 ## Configuration options
 
 - Do we need to link all the options here?
-
-You can configure your MeiliSearch instance through the command line options or environment variables. These options affect your entire MeiliSearch instance, not just a single index. You can set these before or after launch.
-
-This is an example using the command line options.
-
-```bash
-./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
-```
-
-Here is a list of [all the options and how to use them](/reference/features/configuration.md).
+- Should this be a very brief section?
 
 ## Search
 
 - mention search parameters?
 - mention placeholder and phrase search?
-
-Before you start querying, we recommend that you check the status of your index. You can do that using:
-
- Add CodeSample
-
-Once the update shows `processed`, you can start searching.
-
-::: warning
-Attempting to search before all documents are indexed will result in undefined behavior.
-:::
-
-MeiliSearch [offers many parameters](/reference/features/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
-
-The search engine is now aware of your documents and can serve those via an HTTP server.
-
-<CodeSamples id="getting_started_search_md" />
-
-MeiliSearch **response**:
-
-```json
-{
-  "hits": [
-    {
-      "id": "29751",
-      "title": "Batman Unmasked: The Psychology of the Dark Knight",
-      "poster": "https://image.tmdb.org/t/p/w1280/jjHu128XLARc2k4cJrblAvZe0HE.jpg",
-      "overview": "Delve into the world of Batman and the vigilante justice tha",
-      "release_date": "2008-07-15"
-    },
-    {
-      "id": "471474",
-      "title": "Batman: Gotham by Gaslight",
-      "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
-      "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
-      "release_date": "2018-01-12"
-    },
-    …
-  ],
-  "offset": 0,
-  "limit": 20,
-  "processingTimeMs": 2,
-  "query": "botman"
-}
-```
 
 ## Web interface
 
@@ -163,7 +79,7 @@ By default, all attribute are searched for matching query words but you can conf
 
 You can use any (not any-do we need the details here?) of the document fields for sorting by adding them to the `sortableAttributes`.
 
-Will the countries dataset work here?
+- Will the countries dataset work here?
 
 ### Geosearch
 
@@ -179,7 +95,7 @@ A list of synonyms is useful if you have multiple words with the same meaning in
 
 ## Dumps and snapshots
 
-- I copied this section mostly from Data backup: snapshots vs. dumps under Advanced topics. I think this section gives enough detail for an introduction. If we keep this here, do we get rid of it from Advanced topics?
+- I think this section gives enough detail for an introduction. If we keep this here, do we get rid of it from Advanced topics?
 
 MeiliSearch allows you to backup your data using `dumps` or `screenshots`.
 
