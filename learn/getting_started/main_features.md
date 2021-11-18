@@ -20,7 +20,7 @@ MeiliSearch 101:
 Questions:
 
 1. Do we add warnings and notes at this stage?
-2. Do we add links to detailed explanations at every instance? Or do we add them only once at the bottom of each section? I think we should add them once at the bottom of each section 
+2. Do we add links to detailed explanations at every instance? Or do we add them only once at the bottom of each section? I think we should add them once at the bottom of each section
 3. What should the feature examples look like? Do we start with a presenting a use case? Suppose you want to blah blah and demonstrate how MeiliSearch does it? Add a code sample
 4. Do we want a section at the start briefly explaining MeiliSearch terms and any other terms? Documents, indexes, attributes, any other terms used in getting started?
 
