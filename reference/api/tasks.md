@@ -1,6 +1,6 @@
 # Tasks
 
-The `tasks` route gives information about the progress of the [asynchronous processes](/learn/advanced/asynchronous_updates.md).
+The `tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations.md).
 
 :::note
 The task `uid` is incremented **globally.**
@@ -28,7 +28,7 @@ List all tasks globally regardless of the index involved. The `task` objects are
             "type": "documentsAddition",
             "duration": null,
             "enqueuedAt": "2021-08-12T10:00:00.000000Z",
-            "startedProcessingAt": null,
+            "startedAt": null,
             "finishedAt": null
         },
         {
@@ -36,9 +36,7 @@ List all tasks globally regardless of the index involved. The `task` objects are
             "indexUid": "movies",
             "status": "succeeded",
             "type": "documentsAddition",
-            "details": {
-                "numberOfDocuments": 100
-            },
+            "details": { "numberOfDocuments": 100 },
             "duration": "PT16S",
             "enqueuedAt": "2021-08-11T09:25:53.000000Z",
             "startedAt": "2021-08-11T10:03:00.000000Z",
@@ -56,7 +54,7 @@ By default, **task unique identifiers (`uid`) are sorted in `desc` order.** This
 
 <RouteHighlighter method="GET" route="/tasks/:uid"/>
 
-Get the status of a [task](/learn/advanced/asynchronous_updates.md) **regardless of [index](/learn/core_concepts/indexes.md).**
+Get the status of a [task](/learn/advanced/asynchronous_operations.md) regardless of [index](/learn/core_concepts/indexes.md).
 
 #### Path variables
 
@@ -70,7 +68,7 @@ Get the status of a [task](/learn/advanced/asynchronous_updates.md) **regardless
 
 #### Response: `200 Ok`
 
-Here is an example response representing [a task that has already been processed](/learn/advanced/asynchronous_updates.md#understanding-tasks).
+Here is an example response representing [a processed task](/learn/advanced/asynchronous_operations.md#understanding-tasks).
 
 ```json
 {
@@ -99,7 +97,7 @@ Here is an example response representing [a task that has already been processed
 
 <RouteHighlighter method="GET" route="/indexes/:indexUid/tasks/:uid"/>
 
-Get the status of a [task](/learn/advanced/asynchronous_updates.md) in a given [index](/learn/core_concepts/indexes.md).
+Get the status of a [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
 
 #### Path variables
 
@@ -114,7 +112,7 @@ Get the status of a [task](/learn/advanced/asynchronous_updates.md) in a given [
 
 #### Response: `200 Ok`
 
-Here is an example response representing [a task that has already been processed](/learn/advanced/asynchronous_updates.md#understanding-tasks).
+Here is an example response representing [a processed task](/learn/advanced/asynchronous_operations.md#understanding-tasks).
 
 ```json
 {
@@ -143,7 +141,7 @@ Here is an example response representing [a task that has already been processed
 
 <RouteHighlighter method="GET" route="/indexes/:indexUid/tasks"/>
 
-Get the status of all [tasks](/learn/advanced/asynchronous_updates.md) in a given [index](/learn/core_concepts/indexes.md).
+Get the status of all [tasks](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
 
 #### Path variables
 
@@ -157,19 +155,19 @@ Get the status of all [tasks](/learn/advanced/asynchronous_updates.md) in a give
 
 #### Response: `200 Ok`
 
-Here is an example response representing an [enqueued task](/learn/advanced/asynchronous_updates.md#understanding-tasks).
+Here is an example response representing an [enqueued task](/learn/advanced/asynchronous_operations.md#understanding-tasks).
 
 ```json
 {
     "results": [
         {
             "uid": 1,
-            "indexUid": "movies_reviews",
+            "indexUid": "movies",
             "status": "enqueued",
             "type": "documentsAddition",
             "duration": null,
             "enqueuedAt": "2021-08-12T10:00:00.000000Z",
-            "startedProcessingAt": null,
+            "startedAt": null,
             "finishedAt": null
         },
         {
@@ -177,9 +175,7 @@ Here is an example response representing an [enqueued task](/learn/advanced/asyn
             "indexUid": "movies",
             "status": "succeeded",
             "type": "documentsAddition",
-            "details": {
-                "numberOfDocuments": 100
-            },
+            "details": { "numberOfDocuments": 100 },
             "duration": "PT16S",
             "enqueuedAt": "2021-08-11T09:25:53.000000Z",
             "startedAt": "2021-08-11T10:03:00.000000Z",

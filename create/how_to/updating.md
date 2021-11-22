@@ -228,7 +228,7 @@ The server should return a response that looks like this:
 }
 ```
 
-This process can take some time. Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
+This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 ```bash
 # replace :dump_uid with the uid returned by the previous command

@@ -1,4 +1,4 @@
-# Asynchronous updates
+# Asynchronous operations
 
 Index updates are processed **asynchronously**. This means that task requests are not handled as soon as they are received—instead, MeiliSearch places these operations in a queue and processes them in the order they were received.
 
@@ -15,19 +15,6 @@ Currently, these are MeiliSearch's asynchronous operations:
 - Updating documents in an index
 - Deleting documents from an index
 
-## Task workflow
-
-1. When you make a task request, MeiliSearch puts it in the task queue, sets the request `status` to `enqueued` and returns a [`task` object](/learn/advanced/asynchronous_updates.md#response)
-2. When the queue reaches your task request, MeiliSearch begins processing it and changes the request `status` to `processing`
-3. Once the task has been finalized, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, in case the task failed. The final status of a `processed` task is `succeeded` or `failed`.
-4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/tasks.md#get-all-tasks)
-
-### Dumps
-
-While dumps and tasks are both asynchronous processes, they use separate queues and behave differently. For instance, creating a new dump will freeze the task queue until the dump has been generated.
-
-[You can read more about dumps in our dedicated guide.](/reference/features/dumps.md)
-
 ## Understanding tasks
 
 After you have requested an asynchronous operation, you can use the [task API endpoint](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need your request's `uid`.
@@ -36,25 +23,20 @@ After you have requested an asynchronous operation, you can use the [task API en
 
 The response from the [task API endpoint](/reference/api/tasks.md) will always include the following fields in the stated order:
 
-| Field   | Type    | Description                     |
-|---------|---------|---------------------------------|
-| `uid`      | integer | The unique sequential identifier of the task          |
-| `indexUid` | string | The unique index identifier |
-| `status`  | string  | The status of the task, possible values are `enqueued`, `processing`, `succeeded`, `failed`.                                |
-| `type`    | string  | The type of task, possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll`. |
-| `details` | object |  Contains detailed information on the task payload. `numberOfDocuments` represents the number of duplicate documents processed for `documentsAddition`, `documentsPartial` and `documentsDeletion` type. Details contains any settings object depending on the `task` payload for a `settingsUpdate`. `clearAll`, `indexCreation`, `indexUpdate`, `indexDeletion` do not provide a `details` object. |
-| `error` | object | Shows error details and context when a task has a `failed` status |
- | `duration` | string | Represents the total elapsed time the engine was in the `processing` state in the `ISO-8601` duration format  |
-| `enqueuedAt` | string | Represents the date and time in the `ISO-8601` format when the task has been `enqueued` |
-| `startedAt` | string | Represents the date and time in the `ISO-8601` format when the task has been dequeued and started being `processed`. The default is `null`. |
-| `finishedAt` | string | Represents the date and time in the `ISO-8601` format when the task has `failed` or `succeeded`. The default is `null`. |
+| Field        | Type    | Description                                                                                                      |
+|--------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `uid`        | integer | The unique sequential identifier of the task                                                                     |
+| `indexUid`   | string  | The unique index identifier                                                                                      |
+| `status`     | string  | The status of the task, possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
+| `type`       | string  | The type of task, possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll`                                                                       |
+| `details`    | object  |  Contains detailed information on the task payload                                                               |
+| `error`      | object  | Shows error details and context when a task has a `failed` status                                                |
+| `duration`   | string  | Represents the total elapsed time the engine was in the `processing` state in the ISO 8601 duration format     |
+| `enqueuedAt` | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                          |
+| `startedAt`  | string  | Represents the date and time in the ISO 8601 format when the task has been dequeued and started being processed. The default is `null`.                                                                                                                      |
+| `finishedAt` | string  | Represents the date and time in the ISO 8601 format when the task has the `failed` or `succeeded` status. The default is `null`.                                                                                                                          |
 
-Tasks marked as `processed` return additional fields:
-
-- `duration`: the number of seconds taken to complete the operation
-- `processedAt`: the date when the operation was processed
-
-Finally, if a task fails due to an [error](https://docs.meilisearch.com/errors/), all error fields will be appended to the response.
+If a task fails due to an error, all error fields will be appended to the response.
 
 ### Task `status`
 
@@ -124,6 +106,19 @@ Had the task failed, the response would have included an error message:
     "finishedAt": "2021-08-10T14:29:19.000000Z"
 }
 ```
+
+## Task workflow
+
+1. When you make a task request, MeiliSearch puts it in the task queue, sets the request `status` to `enqueued` and returns a [`task` object](/learn/advanced/asynchronous_operations.md#response)
+2. When the queue reaches your task request, MeiliSearch begins processing it and changes the request `status` to `processing`
+3. Once the task has been finalized, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, in case the task failed. The final status of a `processed` task is `succeeded` or `failed`.
+4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/tasks.md#get-all-tasks)
+
+### Dumps
+
+While dumps and tasks are both asynchronous operations, they use separate queues and behave differently. For instance, creating a new dump will freeze the task queue until the dump has been generated.
+
+[You can read more about dumps in our dedicated guide.](/reference/features/dumps.md)
 
 ## Terminate MeiliSearch while a task is being processed
 

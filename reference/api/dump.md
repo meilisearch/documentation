@@ -16,7 +16,7 @@ Dump imports must be performed when launching a MeiliSearch instance [using the 
 
 Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps directory](/reference/features/configuration.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
 
-**MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **update queue is paused and no write operations can occur on the database.**
+**MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **task queue is paused and no write operations can occur on the database.**
 
 ### Example
 

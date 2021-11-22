@@ -71,18 +71,18 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 ### Checking task status
 
-Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_updates.md), including the document addition process.
+Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_operations.md), including the document addition process.
 
 Asynchronous actions return the following response in the stated order:
 
-| Field      | Type    | Description                     |
-|------------|---------|---------------------------------|
-| uid        | integer | Unique sequential identifier           |
-| indexUid   | string | Unique index identifier |
-| status     | string  | Status of the task. Value is `enqueued`. |
-| enqueuedAt | string | Represents the date and time in the `ISO-8601` format when the task has been `enqueued`. |
+| Field      | Type    | Description                              |
+|------------|---------|---------------------------------         |
+| uid        | integer | Unique sequential identifier             |
+| indexUid   | string  | Unique index identifier                  |
+| status     | string  | Status of the task. Value is `enqueued`  |
+| enqueuedAt | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                                                        |
 
-This response is a summarized version of the [`task` object](/learn/advanced/asynchronous_updates.md#response).
+This response is a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
 
 Here's an example of the response on creating an index:
 
@@ -98,7 +98,7 @@ Here's an example of the response on creating an index:
 
 To view additional details on the task's progress, you can use the [get task status route](/reference/api/tasks.md).
 
-See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
+See our guide on [asynchronous operations](/learn/advanced/asynchronous_operations.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
 
 ## Search
 

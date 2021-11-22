@@ -138,7 +138,7 @@ See more [information about the primary key](/learn/core_concepts/documents.md#p
 ## Is killing a MeiliSearch process safe?
 
 Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
-More information in the [asynchronous updates guide](/learn/advanced/asynchronous_updates.md).
+More information in the [asynchronous operations guide](/learn/advanced/asynchronous_operations.md).
 
 ## Does MeiliSearch deliver an interface to search in my documents?
 

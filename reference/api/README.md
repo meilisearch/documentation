@@ -73,7 +73,7 @@ Response body:
 
 If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `code` values and descriptions.
 
-## Asynchronous updates
+## Asynchronous operations
 
 MeiliSearch returns a summarized version of the `task` object on write requests:
 
@@ -89,4 +89,4 @@ MeiliSearch returns a summarized version of the `task` object on write requests:
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
 
-See more information about [asynchronous updates](/learn/advanced/asynchronous_updates.md).
+See more information about [asynchronous operations](/learn/advanced/asynchronous_operations.md).

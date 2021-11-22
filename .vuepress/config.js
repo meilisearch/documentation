@@ -79,7 +79,7 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/asynchronous_updates',
+            '/learn/advanced/asynchronous_operations',
             '/learn/advanced/snapshots_vs_dumps',
           ],
         },

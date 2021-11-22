@@ -1,6 +1,6 @@
 # Indexes
 
-An index is an entity that gathers a set of [documents](/learn/core_concepts/documents.md) with its own settings.
+An index is an entity that gathers a set of [documents](/learn/core_concepts/documents.md) with its own settings. Index creation, update, and deletion are asynchronous operations and are represented by a `task`.
 
 [Learn more about indexes](/learn/core_concepts/indexes.md).
 
