@@ -83,7 +83,7 @@ module.exports = {
             '/learn/advanced/snapshots_vs_dumps',
             {
               title: 'Updating MeiliSearch',
-              path: '/learn/advanced/updating.md'
+              path: '/learn/advanced/updating.md',
             },
           ],
         },
