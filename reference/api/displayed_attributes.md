@@ -49,7 +49,7 @@ List the settings.
 Update the [displayed attributes](/reference/features/settings.md#displayed-attributes) of an index.
 
 ::: note
-Updating `displayedAttributes` does not impact [`fieldDistribution`](/reference/api/stats.md#_3-field-distribution).
+`displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/reference/features/dumps.md), or [snapshots](/reference/features/snapshots.md).
 :::
 
 #### Path variables
