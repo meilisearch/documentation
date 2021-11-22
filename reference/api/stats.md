@@ -1,6 +1,6 @@
 # Stats
 
-`Stats` gives extended information and metrics about indexes and the MeiliSearch database. It returns the following details:
+The `/stats` route gives extended information and metrics about indexes and the MeiliSearch database. It returns the following details:
 
 #### 1. Number of documents
 
@@ -48,8 +48,6 @@ Get stats of an index.
 }
 ```
 
- In the above code sample, `fieldDistribution` shows every field in the `movies` index along with the total number of documents in `movies` that contain that field.
-
 ## Get stats of all indexes
 
 <RouteHighlighter method="GET" route="/stats"/>
@@ -94,5 +92,3 @@ Get stats of all indexes.
   }
 }
 ```
-
-In the above code sample, `fieldDistribution` shows every field in the `movies` and `rangemovies` indexes along with the total number of documents in the database that contain that field.
