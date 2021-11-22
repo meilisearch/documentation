@@ -81,7 +81,10 @@ module.exports = {
           children: [
             '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
-            '/learn/advanced/updating.md',
+            {
+              title: 'Updating MeiliSearch',
+              path: '/learn/advanced/updating.md'
+            },
           ],
         },
         {
