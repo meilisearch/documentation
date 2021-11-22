@@ -55,7 +55,7 @@ Choose the storage **device** and **size** for your MeiliSearch instance.
 
 ![Storage](/aws/05.storage.png)
 
-The amount of storage space required can [vary drastically](/reference/under_the_hood/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).
+The amount of storage space required can [vary drastically](/learn/advanced/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).
 
 When you're ready, click on **Next: Add Tags** to continue.
 

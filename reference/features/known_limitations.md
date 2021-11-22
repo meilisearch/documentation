@@ -1,6 +1,6 @@
 # Known limitations
 
-Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/reference/under_the_hood/storage.md), the key-value store that MeiliSearch uses [under the hood](/reference/under_the_hood).
+Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that MeiliSearch uses under the hood.
 
 ## Design limitations
 
@@ -38,7 +38,7 @@ If your query is `Hello, World`:
 - `World` takes the position `9` of the attribute
 
 ::: note
-`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](/reference/under_the_hood/datatypes.md#string).
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
 :::
 
 If your query is `Hello - World`:
@@ -48,7 +48,7 @@ If your query is `Hello - World`:
 - `World` takes the position `2` of the attribute
 
 ::: note
-`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/reference/under_the_hood/datatypes.md#string).
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
 :::
 
 ### Maximum attributes per document
