@@ -81,13 +81,13 @@
 /reference/features/faceted_search.html              /reference/features/filtering_and_faceted_search.html
 
 # Move under the hood articles to /learn
-/reference/under_the_hood/concat                /learn/advanced/concat
-/reference/under_the_hood/datatypes             /learn/advanced/datatypes
-/reference/under_the_hood/indexation            /learn/advanced/indexation
-/reference/under_the_hood/prefix                /learn/advanced/prefix
-/reference/under_the_hood/storage               /learn/advanced/storage
-/reference/under_the_hood/tokenization          /learn/advanced/tokenization
-/reference/under_the_hood/typotolerance         /learn/advanced/typotolerance
+/reference/under_the_hood/concat.html                /learn/advanced/concat.html
+/reference/under_the_hood/datatypes.html             /learn/advanced/datatypes.html
+/reference/under_the_hood/indexation.html            /learn/advanced/indexation.html
+/reference/under_the_hood/prefix.html                /learn/advanced/prefix.html
+/reference/under_the_hood/storage.html               /learn/advanced/storage.html
+/reference/under_the_hood/tokenization.html          /learn/advanced/tokenization.html
+/reference/under_the_hood/typotolerance.html         /learn/advanced/typotolerance.html
 
 # Bucket sort
-/reference/under_the_hood/bucket_sort           /learn/core_concepts/relevancy#behavior
+/reference/under_the_hood/bucket_sort           /learn/core_concepts/relevancy.html#behavior
