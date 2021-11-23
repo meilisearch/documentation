@@ -85,7 +85,6 @@ module.exports = {
               title: 'Inner workings',
               collapsable: false,
               children: [
-                '/learn/advanced/bucket_sort',
                 '/learn/advanced/concat',
                 '/learn/advanced/datatypes',
                 '/learn/advanced/indexation',
