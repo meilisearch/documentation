@@ -81,7 +81,6 @@
 /reference/features/faceted_search.html              /reference/features/filtering_and_faceted_search.html
 
 # Move under the hood articles to /learn
-/reference/under_the_hood/bucket_sort           /learn/advanced/bucket_sort
 /reference/under_the_hood/concat                /learn/advanced/concat
 /reference/under_the_hood/datatypes             /learn/advanced/datatypes
 /reference/under_the_hood/indexation            /learn/advanced/indexation
@@ -89,3 +88,6 @@
 /reference/under_the_hood/storage               /learn/advanced/storage
 /reference/under_the_hood/tokenization          /learn/advanced/tokenization
 /reference/under_the_hood/typotolerance         /learn/advanced/typotolerance
+
+# Bucket sort
+/reference/under_the_hood/bucket_sort           /learn/core_concepts/relevancy#behavior

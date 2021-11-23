@@ -2,7 +2,7 @@
 
 In MeiliSearch, **you can perform a search with only a single letter as your query**. This is because we follow the philosophy of **prefix search**.
 
-Prefix search is when document sorting starts by comparing the search query against the beginning of each word in your dataset. All documents with words that match the query term are added to the [bucket sort](/learn/advanced/bucket_sort.md), before the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) are applied sequentially.
+Prefix search is when document sorting starts by comparing the search query against the beginning of each word in your dataset. All documents with words that match the query term are added to the [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort), before the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) are applied sequentially.
 
 In other words, prefix search means that it's not necessary to type a word in its entirety to find documents containing that word—you can just type the first one or two letters.
 
