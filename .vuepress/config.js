@@ -84,7 +84,7 @@ module.exports = {
             {
               title: 'Updating MeiliSearch',
               path: '/learn/advanced/updating.md',
-            },            
+            },
             {
               title: 'Inner workings',
               collapsable: false,
