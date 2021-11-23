@@ -66,4 +66,4 @@ For example, you **should not** import a dump from MeiliSearch v0.22.0 to MeiliS
 
 ## Use cases
 
-Dumps are used to restore your database after [updating MeiliSearch](/create/how_to/updating.md) or to copy your database to other MeiliSearch instances without having to worry about their respective versions.
+Dumps are used to restore your database after [updating MeiliSearch](/learn/advanced/updating.md) or to copy your database to other MeiliSearch instances without having to worry about their respective versions.

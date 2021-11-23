@@ -8,7 +8,6 @@ This is not the best section for MeiliSearch beginners. If you'd like to follow 
 
 **Basics**:
 
-- [Update MeiliSearch](/create/how_to/updating.md)
 - [Run MeiliSearch in production](/create/how_to/running_production.md)
 - [Use Postman with MeiliSearch](/create/how_to/postman_collection.md)
 

@@ -10,3 +10,4 @@ These articles are conceptual explorations of important—but difficult—topics
 
 - [Asynchronous updates](/learn/advanced/asynchronous_updates.md)
 - [Snapshots vs. dumps](/learn/advanced/snapshots_vs_dumps.md)
+- [Updating MeiliSearch](/learn/advanced/updating.md)

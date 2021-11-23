@@ -79,3 +79,6 @@
 /reference/api/attributes_for_faceting.html         /reference/api/filterable_attributes.html
 /reference/features/filtering.html                   /reference/features/filtering_and_faceted_search.html
 /reference/features/faceted_search.html              /reference/features/filtering_and_faceted_search.html
+
+#move updating MeiliSearch
+/create/how_to/updating.html                         /learn/advanced/updating.html
