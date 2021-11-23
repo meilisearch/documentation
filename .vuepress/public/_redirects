@@ -90,7 +90,7 @@
 /reference/under_the_hood/typotolerance.html         /learn/advanced/typotolerance.html
 
 # Bucket sort
-/reference/under_the_hood/bucket_sort                /learn/core_concepts/relevancy.html#behavior
+/reference/under_the_hood/bucket_sort.html                /learn/core_concepts/relevancy.html#behavior
 
 # Move updating MeiliSearch
 /create/how_to/updating.html                         /learn/advanced/updating.html
