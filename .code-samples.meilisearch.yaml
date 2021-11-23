@@ -476,6 +476,23 @@ getting_started_search_md: |-
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "botman" }'
   ```
+getting_started_geoRadius_md: |-
+  curl -X POST 'http://localhost:7700/indexes/meteors/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'  
+getting_started_geoPoint_md: |-
+  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
+getting_started_sorting_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/meteors/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "H5",
+      "sort": [
+        "mass:asc"
+      ]}'
 faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
