@@ -182,7 +182,7 @@ MeiliSearch will only launch once the dump data has been fully indexed. The time
 
 ### Log level
 
-**Environment variable**: MEILI_LOG_LEVEL
+**Environment variable**: `MEILI_LOG_LEVEL`
 **CLI option**: `--log-level`
 **Default value**: `'INFO'`
 **Expected value**: one of `ERROR`, `WARN`, `INFO`, `DEBUG`, OR `TRACE`

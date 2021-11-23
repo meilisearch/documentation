@@ -82,6 +82,10 @@ module.exports = {
             '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
             {
+              title: 'Updating MeiliSearch',
+              path: '/learn/advanced/updating.md',
+            },            
+            {
               title: 'Inner workings',
               collapsable: false,
               children: [
@@ -183,10 +187,6 @@ module.exports = {
               collapsable: false,
               sidebarDepth: 0,
               children: [
-                {
-                  title: 'Update MeiliSearch',
-                  path: '/create/how_to/updating',
-                },
                 {
                   title: 'Run in production',
                   path: '/create/how_to/running_production',
