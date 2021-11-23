@@ -101,7 +101,7 @@ module.exports = {
           ],
         },
         {
-          title: '� Contributing',
+          title: '👐 Contributing',
           path: '/learn/contributing/',
           collapsable: false,
           children: [
