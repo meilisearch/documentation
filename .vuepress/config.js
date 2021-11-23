@@ -81,14 +81,20 @@ module.exports = {
           children: [
             '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
-            '/learn/advanced/bucket_sort',
-            '/learn/advanced/concat',
-            '/learn/advanced/datatypes',
-            '/learn/advanced/indexation',
-            '/learn/advanced/prefix',
-            '/learn/advanced/storage',
-            '/learn/advanced/tokenization',
-            '/learn/advanced/typotolerance',
+            {
+              title: 'Under the Hood',
+              collapsable: false,
+              children: [
+                '/learn/advanced/bucket_sort',
+                '/learn/advanced/concat',
+                '/learn/advanced/datatypes',
+                '/learn/advanced/indexation',
+                '/learn/advanced/prefix',
+                '/learn/advanced/storage',
+                '/learn/advanced/tokenization',
+                '/learn/advanced/typotolerance',
+              ],
+            },
           ],
         },
         {
