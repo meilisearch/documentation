@@ -82,7 +82,7 @@ module.exports = {
             '/learn/advanced/asynchronous_updates',
             '/learn/advanced/snapshots_vs_dumps',
             {
-              title: 'Under the Hood',
+              title: 'Inner workings',
               collapsable: false,
               children: [
                 '/learn/advanced/bucket_sort',
