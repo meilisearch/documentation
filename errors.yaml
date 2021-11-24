@@ -66,8 +66,6 @@ errors:
     description: "The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by MeiliSearch, check out this [guide](https://docs.meilisearch.com/reference/features/configuration.html#max-udb-size)."
   - code: index_primary_key_already_exists
     description: "The requested index already has a primary key that cannot be changed."
-  - code: invalid_token
-    description: "The provided master key does not match the value configured on the server-side."  
   - code: task_not_found
     description: "The requested task was not found as it does not exist." 
 ...
