@@ -64,14 +64,14 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an [index](/learn/core_concepts/indexes.md).
+Create an [index](/learn/core_concepts/indexes.md). This route accepts two arguments: `index_uid` and `primaryKey`.
 
-This route requires a unique `uid`.
+`index_uid` is mandatory. It should be a unique string identifying your new index.
 
-You can optionally supply the document attribute that will serve as this index's [primary key](/learn/core_concepts/indexes.md#primary-key).
+`primaryKey` is optional and indicates the field containing your documents' [primary key](/learn/core_concepts/indexes.md#primary-key). If you do not supply a value for `primaryKey`, MeiliSearch will do its best to infer it once you add your first document to the index.
 
 ::: note
-An index is automatically created when adding [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not already exist.
+If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, MeiliSearch will automatically create it for you. This is called implicit index creation.
 :::
 
 Creating an index is an asynchronous task. [You can read more about asynchronous processes in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
@@ -94,7 +94,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 
 <CodeSamples id='create_an_index_1' />
 
-#### Response: `202 accepted`
+#### Response: `202 Accepted`
 
 ```json
 {
@@ -105,6 +105,8 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
+You can use the response's `uid` to track the status of your request.
 
 ## Update an index
 
@@ -148,6 +150,8 @@ This is an asynchronous task. [You can read more about asynchronous processes in
 }
 ```
 
+You can use the response's `uid` to track the status of your request.
+
 ## Delete an index
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
@@ -177,3 +181,5 @@ This is an asynchronous task. [You can read more about asynchronous processes in
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
+You can use the response's `uid` to track the status of your request.
