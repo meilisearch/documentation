@@ -10,19 +10,19 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 
 ## Content of this article
 
-[Step 1: Install MeiliSearch](/create/how_to/running_production.md#step-1-install-meilisearch)
+[Step 1: Install MeiliSearch](/learn/cookbooks/running_production.md#step-1-install-meilisearch)
 
-[Step 2: Run MeiliSearch as a service](/create/how_to/running_production.md#step-2-run-meilisearch-as-a-service)
+[Step 2: Run MeiliSearch as a service](/learn/cookbooks/running_production.md#step-2-run-meilisearch-as-a-service)
 
-+ [2.1. Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
-+ [2.2. Enable and start service](/create/how_to/running_production.md#_2-2-enable-and-start-service)
++ [2.1. Create a service file](/learn/cookbooks/running_production.md#_2-1-create-a-service-file)
++ [2.2. Enable and start service](/learn/cookbooks/running_production.md#_2-2-enable-and-start-service)
 
-[Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/learn/cookbooks/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
 
-+ [3.1. Creating a reverse proxy with Nginx](/create/how_to/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
-+ [3.2. Set up SSL/TLS for your MeiliSearch](/create/how_to/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
++ [3.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
++ [3.2. Set up SSL/TLS for your MeiliSearch](/learn/cookbooks/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
 
-[Conclusion](/create/how_to/running_production.md#conclusion)
+[Conclusion](/learn/cookbooks/running_production.md#conclusion)
 
 ## Get your MeiliSearch ready for production
 

@@ -17,9 +17,9 @@ Welcome to the MeiliSearch documentation. Here you'll find everything you need t
 - [Install MeiliSearch](/learn/getting_started/installation.md)
 - [Updating MeiliSearch](/learn/advanced/updating.md)
 - [SDKs and tools](/learn/what_is_meilisearch/sdks.md)
-- [Deploy MeiliSearch on AWS](create/how_to/aws.md)
-- [Deploy MeiliSearch on GCP](create/how_to/gcp.md)
-- [Deploy MeiliSearch on DigitalOcean](create/how_to/digitalocean_droplet.md)
+- [Deploy MeiliSearch on AWS](learn/cookbooks/aws.md)
+- [Deploy MeiliSearch on GCP](learn/cookbooks/gcp.md)
+- [Deploy MeiliSearch on DigitalOcean](learn/cookbooks/digitalocean_droplet.md)
 
 ## Version compatibility
 

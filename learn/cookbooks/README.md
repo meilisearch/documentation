@@ -6,23 +6,14 @@ This is not the best section for MeiliSearch beginners. If you'd like to follow 
 
 ## Table of contents
 
-**Basics**:
+- [Run MeiliSearch in production](/learn/cookbooks/running_production.md)
+- [Use Postman with MeiliSearch](/learn/cookbooks/postman_collection.md)
+- [Integrate a relevant search bar to your documentation](/learn/cookbooks/search_bar_for_docs.md)
+- [Use HTTP/2 and SSL with MeiliSearch](/learn/cookbooks/http2_ssl.md)
 
-- [Run MeiliSearch in production](/create/how_to/running_production.md)
-- [Use Postman with MeiliSearch](/create/how_to/postman_collection.md)
+### Deployment
 
-**Deploy**:
-
-- [Deploy MeiliSearch on AWS](/create/how_to/aws.md)
-- [Deploy MeiliSearch on GCP](/create/how_to/gcp.md)
-- [Deploy MeiliSearch on DigitalOcean](/create/how_to/digitalocean_droplet.md)
-- [Deploy MeiliSearch on Qovery](/create/how_to/qovery.md)
-
-**Front-end Integration**:
-
-- [Integrate a relevant search bar to your documentation](/create/how_to/search_bar_for_docs.md)
-- [Implement instant search in your React app in 5 Minutes](/create/how_to/meilisearch_react.md)
-
-**Miscellaneous**:
-
-- [Use HTTP/2 and SSL with MeiliSearch](/create/how_to/http2_ssl.md)
+- [Deploy MeiliSearch on AWS](/learn/cookbooks/aws.md)
+- [Deploy MeiliSearch on GCP](/learn/cookbooks/gcp.md)
+- [Deploy MeiliSearch on DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Deploy MeiliSearch on Qovery](/learn/cookbooks/qovery.md)

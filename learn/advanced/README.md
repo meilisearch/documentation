@@ -4,7 +4,7 @@
 
 Bring your knowledge and understanding of MeiliSearch to the next level with these articles on advanced topics.
 
-These articles are conceptual explorations of important—but difficult—topics. Unlike our [how-to guides](/create/how_to), they are **not** step-by-step solutions to common problems.
+These articles are conceptual explorations of important—but difficult—topics. Unlike our [how-to guides](/learn/cookbooks), they are **not** step-by-step solutions to common problems.
 
 ## Table of contents
 

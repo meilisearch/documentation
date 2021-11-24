@@ -234,4 +234,4 @@ For more concrete examples, you can check out this [basic HTML file](https://git
 ## What's next?
 
 At this point you should have a working search engine on your website, congrats! 🎉
-You can check [this tutorial](/create/how_to/running_production.md) if you now want to run MeiliSearch in production!
+You can check [this tutorial](/learn/cookbooks/running_production.md) if you now want to run MeiliSearch in production!
