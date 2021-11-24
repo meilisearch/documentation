@@ -23,7 +23,7 @@ In the top-right corner, click on the **Launch instances** button to start the p
 
 You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the searchbar and select the **Community AMIs** tab on the left sidebar.
 
-![MeiliSearch AMI](/aws/02.select-ami.png)
+![MeiliSearch-v0.19.0-Debian-10.3 AMI](/aws/02.select-ami.png)
 
 Click on **Select** (right side of the screen) to confirm your choice.
 
@@ -31,7 +31,7 @@ Click on **Select** (right side of the screen) to confirm your choice.
 
 Select the specifications of the server you want MeiliSearch to run on.
 
-![Selecting an instance type](/aws/03.size-and-specs.png)
+![Selecting the free tier eligible instance type](/aws/03.size-and-specs.png)
 
 We recommend prioritizing memory allocation for better MeiliSearch performance.
 
@@ -45,7 +45,7 @@ Once you've made your choice, click on **Next: Configure instance details** to c
 
 Here you can specify [details of your Instance](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html). Since **this section is not required to run MeiliSearch**, we won't cover it in this guide.
 
-![Configuring instance details](/aws/04.instance-details.png)
+![Configuring the instance based on requirements](/aws/04.instance-details.png)
 
 Simply click on **Next: Add Storage** to keep going.
 
