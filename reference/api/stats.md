@@ -1,26 +1,28 @@
 # Stats
 
-The `/stats` route gives extended information and metrics about indexes and the MeiliSearch database. It returns the following details:
+The `/stats` route gives extended information and metrics about indexes and the MeiliSearch database.
 
-#### 1. Number of documents
+## Fields returned
+
+### Get stat of an index
+
+<RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
+
+Get stats of an index. It returns the following fields:
+
+#### `numberOfDocuments`
 
 The `numberOfDocuments` field shows the total number of documents in an index.
 
-#### 2. Indexing
+#### `isIndexing`
 
 The `isIndexing` field returns a Boolean. If `true`, the index is still processing documents and attempts to search will result in undefined behavior. If `false`, the index has finished processing and you can start searching.
 
-#### 3. Field distribution
+#### `fieldDistribution`
 
 The `fieldDistribution` object shows every field in the individual index or the entire database along with the total number of documents in the index that contain that field.
 
 `fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, **if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.**  
-
-## Get stat of an index
-
-<RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
-
-Get stats of an index.
 
 #### Path variables
 
@@ -48,15 +50,19 @@ Get stats of an index.
 }
 ```
 
-## Get stats of all indexes
+### Get stats of all indexes
 
 <RouteHighlighter method="GET" route="/stats"/>
 
-Get stats of all indexes.
+Get stats of all indexes. In addition to all fields returned by `GET /indexes/:index_uid/stats`, `GET /stats` returns the following instance-level fields:
 
-::: note
-`databaseSize` is expressed in **bytes**.
-:::
+#### `databaseSize`
+
+The `databaseSize` field shows the size of the database in bytes.
+
+#### `lastUpdate`
+
+The `lastUpdate` field shows when the last update was made to the database in the ISO 8601 format.
 
 ### Example
 
