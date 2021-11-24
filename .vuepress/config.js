@@ -92,26 +92,23 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Basics',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Run in production',
-                  path: '/learn/cookbooks/running_production',
-                },
-                {
-                  title: 'Use with Postman',
-                  path: '/learn/cookbooks/postman_collection',
-                },
-                {
-                  title: 'Add a search bar to your docs',
-                  path: '/learn/cookbooks/search_bar_for_docs',
-                },
-              ],
+              title: 'Run in production',
+              path: '/learn/cookbooks/running_production',
             },
             {
-              title: 'Deployment and security',
+              title: 'Use with Postman',
+              path: '/learn/cookbooks/postman_collection',
+            },
+            {
+              title: 'Add a search bar to your docs',
+              path: '/learn/cookbooks/search_bar_for_docs',
+            },
+            {
+              title: 'Set up HTTP/2 and SSL',
+              path: '/learn/cookbooks/http2_ssl',
+            },
+            {
+              title: 'Deployment',
               collapsable: false,
               sidebarDepth: 0,
               children: [
@@ -130,10 +127,6 @@ module.exports = {
                 {
                   title: 'Deploy on Qovery',
                   path: '/learn/cookbooks/qovery',
-                },
-                {
-                  title: 'Set up HTTP/2 and SSL',
-                  path: '/learn/cookbooks/http2_ssl',
                 },
               ],
             },
