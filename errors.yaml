@@ -73,7 +73,7 @@ errors:
   - code: invalid_api_key_indexes
     description: "The `indexes` field for the requested API key resource is invalid. It should be an array of strings representing index names." 
   - code: invalid_api_key_expires_at
-    description: "The `expiresAt` field for the requested API key resource is invalid. It should either show a future date or datetime in the ISO 8601 format (`YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SS`) or be set to `null`." 
+    description: "The `expiresAt` field for the requested API key resource is invalid. It should either show a future date or datetime in the ISO 8601 format or be set to `null`." 
   - code: api_key_not_found
     description: "The requested API key could not be found." 
   - code: missing_parameter
