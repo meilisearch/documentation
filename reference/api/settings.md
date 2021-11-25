@@ -142,7 +142,7 @@ If the provided index does not exist, it will be created.
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "indexUpdate",
+    "type": "settingsUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
