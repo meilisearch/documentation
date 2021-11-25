@@ -24,6 +24,7 @@ Questions:
 3. What should the feature examples look like? Do we start with a presenting a use case? Suppose you want to blah blah and demonstrate how MeiliSearch does it? Add a code sample
 4. Do we want a section at the start briefly explaining MeiliSearch terms and any other terms? Documents, indexes, attributes, any other terms used in getting started?
 5. Where does the dataset file go?
+6. Should I use "we" or "you"? I think we would sound better in this context I used a mix of both for now just to see what would look better.
 
 This section will go over some of the main features of MeiliSearch to help you get started.
 
@@ -75,7 +76,13 @@ Should this be part of Search?
 ### Searchable attributes
 
 By default, all attribute are searched for matching query words but you can configure the settings to change that. Lets look at MeiliSearch's web interface for this example.
-Add gif here for the default searchable attributes and what happens if we modify them.
+When we search for `lion king` with the default settings, MeiliSearch searches for it everywhere.
+
+![need a better gif](/getting-started/getting_started_searchableAttributes.gif)
+
+If we update the `searchableAttributes` to only contain the movie title, MeiliSearch will only consider the title during search.
+
+new gif
 
 ### Sortable attributes
 
