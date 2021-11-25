@@ -35,7 +35,7 @@ List all [indexes](/learn/core_concepts/indexes.md).
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid"/>
+<RouteHighlighter method="GET" route="/indexes/:uid"/>
 
 Get information about an [index](/learn/core_concepts/indexes.md).
 
@@ -43,7 +43,7 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
@@ -64,9 +64,9 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an [index](/learn/core_concepts/indexes.md). This route accepts two arguments: `index_uid` and `primaryKey`.
+Create an [index](/learn/core_concepts/indexes.md). This route accepts two arguments: `uid` and `primaryKey`.
 
-`index_uid` is mandatory. It should be a unique string identifying your new index.
+`uid` is mandatory. It should be a unique string identifying your new index.
 
 `primaryKey` is optional and indicates the field containing your documents' [primary key](/learn/core_concepts/indexes.md#primary-key). If you do not supply a value for `primaryKey`, MeiliSearch will do its best to infer it once you add your first document to the index.
 
@@ -74,13 +74,13 @@ Create an [index](/learn/core_concepts/indexes.md). This route accepts two argum
 If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, MeiliSearch will automatically create it for you. This is called implicit index creation.
 :::
 
-Creating an index is an asynchronous task. [You can read more about asynchronous processes in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
 
 ### Body
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **index_uid**  | The index unique identifier (_mandatory_)                  |
+| **uid**        | The index unique identifier (_mandatory_)                  |
 | **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
 
 ```json
@@ -110,7 +110,7 @@ You can use the response's `uid` to track the status of your request.
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
+<RouteHighlighter method="PUT" route="/indexes/:uid"/>
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
 
@@ -120,13 +120,13 @@ If a primary key wasn't explicitly chosen during index creation, you can use thi
 It is not possible to change an index's `uid`.
 :::
 
-This is an asynchronous task. [You can read more about asynchronous processes in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
 
 ### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Body
 
@@ -154,17 +154,17 @@ You can use the response's `uid` to track the status of your request.
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
+<RouteHighlighter method="DELETE" route="/indexes/:uid"/>
 
 Delete an [index](/learn/core_concepts/indexes.md).
 
-This is an asynchronous task. [You can read more about asynchronous processes in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
 
 ### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
