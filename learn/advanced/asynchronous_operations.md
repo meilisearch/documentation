@@ -13,6 +13,12 @@ Currently, these are MeiliSearch's asynchronous operations:
 - Updating index settings
 - Adding documents to an index
 - Updating documents in an index
+- Creating an index
+- Updating an index
+- Deleting an index
+- Updating index settings
+- Adding documents to an index
+- Updating documents in an index
 - Deleting documents from an index
 
 ## Understanding tasks
