@@ -93,50 +93,6 @@ Here is an example response representing [a processed task](/learn/advanced/asyn
 }
 ```
 
-## Get task status of an index
-
-<RouteHighlighter method="GET" route="/indexes/:indexUid/tasks/:uid"/>
-
-Get the status of a [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
-
-#### Path variables
-
-| Variable      | Description           |
-| ------------- | --------------------- |
-| **indexUid** | The index UID         |
-| **uid**  | The task identifier |
-
-### Example
-
-<CodeSamples id="get_task_by_index_1" />
-
-#### Response: `200 Ok`
-
-Here is an example response representing [a processed task](/learn/advanced/asynchronous_operations.md#understanding-tasks).
-
-```json
-{
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "succeeded",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "exactness"
-        ]
-    },
-    "duration": "PT1S",
-    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
-    "startedAt": "2021-08-10T14:29:18.000000Z",
-    "finishedAt": "2021-08-10T14:29:19.000000Z"
-}
-```
-
 ## Get all task statuses in an index
 
 <RouteHighlighter method="GET" route="/indexes/:indexUid/tasks"/>
@@ -182,5 +138,49 @@ Here is an example response representing an [enqueued task](/learn/advanced/asyn
             "finishedAt": "2021-08-11T10:03:16.000000Z"
         }
     ]
+}
+```
+
+## Get task status of an index
+
+<RouteHighlighter method="GET" route="/indexes/:indexUid/tasks/:uid"/>
+
+Get the status of a [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
+
+#### Path variables
+
+| Variable      | Description           |
+| ------------- | --------------------- |
+| **indexUid** | The index UID         |
+| **uid**  | The task identifier |
+
+### Example
+
+<CodeSamples id="get_task_by_index_1" />
+
+#### Response: `200 Ok`
+
+Here is an example response representing [a processed task](/learn/advanced/asynchronous_operations.md#understanding-tasks).
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "succeeded",
+    "type": "settingsUpdate",
+    "details": {
+        "rankingRules": [
+            "typo",
+            "ranking:desc",
+            "words",
+            "proximity",
+            "attribute",
+            "exactness"
+        ]
+    },
+    "duration": "PT1S",
+    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+    "startedAt": "2021-08-10T14:29:18.000000Z",
+    "finishedAt": "2021-08-10T14:29:19.000000Z"
 }
 ```

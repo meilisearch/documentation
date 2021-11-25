@@ -1,6 +1,6 @@
 # Asynchronous operations
 
-Index updates are processed **asynchronously**. This means that task requests are not handled as soon as they are received—instead, MeiliSearch places these operations in a queue and processes them in the order they were received.
+All index writes are processed **asynchronously**. This means that task requests are not handled as soon as they are received—instead, MeiliSearch places these operations in a queue and processes them in the order they were received.
 
 ## Which operations are async?
 
