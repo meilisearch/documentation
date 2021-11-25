@@ -77,7 +77,7 @@ A match in title will make a document more relevant than another document with a
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "indexUpdate",
+    "type": "settingsUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
