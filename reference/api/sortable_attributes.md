@@ -68,7 +68,7 @@ An array of strings containing the attributes that can be used to sort search re
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "indexUpdate",
+    "type": "settingsUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -102,7 +102,7 @@ An empty array (`[]`).
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "indexUpdate",
+    "type": "settingsUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
