@@ -36,7 +36,10 @@ List all tasks globally regardless of the index involved. The `task` objects are
             "indexUid": "movies",
             "status": "succeeded",
             "type": "documentsAddition",
-            "details": { "numberOfDocuments": 100 },
+            "details": { 
+                    "receivedDocuments": 100,
+                    "indexedDocuments": 100
+            },
             "duration": "PT16S",
             "enqueuedAt": "2021-08-11T09:25:53.000000Z",
             "startedAt": "2021-08-11T10:03:00.000000Z",
@@ -131,7 +134,10 @@ Here is an example response representing an [enqueued task](/learn/advanced/asyn
             "indexUid": "movies",
             "status": "succeeded",
             "type": "documentsAddition",
-            "details": { "numberOfDocuments": 100 },
+            "details": { 
+                    "receivedDocuments": 100,
+                    "indexedDocuments": 100
+            },
             "duration": "PT16S",
             "enqueuedAt": "2021-08-11T09:25:53.000000Z",
             "startedAt": "2021-08-11T10:03:00.000000Z",

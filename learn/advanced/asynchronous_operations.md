@@ -67,7 +67,10 @@ When you query the task endpoint using this `uid`, you see that it has been enqu
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentsAddition",
-    "details": { "numberOfDocuments": 67493},
+    "details": { 
+        "receivedDocuments": 67493,
+        "indexedDocuments": null
+    },
     "duration": null,
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
     "startedAt": null,
@@ -83,7 +86,10 @@ Later, you check the request's status one more time. It was successfully process
     "indexUid": "movies",
     "status": "succeeded",
     "type": "documentsAddition",
-    "details": { "numberOfDocuments": 67493},
+    "details": { 
+            "receivedDocuments": 67493,
+            "indexedDocuments": 67493
+    },
     "duration": "PT1S",
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
     "startedAt": "2021-08-10T14:29:18.000000Z",
@@ -99,7 +105,10 @@ Had the task failed, the response would have included an `error` object:
     "indexUid": "movies",
     "status": "failed",
     "type": "documentsAddition",
-    "details": { "numberOfDocuments": 67493},
+    "details": { 
+            "receivedDocuments": 67493,
+            "indexedDocuments": 0
+    },
     "error": {
         "message": "Document does not have a `:primaryKey` attribute: `:documentRepresentation`.",
         "code": "internal",
