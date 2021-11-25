@@ -71,7 +71,7 @@ An array of strings that contains attributes of an index to display.
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "indexUpdate",
+    "type": "settingsUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
