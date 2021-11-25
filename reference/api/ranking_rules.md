@@ -133,7 +133,7 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "indexUpdate",
+    "type": "settingsUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
