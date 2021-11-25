@@ -42,7 +42,7 @@ After dump creation is finished, the dump file is added to the dump directory. B
 If a dump file is visible in the file system, the dump process was successfully completed. **MeiliSearch will never create a partial dump file** , even if you interrupt an instance while it is generating a dump.
 
 ::: note
-Unlike [tasks](/learn/advanced/asynchronous_operations.md), dumps have no queue. **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **task queue is paused and no write operations can occur on the database.** This is also true of [snapshots](/reference/features/snapshots.md#snapshots).
+Unlike [tasks](/learn/advanced/asynchronous_operations.md), dumps have no queue. **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **task queue is paused and no write operations can occur on the database.** This is also true for [snapshots](/reference/features/snapshots.md#snapshots).
 :::
 
 ::: warning
