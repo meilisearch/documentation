@@ -36,7 +36,7 @@ The response from the [task API endpoint](/reference/api/tasks.md) will always i
 | `startedAt`  | string  | Represents the date and time in the ISO 8601 format when the task has been dequeued and started being processed. The default is `null`.                                                                                                                      |
 | `finishedAt` | string  | Represents the date and time in the ISO 8601 format when the task has the `failed` or `succeeded` status. The default is `null`.                                                                                                                          |
 
-If a task fails due to an error, all error fields will be appended to the response.
+If a task fails due to an error, all error fields will be appended to the task response in an `error` object.
 
 ### Task `status`
 
@@ -85,7 +85,7 @@ Later, you check the request's status one more time. It was successfully process
 }
 ```
 
-Had the task failed, the response would have included an error message:
+Had the task failed, the response would have included an `error` object:
 
 ```json
 {
