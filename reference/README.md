@@ -8,4 +8,4 @@ This is **timeless knowledge**. We recommend keeping it open in a spare tab, whe
 
 - [⭐ Features](/reference/features)
 - [📒 API](/reference/api)
-- [🛠️ Under the hood](/reference/under_the_hood)
+- [🛠️ Under the hood](/learn/advanced)

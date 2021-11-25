@@ -229,12 +229,12 @@ Beware heavily multi-lingual datasets and datasets with many unique words, such 
 
 ### Search speed
 
-Because MeiliSearch uses a [memory map](/reference/under_the_hood/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
+Because MeiliSearch uses a [memory map](/learn/advanced/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
 
 - A big database + a small amount of RAM => slow search
 - A small database + tons of RAM => lightning fast search
 
-MeiliSearch also uses disk space as [virtual memory](/reference/under_the_hood/storage.md#memory-usage). This disk space does not correspond to database size; rather, it provides speed and flexibility to the engine by allowing it to go over the limits of physical RAM.
+MeiliSearch also uses disk space as [virtual memory](/learn/advanced/storage.md#memory-usage). This disk space does not correspond to database size; rather, it provides speed and flexibility to the engine by allowing it to go over the limits of physical RAM.
 
 At this time, the number of CPU cores has no direct impact on index or search speed. However, **the more cores you provide to the engine, the more search queries it will be able to process at the same time**.
 
