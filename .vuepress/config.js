@@ -101,7 +101,7 @@ module.exports = {
           path: '/reference/features/',
           collapsable: false,
           children: [
-            '/reference/features/authentication',
+            '/reference/features/security',
             '/reference/features/configuration',
             '/reference/features/distinct',
             '/reference/features/dumps',
