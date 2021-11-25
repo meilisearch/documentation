@@ -227,7 +227,7 @@ Delete all documents in the specified index.
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentsDeletion",
+    "type": "clearAll",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
