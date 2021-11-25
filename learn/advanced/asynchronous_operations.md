@@ -59,7 +59,7 @@ The **final status of a `processed` task is `succeeded` or `failed`.**
 
 Suppose you add a new document to your instance using the [documents API endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `uid`.
 
-When you query the task endpoint using this uid, you see that it has been enqueued:
+When you query the task endpoint using this `uid`, you see that it has been enqueued:
 
 ```json
 {
