@@ -187,7 +187,7 @@ All settings will be reset to their default value.
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "indexUpdate",
+    "type": "settingsUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
