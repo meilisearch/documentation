@@ -84,10 +84,10 @@
 /create/how_to/updating.html                         /learn/advanced/updating.html
 
 # Remove Create section
-/create/how_to/meilisearch_react                    https://blog.meilisearch.com/how-to-implement-instant-search-within-5-minutes-in-your-react-app/
+/create/how_to/meilisearch_react.html                    https://blog.meilisearch.com/how-to-implement-instant-search-within-5-minutes-in-your-react-app/
 /create/how_to/aws.html                             /learn/cookbooks/aws.html
 /create/how_to/gcp.html                             /learn/cookbooks/gcp.html
-/create/how_to/qovery.html                          /learn/cookbooks/qovery.htmk
+/create/how_to/qovery.html                          /learn/cookbooks/qovery.html
 /create/how_to/digitalocean_droplet.html            /learn/cookbooks/digitalocean_droplet.html      
 /create/how_to/http2_ssl.html                       /learn/cookbooks/http2_ssl.html
 /create/how_to/running_production.html              /learn/cookbooks/running_production.html

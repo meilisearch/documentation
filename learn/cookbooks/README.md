@@ -1,4 +1,4 @@
-# How-to guides
+# Cookbooks
 
 Each guide in this section takes the reader through the steps required to solve a real-world problem. Like recipes in a cookbook, they are **repeatable solutions** you can return to many times.
 
