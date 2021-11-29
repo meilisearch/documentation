@@ -7,7 +7,7 @@
 
 We aim to provide global language support, and your feedback helps us [move closer to that goal](#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/MeiliSearch/issues/new/choose).
 
-If you'd like to learn more about how different languages are processed in MeiliSearch, see our [tokenizer documentation](/reference/under_the_hood/tokenization.md).
+If you'd like to learn more about how different languages are processed in MeiliSearch, see our [tokenizer documentation](/learn/advanced/tokenization.md).
 
 ## Improving our language support
 

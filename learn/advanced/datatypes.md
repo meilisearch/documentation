@@ -9,12 +9,12 @@ Based on their type, however, the fields will be handled and used in different w
 
 Types:
 
-- [String](/reference/under_the_hood/datatypes.md#string)
-- [Numeric types](/reference/under_the_hood/datatypes.md#numeric-type): `integer`, `float`
-- [Boolean](/reference/under_the_hood/datatypes.md#boolean)
-- [Array](/reference/under_the_hood/datatypes.md#array)
-- [Object](/reference/under_the_hood/datatypes.md#object)
-- [`null` type](/reference/under_the_hood/datatypes.md#null-type)
+- [String](/learn/advanced/datatypes.md#string)
+- [Numeric types](/learn/advanced/datatypes.md#numeric-type): `integer`, `float`
+- [Boolean](/learn/advanced/datatypes.md#boolean)
+- [Array](/learn/advanced/datatypes.md#array)
+- [Object](/learn/advanced/datatypes.md#object)
+- [`null` type](/learn/advanced/datatypes.md#null-type)
 
 ### String
 
@@ -103,7 +103,7 @@ Will be processed as if all elements were arranged at the same level:
 "Bruce Willis. Vin Diesel. Kung Fu Panda."
 ```
 
-The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/reference/under_the_hood/datatypes.md#examples).
+The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
 ### Object
 
@@ -126,7 +126,7 @@ In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are a
 "movie_id. 1564saqw12ss. title. Kung fu Panda."
 ```
 
-These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/reference/under_the_hood/datatypes.md#examples).
+These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
 ### null type
 
