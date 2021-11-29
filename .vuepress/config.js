@@ -107,6 +107,7 @@ module.exports = {
             {
               title: 'Run in production',
               path: '/learn/cookbooks/running_production',
+              sidebarDepth: 0,
             },
             {
               title: 'Use with Postman',
