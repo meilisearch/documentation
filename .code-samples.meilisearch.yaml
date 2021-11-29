@@ -550,3 +550,50 @@ geosearch_guide_sort_usage_2: |-
   curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
+security_guide_create_key_1: |-
+  curl \
+    -X POST 'http://localhost:7700/keys/' \
+    -H 'Content-Type: application/json' \
+    -H "Authorization: Bearer [your_master_key]" \
+    --data-binary '{
+      "description": "Search key",
+      "actions": [
+          "search"
+      ],
+      "indexes": ["scifi_books"],
+      "expiresAt": "2023-01-01T00:00:00Z"
+    }'
+security_guide_create_key_2: |-
+  curl \
+    -X POST 'http://localhost:7700/keys/' \
+    -H 'Content-Type: application/json' \
+    -H "Authorization: Bearer [your_master_key]" \
+    --data-binary '{
+      "description": "Manage sci-fi books key",
+      "actions": [
+        "documents.add",
+        "documents.get",
+        "documents.delete"
+      ],
+      "indexes": ["scifi_books"],
+      "expiresAt": "2022-02-01T00:00:00Z"
+    }'
+security_guide_list_keys_1: |-
+  curl
+    -X GET 'http://localhost:7700/keys' \
+    -H 'Authorization: [your_master_key]'
+security_guide_update_key_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -H 'Authorization: Bearer [your_master_key]' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "expiresAt": "2022-03-01T00:00:00Z",
+    }'
+security_guide_delete_key_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -H 'Authorization: Bearer [your_master_key]'
+security_guide_search_key_1: |-
+  curl -X GET 'http://127.0.0.1:7700/scifi_books/search' \
+    -H "Authorization: Bearer [an_api_key]"
