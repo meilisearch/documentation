@@ -6,7 +6,7 @@ Understanding our reference documentation is easier with background knowledge of
 
 ## Table of contents
 
-[Authentication](/reference/features/authentication.md)
+[Authentication](/reference/features/security.md)
 [Configuration](/reference/features/configuration.md)
 [Distinct attribute](/reference/features/distinct.md)
 [Dumps](/reference/features/dumps.md)

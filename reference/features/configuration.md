@@ -103,12 +103,12 @@ Configures the instance's environment. Value must be either `production` or `dev
 
 `production`:
 
-- Setting a [master key](/reference/features/authentication.md) is **mandatory**
+- Setting a [master key](/reference/features/security.md) is **mandatory**
 - The [web interface](/reference/features/web_interface.md#web-interface) is disabled
 
 `development`:
 
-- Setting a [master key](/reference/features/authentication.md) is **optional**
+- Setting a [master key](/reference/features/security.md) is **optional**
 - The web interface is enabled
 
 ::: tip
@@ -141,7 +141,7 @@ Providing a master key is mandatory when `--env` is set to `production`; if none
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-[Learn more about MeiliSearch's use of security keys.](/reference/features/authentication.md)
+[Learn more about MeiliSearch's use of security keys.](/reference/features/security.md)
 
 ### Disable analytics
 

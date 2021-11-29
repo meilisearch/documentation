@@ -121,7 +121,7 @@ EOF
 ```
 
 ::: tip
-For more information on MeiliSearch authentication and API keys see the [authentication docs](/reference/features/authentication.md). For more information on MeiliSearch options and flags see the [installation docs](/learn/getting_started/installation.md#download-and-launch).
+For more information on MeiliSearch authentication and API keys see the [authentication docs](/reference/features/security.md). For more information on MeiliSearch options and flags see the [installation docs](/learn/getting_started/installation.md#download-and-launch).
 :::
 
 As for now, it is not time yet to expose your MeiliSearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your MeiliSearch instance.

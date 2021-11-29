@@ -7,16 +7,20 @@ MeiliSearch allows you to protect your instances by using API keys. API keys giv
 To protect a MeiliSearch instance, you must supply it with an alphanumeric string representing your `master` key. This can be done with the [master key configuration option](/reference/features/configuration.md#master-key):
 
 :::: tabs
-::: tab CLI 
+::: tab CLI
+
 ```sh
 ./meilisearch --master-key="[your_master_key]"
 ```
+
 :::
 
 ::: tab Environment variable
+
 ```sh
 MEILI_MASTER_KEY="[your_master_key]"
 ```
+
 :::
 ::::
 
@@ -28,9 +32,9 @@ Communicating with a protected instance's endpoints requires adding a `Authoriza
 
 ### Using the `master` key
 
-Whenever possible, you should avoid using your `master` key to access API endpoints other than [`/keys`](#) and [use API Keys instead](#api-keys). When you launch a secured instance for the first time, MeiliSearch creates a two default API keys:[ `Default Search API Key` and `Default Admin API Key`](#default-api-keys).
+Whenever possible, you should avoid using your `master` key to access API endpoints other than [`/keys`](/reference/api/keys.md) and [use API Keys instead](#api-keys). When you launch a secured instance for the first time, MeiliSearch creates a two default API keys: [`Default Search API Key` and `Default Admin API Key`](#default-api-keys).
 
-The `master` key is the only key with access to the [`/keys` endpoint](#). You can use this endpoint to [create, update, and delete API keys](#api-keys).
+The `master` key is the only key with access to the [`/keys` endpoint](/reference/api/keys.md). You can use this endpoint to [create, update, and delete API keys](#api-keys).
 
 ### Updating the `master` key
 
@@ -46,7 +50,7 @@ API keys are necessary to access the majority of API routes in a protected Meili
 
 You can create API keys by using the [`POST /keys` endpoint](/reference/api/keys.md#create-a-key). This endpoint is always protected and can only be accessed with the `master` key.
 
-This endpoint accepts four arguments: 
+This endpoint accepts four arguments:
 
 - `indexes`: an array of strings indicating the `uid`s of indexes the key can access _(mandatory)_
 - `actions`: an array of [valid key actions](/reference/api/keys.md#actions) _(mandatory)_

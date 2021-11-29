@@ -114,7 +114,7 @@ If you don't want to use Docker, here are [other ways to run the scraper](https:
 `<absolute-path-to-your-config-file>` should be the **absolute** path of your configuration file defined at [the previous step](#configuration-file).
 
 The API key you must provide should have the permissions to add documents into your MeiliSearch instance. In a production environment, we recommend providing the private key instead of the master key, as it is safer and it has enough permissions to perform such requests.
-_More about [MeiliSearch authentication](/reference/features/authentication.md)._
+_More about [MeiliSearch authentication](/reference/features/security.md)._
 
 ::: tip
 
@@ -179,7 +179,7 @@ These three fields are mandatory, but more [optional fields are available](https
 ::: warning
 
 Since the configuration file is public, we strongly recommend providing the MeiliSearch public key in a production environment, which is enough to perform search requests.
-Read more about [MeiliSearch authentication](/reference/features/authentication.md).
+Read more about [MeiliSearch authentication](/reference/features/security.md).
 
 :::
 
@@ -219,7 +219,7 @@ The `hostUrl` and the `apiKey` fields are the credentials of the MeiliSearch ins
 ::: warning
 
 We strongly recommend providing the MeiliSearch public key in a production environment, which is enough to perform search requests.
-Read more about [MeiliSearch authentication](/reference/features/authentication.md).
+Read more about [MeiliSearch authentication](/reference/features/security.md).
 
 :::
 
