@@ -1,63 +1,60 @@
 # Main Features
 
-MeiliSearch 101:
+[[toc]]
 
-- Download and install
-  - Cloud deploy?
-  - Configuration (should it be a chapter or a subheading?)
-  - Update MeiliSearch
-- Add documents
-  - mention indexes and documents and how they work briefly
-  - primary key inference? talk about it briefly here?
-- Update (Do we talk about the general update process and updating MeiliSearch?)
-- Search
-- Configure settings (covers some? of the settings the user can modify)
-  - A brief explanation of what the setting allows you to do + an example (multiple examples in case of different options like for geosearch?)
-- Synonyms and stop words (will this have enough content to qualify as a chapter?)
-- Backup
-- Authentication (do we need to talk about this at this stage?)
+Questions: (Answers in italics)
 
-Questions:
-
-1. Do we add warnings and notes at this stage?
-2. Do we add links to detailed explanations at every instance? Or do we add them only once at the bottom of each section? I think we should add them once at the bottom of each section
-3. What should the feature examples look like? Do we start with a presenting a use case? Suppose you want to blah blah and demonstrate how MeiliSearch does it? Add a code sample
-4. Do we want a section at the start briefly explaining MeiliSearch terms and any other terms? Documents, indexes, attributes, any other terms used in getting started?
-5. Where does the dataset file go?
-6. Should I use "we" or "you"? I think we would sound better in this context I used a mix of both for now just to see what would look better.
+1. Do we add warnings and notes at this stage? *Nope*
+2. Do we add links to detailed explanations at every instance? Or do we add them only once at the bottom of each section? *Only once*
+3. What should the feature examples look like? Do we start with a presenting a use case? Suppose you want to blah blah and demonstrate how MeiliSearch does it? Add a code sample. *To be decided*
+4. Do we want a section at the start briefly explaining MeiliSearch terms and any other terms? Documents, indexes, attributes, any other terms used in getting started? *Nope*
+5. Where does the dataset file go? Not sure if we need it
+6. Should I use "we" or "you"? *You*
 
 This section will go over some of the main features of MeiliSearch to help you get started.
 
 Once you have everything set up, you can change the default settings .... need a better sentence to summarize the whole thing.
 
-## Download and install
+## Starting your journey
 
-- Do we need to include all the tabs from Download and launch here?
+### Download and install
 
-## Cloud deploy
+- Add all the tabs from Download and launch here
 
-- Need details
-- Is this a subheading of download and install?
+### Cloud deploy
+
+### Add documents
+
+- Concept of async updates
+
+### Basic search
+
+just the query
+
+### Web interface
 
 ## Configuration options
 
-- Do we need to link all the options here?
-- Should this be a very brief section?
+### Database path
 
-## Search
+### Environment
 
-- mention search parameters?
-- mention placeholder and phrase search?
+### Master key
 
-## Web interface
+### Payload limit size
 
-## Integrate your project
+## Relevancy
 
-## Distinct attributes
+### stop words and synonyms
 
-MeiliSearch lets you set one field per index as the distinct attribute. The distinct attribute will always be unique among returned documents. This means there will never be more than one occurrence of the same value in the distinct attribute field among the returned documents.
+- Is it a good idea to link one-way association or should it be the Synonyms page? This link does take the user to the synonyms page so it shouldn't be a problem
+- Do I need to include examples? I don't think so. The Synonyms and Stop words pages are pretty brief, too much info here will make them useless. But is this detail enough for demonstration purposes? Maybe add a gif and update the examples I used in the text accordingly?
 
-## Settings
+MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English. Adding `the` to your stop words list will mean that MeiliSearch will ignore all documents containing this word improving the speed and relevancy of your search. You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
+
+A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant. So if you have `San Francisco` and `SF` set as synonyms, searching for either words will show the same results. The only exception is one-way association, you can read more about it in our [dedicated guide](/reference/features/synonyms.md#one-way-association).
+
+### ranking rules
 
 ### Displayed attributes
 
@@ -65,18 +62,16 @@ MeiliSearch lets you set one field per index as the distinct attribute. The dist
 
 By default, all attributes are displayed in each matching document but you can update the settings to change that.
 
-### Filterable attributes
+### distinctAttribute
 
-MeiliSearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to the `filterableAttributes`.
-
-### Ranking rules
-
-Should this be part of Search?
+MeiliSearch lets you set one field per index as the distinct attribute. The distinct attribute will always be unique among returned documents. This means there will never be more than one occurrence of the same value in the distinct attribute field among the returned documents.
 
 ### Searchable attributes
 
 By default, all attribute are searched for matching query words but you can configure the settings to change that. Lets look at MeiliSearch's web interface for this example.
 When we search for `lion king` with the default settings, MeiliSearch searches for it everywhere.
+
+Use a number or a common phrase for the example. `Number 23`, `Pi`
 
 ![need a better gif](/getting-started/getting_started_searchableAttributes.gif)
 
@@ -84,17 +79,32 @@ If we update the `searchableAttributes` to only contain the movie title, MeiliSe
 
 new gif
 
+## Search parameters
+
+### attributesToHighlight
+
+### attributesToCrop
+
+### limit
+
+## Filtering and sorting
+
+### Filterable attributes
+
+MeiliSearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to the `filterableAttributes`.
+
 ### Sortable attributes
 
 - I'm not sure how to the example part should go? For now I can only think of "Let's ..." but is that peppy enough?
-- Should we link the feature reference or the API reference?
-- Should we have something on sorting as well? Maybe as part of this?
+- Link to sorting guide
 
-You can use any (not any-do we need the details here?) of the document fields for sorting by adding them to the `sortableAttributes`. Let's look at how you can sort all `H5` meteors based on their mass.
+You can use any (not any-do we need the details here? (if it fits in a sentence)) of the document fields for sorting by adding them to the `sortableAttributes`. Let's look at how you can sort all `H5` meteors based on their mass.
 
 <CodeSamples id= "getting_started_sorting_md" />
 
 Add json result here
+
+Maybe mention asc and desc rules.
 
 To learn more about `sortableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/sorting.md).
 
@@ -461,14 +471,9 @@ You should get the following meteors:
 
 To learn more about geosearch and how to configure it, refer to our [dedicated guide](/reference/features/geosearch.md).
 
-## Stop words and synonyms
+## Integration/Facets
 
-- Is it a good idea to link one-way association or should it be the Synonyms page? This link does take the user to the synonyms page so it shouldn't be a problem
-- Do I need to include examples? I don't think so. The Synonyms and Stop words pages are pretty brief, too much info here will make them useless. But is this detail enough for demonstration purposes? Maybe add a gif and update the examples I used in the text accordingly?
-
-MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English. Adding `the` to your stop words list will mean that MeiliSearch will ignore all documents containing this word improving the speed and relevancy of your search. You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
-
-A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant. So if you have `San Francisco` and `SF` set as synonyms, searching for either words will show the same results. The only exception is one-way association, you can read more about it in our [dedicated guide](/reference/features/synonyms.md#one-way-association).
+- can we use this with the interface?
 
 ## Dumps and snapshots
 
@@ -489,5 +494,3 @@ For example, you should not import a dump from MeiliSearch v0.22.0 to MeiliSearc
 Snapshots, on the other hand, are an exact copy of your database. The documents in a snapshot are already "indexed" and ready to go, greatly increasing import speed. However, as a result, **snapshots are not compatible between different versions of MeiliSearch.**
 
 Snapshots are intended mainly as a safeguard: ensuring that if some failure occurs, you're able to relaunch your database quickly and efficiently.
-
-## ?? Indexation
