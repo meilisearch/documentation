@@ -30,7 +30,7 @@ For almost all routes, you need to be recognized by the server to check your per
 
 <CodeSamples id="authentication_header_1" />
 
-Please read about [authentication keys](/reference/features/authentication.md) and [how to manage them](/reference/api/keys.md) for more information.
+Please read about [security keys](/reference/features/authentication.md) and [how to manage them](/reference/api/keys.md) for more information.
 
 `X-Meili-API-Key: $API_KEY`
 

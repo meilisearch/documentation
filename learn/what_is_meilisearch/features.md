@@ -54,6 +54,10 @@ If you enclose search terms in double quotes (`"`), MeiliSearch will only return
 
 Phrase search is particularly useful when looking for a single result, such as searching for a book by ISBN. It is also possible to combine phrase searches with MeiliSearch's basic syntax so only parts of a query are matched strictly.
 
+## API key management
+
+MeiliSearch allows you to protect your instances through the use of API keys. API keys allow you to control which users can access what indexes, routes, and endpoints. These API keys are stored and managed by the master key. When you set a master key on your first launch, MeiliSearch generates two API keys called the `Default Search API Key` and the `Default Admin API Key`. You can read more them in our article on [security](/reference/features/security.md).
+
 ## Comprehensive language support
 
 [MeiliSearch is multilingual](/reference/features/language.md)! We aim to support every language represented in our global community.
