@@ -2,13 +2,13 @@
 
 The `/stats` route gives extended information and metrics about indexes and the MeiliSearch database.
 
-## Fields returned
-
-### Get stats of an index
+## Get stats of an index
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
 
-Get stats of an index. It returns the following fields:
+Get stats of an index.
+
+### Fields returned
 
 #### `numberOfDocuments`
 
@@ -50,11 +50,15 @@ The `fieldDistribution` object shows every field in the individual index or the 
 }
 ```
 
-### Get stats of all indexes
+## Get stats of all indexes
 
 <RouteHighlighter method="GET" route="/stats"/>
 
-Get stats of all indexes. In addition to [all fields returned by `GET /indexes/:index_uid/stats`](#fields-returned), `GET /stats` returns the following instance-level fields:
+Get stats of all indexes.
+
+### Fields returned
+
+In addition to [all fields returned by `GET /indexes/:index_uid/stats`](#fields-returned), `GET /stats` returns the following instance-level fields:
 
 #### `databaseSize`
 
