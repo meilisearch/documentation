@@ -54,7 +54,7 @@ The `fieldDistribution` object shows every field in the individual index or the 
 
 <RouteHighlighter method="GET" route="/stats"/>
 
-Get stats of all indexes. In addition to all fields returned by `GET /indexes/:index_uid/stats`, `GET /stats` returns the following instance-level fields:
+Get stats of all indexes. In addition to [all fields returned by `GET /indexes/:index_uid/stats`](#fields-returned), `GET /stats` returns the following instance-level fields:
 
 #### `databaseSize`
 
