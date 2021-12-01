@@ -1,6 +1,6 @@
 # Security
 
-MeiliSearch allows you to protect your instances by using API keys. API keys give you fine-grained control over which users can access which indexes, endpoints, and  routes.
+MeiliSearch allows you to protect your instances by using API keys. API keys give you fine-grained control over which users can access which indexes, endpoints, and routes.
 
 ## Protecting a MeiliSearch instance
 
@@ -28,13 +28,13 @@ MEILI_MASTER_KEY="[your_master_key]"
 Launching an instance with a `master` key is mandatory when `env` is set to `production`.
 :::
 
-Communicating with a protected instance's endpoints requires adding a `Authorization` header to your request.
+Communicating with a protected instance's endpoints requires adding an `Authorization` header to your request.
 
 ### Using the `master` key
 
-Whenever possible, you should avoid using your `master` key to access API endpoints other than [`/keys`](/reference/api/keys.md) and [use API Keys instead](#api-keys). When you launch a secured instance for the first time, MeiliSearch creates a two default API keys: [`Default Search API Key` and `Default Admin API Key`](#default-api-keys).
+Whenever possible, you should avoid using your `master` key to access API endpoints other than [`/keys`](/reference/api/keys.md) and [use API Keys instead](#api-keys). When you launch a secured instance for the first time, MeiliSearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](#default-api-keys).
 
-The `master` key is the only key with access to the [`/keys` endpoint](/reference/api/keys.md). You can use this endpoint to [create, update, and delete API keys](#api-keys).
+The `master` key is the only key with access to the [`/keys` endpoint](/reference/api/keys.md). You can use this endpoint to [create, update, list, and delete API keys](#api-keys).
 
 ### Updating the `master` key
 
@@ -78,7 +78,9 @@ All [`/keys` endpoints](/reference/api/keys.md) are synchronous, so your key wil
   "actions": [
       "search"
   ],
-  "indexes": ["scifi_books"],
+  "indexes": [
+  "scifi_books"
+  ],
   "expiresAt": "2023-01-01T00:00:00Z",
   "createdAt": "2022-01-01T10:00:00Z",
   "updatedAt": "2022-01-01T10:00:00Z"
@@ -100,7 +102,9 @@ Once again, you'll receive the key in the request response body:
     "documents.get",
     "documents.delete"
   ],
-  "indexes": ["scifi_books"],
+  "indexes": [
+  "scifi_books"
+  ],
   "expiresAt": "2022-02-01T00:00:00Z",
   "createdAt": "2022-01-01T10:00:00Z",
   "updatedAt": "2022-01-01T10:00:00Z"
@@ -217,7 +221,9 @@ After creating your `Manage sci-fi books key` with an expiry date set for the ne
     "documents.get",
     "documents.delete"
   ],
-  "indexes": ["scifi_books"],
+  "indexes": [
+  "scifi_books"
+  ],
   "expiresAt": "2022-03-01T00:00:00Z",
   "createdAt": "2022-01-01T10:00:00Z",
   "updatedAt": "2022-01-01T10:00:00Z"
