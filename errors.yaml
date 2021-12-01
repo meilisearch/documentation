@@ -13,7 +13,7 @@ errors:
   - code: invalid_state
     description: "The database is in an invalid state. Deleting the database and re-indexing should solve the problem."
   - code: primary_key_inference_failed 
-    description: "The first provided document contains no fields with the substring `id`. [Manually designate the primary key](https://docs.meilisearch.com/learn/core_concepts/documents.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key."
+    description: "The first provided document contains no fields with the substring `id`. [Manually designate the primary key](https://docs.meilisearch.com/learn/core_concepts/documents.html#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key."
   - code: document_fields_limit_reached
     description: "A document exceeds the maximum limit of 65,535 fields."
   - code: missing_document_id
