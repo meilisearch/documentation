@@ -83,10 +83,10 @@ get_task_by_index_1: |-
 get_all_tasks_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks'
-get_task_by_uid_1: |-
+get_task_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks/1'
-get_all_tasks_in_index_1: |-
+get_all_tasks_by_index_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/tasks'
 get_keys_1: |-

@@ -67,7 +67,7 @@ Get a single [task](/learn/advanced/asynchronous_operations.md).
 
 ### Example
 
-<CodeSamples id="get_task_by_uid_1" />
+<CodeSamples id="get_task_1" />
 
 #### Response: `200 Ok`
 
@@ -110,7 +110,7 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
 
 ### Example
 
-<CodeSamples id="get_all_tasks_in_index_1" />
+<CodeSamples id="get_all_tasks_by_index_1" />
 
 #### Response: `200 Ok`
 
