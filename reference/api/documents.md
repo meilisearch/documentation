@@ -142,7 +142,7 @@ The body is composed of a **JSON array** of documents.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Add or update documents
 
@@ -202,7 +202,7 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete all documents
 
@@ -232,7 +232,7 @@ Delete all documents in the specified index.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete one document
 
@@ -263,9 +263,7 @@ Delete one document based on its unique id.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
-
-This `uid` allows you to [track the current task](/reference/api/tasks.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete documents
 
@@ -303,4 +301,4 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

@@ -45,6 +45,20 @@ The response from the [task API](/reference/api/tasks.md) will always include th
 
 If a task fails due to an error, all error fields will be appended to the task response in an `error` object.
 
+### Summarized task objects
+
+All asynchronous operations return a summarized version of the [`task` object](#response). It contains the following fields in the stated order:
+
+| Field      | Type    | Description                              |
+|------------|---------|---------------------------------         |
+| uid        | integer | Unique sequential identifier             |
+| indexUid   | string  | Unique index identifier                  |
+| status     | string  | Status of the task. Value is `enqueued`  |
+| type       | string  | Type of task                             |
+| enqueuedAt | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                                                        |
+
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+
 ### Task `status`
 
 Task responses always contain a field indicating the request's current `status`. This field has four possible values:
@@ -53,8 +67,6 @@ Task responses always contain a field indicating the request's current `status`.
 - `processing`: the task is being processed
 - `succeeded`: the task has been successfully processed
 - `failed`: a failure occurred when processing the task. No changes were made to the database
-
-The **final status of a `processed` task is `succeeded` or `failed`.**
 
 ### Examples
 

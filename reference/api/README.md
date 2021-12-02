@@ -87,6 +87,6 @@ MeiliSearch is an **asynchronous API**. This means that in response to most writ
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 See more information about [asynchronous operations](/learn/advanced/asynchronous_operations.md).

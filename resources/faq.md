@@ -135,6 +135,37 @@ Good:
 
 See more [information about the primary key](/learn/core_concepts/documents.md#primary-key).
 
+## I have uploaded my documents, but I get no result when I search in my index.
+
+Your document upload probably failed. To understand why, please check the status of the document addition task using the `uid`. If the task failed, the response should contain an `error` object.
+
+Here is an example of a failed task:
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "failed",
+    "type": "documentsAddition",
+    "details": { 
+            "receivedDocuments": 67493,
+            "indexedDocuments": 0
+    },
+    "error": {
+        "message": "Document does not have a `:primaryKey` attribute: `:documentRepresentation`.",
+        "code": "internal",
+        "type": "missing_document_id",
+        "link": "https://docs.meilisearch.com/errors#missing-document-id",
+    },
+    "duration": "PT1S",
+    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+    "startedAt": "2021-08-10T14:29:18.000000Z",
+    "finishedAt": "2021-08-10T14:29:19.000000Z"
+}
+```
+
+Check your error message for more information.
+
 ## Is killing a MeiliSearch process safe?
 
 Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.

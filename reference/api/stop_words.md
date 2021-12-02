@@ -74,7 +74,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset stop-words
 
@@ -108,4 +108,4 @@ Empty array: `[]`
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

@@ -103,6 +103,8 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 ```
 
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+
 ## Update an index
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
@@ -142,6 +144,8 @@ The `primaryKey` can be added if it does not already exist (to know if it has be
 }
 ```
 
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+
 ## Delete an index
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
@@ -169,3 +173,5 @@ Delete an [index](/learn/core_concepts/indexes.md).
     "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

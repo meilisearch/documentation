@@ -88,7 +88,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset ranking rules
 
@@ -138,4 +138,4 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

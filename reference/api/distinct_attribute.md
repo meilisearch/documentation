@@ -72,7 +72,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset distinct attribute
 
@@ -104,4 +104,4 @@ Reset the [distinct attribute](/reference/features/settings.md#distinct-attribut
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task-status-by-uid).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

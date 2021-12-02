@@ -142,17 +142,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return:
-
-```json
-{
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "indexUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
-}
-```
+This command should return a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
 
 Now that all fields are displayed, proceed to the next step.
 
@@ -313,17 +303,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return:
-
-```json
-{
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "indexUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
-}
-```
+This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
 
 Now that all fields are displayed, proceed to the next step.
 

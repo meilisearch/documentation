@@ -73,17 +73,6 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_operations.md), including the document addition process.
 
-Asynchronous actions return the following response in the stated order:
-
-| Field      | Type    | Description                              |
-|------------|---------|---------------------------------         |
-| uid        | integer | Unique sequential identifier             |
-| indexUid   | string  | Unique index identifier                  |
-| status     | string  | Status of the task. Value is `enqueued`  |
-| enqueuedAt | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                                                        |
-
-This response is a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
-
 Here's an example of the kind of response you should receive after adding documents.
 
 ```json
@@ -96,7 +85,7 @@ Here's an example of the kind of response you should receive after adding docume
 }
 ```
 
-To view additional details on the task's progress, use the [get task status endpoint](/reference/api/tasks.md).
+This response is a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response). To view additional details on the task's progress, use the [get task endpoint](/reference/api/tasks.md).
 
 See our guide on [asynchronous operations](/learn/advanced/asynchronous_operations.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
 

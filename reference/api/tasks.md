@@ -114,8 +114,6 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
 
 #### Response: `200 Ok`
 
-Here is an example response representing an [enqueued task](/learn/advanced/asynchronous_operations.md#understanding-tasks).
-
 ```json
 {
     "results": [
