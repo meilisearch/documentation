@@ -113,7 +113,7 @@ If you don't want to use Docker, here are [other ways to run the scraper](https:
 
 `<absolute-path-to-your-config-file>` should be the **absolute** path of your configuration file defined at [the previous step](#configuration-file).
 
-The API key used here should have the permissions to add documents into your MeiliSearch instance. In a production environment, we recommend providing the `Default Admin API Key` instead of the master key, as it is safer and it has enough permissions to perform such requests.
+The API key should have the permissions to add documents into your MeiliSearch instance. In a production environment, we recommend providing the `Default Admin API Key` instead of the master key, as it is safer and it has enough permissions to perform such requests.
 _More about [MeiliSearch security](/reference/features/security.md)._
 
 ::: tip
