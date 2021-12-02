@@ -476,6 +476,16 @@ getting_started_search_md: |-
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "botman" }'
   ```
+getting_started_update_displayedAttributes_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+        "title",
+        "overview",
+        "genre", 
+        "poster"
+    ]'
 getting_started_geoRadius_md: |-
   curl -X POST 'http://localhost:7700/indexes/meteors/search' \
     -H 'Content-type:application/json' \
