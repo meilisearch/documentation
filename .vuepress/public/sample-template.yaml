@@ -77,6 +77,7 @@ documents_guide_add_movie_1: |-
 getting_started_add_documents_md: |-
 getting_started_search_md: |-
 getting_started_update_displayedAttributes_md: |-
+getting_started_limit_md: |-
 getting_started_geoRadius_md: |-
 getting_started_geoPoint_md: |-
 getting_started_sorting_md: |-

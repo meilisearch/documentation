@@ -228,10 +228,19 @@ MeiliSearch accepts JSON, NDJSON, and CSV payloads. The default payload limit is
 
 - Is it a good idea to link one-way association or should it be the Synonyms page? This link does take the user to the synonyms page so it shouldn't be a problem
 - Do I need to include examples? I don't think so. The Synonyms and Stop words pages are pretty brief, too much info here will make them useless. But is this detail enough for demonstration purposes? Maybe add a gif and update the examples I used in the text accordingly?
+- Not sure if gifs is a good idea for stop words. Any suggestions?
 
-MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English. Adding `the` to your stop words list will mean that MeiliSearch will ignore all documents containing this word improving the speed and relevancy of your search. You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
+MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English.
 
-A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant. So if you have `San Francisco` and `SF` set as synonyms, searching for either words will show the same results. The only exception is one-way association, you can read more about it in our [dedicated guide](/reference/features/synonyms.md#one-way-association).
+If you search for `the cat` with the current settings, MeiliSearch will return a lot of results but not all of them will be relevant. After adding `the` to your list of stop words, MeiliSearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
+
+You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
+
+A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant. So if you have `winnie` and `piglet` set as synonyms, searching for either words will show the same results.
+
+-> Need to create a gif
+
+The only exception is one-way association, you can read more about it in our [dedicated guide](/reference/features/synonyms.md#one-way-association).
 
 ### ranking rules
 
@@ -264,6 +273,8 @@ If you only want to view the `title`, `poster`, and `overview`, you can do so wi
 
 MeiliSearch lets you set one field per index as the distinct attribute. The distinct attribute will always be unique among returned documents. This means there will never be more than one occurrence of the same value in the distinct attribute field among the returned documents.
 
+-> no idea what the example should be
+
 ### Searchable attributes
 
 By default, all attribute are searched for matching query words but you can configure the settings to change that. Lets look at MeiliSearch's web interface for this example.
@@ -295,7 +306,11 @@ Let's take `overview` as an example, MeiliSearch will return the whole value for
 
 The `limit` decides the maximum number of documents MeiliSearch returns for a query. The default is `20` but you can change it.
 
-If you search the `movies` index for 
+If you search the `movies` index for `shifu`, MeiliSearch will return the first 20 movies. If you were to update the limit to `10`:
+
+<CodeSamples id= "getting_started_limit_md" />
+
+MeiliSearch would now return the first ten results.
 
 ## Filtering and sorting
 
@@ -312,7 +327,7 @@ You can use any (not any-do we need the details here? (if it fits in a sentence)
 
 <CodeSamples id= "getting_started_sorting_md" />
 
-Add json result here
+-> Add json result here
 
 Maybe mention asc and desc rules.
 

@@ -486,6 +486,11 @@ getting_started_update_displayedAttributes_md: |-
         "genre", 
         "poster"
     ]'
+getting_started_limit_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "shifu", "limit": 10 }'
 getting_started_geoRadius_md: |-
   curl -X POST 'http://localhost:7700/indexes/meteors/search' \
     -H 'Content-type:application/json' \
