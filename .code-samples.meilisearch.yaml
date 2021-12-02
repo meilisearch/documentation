@@ -303,7 +303,7 @@ search_parameter_guide_offset_1: |-
     --data-binary '{ "q": "shifu", "offset": 1 }'
 search_parameter_guide_limit_1: |-
   curl \
-    - X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu", "limit": 2 }'
 search_parameter_guide_retrieve_1: |-
