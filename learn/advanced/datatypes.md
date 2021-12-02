@@ -7,16 +7,9 @@ For example, if you have a complex field with nested objects, this field will be
 
 Based on their type, however, the fields will be handled and used in different ways by MeiliSearch. **The type affects how a field is used for search results**.
 
-Types:
+[[toc]]
 
-- [String](/learn/advanced/datatypes.md#string)
-- [Numeric types](/learn/advanced/datatypes.md#numeric-type): `integer`, `float`
-- [Boolean](/learn/advanced/datatypes.md#boolean)
-- [Array](/learn/advanced/datatypes.md#array)
-- [Object](/learn/advanced/datatypes.md#object)
-- [`null` type](/learn/advanced/datatypes.md#null-type)
-
-### String
+## String
 
 String is the primary type for indexing data in MeiliSearch. It enables to create the content in which to search. Strings are processed as detailed below.
 
@@ -36,7 +29,7 @@ Distance plays an essential role in determining whether documents are relevant s
 
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
-#### Examples
+### Examples
 
 To demonstrate how a string is split by space, let's say you have the following string as an input:
 
@@ -65,7 +58,7 @@ Let's see another example. Given two documents:
 When making a query on `Bruce Willis`, `002` will be the first document returned and `001` will be the second one.
 This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
 
-### Numeric type
+## Numeric
 
 A numeric type (`integer`, `float`) is converted to a human-readable decimal number string representation. Numeric types can be searched as they are converted to strings.
 
@@ -73,17 +66,17 @@ You can add [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rule
 
 You can also create [filters](/reference/features/filtering_and_faceted_search.md). The `>`, `>=`, `<`, and `<=` relational operators apply only to numerical values.
 
-### Boolean
+## Boolean
 
 A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (i.e. `true` and `false`). Booleans can be searched as they are converted to strings.
 
-### Array
+## Array
 
 An array represents a collection of elements that can be strings or arrays for instance. An array is recursively broken into separate string tokens, which means separate words.
 
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
-#### Examples
+### Examples
 
 The following input:
 
@@ -105,13 +98,13 @@ Will be processed as if all elements were arranged at the same level:
 
 The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
-### Object
+## Object
 
 JSON objects are written in key/value pairs and surrounded by curly braces. An object is broken into separate string tokens, which means separate words.
 
 After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
 
-#### Example
+### Example
 
 ```json
 {
@@ -128,13 +121,13 @@ In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are a
 
 These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
-### null type
+## `null`
 
 The `null` type can be pushed into MeiliSearch but it **won't be taken into account for indexing**.
 
 ## Possible tokenization issues
 
-Even if it behaves exactly as expected, the tokenization process may make less sense in some cases such as:
+Even if it behaves exactly as expected, the tokenization process may lead to unintuitive results in some cases, such as:
 
 ```
 "S.O.S"
@@ -143,4 +136,5 @@ Even if it behaves exactly as expected, the tokenization process may make less s
 ```
 
 For the two strings above, the full stops `.` will be considered as hard spaces.
-`10,3` will be broken into two strings `10` and `3` instead of being processed as a numeric type.
+
+`10,3` will be broken into two strings—`10` and `3`—instead of being processed as a numeric type.
