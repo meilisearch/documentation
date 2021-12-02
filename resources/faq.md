@@ -51,6 +51,22 @@ In this documentation, we provide this <a id="downloadMovie" href="/movies.json"
 
 More datasets and setting configurations are available [in this repository](https://github.com/meilisearch/datasets/).
 
+## I did a call to an API route, what does the response mean?
+
+All asynchronous operations return a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentsAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
 
 MeiliSearch API accepts JSON, CSV, and NDJSON formats.

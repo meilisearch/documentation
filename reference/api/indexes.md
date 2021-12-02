@@ -1,6 +1,6 @@
 # Indexes
 
-An index is an entity that gathers a set of [documents](/learn/core_concepts/documents.md) with its own settings. Index creation, update, and deletion are asynchronous operations and are represented by a `task`.
+An index is an entity that gathers a set of [documents](/learn/core_concepts/documents.md) with its own settings.
 
 [Learn more about indexes](/learn/core_concepts/indexes.md).
 
@@ -100,7 +100,6 @@ An index is automatically created when adding [documents](/reference/api/documen
     "type": "indexCreation",
     "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
-
 ```
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
