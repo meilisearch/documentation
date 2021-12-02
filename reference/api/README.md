@@ -75,7 +75,7 @@ If you're having trouble understanding an error, take a look at the [complete li
 
 ## Asynchronous operations
 
-MeiliSearch returns a summarized version of the `task` object on write requests:
+MeiliSearch is an **asynchronous API**. This means that in response to most write requests, you will receive a summarized version of the `task` object:
 
 ```json
 {

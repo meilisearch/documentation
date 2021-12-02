@@ -20,44 +20,45 @@ Currently, these are MeiliSearch's asynchronous operations:
 - Adding documents to an index
 - Updating documents in an index
 - Deleting documents from an index
+- [Creating a dump](#dumps)
 
 ## Understanding tasks
 
-After you have requested an asynchronous operation, you can use the [task API endpoint](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need your request's `uid`.
+Most of MeiliSearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need your task's `uid`.
 
 ### Response
 
-The response from the [task API endpoint](/reference/api/tasks.md) will always include the following fields in the stated order:
+The response from the [task API](/reference/api/tasks.md) will always include the following fields in the stated order:
 
 | Field        | Type    | Description                                                                                                      |
 |--------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | `uid`        | integer | The unique sequential identifier of the task                                                                     |
 | `indexUid`   | string  | The unique index identifier                                                                                      |
-| `status`     | string  | The status of the task, possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
-| `type`       | string  | The type of task, possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll`                                                                       |
-| `details`    | object  |  Contains detailed information on the task payload                                                               |
-| `error`      | object  | Shows error details and context when a task has a `failed` status                                                |
-| `duration`   | string  | Represents the total elapsed time the engine was in the `processing` state in the ISO 8601 duration format     |
-| `enqueuedAt` | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                          |
-| `startedAt`  | string  | Represents the date and time in the ISO 8601 format when the task has been dequeued and started being processed. The default is `null`.                                                                                                                      |
-| `finishedAt` | string  | Represents the date and time in the ISO 8601 format when the task has the `failed` or `succeeded` status. The default is `null`.                                                                                                                          |
+| `status`     | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
+| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentsAddition`, `documentsPartial`, `documentsDeletion`, `settingsUpdate`, `clearAll`                                                                       |
+| `details`    | object  | Detailed information on the task payload                                                               |
+| `error`      | object  | Error details and context. Only present when a task has the `failed` status                                                |
+| `duration`   | string  | The total elapsed time the task spent in the `processing` state, in ISO 8601 format     |
+| `enqueuedAt` | string  | The date and time when the task was first `enqueued`, in ISO 8601 format                           |
+| `startedAt`  | string  | The date and time when the task began `processing`, in ISO 8601 format                                                                                                                       |
+| `finishedAt` | string  | The date and time when the task finished processing, whether `failed` or `succeeded`, in ISO 8601 format.                                                                                                                          |
 
 If a task fails due to an error, all error fields will be appended to the task response in an `error` object.
 
 ### Task `status`
 
-Task responses always contain a field indicating the request's current `status`. This field can have one of four possible values:
+Task responses always contain a field indicating the request's current `status`. This field has four possible values:
 
 - `enqueued`: the task request has been received and will be processed soon
 - `processing`: the task is being processed
-- `processed`: the task has been successfully processed
-- `failed`: a failure occurred when processing the task
+- `succeeded`: the task has been successfully processed
+- `failed`: a failure occurred when processing the task. No changes were made to the database
 
 The **final status of a `processed` task is `succeeded` or `failed`.**
 
 ### Examples
 
-Suppose you add a new document to your instance using the [documents API endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `uid`.
+Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `uid` in response.
 
 When you query the task endpoint using this `uid`, you see that it has been enqueued:
 
@@ -124,10 +125,10 @@ Had the task failed, the response would have included an `error` object:
 
 ## Task workflow
 
-1. When you make a task request, MeiliSearch puts it in the task queue, sets the request `status` to `enqueued` and returns a [`task` object](/learn/advanced/asynchronous_operations.md#response)
-2. When the queue reaches your task request, MeiliSearch begins processing it and changes the request `status` to `processing`
-3. Once the task has been finalized, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, in case the task failed. The final status of a `processed` task is `succeeded` or `failed`.
-4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/tasks.md#get-all-tasks)
+1. When you make a task request, MeiliSearch puts it in the task queue, sets the task's `status` to `enqueued` and returns a [`task` object](/learn/advanced/asynchronous_operations.md#response)
+2. When your task reaches the front of the queue, MeiliSearch begins working on it and changes the request `status` to `processing`
+3. Once the task has completed processing, MeiliSearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
+4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-all-tasks)
 
 ### Dumps
 
@@ -143,12 +144,12 @@ MeiliSearch's asynchronous tasks are atomic. This means that all operations conc
 
 What happens to an asynchronous operation when MeiliSearch is terminated changes depending on the request's `status`:
 
-- `enqueued`: the task will remain enqueued and will be processed as usual
+- `enqueued`: the task will remain enqueued and will be processed as usual once MeiliSearch is restarted
 - `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting, MeiliSearch will treat the task as `enqueued`
-- `processed`: there will be no data loss since the request was successfully completed
+- `succeeded`: there will be no data loss since the request was successfully completed
 - `failed`: the task failed and nothing has been altered in the database
 
-You can use [the task route](/reference/api/tasks.md) to determine a task's `status`.
+You can use [the `/tasks` route](/reference/api/tasks.md) to determine a task's `status`.
 
 ### Example
 

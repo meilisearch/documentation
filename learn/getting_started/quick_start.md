@@ -84,19 +84,19 @@ Asynchronous actions return the following response in the stated order:
 
 This response is a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
 
-Here's an example of the response on creating an index:
+Here's an example of the kind of response you should receive after adding documents.
 
 ```json
 {
-    "uid": 0,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "createIndex",
+    "type": "documentsAddition",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-To view additional details on the task's progress, you can use the [get task status route](/reference/api/tasks.md).
+To view additional details on the task's progress, use the [get task status endpoint](/reference/api/tasks.md).
 
 See our guide on [asynchronous operations](/learn/advanced/asynchronous_operations.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
 

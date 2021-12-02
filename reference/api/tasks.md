@@ -10,7 +10,7 @@ The task `uid` is incremented **globally.**
 
 <RouteHighlighter method="GET" route="/tasks"/>
 
-List all tasks globally regardless of the index involved. The `task` objects are contained in the `results` array.
+List all tasks globally, regardless of index. The `task` objects are contained in the `results` array.
 
 ### Example
 
@@ -50,14 +50,14 @@ List all tasks globally regardless of the index involved. The `task` objects are
 ```
 
 :::note
-By default, **task unique identifiers (`uid`) are sorted in `desc` order.** This means that the most recent `task` objects appear first.
+Tasks are displayed in descending order by `uid`. This means that **the most recently created `task` objects appear first**.
 :::
 
-## Get task status by `uid`
+## Get task
 
 <RouteHighlighter method="GET" route="/tasks/:uid"/>
 
-Get the status of a [task](/learn/advanced/asynchronous_operations.md) regardless of [index](/learn/core_concepts/indexes.md).
+Get a single [task](/learn/advanced/asynchronous_operations.md).
 
 #### Path variables
 
@@ -96,11 +96,11 @@ Here is an example response representing [a processed task](/learn/advanced/asyn
 }
 ```
 
-## Get all task statuses in an index
+## Get all tasks by index
 
 <RouteHighlighter method="GET" route="/indexes/:indexUid/tasks"/>
 
-Get the status of all [tasks](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
+List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index](/learn/core_concepts/indexes.md).
 
 #### Path variables
 
@@ -147,11 +147,11 @@ Here is an example response representing an [enqueued task](/learn/advanced/asyn
 }
 ```
 
-## Get task status of an index
+## Get task by index
 
 <RouteHighlighter method="GET" route="/indexes/:indexUid/tasks/:uid"/>
 
-Get the status of a [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
+Get a single [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
 
 #### Path variables
 
