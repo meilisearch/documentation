@@ -140,7 +140,29 @@ To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 
 ### Add documents
 
-- Concept of async updates
+Now that MeiliSearch is up and running, the next step is adding documents. A [document]((/learn/core_concepts/documents.md)) is an object that contains data in the form of one or more fields. MeiliSearch currently accepts documents in the JSON, NDJSON, and CSV formats.
+
+Your documents are stored in an [index](/learn/core_concepts/indexes.md). If the index does not exist, MeiliSearch creates it when you first add documents.
+
+To add documents to an index called `movies`, use:
+
+<CodeSamples id="getting_started_add_documents_md" />
+
+Here's an example of the kind of response you should receive after adding documents.
+
+```json
+{
+    "uid": 0,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentsAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Document addition is an [asynchronous](/learn/advanced/asynchronous_operations.md) operation. All asynchronous operations return the above response indicating that the operation has been taken into account and will be processed once it reaches the front of the queue.
+
+You can use the `uid` to view additional details on the [tasks progress](/reference/api/tasks.md).
 
 ### Basic search
 
@@ -272,6 +294,8 @@ Let's take `overview` as an example, MeiliSearch will return the whole value for
 ### limit
 
 The `limit` decides the maximum number of documents MeiliSearch returns for a query. The default is `20` but you can change it.
+
+If you search the `movies` index for 
 
 ## Filtering and sorting
 
