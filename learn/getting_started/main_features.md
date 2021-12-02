@@ -140,7 +140,7 @@ To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 
 ### Add documents
 
-Now that MeiliSearch is up and running, the next step is adding documents. A [document]((/learn/core_concepts/documents.md)) is an object that contains data in the form of one or more fields. MeiliSearch currently accepts documents in the JSON, NDJSON, and CSV formats.
+Now that MeiliSearch is up and running, the next step is adding documents. A [document](/learn/core_concepts/documents.md) is an object that contains data in the form of one or more fields. MeiliSearch currently accepts documents in the JSON, NDJSON, and CSV formats.
 
 Your documents are stored in an [index](/learn/core_concepts/indexes.md). If the index does not exist, MeiliSearch creates it when you first add documents.
 
