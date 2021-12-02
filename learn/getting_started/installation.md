@@ -121,9 +121,9 @@ For best performance, compile MeiliSearch on the machine you intend to run it on
 
 To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 
-- [AWS](/create/how_to/aws.md)
-- [DigitalOcean](/create/how_to/digitalocean_droplet.md)
-- [Qovery](/create/how_to/qovery.md)
+- [AWS](/learn/cookbooks/aws.md)
+- [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Qovery](/learn/cookbooks/qovery.md)
 
 ## Configuration options
 
