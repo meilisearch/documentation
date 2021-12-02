@@ -178,7 +178,7 @@ These three fields are mandatory, but more [optional fields are available](https
 
 ::: warning
 
-Since the configuration file is public, we strongly recommend providing a `Default Search API Key` in a production environment, which is enough to perform search requests.
+Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/api/search.md) , such as the `Default Search API Key`, in a production environment.
 Read more about [MeiliSearch security](/reference/features/authentication.md).
 
 :::
@@ -219,7 +219,8 @@ The `hostUrl` and the `apiKey` fields are the credentials of the MeiliSearch ins
 ::: warning
 
 We strongly recommend providing a `Default Search API Key` in a production environment, which is enough to perform search requests.
-Read more about [MeiliSearch security](/reference/features/authentication.md).
+
+Read more about [MeiliSearch security](/reference/features/security.md).
 
 :::
 

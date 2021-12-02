@@ -131,7 +131,7 @@ Sets the HTTP address and port MeiliSearch will use.
 **Default value**: `None`
 **Expected value**: an alphanumeric string
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). It gives access to the [`/keys` endpoint](/reference/api/keys.md) allowing you to create, update, and delete API keys.
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in MeiliSearch in our dedicated guide.](/reference/features/security.md)
 
 ::: note
 You must supply an alphanumeric string when using this option.

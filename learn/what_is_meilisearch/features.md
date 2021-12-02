@@ -56,7 +56,7 @@ Phrase search is particularly useful when looking for a single result, such as s
 
 ## API key management
 
-MeiliSearch allows you to protect your instances through the use of API keys. API keys allow you to control which users can access what indexes, routes, and endpoints. These API keys are stored and managed by the master key. When you set a master key on your first launch, MeiliSearch generates two API keys called the `Default Search API Key` and the `Default Admin API Key`. You can read more them in our article on [security](/reference/features/security.md).
+MeiliSearch allows you to protect your instances through the use of API keys. API keys allow you to control which users can access what indexes, routes, and endpoints. These API keys are managed by the master key. When you set a master key on your first launch, MeiliSearch generates two API keys called the `Default Search API Key` and the `Default Admin API Key`. You can read more them in our article on [security](/reference/features/security.md).
 
 ## Comprehensive language support
 
