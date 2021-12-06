@@ -182,7 +182,7 @@ MeiliSearch will only launch once the dump data has been fully indexed. The time
 
 ### Log level
 
-**Environment variable**: MEILI_LOG_LEVEL
+**Environment variable**: `MEILI_LOG_LEVEL`
 **CLI option**: `--log-level`
 **Default value**: `'INFO'`
 **Expected value**: one of `ERROR`, `WARN`, `INFO`, `DEBUG`, OR `TRACE`
@@ -208,7 +208,7 @@ Sets the maximum size of the index. Value must be given in bytes or explicitly s
 
 The `index` stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
 
-[Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
+[Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
 
 ### Max UDB size
 
@@ -221,7 +221,7 @@ Sets the maximum size of the `update` database. Value must be given in bytes or 
 
 The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `index` database, which only stores processed data.
 
-[Learn more about MeiliSearch's database and storage engine.](/reference/under_the_hood/storage.md)
+[Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
 
 ### Payload limit size
 

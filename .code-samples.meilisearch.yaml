@@ -303,7 +303,7 @@ search_parameter_guide_offset_1: |-
     --data-binary '{ "q": "shifu", "offset": 1 }'
 search_parameter_guide_limit_1: |-
   curl \
-    - X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu", "limit": 2 }'
 search_parameter_guide_retrieve_1: |-
@@ -393,6 +393,16 @@ settings_guide_displayed_1: |-
             "release_date"
         ]
     }'
+settings_guide_sortable_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "sortableAttributes": [
+        "price",
+        "author"
+      ]
+    }'
 add_movies_json_1: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
   -H 'Content-Type: application/json' \
@@ -455,7 +465,7 @@ phrase_search_1: |-
   --data-binary '{ "q": "\"african american\" horror" }'
 authentication_header_1: |-
   curl -X GET 'http://127.0.0.1:7700/keys' \
-    --header "X-Meili-API-Key: masterKey"
+    -H 'X-Meili-API-Key: masterKey'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
