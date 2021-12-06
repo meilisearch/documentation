@@ -85,9 +85,7 @@ Here's an example of the kind of response you should receive after adding docume
 }
 ```
 
-Asynchronous actions return a JSON object containing several fields, the most important of which is `uid`. This indicates that the operation has been taken into account and will be processed once it reaches the front of the queue.
-
-This response is a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response). To view additional details on the task's progress, use the [get task endpoint](/reference/api/tasks.md).
+Asynchronous actions return a JSON object containing several fields, the most important of which is `uid`. This indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. To view the task's current `status`, use the [get task endpoint](/reference/api/tasks.md).
 
 See our guide on [asynchronous operations](/learn/advanced/asynchronous_operations.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
 
