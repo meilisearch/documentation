@@ -69,7 +69,7 @@ Results are sorted by **the similarity of the matched words with the query words
 
 ::: tab Typo
 
-![Image demonstrating the typo ranking rule](/ranking-rules/vogli3.png)
+![Demonstrating the typo ranking rule](/ranking-rules/vogli3.png)
 
 ### Typo
 
@@ -81,7 +81,7 @@ The `typo` rule sorts the results by increasing number of typos on matched query
 :::
 
 ::: tab Proximity
-![Image demonstrating the proximity ranking rule](/ranking-rules/new_road.png)
+![Demonstrating the proximity ranking rule](/ranking-rules/new_road.png)
 
 ### Proximity
 
@@ -91,7 +91,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 :::
 
 ::: tab Attribute
-![Image demonstrating the attribute ranking rule](/ranking-rules/belgium.png)
+![Demonstrating the attribute ranking rule](/ranking-rules/belgium.png)
 
 ### Attribute
 
@@ -102,7 +102,7 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 :::
 
 ::: tab Exactness
-![Image demonstrating the exactness ranking rule](/ranking-rules/knight.png)
+![Demonstrating the exactness ranking rule](/ranking-rules/knight.png)
 
 ### Exactness
 

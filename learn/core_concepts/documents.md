@@ -6,7 +6,7 @@ Documents function as **containers for organizing data**, and are the basic buil
 
 ## Structure
 
-![Image showing the structure of a document](/document_structure.svg =573x400)
+![Document structure](/document_structure.svg =573x400)
 
 ### Important terms
 

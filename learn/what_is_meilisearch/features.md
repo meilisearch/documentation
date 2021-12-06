@@ -19,7 +19,7 @@ Read more about typo tolerance in [this dedicated guide](/reference/under_the_ho
 
 ## Synonyms
 
-![Search demo gif for synonyms ](/search-synonyms-typo.gif)
+![Search demo gif for the synonyms 'batman' and 'joker'](/search-synonyms-typo.gif)
 *MeiliSearch in action with `batman` and `joker` defined as synonyms*
 
 Defining synonyms lets you craft a more tailored, intuitive search experience.

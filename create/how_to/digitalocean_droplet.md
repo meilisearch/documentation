@@ -11,7 +11,7 @@
 A "droplet" is a set of resources, as a Virtual Machine, or a Server, in which you can run your own applications.
 In any DigitalOcean page, when you are logged in, you will find a menu in the upper-right corner. Click on "Create" -> "Droplets".
 
-![Creating a droplet from the menu](/digitalocean/01.create.png)
+![Selecting Droplets Create cloud servers](/digitalocean/01.create.png)
 
 ### 2. Select MeiliSearch snapshot
 
@@ -29,7 +29,7 @@ Select your plan. Plans start at $5 (click on "See all plans" for more options).
 
 Select the region where you want to deploy your droplet. Remember, the closer you are to your users or customers, the better will be their search experience with MeiliSearch.
 
-![Selecting the region](/digitalocean/04.select-region.png)
+![Selecting the London datacenter region](/digitalocean/04.select-region.png)
 
 ### 5. Add your ssh key
 
@@ -37,19 +37,19 @@ Select your SSH key in order to be able to connect to your droplet later. If you
 
 If you need help with this, visit [this link](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)
 
-You can also set a password for `root` user if you prefer this authentication method.
+You can also set a password for `root` user if you prefer this authentication method, but it is less secure.
 
-![Adding the ssh key](/digitalocean/05.add-ssh-key.png)
+![Selecting all SSH keys](/digitalocean/05.add-ssh-key.png)
 
 ### 6. Choose your droplet name and tags
 
-Here you can select the name that will be visible everywhere in your DigitalOcean account. Choose wisely!
+Here you can select the name that will be visible everywhere in your DigitalOcean account. Choose wisely!Droplets can only contain alphanumeric characters, dashes, and periods.
 
-![Naming the droplet](/digitalocean/06.droplet-name.png)
+![The meilisearch-droplet-name droplet](/digitalocean/06.droplet-name.png)
 
-Tags are a very good method to know who created resources, and for organizing resources or projects. Try to always add some tags to make clear what are the server purposes.
+Tags are a very good method to know who created resources, and for organizing resources or projects. Tags can contain letters, numbers, colons, dashes, and underscores. Try to always add some tags to make clear what are the server purposes.
 
-![Adding tags](/digitalocean/06.add-tags.png)
+![The searchbar, meilisearch, and search-team tags](/digitalocean/06.add-tags.png)
 
 ### 7. Finally click on 'Create Droplet'
 
@@ -59,21 +59,21 @@ Tags are a very good method to know who created resources, and for organizing re
 
 Instance creation in progress...
 
-![Instance creation in progress](/digitalocean/08.creating.png)
+![Progress bar for the meilisearch-droplet-name instance](/digitalocean/08.creating.png)
 
 ... done!
 
-![Instance created successfully](/digitalocean/08.created-ip.png)
+![meilisearch-droplet-name instance created successfully](/digitalocean/08.created-ip.png)
 
 ### 9. Test MeiliSearch.
 
 Copy the public IP address:
 
-![The instance's IP](/digitalocean/09.copy-ip.png)
+![meilisearch-droplet-name instance's IP: 165.227.56.77](/digitalocean/09.copy-ip.png)
 
 Paste it in your browser. If this screen is shown, your MeiliSearch is now ready!
 
-![Successfully testing MeiliSearch in browser](/digitalocean/09.test-meili.png)
+![MeiliSearch web interface](/digitalocean/09.test-meili.png)
 
 ## Configure production settings in your MeiliSearch droplet
 
@@ -83,7 +83,7 @@ Configuring your MeiliSearch in a **production** environment on DigitalOcean dro
 
 If you want to use your own domain name (or sub-domain), add `A record` in your domain name provider account.
 
-![Domain to MeiliSearch](/digitalocean/11.domain-a-record.png)
+![Domain named droplet](/digitalocean/11.domain-a-record.png)
 
 This should work out of the box. Your domain name should now be linked to your MeiliSearch instance. You can now do a health check to verify that your instance is running and your DNS is well configured:
 
