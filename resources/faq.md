@@ -51,7 +51,7 @@ In this documentation, we provide this <a id="downloadMovie" href="/movies.json"
 
 More datasets and setting configurations are available [in this repository](https://github.com/meilisearch/datasets/).
 
-## I did a call to an API route, what does the response mean?
+## I did a call to an API route and got an object as a response. What does it mean?
 
 All asynchronous operations return a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
 
