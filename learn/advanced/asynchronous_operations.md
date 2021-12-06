@@ -51,11 +51,11 @@ All asynchronous operations return a summarized version of the [`task` object](#
 
 | Field      | Type    | Description                              |
 |------------|---------|---------------------------------         |
-| uid        | integer | Unique sequential identifier             |
-| indexUid   | string  | Unique index identifier                  |
-| status     | string  | Status of the task. Value is `enqueued`  |
-| type       | string  | Type of task                             |
-| enqueuedAt | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                                                        |
+| `uid`        | integer | Unique sequential identifier             |
+| `indexUid`   | string  | Unique index identifier                  |
+| `status`     | string  | Status of the task. Value is `enqueued`  |
+| `type`       | string  | Type of task                             |
+| `enqueuedAt` | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                                                        |
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
