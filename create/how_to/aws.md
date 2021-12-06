@@ -53,7 +53,7 @@ Simply click on **Next: Add Storage** to keep going.
 
 Choose the storage **device** and **size** for your MeiliSearch instance.
 
-![Page titled 'Step 4: Add Storage'. Text at the bottom of the screen: Free tier eligible users can get up to 30GB of EBS General Purpose (SSD) or Magnetic storage.](/aws/05.storage.png)
+![Page titled 'Step 4: Add Storage'. Text at bottom of screen: Free tier eligible users can get up to 30GB of EBS General Purpose (SSD) or Magnetic storage.](/aws/05.storage.png)
 
 The amount of storage space required can [vary drastically](/reference/under_the_hood/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).  We have the **Volume Type** set to **General Purpose SSD (gp2)**.
 
@@ -63,7 +63,7 @@ When you're ready, click on **Next: Add Tags** to continue.
 
 Tags are used to identify your resources in AWS. **They are not required by MeiliSearch**.
 
-![Page titled 'Step 5: Add Tags'. Text in center of the screen: Make sure your IAM policy includes permissions to create tags. ](/aws/06.tags.png)
+![Page titled 'Step 5: Add Tags'. Text in center of screen: Make sure your IAM policy includes permissions to create tags. ](/aws/06.tags.png)
 
 Click on **Next: Configure Security Groups**.
 

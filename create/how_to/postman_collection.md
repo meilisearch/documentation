@@ -25,7 +25,7 @@ Set the API key if needed (set to `masterKey` by default):
 
 Set the host URL (set to MeiliSearch's local port by default) and the index UID (set to `indexUID` by default):
 
-![The Variables tab. Message at the bottom of the screen: The current value is used while sending a request and is never synced to Postman's servers.](/postman/set_variables.png)
+![The Variables tab. Message at bottom of screen: The current value is used while sending a request and is never synced to Postman's servers.](/postman/set_variables.png)
 
 The `url` and `indexUID` variables are used in all the collection routes, like in this one:
 

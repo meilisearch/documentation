@@ -2,7 +2,7 @@
 
 You might have noticed the search bar in this documentation.
 
-![MeiliSearch docs search updating results for 'faq'](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
+![MeiliSearch docs search bar updating results for 'faq'](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
 
 And you are probably wanting the same for your own documentation!
 
@@ -187,7 +187,7 @@ Read more about [MeiliSearch authentication](/reference/features/authentication.
 
 If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
 
-![Docxtemplater search bar updating results for html](/tuto-searchbar-for-docs/docxtemplater-searchbar-demo.gif)
+![Docxtemplater search bar updating results for 'html'](/tuto-searchbar-for-docs/docxtemplater-searchbar-demo.gif)
 *[Docxtemplater](https://docxtemplater.com/) searchbar demo*
 
 ```html
