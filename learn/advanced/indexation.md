@@ -30,11 +30,11 @@ If you encounter performance issues during the indexation we recommend trying th
 
 - Indexation is a memory-intensive and multi-threaded operation. This means **the more memory and processor cores available, the faster MeiliSearch will index new documents**. When trying to improve indexation speed, using a machine with more processor cores is more effective than increasing RAM.
 
-3. **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
+- **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
 
 - **MeiliSearch should not be your main database**. The more documents you add, the longer will indexation and search take, so you should only index documents you want to retrieve when searching.
 
-5. By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields MeiliSearch needs to index, the faster is the indexation process.
+- By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields MeiliSearch needs to index, the faster is the indexation process.
 
 ```json
 [
@@ -56,7 +56,6 @@ If you encounter performance issues during the indexation we recommend trying th
 In some cases, the OS will interrupt MeiliSearch and stop all its processes. Most of these crashes happen during indexation and are a result of a machine running out of RAM. This means your computer does not have enough memory to process your dataset.
 
 We are aware of this issue and actively trying to resolve it. If you are struggling with memory-related crashes, we recommend:
-
 
 - Adding new documents in smaller batches
 - Increasing your machine's RAM
