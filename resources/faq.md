@@ -266,8 +266,8 @@ You can read more about what metrics we collect, why we collect them, and how to
 
 ## Why does MeiliSearch crash when I try to add documents?
 
-Crashes that occur when trying to add documents are connected to MeiliSearch's indexer. For more information and possible solutions, read [our dedicated article on indexation](/reference/under_the_hood/indexation.md#memory-crashes).
+Crashes that occur when trying to add documents are connected to MeiliSearch's indexer. For more information and possible solutions, read [our dedicated article on indexation](/learn/advanced/indexation.md#memory-crashes).
 
 ## How can I speed up indexation when adding documents?
 
-Indexation is one of MeiliSearch's most resource-intensive processes. For more information on how to optimize it, take a look at [our dedicated indexation guide](/reference/under_the_hood/indexation.md#speed-up-the-indexation-time).
+Indexation is one of MeiliSearch's most resource-intensive processes. For more information on how to optimize it, take a look at [our dedicated indexation guide](/learn/advanced/indexation.md#improving-indexation-performance).
