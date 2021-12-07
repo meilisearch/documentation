@@ -253,6 +253,10 @@ Now that you’ve got your dump, [install the latest version of MeiliSearch](/le
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
+::: warning
+If you are using MeiliSearch v0.20.0 or below, you will need to import your dump to a version between v0.21.0 and v0.25.0 and the re-export it to the newer version.
+:::
+
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
 Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
