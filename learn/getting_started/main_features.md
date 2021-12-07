@@ -134,9 +134,9 @@ To learn more about the Windows command prompt, follow this [introductory guide]
 
 To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 
-- [AWS](/create/how_to/aws.md)
-- [DigitalOcean](/create/how_to/digitalocean_droplet.md)
-- [Qovery](/create/how_to/qovery.md)
+- [AWS](/learn/cookbooks/aws.md)
+- [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Qovery](/learn/cookbooks/qovery.md)
 
 ### Add documents
 
@@ -160,9 +160,13 @@ Here's an example of the kind of response you should receive after adding docume
 }
 ```
 
-Document addition is an [asynchronous](/learn/advanced/asynchronous_operations.md) operation. All asynchronous operations return the above response indicating that the operation has been taken into account and will be processed once it reaches the front of the queue.
+Document addition is an [asynchronous](/learn/advanced/asynchronous_updates.md) operation. All asynchronous operations return the above response indicating that the operation has been taken into account and will be processed once it reaches the front of the queue.
 
-You can use the `uid` to view additional details on the [tasks progress](/reference/api/tasks.md).
+You can use the `uid` to view additional details on the [task's progress](/reference/api/updates.md).
+
+All documents must have a [primary key](/learn/core_concepts/documents.md#primary-field). Each index recognizes only one primary key attribute. Once a primary key has been set for an index, it cannot be changed anymore. If no primary key is found in a document, the document will not be stored.
+
+You can set the primary key manually on index creation or document addition. If no primary key is set, MeiliSearch automatically guesses the primary key when you add documents.
 
 ### Basic search
 
@@ -200,53 +204,27 @@ MeiliSearch **response**:
 
 ### Web interface
 
-## Configuration options
+MeiliSearch offers an out-of-the-box web interface where you can test MeiliSearch interactively. You can access it on your browser at: `http://127.0.0.1:7700`.
 
-MeiliSearch allows you to configure your entire instance through **environment variables** and **command-line options**. You can configure your instance with environment variables before launch and with command line options at launch.
+<MovieGif />
 
-This chapter covers some of the important configuration options but you can read about all of them in our [configuration guide](/reference/features/configuration.md).
+If you have multiple indexes, you can switch between them using the indexes dropdown.
 
-### Database path
+![multiple indexes](/getting-started/multiple_indexes.png)
 
-By default, all your database files will be created in a folder called `data.ms`. You can configure this using the `MEILI_DB_PATH` environment variable or the `--db-path` CLI option.
+If your MeiliSearch instance does not have any indexes, you should see this screen.
 
-### Environment
+->Add image
 
-You can run your MeiliSearch instance in `production` or `development`. By default, it runs in `development`, you can change that using the `MEILI_ENV` environment variable or the `--env` CLI option.
-
-### Master key
-
-You can protect your MeiliSearch instance by setting a master key. You can configure this using the `MEILI_MASTER_KEY` environment variable or the `--master-key` CLI option. MeiliSearch requires a master key when the `--env` is set to `production`.
-
-### Payload limit size
-
-MeiliSearch accepts JSON, NDJSON, and CSV payloads. The default payload limit is 104857600 (~100MB) but you can update it using the `MEILI_HTTP_PAYLOAD_SIZE_LIMIT` environment variable or the `--http-payload-size-limit` CLI option.
+We will be using this interface to demonstrate some features in future chapters.
 
 ## Relevancy
 
-### stop words and synonyms
-
-- Is it a good idea to link one-way association or should it be the Synonyms page? This link does take the user to the synonyms page so it shouldn't be a problem
-- Do I need to include examples? I don't think so. The Synonyms and Stop words pages are pretty brief, too much info here will make them useless. But is this detail enough for demonstration purposes? Maybe add a gif and update the examples I used in the text accordingly?
-- Not sure if gifs is a good idea for stop words. Any suggestions?
-
-MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English.
-
-If you search for `the cat` with the current settings, MeiliSearch will return a lot of results but not all of them will be relevant. After adding `the` to your list of stop words, MeiliSearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
-
-You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
-
-A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant. So if you have `winnie` and `piglet` set as synonyms, searching for either words will show the same results.
-
--> Need to create a gif
-
-The only exception is one-way association, you can read more about it in our [dedicated guide](/reference/features/synonyms.md#one-way-association).
-
-### ranking rules
+### Ranking rules
 
 - What kind of example goes here?
 
-MeiliSearch sorts search responses based on a set of consecutive rules called ranking rules. You can update these ranking rules for each index. The default order for the ranking rules is as follows:
+MeiliSearch sorts search responses based on a set of consecutive rules called ranking rules. You can update these ranking rules for each index. The rules are stored in an array of strings called `rankingRules`. The default order for the ranking rules is as follows:
 
 1. Words
 2. Typo
@@ -254,6 +232,8 @@ MeiliSearch sorts search responses based on a set of consecutive rules called ra
 4. Attribute
 5. Sort
 6. Exactness
+
+The order in which ranking rules are applied matters. The first rule in the array has the most impact, and the last rule has the least.
 
 You can read more about them in our [dedicated guide](/learn/core_concepts/relevancy.md).
 
@@ -277,7 +257,7 @@ MeiliSearch lets you set one field per index as the distinct attribute. The dist
 
 ### Searchable attributes
 
-By default, all attribute are searched for matching query words but you can configure the settings to change that. Lets look at MeiliSearch's web interface for this example.
+By default, all attribute are searched for matching query words but you can configure the settings to change that. Let's look at MeiliSearch's web interface for this example.
 When we search for `lion king` with the default settings, MeiliSearch searches for it everywhere.
 
 Use a number or a common phrase for the example. `Number 23`, `Pi`
@@ -288,19 +268,91 @@ If we update the `searchableAttributes` to only contain the movie title, MeiliSe
 
 new gif
 
+->**not clear on how this works**
+
+### stop words and synonyms
+
+- Is it a good idea to link one-way association or should it be the Synonyms page? This link does take the user to the synonyms page so it shouldn't be a problem
+- Do I need to include examples? I don't think so. The Synonyms and Stop words pages are pretty brief, too much info here will make them useless. But is this detail enough for demonstration purposes? Maybe add a gif and update the examples I used in the text accordingly?
+- Not sure if gifs is a good idea for stop words. Any suggestions?
+
+MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English.
+
+If you search the `movies` index for `the cat` with the default settings, MeiliSearch will return a lot of results but not all of them will be relevant. After adding `the` to your list of stop words, MeiliSearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
+
+You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
+
+A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant. So if you have `winnie` and `piglet` set as synonyms, searching for either words will show the same results.
+
+-> Need to create a gif
+
+The only exception is one-way association, you can read more about it in our [dedicated guide](/reference/features/synonyms.md#one-way-association).
+
 ## Search parameters
 
 Even though the search is relevant by default, MeiliSearch offers many parameters that you can play with to refine your search or change the format of the returned document.
 
 This chapter covers some of the important search parameters but you can read about all of them in our [search parameters guide](/reference/features/search_parameters.md).
 
-### attributesToHighlight
+### Placeholder search (does this need to be a heading or something that can be mentioned briefly somewhere else)
+
+If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its custom [ranking rules](/reference/features/settings.md#ranking-rules) and [sorting rules](/reference/features/sorting.md#sorting). This feature is called placeholder search.
+
+### Phrase search (does this need to be a heading or something that can be mentioned briefly somewhere else)
+
+If you enclose search terms in double quotes ("), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
+
+### attributesToHighlight (Is this that important?)
+
+This highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` only works on strings, numbers, arrays, and objects.
+
+When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
+
+<CodeSamples id= "getting_started_attributesToHighlight_md" />
+
+```json
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "The <em>Winter Feast</em> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <em>Winter Feast</em> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+    "release_date": 1290729600
+  }
+}
+```
 
 ### attributesToCrop
 
 By default, MeiliSearch responses return the entire value of all attributes. You can use the `attributesToCrop` parameter to crop the value of selected attributes.
 
 Let's take `overview` as an example, MeiliSearch will return the whole value for it. If you want to only view the first `10` characters(is this the right term), you can use:
+
+<CodeSamples id= "getting_started_attributesToCrop_md" />
+
+You will get the following response with the cropped text in the `_formatted` object:
+
+```json
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "this year Shifu informs",
+    "release_date": 1290729600
+  }
+}
+```
 
 ### limit
 
@@ -316,20 +368,32 @@ MeiliSearch would now return the first ten results.
 
 ### Filterable attributes
 
-MeiliSearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to the `filterableAttributes`.
+MeiliSearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to `filterableAttributes`.
+
+Let's say you only want to view meteors that weigh less than 200g.
+
+<CodeSamples id= "getting_started_filtering_md" />
+
+```json
+{"hits":[{"name":"Acapulco","mass":1914},{"name":"Ellemeet","mass":1470},{"name":"Enshi","mass":8000},{"name":"Ensisheim","mass":127000},{"name":"Épinal","mass":277},{"name":"Ergheo","mass":20000},{"name":"Erxleben","mass":2250},{"name":"Esnandes","mass":1500},{"name":"Essebi","mass":500},{"name":"Estherville","mass":320000},{"name":"Farmington","mass":89400},{"name":"Farmville","mass":56000},{"name":"Favars","mass":1500},{"name":"Fayetteville","mass":2360},{"name":"Feid Chair","mass":380},{"name":"Felix","mass":3200},{"name":"Ferguson","mass":220},{"name":"Fermo","mass":10200},{"name":"Fisher","mass":17600},{"name":"Florence","mass":3640}],"nbHits":858,"exhaustiveNbHits":false,"query":"","limit":20,"offset":0,"processingTimeMs":3}%
+```
 
 ### Sortable attributes
 
 - I'm not sure how to the example part should go? For now I can only think of "Let's ..." but is that peppy enough?
 - Link to sorting guide
 
-You can use any (not any-do we need the details here? (if it fits in a sentence)) of the document fields for sorting by adding them to the `sortableAttributes`. Let's look at how you can sort all `H5` meteors based on their mass.
+By default, MeiliSearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
+
+You can use any of the document fields as long as they contain numbers, strings, arrays of numeric values, or arrays of string values by adding them to `sortableAttributes`. Let's look at how you can sort all `H5` meteors based on their mass.
 
 <CodeSamples id= "getting_started_sorting_md" />
 
--> Add json result here
+```json
+{"hits":[{"name":"Red Canyon Lake","mass":18.41},{"name":"Meerut","mass":22},{"name":"Kutais","mass":23},{"name":"Barnaul","mass":23.2},{"name":"Mason Gully","mass":24.54},{"name":"Centerville","mass":45.6},{"name":"Sologne","mass":54},{"name":"Fenghsien-Ku","mass":82},{"name":"Darmstadt","mass":100},{"name":"Pavlodar (stone)","mass":142.5},{"name":"Seldebourak","mass":150},{"name":"Cross Roads","mass":167},{"name":"Pétèlkolé","mass":189},{"name":"Okabe","mass":194},{"name":"Oviedo","mass":205},{"name":"Grimsby","mass":215},{"name":"Jiange","mass":222},{"name":"Kaee","mass":230},{"name":"Épinal","mass":277},{"name":"Schenectady","mass":283.3}],"nbHits":147,"exhaustiveNbHits":false,"query":"H5","limit":20,"offset":0,"processingTimeMs":6}
+```
 
-Maybe mention asc and desc rules.
+You will see all `H5` meteors sorted based on increasing mass. If you used `desc`, MeiliSearch will sort them based on decreasing mass.
 
 To learn more about `sortableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/sorting.md).
 
@@ -699,6 +763,34 @@ To learn more about geosearch and how to configure it, refer to our [dedicated g
 ## Integration/Facets
 
 - can we use this with the interface?
+
+## Configuration options
+
+MeiliSearch allows you to configure your entire instance through **environment variables** and **command-line options**. You can configure your instance with environment variables before launch and with command line options at launch.
+
+This chapter covers some of the important configuration options but you can read about all of them in our [configuration guide](/reference/features/configuration.md).
+
+### Database path
+
+By default, all your database files will be created in a folder called `data.ms`. You can configure this using the `MEILI_DB_PATH` environment variable or the `--db-path` CLI option.
+
+### Environment
+
+You can run your MeiliSearch instance in `production` or `development`. By default, it runs in `development`, you can change that using the `MEILI_ENV` environment variable or the `--env` CLI option.
+
+### Master key
+
+You can protect your MeiliSearch instance by setting a master key. You can configure this using the `MEILI_MASTER_KEY` environment variable or the `--master-key` CLI option. MeiliSearch requires a master key when the `--env` is set to `production`.
+
+### Disable analytics (I think we can use this here instead of payload limit size)
+
+By default, MeiliSearch automatically collects data from all instances that do not opt out using this flag. You can configure it using the `MEILI_NO_ANALYTICS` environment variable or the `--no-analytics` CLI option.
+
+You can read more about our data collection policy [here](/learn/what_is_meilisearch/telemetry.md).
+
+### Payload limit size
+
+MeiliSearch accepts JSON, NDJSON, and CSV payloads. The default payload limit is 104857600 (~100MB) but you can update it using the `MEILI_HTTP_PAYLOAD_SIZE_LIMIT` environment variable or the `--http-payload-size-limit` CLI option.
 
 ## Dumps and snapshots
 

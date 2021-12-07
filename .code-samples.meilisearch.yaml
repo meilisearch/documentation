@@ -486,6 +486,21 @@ getting_started_update_displayedAttributes_md: |-
         "genre", 
         "poster"
     ]'
+getting_started_filtering_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/meteors/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{"filter": "mass > 200"}'
+getting_started_attributesToHighlight_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'   
+getting_started_attributesToCrop_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
 getting_started_limit_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
