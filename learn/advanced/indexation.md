@@ -22,20 +22,19 @@ In machines with multi-core processors, the indexer avoids using more than half 
 
 Multi-threading is unfortunately not possible in machines with only one processor core.
 
-## Speed up the indexation time
+## Improving indexation performance
 
-If you encounter some performance issues during the indexation we recommend trying the following points:
+If you encounter performance issues during the indexation we recommend trying the following points:
 
-1. Make sure you are using the latest [stable version of MeiliSearch](https://github.com/meilisearch/MeiliSearch/releases). Our latest releases often include performance optimizations that can significantly increase indexation speed.
+- Make sure you are using the latest [stable version of MeiliSearch](https://github.com/meilisearch/MeiliSearch/releases). New releases often include performance improvements that can significantly increase indexation speed.
 
-2. Indexation is a memory-intensive and multi-threaded operation. This means that **the more memory and processor cores available, the faster MeiliSearch will index new documents**. In general, using a machine with many processor cores will be more effective than increasing RAM.
+- Indexation is a memory-intensive and multi-threaded operation. This means **the more memory and processor cores available, the faster MeiliSearch will index new documents**. When trying to improve indexation speed, using a machine with more processor cores is more effective than increasing RAM.
 
-3. **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload, the higher the memory consumption**. An instance may crash if it requires more RAM than is currently available in a machine.
+3. **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, MeiliSearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
 
-4. **MeiliSearch should not be your main database**. By this we mean you should only index documents you want to retrieve when searching. The more documents you add, the longer will indexation and search take.
+- **MeiliSearch should not be your main database**. The more documents you add, the longer will indexation and search take, so you should only index documents you want to retrieve when searching.
 
-5. By default, all the fields of your documents are considered as "searchable". We strongly recommend changing this by [setting the `searchablaAttributes`](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) with the exhaustive list of fields you want to search in. The fewer fields MeiliSearch needs to index, the faster is the indexation process.
-For example, if indexing the `id` and `genre` fields has little impact on the quality of your search, adding only `title` and `author` to `searchableAttributes` will increase indexation speed:
+5. By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields MeiliSearch needs to index, the faster is the indexation process.
 
 ```json
 [
@@ -44,13 +43,13 @@ For example, if indexing the `id` and `genre` fields has little impact on the qu
 ]
 ```
 
-6. When creating a new index, first [configure its settings](/reference/features/settings.md) and only then add your documents. Following this order will significantly reduce indexation time
+- When creating a new index, first [configure its settings](/reference/features/settings.md) and only then add your documents. Following this order will significantly reduce indexation time.
 
-7. Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance
+- Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance.
 
-8. Always prefer machines using SSDs (Solid State Drives). We strongly recommend not running MeiliSearch in HDDs (Hard Disk Drives).
+- Prefer machines using SSDs (Solid State Drives). We strongly recommend not running MeiliSearch in HDDs (Hard Disk Drives).
 
-- Ensure your cloud provider does not limit your I/O operations, like AWS does with their [Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html) for example.
+- Ensure there are no limit to I/O operations in your machine. The restrictions imposed by cloud providers such as [AWS's Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#IOcredit) can severely impact indexation performance
 
 ## Memory crashes
 
@@ -61,4 +60,4 @@ We are aware of this issue and actively trying to resolve it. If you are struggl
 
 - Adding new documents in smaller batches
 - Increasing your machine's RAM
-- Improving indexation performance as described in the previous section. Notable exception: increasing payload size, as recommended on item #3, is not advised if you are experiencing memory-related issues
+- Improving indexation performance [as described in the previous section](#improving-indexation-performance). Notable exception: increasing payload size is not advised if you are experiencing memory-related issues
