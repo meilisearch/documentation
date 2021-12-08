@@ -14,16 +14,6 @@ See something wrong that's not on the list? Great! Open a new issue describing t
 
 To contribute, clone this repository, commit your changes and open a pull request.
 
-### Hacktoberfest
-
-It's [Hacktoberfest month](https://blog.meilisearch.com/contribute-hacktoberfest-2021/)! 🥳
-
-🚀 If your PR gets accepted it will count into your participation to Hacktoberfest!
-
-✅ To be accepted it has either to have been merged, approved or tagged with the `hacktoberfest-accepted` label.
-
-🧐 Don't forget to check the [quality standards](https://hacktoberfest.digitalocean.com/resources/qualitystandards)! Low-quality PRs might get marked as `spam` or `invalid`, and will not count toward your participation in Hacktoberfest.
-
 ### Requirements
 
 - Node version >= v10 and < v15

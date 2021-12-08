@@ -22,21 +22,6 @@ Currently, these are MeiliSearch's asynchronous operations:
 3. Once the update has been finalized, MeiliSearch marks it as `processed`, if it was successful, or `failed`, in case the update failed
 4. Requests marked as `processed` are not deleted and will remain visible in [the operation list](/reference/api/updates.md#get-all-update-status)
 
-<mermaid>
-sequenceDiagram
-  participant C as Client
-  participant Q as Queue
-  participant M as MeiliSearch
-  C->>Q: enqueue first update
-  Q-->>C: return updateId: 1
-  Q-->>+M: begin update 1
-  C->>Q: enqueue second update
-  Q-->>C: return updateId: 2
-  M->>-Q: dequeue update 1
-  Q-->>+M: begin update 2
-  M->>-Q: dequeue update 2
-</mermaid>
-
 ### Dumps
 
 While dumps and updates are both asynchronous processes, they use separate queues and behave differently. For instance, creating a new dump will freeze the update queue until the dump has been generated.
@@ -61,7 +46,7 @@ Updates marked as `processed` return additional fields:
 - `duration`: the number of seconds taken to complete the operation
 - `processedAt`: the date when the operation was processed
 
-Finally, if an update fails due to an [error](https://docs.meilisearch.com/errors/), all error fields will be appended to the response.
+Finally, if an update fails due to an error, all error fields will be appended to the response.
 
 ### Update `status`
 
@@ -103,25 +88,30 @@ Later, you check the request's status one more time. It was successfully process
 }
 ```
 
-Had the update failed, the response would have included an error message:
+Had the update failed, the response would have included an error object:
 
 ```json
 {
   "status": "failed",
-  "updateId": 1,
+  "updateId": 0,
   "type": { "name": "DocumentsAddition" },
-  "enqueuedAt": "2019-12-07T21:10:07.607581330Z",
-  "duration": 0.000048524,
-  "processedAt": "2019-12-07T21:10:20.511525620Z",
-  "error": "document id is missing"
+  "error": {
+    "message": "The primary key inference process failed because the engine did not find any fields containing `id` substring in their name. If your document identifier does not contain any `id` substring, you can set the primary key of the index.",
+    "code": "primary_key_inference_failed",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#primary_key_inference_failed"
+  },
+  "duration": 0,
+  "enqueuedAt": "2021-11-11T13:31:12.051786Z",
+  "processedAt": "2021-11-11T13:31:12.052899Z"
 }
 ```
 
 ## Terminate MeiliSearch while a task is being processed
 
-**Terminating a MeiliSearch instance in the middle of an update is completely safe** and will never adversely affect the database
+**Terminating a MeiliSearch instance in the middle of an update is completely safe** and will never adversely affect the database.
 
-MeiliSearch's asynchronous tasks are <clientGlossary word="atomic"/>. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or is interrupted before reaching its end, nothing is committed to the database.
+MeiliSearch's asynchronous tasks are atomic. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or is interrupted before reaching its end, nothing is committed to the database.
 
 What happens to an update task when MeiliSearch is terminated changes depending on the request's `status`:
 

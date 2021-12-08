@@ -7,11 +7,11 @@ By default, all fields are considered to be `displayedAttributes`. This behavior
 
 Displayed attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-::: note
+To learn more about displayed attributes, refer to our [dedicated guide](/reference/features/field_properties.md#displayed-fields).
+
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
-
-[Learn more about displayed fields](/reference/features/field_properties.md#displayed-fields).
 
 ## Get displayed attributes
 

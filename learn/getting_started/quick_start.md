@@ -46,9 +46,9 @@ To add documents to MeiliSearch you must provide:
 - [Documents](/learn/core_concepts/documents.md) in the form of an array of JSON objects.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
-> _If the index does not exist, MeiliSearch creates it when you first add documents._
+**If the index does not exist, MeiliSearch creates it when you first add documents.**
 
-To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+To be processed, all documents must share one common field which will serve as [primary key](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
 ```json
 [
@@ -59,9 +59,9 @@ To be processed, all documents must share one common <clientGlossary word="field
 ]
 ```
 
-> The primary key is `id`, the document's unique identifier is `123`.
+The **primary key** is `id`, the **document's unique identifier** is `123`.
 
-There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
+There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an attribute that contains the string `id` in a case-insensitive manner.
 
 Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
 
@@ -136,6 +136,10 @@ MeiliSearch **response**:
   "query": "botman"
 }
 ```
+
+::: note
+**By default, MeiliSearch returns only the first 20 results** for a search query. You can read more about the limit parameter [here](/reference/features/search_parameters.md#limit).
+:::
 
 [API references](/reference/api/search.md)
 

@@ -1,6 +1,6 @@
 # Storage
 
-::: tip TLDR
+::: tip
 
 - If the database does not shrink after deleting documents or indexes, it is expected behavior. You are not losing space, MeiliSearch is keeping this space for performance reasons.
 - You should have the same amount of RAM than the space taken on disk by MeiliSearch for optimal performances.
@@ -60,7 +60,7 @@ After indexed, the dataset size in LMDB is about 122MB.
 | -------- | --------------------------------- | -------------------- | ------------------- |
 | 9.1 MB   | 224 MB                            | ≃ 305 MB             | 205 Gb (memory map) |
 
-> This means the database is using 305 MB of RAM and 224 MB of disk space. Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database. See [Memory Usage](#memory-usage) for more details.
+This means the database is using **305 MB of RAM and 224 MB of disk space.** Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) **refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database.** See [Memory Usage](#memory-usage) for more details.
 
 ::: warning
 

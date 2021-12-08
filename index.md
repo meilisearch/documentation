@@ -15,14 +15,15 @@ Welcome to the MeiliSearch documentation. Here you'll find everything you need t
 **Other helpful links**:
 
 - [Install MeiliSearch](/learn/getting_started/installation.md)
+- [Updating MeiliSearch](/learn/advanced/updating.md)
 - [SDKs and tools](/learn/what_is_meilisearch/sdks.md)
-- [Deploy MeiliSearch on AWS](create/how_to/aws.md)
-- [Deploy MeiliSearch on GCP](create/how_to/gcp.md)
-- [Deploy MeiliSearch on DigitalOcean](create/how_to/digitalocean_droplet.md)
+- [Deploy MeiliSearch on AWS](/learn/cookbooks/aws.md)
+- [Deploy MeiliSearch on GCP](/learn/cookbooks/gcp.md)
+- [Deploy MeiliSearch on DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
 
 ## Version compatibility
 
-This documentation only reflects the latest version of MeiliSearch. As long as we are pre-`v1.0`, **we do not provide multi-version documentation** and **[databases are not compatible between versions](create/how_to/updating.md).**
+This documentation only reflects the latest version of MeiliSearch. As long as we are pre-`v1.0`, **we do not provide multi-version documentation** and **[databases are not compatible between versions](/learn/advanced/updating.md).**
 
 The current version of [MeiliSearch](https://github.com/meilisearch/MeiliSearch) can be found in the top-left of this site.
 

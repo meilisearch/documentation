@@ -27,6 +27,9 @@ You **don't need** to specify a header for `GET` and `DELETE` routes. Routes tha
 #### Authentication
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
+
+<CodeSamples id="authentication_header_1" />
+
 Please read about [authentication keys](/reference/features/authentication.md) and [how to manage them](/reference/api/keys.md) for more information.
 
 `X-Meili-API-Key: $API_KEY`
@@ -61,14 +64,14 @@ Response body:
 
 ```json
 {
-  "message": "Index movies not found",
-  "errorCode": "index_not_found",
-  "errorType": "invalid_request_error",
-  "errorLink": "https://docs.meilisearch.com/errors#index_not_found"
+  "message": "Index `movies` not found.",
+  "code": "index_not_found",
+  "type": "invalid_request",
+  "link": "https://docs.meilisearch.com/errors#index_not_found"
 }
 ```
 
-If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `errorCode` values and descriptions.
+If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `code` values and descriptions.
 
 ## Asynchronous updates
 
