@@ -51,7 +51,7 @@ If you restart MeiliSearch after creating a dump, you will not be able to use th
 
 ## Importing a dump
 
-MeiliSearch v0.25.0 and above dropped support for version 1 dumps to ensure stabilization. Before you start importing, check your [MeiliSearch version](/reference/api/version.md#example) and proceed accordingly.
+Dumps in v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [MeiliSearch version](/reference/api/version.md#example) and proceed accordingly.
 
 ::: note
 We do not recommend using dumps from a new MeiliSearch version to import an older version.
@@ -70,7 +70,7 @@ As the data contained in the dump needs to be indexed, the process will take som
 
 ### Importing a dump for v0.20.0 or below
 
-If your MeiliSearch version is v0.20.0 or below, you will need to import your dump to a version between v0.21.0 and v0.25.0 and the re-export it to the newer version.
+If your MeiliSearch version is v0.20.0 or below, you will need to import your dump to a version between v0.21.0 and v0.25.0 and then re-export it to the newer version.
 
 ## Use cases
 
