@@ -392,7 +392,7 @@ You would get the following response with **information about the matches in the
 }
 ```
 
-Note how MeiliSearch searches for the `winter` and `feast` separately because of the whitespace.
+Note how MeiliSearch searches for `winter` and `feast` separately because of the whitespace.
 
 ## Sort
 
