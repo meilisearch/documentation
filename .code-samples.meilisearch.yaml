@@ -14,8 +14,7 @@ create_an_index_1: |-
     -X POST 'http://localhost:7700/indexes' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "uid": "movies",
-      "primaryKey": "movie_id"
+      "uid": "movies"
     }'
 update_an_index_1: |-
   curl \
@@ -611,3 +610,4 @@ set_primary_key_on_document_addition: |-
         "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
         "release_date": "2019-03-23"
      }]' 
+     
