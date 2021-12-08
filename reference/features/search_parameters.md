@@ -346,7 +346,7 @@ The highlighted version of the text would then be found in the `_formatted` obje
 **Expected value**: `true` or `false`
 **Default value**: `false`
 
-Adds a `_matchesInfo` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). Matches only works for strings and numbers.
+Adds a `_matchesInfo` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `matches` only works for strings and numbers.
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
