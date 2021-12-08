@@ -175,7 +175,7 @@ The body is composed of a **JSON array** of documents.
 ```json
 [
   {
-    "reference_number": 287947,
+    "id": 287947,
     "title": "Shazam ⚡️"
   }
 ]

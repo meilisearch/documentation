@@ -48,7 +48,7 @@ add_or_update_documents_1: |-
     -X PUT 'http://localhost:7700/indexes/movies/documents' \
     -H 'Content-Type: application/json' \
     --data-binary '[{
-        "reference_number": 287947,
+        "id": 287947,
         "title": "Shazam ⚡️",
         "genres": "comedy"
     }]'
