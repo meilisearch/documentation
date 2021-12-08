@@ -101,6 +101,8 @@ An index is automatically created when adding [documents](/reference/api/documen
 }
 ```
 
+[You can set the primary key on index creation.](/learn/core_concepts/documents.md#setting-the-primary-key-on-index-creation)
+
 ## Update an index
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid"/>

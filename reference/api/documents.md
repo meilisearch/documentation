@@ -140,6 +140,8 @@ The body is composed of a **JSON array** of documents.
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
+[You can set the primary key of the index on document addition.](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition)
+
 ## Add or update documents
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
@@ -194,6 +196,8 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
+
+[You can set the primary key of the index on document addition.](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition)
 
 ## Delete all documents
 
