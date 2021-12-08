@@ -11,9 +11,7 @@ delete_an_index_1: |-
 get_one_document_1: |-
 get_documents_1: |-
 add_or_replace_documents_1: |-
-add_or_replace_documents_with_primaryKey_1: |-
 add_or_update_documents_1: |-
-add_or_update_documents_with_primaryKey_1: |-
 delete_all_documents_1: |-
 delete_one_document_1: |-
 delete_documents_1: |-
@@ -100,3 +98,5 @@ geosearch_guide_filter_usage_2: |-
 geosearch_guide_sort_settings_1: |-
 geosearch_guide_sort_usage_1: |-
 geosearch_guide_sort_usage_2: |-
+set_primary_key_on_index_creation: |-
+set_primary_key_on_document_addition: |-
