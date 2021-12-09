@@ -15,7 +15,9 @@ This section will go over some of the main features of MeiliSearch to help you g
 
 Once you have everything set up, you can change the default settings .... need a better sentence to summarize the whole thing.
 
-## Starting your journey / Quick start / MeiliSearch 101 /
+## Starting your journey
+
+We'll start with downloading and installing MeiliSearch. You have the option to deploy MeiliSearch locally or over a cloud service.
 
 ### Download and install
 
@@ -138,11 +140,33 @@ To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 - [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
 - [Qovery](/learn/cookbooks/qovery.md)
 
+On successfully running MeiliSearch, you should see the following response:
+
+```
+888b     d888          d8b 888 d8b  .d8888b.                                    888
+8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
+88888b.d88888              888     Y88b.                                        888
+888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
+
+Database path:       "./data.ms"
+Server listening on: "127.0.0.1:7700"
+```
+
+You can communicate with the server through a [RESTful API](/reference/api/README.md) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
+
 ### Add documents
 
 Now that MeiliSearch is up and running, the next step is adding documents. A [document](/learn/core_concepts/documents.md) is an object that contains data in the form of one or more fields. MeiliSearch currently accepts documents in the JSON, NDJSON, and CSV formats.
 
 Your documents are stored in an [index](/learn/core_concepts/indexes.md). If the index does not exist, MeiliSearch creates it when you first add documents.
+
+**All documents must have a [primary key](/learn/core_concepts/documents.md#primary-field).** Each index recognizes only one primary key attribute. Once a primary key has been set for an index, it cannot be changed. If no primary key is found in a document, the document will not be stored.
+
+You can set the primary key manually on index creation or document addition. If no primary key is set, MeiliSearch automatically guesses the primary key when you add documents.
 
 To add documents to an index called `movies`, use:
 
@@ -163,10 +187,6 @@ Here's an example of the kind of response you should receive after adding docume
 Document addition is an [asynchronous](/learn/advanced/asynchronous_updates.md) operation. All asynchronous operations return the above response indicating that the operation has been taken into account and will be processed once it reaches the front of the queue.
 
 You can use the `uid` to view additional details on the [task's progress](/reference/api/updates.md).
-
-All documents must have a [primary key](/learn/core_concepts/documents.md#primary-field). Each index recognizes only one primary key attribute. Once a primary key has been set for an index, it cannot be changed anymore. If no primary key is found in a document, the document will not be stored.
-
-You can set the primary key manually on index creation or document addition. If no primary key is set, MeiliSearch automatically guesses the primary key when you add documents.
 
 ### Basic search
 
@@ -202,6 +222,8 @@ MeiliSearch **response**:
 }
 ```
 
+**By default, MeiliSearch returns only the first 20 results for a search query.**
+
 ### Web interface
 
 MeiliSearch offers an out-of-the-box web interface where you can test MeiliSearch interactively. You can access it on your browser at: `http://127.0.0.1:7700`.
@@ -214,15 +236,17 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 If your MeiliSearch instance does not have any indexes, you should see this screen.
 
-->Add image
+![no documents](/getting-started/web_interface_without_documents.png)
 
 We will be using this interface to demonstrate some features in future chapters.
 
-## Relevancy / Refining your search / 
+## Relevancy
 
 ### Ranking rules
 
 - What kind of example goes here?
+
+Relevancy refers to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa. MeiliSearch has a number of features for fine-tuning the relevancy of search results. The most important tool among them is ranking rules.
 
 MeiliSearch sorts search responses based on a set of consecutive rules called ranking rules. You can update these ranking rules for each index. The rules are stored in an array of strings called `rankingRules`. The default order for the ranking rules is as follows:
 
@@ -237,7 +261,13 @@ The order in which ranking rules are applied matters. The first rule in the arra
 
 You can read more about them in our [dedicated guide](/learn/core_concepts/relevancy.md).
 
+-> How do we go from ranking rules to explaining all these different attributes. Need some introduction or something
+
+- Do we have any order for these attributes? Or do we go with alphabetical order?
+
 ### Displayed attributes
+
+- Do we need the json responses here as well? or is the interface enough?
 
 By default, all attributes are displayed in each matching document but you can update the settings to change that. If you access the MeiliSearch web interface at `http://127.0.0.1:7700/`, you will notice that you can view all of the attributes in the `movies` index.
 
@@ -257,16 +287,19 @@ MeiliSearch lets you set one field per index as the distinct attribute. The dist
 
 ### Searchable attributes
 
-By default, all attribute are searched for matching query words but you can configure the settings to change that. Let's look at MeiliSearch's web interface for this example.
-When we search for `lion king` with the default settings, MeiliSearch searches for it everywhere.
+By default, all attributes are searched for matching query words but you can configure the settings to change that.
 
-Use a number or a common phrase for the example. `Number 23`, `Pi`
+Let's look at MeiliSearch's web interface for this example. When we search for `2012` with the default settings, MeiliSearch searches for it everywhere.
 
-![need a better gif](/getting-started/getting_started_searchableAttributes.gif)
+![default searchableAttributes](/getting-started/default_searchableAttributes.gif)
 
-If we update the `searchableAttributes` to only contain the movie title, MeiliSearch will only consider the title during search.
+If you update the `searchableAttributes` to only contain `title`, MeiliSearch will only consider `title` during search. You will see fewer results.
 
-new gif
+![title as the only searchableAttribute](/getting-started/title_searchableAttributes.gif)
+
+Please note that MeiliSearch will still highlight matches in other attributes, but they won’t be used to compute results.
+
+-> Moving from the different attributes to stop words and synonyms? Not sure if this is the right order
 
 ### stop words and synonyms
 
@@ -297,7 +330,7 @@ Let's say you only want to view meteors that weigh less than 200g.
 <CodeSamples id= "getting_started_filtering_md" />
 
 ```json
-{"hits":[{"name":"Acapulco","mass":1914},{"name":"Ellemeet","mass":1470},{"name":"Enshi","mass":8000},{"name":"Ensisheim","mass":127000},{"name":"Épinal","mass":277},{"name":"Ergheo","mass":20000},{"name":"Erxleben","mass":2250},{"name":"Esnandes","mass":1500},{"name":"Essebi","mass":500},{"name":"Estherville","mass":320000},{"name":"Farmington","mass":89400},{"name":"Farmville","mass":56000},{"name":"Favars","mass":1500},{"name":"Fayetteville","mass":2360},{"name":"Feid Chair","mass":380},{"name":"Felix","mass":3200},{"name":"Ferguson","mass":220},{"name":"Fermo","mass":10200},{"name":"Fisher","mass":17600},{"name":"Florence","mass":3640}],"nbHits":858,"exhaustiveNbHits":false,"query":"","limit":20,"offset":0,"processingTimeMs":3}%
+{"hits":[{"name":"Aachen","mass":21},{"name":"Emmaville","mass":127},{"name":"Erakot","mass":113},{"name":"Erevan","mass":107.2},{"name":"Fenghsien-Ku","mass":82},{"name":"Galapian","mass":132.7},{"name":"Galim (a)","mass":36.1},{"name":"Galim (b)","mass":28},{"name":"Garland","mass":102},{"name":"Grefsheim","mass":45.5},{"name":"Gurram Konda","mass":28},{"name":"Hachi-oji","mass":0.2},{"name":"Hotse","mass":180},{"name":"Hungen","mass":112},{"name":"Jamkheir","mass":22},{"name":"Jodzie","mass":30},{"name":"Kadonah","mass":89},{"name":"Karewar","mass":180},{"name":"Khetri","mass":100},{"name":"Kikino","mass":195}],"nbHits":114,"exhaustiveNbHits":false,"query":"","limit":20,"offset":0,"processingTimeMs":0}%
 ```
 
 ### Sortable attributes
@@ -307,15 +340,17 @@ Let's say you only want to view meteors that weigh less than 200g.
 
 By default, MeiliSearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
 
-You can use any of the document fields as long as they contain numbers, strings, arrays of numeric values, or arrays of string values by adding them to `sortableAttributes`. Let's look at how you can sort all `H5` meteors based on their mass.
+You can use any of the document fields as long as they contain numbers, strings, arrays of numeric values, or arrays of string values by adding them to `sortableAttributes`. Let's sort the meteors in the previous example  based on mass.
 
 <CodeSamples id= "getting_started_sorting_md" />
 
 ```json
-{"hits":[{"name":"Red Canyon Lake","mass":18.41},{"name":"Meerut","mass":22},{"name":"Kutais","mass":23},{"name":"Barnaul","mass":23.2},{"name":"Mason Gully","mass":24.54},{"name":"Centerville","mass":45.6},{"name":"Sologne","mass":54},{"name":"Fenghsien-Ku","mass":82},{"name":"Darmstadt","mass":100},{"name":"Pavlodar (stone)","mass":142.5},{"name":"Seldebourak","mass":150},{"name":"Cross Roads","mass":167},{"name":"Pétèlkolé","mass":189},{"name":"Okabe","mass":194},{"name":"Oviedo","mass":205},{"name":"Grimsby","mass":215},{"name":"Jiange","mass":222},{"name":"Kaee","mass":230},{"name":"Épinal","mass":277},{"name":"Schenectady","mass":283.3}],"nbHits":147,"exhaustiveNbHits":false,"query":"H5","limit":20,"offset":0,"processingTimeMs":6}
+{"hits":[{"name":"Silistra","mass":0.15},{"name":"Hachi-oji","mass":0.2},{"name":"Chail","mass":0.5},{"name":"Delhi","mass":0.8},{"name":"Revelstoke","mass":1},{"name":"Natal","mass":1.4},{"name":"Perth","mass":2},{"name":"Niger (L6)","mass":3.3},{"name":"Niger (LL6)","mass":3.3},{"name":"Kusiali","mass":5},{"name":"Ras Tanura","mass":6.1},{"name":"Caratash","mass":8},{"name":"Cumulus Hills 04075","mass":9.6},{"name":"Patti","mass":12},{"name":"Piancaldoli","mass":13.1},{"name":"Bethlehem","mass":13.9},{"name":"Banswal","mass":14},{"name":"Barntrup","mass":17},{"name":"Bhagur","mass":18},{"name":"Red Canyon Lake","mass":18.41}],"nbHits":114,"exhaustiveNbHits":false,"query":"","limit":20,"offset":0,"processingTimeMs":1}%
 ```
 
-You will see all `H5` meteors sorted based on increasing mass. If you used `desc`, MeiliSearch will sort them based on decreasing mass.
+- Is it a good idea to link this example to the previous one? Wouldn't the user expect the same results? Is it a good idea to mention limit at the beginning?
+
+You will see all meteors weighing less than 200g sorted based on increasing mass. If you used `mass:desc`, MeiliSearch will sort them based on decreasing mass.
 
 To learn more about `sortableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/sorting.md).
 
@@ -324,7 +359,6 @@ To learn more about `sortableAttributes` and how to configure them, refer to our
 - Can't demonstrate this using a gif so I added the code sample and I don't like this
 - Do I add the result for each query? If so, I need to fix the indentation
 - Where do I link the dataset?
-- Do I need to mention `_geoDistance`?
 
 MeiliSearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field.
 
@@ -680,25 +714,33 @@ You should get the following meteors:
 ]
 ```
 
+This response return an additional `_geoDistance` field. `_geoDistance` represents the distance between the Taj Mahal and the each meteor in meters.
+
 To learn more about geosearch and how to configure it, refer to our [dedicated guide](/reference/features/geosearch.md).
 
-## Integration/Facets (Decide this chapter name once we know what goes in here)
+## Integration/Facets
 
 - can we use this with the interface?
 
-## Search parameters / Optimizing your search
+**The following content is currently homeless:**
+
+**---------------------------------------------------------------------------------------------------**
+
+Placeholder search (does this need to be a heading or something that can be mentioned briefly somewhere else)
+
+If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its custom [ranking rules](/reference/features/settings.md#ranking-rules) and [sorting rules](/reference/features/sorting.md#sorting). This feature is called placeholder search.
+
+Phrase search (does this need to be a heading or something that can be mentioned briefly somewhere else)
+
+If you enclose search terms in double quotes ("), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
+
+**---------------------------------------------------------------------------------------------------**
+
+## Search parameters
 
 Even though the search is relevant by default, MeiliSearch offers many parameters that you can play with to refine your search or change the format of the returned document.
 
 This chapter covers some of the important search parameters but you can read about all of them in our [search parameters guide](/reference/features/search_parameters.md).
-
-### Placeholder search (does this need to be a heading or something that can be mentioned briefly somewhere else)
-
-If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its custom [ranking rules](/reference/features/settings.md#ranking-rules) and [sorting rules](/reference/features/sorting.md#sorting). This feature is called placeholder search.
-
-### Phrase search (does this need to be a heading or something that can be mentioned briefly somewhere else)
-
-If you enclose search terms in double quotes ("), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
 
 ### attributesToHighlight (Is this that important?)
 
@@ -762,7 +804,7 @@ If you search the `movies` index for `shifu`, MeiliSearch will return the first 
 
 MeiliSearch would now return the first ten results.
 
-## Configuration options / Dive deeper / Advanced concepts
+## Configuration options
 
 MeiliSearch allows you to configure your entire instance through **environment variables** and **command-line options**. You can configure your instance with environment variables before launch and with command line options at launch.
 

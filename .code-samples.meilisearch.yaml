@@ -490,7 +490,7 @@ getting_started_filtering_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteors/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{"filter": "mass > 200"}'
+    --data-binary '{"filter": "mass < 200"}'
 getting_started_attributesToHighlight_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -515,11 +515,10 @@ getting_started_geoPoint_md: |-
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
 getting_started_sorting_md: |-
-  curl \
+   curl \
     -X POST 'http://localhost:7700/indexes/meteors/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "H5",
+    --data-binary '{"filter": "mass < 200",
       "sort": [
         "mass:asc"
       ]}'
