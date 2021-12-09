@@ -724,17 +724,17 @@ To learn more about geosearch and how to configure it, refer to our [dedicated g
 
 **The following content is currently homeless:**
 
-**---------------------------------------------------------------------------------------------------**
+======================================================================
 
-Placeholder search (does this need to be a heading or something that can be mentioned briefly somewhere else)
+Placeholder search (this is a behavior needs to mentioned briefly)
 
 If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its custom [ranking rules](/reference/features/settings.md#ranking-rules) and [sorting rules](/reference/features/sorting.md#sorting). This feature is called placeholder search.
 
-Phrase search (does this need to be a heading or something that can be mentioned briefly somewhere else)
+Phrase search (Don't know where this goes)
 
 If you enclose search terms in double quotes ("), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
 
-**---------------------------------------------------------------------------------------------------**
+======================================================================
 
 ## Search parameters
 
@@ -832,7 +832,11 @@ You can read more about our data collection policy [here](/learn/what_is_meilise
 
 MeiliSearch accepts JSON, NDJSON, and CSV payloads. The default payload limit is 104857600 (~100MB) but you can update it using the `MEILI_HTTP_PAYLOAD_SIZE_LIMIT` environment variable or the `--http-payload-size-limit` CLI option.
 
-## Dumps and snapshots
+### Dumps (Can we mention this here?)
+
+### Snapshots (Can we mention this here?)
+
+## Dumps and snapshots (Won't need this probably. Keeping it here so I can copy this in case we need to mention dumps and snapshots somwhere in the getting started)
 
 - I think this section gives enough detail for an introduction. If we keep this here, do we get rid of it from Advanced topics?
 - I don't think a note is a good idea here, too much detail for a "brief intro".
