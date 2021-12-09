@@ -46,11 +46,11 @@ docker pull getmeili/meilisearch:latest
 # Launch MeiliSearch
 docker run -it --rm \
     -p 7700:7700 \
-    -v $(pwd)/data.ms:/data.ms \
+    -v $(pwd)/data.ms:/home/meili/data.ms \
     getmeili/meilisearch:latest
 ```
 
-Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
+Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to the `data.ms` folder.
 
 You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
 :::
