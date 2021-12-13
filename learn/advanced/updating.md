@@ -79,7 +79,7 @@ cargo build --release
 Replace `0.X.X` with the version you would like to install.
 
 ```bash
-apt-get install meilisearch=0.X.X
+apt-get install meilisearch-http=0.X.X
 ```
 
 :::
