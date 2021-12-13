@@ -254,7 +254,7 @@ Now that you’ve got your dump, [install the latest version of MeiliSearch](/le
 ```
 
 ::: warning
-If you are using MeiliSearch v0.20.0 or below, you will need to import your dump to a version between v0.21.0 and v0.25.0 and the re-export it to the newer version.
+If you are using MeiliSearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of MeiliSearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
 :::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
