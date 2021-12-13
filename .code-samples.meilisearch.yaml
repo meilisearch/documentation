@@ -559,7 +559,7 @@ geosearch_guide_sort_usage_2: |-
   curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
-set_primary_key_on_index_creation: |-
+document_guide_create_index_primary_key: |-
   curl \
     -X POST 'http://localhost:7700/indexes' \
     -H 'Content-Type: application/json' \
@@ -567,7 +567,7 @@ set_primary_key_on_index_creation: |-
       "uid": "movies",
       "primaryKey": "id"
     }'
-set_primary_key_on_document_addition: |-      
+document_guide_add_document_primary_key: |-      
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents?primaryKey=reference_number' \
     -H 'Content-Type: application/json' \

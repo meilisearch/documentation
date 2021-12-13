@@ -173,13 +173,13 @@ There are several ways to set the primary key for an index:
 
 The code below creates an index called `movies` with `id` as primary key:
 
-<CodeSamples id="set_primary_key_on_index_creation" />
+<CodeSamples id="document_guide_create_index_primary_key" />
 
 #### Setting the primary key on document addition
 
 The code below adds a document with `reference_number` as primary key:
 
-<CodeSamples id="set_primary_key_on_document_addition" />
+<CodeSamples id="document_guide_add_document_primary_key" />
 
 #### MeiliSearch guesses your primary key
 
