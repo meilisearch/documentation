@@ -215,7 +215,7 @@ See our [contact page](/learn/what_is_meilisearch/contact.md).
 
 ## I have just updated Meilisearch, and I am getting an error: "Cannot open database, expected Meilisearch engine version..."
 
-Until our first stable release (v1.0), Meilisearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating Meilisearch](/learn/getting_started/installation.md#updating-meilisearch) for more information.
+Until our first stable release (v1.0), Meilisearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating Meilisearch](/learn/advanced/updating.md) for more information.
 
 ## What are the recommended requirements for hosting a Meilisearch instance?
 

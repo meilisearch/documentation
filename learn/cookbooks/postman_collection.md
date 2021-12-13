@@ -33,6 +33,6 @@ The `url` and `indexUID` variables are used in all the collection routes, like i
 
 ## Start to use it!
 
-You can now [run your Meilisearch instance](/learn/getting_started/installation.md) and create your first index:
+You can now [run your Meilisearch instance](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and create your first index:
 
 ![Create index](/postman/create_index.png)

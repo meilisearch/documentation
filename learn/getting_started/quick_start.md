@@ -1,105 +1,214 @@
 # Quick start
 
-This quick tour will help you get started with Meilisearch in just a few steps.
+In this quick start we will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, and adding a search bar.
 
-All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)). You can find instructions to install each of our SDKs further down in the [add documents section](#add-documents) of this guide.
+All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
 
-## Download and launch
+Let's get started!
 
-First of all, let's download and run Meilisearch.
+## Step 1: Setup and installation
+
+We'll start with downloading and installing Meilisearch. You have the option to install Meilisearch locally or deploy it over a cloud service.
+
+### Local installation
+
+:::: tabs
+
+::: tab cURL
+Download the **latest stable release** of Meilisearch with **cURL**.
+
+Launch Meilisearch to start the server.
 
 ```bash
+# Install Meilisearch
 curl -L https://install.meilisearch.com | sh
+
+# Launch Meilisearch
 ./meilisearch
 ```
 
-You should see the following response:
+:::
+
+::: tab Homebrew
+Download the **latest stable release** of Meilisearch with **[Homebrew](https://brew.sh/)**, a package manager for MacOS.
+
+Launch Meilisearch to start the server.
+
+```bash
+# Update brew and install Meilisearch
+brew update && brew install meilisearch
+
+# Launch Meilisearch
+meilisearch
+```
+
+:::
+
+::: tab Docker
+When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/Meilisearch/tags).
+
+This command starts the **latest stable release** of Meilisearch.
+
+```bash
+# Fetch the latest version of Meilisearch image from DockerHub
+docker pull getmeili/meilisearch:latest
+
+# Launch Meilisearch
+docker run -it --rm \
+    -p 7700:7700 \
+    -v $(pwd)/data.ms:/data.ms \
+    getmeili/meilisearch:latest
+```
+
+Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
+
+You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
+:::
+
+::: tab APT
+
+Download the **latest stable release** of Meilisearch with **APT**.
+
+Launch Meilisearch to start the server.
+
+```bash
+# Add Meilisearch package
+echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+
+# Update APT and install Meilisearch
+apt update && apt install meilisearch-http
+
+# Launch Meilisearch
+meilisearch
+```
+
+:::
+
+::: tab Source
+
+Meilisearch is written in `Rust`. To compile it, [install the Rust toolchain](https://www.rust-lang.org/tools/install).
+
+If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
+
+```bash
+git clone https://github.com/meilisearch/Meilisearch
+cd Meilisearch
+```
+
+In the cloned repository, compile Meilisearch.
+
+```bash
+# Update the rust toolchain to the latest version
+rustup update
+
+# Compile the project
+cargo build --release
+
+# Execute the server binary
+./target/release/meilisearch
+```
+
+:::
+
+::: tab Windows
+
+To install Meilisearch on Windows, you can:
+
+- use Docker (see "Docker" tab above)
+- [download the latest binary](https://github.com/meilisearch/Meilisearch/releases)
+- use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
+- compile from source (see "Source" tab above)
+
+To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
+
+::::
+
+### Cloud deploy
+
+To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
+
+- [AWS](/learn/cookbooks/aws.md)
+- [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Qovery](/learn/cookbooks/qovery.md)
+
+### Running Meilisearch
+
+On successfully running Meilisearch, you should see the following response:
 
 ```
-888b     d888          d8b 888 d8b  .d8888b.                                    888
-8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
-88888b.d88888              888     Y88b.                                        888
-888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
+888b     d888          d8b 888 d8b                                            888
+8888b   d8888          Y8P 888 Y8P                                            888
+88888b.d88888              888                                                888
+888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
 
 Database path:       "./data.ms"
 Server listening on: "127.0.0.1:7700"
 ```
 
-You can download & run Meilisearch [in many different ways (i.e: docker, apt, homebrew, ...)](/learn/getting_started/installation.md).
+Congratulations! You're ready to move on to the next step!
 
-[Environment variables and options](/learn/configuration/instance_options.md) can be set before and on launch to configure Meilisearch. Amongst all the options, you can use the **master key** and the **port** options.
+## Step 2: Add documents
 
-### Communicate with Meilisearch
+For this quick start, we will be using a collection of movies as our dataset. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file into your working directory.
 
-Now that your Meilisearch server is up and running, you should be able to communicate with it.
-
-Communication to the server is done through a [RESTful API](/reference/api/README.md) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
-
-## Add documents
-
-To add documents to Meilisearch you must provide:
-
-- [Documents](/learn/core_concepts/documents.md) in the form of an array of JSON objects.
-- An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
-
-**If the index does not exist, Meilisearch creates it when you first add documents.**
-
-To be processed, all documents must share one common field which will serve as [primary key](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
-
-```json
-[
-  {
-    "id": "123",
-    "title": "Superman"
-  }
-]
-```
-
-The **primary key** is `id`, the **document's unique identifier** is `123`.
-
-There are [several ways to let Meilisearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an attribute that contains the string `id` in a case-insensitive manner.
-
-Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
+Open a new terminal window and run the following command:
 
 <CodeSamples id="getting_started_add_documents_md" />
 
-[API references](/reference/api/documents.md)
+Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents.md). Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes.md).
 
-### Checking task status
-
-Most actions in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md), including the document addition process.
-
-Here's an example of the kind of response you should receive after adding documents.
+The previous command added documents from `movies.json` to a new index called `movies`. After adding documents, you should receive a response like this:
 
 ```json
 {
-    "uid": 1,
+    "uid": 0,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentsAddition",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-Asynchronous actions return a JSON object containing several fields, the most important of which is `uid`. This indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. To view the task's current `status`, use the [get task endpoint](/reference/api/tasks.md).
+Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
 
-See our guide on [asynchronous operations](/learn/advanced/asynchronous_operations.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
+Use the returned `uid` to [check the status](/reference/api/tasks.md) of your documents:
 
-## Search
+<CodeSamples id="getting_started_check_task_status_md" />
 
-Now that your documents have been ingested into Meilisearch, you are able to search them.
+If the document addition is successful, the response should look like this:
 
-Meilisearch [offers many parameters](/reference/api/search.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
+```json
+{
+   "uid":0,
+   "indexUid":"movies",
+   "status":"succeeded",
+   "type":"documentAddition",
+   "details":{
+      "receivedDocuments":19547,
+      "indexedDocuments":19547
+   },
+   "duration":"PT0.030750S",
+   "enqueuedAt":"2021-12-20T12:39:18.349288Z",
+   "startedAt":"2021-12-20T12:39:18.352490Z",
+   "finishedAt":"2021-12-20T12:39:18.380038Z"
+}
+```
 
-The search engine is now aware of your documents and can serve those via an HTTP server.
+If the `status` field has the value `enqueued` or `processing`, all you have to do is wait a short time and check again. Proceed to the next step once the task `status` has changed to `succeeded`.
+
+## Step 3: Search
+
+Now that you have Meilisearch setup, you can start searching!
 
 <CodeSamples id="getting_started_search_md" />
 
-Meilisearch **response**:
+In the above code sample, the parameter `q` represents the search query. The documents you added in [step two](#step-2-add-documents) will be searched for text that matches `botman`.
+
+**Meilisearch response**:
 
 ```json
 {
@@ -127,40 +236,19 @@ Meilisearch **response**:
 }
 ```
 
-::: note
-**By default, Meilisearch returns only the first 20 results** for a search query. You can read more about the limit parameter [here](/reference/api/search.md#limit).
-:::
+By default, Meilisearch only returns the first 20 results for a search query. This can be changed using the [`limit` parameter](/reference/api/search.md#limit).
 
-[API references](/reference/api/search.md)
+## Step 4: Search preview
 
-### Search preview
+Meilisearch offers a web interface where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
-We also deliver an out-of-the-box [search preview](/learn/what_is_meilisearch/search_preview.md) in which you can test Meilisearch interactively.
+![Screenshot of Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
 
-To do so, open your web browser and enter Meilisearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
-This will lead you to a web page with a search bar that will allow you to search in the selected index.
+If you have multiple indexes, you can switch between them using the indexes dropdown.
 
-<br>
-<MovieGif />
+## Step 5: Front-end integration
 
-## Integrate with your project
-
-The only step missing now is adding the search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the search components needed to start searching.
-
-[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments, such as [JavaScript](https://github.com/meilisearch/meilisearch-js), [React](https://github.com/meilisearch/meilisearch-react), and [Vue.js](https://github.com/meilisearch/meilisearch-vue).
-
-`instant-meilisearch` uses [InstantSearch](https://github.com/algolia/instantsearch.js) an open-source library that generates everything you need from a search interface.
-
-#### Let's try!
-
-1. Create an `html` file, for example, `index.html`
-2. Open it in a text editor (e.g. Notepad, Sublime Text, Visual Studio Code)
-3. Copy-paste any of the code examples below and save the file
-4. Open `index.html` in your browser (double click on it in your folder)
-
-::: note
-We use browser builds for ease of integration. It is possible to do this with `npm` or `yarn`. Please refer to [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch) for documentation.
-:::
+The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the components needed to start searching.
 
 :::: tabs
 
@@ -186,7 +274,7 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
   <script>
     const search = instantsearch({
       indexName: "movies",
-      searchClient: instantMeiliSearch(
+      searchClient: instantMeilisearch(
         "http://localhost:7700"
       )
       });
@@ -220,7 +308,7 @@ The code above comes in multiple parts:
 - `<script src="..">` tags are [CDNs](https://en.wikipedia.org/wiki/Content_delivery_network) that import libraries needed to run `instant-meilisearch`.
 - The JavaScript part is where you customize `instant-meilisearch`.
 
-To use `instant-meilisearch` using `npm` or `yarn` please visit [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch).
+To use `instant-meilisearch` with `npm` or `yarn` please visit [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch).
 
 :::
 
@@ -256,7 +344,7 @@ The following code sample uses [Vue.js](https://vuejs.org/) framework.
     var app = new Vue({
         el: '#app',
         data: {
-            searchClient: instantMeiliSearch('http://127.0.0.1:7700')
+            searchClient: instantMeilisearch('http://127.0.0.1:7700')
         }
     })
   </script>
@@ -293,7 +381,7 @@ The following code sample uses [React](https://reactjs.org/) framework.
   <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script>
     const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
-    const searchClient = instantMeiliSearch(
+    const searchClient = instantMeilisearch(
       "http://localhost:7700"
     );
 
@@ -331,4 +419,17 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 ::::
 
-You should now have a Meilisearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/learn/getting_started/whats_next.md) to continue your Meilisearch journey.
+### Let's try it!
+
+1. Create an `html` file, for example, `index.html`
+2. Open it in a text editor (e.g. Notepad, Sublime Text, Visual Studio Code)
+3. Copy-paste any of the code examples below and save the file
+4. Open `index.html` in your browser (double click on it in your folder)
+
+You should now have a working front-end search interface 🚀🔥
+
+## What's next?
+
+You now know all the basics: how to install Meilisearch, create an index, add documents, check the status of an asynchronous task, and perform a search.
+
+To keep going, continue to the [Meilisearch 101](/learn/getting_started/filtering_and_sorting.md) for a guided overview of the main features, or check out the [API references](/reference/api/README.md) to dive right in!

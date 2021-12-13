@@ -469,6 +469,11 @@ getting_started_add_documents_md: |-
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
   ```
+getting_started_check_task_status_md: |-
+  ```bash
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/tasks/0'
+  ```  
 getting_started_search_md: |-
   ```bash
   curl \
@@ -476,6 +481,25 @@ getting_started_search_md: |-
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "botman" }'
   ```
+getting_started_add_meteorites_md: |-
+  curl \
+    -X POST 'http://127.0.0.1:7700/indexes/meteorites/documents' \
+    -H 'Content-Type: application/json' \
+    --data-binary @meteorites.json
+getting_started_update_rankingRules_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[ 
+        "exactness",
+        "words",
+        "typo",
+        "proximity",
+        "attribute",
+        "sort",
+        "release_date:asc",
+        "rank:desc"
+    ]'
 getting_started_update_displayedAttributes_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
@@ -486,6 +510,25 @@ getting_started_update_displayedAttributes_md: |-
         "genre", 
         "poster"
     ]'
+getting_started_update_searchableAttributes_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+        "title"
+    ]'    
+getting_started_update_stop_words_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
+    -H 'Content-Type: application/json' \
+    --data-binary '["the"]'
+getting_started_synonyms_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "winnie": ["piglet"], "piglet": ["winnie"]
+      }'
 getting_started_filtering_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteors/search' \
@@ -522,6 +565,23 @@ getting_started_sorting_md: |-
       "sort": [
         "mass:asc"
       ]}'
+getting_started_configure_settings: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/meteorites/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+        "filterableAttributes": [
+            "mass",
+            "_geo"
+        ],
+        "sortableAttributes": [
+            "mass",
+            "_geo"
+        ]
+    }'        
+getting_started_communicating_with_a_protected_instance: |-
+  curl -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
+    -H 'Authorization: Bearer apiKey' 
 faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
