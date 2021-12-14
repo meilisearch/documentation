@@ -9,12 +9,144 @@
 MeiliSearch has been designed to be a ready-to-go open source solution and deliver an intuitive and instantaneous search experience. As the amount of information available on the websites increases as time goes by, it is essential to provide users with the most relevant results. Since many closed source search engines and open source alternatives can be used, determining which one to install is critical and may not seem easy at first.
 
 The present article covers a comparison of alternatives to MeiliSearch, i.e., available search technologies to be considered when planning to implement a search bar.
+The [comparison table](/learn/what_is_meilisearch/comparison_to_alternatives.md#comparison-table) gives a good overview of how MeiliSearch is different from its alternatives.
+The [approach comparison](/learn/what_is_meilisearch/comparison_to_alternatives.md#approach-comparison) gives details about how MeiliSearch measures against [ElasticSearch](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-elasticsearch) and [Algolia](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
+This article ends with [a quick look at the search engine landscape](/learn/what_is_meilisearch/comparison_to_alternatives.md#a-quick-look-at-the-search-engine-landscape).
 
 ::: note
 Please be advised that many of the search products described below are constantly evolving—just like MeiliSearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
 :::
 
-## Comparisons
+## Comparison table
+
+### General Overview
+
+| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:----:|:----:|:-----:|:----:|
+| Source code licensing | [MIT](https://choosealicense.com/licenses/mit/) <br> (Fully open-source) |  Closed-source  | [GPL-3](https://choosealicense.com/licenses/gpl-3.0/) <br> (Fully open-source) | SSPL <br>([Not open-source](https://opensource.org/node/1099))  |
+| Built with | Rust <br> [Check out why we believe in Rust](https://www.abetterinternet.org/docs/memory-safety/). | C++ | C++ | Java |
+| Data storage | Disk with Memory Mapping -- Not limited by RAM | Limited by RAM | Limited by RAM | Disk with RAM cache |
+
+### Features
+
+#### Connect
+
+We list only officially supported libraries by the internal teams of the different projects.
+
+> Can't find a client you'd like us to support? [Submit your idea or vote for it](https://roadmap.meilisearch.com/tabs/1-under-consideration) 😇
+
+| SDK      | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| REST API | ✅ | ✅ | ✅ | ✅ |
+| [Javascript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
+| [Php client](https://github.com/meilisearch/meilisearch-php)                  |  ✅         |   ✅     |     ✅      |        ✅       |
+| [Python client](https://github.com/meilisearch/meilisearch-python)              | ✅          | ✅      |        ✅   |       ✅        |
+| [Ruby client](https://github.com/meilisearch/meilisearch-ruby)              | ✅          | ✅      |        ✅   |       ✅        |
+| [Java client](https://github.com/meilisearch/meilisearch-java)              | ✅          | ✅      |        ✅   |       ✅        |
+| [Swift client](https://github.com/meilisearch/meilisearch-swift)              | ✅          | ✅      |   🔶 <br> WIP  |       ❌        |
+| [.NET client](https://github.com/meilisearch/meilisearch-dotnet)               | ✅          | ✅      |        ❌   |       ✅        |
+| [Rust client](https://github.com/meilisearch/meilisearch-rust)             | ✅          | ❌      |        🔶 <br> WIP  |       ✅        |
+| [Go client](https://github.com/meilisearch/meilisearch-go)              | ✅          | ✅     |        ✅   |       ✅        |
+| [Dart client](https://github.com/meilisearch/meilisearch-dart)               | ✅          | ✅     |        ✅   |       ❌        |
+| [Symfony](https://github.com/meilisearch/meilisearch-symfony) | ✅ | ✅ | ❌ | ❌ |
+| [Django](https://roadmap.meilisearch.com/c/60-django) | ❌ | ✅ | ❌ | ❌ |
+| [Rails](https://github.com/meilisearch/meilisearch-rails) | ✅ | ✅ | 🔶 <br>WIP | ❌ ||
+| [Official Laravel Scout Support](https://github.com/laravel/scout) | ✅ | ✅ | ❌ | ❌ |
+| [UI Search Kit](https://github.com/meilisearch/instant-meilisearch) | ✅ | ✅ | ✅ | ✅ |
+| [Docsearch](https://github.com/meilisearch/docs-scraper) | ✅ | ✅ | ✅ | ❌ |
+| [Strapi](https://github.com/meilisearch/strapi-plugin-meilisearch) | ✅ | ✅ | ❌ | ❌ |
+| [Gatsby](https://github.com/meilisearch/gatsby-plugin-meilisearch) | 🔶 <br> January 2022 | ✅ | ✅ | ❌ |
+| [Firebase](https://github.com/meilisearch/firestore-meilisearch) | 🔶 <br> January 2022 | ✅ | ✅ | ❌ |
+
+#### Configure
+
+##### Document schema
+
+| -       | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| Schemaless | ✅ | ✅ | 🔶 <br>Automatic schema detection is supported but needs to be specified. | ✅ |
+| Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
+| Native document formats | `Json`, `NDJson`, `CSV` | `Json` | `Json`, `NDJson` | `Json`, `NDJson`, `CSV` |
+
+##### Relevancy
+
+| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Need to be specified by fuzzy queries. |
+| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule. | ❌|
+| Custom rules | ✅ | ✅ | 🔶 <br>Limited to one default sorting rule. | 🔶 <br>Function score query
+| Query field weights | ✅ | ✅ | ✅ | ✅ |
+| Synonyms | ✅ | ✅ | ✅ | ✅ |
+| Stop words | ✅ | ✅ | ❌ | ✅ |
+| Automatic language detection | ✅ | ✅ | ❌ | ❌ |
+| All language supports | ✅ | ✅ | ❌ <br> Only space separated | ✅ |
+
+##### Security
+
+| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| API Key Management | ✅ | ✅ | ✅ | ✅ |
+| Tenant tokens & multi-tenant indexes | **Q1 2022** <br> Configurable end-user hard filters per index. | ✅  <br> Hard filters are not configurable per index for an end-user tenant key.   | ✅ <br> Hard filters are not configurable per index for an end-user tenant key. | ✅ <br> Role based |
+
+##### Search
+
+| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| Placeholder search | ✅ | ✅ | ✅ | ✅ |
+| Multi-index search | Early 2022 | ✅ | ✅ | ✅ |
+| Exact phrase search | ✅ | ✅ | ❌ | ✅ |
+| Geo search |  ✅  | ✅ | ✅ | ✅ |
+| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Index have to be duplicated for each sort field and sort order. | 🔶 <br> Do not support sort on string field. | ✅ |
+| Filtering |  ✅ - Support complex filter queries with an SQL-like syntax.  | 🔶 <br>Does not support `OR` operation across multiple fields. | 🔶 <br>Does not support `OR` operation across multiple fields. | ✅ |
+| Facetting |  ✅ | ✅ | ✅ | ✅ |
+| Facet value searches | ❌ | ✅ | ✅ | ❌ |
+| Distinct <br><div style="color:#A9A9A9;margin-top:0.8em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
+| Grouping <br><div style="color:#A9A9A9;margin-top:0.8em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
+
+##### Vizualize
+
+| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| [Visual Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br>Cloud product | 🔶 <br>Cloud product | ✅ |
+
+#### Deploy
+
+| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| Self-hosted | ✅  | ❌  | ✅  | ✅ |
+| Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution. | ❌ |
+| Official cloud-hosted solution | [Join the beta](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=comparative-table) | ✅ | ✅ | ✅ |
+| High availability | Expected 2022 | ✅ | ✅ | ✅ |
+| Run-time dependencies | None | n/a | None | None |
+| Backward compatibility | ✅ | n/a | ✅ | ✅ |
+| Upgrade path | Replace binary, restart process, documents need to be reindexed. | n/a  | Replace binary, restart process, documents need to be reindexed. | Replace binary, restart process, documents need to be reindexed. |
+
+### Limits
+
+| -| MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| Maximum number of indexes | No limitation | No limitation | No limitation | No limitation |
+| Maximum index size | 100GB default, configurable.  | 128Gb | Constrained by RAM | No Limitation |
+| Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
+| Maximum document size | No limitation | 10KB | No limitation | 100KB default, configurable.  |
+
+### Community
+
+| -| MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| GitHub stars of the main project | 20K | N/A | 9K | 57K |
+| Number of contributors on the main project | 75 | N/A | 20 | 1,700 |
+| Public Slack community size | 1K | N/A | 400 | 11K |
+
+### Support
+
+| -| MeiliSearch | Algolia | Typesense | Elasticsearch |
+|---|:---:|:----:|:---:|:---:|
+| Status page | ✅ | ✅ | ✅ | ✅ |
+| Free support channels | Instant messaging/chatbox (2-3h delay),<br />emails,<br />public Slack community,<br /> GitHub issues & discussions,<br />Slack Connect. | Instant messaging/chatbox,<br />public community forum. |  Instant messaging/chatbox (24h-48h delay),<br />public Slack community,<br />GitHub issues. | Public Slack community,<br />public community forum,<br />GitHub issues. |
+| Paid support channels | _Support is free!_ | Emails | Emails,<br />phone,<br />private Slack. | Web support,<br />emails,<br />phone. |
+
+## Approach comparison
 
 ### MeiliSearch vs Elasticsearch
 
