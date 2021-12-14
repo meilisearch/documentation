@@ -554,7 +554,7 @@ security_guide_create_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys/' \
     -H 'Content-Type: application/json' \
-    -H "Authorization: Bearer [your_master_key]" \
+    -H 'Authorization: Bearer [your_master_key]' \
     --data-binary '{
       "description": "Search key",
       "actions": [
@@ -567,7 +567,7 @@ security_guide_create_key_2: |-
   curl \
     -X POST 'http://localhost:7700/keys/' \
     -H 'Content-Type: application/json' \
-    -H "Authorization: Bearer [your_master_key]" \
+    -H 'Authorization: Bearer [your_master_key]' \
     --data-binary '{
       "description": "Manage sci-fi books key",
       "actions": [
