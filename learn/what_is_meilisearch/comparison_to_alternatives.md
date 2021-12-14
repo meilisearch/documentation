@@ -97,7 +97,7 @@ We list only officially supported libraries by the internal teams of the differe
 | Exact phrase search | ✅ | ✅ | ❌ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Index have to be duplicated for each sort field and sort order. | 🔶 <br> Do not support sort on string field. | ✅ |
-| Filtering |  ✅ - Support complex filter queries with an SQL-like syntax.  | 🔶 <br>Does not support `OR` operation across multiple fields. | 🔶 <br>Does not support `OR` operation across multiple fields. | ✅ |
+| Filtering |  ✅ <br>Support complex filter queries with an SQL-like syntax.  | 🔶 <br>Does not support `OR` operation across multiple fields. | 🔶 <br>Does not support `OR` operation across multiple fields. | ✅ |
 | Facetting |  ✅ | ✅ | ✅ | ✅ |
 | Facet value searches | ❌ | ✅ | ✅ | ❌ |
 | Distinct <br><div style="color:#A9A9A9;margin-top:0.8em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
