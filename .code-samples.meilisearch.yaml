@@ -554,7 +554,7 @@ getting_started_geoRadius_md: |-
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'  
 getting_started_geoPoint_md: |-
-  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+  curl -X POST 'http://localhost:7700/indexes/meteors/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
 getting_started_sorting_md: |-

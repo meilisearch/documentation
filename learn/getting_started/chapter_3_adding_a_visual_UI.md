@@ -12,8 +12,6 @@ Even though the search is relevant by default, MeiliSearch offers many parameter
 
 This section covers some of the important search parameters but you can read about all of them in our [search parameters guide](/reference/features/search_parameters.md).
 
-- Do want to mention these in any particular order?
-
 ### attributesToCrop
 
 By default, MeiliSearch responses return the entire value of all attributes. You can use the `attributesToCrop` parameter to crop the value of selected attributes.
@@ -78,18 +76,6 @@ MeiliSearch would now return the first ten results.
 
 ## Faceted search
 
-- can we use this with the interface?
+You can use MeiliSearch filters to build faceted search interfaces. This allows users to refine search results based on broad categories or facets.
 
-**The following content is currently homeless:**
-
-======================================================================
-
-Placeholder search (this is a behavior needs to mentioned briefly)
-
-If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its custom [ranking rules](/reference/features/settings.md#ranking-rules) and [sorting rules](/reference/features/sorting.md#sorting). This feature is called placeholder search.
-
-Phrase search (Don't know where this goes)
-
-If you enclose search terms in double quotes ("), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
-
-======================================================================
+Faceted navigation systems are intuitive interfaces for displaying and navigating through content. Facets are used in the UI as filters which users can apply to refine the results in real-time.
