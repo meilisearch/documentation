@@ -101,39 +101,39 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Filtering |  ✅ <br>Support complex filter queries with an SQL-like syntax.  | 🔶 <br>Does not support `OR` operation across multiple fields. | 🔶 <br>Does not support `OR` operation across multiple fields. | ✅ |
 | Facetting |  ✅ | ✅ | ✅ | ✅ |
 | Facet value searches | ❌ | ✅ | ✅ | ❌ |
-| Distinct <br><div style="color:#A9A9A9;margin-top:0.8em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
-| Grouping <br><div style="color:#A9A9A9;margin-top:0.8em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
+| Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
+| Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
 
-##### Vizualize
+##### Visualize
 
-| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | [Visual Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br>Cloud product | 🔶 <br>Cloud product | ✅ |
 
-#### Deploy
+#### Deployment
 
-| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
-| Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution. | ❌ |
+| Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
 | Official cloud-hosted solution | [Join the beta](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=comparative-table) | ✅ | ✅ | ✅ |
 | High availability | Expected 2022 | ✅ | ✅ | ✅ |
-| Run-time dependencies | None | n/a | None | None |
-| Backward compatibility | ✅ | n/a | ✅ | ✅ |
-| Upgrade path | Replace binary, restart process, documents need to be reindexed. | n/a  | Replace binary, restart process, documents need to be reindexed. | Replace binary, restart process, documents need to be reindexed. |
+| Run-time dependencies | None | N/A | None | None |
+| Backward compatibility | ✅ | N/A | ✅ | ✅ |
+| Upgrade path | Documents need to be reindexed | N/A  | Documents need to be reindexed | Documents need to be reindexed |
 
 ### Limits
 
 | -| MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | No limitation | No limitation | No limitation |
-| Maximum index size | 100GB default, configurable.  | 128Gb | Constrained by RAM | No Limitation |
+| Maximum index size | 100GB default, configurable  | 128Gb | Constrained by RAM | No Limitation |
 | Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
-| Maximum document size | No limitation | 10KB | No limitation | 100KB default, configurable.  |
+| Maximum document size | No limitation | 10KB | No limitation | 100KB default, configurable  |
 
 ### Community
 
-| -| MeiliSearch | Algolia | Typesense | Elasticsearch |
+|  | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | GitHub stars of the main project | 20K | N/A | 9K | 57K |
 | Number of contributors on the main project | 75 | N/A | 20 | 1,700 |
@@ -141,11 +141,11 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ### Support
 
-| -| MeiliSearch | Algolia | Typesense | Elasticsearch |
+|  | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Status page | ✅ | ✅ | ✅ | ✅ |
-| Free support channels | Instant messaging/chatbox (2-3h delay),<br />emails,<br />public Slack community,<br /> GitHub issues & discussions,<br />Slack Connect. | Instant messaging/chatbox,<br />public community forum. |  Instant messaging/chatbox (24h-48h delay),<br />public Slack community,<br />GitHub issues. | Public Slack community,<br />public community forum,<br />GitHub issues. |
-| Paid support channels | _Support is free!_ | Emails | Emails,<br />phone,<br />private Slack. | Web support,<br />emails,<br />phone. |
+| Free support channels | Instant messaging / chatbox (2-3h delay),<br> emails, <br> public Slack community, <br> GitHub issues & discussions,<br> Slack Connect | Instant messaging / chatbox, <br> public community forum |  Instant messaging/chatbox (24h-48h delay),<br> public Slack community, <br> GitHub issues. | Public Slack community, <br> public community forum,<br> GitHub issues |
+| Paid support channels | _Support is free!_ | Emails | Emails, <br> phone, <br> private Slack | Web support, <br> emails, <br> phone |
 
 ## Approach comparison
 
