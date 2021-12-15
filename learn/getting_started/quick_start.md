@@ -8,10 +8,116 @@ All that is required is a [command line](https://www.learnenough.com/command-lin
 
 First of all, let's download and run MeiliSearch.
 
+:::: tabs
+
+::: tab cURL
+Download the **latest stable release** of MeiliSearch with **cURL**.
+
+Launch MeiliSearch to start the server.
+
 ```bash
+# Install MeiliSearch
 curl -L https://install.meilisearch.com | sh
+
+# Launch MeiliSearch
 ./meilisearch
 ```
+
+:::
+
+::: tab Homebrew
+Download the **latest stable release** of MeiliSearch with **Homebrew**.
+
+Launch MeiliSearch to start the server.
+
+```bash
+# Update brew and install MeiliSearch
+brew update && brew install meilisearch
+
+# Launch MeiliSearch
+meilisearch
+```
+
+:::
+
+::: tab Docker
+Using **Docker** you can choose to run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).
+
+This command starts the **latest stable release** of MeiliSearch.
+
+```bash
+# Fetch the latest version of MeiliSearch image from DockerHub
+docker pull getmeili/meilisearch:latest
+
+# Launch MeiliSearch
+docker run -it --rm \
+    -p 7700:7700 \
+    -v $(pwd)/data.ms:/home/meili/data.ms \
+    getmeili/meilisearch:latest
+```
+
+Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to the `data.ms` folder.
+
+You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
+:::
+
+::: tab APT
+
+Download the **latest stable release** of MeiliSearch with **APT**.
+
+Launch MeiliSearch to start the server.
+
+```bash
+# Add MeiliSearch package
+echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+
+# Update APT and install MeiliSearch
+apt update && apt install meilisearch-http
+
+# Launch MeiliSearch
+meilisearch
+```
+
+:::
+
+::: tab Source
+
+MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
+
+If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
+
+```bash
+git clone https://github.com/meilisearch/MeiliSearch
+cd MeiliSearch
+```
+
+In the cloned repository, compile MeiliSearch.
+
+```bash
+# Update the rust toolchain to the latest version
+rustup update
+
+# Compile the project
+cargo build --release
+
+# Execute the server binary
+./target/release/meilisearch
+```
+
+:::
+
+::: tab Windows
+
+To install MeiliSearch on Windows, you can:
+
+- use Docker (see "Docker" tab above)
+- [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
+- use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
+- compile from source (see "Source" tab above)
+
+To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
+
+::::
 
 You should see the following response:
 
