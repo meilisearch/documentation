@@ -74,8 +74,8 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Need to be specified by fuzzy queries |
-| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule. | ❌|
-| Custom rules | ✅ | ✅ | 🔶 <br>Limited to one default sorting rule. | 🔶 <br>Function score query
+| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule | ❌|
+| Custom rules | ✅ | ✅ | 🔶 <br>Limited to one default sorting rule | 🔶 <br>Function score query
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
 | Synonyms | ✅ | ✅ | ✅ | ✅ |
 | Stop words | ✅ | ✅ | ❌ | ✅ |
@@ -84,22 +84,22 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ##### Security
 
-| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | API Key Management | ✅ | ✅ | ✅ | ✅ |
-| Tenant tokens & multi-tenant indexes | **Q1 2022** <br> Configurable end-user hard filters per index. | ✅  <br> Hard filters are not configurable per index for an end-user tenant key.   | ✅ <br> Hard filters are not configurable per index for an end-user tenant key. | ✅ <br> Role based |
+| Tenant tokens & multi-tenant indexes | **Q1 2022** <br> Configurable end-user hard filters per index | ✅  <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Role-based |
 
 ##### Search
 
-| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
 | Multi-index search | Early 2022 | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ❌ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
-| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Index have to be duplicated for each sort field and sort order. | 🔶 <br> Do not support sort on string field. | ✅ |
-| Filtering |  ✅ <br>Support complex filter queries with an SQL-like syntax.  | 🔶 <br>Does not support `OR` operation across multiple fields. | 🔶 <br>Does not support `OR` operation across multiple fields. | ✅ |
-| Facetting |  ✅ | ✅ | ✅ | ✅ |
+| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Index have to be duplicated for each sort field and sort order | 🔶 <br> Do not support sort on string field | ✅ |
+| Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ |
+| Faceting |  ✅ | ✅ | ✅ | ✅ |
 | Facet value searches | ❌ | ✅ | ✅ | ❌ |
 | Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
 | Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
