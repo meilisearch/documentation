@@ -101,7 +101,9 @@ create_a_key_1: |-
       "actions": [
         "documents.add"
       ],
-      "indexes": ["products"],
+      "indexes": [
+      "products"
+      ],
       "expiresAt": "2021-11-13T00:00:00Z"
     }'
 update_a_key_1: |-
