@@ -10,8 +10,9 @@ There are many search engines on the web, both open-source and otherwise. Decidi
 
 - In the [comparison table](#comparison-table), we present a general overview of the differences between MeiliSearch and other search engines
 
-The [approach comparison](/learn/what_is_meilisearch/comparison_to_alternatives.md#approach-comparison) gives details about how MeiliSearch measures against [ElasticSearch](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-elasticsearch) and [Algolia](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
-This article ends with [a quick look at the search engine landscape](/learn/what_is_meilisearch/comparison_to_alternatives.md#a-quick-look-at-the-search-engine-landscape).
+- In the [approach comparison](#approach-comparison), instead, we focus on how MeiliSearch measures against [ElasticSearch](#meilisearch-vs-elasticsearch) and [Algolia](#meilisearch-vs-algolia), currently two of the biggest solutions available in the market
+
+- Finally, we end this article with [an in-depth analysis of the broader search engine landscape](#a-quick-look-at-the-search-engine-landscape)
 
 ::: note
 Please be advised that many of the search products described below are constantly evolving—just like MeiliSearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
@@ -21,7 +22,7 @@ Please be advised that many of the search products described below are constantl
 
 ### General Overview
 
-| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:----:|:----:|:-----:|:----:|
 | Source code licensing | [MIT](https://choosealicense.com/licenses/mit/) <br> (Fully open-source) |  Closed-source  | [GPL-3](https://choosealicense.com/licenses/gpl-3.0/) <br> (Fully open-source) | SSPL <br>([Not open-source](https://opensource.org/node/1099))  |
 | Built with | Rust <br> [Check out why we believe in Rust](https://www.abetterinternet.org/docs/memory-safety/). | C++ | C++ | Java |
@@ -29,17 +30,17 @@ Please be advised that many of the search products described below are constantl
 
 ### Features
 
-#### Connect
+#### Integrations and SDKs
 
 We list only officially supported libraries by the internal teams of the different projects.
 
-> Can't find a client you'd like us to support? [Submit your idea or vote for it](https://roadmap.meilisearch.com/tabs/1-under-consideration) 😇
+Can't find a client you'd like us to support? [Submit your idea or vote for it](https://roadmap.meilisearch.com/tabs/1-under-consideration) 😇
 
 | SDK      | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | REST API | ✅ | ✅ | ✅ | ✅ |
 | [Javascript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
-| [Php client](https://github.com/meilisearch/meilisearch-php)                  |  ✅         |   ✅     |     ✅      |        ✅       |
+| [PHP client](https://github.com/meilisearch/meilisearch-php)                  |  ✅         |   ✅     |     ✅      |        ✅       |
 | [Python client](https://github.com/meilisearch/meilisearch-python)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Ruby client](https://github.com/meilisearch/meilisearch-ruby)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Java client](https://github.com/meilisearch/meilisearch-java)              | ✅          | ✅      |        ✅   |       ✅        |
@@ -58,21 +59,21 @@ We list only officially supported libraries by the internal teams of the differe
 | [Gatsby](https://github.com/meilisearch/gatsby-plugin-meilisearch) | 🔶 <br> January 2022 | ✅ | ✅ | ❌ |
 | [Firebase](https://github.com/meilisearch/firestore-meilisearch) | 🔶 <br> January 2022 | ✅ | ✅ | ❌ |
 
-#### Configure
+#### Configuration
 
 ##### Document schema
 
 | -       | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Schemaless | ✅ | ✅ | 🔶 <br>Automatic schema detection is supported but needs to be specified. | ✅ |
+| Schemaless | ✅ | ✅ | 🔶 <br>Automatic schema detection is supported but needs to be specified | ✅ |
 | Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
-| Native document formats | `Json`, `NDJson`, `CSV` | `Json` | `Json`, `NDJson` | `Json`, `NDJson`, `CSV` |
+| Native document formats | `JSON`, `NDJSON`, `CSV` | `JSON` | `JSON`, `NDJSON` | `JSON`, `NDJSON`, `CSV` |
 
 ##### Relevancy
 
-| - | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Need to be specified by fuzzy queries. |
+| Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Need to be specified by fuzzy queries |
 | Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule. | ❌|
 | Custom rules | ✅ | ✅ | 🔶 <br>Limited to one default sorting rule. | 🔶 <br>Function score query
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
