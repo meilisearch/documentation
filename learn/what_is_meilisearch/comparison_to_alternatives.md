@@ -108,7 +108,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| [Visual Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br>Cloud product | 🔶 <br>Cloud product | ✅ |
+| [Mini Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br> Cloud product | 🔶 <br> Cloud product | ✅ |
 
 #### Deployment
 
