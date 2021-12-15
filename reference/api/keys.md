@@ -85,21 +85,21 @@ A list of indexes permitted for the key. `["*"]` for all indexes.
 **Modifiable:** yes
 **Mandatory:** yes
 
-Expiration date and time of the key represented in **ISO-8601** format. `null` if the key never expires.
+Date and time when the key will expire, represented in **ISO-8601** format. `null` if the key never expires.
 
 #### `createdAt`
 
 **Type:** string
 **Modifiable:** no
 
-Date and time the key was created, represented in **ISO-8601** format.
+Date and time when the key was created, represented in **ISO-8601** format.
 
 #### `updatedAt`
 
 **Type:** string
 **Modifiable:** no
 
-Date and time the key was last updated, represented in **ISO-8601** format.
+Date and time when the key was last updated, represented in **ISO-8601** format.
 
 ## Get one key
 
