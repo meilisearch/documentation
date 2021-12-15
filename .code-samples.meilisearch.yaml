@@ -115,13 +115,13 @@ update_a_key_1: |-
       "description": "Manage documents: Products/Reviews API key", // Update key description to specify its new scope
       "actions": [
         "documents.add",
-        "documents.delete" // Now has access to document deletion
+        "documents.delete" // Add access to document deletion
       ],
       "indexes": [
         "products",
-        "reviews" // Now has access to the "reviews" index
+        "reviews" // Add access to the "reviews" index
       ],
-      "expiresAt": "2021-12-31T23:59:59Z" // Now extended to the end of the year
+      "expiresAt": "2021-12-31T23:59:59Z" // Extend expiration date to the end of the year
     }'
 delete_a_key_1: |-
   curl \
