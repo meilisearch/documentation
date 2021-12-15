@@ -101,7 +101,6 @@ module.exports = {
           path: '/reference/features/',
           collapsable: false,
           children: [
-            '/reference/features/security',
             '/reference/features/configuration',
             '/reference/features/distinct',
             '/reference/features/dumps',
@@ -115,6 +114,7 @@ module.exports = {
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
+            '/reference/features/security',
             '/reference/features/settings',
             '/reference/features/snapshots',
             '/reference/features/sorting',
