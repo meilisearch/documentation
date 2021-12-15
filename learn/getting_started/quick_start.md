@@ -80,7 +80,7 @@ Here's an example of the kind of response you should receive after adding docume
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentsAddition",
+    "type": "documentAddition",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```

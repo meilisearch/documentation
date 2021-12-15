@@ -25,7 +25,7 @@ List all tasks globally, regardless of index. The `task` objects are contained i
             "uid": 1,
             "indexUid": "movies_reviews",
             "status": "enqueued",
-            "type": "documentsAddition",
+            "type": "documentAddition",
             "duration": null,
             "enqueuedAt": "2021-08-12T10:00:00.000000Z",
             "startedAt": null,
@@ -35,7 +35,7 @@ List all tasks globally, regardless of index. The `task` objects are contained i
             "uid": 0,
             "indexUid": "movies",
             "status": "succeeded",
-            "type": "documentsAddition",
+            "type": "documentAddition",
             "details": { 
                     "receivedDocuments": 100,
                     "indexedDocuments": 100
@@ -121,7 +121,7 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
             "uid": 1,
             "indexUid": "movies",
             "status": "enqueued",
-            "type": "documentsAddition",
+            "type": "documentAddition",
             "duration": null,
             "enqueuedAt": "2021-08-12T10:00:00.000000Z",
             "startedAt": null,
@@ -131,7 +131,7 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
             "uid": 0,
             "indexUid": "movies",
             "status": "succeeded",
-            "type": "documentsAddition",
+            "type": "documentAddition",
             "details": { 
                     "receivedDocuments": 100,
                     "indexedDocuments": 100

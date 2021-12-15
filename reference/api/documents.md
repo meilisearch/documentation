@@ -137,7 +137,7 @@ The body is composed of a **JSON array** of documents.
     "uid":1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentsAddition",
+    "type": "documentAddition",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -197,7 +197,7 @@ The documents are matched because they have the same `primaryKey` value `id: 287
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentsAddition",
+    "type": "documentAddition",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -258,7 +258,7 @@ Delete one document based on its unique id.
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentsDeletion",
+    "type": "documentDeletion",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -296,7 +296,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentsDeletion",
+    "type": "documentDeletion",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
