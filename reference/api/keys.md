@@ -208,7 +208,9 @@ Only the `indexes`, `actions`, and `expiresAt` fields are mandatory. For more in
     "actions": [
         "documents.add"
     ],
-    "indexes": ["products"],
+    "indexes": [
+    "products"
+    ],
     "expiresAt": "2021-11-13T00:00:00Z",
     "createdAt": "2021-11-12T10:00:00Z",
     "updatedAt": "2021-11-12T10:00:00Z"
