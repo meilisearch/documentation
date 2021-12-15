@@ -8,6 +8,12 @@ The `/stats` route gives extended information and metrics about indexes and the 
 
 Get stats of an index.
 
+#### Path variables
+
+| Variable      | Description   |
+| ------------- | ------------- |
+| **index_uid** | The index UID |
+
 ### Fields returned
 
 #### `numberOfDocuments`
@@ -23,12 +29,6 @@ The `isIndexing` field returns a Boolean. If `true`, the index is still processi
 The `fieldDistribution` object shows every field in the individual index or the entire database along with the total number of documents in the index that contain that field.
 
 `fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, **if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.**  
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 ### Example
 
