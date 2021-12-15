@@ -49,21 +49,21 @@ The `*` character can also be used as a wildcard to get all permissions for a ro
 
 | name             | description |
 |------------------|-------------|
-| search           | Provides access to `GET` and `POST` methods on `/indexes/:authorizedIndexes/search` routes. |
-| documents.add    | Provides access to `POST` and `PUT` on `/indexes/:authorizedIndexes/documents` routes. |
-| documents.get    | Provides access to `GET` methods on `/indexes/:authorizedIndexes/documents` and `/indexes/:authorizedIndexes/documents/:documentId` routes. |
-| documents.delete | Provides access to `DELETE` method on `/indexes/:authorizedIndexes/documents/:documentId`, `indexes/:authorizedIndexes/documents/:documentId` and `POST` method on `/indexes/:authorizedIndexes/documents/delete-batch` routes. |
-| indexes.add      | Provides access to `POST` `/indexes`. **⚠️ The newly created index is automatically added to the permissions for the API key making the call, as well as all others keys having `[*]` as a value for `indexes`**. |
-| indexes.get      | Provides access to `GET` `/indexes` and `/indexes/:authorizedIndexes`. **⚠️Non-authorized `indexes` are omitted from the response on `/indexes`**. |
-| indexes.update   | Provides access to `PUT` `/indexes/:authorizedIndexes`. |
-| indexes.delete   | Provides access to `DELETE` `/indexes/:authorizedIndexes`. |
-| tasks.get        | Provides access to `GET` `/tasks`. **⚠️Non-authorized `indexes` are omitted from the response on `/tasks`**. Also add access to `GET` `/indexes/:authorizedIndexes/tasks` routes. |
-| settings.get     | Provides access to `GET` `/indexes/:authorizedIndexes/settings` and `/indexes/:authorizedIndexes/settings/*` routes. |
-| settings.update  | Provides access to `POST / DELETE` `/indexes/:authorizedIndexes/settings` and `/indexes/:authorizedIndexes/settings/*` routes. |
-| stats.get        | Provides access to `GET` `/stats/`. **⚠️Non-authorized `indexes` are omitted from the response on `/stats`**. Also add access to `GET` `/indexes/:authorizedIndexes/stats`. |
-| dumps.create     | Provides access to `POST` `/dumps` route. **As dumps are not scoped by indexes, a restriction on `indexes` does not affect this action.** |
-| dumps.get        | Provides access to `GET` `/dumps/:dumpUid` route. **As dumps are not scoped by indexes, a restriction on `indexes` does not affect this action.** |
-| version          | Provides access to `GET` `/version` route.
+| search           | Provides access to both [`POST`](/reference/api/search.md#search-in-an-index-with-post-route) and [`GET`](/reference/api/search.md#search-in-an-index-with-get-route) search endpoints on authorized indexes. |
+| documents.add    | Provides access to the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints on authorized indexes. |
+| documents.get    | Provides access to the [get one document](/reference/api/documents.md#get-one-document) and [get documents](/reference/api/documents.md#get-documents) endpoints on authorized indexes. |
+| documents.delete | Provides access to the [delete one document](/reference/api/documents.md#delete-one-document), [delete all documents](/reference/api/documents.md#delete-all-documents), and [batch delete](/reference/api/documents.md#delete-documents) endpoints on authorized indexes. |
+| indexes.create   | Provides access to the [create index](/reference/api/indexes.md#create-an-index) endpoint. |
+| indexes.get      | Provides access to the [get one index](/reference/api/indexes.md#get-one-index) and [list all indexes](/reference/api/indexes.md#list-all-indexes) endpoints. **Non-authorized `indexes` will be omitted from the response**. |
+| indexes.update   | Provides access to the [update index](/reference/api/indexes.md#update-an-index) endpoint. |
+| indexes.delete   | Provides access to the [delete index](/reference/api/indexes.md#delete-an-index) endpoint. |
+| tasks.get        | Provides access to the [get one task](/reference/api/tasks.md#get-task) and [get all tasks](/reference/api/tasks.md#get-all-tasks) endpoints. **Tasks from non-authorized `indexes` will be omitted from the response**. Also provides access to the [get one task by index](/reference/api/tasks.md#get-task-by-index) and [get all tasks by index](/reference/api/tasks.md#get-all-tasks-by-index) endpoints on authorized indexes. |
+| settings.get     | Provides access to the [get settings](/reference/api/settings.md#get-settings) endpoint and equivalents for all subroutes on authorized indexes. |
+| settings.update  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes on authorized indexes. |
+| stats.get        | Provides access to the [get stats of an index](/reference/api/stats.md#get-stat-of-an-index) endpoint and the [get stats of all indexes](/reference/api/stats.md#get-stats-of-all-indexes) endpoint. For the latter, **non-authorized `indexes` are omitted from the response**. |
+| dumps.create     | Provides access to the [create dump](/reference/api/dump.md#create-a-dump) endpoint. **Not restricted by `indexes`.** |
+| dumps.get        | Provides access to the [get dump status](/reference/api/dump.md#get-dump-status) endpoint. **Not restricted by `indexes`.** |
+| version          | Provides access to the [get MeiliSearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint. |
 
 #### `indexes`
 
