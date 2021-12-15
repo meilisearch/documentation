@@ -24,8 +24,6 @@ You can use any of the document fields as long as they contain numbers, strings,
 {"hits":[{"name":"Silistra","mass":0.15},{"name":"Hachi-oji","mass":0.2},{"name":"Chail","mass":0.5},{"name":"Delhi","mass":0.8},{"name":"Revelstoke","mass":1},{"name":"Natal","mass":1.4},{"name":"Perth","mass":2},{"name":"Niger (L6)","mass":3.3},{"name":"Niger (LL6)","mass":3.3},{"name":"Kusiali","mass":5},{"name":"Ras Tanura","mass":6.1},{"name":"Caratash","mass":8},{"name":"Cumulus Hills 04075","mass":9.6},{"name":"Patti","mass":12},{"name":"Piancaldoli","mass":13.1},{"name":"Bethlehem","mass":13.9},{"name":"Banswal","mass":14},{"name":"Barntrup","mass":17},{"name":"Bhagur","mass":18},{"name":"Red Canyon Lake","mass":18.41}],"nbHits":114,"exhaustiveNbHits":false,"query":"","limit":20,"offset":0,"processingTimeMs":1}%
 ```
 
-- Is it a good idea to link this example to the previous one? Wouldn't the user expect the same results? Is it a good idea to mention limit at the beginning?
-
 You will see all meteors weighing less than 200g sorted based on increasing mass. If you use `mass:desc`, MeiliSearch will sort them based on decreasing mass.
 
 To learn more about `sortableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/sorting.md).

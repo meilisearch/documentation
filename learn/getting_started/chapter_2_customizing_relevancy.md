@@ -37,17 +37,49 @@ If you only want to view the `title`, `poster`, and `overview`, you can do so wi
 
 ![Web interface with updated displayed attributes](/getting-started/updated_displayed_attributes.png)  
 
-## distinctAttribute
+## Distinct attribute
 
 - no idea what the example should be
 
 MeiliSearch lets you set one field per index as the distinct attribute. The distinct attribute will always be unique among returned documents. This means there will never be more than one occurrence of the same value in the distinct attribute field among the returned documents.
 
+Suppose you have an e-commerce dataset with an index on jackets. There are several identical items with minor variations such as color or size.
+
+```json
+[
+  {
+    "id": 1,
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "brown",
+    "product_id": "123456"
+  },
+  {
+    "id": 2,
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "black",
+    "product_id": "123456"
+  },
+  {
+    "id": 3,
+    "description": "Leather jacket",
+    "brand": "Lee jeans",
+    "color": "blue",
+    "product_id": "123456"
+  }
+]
+```
+
+If you search for `lee leather jacket` with the default settings, you would get all three documents.
+
+If you set the `product_id` as the `distinctAttribute`, MeiliSearch will only return the first found document.
+
 ## Searchable attributes
 
 By default, all attributes are searched for matching query words but you can configure the settings to change that.
 
-Let's look at MeiliSearch's web interface for this example. When we search for `2012` with the default settings, MeiliSearch searches for it everywhere.
+Let's look at MeiliSearch's web interface for this example. If you search for `2012` with the default settings, MeiliSearch searches for it everywhere.
 
 ![default searchableAttributes](/getting-started/default_searchableAttributes.gif)
 
@@ -59,7 +91,7 @@ Please note that **MeiliSearch will still highlight matches in other attributes,
 
 -> Moving from the different attributes to stop words and synonyms? Not sure if this is the right order
 
-## stop words and synonyms
+## Stop words and synonyms
 
 - Is it a good idea to link one-way association or should it be the Synonyms page? This link does take the user to the synonyms page so it shouldn't be a problem
 - Do I need to include examples? I don't think so. The Synonyms and Stop words pages are pretty brief, too much info here will make them useless. But is this detail enough for demonstration purposes? Maybe add a gif and update the examples I used in the text accordingly?
