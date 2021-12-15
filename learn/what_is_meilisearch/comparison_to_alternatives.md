@@ -6,10 +6,10 @@
 
 ## About MeiliSearch
 
-MeiliSearch has been designed to be a ready-to-go open source solution and deliver an intuitive and instantaneous search experience. As the amount of information available on the websites increases as time goes by, it is essential to provide users with the most relevant results. Since many closed source search engines and open source alternatives can be used, determining which one to install is critical and may not seem easy at first.
+There are many search engines on the web, both open-source and otherwise. Deciding which search solution is the best fit for your project is very important, but also difficult. In this article, we'll go over the differences between MeiliSearch and other search engines:
 
-The present article covers a comparison of alternatives to MeiliSearch, i.e., available search technologies to be considered when planning to implement a search bar.
-The [comparison table](/learn/what_is_meilisearch/comparison_to_alternatives.md#comparison-table) gives a good overview of how MeiliSearch is different from its alternatives.
+- In the [comparison table](#comparison-table), we present a general overview of the differences between MeiliSearch and other search engines
+
 The [approach comparison](/learn/what_is_meilisearch/comparison_to_alternatives.md#approach-comparison) gives details about how MeiliSearch measures against [ElasticSearch](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-elasticsearch) and [Algolia](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
 This article ends with [a quick look at the search engine landscape](/learn/what_is_meilisearch/comparison_to_alternatives.md#a-quick-look-at-the-search-engine-landscape).
 
