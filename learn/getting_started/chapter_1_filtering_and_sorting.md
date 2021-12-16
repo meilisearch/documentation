@@ -72,34 +72,34 @@ Let's say you want to find out the what meteors crashed within a 210km radius of
 
 <CodeSamples id= "getting_started_geoRadius_md" />
 
-You should get the following meteors:
-
 ```json
 {
   "hits":[
   {
     "name":"Ensisheim",
-  "id":"10039",
-  "nametype":"Valid",
-  "recclass":"LL6",
-  "mass":"127000",
-  "fall":"Fell",
-  "year":"1492-01-01T00:00:00.000",
-  "_geo": {
-      "lat":47.86667,
-      "lng":7.35}
+    "id":"10039",
+    "nametype":"Valid",
+    "recclass":"LL6",
+    "mass":"127000",
+    "fall":"Fell",
+    "year":"1492-01-01T00:00:00.000",
+    "_geo": {
+        "lat":47.86667,
+        "lng":7.35
+        }
   },
   {
     "name":"Épinal",
-  "id":"10041",
-  "nametype":"Valid",
-  "recclass":"H5",
-  "mass":"277",
-  "fall":"Fell",
-  "year":"1822-01-01T00:00:00.000",
-  "_geo": {
-      "lat":48.18333,
-      "lng":6.46667}
+    "id":"10041",
+    "nametype":"Valid",
+    "recclass":"H5",
+    "mass":"277",
+    "fall":"Fell",
+    "year":"1822-01-01T00:00:00.000",
+    "_geo": {
+        "lat":48.18333,
+        "lng":6.46667
+        }
   },
   …
   ],
@@ -115,8 +115,6 @@ You should get the following meteors:
 You can also use geosearch to sort results based on their distance from a specific location. Let's say you want to view meteors based on how close they were to the Taj Mahal:
 
 <CodeSamples id= "getting_started_geoPoint_md" />
-
-You should get the following meteors:
 
 ```json
 {
