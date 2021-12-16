@@ -108,7 +108,7 @@ For a partial update of the document see [add or update documents](/reference/ap
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
 | **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the index _(optional)_ |     none      |
 
-If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
@@ -138,8 +138,6 @@ The body is composed of a **JSON array** of documents.
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
-[You can set the primary key of the index on document addition.](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition)
-
 ## Add or update documents
 
 <RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
@@ -158,7 +156,7 @@ If the provided index does not exist, it will be created.
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Query parameters
 
@@ -185,7 +183,7 @@ The body is composed of a **JSON array** of documents.
 
 This document is an update of the document found in [add or replace document](/reference/api/documents.md#add-or-replace-documents).
 
-The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
+The documents are matched because they have the same [primary key](/learn/core_concepts/documents.md#primary-field) value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
 
@@ -194,8 +192,6 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 ```
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
-
-[You can set the primary key of the index on document addition.](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition)
 
 ## Delete all documents
 

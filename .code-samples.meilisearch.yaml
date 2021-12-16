@@ -565,7 +565,7 @@ document_guide_create_index_primary_key: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "uid": "movies",
-      "primaryKey": "id"
+      "primaryKey": "reference_number"
     }'
 document_guide_add_document_primary_key: |-      
   curl \

@@ -165,19 +165,19 @@ Each index recognizes **only one** primary key attribute. Once a primary key has
 
 There are several ways to set the primary key for an index:
 
-- You can set it manually [on index creation](/reference/api/indexes.md#create-an-index)
-- You can set it manually [on document addition](/reference/api/documents.md#add-or-replace-documents)
+- You can set it manually [on index creation](#setting-the-primary-key-on-index-creation)
+- You can set it manually [on document addition](#setting-the-primary-key-on-document-addition)
 - If no primary key is set, MeiliSearch automatically [guesses the primary key](/learn/core_concepts/documents.md#meilisearch-guesses-your-primary-key) when you add documents
 
 #### Setting the primary key on index creation
 
-The code below creates an index called `movies` with `id` as primary key:
+The code below creates an index called `movies` with `reference_number` as primary key:
 
 <CodeSamples id="document_guide_create_index_primary_key" />
 
 #### Setting the primary key on document addition
 
-The code below adds a document with `reference_number` as primary key:
+The code below adds a document and sets `reference_number` as the index's primary key:
 
 <CodeSamples id="document_guide_add_document_primary_key" />
 
