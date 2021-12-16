@@ -14,7 +14,7 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
 #### Content type
 
-Any endpoint with a payload (`--data-binary`) requires a `Content-Type` header. MeiliSearch currently supports the following formats:
+Any API request with a payload (`--data-binary`) requires a `Content-Type` header. MeiliSearch currently supports the following formats:
 
 - `Content-Type: application/json` for JSON
 - `Content-Type: application/x-ndjson` for NDJSON
