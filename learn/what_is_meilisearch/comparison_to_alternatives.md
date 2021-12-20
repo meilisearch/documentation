@@ -73,7 +73,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |   | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Need to be specified by fuzzy queries |
+| Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Needs to be specified by fuzzy queries |
 | Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule | ❌|
 | Custom rules | ✅ | ✅ | 🔶 <br>Limited to one default sorting rule | 🔶 <br>Function score query
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
@@ -97,7 +97,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Multi-index search | Early 2022 | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ❌ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
-| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Index have to be duplicated for each sort field and sort order | 🔶 <br> Do not support sort on string field | ✅ |
+| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Index have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
 | Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ |
 | Faceting |  ✅ | ✅ | ✅ | ✅ |
 | Facet value searches | ❌ | ✅ | ✅ | ❌ |
@@ -124,10 +124,10 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ### Limits
 
-| -| MeiliSearch | Algolia | Typesense | Elasticsearch |
+|  | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | No limitation | No limitation | No limitation |
-| Maximum index size | 100GB default, configurable  | 128Gb | Constrained by RAM | No Limitation |
+| Maximum index size | 100GB default, configurable  | 128Gb | Constrained by RAM | No limitation |
 | Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
 | Maximum document size | No limitation | 10KB | No limitation | 100KB default, configurable  |
 
