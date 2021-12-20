@@ -2,6 +2,8 @@
 
 MeiliSearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
+In this guide, you will learn how to protect your MeiliSearch instance with a master key and communicate with it using an API key. You will also see how you can use your instance's master key to create, update, list and delete API keys.
+
 ## Protecting a MeiliSearch instance
 
 By default, MeiliSearch is unprotected. This means all routes are publicly accessible.
@@ -185,7 +187,7 @@ We can query our instance to confirm which active keys can search our `patient_m
 
 ### Deleting an API key
 
-If a key is no longer useful or has been compromised, you can use [`DELETE /keys/:key`](/reference/api/keys.md#delete-a-key) to disable it before its expiry date.
+If a key is no longer useful or has been compromised, you can use [delete key endpoint](/reference/api/keys.md#delete-a-key) to disable it before its expiry date.
 
 If we accidentally exposed our `Search patient records key`, we can delete it to prevent unauthorized parties from gaining access to our `patient_medical_records` index:
 
@@ -197,7 +199,7 @@ Once a key is past its `expiresAt` date, using it when communicating with a prot
 
 If you must continue using an expired key, you may use the [update key endpoint] to set a new `expiresAt` date and effectively reactivate it.
 
-### Updating the master key
+## Updating the master key
 
 To update the master key, you must first terminate your instance. You must then launch it again, [supplying a new value for the master key](#protecting-a-meilisearch-instance).
 
