@@ -63,7 +63,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ##### Document schema
 
-| -       | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|         | MeiliSearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Schemaless | ✅ | ✅ | 🔶 <br>Automatic schema detection is supported but needs to be specified | ✅ |
 | Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
