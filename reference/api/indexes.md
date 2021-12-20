@@ -150,7 +150,7 @@ This is an asynchronous task. [You can read more about asynchronous processes in
 }
 ```
 
-You can use the response's `uid` to track the status of your request.
+You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
 
 ## Delete an index
 
