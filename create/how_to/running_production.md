@@ -103,7 +103,9 @@ In Debian and other Linux distributions, `systemd` allows you to create and mana
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run MeiliSearch on port `7700`.
 
-To run MeiliSearch in a production environment, use the `--env` flag. Generate the master key using the `--master-key` flag. When you launch a secured instance for the first time, MeiliSearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/reference/features/security.md#default-api-keys). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration. You can change the master Key to any value in the following command. However, for security concerns, it's better to choose a safe and random key, never share it and, just, **keep it safe**.
+To run MeiliSearch in a production environment, use the `--env` flag. Generate the master key using the `--master-key` option. When you launch an instance for the first time, MeiliSearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/reference/features/security.md#default-api-keys). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration. 
+
+Remember to choose a safe and random key and avoid exposing it in publicly accessible applications. You can change the master key with the following command:
 
 ```bash
 cat << EOF > /etc/systemd/system/meilisearch.service
