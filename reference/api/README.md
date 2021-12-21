@@ -20,7 +20,7 @@ Any API request with a payload (`--data-binary`) requires a `Content-Type` heade
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
 
-However, the only endpoints which currently accept NDJSON and CSV `Content-Type` are the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints. For all others, use `Content-Type: application/json`.
+The only endpoints which currently accept NDJSON and CSV `Content-Type` are the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints. For all others, use `Content-Type: application/json`.
 
 #### Authentication
 
