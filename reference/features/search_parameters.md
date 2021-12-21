@@ -360,9 +360,7 @@ If you set `matches` to `true` and search for `winter feast`:
 
 <CodeSamples id="search_parameter_guide_matches_1" />
 
-You would get the following response with **information about the matches in the `_matchesInfo` object**:
-
-Note how MeiliSearch searches for `winter` and `feast` separately because of the whitespace.
+You would get the following response with **information about the matches in the `_matchesInfo` object**. Note how MeiliSearch searches for `winter` and `feast` separately because of the whitespace:
 
 ```json
 {
