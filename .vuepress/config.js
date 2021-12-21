@@ -79,10 +79,28 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_updates',
-            '/learn/advanced/snapshots_vs_dumps',
             {
               title: 'Updating MeiliSearch',
               path: '/learn/advanced/updating.md',
+            },
+            {
+              title: 'Data backup',
+              collapsable: false,
+              sidebarDepth: 0,
+              children: [
+                {
+                  title: 'Dumps',
+                  path: '/learn/advanced/dumps',
+                },
+                {
+                  title: 'Snapshots',
+                  path: '/learn/advanced/snapshots',
+                },
+                {
+                  title: 'Snapshots vs dumps',
+                  path: '/learn/advanced/snapshots_vs_dumps',
+                },
+              ],
             },
             {
               title: 'Inner workings',
