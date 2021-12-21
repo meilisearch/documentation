@@ -64,11 +64,9 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an [index](/learn/core_concepts/indexes.md). This route accepts two arguments: `uid` and `primaryKey`.
+Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `index_uid` and `primaryKey`.
 
-`uid` is mandatory. It should be a unique string identifying your new index.
-
-`primaryKey` is optional and indicates the field containing your documents' [primary key](/learn/core_concepts/indexes.md#primary-key). If you do not supply a value for `primaryKey`, MeiliSearch will do its best to infer it once you add your first document to the index.
+If you do not supply a value for `primaryKey`, MeiliSearch will try to infer your dataset's unique identifier from first document you add to the index.
 
 ::: note
 If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, MeiliSearch will automatically create it for you. This is called implicit index creation.
@@ -106,7 +104,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 }
 ```
 
-You can use the response's `uid` to track the status of your request.
+You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
 
 ## Update an index
 
@@ -114,7 +112,7 @@ You can use the response's `uid` to track the status of your request.
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
 
-If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use [the get index route](/reference/api/indexes.md#get-one-index) to verify it.
+If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/api/indexes.md#get-one-index) to verify it.
 
 ::: note
 It is not possible to change an index's `uid`.
@@ -150,7 +148,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to track the status of your request.
+You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
 
 ## Delete an index
 
