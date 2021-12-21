@@ -67,5 +67,5 @@ errors:
   - code: index_primary_key_already_exists
     description: "The requested index already has a primary key that cannot be changed."
   - code: task_not_found
-    description: "The requested task was not found as it does not exist. Please ensure that you are using the correct `uid`." 
+    description: "The requested task does not exist. Please ensure that you are using the correct `uid`." 
 ...
