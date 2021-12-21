@@ -67,7 +67,7 @@ errors:
   - code: index_primary_key_already_exists
     description: "The requested index already has a primary key that cannot be changed."
   - code: invalid_api_key_description
-    description: "The `description` field for the provided API key resource is invalid. It should either be a string or be set to`null`." 
+    description: "The `description` field for the provided API key resource is invalid. It should either be a string or `null`." 
   - code: invalid_api_key_actions
     description: "The `actions` field for the provided API key resource is invalid. It should be an array of strings representing action names." 
   - code: invalid_api_key_indexes
