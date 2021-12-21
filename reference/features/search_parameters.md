@@ -46,7 +46,7 @@ If the index has no sort or custom ranking rules, the results are returned in th
 
 ::: tip
 
-Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
+Placeholder search is particularly useful when building a [faceted search UI](/learn/advanced/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
 
 :::
 
@@ -134,7 +134,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
 
-[Read our guide on filtering, faceted search and filter expressions.](/reference/features/filtering_and_faceted_search.md)
+[Read our guide on filtering, faceted search and filter expressions.](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Example
 
@@ -198,7 +198,7 @@ When `facetsDistribution` is set, the search results object contains **two addit
 `exhaustiveFacetsCount` is not currently implemented and will always return `false`.
 :::
 
-[Learn more about facet distribution in the filtering and faceted search guide.](/reference/features/filtering_and_faceted_search.md#facets-distribution)
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#facets-distribution)
 
 ### Example
 
@@ -414,7 +414,7 @@ When using the `POST` route, `sort` expects an array of strings.
 
 When using the `GET` route, `sort` expects the list as a comma-separated string.
 
-[Read more about sorting search results in our dedicated guide.](/reference/features/sorting.md)
+[Read more about sorting search results in our dedicated guide.](/learn/advanced/sorting.md)
 
 ### Example
 
@@ -446,4 +446,4 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our dedicated guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)
+[You can read more about location-based sorting in our dedicated guide.](/learn/advanced/geosearch.md#sorting-results-with-geopoint)

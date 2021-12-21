@@ -94,3 +94,8 @@
 
 # Move updating MeiliSearch
 /create/how_to/updating.html                         /learn/advanced/updating.html
+
+# Move guides (filtering, sorting, geosearch) to /learn
+/reference/features/filtering_and_faceted_search.html   /learn/advanced/filtering_and_faceted_search.html
+/reference/features/geosearch.html                      /learn/advanced/geosearch.html
+/reference/features/sorting.html                        /learn/advanced/sorting.html

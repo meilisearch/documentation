@@ -117,7 +117,7 @@ In order to filter results based on their location, you must add the `_geo` attr
 
 Note that MeiliSearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
-[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/reference/features/filtering_and_faceted_search.md#configuring-filters)
+[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-filters)
 
 ### Usage
 
@@ -139,7 +139,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, MeiliSearch will return an [`invalid_filter`](https://docs.meilisearch.com/errors/#invalid_filter) error.
 
-[You can read more about using `filter` in our dedicated guide.](/reference/features/filtering_and_faceted_search.md#using-filters)
+[You can read more about using `filter` in our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md#using-filters)
 
 ::: warning
 `_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_filter`](https://docs.meilisearch.com/errors/#invalid_filter) error.
@@ -212,7 +212,7 @@ Before using geosearch for sorting, you must add the `_geo` attribute to the `so
 
 Note that MeiliSearch will rebuild your index whenever you update `sortableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
-[You can read more about configuring `sortableAttributes` in our dedicated sorting guide.](/reference/features/sorting.md#configuring-meilisearch-for-sorting-at-search-time)
+[You can read more about configuring `sortableAttributes` in our dedicated sorting guide.](/learn/advanced/sorting.md#configuring-meilisearch-for-sorting-at-search-time)
 
 ### Usage
 
@@ -238,7 +238,7 @@ The following sorting rule orders results according to how close they are to the
 
 If either `lat` or `lng` is invalid or missing, MeiliSearch will return an [`invalid_sort`](https://docs.meilisearch.com/errors/#invalid_sort) error. An error will also be thrown if you fail to indicate a sorting order.
 
-[You can read more about sorting in our dedicated guide.](/reference/features/sorting.md#sorting-results-at-search-time)
+[You can read more about sorting in our dedicated guide.](/learn/advanced/sorting.md#sorting-results-at-search-time)
 
 ::: warning
 `_geo`, `_geoDistance`, and `_geoRadius` are not valid `sort` values. Trying to use any of them with the `sort` search parameter will result in an [`invalid_sort`](https://docs.meilisearch.com/errors/#invalid_sort) error.
@@ -340,7 +340,7 @@ This means that sorting with `_geoPoint` will often be a tie-breaker and not the
 
 Since `_geoPoint` is used with the `sort` search parameter, its weight when ranking results is controlled by the position of `"sort"` ranking rule.
 
-[You can read more about the `"sort"` ranking rule and how to customize it on our dedicated sorting guide.](/reference/features/sorting.md#sorting-and-custom-ranking-rules)
+[You can read more about the `"sort"` ranking rule and how to customize it on our dedicated sorting guide.](/learn/advanced/sorting.md#sorting-and-custom-ranking-rules)
 
 ## Finding the distance between a document and a `_geoPoint`
 

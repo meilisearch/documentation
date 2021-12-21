@@ -32,21 +32,21 @@ Read more about synonyms in [this dedicated guide](/reference/features/synonyms.
 
 ## Filters
 
-MeiliSearch allows you to define [filters](/reference/features/filtering_and_faceted_search.md) so you can filter through the results based on user-defined criteria.
+MeiliSearch allows you to define [filters](/learn/advanced/filtering_and_faceted_search.md) so you can filter through the results based on user-defined criteria.
 
 ## Faceting
 
-[Faceted search](/reference/features/filtering_and_faceted_search.md) allows you to classify search results into categories and to build intuitive navigation interfaces.
+[Faceted search](/learn/advanced/filtering_and_faceted_search.md) allows you to classify search results into categories and to build intuitive navigation interfaces.
 
 ## Sorting
 
-[Sort search results](/reference/features/sorting.md) at query time and let users choose which types of results they want to see first.
+[Sort search results](/learn/advanced/sorting.md) at query time and let users choose which types of results they want to see first.
 
 ## Placeholder search
 
-If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule) and [sorting rules](https://docs.meilisearch.com/reference/features/sorting.html#sorting). This feature is called **placeholder search**.
+If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule) and [sorting rules](https://docs.meilisearch.com/learn/advanced/sorting.html#sorting). This feature is called **placeholder search**.
 
-Placeholder searches are particularly effective when used with other features such as [faceting or filtering](/reference/features/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category. You can read more about this feature in our article on [search parameters](https://docs.meilisearch.com/reference/features/search_parameters.html#placeholder-search).
+Placeholder searches are particularly effective when used with other features such as [faceting or filtering](/learn/advanced/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category. You can read more about this feature in our article on [search parameters](https://docs.meilisearch.com/reference/features/search_parameters.html#placeholder-search).
 
 ## Phrase search
 

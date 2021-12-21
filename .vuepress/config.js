@@ -80,9 +80,9 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_updates',
-            '/learn/advanced/snapshots_vs_dumps',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
+            '/learn/advanced/snapshots_vs_dumps',
             '/learn/advanced/sorting',
             {
               title: 'Updating MeiliSearch',
