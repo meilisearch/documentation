@@ -64,7 +64,7 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `index_uid` and `primaryKey`.
+Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `uid` and `primaryKey`.
 
 If you do not supply a value for `primaryKey`, MeiliSearch will try to infer your dataset's unique identifier from first document you add to the index.
 
