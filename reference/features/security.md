@@ -1,7 +1,5 @@
 # Security
 
-MeiliSearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
-
 This guide will teach you how to protect your MeiliSearch instance by setting a master key and how to authorize requests using API keys. You will also learn how to use your master key to create, list, update, and delete API keys with granular permissions.
 
 ## Protecting a MeiliSearch instance
@@ -41,16 +39,7 @@ It is particularly important to protect an instance when dealing with sensitive 
 
 <CodeSamples id="security_guide_search_key_1" />
 
-MeiliSearch currently has two types of security keys: one master key and any number of API keys.
-
-API keys grant users access to a specific set of indexes, routes, and endpoints. You can also configure them to expire after a certain date. For most of your day-to-day operations, you should use API keys when communicating with a protected instance.
-
-When you launch an instance for the first time, MeiliSearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](#default-api-keys).
-
-While API keys are designed to have limited permissions, the master key grants users full control over an instance, including endpoints for creating and deleting API keys. Since exposing your master key would give malicious users complete control over your MeiliSearch instance, we strongly recommend you only use the master key when managing API keys.
-
-
-### Default API Keys
+### Using default API keys for authorization
 
 When you launch an instance for the first time, MeiliSearch will automatically generate two API keys: `Default Search API Key` and `Default Admin API Key`.
 
@@ -58,13 +47,33 @@ As its name indicates, the `Default Search API Key` can only be used to access [
 
 The second automatically-generated key, `Default Admin API Key`, has access to all API routes except `/keys`. You should avoid exposing the default admin key in publicly accessible code.
 
+::: warning
 Both default API keys have access to all indexes in an instance and do not have an expiry date. They can be [retrieved](#listing-api-keys), [modified](#updating-an-api-key), or [deleted](#deleting-an-api-key) the same way as user-created keys.
+:::
+
+### Differences between the master key and API keys
+
+MeiliSearch currently has two types of security keys: one master key and any number of API keys.
+
+Though both types of keys help you protect your instance and your data, they serve distinct purposes and are managed in different ways.
+
+API keys grant users access to a specific set of indexes, routes, and endpoints. You can also configure them to expire after a certain date. They can be configured by using the [`/keys` route](/reference/api/keys.md).
+
+For most of your day-to-day operations, you should use API keys when communicating with a protected instance.
+
+When you launch an instance for the first time, MeiliSearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](#using-default-api-keys-for-authorization).
+
+While API keys are designed to have limited permissions, the master key grants users full control over an instance. The master key is the only key with access to endpoints for creating and deleting API keys. Since the master key is not an API key, it cannot be configured and listed through the `/keys` endpoints.
+
+Exposing your master key can give malicious users complete control over your MeiliSearch instance. We strongly recommend you **only use the master key when managing API keys**.
 
 ## Using the master key to manage API keys
 
+MeiliSearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
+
 The master key is the only key with access to the [`/keys` route](/reference/api/keys.md). This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-api-keys) API keys.
 
-Though the default API keys are usually enough to manage the security needs of most applications, the fine-grained control offered by the `keys` endpoint is particularly useful when dealing with privacy-sensitive data and full control over who can access what information is crucial.
+Though the default API keys are usually enough to manage the security needs of most applications, this might not be the case when dealing with privacy-sensitive data. In these situations, the fine-grained control offered by the `/keys` endpoint allows you to clearly decide who can access what information and for how long.
 
 ### Updating an API key
 
