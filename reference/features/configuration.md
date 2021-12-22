@@ -241,7 +241,7 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 
 Activates scheduled snapshots when set to `true`. Snapshots are disabled by default.
 
-[Learn more about snapshots](/reference/features/snapshots.md).
+[Learn more about snapshots](/learn/advanced/snapshots.md).
 
 ### Snapshot destination
 

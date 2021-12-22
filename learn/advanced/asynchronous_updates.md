@@ -26,7 +26,7 @@ Currently, these are MeiliSearch's asynchronous operations:
 
 While dumps and updates are both asynchronous processes, they use separate queues and behave differently. For instance, creating a new dump will freeze the update queue until the dump has been generated.
 
-[You can read more about dumps in our dedicated guide.](/reference/features/dumps.md)
+[You can read more about dumps in our dedicated guide.](/learn/advanced/dumps.md)
 
 ## Understanding updates
 

@@ -29,4 +29,4 @@ To summarize:
 - **Dumps are portable, but not very efficient**.
   - Frequently launching MeiliSearch from a dump would cause your performance to suffer.
 
-For more information, have a look at the reference documentation for [snapshots](/reference/features/snapshots.md) and [dumps](/reference/features/dumps.md).
+For more information, have a look at the reference documentation for [snapshots](/learn/advanced/snapshots.md) and [dumps](/learn/advanced/dumps.md).
