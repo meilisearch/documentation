@@ -2,13 +2,13 @@
 
 MeiliSearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
-In this guide, you will learn how to protect your MeiliSearch instance with a master key and communicate with it using an API key. You will also see how you can use your instance's master key to create, update, list and delete API keys.
+This guide will teach you how to protect your MeiliSearch instance by setting a master key and how to authorize requests using API keys. You will also learn how to use your master key to create, list, update, and delete API keys with granular permissions.
 
 ## Protecting a MeiliSearch instance
 
-By default, MeiliSearch is unprotected. This means all routes are publicly accessible.
+**By default, MeiliSearch's API is unprotected**. This means all routes are publicly accessible, and require no authorization to access.
 
-To protect a MeiliSearch instance from unauthorized use, you must supply an alphanumeric string at launch. This alphanumeric string is your master key.
+To protect a MeiliSearch instance from unauthorized use, you must supply a master key at launch. This master key can be an alphanumeric string of any length.
 
 Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/reference/features/configuration.md#master-key).
 
@@ -24,16 +24,12 @@ Setting up a master key can be done with either command-line options or environm
 ::: tab Environment variable
 
 ```sh
-MEILI_MASTER_KEY="[your_master_key]"
+export MEILI_MASTER_KEY="your_master_key"
 ./meilisearch
 ```
 
 :::
 ::::
-
-::: note
-Launching an instance with a master key is mandatory when `env` is set to `production`.
-:::
 
 Once you launch MeiliSearch with a master key, the instance is protected. From that point on, [communicating with a protected instance](#communicating-with-a-protected-instance) requires adding an `Authorization` header to requests.
 
@@ -53,7 +49,6 @@ When you launch an instance for the first time, MeiliSearch creates two default 
 
 While API keys are designed to have limited permissions, the master key grants users full control over an instance, including endpoints for creating and deleting API keys. Since exposing your master key would give malicious users complete control over your MeiliSearch instance, we strongly recommend you only use the master key when managing API keys.
 
-If you provide an invalid or expired key, you will receive an error as a response. You will receive the same error if you fail to provide a key when querying a protected route.
 
 ### Default API Keys
 
@@ -95,7 +90,7 @@ We can update the `Default Search API Key` so regular users cannot perform searc
 }
 ```
 
-To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key) which can only be accessed with the master key. `:key` stands for the full value of the key you want to update.
+To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key) which can only be accessed with the master key.
 
 MeiliSearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `indexes`.
 
@@ -195,15 +190,15 @@ If we accidentally exposed our `Search patient records key`, we can delete it to
 
 ### Expired keys
 
-Once a key is past its `expiresAt` date, using it when communicating with a protected instance will return an error.
+Once a key is past its `expiresAt` date, using it for API authorization will return an error. Expired keys will still be returned by the [list keys endpoint](/reference/api/keys.md#get-all-keys).
 
-If you must continue using an expired key, you may use the [update key endpoint] to set a new `expiresAt` date and effectively reactivate it.
+If you must continue using an expired key, you may use the [update key endpoint](/reference/api/keys.md#update-a-key) to set a new `expiresAt` date and effectively reactivate it.
 
-## Updating the master key
+## Changing the master key
 
-To update the master key, you must first terminate your instance. You must then launch it again, [supplying a new value for the master key](#protecting-a-meilisearch-instance).
+To change the master key, first terminate your MeiliSearch instance. Then relaunch it, [supplying a new value for the master key](#protecting-a-meilisearch-instance).
 
-**Changing an instance's master key renders all active API keys invalid and generates new values for each one of them.** This can be useful if your master key is ever compromised and you must reset all key values at once.
+**Changing an instance's master key renders all active API keys invalid and generates new values for each one of them.** This is useful if your security is severely compromised and you must reset all API key values at once.
 
 ## Disabling security
 
@@ -212,7 +207,7 @@ You can disable instance protection by restarting MeiliSearch without providing 
 :::: tabs
 ::: tab CLI
 
-If the master key was set up with command-line flags, relaunch the instance without the `--master-key` option:
+If your master key was set up using the command-line option, relaunch the instance without the `--master-key` option:
 
 ```sh
 ./meilisearch
@@ -222,10 +217,10 @@ If the master key was set up with command-line flags, relaunch the instance with
 
 ::: tab Environment variable
 
-- If the master key was configured with environment variables, unset `MEILI_MASTER_KEY` and relaunch the instance
+If your master key was configured with an environment variable, unset `MEILI_MASTER_KEY` and relaunch the instance:
 
 ```sh
-MEILI_MASTER_KEY=
+export MEILI_MASTER_KEY=
 ./meilisearch
 ```
 
@@ -233,5 +228,5 @@ MEILI_MASTER_KEY=
 ::::
 
 ::: danger
-We strongly advise against deactivating MeiliSearch's key-based security in publicly-accessible instances.
+We strongly advise against deactivating key-based security for any MeiliSearch instances used in production or containing sensitive information.
 :::
