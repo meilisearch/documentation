@@ -66,6 +66,18 @@ errors:
     description: "The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by MeiliSearch, check out this [guide](https://docs.meilisearch.com/reference/features/configuration.html#max-udb-size)."
   - code: index_primary_key_already_exists
     description: "The requested index already has a primary key that cannot be changed."
+  - code: invalid_api_key_description
+    description: "The `description` field for the provided API key resource is invalid. It should either be a string or `null`." 
+  - code: invalid_api_key_actions
+    description: "The `actions` field for the provided API key resource is invalid. It should be an array of strings representing action names." 
+  - code: invalid_api_key_indexes
+    description: "The `indexes` field for the provided API key resource is invalid. It should be an array of strings representing index names." 
+  - code: invalid_api_key_expires_at
+    description: "The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the ISO 8601 format or be set to `null`." 
+  - code: api_key_not_found
+    description: "The requested API key could not be found." 
+  - code: missing_parameter
+    description: "The payload is missing one or more required fields."    
   - code: task_not_found
     description: "The requested task does not exist. Please ensure that you are using the correct `uid`." 
 ...
