@@ -72,7 +72,7 @@ If you do not supply a value for `primaryKey`, MeiliSearch will try to infer you
 If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, MeiliSearch will automatically create it for you. This is called implicit index creation.
 :::
 
-Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
 
 ### Body
 
@@ -118,7 +118,7 @@ If a primary key wasn't explicitly chosen during index creation, you can use thi
 It is not possible to change an index's `uid`.
 :::
 
-This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
 
 ### Path variables
 
@@ -156,7 +156,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 Delete an [index](/learn/core_concepts/indexes.md).
 
-This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_updates.md)
+This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
 
 ### Path variables
 
@@ -167,7 +167,6 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 ### Example
 
 <CodeSamples id='delete_an_index_1' />
-
 
 #### Response: `202 Accepted`
 
