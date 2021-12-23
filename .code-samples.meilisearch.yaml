@@ -77,12 +77,18 @@ search_post_1: |-
 search_get_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/search?q=american%20ninja'
-get_update_1: |-
+get_task_by_index_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates/1'
-get_all_updates_1: |-
+    -X GET 'http://localhost:7700/indexes/movies/tasks/1'
+get_all_tasks_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates'
+    -X GET 'http://localhost:7700/tasks'
+get_task_1: |-
+  curl \
+    -X GET 'http://localhost:7700/tasks/1'
+get_all_tasks_by_index_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/tasks'
 get_keys_1: |-
   curl \
     -H "X-Meili-API-Key: 123" \
@@ -303,7 +309,7 @@ search_parameter_guide_offset_1: |-
     --data-binary '{ "q": "shifu", "offset": 1 }'
 search_parameter_guide_limit_1: |-
   curl \
-    - X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu", "limit": 2 }'
 search_parameter_guide_retrieve_1: |-
@@ -393,6 +399,16 @@ settings_guide_displayed_1: |-
             "release_date"
         ]
     }'
+settings_guide_sortable_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "sortableAttributes": [
+        "price",
+        "author"
+      ]
+    }'
 add_movies_json_1: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
   -H 'Content-Type: application/json' \
@@ -455,7 +471,7 @@ phrase_search_1: |-
   --data-binary '{ "q": "\"african american\" horror" }'
 authentication_header_1: |-
   curl -X GET 'http://127.0.0.1:7700/keys' \
-    --header "X-Meili-API-Key: masterKey"
+    -H 'X-Meili-API-Key: masterKey'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \

@@ -1,6 +1,6 @@
 # Known limitations
 
-Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/reference/under_the_hood/storage.md), the key-value store that MeiliSearch uses [under the hood](/reference/under_the_hood).
+Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that MeiliSearch uses under the hood.
 
 ## Design limitations
 
@@ -12,9 +12,9 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 ### Database size
 
-**Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-index-size` & `--max-udb-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
+**Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
 
-**Explanation:** MeiliSearch uses two databases: one for storage and one for updates. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
+**Explanation:** MeiliSearch uses two databases: one for storage and one for tasks. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
 ### Maximum words per attribute
 
@@ -38,7 +38,7 @@ If your query is `Hello, World`:
 - `World` takes the position `9` of the attribute
 
 ::: note
-`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](/reference/under_the_hood/datatypes.md#string).
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
 :::
 
 If your query is `Hello - World`:
@@ -48,7 +48,7 @@ If your query is `Hello - World`:
 - `World` takes the position `2` of the attribute
 
 ::: note
-`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/reference/under_the_hood/datatypes.md#string).
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
 :::
 
 ### Maximum attributes per document
