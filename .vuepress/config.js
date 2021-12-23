@@ -185,7 +185,6 @@ module.exports = {
             '/reference/features/authentication',
             '/reference/features/configuration',
             '/reference/features/distinct',
-            '/reference/features/dumps',
             {
               title: 'Errors',
               path: '/errors/',
@@ -197,7 +196,6 @@ module.exports = {
             '/reference/features/language',
             '/reference/features/search_parameters',
             '/reference/features/settings',
-            '/reference/features/snapshots',
             '/reference/features/sorting',
             '/reference/features/stop_words',
             '/reference/features/synonyms',

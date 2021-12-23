@@ -15,7 +15,6 @@ Understanding our reference documentation is easier with background knowledge of
 [Language](/reference/features/language.md)
 [Search parameters](/reference/features/search_parameters.md)
 [Settings](/reference/features/settings.md)
-[Snapshots](/learn/advanced/snapshots.md)
 [Stop words](/reference/features/stop_words.md)
 [Synonyms](/reference/features/synonyms.md)
 [Web interface](/reference/features/web_interface.md)
