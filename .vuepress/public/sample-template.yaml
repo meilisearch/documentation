@@ -16,8 +16,10 @@ delete_all_documents_1: |-
 delete_one_document_1: |-
 delete_documents_1: |-
 search_post_1: |-
-get_update_1: |-
-get_all_updates_1: |-
+get_task_by_index_1: |-
+get_all_tasks_1: |-
+get_task_1: |-
+get_all_tasks_by_index_1: |-
 get_keys_1: |-
 get_settings_1: |-
 update_settings_1: |-
@@ -66,6 +68,7 @@ settings_guide_ranking_rules_1: |-
 settings_guide_distinct_1: |-
 settings_guide_searchable_1: |-
 settings_guide_displayed_1: |-
+settings_guide_sortable_1: |-
 documents_guide_add_movie_1: |-
 getting_started_add_documents_md: |-
 getting_started_search_md: |-

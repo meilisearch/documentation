@@ -133,10 +133,16 @@ The body is composed of a **JSON array** of documents.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid":1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Add or update documents
 
@@ -187,10 +193,16 @@ The documents are matched because they have the same `primaryKey` value `id: 287
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete all documents
 
@@ -211,10 +223,16 @@ Delete all documents in the specified index.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "clearAll",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete one document
 
@@ -236,10 +254,16 @@ Delete one document based on its unique id.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete documents
 
@@ -268,7 +292,13 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

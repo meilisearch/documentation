@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "d66368c6-e28c-4a81-a653-e2ca431c10fe",
-		"name": "MeiliSearch v0.24",
+		"_postman_id": "bcad3eea-34e4-421e-a3a2-c019641f680f",
+		"name": "MeiliSearch v0.25",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -329,41 +329,76 @@
 			]
 		},
 		{
-			"name": "Updates Status",
+			"name": "Task Status",
 			"item": [
 				{
-					"name": "Get all update status",
+					"name": "Get all tasks",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/updates",
+							"raw": "{{url}}/tasks",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"indexes",
-								"{{indexUID}}",
-								"updates"
+								"tasks"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get status for one update",
+					"name": "Get one task",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/updates/0",
+							"raw": "{{url}}/tasks/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tasks",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all tasks of an index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/tasks",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"indexes",
 								"{{indexUID}}",
-								"updates",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one task of an index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/tasks/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"tasks",
 								"0"
 							]
 						}
@@ -1241,13 +1276,109 @@
 			]
 		},
 		{
-			"name": "Keys",
+			"name": "Key Management",
 			"item": [
 				{
-					"name": "GET keys",
+					"name": "Get keys",
 					"request": {
 						"method": "GET",
 						"header": [],
+						"url": {
+							"raw": "{{url}}/keys",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/keys/L8l05tFb188aab693735bbaf1f898b9902fb39f865160d39dddba2b47b940115a0430705",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys",
+								"L8l05tFb188aab693735bbaf1f898b9902fb39f865160d39dddba2b47b940115a0430705"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a key",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Key to add and delete documents, in `books` index.\",\n    \"actions\": [\n        \"documents.add\",\n        \"documents.delete\" \n    ],\n    \"indexes\": [\n        \"books\"\n    ],\n    \"expiresAt\": null\n}"
+						},
+						"url": {
+							"raw": "{{url}}/keys",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a key",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Key to add and delete documents, but also to create indexes, in `book` index.\",\n    \"actions\": [\n        \"documents.add\",\n        \"documents.delete\",\n        \"indexes.create\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/keys/wYZjGJyBcdb0621b97999c233246a8ec0a35d0fcd9a6417ef8ccee0c8978b64b123af2dd",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys",
+								"wYZjGJyBcdb0621b97999c233246a8ec0a35d0fcd9a6417ef8ccee0c8978b64b123af2dd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a key",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/keys",
 							"host": [
@@ -1403,16 +1534,11 @@
 		}
 	],
 	"auth": {
-		"type": "apikey",
-		"apikey": [
+		"type": "bearer",
+		"bearer": [
 			{
-				"key": "value",
+				"key": "token",
 				"value": "masterKey",
-				"type": "string"
-			},
-			{
-				"key": "key",
-				"value": "X-Meili-Api-Key",
 				"type": "string"
 			}
 		]
