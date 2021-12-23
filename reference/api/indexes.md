@@ -94,12 +94,15 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 ```json
 {
-  "uid": "movies",
-  "primaryKey": "movie_id",
-  "createdAt": "2019-11-20T09:40:33.711476Z",
-  "updatedAt": "2019-11-20T09:40:33.711476Z"
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexCreation",
+    "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Update an index
 
@@ -132,12 +135,15 @@ The `primaryKey` can be added if it does not already exist (to know if it has be
 
 ```json
 {
-  "uid": "movie_review",
-  "primaryKey": "movie_review_id",
-  "createdAt": "2019-11-20T09:40:33.711324Z",
-  "updatedAt": "2019-11-20T10:16:42.761858Z"
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexUpdate",
+    "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete an index
 
@@ -155,4 +161,16 @@ Delete an [index](/learn/core_concepts/indexes.md).
 
 <CodeSamples id='delete_an_index_1' />
 
-#### Response: `204 No Content`
+#### Response: `200 Ok`
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "indexDeletion",
+    "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+}
+```
+
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

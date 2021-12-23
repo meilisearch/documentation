@@ -78,7 +78,7 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/asynchronous_updates',
+            '/learn/advanced/asynchronous_operations',
             '/learn/advanced/snapshots_vs_dumps',
             {
               title: 'Updating MeiliSearch',
@@ -194,7 +194,7 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
-            '/reference/api/updates',
+            '/reference/api/tasks',
             '/reference/api/keys',
             {
               title: 'Settings',

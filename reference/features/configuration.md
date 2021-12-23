@@ -65,7 +65,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
   - [Import dump](/reference/features/configuration.md#import-dump)
 - [Log level](/reference/features/configuration.md#log-level)
 - [Max index size](/reference/features/configuration.md#max-index-size)
-- [Max UDB size](/reference/features/configuration.md#max-udb-size)
+- [Max TASK_DB size](/reference/features/configuration.md#max-task-db-size)
 - [Payload limit size](/reference/features/configuration.md#payload-limit-size)
 - [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
   - [Schedule snapshot creation](/reference/features/configuration.md#schedule-snapshot-creation)
@@ -206,20 +206,20 @@ MeiliSearch currently supports four log levels, listed in order of increasing ve
 
 Sets the maximum size of the index. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-The `index` stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
+The `index` stores processed data and is different from the `task` database, which handles [pending tasks](/learn/advanced/asynchronous_operations.md).
 
 [Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
 
-### Max UDB size
+### Max TASK_DB size
 
-**Environment variable**: `MEILI_MAX_UDB_SIZE`
-**CLI option**: `--max-udb-size`
+**Environment variable**: `MEILI_MAX_TASK_DB_SIZE`
+**CLI option**: `--max-task-db-size`
 **Default value**: `107374182400` (100 GiB)
 **Expected value**: an integer
 
-Sets the maximum size of the `update` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+Sets the maximum size of the `task` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `index` database, which only stores processed data.
+The `task` database handles [pending tasks](/learn/advanced/asynchronous_operations.md). This is different from the `index` database, which only stores processed data.
 
 [Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
 
