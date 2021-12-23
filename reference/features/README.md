@@ -9,7 +9,6 @@ Understanding our reference documentation is easier with background knowledge of
 [Authentication](/reference/features/authentication.md)
 [Configuration](/reference/features/configuration.md)
 [Distinct attribute](/reference/features/distinct.md)
-[Dumps](/learn/advanced/dumps.md)
 [Field properties](/reference/features/field_properties.md)
 [Filtering and faceted search](/reference/features/filtering_and_faceted_search.md)
 [Known limitations](/reference/features/known_limitations.md)
