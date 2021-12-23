@@ -51,24 +51,21 @@ In this documentation, we provide this <a id="downloadMovie" href="/movies.json"
 
 More datasets and setting configurations are available [in this repository](https://github.com/meilisearch/datasets/).
 
-## I did a call to an API route, and I only got an `updateId` as a response. What does it mean?
+## I did a call to an API route and got an object as a response. What does it mean?
 
-MeiliSearch is an **asynchronous API**.
-It means that in many cases (e.g., documents addition), you will receive as server response a simple JSON containing only an `updateId` attribute. For example:
+All asynchronous operations return a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
 
 ```json
-{ "updateId": 2 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This kind of **successful response** indicates that the operation has been taken into account, but may not have been executed yet.
-
-::: tip
-You can check the status of the operation using the `updateId` via the [get update status route](/reference/api/updates.md#get-an-update-status).
-In addition, MeiliSearch delivers a global route to [track all your update status](/reference/api/updates.md#get-all-update-status).
-**This way, you will be informed if your action was processed or not, and <u>why</u>**.
-:::
-
-If you are curious about how the asynchronous part of MeiliSearch works, you can find more information [here](/learn/advanced/asynchronous_updates.md).
+This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
 
@@ -156,12 +153,39 @@ See more [information about the primary key](/learn/core_concepts/documents.md#p
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
-Your document upload probably failed. To understand what happened, please check this [answer](#i-did-a-call-to-an-api-route-and-i-only-got-an-updateid-as-a-response-what-does-it-mean).
+Your document upload probably failed. To understand why, please check the status of the document addition task using the `uid`. If the task failed, the response should contain an `error` object.
+
+Here is an example of a failed task:
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "failed",
+    "type": "documentAddition",
+    "details": { 
+            "receivedDocuments": 67493,
+            "indexedDocuments": 0
+    },
+    "error": {
+        "message": "Document does not have a `:primaryKey` attribute: `:documentRepresentation`.",
+        "code": "internal",
+        "type": "missing_document_id",
+        "link": "https://docs.meilisearch.com/errors#missing-document-id",
+    },
+    "duration": "PT1S",
+    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+    "startedAt": "2021-08-10T14:29:18.000000Z",
+    "finishedAt": "2021-08-10T14:29:19.000000Z"
+}
+```
+
+Check your error message for more information.
 
 ## Is killing a MeiliSearch process safe?
 
 Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
-More information in the [asynchronous updates guide](/learn/advanced/asynchronous_updates.md).
+More information in the [asynchronous operations guide](/learn/advanced/asynchronous_operations.md).
 
 ## Does MeiliSearch deliver an interface to search in my documents?
 
@@ -229,12 +253,12 @@ Beware heavily multi-lingual datasets and datasets with many unique words, such 
 
 ### Search speed
 
-Because MeiliSearch uses a [memory map](/reference/under_the_hood/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
+Because MeiliSearch uses a [memory map](/learn/advanced/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
 
 - A big database + a small amount of RAM => slow search
 - A small database + tons of RAM => lightning fast search
 
-MeiliSearch also uses disk space as [virtual memory](/reference/under_the_hood/storage.md#memory-usage). This disk space does not correspond to database size; rather, it provides speed and flexibility to the engine by allowing it to go over the limits of physical RAM.
+MeiliSearch also uses disk space as [virtual memory](/learn/advanced/storage.md#memory-usage). This disk space does not correspond to database size; rather, it provides speed and flexibility to the engine by allowing it to go over the limits of physical RAM.
 
 At this time, the number of CPU cores has no direct impact on index or search speed. However, **the more cores you provide to the engine, the more search queries it will be able to process at the same time**.
 

@@ -16,8 +16,10 @@ delete_all_documents_1: |-
 delete_one_document_1: |-
 delete_documents_1: |-
 search_post_1: |-
-get_update_1: |-
-get_all_updates_1: |-
+get_task_by_index_1: |-
+get_all_tasks_1: |-
+get_task_1: |-
+get_all_tasks_by_index_1: |-
 get_one_key_1: |-
 get_all_keys_1: |-
 create_a_key_1: |-
@@ -70,6 +72,7 @@ settings_guide_ranking_rules_1: |-
 settings_guide_distinct_1: |-
 settings_guide_searchable_1: |-
 settings_guide_displayed_1: |-
+settings_guide_sortable_1: |-
 documents_guide_add_movie_1: |-
 getting_started_add_documents_md: |-
 getting_started_search_md: |-
@@ -96,3 +99,9 @@ geosearch_guide_sort_settings_1: |-
 geosearch_guide_sort_usage_1: |-
 geosearch_guide_sort_usage_2: |-
 authentication_header_1: |-
+security_guide_create_key_1: |-
+security_guide_create_key_2: |-
+security_guide_list_keys_1: |-
+security_guide_update_key_1: |-
+security_guide_delete_key_1: |-
+security_guide_search_key_1: |-

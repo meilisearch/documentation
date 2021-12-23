@@ -142,11 +142,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an updateId:
-
-```json
-{ "updateId": 1 }
-```
+This command should return a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
 
 Now that all fields are displayed, proceed to the next step.
 
@@ -222,7 +218,7 @@ The server should return a response that looks like this:
 }
 ```
 
-This process can take some time. Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
+This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 ```bash
 # replace :dump_uid with the uid returned by the previous command
@@ -252,6 +248,10 @@ Now that you’ve got your dump, [install the latest version of MeiliSearch](/le
 # launch the latest version of MeiliSearch and import the specified dump file
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
+
+::: warning
+If you are using MeiliSearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of MeiliSearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
+:::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
@@ -307,11 +307,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an updateId:
-
-```json
-{ "updateId": 1 }
-```
+This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
 
 Now that all fields are displayed, proceed to the next step.
 

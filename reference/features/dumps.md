@@ -42,7 +42,7 @@ After dump creation is finished, the dump file is added to the dump directory. B
 If a dump file is visible in the file system, the dump process was successfully completed. **MeiliSearch will never create a partial dump file** , even if you interrupt an instance while it is generating a dump.
 
 ::: note
-Unlike [updates](/learn/advanced/asynchronous_updates.md), dumps have no queue. **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **update queue is paused and no write operations can occur on the database.** This is also true of [snapshots](/reference/features/snapshots.md#snapshots).
+Unlike [tasks](/learn/advanced/asynchronous_operations.md), dumps have no queue. **MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw an [error](/errors). While a dump is processing, the **task queue is paused and no write operations can occur on the database.** This is also true for [snapshots](/reference/features/snapshots.md#snapshots).
 :::
 
 ::: warning
@@ -50,6 +50,16 @@ If you restart MeiliSearch after creating a dump, you will not be able to use th
 :::
 
 ## Importing a dump
+
+Dumps in v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [MeiliSearch version](/reference/api/version.md#example) and proceed accordingly.
+
+::: note
+We do not recommend using dumps from a new MeiliSearch version to import an older version.
+
+For example, you can import a dump from MeiliSearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
+:::
+
+### Importing a dump for v0.21 or above
 
 Once you have exported a dump you will be able to use the `.dump` file to [launch MeiliSearch with the `--import-dump` command-line flag](/reference/features/configuration.md#import-dump).
 
@@ -59,11 +69,10 @@ As the data contained in the dump needs to be indexed, the process will take som
 ./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
 
-::: note
-We do not recommend using dumps from a new MeiliSearch version to import an older version.
-For example, you **should not** import a dump from MeiliSearch v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearch v0.21.0 to MeiliSearch v0.21.0 or higher will work.
-:::
+### Importing a dump for v0.20 or below
+
+If you are using MeiliSearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of MeiliSearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
 
 ## Use cases
 
-Dumps are used to restore your database after [updating MeiliSearch](/create/how_to/updating.md) or to copy your database to other MeiliSearch instances without having to worry about their respective versions.
+Dumps are used to restore your database after [updating MeiliSearch](/learn/advanced/updating.md) or to copy your database to other MeiliSearch instances without having to worry about their respective versions.

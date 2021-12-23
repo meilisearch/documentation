@@ -82,7 +82,7 @@ This will give you a list of documents that contain your query terms in at least
 
 If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
 
-Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/reference/under_the_hood/datatypes.md). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
+Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/advanced/datatypes.md). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
 You can combine phrase search and normal queries in a single search request. In this case, MeiliSearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
 
@@ -346,39 +346,45 @@ The highlighted version of the text would then be found in the `_formatted` obje
 **Expected value**: `true` or `false`
 **Default value**: `false`
 
-Adds an object to the search response (`_matchesInfo`) containing the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight).
+Adds a `_matchesInfo` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `matches` only works for strings, numbers, and arrays of strings and numbers.
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
 ::: warning
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-
-`matches` does not work with array or object values—only strings.
 :::
 
 ### Example
 
-If you set `matches` to `true` and search for `shifu`:
+If you set `matches` to `true` and search for `winter feast`:
 
 <CodeSamples id="search_parameter_guide_matches_1" />
 
-You would get the following response with **information about the matches in the `_matchesInfo` object**:
+You would get the following response with **information about the matches in the `_matchesInfo` object**. Note how MeiliSearch searches for `winter` and `feast` separately because of the whitespace:
 
 ```json
 {
   "id": "50393",
   "title": "Kung Fu Panda Holiday",
-  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
   "release_date": 1290729600,
   "_matchesInfo": {
     "overview": [
       {
-        "start": 159,
+        "start": 4,
+        "length": 6
+      },
+      {
+        "start": 11,
         "length": 5
       },
       {
-        "start": 361,
+        "start": 234,
+        "length": 6
+      },
+      {
+        "start": 241,
         "length": 5
       }
     ]

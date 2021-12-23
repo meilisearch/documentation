@@ -8,7 +8,7 @@ curl \
   …
 ```
 
-[Learn more about managing keys and their rights](/reference/features/authentication.md).
+[Learn more about managing keys and their rights](/reference/features/security.md).
 
 ## Get all keys
 

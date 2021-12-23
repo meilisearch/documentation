@@ -15,7 +15,7 @@ MeiliSearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are d
 ## Typo tolerant
 
 Instead of letting typos ruin your search experience, MeiliSearch will always find the results you expect.
-Read more about typo tolerance in [this dedicated guide](/reference/under_the_hood/typotolerance.md).
+Read more about typo tolerance in [this dedicated guide](/learn/advanced/typotolerance.md).
 
 ## Synonyms
 
@@ -53,6 +53,12 @@ Placeholder searches are particularly effective when used with other features su
 If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
 
 Phrase search is particularly useful when looking for a single result, such as searching for a book by ISBN. It is also possible to combine phrase searches with MeiliSearch's basic syntax so only parts of a query are matched strictly.
+
+## API key management
+
+MeiliSearch allows you to protect your instances through the use of API keys. API keys give you control over which users can access what indexes, routes, and endpoints.
+
+API keys are managed by the master key. When you set a master key on your first launch, MeiliSearch generates two API keys called the `Default Search API Key` and the `Default Admin API Key`. You can read more them in our article on [security](/reference/features/security.md).
 
 ## Comprehensive language support
 

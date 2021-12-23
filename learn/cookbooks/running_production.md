@@ -10,19 +10,19 @@ Using MeiliSearch on your own machine for your weekend project is fun, let's agr
 
 ## Content of this article
 
-[Step 1: Install MeiliSearch](/create/how_to/running_production.md#step-1-install-meilisearch)
+[Step 1: Install MeiliSearch](/learn/cookbooks/running_production.md#step-1-install-meilisearch)
 
-[Step 2: Run MeiliSearch as a service](/create/how_to/running_production.md#step-2-run-meilisearch-as-a-service)
+[Step 2: Run MeiliSearch as a service](/learn/cookbooks/running_production.md#step-2-run-meilisearch-as-a-service)
 
-+ [2.1. Create a service file](/create/how_to/running_production.md#_2-1-create-a-service-file)
-+ [2.2. Enable and start service](/create/how_to/running_production.md#_2-2-enable-and-start-service)
++ [2.1. Create a service file](/learn/cookbooks/running_production.md#_2-1-create-a-service-file)
++ [2.2. Enable and start service](/learn/cookbooks/running_production.md#_2-2-enable-and-start-service)
 
-[Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/create/how_to/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/learn/cookbooks/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
 
-+ [3.1. Creating a reverse proxy with Nginx](/create/how_to/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
-+ [3.2. Set up SSL/TLS for your MeiliSearch](/create/how_to/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
++ [3.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
++ [3.2. Set up SSL/TLS for your MeiliSearch](/learn/cookbooks/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
 
-[Conclusion](/create/how_to/running_production.md#conclusion)
+[Conclusion](/learn/cookbooks/running_production.md#conclusion)
 
 ## Get your MeiliSearch ready for production
 
@@ -103,7 +103,9 @@ In Debian and other Linux distributions, `systemd` allows you to create and mana
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run MeiliSearch on port `7700`.
 
-To run MeiliSearch in a production environment, use the `--env` flag. To generate a master key that will let MeiliSearch create reading and writing keys, use the `--master-key` flag. With those keys, you can easily control who can access or create new documents, indexes, or change the configuration. You can change the `Master Key` to any value in the following command. However, for security concerns, it's better to choose a safe and random key, never share it and, just, **keep it safe**.
+To run MeiliSearch in a production environment, use the `--env` flag. Generate the master key using the `--master-key` option. When you launch an instance for the first time, MeiliSearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/reference/features/security.md#default-api-keys). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration. 
+
+Remember to choose a safe and random key and avoid exposing it in publicly accessible applications. You can change the master key with the following command:
 
 ```bash
 cat << EOF > /etc/systemd/system/meilisearch.service
@@ -121,7 +123,7 @@ EOF
 ```
 
 ::: tip
-For more information on MeiliSearch authentication and API keys see the [authentication docs](/reference/features/authentication.md). For more information on MeiliSearch options and flags see the [installation docs](/learn/getting_started/installation.md#download-and-launch).
+For more information on MeiliSearch security and API keys see the [security docs](/reference/features/security.md). For more information on MeiliSearch options and flags see the [installation docs](/learn/getting_started/installation.md#download-and-launch).
 :::
 
 As for now, it is not time yet to expose your MeiliSearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your MeiliSearch instance.
