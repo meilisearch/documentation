@@ -51,6 +51,16 @@ If you restart MeiliSearch after creating a dump, you will not be able to use th
 
 ## Importing a dump
 
+Dumps in v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [MeiliSearch version](/reference/api/version.md#example) and proceed accordingly.
+
+::: note
+We do not recommend using dumps from a new MeiliSearch version to import an older version.
+
+For example, you can import a dump from MeiliSearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
+:::
+
+### Importing a dump for v0.21 or above
+
 Once you have exported a dump you will be able to use the `.dump` file to [launch MeiliSearch with the `--import-dump` command-line flag](/reference/features/configuration.md#import-dump).
 
 As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the MeiliSearch server start, after which you can begin searching through your data.
@@ -59,10 +69,9 @@ As the data contained in the dump needs to be indexed, the process will take som
 ./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
 
-::: note
-We do not recommend using dumps from a new MeiliSearch version to import an older version.
-For example, you **should not** import a dump from MeiliSearch v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearch v0.21.0 to MeiliSearch v0.21.0 or higher will work.
-:::
+### Importing a dump for v0.20 or below
+
+If you are using MeiliSearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of MeiliSearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
 
 ## Use cases
 

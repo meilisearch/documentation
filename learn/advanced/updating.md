@@ -249,6 +249,10 @@ Now that you’ve got your dump, [install the latest version of MeiliSearch](/le
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
+::: warning
+If you are using MeiliSearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of MeiliSearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
+:::
+
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
 Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
