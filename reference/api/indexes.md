@@ -35,15 +35,15 @@ List all [indexes](/learn/core_concepts/indexes.md).
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid"/>
+<RouteHighlighter method="GET" route="/indexes/:uid"/>
 
 Get information about an [index](/learn/core_concepts/indexes.md).
 
-#### Path variables
+### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
@@ -64,19 +64,21 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an [index](/learn/core_concepts/indexes.md).
+Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `uid` and `primaryKey`.
 
-This route takes as parameter an unique `uid` and **optionally** the [primary key](/learn/core_concepts/indexes.md#primary-key).
+If you do not supply a value for `primaryKey`, MeiliSearch will try to infer your dataset's unique identifier from first document you add to the index.
 
 ::: note
-An index is automatically created when adding [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not already exist.
+If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, MeiliSearch will automatically create it for you. This is called implicit index creation.
 :::
 
-#### Body
+Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
+
+### Body
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **index_uid**  | The index unique identifier (_mandatory_)                  |
+| **uid**  | The index unique identifier (_mandatory_)                  |
 | **primaryKey** | The primary key of the documents |
 
 ```json
@@ -90,87 +92,92 @@ An index is automatically created when adding [documents](/reference/api/documen
 
 <CodeSamples id='create_an_index_1' />
 
-#### Response: `201 created`
+#### Response: `202 Accepted`
 
 ```json
 {
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "indexCreation",
-    "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+  "uid": 0,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "indexCreation",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/:index_uid"/>
+<RouteHighlighter method="PUT" route="/indexes/:uid"/>
 
-Update an [index](/learn/core_concepts/indexes.md).
+Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
 
-#### Path variables
+If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/api/indexes.md#get-one-index) to verify it.
+
+::: note
+It is not possible to change an index's `uid`.
+:::
+
+This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
+
+### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
-#### Body
+### Body
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
 | **primaryKey** | The primary key of the documents |
 
-The `uid` of an index cannot be changed.
-The `primaryKey` can be added if it does not already exist (to know if it has been set, use [the get index route](/reference/api/indexes.md#get-one-index)).
-
-[There are many ways in MeiliSearch to set the primary key](/learn/core_concepts/documents.md#primary-key).
-
 ### Example
 
 <CodeSamples id='update_an_index_1' />
 
-#### Response: `200 Ok`
+#### Response: `202 Accepted`
 
 ```json
 {
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "indexUpdate",
-    "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+  "uid": 1,
+  "indexUid": "movie_review",
+  "status": "enqueued",
+  "type": "indexUpdate",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid"/>
+<RouteHighlighter method="DELETE" route="/indexes/:uid"/>
 
 Delete an [index](/learn/core_concepts/indexes.md).
 
-#### Path variables
+This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
+
+### Path variables
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
 <CodeSamples id='delete_an_index_1' />
 
-#### Response: `200 Ok`
+#### Response: `202 Accepted`
 
 ```json
 {
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "indexDeletion",
-    "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+  "uid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "indexDeletion",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
