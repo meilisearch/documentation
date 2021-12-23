@@ -73,7 +73,7 @@ Exposing your master key can give malicious users complete control over your Mei
 
 MeiliSearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
-The master key is the only key with access to the [`/keys` route](/reference/api/keys.md). This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-api-keys) API keys.
+The master key is the only key with access to the [`/keys` route](/reference/api/keys.md). This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
 
 Though the default API keys are usually enough to manage the security needs of most applications, this might not be the case when dealing with privacy-sensitive data. In these situations, the fine-grained control offered by the `/keys` endpoint allows you to clearly decide who can access what information and for how long.
 
