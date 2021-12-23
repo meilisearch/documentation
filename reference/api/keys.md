@@ -72,6 +72,8 @@ List all existing API keys. **Expired keys are included in the response**, but d
 }
 ```
 
+### Returned fields
+
 #### `description`
 
 A description for the key. Default value is `null`.
@@ -90,19 +92,21 @@ The `*` character can also be used as a wildcard to get all permissions for a ro
 
 #### `indexes`
 
-An array of indexes permitted for the key. `["*"]` for all indexes.
+An array of indexes the key is authorized to act on. `["*"]` for all indexes.
+
+Only the key's [permitted actions](#actions-2) can be used on these indexes.
 
 #### `expiresAt`
 
-Date and time when the key will expire, represented in **ISO 8601** format. `null` if the key never expires.
+Date and time when the key will expire, represented in ISO 8601 format. `null` if the key never expires.
 
 #### `createdAt`
 
-Date and time when the key was created, represented in **ISO 8601** format.
+Date and time when the key was created, represented in ISO 8601 format.
 
 #### `updatedAt`
 
-Date and time when the key was last updated, represented in **ISO 8601** format.
+Date and time when the key was last updated, represented in ISO 8601 format.
 
 ## Get one key
 
@@ -138,7 +142,7 @@ Get information on the specified key. Attempting to use this endpoint with a non
 }
 ```
 
-For an explanation of these fields, see the [get all keys](#response-body) endpoint.
+For an explanation of these fields, see the [get all keys endpoint](#returned-fields).
 
 ## Create a key
 
@@ -146,7 +150,7 @@ For an explanation of these fields, see the [get all keys](#response-body) endpo
 
 Create an API key with the provided description, permissions, and expiration date.
 
-Only the `indexes`, `actions`, and `expiresAt` fields are mandatory. For more information, [see below](#body).
+Only the `indexes`, `actions`, and `expiresAt` fields are mandatory. [Learn more about the request body.](#body)
 
 #### Path variables
 
@@ -195,14 +199,16 @@ The `*` character can also be used as a wildcard to get all permissions for a ro
 **Type:** array
 **Default value:** none
 
-A list of indexes permitted for the key. `["*"]` for all indexes.
+An array of indexes the key is authorized to act on. `["*"]` for all indexes.
+
+Only the key's [permitted actions](#actions-2) can be used on these indexes.
 
 #### `expiresAt`
 
 **Type:** string
 **Default value:** none
 
-Date and time when the key will expire, represented in **ISO 8601** format. `null` if the key never expires.
+Date and time when the key will expire, represented in ISO 8601 format. `null` if the key never expires.
 
 ### Example
 
