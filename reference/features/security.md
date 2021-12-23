@@ -14,7 +14,7 @@ Setting up a master key can be done with either command-line options or environm
 ::: tab CLI
 
 ```sh
-./meilisearch --master-key="[your_master_key]"
+./meilisearch --master-key="your_master_key"
 ```
 
 :::
@@ -29,7 +29,9 @@ export MEILI_MASTER_KEY="your_master_key"
 :::
 ::::
 
-Once you launch MeiliSearch with a master key, the instance is protected. From that point on, [communicating with a protected instance](#communicating-with-a-protected-instance) requires adding an `Authorization` header to requests.
+Once you launch MeiliSearch with a master key, all API endpoints except [the health endpoint](/reference/api/health.md#get-health) are automatically protected from unauthorized requests.
+
+From that point on, API requests must include the `Authorization` header to be successful. Read on to learn more.
 
 ## Communicating with a protected instance
 
