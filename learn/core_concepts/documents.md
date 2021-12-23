@@ -103,7 +103,7 @@ A field is a set of two data items linked together: an attribute and a value. Do
 
 An attribute functions a bit like a variable in most programming languages, i.e. it is a name that allows you to store, access, and describe some data. That data is the attribute's **value**.
 
-Every field has a [data type](/reference/under_the_hood/datatypes.md) dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
+Every field has a [data type](/learn/advanced/datatypes.md) dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
 Take note that, in the case of strings, a value **[can contain at most 65535 positions](/reference/features/known_limitations.md#maximum-words-per-attribute). Words exceeding the 65535 position limit will be ignored.**
 

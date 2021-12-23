@@ -79,10 +79,16 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset ranking rules
 
@@ -123,7 +129,13 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

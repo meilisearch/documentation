@@ -15,7 +15,7 @@ MeiliSearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are d
 ## Typo tolerant
 
 Instead of letting typos ruin your search experience, MeiliSearch will always find the results you expect.
-Read more about typo tolerance in [this dedicated guide](/reference/under_the_hood/typotolerance.md).
+Read more about typo tolerance in [this dedicated guide](/learn/advanced/typotolerance.md).
 
 ## Synonyms
 

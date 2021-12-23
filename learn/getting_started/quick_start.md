@@ -69,35 +69,25 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 [API references](/reference/api/documents.md)
 
-### Checking updates
+### Checking task status
 
-Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_updates.md), including the document addition process.
+Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_operations.md), including the document addition process.
 
-Asynchronous actions return a JSON object that contains only an `updateId` attribute. This is a **successful response**, indicating that the operation has been taken into account, but may not have been executed yet.
-
-You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md). Checking the update status of an operation is never mandatory, but can prove useful in tracing the origin of errors or unexpected behavior.
-
-You can also check the status of all updates for a given index:
-
-<CodeSamples id="get_all_updates_1" />
-
-The response to this command will depend on the status of updates for your index. Here is an example response showing a document addition request waiting to be processed:
+Here's an example of the kind of response you should receive after adding documents.
 
 ```json
-[
-    {
-        "status": "enqueued",
-        "updateId": 0,
-        "type": {
-            "name": "DocumentsAddition",
-            "number": 30
-        },
-        "enqueuedAt": "2021-02-14T14:07:09.364505700Z"
-    }
-]
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md) or the [updates API reference](/reference/api/updates.md) for more information.
+Asynchronous actions return a JSON object containing several fields, the most important of which is `uid`. This indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. To view the task's current `status`, use the [get task endpoint](/reference/api/tasks.md).
+
+See our guide on [asynchronous operations](/learn/advanced/asynchronous_operations.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
 
 ## Search
 
