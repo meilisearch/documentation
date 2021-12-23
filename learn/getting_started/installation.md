@@ -35,7 +35,7 @@ meilisearch
 :::
 
 ::: tab Docker
-Using **Docker** you can choose to run [any available tags](https://hub.docker.com/r/getmeili/meilisearch/tags).
+Using **Docker** you can choose to run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 This command starts the **latest stable release** of MeiliSearch.
 
@@ -104,12 +104,12 @@ cargo build --release
 
 To install MeiliSearch on Windows, you can:
 
-- use Docker
+- use Docker (see "Docker" tab above)
 - [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
-- use the installation script (cf `cURL` tab) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
-- compile from source
+- use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
+- compile from source (see "Source" tab above)
 
-If you are new to the Windows CMD, you can follow this [guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/) to get started.
+To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
 
 ::::
 
@@ -121,9 +121,9 @@ For best performance, compile MeiliSearch on the machine you intend to run it on
 
 To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 
-- [AWS](/create/how_to/aws.md)
-- [DigitalOcean](/create/how_to/digitalocean_droplet.md)
-- [Qovery](/create/how_to/qovery.md)
+- [AWS](/learn/cookbooks/aws.md)
+- [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Qovery](/learn/cookbooks/qovery.md)
 
 ## Configuration options
 
@@ -145,4 +145,4 @@ However, please note that **prior to our official release (`v1.0`), databases ar
 
 ### Migrating your database to a later version
 
-If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, follow our [dedicated guide](/create/how_to/updating.md).
+If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, follow our [dedicated guide](/learn/advanced/updating.md).

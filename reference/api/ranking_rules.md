@@ -6,9 +6,9 @@ Ranking rules are built-in rules that allow you to **customize the relevancy of 
 
 Ranking rules can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-[Learn more about ranking rules](/learn/core_concepts/relevancy.md).
+To learn more about ranking rules, refer to our [dedicated guide](/learn/core_concepts/relevancy.md).
 
-::: note
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
@@ -80,11 +80,15 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset ranking rules
 
@@ -126,8 +130,12 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

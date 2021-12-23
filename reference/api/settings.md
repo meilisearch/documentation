@@ -15,9 +15,9 @@ These are the reference pages for the dedicated routes:
 - [Stop-words](/reference/api/stop_words.md)
 - [Synonyms](/reference/api/synonyms.md)
 
-[Learn more about the settings in this guide.](/reference/features/settings.md)
+To learn more about settings, refer to our [dedicated guide.](/reference/features/settings.md)
 
-::: note
+::: warning
 When you update a setting, you overwrite its default value. Use the `DELETE` route to reset any setting to its original value.
 :::
 
@@ -69,9 +69,15 @@ List the settings.
     "exactness",
     "desc(release_date)"
   ],
-  "filterableAttributes": ["genres"],
+  "filterableAttributes": [
+    "genres"
+  ],
   "distinctAttribute": null,
-  "searchableAttributes": ["title", "description", "genres"],
+  "searchableAttributes": [
+    "title",
+    "description",
+    "genres"
+  ],
   "displayedAttributes": [
     "title",
     "description",
@@ -80,8 +86,14 @@ List the settings.
   ],
   "stopWords": null,
   "synonyms": {
-    "wolverine": ["xmen", "logan"],
-    "logan": ["wolverine", "xmen"]
+    "wolverine": [
+      "xmen",
+      "logan"
+    ],
+    "logan": [
+      "wolverine",
+      "xmen"
+    ]
   }
 }
 ```
@@ -127,11 +139,15 @@ If the provided index does not exist, it will be created.
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset settings
 
@@ -168,8 +184,12 @@ All settings will be reset to their default value.
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

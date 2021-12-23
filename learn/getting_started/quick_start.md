@@ -46,9 +46,9 @@ To add documents to MeiliSearch you must provide:
 - [Documents](/learn/core_concepts/documents.md) in the form of an array of JSON objects.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
-> _If the index does not exist, MeiliSearch creates it when you first add documents._
+**If the index does not exist, MeiliSearch creates it when you first add documents.**
 
-To be processed, all documents must share one common <clientGlossary word="field" /> which will serve as [<clientGlossary word="primary key" />](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
+To be processed, all documents must share one common field which will serve as [primary key](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
 ```json
 [
@@ -59,9 +59,9 @@ To be processed, all documents must share one common <clientGlossary word="field
 ]
 ```
 
-> The primary key is `id`, the document's unique identifier is `123`.
+The **primary key** is `id`, the **document's unique identifier** is `123`.
 
-There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an <clientGlossary word="attribute" /> that contains the string `id` in a case-insensitive manner.
+There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an attribute that contains the string `id` in a case-insensitive manner.
 
 Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
 
@@ -69,15 +69,25 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 [API references](/reference/api/documents.md)
 
-### Checking updates
+### Checking task status
 
-Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_updates.md), including the document addition process.
+Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_operations.md), including the document addition process.
 
-Asynchronous actions return a JSON object that contains only an `updateId` attribute. This is a **successful response**, indicating that the operation has been taken into account, but may not have been executed yet.
+Here's an example of the kind of response you should receive after adding documents.
 
-You can check the status of the operation via the `updateId` and the [get update status route](/reference/api/updates.md). Checking the update status of an operation is never mandatory, but can prove useful in tracing the origin of errors or unexpected behavior.
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
 
-See our guide on [asynchronous updates](/learn/advanced/asynchronous_updates.md) or the [updates API reference](/reference/api/updates.md) for more information.
+Asynchronous actions return a JSON object containing several fields, the most important of which is `uid`. This indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. To view the task's current `status`, use the [get task endpoint](/reference/api/tasks.md).
+
+See our guide on [asynchronous operations](/learn/advanced/asynchronous_operations.md) or the [tasks API reference](/reference/api/tasks.md) for more information.
 
 ## Search
 
@@ -107,8 +117,8 @@ MeiliSearch **response**:
       "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
       "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
       "release_date": "2018-01-12"
-    }
-    ...
+    },
+    …
   ],
   "offset": 0,
   "limit": 20,
@@ -116,6 +126,10 @@ MeiliSearch **response**:
   "query": "botman"
 }
 ```
+
+::: note
+**By default, MeiliSearch returns only the first 20 results** for a search query. You can read more about the limit parameter [here](/reference/features/search_parameters.md#limit).
+:::
 
 [API references](/reference/api/search.md)
 

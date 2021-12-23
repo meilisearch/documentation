@@ -1,6 +1,6 @@
 # Known limitations
 
-Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/reference/under_the_hood/storage.md), the key-value store that MeiliSearch uses [under the hood](/reference/under_the_hood).
+Currently, MeiliSearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that MeiliSearch uses under the hood.
 
 ## Design limitations
 
@@ -12,15 +12,44 @@ Currently, MeiliSearch has a number of known limitations. Some of these limitati
 
 ### Database size
 
-**Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-index-size` & `--max-udb-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
+**Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
 
-**Explanation:** MeiliSearch uses two databases: one for storage and one for updates. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
+**Explanation:** MeiliSearch uses two databases: one for storage and one for tasks. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
 ### Maximum words per attribute
 
-**Limitation:** MeiliSearch can index a maximum of __1000 words per attribute__. If an attribute contains more than 1000 words, only the first 1000 words will be indexed and the rest will be silently ignored.
+**Limitation:** MeiliSearch can index a maximum of __65535 positions per attribute__. Any words exceeding the 65535 position limit will be silently ignored.
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
+
+#### Example
+
+Suppose you have three similar queries: `Hello World`, `Hello, World`, and `Hello - World`. Due to how our tokenizer works, each one of them will be processed differently and take up a different number of "positions" in our internal database.
+
+If your query is `Hello World`:
+
+- `Hello` takes the position `0` of the attribute
+- `World` takes the position `1` of the attribute
+
+If your query is `Hello, World`:
+
+- `Hello` takes the position `0` of the attribute
+- `,` takes the position `8` of the attribute
+- `World` takes the position `9` of the attribute
+
+::: note
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
+:::
+
+If your query is `Hello - World`:
+
+- `Hello` takes the position `0` of the attribute
+- `-` takes the position `1` of the attribute
+- `World` takes the position `2` of the attribute
+
+::: note
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
+:::
 
 ### Maximum attributes per document
 

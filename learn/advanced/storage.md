@@ -1,6 +1,6 @@
 # Storage
 
-::: tip TLDR
+::: tip
 
 - If the database does not shrink after deleting documents or indexes, it is expected behavior. You are not losing space, MeiliSearch is keeping this space for performance reasons.
 - You should have the same amount of RAM than the space taken on disk by MeiliSearch for optimal performances.
@@ -14,7 +14,7 @@ Writing a database is hard, and we do not want to reinvent the wheel, so MeiliSe
 
 The storage engine of MeiliSearch is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
 
-We chose LMDB after we successfully (or not) tried MeiliSearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for Meilisearch.
+We chose LMDB after we successfully (or not) tried MeiliSearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for MeiliSearch.
 
 ### Memory mapping
 
@@ -60,7 +60,7 @@ After indexed, the dataset size in LMDB is about 122MB.
 | -------- | --------------------------------- | -------------------- | ------------------- |
 | 9.1 MB   | 224 MB                            | ≃ 305 MB             | 205 Gb (memory map) |
 
-> This means the database is using 305 MB of RAM and 224 MB of disk space. Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database. See [Memory Usage](#memory-usage) for more details.
+This means the database is using **305 MB of RAM and 224 MB of disk space.** Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) **refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database.** See [Memory Usage](#memory-usage) for more details.
 
 ::: warning
 

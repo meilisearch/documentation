@@ -26,9 +26,9 @@ The response should look something like this:
 
 ```json
 {
-  "commitSha":"stringOfLettersAndNumbers",
-  "commitDate":"YYYY-MM-DDTimestamp",
-  "pkgVersion":"x.y.z"
+  "commitSha": "stringOfLettersAndNumbers",
+  "commitDate": "YYYY-MM-DDTimestamp",
+  "pkgVersion": "x.y.z"
 }
 ```
 
@@ -142,13 +142,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an updateId:
-
-```json
-{
-  "updateId": 1
-}
-```
+This command should return a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
 
 Now that all fields are displayed, proceed to the next step.
 
@@ -224,7 +218,7 @@ The server should return a response that looks like this:
 }
 ```
 
-This process can take some time. Since dump creation is an [asynchronous process](/learn/advanced/asynchronous_updates.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
+This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 ```bash
 # replace :dump_uid with the uid returned by the previous command
@@ -309,13 +303,7 @@ curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command should return an updateId:
-
-```json
-{
-  "updateId": 1
-}
-```
+This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
 
 Now that all fields are displayed, proceed to the next step.
 

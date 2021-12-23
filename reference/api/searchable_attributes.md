@@ -6,11 +6,11 @@ The values associated with attributes in the `searchableAttributes` list are **s
 
 Searchable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-::: note
+To learn more about searchable attributes, refer to our [dedicated guide](/reference/features/field_properties.md#searchable-fields).
+
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
-
-[Learn more about searchable fields](/reference/features/field_properties.md#searchable-fields).
 
 ## Get searchable attributes
 
@@ -33,7 +33,11 @@ Get the [searchable attributes](/reference/features/field_properties.md#searchab
 List the settings.
 
 ```json
-["title", "description", "genre"]
+[
+  "title",
+  "description",
+  "genre"
+]
 ```
 
 ## Update searchable attributes
@@ -70,11 +74,15 @@ A match in title will make a document more relevant than another document with a
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset searchable attributes
 
@@ -100,8 +108,12 @@ All attributes found in the documents added to the index.
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

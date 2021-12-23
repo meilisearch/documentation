@@ -31,15 +31,15 @@ Suppose you have a collection of movies containing the following fields:
 ```json
 [
   {
-      "id": "458723",
-      "title": "Us",
-      "director": "Jordan Peele",
-      "genres": [
-        "Thriller",
-        "Horror",
-        "Mystery"
-      ],
-      "overview": "Husband and wife Gabe and Adelaide Wilson take their […]",
+    "id": "458723",
+    "title": "Us",
+    "director": "Jordan Peele",
+    "genres": [
+      "Thriller",
+      "Horror",
+      "Mystery"
+    ],
+    "overview": "Husband and wife Gabe and Adelaide Wilson take their…"
   },
   …
 ]
@@ -104,11 +104,12 @@ The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-i
 
 #### Creating filter expressions with strings
 
-String expressions combine conditions using three logical connectives—`AND`, `OR` and `NOT`— and parentheses:
+String expressions combine conditions using the following filter operators and parentheses:
 
 - `NOT` only returns documents that do not satisfy a condition : `NOT genres = horror`
 - `AND` operates by connecting two conditions and only returns documents that satisfy both of them: `genres = horror AND director = 'Jordan Peele'`
 - `OR` connects two conditions and returns results that satisfy at least one of them: `genres = horror OR genres = comedy`
+- `TO` is equivalent to `>= AND <=`. The expression `release_date 795484800 TO 972129600` translates to `release_date >= 795484800 AND release_date <= 972129600`
 
 ::: tip
 String expressions are read left to right. `NOT` takes precedence over `AND` and `AND` takes precedence over `OR`. You can use parentheses to ensure expressions are correctly parsed.
@@ -168,22 +169,22 @@ Suppose that you have a dataset containing several movies in the following forma
 
 ```json
 [
-    …
-    {
-        "id": "458723",
-        "title": "Us",
-        "director": "Jordan Peele",
-        "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
-        "overview": "Husband and wife Gabe and Adelaide Wilson take their…",
-        "release_date": 1552521600,
-        "genres": [
-            "Comedy",
-            "Horror",
-            "Thriller"
-        ],
-        "rating": 4
-    },
-    …
+  …
+  {
+    "id": "458723",
+    "title": "Us",
+    "director": "Jordan Peele",
+    "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
+    "overview": "Husband and wife Gabe and Adelaide Wilson take their…",
+    "release_date": 1552521600,
+    "genres": [
+      "Comedy",
+      "Horror",
+      "Thriller"
+    ],
+    "rating": 4
+  },
+  …
 ]
 ```
 
@@ -221,7 +222,7 @@ rating >= 3 AND (NOT director = "Tim Burton")
 
 You can use this filter when searching for `Planet of the Apes`:
 
-<CodeSamples id="filtering_guide_4" />
+<CodeSamples id="filtering_guide_3" />
 
 ## Filtering with `_geoRadius`
 
@@ -263,6 +264,10 @@ Like any other filter, attributes you want to use as facets must be added to the
 
 Once they have been configured, you can search for facets with the `filter` search parameter.
 
+:::warning
+Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
+:::
+
 #### Example
 
 Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/reference/features/settings.md#filterable-attributes), and you want to get movies classified as either `Horror` **or** `Mystery` **and** directed by `Jordan Peele`.
@@ -303,7 +308,7 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
   "facetsDistribution" : {
     "genres" : {
       "horror": 50,
-      "comedy": 34,
+      "comedy": 34
     }
   }
 }
@@ -337,7 +342,7 @@ This query would return not only the matching movies, but also the `facetsDistri
       "fantasy": 67,
       "comedy": 475,
       "mystery": 70,
-      "thriller": 217,
+      "thriller": 217
     }
   }
 }

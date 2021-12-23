@@ -3,36 +3,43 @@ name: GitHub pages and scraping
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build-deploy:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Publish
-      uses: netlify/actions/build@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        NETLIFY_CMD: vuepress build .
-        NETLIFY_DIR: .vuepress/dist
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - name: Publish
+        uses: netlify/actions/build@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_CMD: vuepress build .
+          NETLIFY_DIR: .vuepress/dist
 
   scrape-docs:
     needs: build-deploy
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - name: Run docs-scraper
-      env:
-        HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
-        API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
-        CONFIG_FILE_PATH: ${{ github.workspace }}/.vuepress/docs-scraper/docs-scraper.config.json
-      run: |
-        docker run -t --rm \
-          -e MEILISEARCH_HOST_URL=$HOST_URL \
-          -e MEILISEARCH_API_KEY=$API_KEY \
-          -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
-          getmeili/docs-scraper:v0.10.4 pipenv run ./docs_scraper config.json
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - name: Run docs-scraper
+        env:
+          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
+          CONFIG_FILE_PATH: ${{ github.workspace }}/.vuepress/docs-scraper/docs-scraper.config.json
+        run: |
+          docker run -t --rm \
+            -e MEILISEARCH_HOST_URL=$HOST_URL \
+            -e MEILISEARCH_API_KEY=$API_KEY \
+            -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
+            getmeili/docs-scraper:v0.10.4 pipenv run ./docs_scraper config.json

@@ -77,12 +77,18 @@ search_post_1: |-
 search_get_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/search?q=american%20ninja'
-get_update_1: |-
+get_task_by_index_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates/1'
-get_all_updates_1: |-
+    -X GET 'http://localhost:7700/indexes/movies/tasks/1'
+get_all_tasks_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates'
+    -X GET 'http://localhost:7700/tasks'
+get_task_1: |-
+  curl \
+    -X GET 'http://localhost:7700/tasks/1'
+get_all_tasks_by_index_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/tasks'
 get_keys_1: |-
   curl \
     -H "X-Meili-API-Key: 123" \
@@ -288,11 +294,6 @@ filtering_guide_2: |-
     --data-binary '{ "q":"Batman",  "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
 filtering_guide_3: |-
   curl \
-    -X POST '\http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "horror", "filter": "director = \"Jordan Peele\"" }'
-filtering_guide_4: |-
-  curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "Planet of the Apes", "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
@@ -308,7 +309,7 @@ search_parameter_guide_offset_1: |-
     --data-binary '{ "q": "shifu", "offset": 1 }'
 search_parameter_guide_limit_1: |-
   curl \
-    - X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu", "limit": 2 }'
 search_parameter_guide_retrieve_1: |-
@@ -326,16 +327,6 @@ search_parameter_guide_highlight_1: |-
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'
-search_parameter_guide_filter_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "n", "filter": "title = Nightshift" }'
-search_parameter_guide_filter_2: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "filter": "title=\"Kung Fu Panda\"" }'
 search_parameter_guide_matches_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -408,6 +399,16 @@ settings_guide_displayed_1: |-
             "release_date"
         ]
     }'
+settings_guide_sortable_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "sortableAttributes": [
+        "price",
+        "author"
+      ]
+    }'
 add_movies_json_1: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
   -H 'Content-Type: application/json' \
@@ -421,16 +422,6 @@ documents_guide_add_movie_1: |-
         "title": "Amelie Poulain"
       }
     ]'
-search_guide_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "limit": 5, "offset": 10 }'
-search_guide_2: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "Avengers", "filter": "release_date > 795484800" }'
 getting_started_add_documents_md: |-
   ```bash
   curl \
@@ -465,28 +456,11 @@ faceted_search_facets_distribution_1: |-
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "Batman", "facetsDistribution": ["genres"] }'
-faceted_search_walkthrough_filterable_attributes_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-        "filterableAttributes": [
-            "director",
-            "producer",
-            "genres",
-            "production_companies"
-        ]
-    }'
 faceted_search_walkthrough_filter_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/movies/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
-faceted_search_walkthrough_facets_distribution_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{  "q": "Batman", "facetsDistribution": ["genres"] }'
 post_dump_1: |-
   curl -X POST 'http://localhost:7700/dumps'
 get_dump_status_1: |-
@@ -496,8 +470,8 @@ phrase_search_1: |-
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
 authentication_header_1: |-
-  $ curl -X GET 'http://127.0.0.1:7700/keys' \
-  --header "X-Meili-API-Key: masterKey"
+  curl -X GET 'http://127.0.0.1:7700/keys' \
+    -H 'X-Meili-API-Key: masterKey'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
@@ -567,7 +541,7 @@ geosearch_guide_filter_settings_1: |-
     -X POST 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '[
-        "_geo",
+        "_geo"
     ]'
 geosearch_guide_filter_usage_1: |-
   curl -X POST 'http://localhost:7700/indexes/restaurants/search' \

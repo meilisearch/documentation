@@ -6,7 +6,7 @@
   },
   {
     "language": "javascript",
-    "label": "JavaScript",
+    "label": "JS",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-js/main/.code-samples.meilisearch.yaml"
   },
   {
@@ -20,6 +20,11 @@
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-php/main/.code-samples.meilisearch.yaml"
   },
   {
+    "language": "java",
+    "label": "Java",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-java/main/.code-samples.meilisearch.yaml"
+  },
+  {
     "language": "ruby",
     "label": "Ruby",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-ruby/main/.code-samples.meilisearch.yaml"
@@ -28,6 +33,11 @@
     "language": "go",
     "label": "Go",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/main/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "csharp",
+    "label": "C#",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dotnet/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "rust",

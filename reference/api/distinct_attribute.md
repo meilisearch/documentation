@@ -6,11 +6,11 @@ _Child route of the [settings route](/reference/api/settings.md)._
 
 Distinct attribute can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-::: note
+To learn more about distinct attributes, refer to our [dedicated guide](/reference/features/settings.md#distinct-attribute).
+
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
-
-[Learn more about distinct attribute](/reference/features/settings.md#distinct-attribute).
 
 ## Get distinct attribute
 
@@ -64,11 +64,15 @@ If the field does not exist, no error will be thrown.
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset distinct attribute
 
@@ -92,8 +96,12 @@ Reset the [distinct attribute](/reference/features/settings.md#distinct-attribut
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

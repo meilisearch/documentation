@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.24',
+  title: 'MeiliSearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -12,7 +12,6 @@ module.exports = {
     smoothScroll: true,
     nav: [
       { text: 'Learn', link: '/learn/' },
-      { text: 'Create', link: '/create/how_to/' },
       { text: 'Reference', link: '/reference/' },
       {
         text: 'Resources',
@@ -41,7 +40,7 @@ module.exports = {
     sidebar: {
       '/learn/': [
         {
-          title: '🔎 What Is MeiliSearch?',
+          title: '🔎 What is MeiliSearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
           sidebarDepth: 0,
@@ -55,7 +54,7 @@ module.exports = {
           ],
         },
         {
-          title: '🚀 Getting Started',
+          title: '🚀 Getting started',
           path: '/learn/getting_started/',
           collapsable: false,
           children: [
@@ -65,7 +64,7 @@ module.exports = {
           ],
         },
         {
-          title: '💡 Core Concepts',
+          title: '💡 Core concepts',
           path: '/learn/core_concepts/',
           collapsable: false,
           children: [
@@ -75,12 +74,76 @@ module.exports = {
           ],
         },
         {
-          title: '📚 Advanced Topics',
+          title: '📚 Advanced topics',
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/asynchronous_updates',
+            '/learn/advanced/asynchronous_operations',
             '/learn/advanced/snapshots_vs_dumps',
+            {
+              title: 'Updating MeiliSearch',
+              path: '/learn/advanced/updating.md',
+            },
+            {
+              title: 'Inner workings',
+              collapsable: false,
+              children: [
+                '/learn/advanced/concat',
+                '/learn/advanced/datatypes',
+                '/learn/advanced/indexation',
+                '/learn/advanced/prefix',
+                '/learn/advanced/storage',
+                '/learn/advanced/tokenization',
+                '/learn/advanced/typotolerance',
+              ],
+            },
+          ],
+        },
+        {
+          title: '📕 Cookbooks',
+          path: '/learn/cookbooks/',
+          collapsable: false,
+          children: [
+            {
+              title: 'Run in production',
+              path: '/learn/cookbooks/running_production',
+              sidebarDepth: 0,
+            },
+            {
+              title: 'Use with Postman',
+              path: '/learn/cookbooks/postman_collection',
+            },
+            {
+              title: 'Add a search bar to your docs',
+              path: '/learn/cookbooks/search_bar_for_docs',
+            },
+            {
+              title: 'Set up HTTP/2 and SSL',
+              path: '/learn/cookbooks/http2_ssl',
+            },
+            {
+              title: 'Deployment',
+              collapsable: false,
+              sidebarDepth: 0,
+              children: [
+                {
+                  title: 'Deploy on AWS',
+                  path: '/learn/cookbooks/aws',
+                },
+                {
+                  title: 'Deploy on GCP',
+                  path: '/learn/cookbooks/gcp',
+                },
+                {
+                  title: 'Deploy on DigitalOcean',
+                  path: '/learn/cookbooks/digitalocean_droplet',
+                },
+                {
+                  title: 'Deploy on Qovery',
+                  path: '/learn/cookbooks/qovery',
+                },
+              ],
+            },
           ],
         },
         {
@@ -89,7 +152,7 @@ module.exports = {
           collapsable: false,
           children: [
             {
-              title: 'Contributing to the Docs',
+              title: 'Contributing to the docs',
               path: '/learn/contributing/contributing_to_docs',
             },
           ],
@@ -97,7 +160,7 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '⭐ Feature References',
+          title: '⭐ Feature references',
           path: '/reference/features/',
           collapsable: false,
           children: [
@@ -124,14 +187,14 @@ module.exports = {
           ],
         },
         {
-          title: '📒 API References',
+          title: '📒 API references',
           path: '/reference/api/',
           collapsable: false,
           children: [
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
-            '/reference/api/updates',
+            '/reference/api/tasks',
             '/reference/api/keys',
             {
               title: 'Settings',
@@ -156,93 +219,6 @@ module.exports = {
             '/reference/api/health',
             '/reference/api/version',
             '/reference/api/dump',
-          ],
-        },
-        {
-          title: '🛠️ Under the Hood',
-          path: '/reference/under_the_hood/',
-          collapsable: false,
-          children: [
-            '/reference/under_the_hood/bucket_sort',
-            '/reference/under_the_hood/concat',
-            '/reference/under_the_hood/datatypes',
-            '/reference/under_the_hood/prefix',
-            '/reference/under_the_hood/storage',
-            '/reference/under_the_hood/tokenization',
-            '/reference/under_the_hood/typotolerance',
-          ],
-        },
-      ],
-      '/create/': [
-        {
-          title: '📕 How-to guides',
-          path: '/create/how_to/',
-          collapsable: false,
-          children: [
-            {
-              title: 'Basics',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Update MeiliSearch',
-                  path: '/create/how_to/updating',
-                },
-                {
-                  title: 'Run in production',
-                  path: '/create/how_to/running_production',
-                },
-                {
-                  title: 'Use with Postman',
-                  path: '/create/how_to/postman_collection',
-                },
-              ],
-            },
-            {
-              title: 'Deploy',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Deploy on AWS',
-                  path: '/create/how_to/aws',
-                },
-                {
-                  title: 'Deploy on GCP',
-                  path: '/create/how_to/gcp',
-                },
-                {
-                  title: 'Deploy on DigitalOcean',
-                  path: '/create/how_to/digitalocean_droplet',
-                },
-                {
-                  title: 'Deploy on Qovery',
-                  path: '/create/how_to/qovery',
-                },
-              ],
-            },
-            {
-              title: 'Integrate',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Add a search bar to your docs',
-                  path: '/create/how_to/search_bar_for_docs',
-                },
-              ],
-            },
-            {
-              title: 'Miscellaneous',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Set up HTTP/2 and SSL',
-                  path: '/create/how_to/http2_ssl',
-                },
-              ],
-            },
           ],
         },
       ],

@@ -31,10 +31,8 @@
   "author": "tpayet",
   "license": "MIT",
   "dependencies": {
-    "@popperjs/core": "^2.10.2",
-    "mermaid": "8.13.3",
+    "@popperjs/core": "^2.11.0",
     "moment": "^2.29.1",
-    "vue-eslint-parser": "^7.10.0",
     "vuepress": "^1.8.2",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-container": "^2.1.5",
@@ -43,7 +41,8 @@
     "vuepress-plugin-meilisearch": "^0.10.8",
     "vuepress-plugin-seo": "^0.1.4",
     "vuepress-plugin-sitemap": "^2.3.1",
-    "vuepress-plugin-zooming": "^1.1.8"
+    "vuepress-plugin-zooming": "^1.1.8",
+    "vuex": "^3.6.2"
   },
   "engines": {
     "node": ">=12 <15"
@@ -52,6 +51,7 @@
     "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#add_ignore_pattern"
   },
   "devDependencies": {
+    "vue-eslint-parser": "^7.10.0",
     "babel-eslint": "^10.1.0",
     "bent": "^7.3.12",
     "eslint": "^7.25.0",
@@ -64,7 +64,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.9.0",
     "js-yaml": "^3.14.1",
-    "markdownlint-cli": "^0.29.0",
+    "markdownlint-cli": "^0.30.0",
     "vuepress-plugin-check-md": "^0.0.2"
   }
 }

@@ -29,7 +29,7 @@ The following guide will walk you through every step to deploy MeiliSearch in a 
 - Copy the following URI in the `Cloud Storage file` field.
 
 ```
-gs://meilisearch-image/meilisearch-v0.23.1-debian-10.vmdk
+gs://meilisearch-image/meilisearch-v0.24.0-debian-10.vmdk
 ```
 
 - **The other fields are not required.**
@@ -100,7 +100,7 @@ The server should answer with a `200 OK` status code as shown in the example bel
 
 ### 2. Set API key and SSL (HTTPS)
 
-Meilisearch is currently running in a *development environment*. You haven't set up an API key, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for production.
+MeiliSearch is currently running in a **development** environment. You haven't set up an API key, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for **production**.
 
 To start the configuration process, connect via SSH to your new MeiliSearch instance and follow the instructions that appear.
 
@@ -167,7 +167,7 @@ To make sure that everything is running smoothly, do a final HTTP call to the `/
 curl -v https://<your-domain-name>/health
 ```
 
-> Note that this time, we're using HTTPS.
+Note that this time, **we're using HTTPS.**
 
 The server should answer with a `200 OK` status code as shown in the example below:
 

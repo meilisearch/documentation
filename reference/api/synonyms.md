@@ -2,15 +2,15 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-`Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
+`Synonyms` is an object containing words and their respective synonyms. A synonym in MeiliSearch is considered equal to its associated word in a search query.
 
 Synonyms can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-::: note
+To learn more about synonyms, refer to our [dedicated guide](/reference/features/synonyms.md).
+
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
-
-[Learn more about synonyms](/reference/features/synonyms.md)
 
 ## Get synonyms
 
@@ -32,9 +32,17 @@ Get the list of [synonyms](/reference/features/synonyms.md) of an index.
 
 ```json
 {
-  "wolverine": ["xmen", "logan"],
-  "logan": ["wolverine", "xmen"],
-  "wow": ["world of warcraft"]
+  "wolverine": [
+    "xmen",
+    "logan"
+  ],
+  "logan": [
+    "wolverine",
+    "xmen"
+  ],
+  "wow": [
+    "world of warcraft"
+  ]
 }
 ```
 
@@ -64,11 +72,15 @@ An object that contains all synonyms and their associated words.
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset synonyms
 
@@ -94,8 +106,12 @@ Empty object : `{}`
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

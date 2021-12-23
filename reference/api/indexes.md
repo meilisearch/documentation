@@ -78,8 +78,8 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **uid**        | The index unique identifier (_mandatory_)                  |
-| **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
+| **uid**  | The index unique identifier (_mandatory_)                  |
+| **primaryKey** | The primary key of the documents |
 
 ```json
 {
@@ -130,7 +130,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **primaryKey** | The <clientGlossary word="primary key" /> of the documents |
+| **primaryKey** | The primary key of the documents |
 
 ### Example
 
@@ -168,6 +168,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 <CodeSamples id='delete_an_index_1' />
 
+
 #### Response: `202 Accepted`
 
 ```json
@@ -180,4 +181,4 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to track the status of your request.
+You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).

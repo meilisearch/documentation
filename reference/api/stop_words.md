@@ -6,9 +6,9 @@ The stop-words route lets you add a list of words that will be ignored in search
 
 Stop-words can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-[Learn more about stop words](/reference/features/stop_words.md)
+To learn more about stop words, refer to our [dedicated guide](/reference/features/stop_words.md).
 
-::: note
+::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
 :::
 
@@ -31,7 +31,11 @@ Get the [stop-words](/reference/features/stop_words.md) list of an index.
 #### Response: `200 Ok`
 
 ```json
-["of", "the", "to"]
+[
+  "of",
+  "the",
+  "to"
+]
 ```
 
 ## Update stop-words
@@ -62,11 +66,15 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset stop-words
 
@@ -92,8 +100,12 @@ Empty array: `[]`
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

@@ -2,9 +2,13 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-Attributes that can be used together with the [`sort` search parameter](/reference/features/search_parameters.md#sort). [You can learn more about sorting in our dedicated guide.](/reference/features/sorting.md)
-
 Sortable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
+
+Attributes that can be used together with the [`sort` search parameter](/reference/features/search_parameters.md#sort). To learn more about sortable attributes, refer to our [dedicated guide](/reference/features/sorting.md)
+
+::: warning
+Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+:::
 
 ## Get sortable attributes
 
@@ -61,11 +65,15 @@ An array of strings containing the attributes that can be used to sort search re
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset sortable attributes
 
@@ -91,8 +99,12 @@ An empty array (`[]`).
 
 ```json
 {
-  "updateId": 1
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "settingsUpdate",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

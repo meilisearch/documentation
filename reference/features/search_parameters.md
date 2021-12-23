@@ -40,13 +40,13 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 ### Placeholder search
 
-When `q` isn't specified, MeiliSearch performs a **placeholder search**. A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule).
+When `q` isn't specified, MeiliSearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
 
-If the index has no custom ranking rules, the results are returned in the order of their internal database position.
+If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
 
-Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search).
+Placeholder search is particularly useful when building a [faceted search UI](/reference/features/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
 
 :::
 
@@ -62,15 +62,19 @@ This will give you a list of documents that contain your query terms in at least
 {
   "hits": [
     {
-      "id":"50393",
-      "title":"Kung Fu Panda Holiday",
-      "poster":"https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
-      "overview":"The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
-      "release_date":1290729600,
-      "genres":["Animation","Family","TV Movie"]
-    },
+      "id": "50393",
+      "title": "Kung Fu Panda Holiday",
+      "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
+      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
+      "release_date": 1290729600,
+      "genres": [
+        "Animation",
+        "Family",
+        "TV Movie"
+      ]
+    }
   ],
-  "query":"shifu"
+  "query": "shifu"
 }
 ```
 
@@ -78,7 +82,7 @@ This will give you a list of documents that contain your query terms in at least
 
 If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
 
-Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/reference/under_the_hood/datatypes.md). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
+Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/advanced/datatypes.md). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
 You can combine phrase search and normal queries in a single search request. In this case, MeiliSearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
 
@@ -218,7 +222,7 @@ You would get the following response:
       "fantasy": 67,
       "comedy": 475,
       "mystery": 70,
-      "thriller": 217,
+      "thriller": 217
     }
   }
 }
@@ -243,7 +247,7 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 ## Attributes to crop
 
 **Parameter**: `attributesToCrop`
-**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
+**Expected value**: an array of attribute or `["*"]`
 **Default value**: `null`
 
 Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](/reference/features/search_parameters.md#crop-length) parameter.
@@ -296,28 +300,28 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 ## Attributes to highlight
 
 **Parameter**: `attributesToHighlight`
-**Expected value**: an array of <clientGlossary word="attribute" label="attributes" /> or `["*"]`
+**Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
-Highlights matching query terms in the given attributes. When this parameter is set, the `_formatted` object is added to the response for each document, within which you can find the highlighted text.
+Highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` only works on values of the following types: string, number, array, object.
 
-Values can be supplied as an array of attributes: `attributesToHighlight=["attributeA", "attributeB"]`.
+When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-Alternatively, you can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in `attributesToRetrieve` will be assigned to `attributesToHighlight`.
+You can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](/reference/features/search_parameters.md#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
 
 ::: tip
-The highlighting performed by this parameter consists of wrapping matching query terms in `<em>` tags. Neither this tag nor this behavior can be modified.
+It is not possible to change the `<em>` tag or its attributes.
 
-If a different type of highlighting is desired, we recommend [the `matches` parameter](#matches), which provides much finer control over the output.
+If you need finer control over the formatted output, we recommend using [the `matches` search parameter](#matches).
 :::
 
 ### Example
 
-If you wanted to highlight query matches that appear within the `overview` attribute:
+The following query highlights matches present in the `overview` attribute:
 
 <CodeSamples id="search_parameter_guide_highlight_1" />
 
-You would get the following response with the **highlighted version in the `_formatted` object**:
+The highlighted version of the text would then be found in the `_formatted` object included in each returned document:
 
 ```json
 {
@@ -330,7 +334,7 @@ You would get the following response with the **highlighted version in the `_for
     "id": "50393",
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year <em>Shifu</em> informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between <em>Shifu</em> and Mr. Ping.",
+    "overview": "The <em>Winter Feast</em> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <em>Winter Feast</em> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
     "release_date": 1290729600
   }
 }
@@ -349,12 +353,12 @@ The beginning of a matching term within a field is indicated by `start`, and its
 ::: warning
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
 
-`matchesInfo` cannot be used with arrays and objects, only strings.
+`matches` does not work with array or object values—only strings.
 :::
 
 ### Example
 
-If you set `matches` to `true` and search for `shifu`:
+If you set `matches` to `true` and search for `winter feast`:
 
 <CodeSamples id="search_parameter_guide_matches_1" />
 
@@ -364,17 +368,25 @@ You would get the following response with **information about the matches in the
 {
   "id": "50393",
   "title": "Kung Fu Panda Holiday",
-  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
   "release_date": 1290729600,
   "_matchesInfo": {
     "overview": [
       {
-        "start": 159,
+        "start": 4,
+        "length": 6
+      },
+      {
+        "start": 11,
         "length": 5
       },
       {
-        "start": 361,
+        "start": 234,
+        "length": 6
+      },
+      {
+        "start": 241,
         "length": 5
       }
     ]
