@@ -98,7 +98,7 @@ geosearch_guide_filter_usage_2: |-
 geosearch_guide_sort_settings_1: |-
 geosearch_guide_sort_usage_1: |-
 geosearch_guide_sort_usage_2: |-
-authentication_header_1: |-
+authorization_header_1: |-
 security_guide_create_key_1: |-
 security_guide_create_key_2: |-
 security_guide_list_keys_1: |-
