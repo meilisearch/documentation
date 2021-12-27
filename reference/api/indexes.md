@@ -95,7 +95,7 @@ An index is automatically created when adding [documents](/reference/api/documen
 ```json
 {
   "uid": "movies",
-  "primaryKey": "movie_id",
+  "primaryKey": "null",
   "createdAt": "2019-11-20T09:40:33.711476Z",
   "updatedAt": "2019-11-20T09:40:33.711476Z"
 }
