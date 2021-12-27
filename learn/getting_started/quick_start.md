@@ -12,6 +12,8 @@ We'll start with downloading and installing Meilisearch. You have the option to 
 
 ### Local installation
 
+### Local installation
+
 :::: tabs
 
 ::: tab cURL
