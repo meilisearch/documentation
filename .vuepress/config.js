@@ -191,6 +191,7 @@ module.exports = {
           path: '/reference/api/',
           collapsable: false,
           children: [
+            '/reference/api/sample_api',
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
