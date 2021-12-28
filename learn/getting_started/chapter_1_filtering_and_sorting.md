@@ -30,6 +30,8 @@ Let's say you only want to view meteors that weigh less than 200g.
 }
 ```
 
+To learn more about `filterableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/filtering_and_faceted_search.md).
+
 ## Sorting
 
 By default, MeiliSearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
