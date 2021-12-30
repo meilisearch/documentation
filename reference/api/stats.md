@@ -90,13 +90,15 @@ The `lastUpdate` field shows when the last update was made to the database in th
         "release_date": 19654
       }
     },
-    "rangemovies": {
-      "numberOfDocuments": 19654,
+    "books": {
+      "numberOfDocuments": 5,
       "isIndexing": false,
       "fieldDistribution": {
-        "overview": 19654,
-        "id": 19654,
-        "title": 19654
+        "id": 5,
+        "title": 5,
+        "author": 5,
+        "price": 5, 
+        "genres": 5
       }
     }
   }
