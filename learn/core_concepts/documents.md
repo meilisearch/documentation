@@ -165,35 +165,9 @@ Each index recognizes **only one** primary key attribute. Once a primary key has
 
 There are several ways to set the primary key for an index:
 
-- You can set it manually [on index creation](#setting-the-primary-key-on-index-creation)
-- You can set it manually [on document addition](#setting-the-primary-key-on-document-addition)
-- If no primary key is set, MeiliSearch automatically [guesses the primary key](/learn/core_concepts/documents.md#meilisearch-guesses-your-primary-key) when you add documents
-
-#### Setting the primary key on index creation
-
-The code below creates an index called `movies` with `reference_number` as primary key:
-
-<CodeSamples id="document_guide_create_index_primary_key" />
-
-#### Setting the primary key on document addition
-
-The code below adds a document and sets `reference_number` as the index's primary key:
-
-<CodeSamples id="document_guide_add_document_primary_key" />
-
-#### MeiliSearch guesses your primary key
-
-If the primary key has neither been set at index creation nor as a parameter of the add documents route, MeiliSearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
-
-If no corresponding attribute is found, the index will have no known primary key, and therefore, **no documents will be added**.
-
-#### Missing primary key error
-
-::: warning
-If you get the [`missing_primary_key` error](https://docs.meilisearch.com/errors/#missing_primary_key), the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
-:::
-
-Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).
+- You can set it manually [on index creation](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-index-creation)
+- You can set it manually [on document addition](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition)
+- If no primary key is set, MeiliSearch automatically [guesses the primary key](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) when you add documents
 
 ### Document Id
 
