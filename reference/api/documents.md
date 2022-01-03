@@ -242,7 +242,7 @@ Delete one document based on its unique id.
 
 This `updateId` allows you to [track the current update](/reference/api/updates.md).
 
-## Delete documents
+## Delete documents by batch
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete-batch"/>
 
