@@ -27,7 +27,7 @@ git clone git@github.com:meilisearch/documentation.git meilisearch-documentation
 cd meilisearch-documentation
 # Install dependencies
 yarn install
-# Run MeiliSearch documentation on https://localhost:8080
+# Run MeiliSearch documentation on http://localhost:8080
 yarn dev
 ```
 

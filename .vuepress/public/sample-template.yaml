@@ -105,3 +105,6 @@ security_guide_list_keys_1: |-
 security_guide_update_key_1: |-
 security_guide_delete_key_1: |-
 security_guide_search_key_1: |-
+document_guide_create_index_primary_key: |-
+document_guide_add_document_primary_key: |-
+authentication_header_1: |-
