@@ -224,7 +224,7 @@ Date and time when the key will expire, represented in ISO 8601 format. `null` i
         "documents.add"
     ],
     "indexes": [
-    "products"
+        "products"
     ],
     "expiresAt": "2021-11-13T00:00:00Z",
     "createdAt": "2021-11-12T10:00:00Z",
