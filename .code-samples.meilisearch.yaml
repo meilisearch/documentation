@@ -91,15 +91,15 @@ get_all_tasks_by_index_1: |-
 get_one_key_1: |-
   curl \
     -X GET 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer yourMasterKey'
+    -H 'Authorization: Bearer masterKey'
 get_all_keys_1: |-
   curl \
     -X GET 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer yourMasterKey'
+    -H 'Authorization: Bearer masterKey'
 create_a_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer yourMasterKey' \
+    -H 'Authorization: Bearer masterKey' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Add documents: Products API key",
@@ -114,24 +114,24 @@ create_a_key_1: |-
 update_a_key_1: |-
   curl \
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer yourMasterKey' \
+    -H 'Authorization: Bearer masterKey' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "description": "Manage documents: Products/Reviews API key", // Update key description to specify its new scope
+      "description": "Manage documents: Products/Reviews API key",
       "actions": [
         "documents.add",
-        "documents.delete" // Add access to document deletion
+        "documents.delete"
       ],
       "indexes": [
         "products",
-        "reviews" // Add access to the "reviews" index
+        "reviews"
       ],
-      "expiresAt": "2021-12-31T23:59:59Z" // Extend expiration date to the end of the year
+      "expiresAt": "2021-12-31T23:59:59Z"
     }'
 delete_a_key_1: |-
   curl \
     -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer yourMasterKey'
+    -H 'Authorization: Bearer masterKey'
 get_settings_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings'
@@ -607,11 +607,11 @@ geosearch_guide_sort_usage_2: |-
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
 security_guide_search_key_1: |-
   curl -X POST 'http://127.0.0.1:7700/patient_medical_records/search' \
-    -H 'Authorization: Bearer [an_api_key]'
+    -H 'Authorization: Bearer apiKey'
 security_guide_update_key_1: |-
   curl \
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer [your_master_key]' \
+    -H 'Authorization: Bearer masterKey' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "indexes": ["doctors"]
@@ -620,7 +620,7 @@ security_guide_create_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys/' \
     -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer [your_master_key]' \
+    -H 'Authorization: Bearer masterKey' \
     --data-binary '{
       "description": "Search patient records key",
       "actions": [
@@ -632,11 +632,11 @@ security_guide_create_key_1: |-
 security_guide_list_keys_1: |-
   curl
     -X GET 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer [your_master_key]'
+    -H 'Authorization: Bearer masterKey'
 security_guide_delete_key_1: |-
   curl \
     -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer [your_master_key]'
+    -H 'Authorization: Bearer masterKey'
 document_guide_create_index_primary_key: |-
   curl \
     -X POST 'http://localhost:7700/indexes' \
