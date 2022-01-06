@@ -1,4 +1,4 @@
-# GET visual reference
+# GET visual reference 1
 
 ## Get stats of an index
 
