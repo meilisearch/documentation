@@ -1,10 +1,6 @@
 # GET visual reference 2
 
-## Tasks
-
-The `tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations.md).
-
-### The `task` object
+## The `task` object
 
 `uid`
 **Description:** The unique sequential identifier of the task
@@ -66,7 +62,7 @@ The `tasks` route gives information about the progress of [asynchronous operatio
 **Description:** The date and time when the task finished processing, whether `failed` or `succeeded`, in ISO 8601 format
 **Type:** `string`
 
-### Get task
+## Get task
 
 <RouteHighlighter method="GET" route="/tasks/:uid"/>
 
@@ -131,11 +127,7 @@ Returns the `task` object:
 
 ::::
 
-## Stats
-
-The `/stats` route gives extended information and metrics about indexes and the MeiliSearch database.
-
-### The stats objects (is this the correct?)
+## The stats object
 
 #### `numberOfDocuments`
 
@@ -156,7 +148,7 @@ The `/stats` route gives extended information and metrics about indexes and the 
 **Description**: Shows every field in the individual index or the entire database along with the total number of documents in the index that contain that field
 **Type**: `object`
 
-### Get status of an index
+## Get status of an index
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
 
