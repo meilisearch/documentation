@@ -21,8 +21,17 @@ Setting up a master key can be done with either command-line options or environm
 
 ::: tab Environment variable
 
+Linux/MacOS:
+
 ```sh
 export MEILI_MASTER_KEY="your_master_key"
+./meilisearch
+```
+
+Windows:
+
+```sh
+set MEILI_MASTER_KEY="your_master_key"
 ./meilisearch
 ```
 
@@ -228,10 +237,19 @@ If your master key was set up using the command-line option, relaunch the instan
 
 ::: tab Environment variable
 
-If your master key was configured with an environment variable, unset `MEILI_MASTER_KEY` and relaunch the instance:
+If your master key was configured with an environment variable, unset `MEILI_MASTER_KEY` and relaunch the instance.
+
+Linux/MacOS:
 
 ```sh
 export MEILI_MASTER_KEY=
+./meilisearch
+```
+
+Windows:
+
+```sh
+set MEILI_MASTER_KEY=
 ./meilisearch
 ```
 
