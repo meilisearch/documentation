@@ -9289,10 +9289,10 @@ vuepress-plugin-meilisearch@^0.10.8:
   dependencies:
     docs-searchbar.js "^1.1.11"
 
-vuepress-plugin-seo@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-seo/-/vuepress-plugin-seo-0.1.4.tgz#be8e5577491c1fc317a7ad4abe3ae51ff317be1e"
-  integrity sha512-foNKrAAKihiC47bx0UXFzs/+BIFmnowTQsLVF/8pfsnsPDp8FXjkTGyjxyjOhbwj7ADPv32CdX3pEoYGnZ7OjA==
+vuepress-plugin-seo@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-seo/-/vuepress-plugin-seo-0.2.0.tgz#2fa4fd7ef2eb6c71f62302f264aeba47c6560ee9"
+  integrity sha512-/Rqul20UTL30mZyCbNwkfAfP50Yr7jzWlavQ92OVzZ8PcpZGXoDc+eoKQyKLQKL3G96dqvuCCbIMbW7RRs7Bhw==
 
 vuepress-plugin-sitemap@^2.3.1:
   version "2.3.1"
