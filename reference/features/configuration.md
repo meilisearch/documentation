@@ -65,7 +65,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
   - [Import dump](/reference/features/configuration.md#import-dump)
 - [Log level](/reference/features/configuration.md#log-level)
 - [Max index size](/reference/features/configuration.md#max-index-size)
-- [Max UDB size](/reference/features/configuration.md#max-udb-size)
+- [Max TASK_DB size](/reference/features/configuration.md#max-task-db-size)
 - [Payload limit size](/reference/features/configuration.md#payload-limit-size)
 - [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
   - [Schedule snapshot creation](/reference/features/configuration.md#schedule-snapshot-creation)
@@ -103,12 +103,12 @@ Configures the instance's environment. Value must be either `production` or `dev
 
 `production`:
 
-- Setting a [master key](/reference/features/authentication.md) is **mandatory**
+- Setting a [master key](/reference/features/security.md) is **mandatory**
 - The [web interface](/reference/features/web_interface.md#web-interface) is disabled
 
 `development`:
 
-- Setting a [master key](/reference/features/authentication.md) is **optional**
+- Setting a [master key](/reference/features/security.md) is **optional**
 - The web interface is enabled
 
 ::: tip
@@ -131,7 +131,7 @@ Sets the HTTP address and port MeiliSearch will use.
 **Default value**: `None`
 **Expected value**: an alphanumeric string
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md).
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in MeiliSearch in our dedicated guide.](/reference/features/security.md)
 
 ::: note
 You must supply an alphanumeric string when using this option.
@@ -141,7 +141,7 @@ Providing a master key is mandatory when `--env` is set to `production`; if none
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-[Learn more about MeiliSearch's use of security keys.](/reference/features/authentication.md)
+[Learn more about MeiliSearch's use of security keys.](/reference/features/security.md)
 
 ### Disable analytics
 
@@ -206,20 +206,20 @@ MeiliSearch currently supports four log levels, listed in order of increasing ve
 
 Sets the maximum size of the index. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-The `index` stores processed data and is different from the `update` database, which handles [pending updates](/learn/advanced/asynchronous_updates.md).
+The `index` stores processed data and is different from the `task` database, which handles [pending tasks](/learn/advanced/asynchronous_operations.md).
 
 [Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
 
-### Max UDB size
+### Max TASK_DB size
 
-**Environment variable**: `MEILI_MAX_UDB_SIZE`
-**CLI option**: `--max-udb-size`
+**Environment variable**: `MEILI_MAX_TASK_DB_SIZE`
+**CLI option**: `--max-task-db-size`
 **Default value**: `107374182400` (100 GiB)
 **Expected value**: an integer
 
-Sets the maximum size of the `update` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+Sets the maximum size of the `task` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-The `update` database handles [pending updates](/learn/advanced/asynchronous_updates.md). This is different from the `index` database, which only stores processed data.
+The `task` database handles [pending tasks](/learn/advanced/asynchronous_operations.md). This is different from the `index` database, which only stores processed data.
 
 [Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
 

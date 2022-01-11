@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.24',
+  title: 'MeiliSearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -78,7 +78,7 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/asynchronous_updates',
+            '/learn/advanced/asynchronous_operations',
             '/learn/advanced/snapshots_vs_dumps',
             {
               title: 'Updating MeiliSearch',
@@ -164,7 +164,6 @@ module.exports = {
           path: '/reference/features/',
           collapsable: false,
           children: [
-            '/reference/features/authentication',
             '/reference/features/configuration',
             '/reference/features/distinct',
             '/reference/features/dumps',
@@ -178,6 +177,7 @@ module.exports = {
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
+            '/reference/features/security',
             '/reference/features/settings',
             '/reference/features/snapshots',
             '/reference/features/sorting',
@@ -194,7 +194,7 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
-            '/reference/api/updates',
+            '/reference/api/tasks',
             '/reference/api/keys',
             {
               title: 'Settings',

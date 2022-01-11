@@ -8,6 +8,6 @@ These articles are conceptual explorations of important—but difficult—topics
 
 ## Table of contents
 
-- [Asynchronous updates](/learn/advanced/asynchronous_updates.md)
+- [Asynchronous operations](/learn/advanced/asynchronous_operations.md)
 - [Snapshots vs. dumps](/learn/advanced/snapshots_vs_dumps.md)
 - [Updating MeiliSearch](/learn/advanced/updating.md)
