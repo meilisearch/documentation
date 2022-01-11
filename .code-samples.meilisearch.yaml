@@ -109,7 +109,7 @@ create_a_key_1: |-
       "indexes": [
       "products"
       ],
-      "expiresAt": "2021-11-13T00:00:00Z"
+      "expiresAt": "2042-04-02T00:42:42Z"
     }'
 update_a_key_1: |-
   curl \
@@ -126,7 +126,7 @@ update_a_key_1: |-
         "products",
         "reviews"
       ],
-      "expiresAt": "2021-12-31T23:59:59Z"
+      "expiresAt": "2042-04-02T00:42:42Z"
     }'
 delete_a_key_1: |-
   curl \
