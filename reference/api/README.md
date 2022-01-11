@@ -22,11 +22,11 @@ Any API request with a payload (`--data-binary`) requires a `Content-Type` heade
 
 The only endpoints which currently accept NDJSON and CSV `Content-Type` are the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints. For all others, use `Content-Type: application/json`.
 
-#### Authentication
+#### Authorization
 
 For almost all routes, you need to be recognized by the server to check your permissions. Add your API key to your headers.
 
-<CodeSamples id="authentication_header_1" />
+<CodeSamples id="authorization_header_1" />
 
 Please read about [security keys](/reference/features/security.md) and [how to manage them](/reference/api/keys.md) for more information.
 
