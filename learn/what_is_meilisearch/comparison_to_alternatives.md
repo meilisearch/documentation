@@ -32,7 +32,7 @@ Please be advised that many of the search products described below are constantl
 
 #### Integrations and SDKs
 
-We list only officially supported libraries by the internal teams of the different projects.
+Note: we are only listing libraries officially supported by the internal teams of each different search engine.
 
 Can't find a client you'd like us to support? [Submit your idea or vote for it](https://roadmap.meilisearch.com/tabs/1-under-consideration) 😇
 
@@ -97,10 +97,9 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Multi-index search | Early 2022 | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ❌ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
-| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Index have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
+| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
 | Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ |
 | Faceting |  ✅ | ✅ | ✅ | ✅ |
-| Facet value searches | ❌ | ✅ | ✅ | ❌ |
 | Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
 | Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
 
