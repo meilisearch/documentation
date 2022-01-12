@@ -99,7 +99,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
 | Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ |
-| Faceting |  ✅ | ✅ | ✅ | ✅ |
+| Faceted search |  ✅ | ✅ | ✅ | ✅ |
 | Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
 | Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
 
