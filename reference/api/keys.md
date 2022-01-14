@@ -88,8 +88,6 @@ This value is also used as the `:key` path variable to [update](#update-a-key), 
 
 An array of API actions permitted for the key. `["*"]` for all actions.
 
-The `*` character can also be used as a wildcard to get all permissions for a route, e.g. `documents.*` to authorize access to all document-related endpoints.
-
 #### `indexes`
 
 An array of indexes the key is authorized to act on. `["*"]` for all indexes.
@@ -173,8 +171,6 @@ An optional description for the key.
 **Default value:** none
 
 A list of API actions permitted for the key. `["*"]` for all actions.
-
-The `*` character can also be used as a wildcard to get all permissions for a route, e.g. `documents.*` to authorize access to all document-related endpoints.
 
 | name             | description |
 |------------------|-------------|
