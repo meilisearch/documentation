@@ -144,7 +144,7 @@ For an explanation of these fields, see the [get all keys endpoint](#returned-fi
 
 ## Create a key
 
-<RouteHighlighter method="POST" route="/keys/:key"/>
+<RouteHighlighter method="POST" route="/keys"/>
 
 Create an API key with the provided description, permissions, and expiration date.
 
