@@ -88,6 +88,24 @@ module.exports = {
               path: '/learn/advanced/updating.md',
             },
             {
+              title: 'Data backup',
+              collapsable: false,
+              children: [
+                {
+                  title: 'Snapshots vs dumps',
+                  path: '/learn/advanced/snapshots_vs_dumps',
+                },
+                {
+                  title: 'Dumps',
+                  path: '/learn/advanced/dumps',
+                },
+                {
+                  title: 'Snapshots',
+                  path: '/learn/advanced/snapshots',
+                },
+              ],
+            },
+            {
               title: 'Inner workings',
               collapsable: false,
               children: [
@@ -169,7 +187,6 @@ module.exports = {
           children: [
             '/reference/features/configuration',
             '/reference/features/distinct',
-            '/reference/features/dumps',
             {
               title: 'Errors',
               path: '/errors/',
@@ -180,7 +197,6 @@ module.exports = {
             '/reference/features/search_parameters',
             '/reference/features/security',
             '/reference/features/settings',
-            '/reference/features/snapshots',
             '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',

@@ -146,7 +146,7 @@ Had the task failed, the response would have included an `error` object:
 
 While dumps and tasks are both asynchronous operations, they use separate queues and behave differently. For instance, creating a new dump will freeze the task queue until the dump has been generated.
 
-[You can read more about dumps in our dedicated guide.](/reference/features/dumps.md)
+[You can read more about dumps in our dedicated guide.](/learn/advanced/dumps.md)
 
 ## Terminate MeiliSearch while a task is being processed
 

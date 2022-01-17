@@ -108,7 +108,7 @@ Now that you know which MeiliSearch version your database is compatible with, pr
 
 ## Updating from v0.15.0 or above
 
-Because MeiliSearch v0.15.0 and above include the [dumps feature](/reference/features/dumps.md), updating is relatively simple.
+Because MeiliSearch v0.15.0 and above include the [dumps feature](/learn/advanced/dumps.md), updating is relatively simple.
 
 In this guide, we will:
 
@@ -242,7 +242,7 @@ To delete the old MeiliSearch version, you need to delete the `data.ms` folder. 
 
 ### Step 4: Import the dump
 
-Now that you’ve got your dump, [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/reference/features/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
+Now that you’ve got your dump, [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
 
 ```bash
 # launch the latest version of MeiliSearch and import the specified dump file
@@ -261,7 +261,7 @@ Congratulations! You have successfully migrated your MeiliSearch database to the
 
 ## Updating from v0.14.0 or below
 
-Since these versions predate the [dumps feature](/reference/features/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as `.JSON` files.
+Since these versions predate the [dumps feature](/learn/advanced/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as `.JSON` files.
 
 In this guide, we will:
 
