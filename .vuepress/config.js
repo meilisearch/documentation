@@ -81,7 +81,6 @@ module.exports = {
             '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
-            '/learn/advanced/snapshots_vs_dumps',
             '/learn/advanced/sorting',
             {
               title: 'Updating MeiliSearch',
