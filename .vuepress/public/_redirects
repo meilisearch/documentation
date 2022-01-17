@@ -77,8 +77,14 @@
 
 # Group filters and facets content
 /reference/api/attributes_for_faceting.html         /reference/api/filterable_attributes.html
-/reference/features/filtering.html                   /reference/features/filtering_and_faceted_search.html
-/reference/features/faceted_search.html              /reference/features/filtering_and_faceted_search.html
+/reference/features/filtering.html                  /reference/features/filtering_and_faceted_search.html
+/reference/features/faceted_search.html             /reference/features/filtering_and_faceted_search.html
+
+# Rename Asynchronous updates to Asynchronous operations
+/learn/advanced/asynchronous_updates.html           /learn/advanced/asynchronous_operations.html
+
+# Rename Updates to Tasks
+/reference/api/updates.html                         /reference/api/tasks.html
 
 # Move under the hood articles to /learn
 /reference/under_the_hood/concat.html                /learn/advanced/concat.html

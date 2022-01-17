@@ -123,7 +123,7 @@ This list is liable to change with every new version of MeiliSearch. It's not be
 | `sort.avg_criteria_number`              | Average number of sort criteria among all search requests containing the `sort` parameter   | 2
 | `filter.with_geoRadius`                 | `true` if the filter rule `_geoRadius` was used, otherwise `false`                          | false
 | `filter.most_used_syntax`               | Most used filter syntax among all search requests containing the `filter` parameter         | string
-| `q.avg_terms_number`                    | Average number of terms given for the `q` parameter                                         | 5
+| `q.max_terms_number`                    | Highest number of terms given for the `q` parameter                                         | 5
 | `pagination.max_limit`                  | Highest value given for the `limit` parameter                                               | 60
 | `pagination.max_offset`                 | Highest value given for the `offset` parameter                                              | 1000
 | `primary_key`                           | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
@@ -135,3 +135,4 @@ This list is liable to change with every new version of MeiliSearch. It's not be
 | `filterable_attributes.total`           | Number of filterable attributes                                                             | 3
 | `filterable_attributes.has_geo`         | `true` if `_geo` is set as a filterable attribute, otherwise `false`                        | false
 | `searchable_attributes.total`           | Number of searchable attributes                                                             | 4
+| `per_task_uid`                          | `true` if a `uid` is used to fetch a particular task resource, otherwise `false`                                                                                                                                 | true
