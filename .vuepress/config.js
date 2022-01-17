@@ -86,8 +86,11 @@ module.exports = {
             {
               title: 'Data backup',
               collapsable: false,
-              sidebarDepth: 0,
               children: [
+                {
+                  title: 'Snapshots vs dumps',
+                  path: '/learn/advanced/snapshots_vs_dumps',
+                },
                 {
                   title: 'Dumps',
                   path: '/learn/advanced/dumps',
@@ -95,10 +98,6 @@ module.exports = {
                 {
                   title: 'Snapshots',
                   path: '/learn/advanced/snapshots',
-                },
-                {
-                  title: 'Snapshots vs dumps',
-                  path: '/learn/advanced/snapshots_vs_dumps',
                 },
               ],
             },
