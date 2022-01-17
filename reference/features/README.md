@@ -11,7 +11,6 @@ Understanding our reference documentation is easier with background knowledge of
 [Distinct attribute](/reference/features/distinct.md)
 [Dumps](/reference/features/dumps.md)
 [Field properties](/reference/features/field_properties.md)
-[Filtering and faceted search](/learn/advanced/filtering_and_faceted_search.md)
 [Known limitations](/reference/features/known_limitations.md)
 [Language](/reference/features/language.md)
 [Search parameters](/reference/features/search_parameters.md)
