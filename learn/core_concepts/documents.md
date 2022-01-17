@@ -6,7 +6,7 @@ Documents function as **containers for organizing data**, and are the basic buil
 
 ## Structure
 
-![Document structure](/document_structure.svg =573x400)
+![Diagram illustration MeiliSearch's document structure](/document_structure.svg =573x400)
 
 ### Important terms
 

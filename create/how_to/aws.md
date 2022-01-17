@@ -89,7 +89,7 @@ Once you have reviewed your instance configuration, there is one last step befor
 
 Click on **Launch** and a pop-up window will ask you to select a **key pair**. This key pair is very important as it will be your private key to access the instance via SSH, which is required to [configure your MeiliSearch instance in a production environment](#part-2-configure-production-settings).
 
-![Select an existing key pair or create a new key pair popup. Important: Download and store your private key file in a secure accessible location. You cannot download it again once it has been created](/aws/08.key-pair.png)
+![A popup titled: "Select an existing key pair or create a new key pair". Inside the popup, there is a form that allows you to configure key pairs. It also contains a warning: "Download and store your private key file in a secure accessible location. You cannot download it again once it has been created"](/aws/08.key-pair.png)
 
 If you have an existing Key Pair, you can use that. Otherwise, select the option **Create a new key pair** and give it a name. Then, click on **Download Key Pair** and store this file somewhere safe.
 
@@ -99,7 +99,7 @@ Once you've downloaded your key pair (and only then), click on **Launch Instance
 
 Your instance may take a minute or two to get up and running (see the **Instance state** column).
 
-![Instance i-0642dee1520eae5d9 running](/aws/09.launch.png)
+![AWS dashboard showing an active instance](/aws/09.launch.png)
 
 Once the **Instance state** is **Running**, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS** displayed in your AWS instances dashboard. You should see the MeiliSearch [web interface](/reference/features/web_interface.md).
 
