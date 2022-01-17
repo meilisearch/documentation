@@ -50,7 +50,7 @@ docker run -it --rm \
     getmeili/meilisearch:latest
 ```
 
-Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to `/data.ms`
+Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to the `data.ms` folder.
 
 You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
 :::
@@ -121,9 +121,9 @@ For best performance, compile MeiliSearch on the machine you intend to run it on
 
 To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
 
-- [AWS](/create/how_to/aws.md)
-- [DigitalOcean](/create/how_to/digitalocean_droplet.md)
-- [Qovery](/create/how_to/qovery.md)
+- [AWS](/learn/cookbooks/aws.md)
+- [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Qovery](/learn/cookbooks/qovery.md)
 
 ## Configuration options
 

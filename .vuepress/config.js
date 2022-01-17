@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.24',
+  title: 'MeiliSearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -12,7 +12,6 @@ module.exports = {
     smoothScroll: true,
     nav: [
       { text: 'Learn', link: '/learn/' },
-      { text: 'Create', link: '/create/how_to/' },
       { text: 'Reference', link: '/reference/' },
       {
         text: 'Resources',
@@ -79,7 +78,7 @@ module.exports = {
           path: '/learn/advanced/',
           collapsable: false,
           children: [
-            '/learn/advanced/asynchronous_updates',
+            '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
             '/learn/advanced/snapshots_vs_dumps',
@@ -104,6 +103,53 @@ module.exports = {
           ],
         },
         {
+          title: '📕 Cookbooks',
+          path: '/learn/cookbooks/',
+          collapsable: false,
+          children: [
+            {
+              title: 'Run in production',
+              path: '/learn/cookbooks/running_production',
+              sidebarDepth: 0,
+            },
+            {
+              title: 'Use with Postman',
+              path: '/learn/cookbooks/postman_collection',
+            },
+            {
+              title: 'Add a search bar to your docs',
+              path: '/learn/cookbooks/search_bar_for_docs',
+            },
+            {
+              title: 'Set up HTTP/2 and SSL',
+              path: '/learn/cookbooks/http2_ssl',
+            },
+            {
+              title: 'Deployment',
+              collapsable: false,
+              sidebarDepth: 0,
+              children: [
+                {
+                  title: 'Deploy on AWS',
+                  path: '/learn/cookbooks/aws',
+                },
+                {
+                  title: 'Deploy on GCP',
+                  path: '/learn/cookbooks/gcp',
+                },
+                {
+                  title: 'Deploy on DigitalOcean',
+                  path: '/learn/cookbooks/digitalocean_droplet',
+                },
+                {
+                  title: 'Deploy on Qovery',
+                  path: '/learn/cookbooks/qovery',
+                },
+              ],
+            },
+          ],
+        },
+        {
           title: '👐 Contributing',
           path: '/learn/contributing/',
           collapsable: false,
@@ -121,7 +167,6 @@ module.exports = {
           path: '/reference/features/',
           collapsable: false,
           children: [
-            '/reference/features/authentication',
             '/reference/features/configuration',
             '/reference/features/distinct',
             '/reference/features/dumps',
@@ -133,6 +178,7 @@ module.exports = {
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
+            '/reference/features/security',
             '/reference/features/settings',
             '/reference/features/snapshots',
             '/reference/features/stop_words',
@@ -148,7 +194,7 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
-            '/reference/api/updates',
+            '/reference/api/tasks',
             '/reference/api/keys',
             {
               title: 'Settings',
@@ -173,75 +219,6 @@ module.exports = {
             '/reference/api/health',
             '/reference/api/version',
             '/reference/api/dump',
-          ],
-        },
-      ],
-      '/create/': [
-        {
-          title: '📕 How-to guides',
-          path: '/create/how_to/',
-          collapsable: false,
-          children: [
-            {
-              title: 'Basics',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Run in production',
-                  path: '/create/how_to/running_production',
-                },
-                {
-                  title: 'Use with Postman',
-                  path: '/create/how_to/postman_collection',
-                },
-              ],
-            },
-            {
-              title: 'Deploy',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Deploy on AWS',
-                  path: '/create/how_to/aws',
-                },
-                {
-                  title: 'Deploy on GCP',
-                  path: '/create/how_to/gcp',
-                },
-                {
-                  title: 'Deploy on DigitalOcean',
-                  path: '/create/how_to/digitalocean_droplet',
-                },
-                {
-                  title: 'Deploy on Qovery',
-                  path: '/create/how_to/qovery',
-                },
-              ],
-            },
-            {
-              title: 'Integrate',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Add a search bar to your docs',
-                  path: '/create/how_to/search_bar_for_docs',
-                },
-              ],
-            },
-            {
-              title: 'Miscellaneous',
-              collapsable: false,
-              sidebarDepth: 0,
-              children: [
-                {
-                  title: 'Set up HTTP/2 and SSL',
-                  path: '/create/how_to/http2_ssl',
-                },
-              ],
-            },
           ],
         },
       ],

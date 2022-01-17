@@ -14,8 +14,7 @@ create_an_index_1: |-
     -X POST 'http://localhost:7700/indexes' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "uid": "movies",
-      "primaryKey": "movie_id"
+      "uid": "movies"
     }'
 update_an_index_1: |-
   curl \
@@ -77,16 +76,62 @@ search_post_1: |-
 search_get_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/search?q=american%20ninja'
-get_update_1: |-
+get_task_by_index_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates/1'
-get_all_updates_1: |-
+    -X GET 'http://localhost:7700/indexes/movies/tasks/1'
+get_all_tasks_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/updates'
-get_keys_1: |-
+    -X GET 'http://localhost:7700/tasks'
+get_task_1: |-
   curl \
-    -H "X-Meili-API-Key: 123" \
-    -X GET 'http://localhost:7700/keys'
+    -X GET 'http://localhost:7700/tasks/1'
+get_all_tasks_by_index_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/tasks'
+get_one_key_1: |-
+  curl \
+    -X GET 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -H 'Authorization: Bearer masterKey'
+get_all_keys_1: |-
+  curl \
+    -X GET 'http://localhost:7700/keys' \
+    -H 'Authorization: Bearer masterKey'
+create_a_key_1: |-
+  curl \
+    -X POST 'http://localhost:7700/keys' \
+    -H 'Authorization: Bearer masterKey' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Add documents: Products API key",
+      "actions": [
+        "documents.add"
+      ],
+      "indexes": [
+      "products"
+      ],
+      "expiresAt": "2042-04-02T00:42:42Z"
+    }'
+update_a_key_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -H 'Authorization: Bearer masterKey' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "description": "Manage documents: Products/Reviews API key",
+      "actions": [
+        "documents.add",
+        "documents.delete"
+      ],
+      "indexes": [
+        "products",
+        "reviews"
+      ],
+      "expiresAt": "2042-04-02T00:42:42Z"
+    }'
+delete_a_key_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -H 'Authorization: Bearer masterKey'
 get_settings_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings'
@@ -303,7 +348,7 @@ search_parameter_guide_offset_1: |-
     --data-binary '{ "q": "shifu", "offset": 1 }'
 search_parameter_guide_limit_1: |-
   curl \
-    - X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu", "limit": 2 }'
 search_parameter_guide_retrieve_1: |-
@@ -463,9 +508,9 @@ phrase_search_1: |-
   curl -X POST 'http://localhost:7700/indexes/movies/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
-authentication_header_1: |-
+authorization_header_1: |-
   curl -X GET 'http://127.0.0.1:7700/keys' \
-    --header "X-Meili-API-Key: masterKey"
+    -H 'Authorization: Bearer masterKey'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
   -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
@@ -560,3 +605,54 @@ geosearch_guide_sort_usage_2: |-
   curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
+security_guide_search_key_1: |-
+  curl -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
+    -H 'Authorization: Bearer apiKey'
+security_guide_update_key_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -H 'Authorization: Bearer masterKey' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "indexes": ["doctors"]
+    }'
+security_guide_create_key_1: |-
+  curl \
+    -X POST 'http://localhost:7700/keys' \
+    -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer masterKey' \
+    --data-binary '{
+      "description": "Search patient records key",
+      "actions": [
+        "search"
+      ],
+      "indexes": ["patient_medical_records"],
+      "expiresAt": "2023-01-01T00:00:00Z"
+    }'
+security_guide_list_keys_1: |-
+  curl
+    -X GET 'http://localhost:7700/keys' \
+    -H 'Authorization: Bearer masterKey'
+security_guide_delete_key_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -H 'Authorization: Bearer masterKey'
+document_guide_create_index_primary_key: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "uid": "movies",
+      "primaryKey": "reference_number"
+    }'
+document_guide_add_document_primary_key: |-      
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/documents?primaryKey=reference_number' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[{
+        "reference_number": 287947,
+        "title": "Shazam",
+        "poster": "https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
+        "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
+        "release_date": "2019-03-23"
+     }]' 

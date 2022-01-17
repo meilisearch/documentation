@@ -113,8 +113,8 @@ If you don't want to use Docker, here are [other ways to run the scraper](https:
 
 `<absolute-path-to-your-config-file>` should be the **absolute** path of your configuration file defined at [the previous step](#configuration-file).
 
-The API key you must provide should have the permissions to add documents into your MeiliSearch instance. In a production environment, we recommend providing the private key instead of the master key, as it is safer and it has enough permissions to perform such requests.
-_More about [MeiliSearch authentication](/reference/features/authentication.md)._
+The API key should have the permissions to add documents into your MeiliSearch instance. In a production environment, we recommend providing the `Default Admin API Key` as it has enough permissions to perform such requests.
+_More about [MeiliSearch security](/reference/features/security.md)._
 
 ::: tip
 
@@ -178,8 +178,8 @@ These three fields are mandatory, but more [optional fields are available](https
 
 ::: warning
 
-Since the configuration file is public, we strongly recommend providing the MeiliSearch public key in a production environment, which is enough to perform search requests.
-Read more about [MeiliSearch authentication](/reference/features/authentication.md).
+Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/api/search.md) , such as the `Default Search API Key`, in a production environment.
+Read more about [MeiliSearch security](/reference/features/security.md).
 
 :::
 
@@ -218,8 +218,9 @@ The `hostUrl` and the `apiKey` fields are the credentials of the MeiliSearch ins
 
 ::: warning
 
-We strongly recommend providing the MeiliSearch public key in a production environment, which is enough to perform search requests.
-Read more about [MeiliSearch authentication](/reference/features/authentication.md).
+We strongly recommend providing a `Default Search API Key` in a production environment, which is enough to perform search requests.
+
+Read more about [MeiliSearch security](/reference/features/security.md).
 
 :::
 
@@ -234,4 +235,4 @@ For more concrete examples, you can check out this [basic HTML file](https://git
 ## What's next?
 
 At this point you should have a working search engine on your website, congrats! 🎉
-You can check [this tutorial](/create/how_to/running_production.md) if you now want to run MeiliSearch in production!
+You can check [this tutorial](/learn/cookbooks/running_production.md) if you now want to run MeiliSearch in production!

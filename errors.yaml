@@ -13,7 +13,7 @@ errors:
   - code: invalid_state
     description: "The database is in an invalid state. Deleting the database and re-indexing should solve the problem."
   - code: primary_key_inference_failed 
-    description: "The first provided document contains no fields with the substring `id`. [Manually designate the primary key](https://docs.meilisearch.com/learn/core_concepts/documents.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key."
+    description: "The first provided document contains no fields with the substring `id`. [Manually designate the primary key](https://docs.meilisearch.com/learn/core_concepts/documents.html#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key."
   - code: document_fields_limit_reached
     description: "A document exceeds the maximum limit of 65,535 fields."
   - code: missing_document_id
@@ -31,7 +31,7 @@ errors:
   - code: internal
     description: "MeiliSearch experienced an internal error. Check the error message, and open an issue if necessary."
   - code: missing_authorization_header
-    description: "The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [authentication](https://docs.meilisearch.com/reference/features/authentication.html) for more information."
+    description: "The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [security](https://docs.meilisearch.com/reference/features/security.html) for more information."
   - code: not_found
     description: "The requested resources could not be found."
   - code: payload_too_large
@@ -57,7 +57,7 @@ errors:
   - code: invalid_geo_field
     description: "The provided `_geo` field of one or more documents is invalid. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](https://docs.meilisearch.com/learn/advanced/geosearch.html)."
   - code: invalid_api_key
-    description: "The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](https://docs.meilisearch.com/reference/features/authentication.html)."
+    description: "The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](https://docs.meilisearch.com/reference/features/security.html)."
   - code: invalid_store_file
     description: "The `data.ms` folder is in an invalid state. Your `.mdb` file is corrupted or the `data.ms` folder has been replaced by a file."
   - code: no_space_left_on_device
@@ -66,4 +66,18 @@ errors:
     description: "The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by MeiliSearch, check out this [guide](https://docs.meilisearch.com/reference/features/configuration.html#max-udb-size)."
   - code: index_primary_key_already_exists
     description: "The requested index already has a primary key that cannot be changed."
+  - code: invalid_api_key_description
+    description: "The `description` field for the provided API key resource is invalid. It should either be a string or `null`." 
+  - code: invalid_api_key_actions
+    description: "The `actions` field for the provided API key resource is invalid. It should be an array of strings representing action names." 
+  - code: invalid_api_key_indexes
+    description: "The `indexes` field for the provided API key resource is invalid. It should be an array of strings representing index names." 
+  - code: invalid_api_key_expires_at
+    description: "The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the ISO 8601 format or be set to `null`." 
+  - code: api_key_not_found
+    description: "The requested API key could not be found." 
+  - code: missing_parameter
+    description: "The payload is missing one or more required fields."    
+  - code: task_not_found
+    description: "The requested task does not exist. Please ensure that you are using the correct `uid`." 
 ...
