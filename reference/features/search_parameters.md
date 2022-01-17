@@ -346,14 +346,12 @@ The highlighted version of the text would then be found in the `_formatted` obje
 **Expected value**: `true` or `false`
 **Default value**: `false`
 
-Adds an object to the search response (`_matchesInfo`) containing the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight).
+Adds a `_matchesInfo` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `matches` only works for strings, numbers, and arrays of strings and numbers.
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
 ::: warning
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-
-`matches` does not work with array or object values—only strings.
 :::
 
 ### Example
@@ -362,7 +360,7 @@ If you set `matches` to `true` and search for `winter feast`:
 
 <CodeSamples id="search_parameter_guide_matches_1" />
 
-You would get the following response with **information about the matches in the `_matchesInfo` object**:
+You would get the following response with **information about the matches in the `_matchesInfo` object**. Note how MeiliSearch searches for `winter` and `feast` separately because of the whitespace:
 
 ```json
 {

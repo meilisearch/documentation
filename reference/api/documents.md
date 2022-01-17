@@ -108,7 +108,7 @@ For a partial update of the document see [add or update documents](/reference/ap
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
 | **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the index _(optional)_ |     none      |
 
-If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
@@ -133,10 +133,16 @@ The body is composed of a **JSON array** of documents.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid":1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Add or update documents
 
@@ -156,7 +162,7 @@ If the provided index does not exist, it will be created.
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-If you want to set the **primary key** of your index through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Query parameters
 
@@ -182,15 +188,22 @@ The body is composed of a **JSON array** of documents.
 <CodeSamples id="add_or_update_documents_1" />
 
 This document is an update of the document found in [add or replace document](/reference/api/documents.md#add-or-replace-documents).
-The documents are matched because they have the same `primaryKey` value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
+
+The documents are matched because they have the same [primary key](/learn/core_concepts/documents.md#primary-field) value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAddition",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete all documents
 
@@ -211,10 +224,16 @@ Delete all documents in the specified index.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "clearAll",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete one document
 
@@ -236,10 +255,16 @@ Delete one document based on its unique id.
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Delete documents
 
@@ -268,7 +293,13 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 #### Response: `202 Accepted`
 
 ```json
-{ "updateId": 1 }
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
 ```
 
-This `updateId` allows you to [track the current update](/reference/api/updates.md).
+You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

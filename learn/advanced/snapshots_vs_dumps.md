@@ -18,7 +18,8 @@ As a result, importing a dump requires MeiliSearch to re-index all of your docum
 
 ::: note
 We do not recommend using dumps from a new MeiliSearch version to import an older version.
-For example, you **should not** import a dump from MeiliSearch v0.22.0 to MeiliSearch v0.21.0. But importing a dump from MeiliSearch v0.21.0 to MeiliSearch v0.21.0 or higher will work.
+
+For example, you can import a dump from MeiliSearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
 :::
 
 ### Conclusion
