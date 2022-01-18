@@ -46,6 +46,5 @@ You can read more about security in our [dedicated guide](/reference/features/au
 
 Hopefully these chapters gave you a basic introduction to MeiliSearch and what it can do. Once you get a hang of the basics, the possibilities are endless. To continue exploring MeiliSearch, check out:
 
-- [Core concepts](/learn/core_concepts/README.md) for details on the basic concepts
 - [Advanced topics](/learn/advanced/README.md) for a more in depth understanding
 - [API references](/reference/api/README.md)

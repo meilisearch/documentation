@@ -34,9 +34,9 @@ To learn more about `filterableAttributes` and how to configure them, refer to o
 
 ## Sorting
 
-By default, MeiliSearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
+By default, MeiliSearch orders results according to their relevancy. You can alter this sorting behavior as part of the search request, allowing users to decide which type of results they want to see first.
 
-You can use any of the document fields as long as they contain numbers, strings, arrays of numeric values, or arrays of string values by adding them to `sortableAttributes`. Let's sort the meteors in the previous example  based on mass.
+You can use any of the document fields as long as they contain numbers, strings, arrays of numbers, or arrays of strings by adding them to `sortableAttributes`. Let's sort the meteors in the previous example based on mass.
 
 <CodeSamples id= "getting_started_sorting_md" />
 
@@ -70,7 +70,7 @@ To learn more about `sortableAttributes` and how to configure them, refer to our
 
 MeiliSearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field.
 
-Let's say you want to find out the what meteors crashed within a 210km radius of Bern:
+Let's say you want to find out which meteors crashed within a 210km radius of Bern:
 
 <CodeSamples id= "getting_started_geoRadius_md" />
 
@@ -114,7 +114,7 @@ Let's say you want to find out the what meteors crashed within a 210km radius of
   }
   ```
 
-You can also use geosearch to sort results based on their distance from a specific location. Let's say you want to view meteors based on how close they were to the Taj Mahal:
+You can also use geosearch to sort results based on their distance from a specific location. For example, the following code sample would display meteors in order of how close they were to the Taj Mahal:
 
 <CodeSamples id= "getting_started_geoPoint_md" />
 

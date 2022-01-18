@@ -507,7 +507,6 @@ getting_started_update_displayedAttributes_md: |-
     --data-binary '[
         "title",
         "overview",
-        "genre", 
         "poster"
     ]'
 getting_started_update_searchableAttributes_md: |-

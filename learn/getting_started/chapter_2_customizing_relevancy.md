@@ -1,19 +1,27 @@
 # Chapter 2: Customizing relevancy
 
+MeiliSearch is designed to offer a great search experience out of the box, but sometimes you need greater control over results. The tools described below help you tailor the search experience to your particular dataset and use-case.
+
 ## Ranking rules
 
-Relevancy refers to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa. MeiliSearch has a number of features for fine-tuning the relevancy of search results. The most important tool among them is ranking rules.
 
-MeiliSearch sorts search responses based on a set of consecutive rules called ranking rules. These rules are stored in an array of strings called `rankingRules`. You can update these ranking rules for each index. The default order for the ranking rules is as follows:
+MeiliSearch sorts search responses based on a set of consecutive rules called ranking rules. These rules are stored in an array of strings called `rankingRules`, which is part of the `settings` object.
 
-1. Words
-2. Typo
-3. Proximity
-4. Attribute
-5. Sort
-6. Exactness
+The order in which ranking rules are applied matters. The first rule in the array has the most impact, and the last rule has the least. This is the default order:
 
-The order in which ranking rules are applied matters. The first rule in the array has the most impact, and the last rule has the least.
+```
+"rankingRules": [
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness",
+]
+```
+
+By changing this order, you can dramatically alter your search experience. 
+
 
 You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy.md).
 
