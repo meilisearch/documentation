@@ -103,7 +103,7 @@ Your instance may take a minute or two to get up and running (see the **Instance
 
 Once the **Instance state** is **Running**, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS** displayed in your AWS instances dashboard. You should see the MeiliSearch [web interface](/reference/features/web_interface.md).
 
-![MeiliSearch web interface with the movies index](/aws/10.enjoy.png)
+![MeiliSearch web interface allowing users to search an example dataset](/aws/10.enjoy.png)
 
 Your MeiliSearch instance is now ready to use!
 
