@@ -39,7 +39,7 @@ You will get the following response with the cropped text in the `_formatted` ob
 }
 ```
 
-### attributesToHighlight (Is this that important?)
+### attributesToHighlight
 
 This highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` only works on strings, numbers, arrays, and objects.
 

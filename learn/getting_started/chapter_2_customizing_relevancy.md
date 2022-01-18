@@ -1,9 +1,8 @@
-# Chapter 2: Customizing relevancy
+# Chapter 2: Fine-tuning search results
 
 MeiliSearch is designed to offer a great search experience out of the box, but sometimes you need greater control over results. The tools described below help you tailor the search experience to your particular dataset and use-case.
 
 ## Ranking rules
-
 
 MeiliSearch sorts search responses based on a set of consecutive rules called ranking rules. These rules are stored in an array of strings called `rankingRules`, which is part of the `settings` object.
 
@@ -20,8 +19,7 @@ The order in which ranking rules are applied matters. The first rule in the arra
 ]
 ```
 
-By changing this order, you can dramatically alter your search experience. 
-
+By changing this order, you can dramatically alter your search experience.
 
 You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy.md).
 
@@ -30,6 +28,8 @@ You can read more about ranking rules in our [dedicated guide](/learn/core_conce
 By default, all attributes are displayed in each matching document but you can update the settings to change that. If you access the MeiliSearch web interface at `http://127.0.0.1:7700/`, you will notice that you can view all of the attributes in the `movies` index.
 
 ![Web interface with default displayed attributes](/getting-started/default_displayed_attributes.png)
+
+You can read more about adding documents to an index in the [quick start](/learn/getting_started/quick_start.md#step-2-add-documents).
 
 If you only want to view the `title`, `poster`, and `overview`:
 
@@ -87,14 +87,22 @@ If you update the `searchableAttributes` to only contain `title`, MeiliSearch wi
 
 Please note that **MeiliSearch will still highlight matches in other attributes, but they won’t be used to compute results.**
 
-## Stop words and synonyms
+## Stop words
 
 MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English.
 
-If you search the `movies` index for `the cat` with the default settings, MeiliSearch will return a lot of results but not all of them will be relevant. After adding `the` to your list of stop words, MeiliSearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
+<CodeSamples id= "getting_started_update_stop_words_md" />
+
+If you search the `movies` index for `the cat`, MeiliSearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
 
 You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
 
-A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant. So if you have `winnie` and `piglet` set as synonyms, searching for either words will show the same results.
+## Synonyms
+
+A list of synonyms is useful if you have multiple words with the same meaning in your dataset. This will make your search results more relevant.
+
+<CodeSamples id= "getting_started_synonyms_md" />
+
+This will set `winnie` and `piglet` as synonyms, searching for either words will show the same results.
 
 The only exception is one-way association, you can read more about it in our [dedicated guide](/reference/features/synonyms.md#one-way-association).
