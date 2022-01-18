@@ -47,7 +47,7 @@ The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-in
 
 An index is a collection of documents. All documents have a primary key, which is a mandatory field. This field is composed of a primary key attribute name and a unique value. All documents in a given index share the same primary key attribute but a different unique value.
 
-The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/learn/core_concepts/documents.md#setting-the-primary-key).
+The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/learn/core_concepts/primary_key.md#setting-the-primary-key).
 
 [Learn more about document primary key](/learn/core_concepts/documents.md#primary-key)
 

@@ -1,10 +1,10 @@
 # Primary key
 
-The primary key  is a **mandatory attribute linked to a unique value** the [document id](/learn/core_concepts/documents.md#document-id). It is part of the [primary field](/learn/core_concepts/documents.md#primary-field).
+The primary key is a **mandatory attribute linked to a unique value** the [document id](/learn/core_concepts/documents.md#document-id). It is part of the [primary field](/learn/core_concepts/documents.md#primary-field).
 
 Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in a document, **no documents will be stored.**
 
-The primary field serves the important role of uniquely identifying each document stored in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index. Therefore, every document in the same index **must possess the exact same primary key** associated with a unique **document id** as value.
+The primary key ensures that there are no identical documents in the same index.
 
 ## Setting the primary key
 
@@ -41,7 +41,7 @@ The code below adds a document and sets `reference_number` as the index's primar
 
 ```json
 {
-    "uid":19,
+    "uid":1,
     "indexUid":"movies",
     "status":"succeeded",
     "type":"documentAddition",
@@ -71,7 +71,7 @@ This happens when you add documents for the first time and none of them have a p
 
 ```json
 {
-    "uid":25,
+    "uid":1,
     "indexUid":"books3",
     "status":"failed",
     "type":"documentAddition",
@@ -100,7 +100,7 @@ This happens when your index already has a primary key but one of the documents 
 
 ```json
 {
-    "uid":26,
+    "uid":1,
     "indexUid":"books3",
     "status":"failed",
     "type":"documentAddition",
@@ -129,7 +129,7 @@ This happens when your primary key does not have the correct format. The primary
 
 ```json
 {
-    "uid":27,
+    "uid":1,
     "indexUid":"books4",
     "status":"failed",
     "type":"documentAddition",
