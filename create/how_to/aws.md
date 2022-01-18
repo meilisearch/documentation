@@ -121,7 +121,7 @@ Configuring your MeiliSearch instance in a production environment is not just st
 
 If you want to use your own domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, **you can skip this step**.
 
-![my-aws-instance domain](/aws/11.domain.png)
+![An interface for editing DNS records. The A record is set to my-aws-instance](/aws/11.domain.png)
 
 Your domain name should now be linked to your MeiliSearch instance. Run a health check to verify that your instance is running and your DNS is well configured:
 

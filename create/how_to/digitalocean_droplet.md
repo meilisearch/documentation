@@ -11,7 +11,7 @@
 A "droplet" is a set of resources, as a Virtual Machine, or a Server, in which you can run your own applications.
 In any DigitalOcean page, when you are logged in, you will find a menu in the upper-right corner. Click on "Create" -> "Droplets".
 
-![Selecting Droplets Create cloud servers](/digitalocean/01.create.png)
+![Selecting Droplets Create cloud servers from the Create dropdown](/digitalocean/01.create.png)
 
 ### 2. Select MeiliSearch snapshot
 
@@ -23,7 +23,7 @@ By default, DigitalOcean will display the "distributions" tab. Select the "Marke
 
 Select your plan. Plans start at $5 (click on "See all plans" for more options). Memory-optimized options will give you better results for a production environment on big datasets.
 
-![Selecting the $5/month plan](/digitalocean/03.select-plan.png)
+![Selecting the plan based on your usage](/digitalocean/03.select-plan.png)
 
 ### 4. Select a region for your droplet
 
