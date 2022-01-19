@@ -247,7 +247,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our geosearch guide.](/reference/features/geosearch.md#sorting-results-with-geopoint)
+[You can read more about location-based sorting in our geosearch guide.](/learn/advanced/geosearch.md#sorting-results-with-geopoint)
 
 ### Example
 

@@ -21,9 +21,9 @@ errors:
   - code: invalid_document_id
     description: "The provided document identifier does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_)."
   - code: invalid_filter
-    description: "The filter provided with the search is invalid. This may be due to syntax errors in the `filter` parameter, using reserved fields as filter expressions, or neglecting to add the filtering attributes to `filterableAttributes`. For troubleshooting, check our [guide on filtering](https://docs.meilisearch.com/reference/features/filtering_and_faceted_search.html)."
+    description: "The filter provided with the search is invalid. This may be due to syntax errors in the `filter` parameter, using reserved fields as filter expressions, or neglecting to add the filtering attributes to `filterableAttributes`. For troubleshooting, check our [guide on filtering](https://docs.meilisearch.com/learn/advanced/filtering_and_faceted_search.html)."
   - code: invalid_sort
-    description: "The sort value is invalid. This may be due to syntax errors in the `sort` parameter, using reserved fields as sort expressions, or neglecting to add the sorting attributes to `sortableAttributes`. For troubleshooting, check our [guide on sorting](https://docs.meilisearch.com/reference/features/sorting.html)."
+    description: "The sort value is invalid. This may be due to syntax errors in the `sort` parameter, using reserved fields as sort expressions, or neglecting to add the sorting attributes to `sortableAttributes`. For troubleshooting, check our [guide on sorting](https://docs.meilisearch.com/learn/advanced/sorting.html)."
   - code: bad_request
     description: "The request is invalid, check the error message for more information."
   - code: document_not_found
@@ -55,7 +55,7 @@ errors:
   - code: invalid_ranking_rule
     description: "The provided ranking rules are invalid. This may be due to syntax errors in your ranking rules or specifying custom ranking rules on reserved fields or reserved expressions. For more information on ranking rule configuration, check our [relevancy guide](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules)."
   - code: invalid_geo_field
-    description: "The provided `_geo` field of one or more documents is invalid. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](https://docs.meilisearch.com/reference/features/geosearch.html)."
+    description: "The provided `_geo` field of one or more documents is invalid. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](https://docs.meilisearch.com/learn/advanced/geosearch.html)."
   - code: invalid_api_key
     description: "The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](https://docs.meilisearch.com/reference/features/security.html)."
   - code: invalid_store_file

@@ -4,7 +4,7 @@ _Child route of the [settings route](/reference/api/settings.md)._
 
 Filterable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
 
-Attributes that can be used as filters for filtering and faceted search. To learn more about filterable attributes, refer to our [dedicated guide](/reference/features/filtering_and_faceted_search.md).
+Attributes that can be used as filters for filtering and faceted search. To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
 ::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
@@ -14,7 +14,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Get an index's [`filterableAttributes`](/reference/features/filtering_and_faceted_search.md).
+Get an index's [`filterableAttributes`](/learn/advanced/filtering_and_faceted_search.md).
 
 ### Path variables
 
@@ -41,7 +41,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Update an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md). This will re-index all documents in the index.
+Update an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md). This will re-index all documents in the index.
 
 ### Path variables
 
@@ -77,7 +77,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/filterable-attributes"/>
 
-Reset an index's [filterable attributes list](/reference/features/filtering_and_faceted_search.md) back to its default value.
+Reset an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md) back to its default value.
 
 ### Default value
 

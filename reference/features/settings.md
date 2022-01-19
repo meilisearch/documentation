@@ -9,7 +9,7 @@ This page describes the **index-level settings** available in MeiliSearch and ho
 | **[filterableAttributes](/reference/features/settings.md#filterable-attributes)** | List of attributes that can be used for filtering                                | `null`                                                                                      |
 | **[rankingRules](/reference/features/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **[searchableAttributes](/reference/features/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                       |                                                     |
-| **[sortableAttributes](/reference/features/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/reference/features/sorting.md) search results  | `[]`                                                                         |
+| **[sortableAttributes](/reference/features/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
 | **[stopWords](/reference/features/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                        |
 | **[synonyms](/reference/features/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                        |
 
@@ -78,7 +78,7 @@ With the settings in the example above, only one of the two documents will be re
 
 ## Filterable attributes
 
-List of attributes that can be used for [filtering and faceted search](/reference/features/filtering_and_faceted_search.md).
+List of attributes that can be used for [filtering and faceted search](/learn/advanced/filtering_and_faceted_search.md).
 
 By default, `filterableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
 
@@ -86,7 +86,7 @@ By default, `filterableAttributes` is an empty array. It expects an array of att
 Configuring `filterableAttributes` is necessary in order to use the [`filter` search parameter](/reference/features/search_parameters.md#filter).
 :::
 
-[Learn more about filtering and faceted search in our dedicated guide.](/reference/features/filtering_and_faceted_search.md)
+[Learn more about filtering and faceted search in our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
 #### Example
 
@@ -159,7 +159,7 @@ By adding the following settings, the fields `title`, `description` and `genre` 
 
 ## Sortable attributes
 
-List of attributes that can be used for [sorting](/reference/features/sorting.md).
+List of attributes that can be used for [sorting](/learn/advanced/sorting.md).
 
 By default, `sortableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
 
@@ -167,7 +167,7 @@ By default, `sortableAttributes` is an empty array. It expects an array of attri
 Configuring `sortableAttributes` is necessary in order to use the [`sort` search parameter](/reference/features/search_parameters.md#sort).
 :::
 
-[Learn more about sorting in our dedicated guide.](/reference/features/sorting.md)
+[Learn more about sorting in our dedicated guide.](/learn/advanced/sorting.md)
 
 #### Example
 

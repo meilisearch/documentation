@@ -36,9 +36,9 @@ This is the preferred route to perform search when an API key is required, as it
 | **attributesToHighlight** | `[Strings]`            | Attributes whose values will contain highlighted matching terms                                 | `null`                                                                                          |
 | **matches**               | `Boolean`              | Defines whether an object that contains information about the matches should be returned or not | `false`                                                                                         |
 | **sort**               | `[Strings]`              | Sort search results according to the attributes and sorting order (`asc` or `desc`) specified | `null`                                                                                         |
-> `filter` accepts a query string. You can find more about the filter syntax on [our dedicated page](/reference/features/filtering_and_faceted_search.md).
+> `filter` accepts a query string. You can find more about the filter syntax on [our dedicated page](/learn/advanced/filtering_and_faceted_search.md).
 > `cropLength` is automatically rounded to match word boundaries.
-> `sort` requires attributes to be given as `attribute:sorting_order`. You can find more about the syntax on [our dedicate page](/reference/features/sorting.md#using-sort).
+> `sort` requires attributes to be given as `attribute:sorting_order`. You can find more about the syntax on [our dedicate page](/learn/advanced/sorting.md#using-sort).
 
 [Learn more about how to use the search parameters](/reference/features/search_parameters.md).
 
@@ -130,9 +130,9 @@ This route should only be used when no API key is required. If an API key is req
 | **[matches](/reference/features/search_parameters.md#matches)**                               | Defines whether an object that contains information about the matches should be returned or not |   `false`     |
 | **[sort](/reference/features/search_parameters.md#sort)**                               | Sort search results according to the attributes and sorting order (`asc` or `desc`) specified |   `null`     |
 
-> `filter` accepts a query string. You can find about the filter syntax on [our dedicated page](/reference/features/filtering_and_faceted_search.md).
+> `filter` accepts a query string. You can find about the filter syntax on [our dedicated page](/learn/advanced/filtering_and_faceted_search.md).
 > `cropLength` is automatically rounded to match word boundaries.
-> `sort` requires attributes to be given as `attribute:sorting_order`. You can find more about the syntax on [our dedicate page](/reference/features/sorting.md#using-sort).
+> `sort` requires attributes to be given as `attribute:sorting_order`. You can find more about the syntax on [our dedicate page](/learn/advanced/sorting.md#using-sort).
 
 [Learn more about how to use the search parameters](/reference/features/search_parameters.md).
 

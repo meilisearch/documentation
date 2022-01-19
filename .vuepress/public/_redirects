@@ -101,6 +101,11 @@
 # Move updating MeiliSearch
 /create/how_to/updating.html                         /learn/advanced/updating.html
 
+# Move guides (filtering, sorting, geosearch) to /learn
+/reference/features/filtering_and_faceted_search.html   /learn/advanced/filtering_and_faceted_search.html
+/reference/features/geosearch.html                      /learn/advanced/geosearch.html
+/reference/features/sorting.html                        /learn/advanced/sorting.html
+
 # Remove Create section
 /create/how_to/meilisearch_react.html                    https://blog.meilisearch.com/how-to-implement-instant-search-within-5-minutes-in-your-react-app/
 /create/how_to/aws.html                             /learn/cookbooks/aws.html
