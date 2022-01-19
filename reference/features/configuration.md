@@ -103,12 +103,12 @@ Configures the instance's environment. Value must be either `production` or `dev
 
 `production`:
 
-- Setting a [master key](/reference/features/security.md) is **mandatory**
+- Setting a [master key](/learn/advanced/security.md) is **mandatory**
 - The [web interface](/reference/features/web_interface.md#web-interface) is disabled
 
 `development`:
 
-- Setting a [master key](/reference/features/security.md) is **optional**
+- Setting a [master key](/learn/advanced/security.md) is **optional**
 - The web interface is enabled
 
 ::: tip
@@ -131,7 +131,7 @@ Sets the HTTP address and port MeiliSearch will use.
 **Default value**: `None`
 **Expected value**: an alphanumeric string
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in MeiliSearch in our dedicated guide.](/reference/features/security.md)
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in MeiliSearch in our dedicated guide.](/learn/advanced/security.md)
 
 ::: note
 You must supply an alphanumeric string when using this option.
@@ -141,7 +141,7 @@ Providing a master key is mandatory when `--env` is set to `production`; if none
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-[Learn more about MeiliSearch's use of security keys.](/reference/features/security.md)
+[Learn more about MeiliSearch's use of security keys.](/learn/advanced/security.md)
 
 ### Disable analytics
 
