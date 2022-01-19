@@ -121,3 +121,6 @@
 # Move Snapshots and Dumps guide
 /reference/features/snapshots.html                  /learn/advanced/snapshots.html
 /reference/features/dumps.html                      /learn/advanced/dumps.html
+
+# New errors page
+/errors                                             /reference/api/errors.html
