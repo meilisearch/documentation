@@ -79,11 +79,11 @@ Since synonyms are linked to a given index, they won't apply to any other index 
 
 Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (for example, `the` or `of` in English).
 
-Words added to the [stop words list](/reference/features/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
+Words added to the [stop words list](/reference/api/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
 
 For example, suppose you want to search for `the great gatsby`. You would prefer to receive documents containing the terms `great gatsby`, rather than documents containing the terms `the great`, or just `the`. In this case, adding `the` to the stop word list would improve performance and make search results more relevant.
 
-[Learn more about stop words](/reference/features/stop_words.md)
+[Learn more about stop words](/reference/api/stop_words.md)
 
 ## Field properties
 
