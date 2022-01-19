@@ -544,12 +544,12 @@ getting_started_attributesToCrop_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
+    --data-binary '{ "q": "school", "attributesToCrop": ["overview"], "cropLength": 5 }'
 getting_started_limit_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "limit": 10 }'
+    --data-binary '{ "q": "bear", "limit": 10 }'
 getting_started_geoRadius_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteors/search' \

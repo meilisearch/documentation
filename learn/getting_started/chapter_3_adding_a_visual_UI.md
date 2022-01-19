@@ -14,9 +14,9 @@ This section covers some of the important search parameters but you can read abo
 
 ### attributesToCrop
 
-By default, MeiliSearch responses return the entire value of all attributes. You can use the `attributesToCrop` parameter to crop the value of selected attributes.
+By default, MeiliSearch responses return the entire value of all attributes. You can use the `attributesToCrop` parameter to crop `n` bytes in either direction of the selected attributes.
 
-Let's take `overview` as an example, MeiliSearch will return the whole value for it. If you want to only view the first `10` bytes, you can use:
+Let's take `overview` as an example, MeiliSearch will return the whole value for it. If you want to crop  `5` bytes in either direction, you can use:
 
 <CodeSamples id= "getting_started_attributesToCrop_md" />
 
@@ -24,18 +24,7 @@ You will get the following response with the cropped text in the `_formatted` ob
 
 ```json
 {
-  "id": "50393",
-  "title": "Kung Fu Panda Holiday",
-  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
-  "release_date": 1290729600,
-  "_formatted": {
-    "id": "50393",
-    "title": "Kung Fu Panda Holiday",
-    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "this year Shifu informs",
-    "release_date": 1290729600
-  }
+
 }
 ```
 
@@ -68,7 +57,7 @@ When this parameter is set, returned documents include a `_formatted` object con
 
 The `limit` decides the maximum number of documents MeiliSearch returns for a query. The default is `20` but you can change it.
 
-If you search the `movies` index for `shifu`, MeiliSearch will return the first 20 movies. If you were to update the limit to `10`:
+If you search the `movies` index for `bear`, MeiliSearch will return the first 20 movies. If you were to update the limit to `10`:
 
 <CodeSamples id= "getting_started_limit_md" />
 

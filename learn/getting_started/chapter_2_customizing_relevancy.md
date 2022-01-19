@@ -19,7 +19,11 @@ The order in which ranking rules are applied matters. The first rule in the arra
 ]
 ```
 
-By changing this order, you can dramatically alter your search experience.
+The following code sample moves `exactness` to the top:
+
+<CodeSamples id= "getting_started_update_rankingRules_md" />
+
+Your results will be now be sorted based on `exactness` first.
 
 You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy.md).
 
@@ -81,7 +85,11 @@ Let's look at MeiliSearch's web interface for this example. If you search for `2
 
 ![default searchableAttributes](/getting-started/default_searchableAttributes.gif)
 
-If you update the `searchableAttributes` to only contain `title`, MeiliSearch will only consider `title` during search. You will see fewer results.
+If you update the `searchableAttributes` to only contain `title`:
+
+<CodeSamples id= "getting_started_update_searchableAttributes_md" />
+
+MeiliSearch will now only consider `title` during search and you will see fewer results.
 
 ![title as the only searchableAttribute](/getting-started/title_searchableAttributes.gif)
 
