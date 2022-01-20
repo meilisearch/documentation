@@ -123,7 +123,7 @@
 /reference/features/dumps.html                      /learn/advanced/dumps.html
 
 # New errors page
-/errors                                             /reference/api/errors.html
+/errors                                             /reference/api/error_codes.html
 
 # Move Security guide
 /reference/features/security.html                   /learn/advanced/security.html
