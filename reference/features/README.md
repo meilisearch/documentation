@@ -6,7 +6,6 @@ Understanding our reference documentation is easier with background knowledge of
 
 ## Table of contents
 
-[Security](/reference/features/security.md)
 [Configuration](/reference/features/configuration.md)
 [Distinct attribute](/reference/features/distinct.md)
 [Field properties](/reference/features/field_properties.md)

@@ -122,6 +122,10 @@
 /reference/features/snapshots.html                  /learn/advanced/snapshots.html
 /reference/features/dumps.html                      /learn/advanced/dumps.html
 
+
+# Move Security guide
+/reference/features/security.html                   /learn/advanced/security.html
+
 # Remove reference/features/stopwords
 /reference/features/stop_words.html                 /reference/api/stop_words.html
 
