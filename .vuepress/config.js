@@ -196,7 +196,6 @@ module.exports = {
             '/reference/features/search_parameters',
             '/reference/features/security',
             '/reference/features/settings',
-            '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',
           ],
