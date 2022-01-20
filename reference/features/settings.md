@@ -185,7 +185,7 @@ A set of words defined for an index. Because some words neither add semantic val
 
   An array of strings that contains the stop words.
 
-[Learn more about stop words](/reference/features/stop_words.md)
+[Learn more about stop words](/reference/api/stop_words.md)
 
 #### Example
 

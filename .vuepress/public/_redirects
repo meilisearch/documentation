@@ -124,3 +124,9 @@
 
 # New errors page
 /errors                                             /reference/api/errors.html
+
+# Move Security guide
+/reference/features/security.html                   /learn/advanced/security.html
+
+# Remove reference/features/stopwords
+/reference/features/stop_words.html                 /reference/api/stop_words.html

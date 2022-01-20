@@ -25,7 +25,7 @@ Meilisearch helps the Rust community find crates on [crates.meilisearch.com](htt
 - **Return the whole document**: The entire document is returned upon search.
 - **Highly customizable search and indexation**:
   - [Custom ranking](/learn/core_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
-  - [Stop words](/reference/features/stop_words.md): Ignore common non-relevant words like `of` or `the`.
+  - [Stop words](/reference/api/stop_words.md): Ignore common non-relevant words like `of` or `the`.
   - [Highlighting](/learn/what_is_meilisearch/features.md#highlighting): Highlighted search results in documents
   - [Synonyms](/learn/what_is_meilisearch/features.md#synonyms): define synonyms for a better search experience.
 - **RESTful API**

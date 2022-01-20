@@ -81,6 +81,7 @@ module.exports = {
             '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
+            '/learn/advanced/security',
             '/learn/advanced/sorting',
             {
               title: 'Updating MeiliSearch',
@@ -190,9 +191,7 @@ module.exports = {
             '/reference/features/known_limitations',
             '/reference/features/language',
             '/reference/features/search_parameters',
-            '/reference/features/security',
             '/reference/features/settings',
-            '/reference/features/stop_words',
             '/reference/features/synonyms',
             '/reference/features/web_interface',
           ],

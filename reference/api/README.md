@@ -28,7 +28,7 @@ For almost all routes, you need to be recognized by the server to check your per
 
 <CodeSamples id="authorization_header_1" />
 
-Please read about [security keys](/reference/features/security.md) and [how to manage them](/reference/api/keys.md) for more information.
+Please read about [security keys](/learn/advanced/security.md) and [how to manage them](/reference/api/keys.md) for more information.
 
 `Authorization: Bearer $API_KEY`
 
