@@ -2,11 +2,15 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-The stop-words route lets you add a list of words that will be ignored in search queries. So if you add `the` as a stop word and you make a search on `the mask` you will only have matching documents with `mask`.
+The stop-words route allows you to add a list of words ignored in your search queries. During a search, the stop words contained in your search query will be ignored by the sorting algorithm.
+
+When you add a common English word such as `the` to the stop-words list, MeiliSearch will not take it into consideration when calculating how relevant a result is.
+
+::: note
+Stop-words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
+:::
 
 Stop-words can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
-
-To learn more about stop words, refer to our [dedicated guide](/reference/features/stop_words.md).
 
 ::: warning
 Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
@@ -16,7 +20,7 @@ Updating the settings means overwriting the default settings of MeiliSearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
 
-Get the [stop-words](/reference/features/stop_words.md) list of an index.
+Get the stop-words list of an index.
 
 #### Path variables
 
@@ -42,7 +46,7 @@ Get the [stop-words](/reference/features/stop_words.md) list of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
 
-Update the list of [stop-words](/reference/features/stop_words.md) of an index.
+Update the list of stop-words of an index.
 
 #### Path variables
 
@@ -52,7 +56,7 @@ Update the list of [stop-words](/reference/features/stop_words.md) of an index.
 
 #### Body
 
-An array of strings that contains the [stop-words](/reference/features/stop_words.md).
+An array of strings that contains the stop-words.
 
 If a list of stop-words already exists it will be overwritten (_replaced_).
 
@@ -80,7 +84,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
 
-Reset the list of [stop-words](/reference/features/stop_words.md) of an index to its default value.
+Reset the list of stop-words of an index to its default value.
 
 #### Default value
 
