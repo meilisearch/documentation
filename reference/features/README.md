@@ -10,7 +10,6 @@ Understanding our reference documentation is easier with background knowledge of
 [Configuration](/reference/features/configuration.md)
 [Distinct attribute](/reference/features/distinct.md)
 [Field properties](/reference/features/field_properties.md)
-[Known limitations](/reference/features/known_limitations.md)
 [Language](/reference/features/language.md)
 [Search parameters](/reference/features/search_parameters.md)
 [Settings](/reference/features/settings.md)

@@ -33,7 +33,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 Sets the search terms.
 
 ::: warning
-MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/reference/features/known_limitations.md#number-of-query-words).
+MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations.md#number-of-query-words).
 
 Additionally, keep in mind queries go through a normalization process that strips accents and diacritics, as well as making all terms lowercase.
 :::
