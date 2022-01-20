@@ -230,7 +230,7 @@ module.exports = {
             '/reference/api/health',
             '/reference/api/version',
             '/reference/api/dump',
-            '/reference/api/errors',
+            '/reference/api/error_codes',
           ],
         },
       ],
