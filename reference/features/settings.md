@@ -137,7 +137,7 @@ To add your ranking rules to the settings, send:
 
 <CodeSamples id="settings_guide_ranking_rules_1" />
 
-With the settings in the example above, documents will be sorted by decreasing number of matched query terms first. If too many documents have the same query terms, the `typo` rule will be applied. This operation will be repeated with the next rules until the requested number of documents has been reached (default: 20).
+With the settings in the example above, documents will be sorted by decreasing number of matched query terms first. If too many documents have the same number of query terms, the `typo` rule will be applied. This operation will be repeated with the next rule until the requested number of documents has been reached (default: 20).
 
 ## Searchable attributes
 
