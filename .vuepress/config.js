@@ -51,6 +51,7 @@ module.exports = {
             '/learn/what_is_meilisearch/comparison_to_alternatives',
             '/learn/what_is_meilisearch/telemetry',
             '/learn/what_is_meilisearch/contact',
+            '/learn/what_is_meilisearch/search_preview',
           ],
         },
         {
@@ -193,7 +194,6 @@ module.exports = {
             '/reference/features/search_parameters',
             '/reference/features/settings',
             '/reference/features/synonyms',
-            '/reference/features/web_interface',
           ],
         },
         {

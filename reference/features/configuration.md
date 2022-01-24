@@ -104,12 +104,12 @@ Configures the instance's environment. Value must be either `production` or `dev
 `production`:
 
 - Setting a [master key](/learn/advanced/security.md) is **mandatory**
-- The [web interface](/reference/features/web_interface.md#web-interface) is disabled
+- The [search preview interface](/learn/what_is_meilisearch/search_preview.md) is disabled
 
 `development`:
 
 - Setting a [master key](/learn/advanced/security.md) is **optional**
-- The web interface is enabled
+- Search preview is enabled
 
 ::: tip
 When the server environment is set to `development`, providing a master key is not mandatory. This is useful when debugging and prototyping, but dangerous otherwise since API routes are unprotected.
