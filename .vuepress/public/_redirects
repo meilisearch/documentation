@@ -133,3 +133,6 @@
 
 # Move Known limitations guide
 /reference/features/known_limitations.html          /learn/advanced/known_limitations.html
+
+# Move Language guide
+/reference/features/language.html                   /learn/what_is_meilisearch/language.html
