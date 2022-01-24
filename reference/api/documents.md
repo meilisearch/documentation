@@ -266,7 +266,7 @@ Delete one document based on its unique id.
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
-## Delete documents
+## Delete documents by batch
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete-batch"/>
 
