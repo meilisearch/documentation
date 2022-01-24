@@ -190,7 +190,7 @@ If no corresponding attribute is found, the index will have no known primary key
 #### Missing primary key error
 
 ::: warning
-If you get the [`missing_primary_key` error](https://docs.meilisearch.com/errors/#missing_primary_key), the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
+If you get the [`primary_key_inference_failed` error](/reference/api/error_codes.md#primary-key-inference-failed), the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
 :::
 
 Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).

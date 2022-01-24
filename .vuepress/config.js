@@ -188,10 +188,6 @@ module.exports = {
           children: [
             '/reference/features/configuration',
             '/reference/features/distinct',
-            {
-              title: 'Errors',
-              path: '/errors/',
-            },
             '/reference/features/field_properties',
             '/reference/features/language',
             '/reference/features/search_parameters',
@@ -233,6 +229,7 @@ module.exports = {
             '/reference/api/health',
             '/reference/api/version',
             '/reference/api/dump',
+            '/reference/api/error_codes',
           ],
         },
       ],
@@ -257,7 +254,6 @@ module.exports = {
     [require('./custom-markdown-rules')],
     [require('./custom-timestamp')],
     [require('./code-samples')],
-    [require('./error-pages')],
     [
       'vuepress-plugin-code-copy',
       {
