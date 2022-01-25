@@ -50,8 +50,8 @@ module.exports = {
             '/learn/what_is_meilisearch/sdks',
             '/learn/what_is_meilisearch/comparison_to_alternatives',
             '/learn/what_is_meilisearch/telemetry',
-            '/learn/what_is_meilisearch/contact',
             '/learn/what_is_meilisearch/language',
+            '/learn/what_is_meilisearch/contact',
           ],
         },
         {
