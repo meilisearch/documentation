@@ -51,7 +51,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | [Dart client](https://github.com/meilisearch/meilisearch-dart)               | ✅          | ✅     |        ✅   |       ❌        |
 | [Symfony](https://github.com/meilisearch/meilisearch-symfony) | ✅ | ✅ | ❌ | ❌ |
 | [Django](https://roadmap.meilisearch.com/c/60-django) | ❌ | ✅ | ❌ | ❌ |
-| [Rails](https://github.com/meilisearch/meilisearch-rails) | ✅ | ✅ | 🔶 <br>WIP | ❌ ||
+| [Rails](https://github.com/meilisearch/meilisearch-rails) | ✅ | ✅ | 🔶 <br>WIP | ✅ ||
 | [Official Laravel Scout Support](https://github.com/laravel/scout) | ✅ | ✅ | ❌ | ❌ |
 | [UI Search Kit](https://github.com/meilisearch/instant-meilisearch) | ✅ | ✅ | ✅ | ✅ |
 | [Docsearch](https://github.com/meilisearch/docs-scraper) | ✅ | ✅ | ✅ | ❌ |
