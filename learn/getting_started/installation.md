@@ -114,7 +114,8 @@ To learn more about the Windows command prompt, follow this [introductory guide]
 ::::
 
 ::: tip Compile for Best Performance
-For best performance, compile MeiliSearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
+For best performance, compile MeiliSearch on the machine you intend to run it on with the following environment variable set `RUSTFLAGS="-C target-cpu=native"`.
+This way, the binary is optimized for your CPU, and rust will use more aggressive optimizations.
 :::
 
 ## Cloud deploy
