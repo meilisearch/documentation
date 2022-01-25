@@ -29,9 +29,9 @@ You can read more about ranking rules in our [dedicated guide](/learn/core_conce
 
 ## Displayed attributes
 
-By default, all attributes are displayed in each matching document but you can update the settings to change that. If you access the MeiliSearch web interface at `http://127.0.0.1:7700/`, you will notice that you can view all of the attributes in the `movies` index.
+By default, all attributes are displayed in each matching document but you can update the settings to change that. If you access the MeiliSearch search preview at `http://127.0.0.1:7700/`, you will notice that you can view all of the attributes in the `movies` index.
 
-![Web interface with default displayed attributes](/getting-started/default_displayed_attributes.png)
+![search preview with default displayed attributes](/getting-started/default_displayed_attributes.png)
 
 You can read more about adding documents to an index in the [quick start](/learn/getting_started/quick_start.md#step-2-add-documents).
 
@@ -81,7 +81,7 @@ If you set the `product_id` as the `distinctAttribute`, MeiliSearch will only re
 
 By default, all attributes are searched for matching query words but you can configure the settings to change that.
 
-Let's look at MeiliSearch's web interface for this example. If you search for `2012` with the default settings, MeiliSearch searches for it everywhere.
+Let's look at MeiliSearch's search preview for this example. If you search for `2012` with the default settings, MeiliSearch searches for it everywhere.
 
 ![default searchableAttributes](/getting-started/default_searchableAttributes.gif)
 
@@ -95,6 +95,17 @@ MeiliSearch will now only consider `title` during search and you will see fewer 
 
 Please note that **MeiliSearch will still highlight matches in other attributes, but they won’t be used to compute results.**
 
+The order of these `searchableAttributes` decides what field has more impact on relevancy. If you have something like:
+
+```json
+  [
+     "overview",
+    "title", 
+  ]
+```
+
+matching words found in the `overview` field will have a higher impact on relevancy than the same words found in `title`. You can read more about this in our [relevancy guide](/learn/core_concepts/relevancy.md#attribute-ranking-order).
+
 ## Stop words
 
 MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English.
@@ -103,7 +114,7 @@ MeiliSearch allows you to create a list of words that is ignored in your search 
 
 If you search the `movies` index for `the cat`, MeiliSearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
 
-You can read more about stop words in our [dedicated guide](/reference/features/stop_words.md).
+You can read more about stop words in the [API reference](/reference/features/stop_words.md).
 
 ## Synonyms
 

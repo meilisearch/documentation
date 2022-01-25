@@ -539,12 +539,12 @@ getting_started_attributesToHighlight_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'   
+    --data-binary '{ "q": "cheese", "attributesToHighlight": ["overview"] }'   
 getting_started_attributesToCrop_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "school", "attributesToCrop": ["overview"], "cropLength": 5 }'
+    --data-binary '{ "q": "potatos", "attributesToCrop": ["overview"], "cropLength": 5 }'
 getting_started_limit_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \

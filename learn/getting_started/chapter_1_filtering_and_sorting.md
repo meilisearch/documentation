@@ -1,5 +1,11 @@
 # Chapter 1: Filtering and sorting
 
+This guide picks up right after the [Quick start](/learn/getting_started/quick_start.md) and aims to introduce you to the main features of MeiliSearch. We recommend reading these chapters sequentially. We will be using the command line and the MeiliSearch search preview to demonstrate the features.
+
+This chapter will walk you through how you can control what results you see first using filtering and sorting. You can also filter and sort based on geographical location.
+
+This chapter uses the meteors dataset.
+
 ## Filtering
 
 MeiliSearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to `filterableAttributes`.

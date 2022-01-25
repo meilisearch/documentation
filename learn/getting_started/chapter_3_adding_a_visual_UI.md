@@ -1,5 +1,7 @@
 # Chapter 3: Adding a visual UI
 
+This chapter will introduce you to customizing your search bar environment along with search parameters and faceted search interfaces.
+
 ## Instant MeiliSearch
 
 The Instant MeiliSearch plugin let's your MeiliSearch instance communicate with the open-source [InstantSearch](https://github.com/algolia/instantsearch.js) tools for your front-end application. InstantSearch is an open-source library powered by Algolia and provides all the front-end tools you need to highly customize your search bar environment.
@@ -24,7 +26,28 @@ You will get the following response with the cropped text in the `_formatted` ob
 
 ```json
 {
-
+  "id":"543878",
+  "title":"Peppa Pig: Festival of Fun",
+  "poster":"https://image.tmdb.org/t/p/w500/tZgQ76hS9RFIwFyUxzctp1Pkz0N.jpg",
+  "overview":"Join the party with Peppa and George in their brand new adventures as they dance in the mud at a children’s festival, celebrate Grandpa Pig’s birthday at a restaurant for the first time, and take a trip to the cinema to see Super Potato’s big movie feature!",
+  "release_date":1554426000,
+  "genres":
+  [
+    "Animation",
+    "Family"
+    ],
+    "_formatted": {
+      "id":"543878",
+      "title":"Peppa Pig: Festival of Fun",
+      "poster":"https://image.tmdb.org/t/p/w500/tZgQ76hS9RFIwFyUxzctp1Pkz0N.jpg",
+      "overview":"children’s festival",
+      "release_date":"1554426000",
+      "genres":
+      [
+        "Animation",
+        "Family"
+        ]
+        }
 }
 ```
 
@@ -38,18 +61,28 @@ When this parameter is set, returned documents include a `_formatted` object con
 
 ```json
 {
-  "id": "50393",
-  "title": "Kung Fu Panda Holiday",
-  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
-  "release_date": 1290729600,
-  "_formatted": {
-    "id": "50393",
-    "title": "Kung Fu Panda Holiday",
-    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "The <em>Winter Feast</em> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <em>Winter Feast</em> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
-    "release_date": 1290729600
-  }
+  "id":"471335",
+  "title":"Cheese in the Trap",
+  "poster":"https://image.tmdb.org/t/p/w500/jG1nfIvkSpwlEt2EeAG6oGFKyqY.jpg",
+  "overview":"Movie is based on the popular webcomic “Cheese in the Trap” by Soonkki which was previously adapted in the 2016 television drama series “Cheese in the Trap.”",
+  "release_date":1520985600,
+  "genres":[
+    "Romance",
+    "Drama",
+    "Thriller"
+    ],
+    "_formatted": {
+      "id":"471335",
+      "title":"Cheese in the Trap",
+      "poster":"https://image.tmdb.org/t/p/w500/jG1nfIvkSpwlEt2EeAG6oGFKyqY.jpg",
+      "overview":"Movie is based on the popular webcomic “<em>Cheese</em> in the Trap” by Soonkki which was previously adapted in the 2016 television drama series “<em>Cheese</em> in the Trap.”","release_date":"1520985600",
+      "genres":
+      [
+        "Romance",
+        "Drama",
+        "Thriller"
+        ]
+        }
 }
 ```
 
