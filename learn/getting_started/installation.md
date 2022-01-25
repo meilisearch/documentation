@@ -113,10 +113,6 @@ To learn more about the Windows command prompt, follow this [introductory guide]
 
 ::::
 
-::: tip Compile for Best Performance
-For best performance, compile Meilisearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
-:::
-
 ## Cloud deploy
 
 To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
