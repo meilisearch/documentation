@@ -10,7 +10,7 @@ Displayed attributes can also be updated directly through the [global settings r
 To learn more about displayed attributes, refer to our [dedicated guide](/reference/features/field_properties.md#displayed-fields).
 
 ::: warning
-Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
 :::
 
 ## Get displayed attributes

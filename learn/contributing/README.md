@@ -1,6 +1,6 @@
-# Contributing to MeiliSearch
+# Contributing to Meilisearch
 
-There are many ways to contribute to MeiliSearch. You can:
+There are many ways to contribute to Meilisearch. You can:
 
 - [Contribute to the documentation](/learn/contributing/contributing_to_docs.md)
 - Contribute to the [main engine](https://github.com/meilisearch/MeiliSearch/blob/master/CONTRIBUTING.md)

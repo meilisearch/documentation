@@ -9,27 +9,27 @@ Our documentation aims to be:
 - **Efficient**. We don't want to waste anyone's time.
 - **Accessible**. Reading this shouldn't require native English or a computer science degree.
 - **Thorough**. Behavior that isn't documented or is documented incorrectly, we consider broken.
-- **Open source**. This is a resource by MeiliSearch users, for MeiliSearch users.
+- **Open source**. This is a resource by Meilisearch users, for Meilisearch users.
 
 ## How to contribute?
 
 ### Issues
 
-On the MeiliSearch documentation team, [GitHub Issues](https://github.com/meilisearch/documentation/issues/new/choose) are the primary tool we use to track tasks. They're like elements in our to-do list. Here are some good uses for issues:
+On the Meilisearch documentation team, [GitHub Issues](https://github.com/meilisearch/documentation/issues/new/choose) are the primary tool we use to track tasks. They're like elements in our to-do list. Here are some good uses for issues:
 
 - A detailed bug report
 - A request for a new technical feature (e.g. dark mode, versioning, etc.)
 - A request for new content (e.g. a tutorial, guide, or explanation)
 - A helpful suggestion for the future of the documentation
 
-We love issues at MeiliSearch, because they help us do our jobs better. Nine times out of ten, the most useful contribution is a simple GitHub issue that points out a problem and proposes a solution.
+We love issues at Meilisearch, because they help us do our jobs better. Nine times out of ten, the most useful contribution is a simple GitHub issue that points out a problem and proposes a solution.
 
 #### Creating your first issue
 
 All you need to create an issue is a [GitHub account](https://github.com).
 
 1. Log into your account.
-2. Go to the MeiliSearch [Documentation repository](https://github.com/meilisearch/documentation).
+2. Go to the Meilisearch [Documentation repository](https://github.com/meilisearch/documentation).
 3. Click on "Issues".
 4. Use the search bar to make sure nobody else has reported your issue already. If somebody has, give them an upvote 👍 and **don't create that issue**!
 5. Click "New issue".
@@ -66,7 +66,7 @@ All you need to continue is a [GitHub account](https://github.com).
 6. Make sure the base repository is `meilisearch/documentation` and the base is `master`. Don't worry about the other two boxes—they automatically target the changes you just made.
 7. Below, you can see the changes you made compared to the master branch (what's currently published on docs.meilisearch.com). When you're ready, click `Create pull request`.
 8. **Congrats, you made your first PR!** Someone from the documentation team will review your pull request shortly. They may ask for changes, so keep an eye on your GitHub notifications.
-9. If everything looks good, your work will be merged into the `master` branch and become part of the official documentation site. You are now a MeiliSearch Contributor! 🚀
+9. If everything looks good, your work will be merged into the `master` branch and become part of the official documentation site. You are now a Meilisearch Contributor! 🚀
 
 ## How we review contributions
 

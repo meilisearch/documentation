@@ -2,7 +2,7 @@
 
 ## Concatenated queries
 
-When your search contains several words, MeiliSearch applies a concatenation algorithm to it.
+When your search contains several words, Meilisearch applies a concatenation algorithm to it.
 
 When searching for multiple words, a search is also done on the concatenation of those words. When concatenation is done on a search query containing multiple words, it will concatenate the words following each other. Thus, the first and third words will not be concatenated without the second word.
 

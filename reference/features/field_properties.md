@@ -1,6 +1,6 @@
 # Field properties
 
-By default, whenever a document is added to MeiliSearch, all new attributes found in it are automatically added to two lists:
+By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
 - [`searchableAttributes`](/reference/features/field_properties.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
 - [`displayedAttributes`](/reference/features/field_properties.md#displayed-fields): attributes whose fields are displayed in documents.
@@ -21,7 +21,7 @@ Even if you make a field non-searchable, it will remain [stored in the database]
 
 ### The `searchableAttributes` list
 
-MeiliSearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/learn/core_concepts/relevancy.md#attribute-ranking-order), from most impactful to least.
+Meilisearch uses an ordered list to determine which attributes are searchable. The order in which attributes appear in this list also determines their [impact on relevancy](/learn/core_concepts/relevancy.md#attribute-ranking-order), from most impactful to least.
 
 In other words, the `searchableAttributes` list serves two purposes:
 

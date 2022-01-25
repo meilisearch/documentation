@@ -2,25 +2,25 @@
 
 ::: tip
 
-- If the database does not shrink after deleting documents or indexes, it is expected behavior. You are not losing space, MeiliSearch is keeping this space for performance reasons.
-- You should have the same amount of RAM than the space taken on disk by MeiliSearch for optimal performances.
+- If the database does not shrink after deleting documents or indexes, it is expected behavior. You are not losing space, Meilisearch is keeping this space for performance reasons.
+- You should have the same amount of RAM than the space taken on disk by Meilisearch for optimal performances.
   :::
 
-MeiliSearch is a database. It stores the indexed documents along with the data needed to perform lightning search.
+Meilisearch is a database. It stores the indexed documents along with the data needed to perform lightning search.
 
-Writing a database is hard, and we do not want to reinvent the wheel, so MeiliSearch uses a storage engine under the hood. Using a storage engine allows MeiliSearch to focus on improving search relevancy and search performance while abstracting the complicated task of creating, reading and updating documents on disk, and in memory.
+Writing a database is hard, and we do not want to reinvent the wheel, so Meilisearch uses a storage engine under the hood. Using a storage engine allows Meilisearch to focus on improving search relevancy and search performance while abstracting the complicated task of creating, reading and updating documents on disk, and in memory.
 
 ## LMDB
 
-The storage engine of MeiliSearch is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
+The storage engine of Meilisearch is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
 
-We chose LMDB after we successfully (or not) tried MeiliSearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for MeiliSearch.
+We chose LMDB after we successfully (or not) tried Meilisearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for Meilisearch.
 
 ### Memory mapping
 
 LMDB stores its data in a [memory-mapped file](https://en.wikipedia.org/wiki/Memory-mapped_file). All data fetched from LMDB is returned straight from the memory map, which means there is no memory allocation or memory copy during data fetches.
 
-All documents stored on disk are automatically loaded in memory when MeiliSearch asks for them. This ensures LMDB will always make the best use of the RAM available to retrieve the documents.
+All documents stored on disk are automatically loaded in memory when Meilisearch asks for them. This ensures LMDB will always make the best use of the RAM available to retrieve the documents.
 
 For the best performance, it is recommended to provide the same amount of RAM as the size the database takes on disk, so all the data structures can fit in memory.
 
@@ -30,24 +30,24 @@ The choice of LMDB comes with certain pros and cons. In order to understand this
 
 #### Database size
 
-When freeing entries from the database (in our case, removing documents from MeiliSearch), one can observe that no space disk is released. The space previously used by the entry is marked as free for LMDB but not made available for the operating system.
+When freeing entries from the database (in our case, removing documents from Meilisearch), one can observe that no space disk is released. The space previously used by the entry is marked as free for LMDB but not made available for the operating system.
 Unlike other storage engines, LMDB chooses this design for performance issues as there is no need for a compaction phase.
 
-As a result, you may see that the disk occupied by LMDB and therefore by MeiliSearch keeps growing even if you are deleting indexes or documents. This is normal behavior, and you can note that the database will not grow again if you write some data after deleting indexes or documents.
+As a result, you may see that the disk occupied by LMDB and therefore by Meilisearch keeps growing even if you are deleting indexes or documents. This is normal behavior, and you can note that the database will not grow again if you write some data after deleting indexes or documents.
 
 #### Memory usage
 
-Since LMDB is memory mapped, it is the operating system that manages the real memory allocated (or not) to MeiliSearch.
+Since LMDB is memory mapped, it is the operating system that manages the real memory allocated (or not) to Meilisearch.
 
-Thus, if you run MeiliSearch as a standalone program on a server, LMDB will use the maximum RAM it can use.
+Thus, if you run Meilisearch as a standalone program on a server, LMDB will use the maximum RAM it can use.
 
-On the other hand, if you run MeiliSearch along with other programs, the OS will manage memory based on everyone's need. This makes MeiliSearch's memory usage quite flexible when used in development.
+On the other hand, if you run Meilisearch along with other programs, the OS will manage memory based on everyone's need. This makes Meilisearch's memory usage quite flexible when used in development.
 
 ::: tip
 **Virtual Memory != Real Memory**
 Virtual memory is the disk space a program requests from the OS. It is not the memory that the program will actually use.
 
-MeiliSearch will always demand a certain amount of space to use as a [memory map](#memory-mapping). This space will be used as virtual memory, but the amount of real memory (RAM) used will be much smaller.
+Meilisearch will always demand a certain amount of space to use as a [memory map](#memory-mapping). This space will be used as virtual memory, but the amount of real memory (RAM) used will be much smaller.
 :::
 
 ## Measured disk usage
@@ -56,15 +56,15 @@ The following measurements were taken using <a id="downloadMovie" href="/movies.
 
 After indexed, the dataset size in LMDB is about 122MB.
 
-| Raw JSON | MeiliSearch database size on disk | RAM usage | Virtual memory usage |
+| Raw JSON | Meilisearch database size on disk | RAM usage | Virtual memory usage |
 | -------- | --------------------------------- | -------------------- | ------------------- |
 | 9.1 MB   | 224 MB                            | ≃ 305 MB             | 205 Gb (memory map) |
 
-This means the database is using **305 MB of RAM and 224 MB of disk space.** Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) **refers only to disk space allocated by your computer for MeiliSearch—it does not mean that it's actually in use by the database.** See [Memory Usage](#memory-usage) for more details.
+This means the database is using **305 MB of RAM and 224 MB of disk space.** Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) **refers only to disk space allocated by your computer for Meilisearch—it does not mean that it's actually in use by the database.** See [Memory Usage](#memory-usage) for more details.
 
 ::: warning
 
-These metrics are highly dependent on the machine that is running MeiliSearch. Running this test in significantly underpowered machines is likely to give different results.
+These metrics are highly dependent on the machine that is running Meilisearch. Running this test in significantly underpowered machines is likely to give different results.
 
 :::
 

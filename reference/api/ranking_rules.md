@@ -9,7 +9,7 @@ Ranking rules can also be updated directly through the [global settings route](/
 To learn more about ranking rules, refer to our [dedicated guide](/learn/core_concepts/relevancy.md).
 
 ::: warning
-Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
 :::
 
 ## Get ranking rules

@@ -9,7 +9,7 @@ Distinct attribute can also be updated directly through the [global settings rou
 To learn more about distinct attributes, refer to our [dedicated guide](/reference/features/settings.md#distinct-attribute).
 
 ::: warning
-Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
 :::
 
 ## Get distinct attribute

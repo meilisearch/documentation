@@ -2,7 +2,7 @@
 
 A **document** is an object composed of one or more **fields**. Each field consists of an **attribute** and its associated **value**.
 
-Documents function as **containers for organizing data**, and are the basic building blocks of a MeiliSearch database. To search for a document, it must first be added to an [index][indexes].
+Documents function as **containers for organizing data**, and are the basic building blocks of a Meilisearch database. To search for a document, it must first be added to an [index][indexes].
 
 ## Structure
 
@@ -28,7 +28,7 @@ You can provide your dataset in the following formats:
 
 #### JSON
 
-Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting MeiliSearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
+Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting Meilisearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
 
 As an example, let's say you are creating an **[index][indexes]** that contains information about movies. A sample document might look like this:
 
@@ -51,7 +51,7 @@ At minimum, the document must contain one field with the **[primary key][primary
 
 #### NDJSON
 
-NDJSON objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to MeiliSearch documents.
+NDJSON objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to Meilisearch documents.
 
 Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.  
 
@@ -72,7 +72,7 @@ The above JSON document would look like this in NDJSON:
 
 #### CSV
 
-CSV files express data as a sequence of values separated by a delimiter character. Currently, MeiliSearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to MeiliSearch documents.
+CSV files express data as a sequence of values separated by a delimiter character. Currently, Meilisearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
 
 Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
 
@@ -109,7 +109,7 @@ Take note that, in the case of strings, a value **[can contain at most 65535 pos
 
 You can also apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
-If you would like to adjust how a field gets handled by MeiliSearch, you can do so in the [settings](/reference/features/settings.md#settings).
+If you would like to adjust how a field gets handled by Meilisearch, you can do so in the [settings](/reference/features/settings.md#settings).
 
 ### Field properties
 
@@ -167,7 +167,7 @@ There are several ways to set the primary key for an index:
 
 - You can set it manually [on index creation](#setting-the-primary-key-on-index-creation)
 - You can set it manually [on document addition](#setting-the-primary-key-on-document-addition)
-- If no primary key is set, MeiliSearch automatically [guesses the primary key](/learn/core_concepts/documents.md#meilisearch-guesses-your-primary-key) when you add documents
+- If no primary key is set, Meilisearch automatically [guesses the primary key](/learn/core_concepts/documents.md#meilisearch-guesses-your-primary-key) when you add documents
 
 #### Setting the primary key on index creation
 
@@ -181,9 +181,9 @@ The code below adds a document and sets `reference_number` as the index's primar
 
 <CodeSamples id="document_guide_add_document_primary_key" />
 
-#### MeiliSearch guesses your primary key
+#### Meilisearch guesses your primary key
 
-If the primary key has neither been set at index creation nor as a parameter of the add documents route, MeiliSearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
+If the primary key has neither been set at index creation nor as a parameter of the add documents route, Meilisearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
 
 If no corresponding attribute is found, the index will have no known primary key, and therefore, **no documents will be added**.
 
@@ -217,11 +217,11 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-Take note that the document addition request in MeiliSearch is atomic. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
+Take note that the document addition request in Meilisearch is atomic. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
 
 ## Upload
 
-By default, MeiliSearch limits the size of all payloads—and therefore document uploads—to 100MB.
+By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB.
 
 To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
@@ -231,7 +231,7 @@ To upload more documents in one go, it is possible to [change the payload size l
 
 The above code sets the payload limit to 1GB, instead of the 100MB default.
 
-**MeiliSearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase the size of your batch as this could cause MeiliSearch to crash.
+**Meilisearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase the size of your batch as this could cause Meilisearch to crash.
 
 When using the [route to add new documents](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 

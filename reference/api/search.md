@@ -1,6 +1,6 @@
 # Search
 
-MeiliSearch exposes 2 routes to perform searches:
+Meilisearch exposes 2 routes to perform searches:
 
 - A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances.
 - A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example).

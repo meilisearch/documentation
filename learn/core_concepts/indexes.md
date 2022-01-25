@@ -11,9 +11,9 @@ An index is defined by a `uid` and contains the following information:
 
 #### Example
 
-Suppose you manage [a database that contains information about movies](https://imdb.com/). You would probably want to keep multiple types of documents, such as movies, TV shows, actors, directors, and more. Each of these categories would be represented by an index in MeiliSearch.
+Suppose you manage [a database that contains information about movies](https://imdb.com/). You would probably want to keep multiple types of documents, such as movies, TV shows, actors, directors, and more. Each of these categories would be represented by an index in Meilisearch.
 
-Each index holds information about the fields found in the documents, including how they are handled by MeiliSearch and their order of importance. In addition, each has its own set of synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
+Each index holds information about the fields found in the documents, including how they are handled by Meilisearch and their order of importance. In addition, each has its own set of synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
 
 For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
 
@@ -23,7 +23,7 @@ An index is created the first time documents are added to it or manually using t
 
 #### Example
 
-Let's use the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents) to add documents to a new MeiliSearch instance without an index.
+Let's use the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents) to add documents to a new Meilisearch instance without an index.
 
 We will create an index called `movies`. The code below will create the `movies` index and add a sample document to it.
 
@@ -47,7 +47,7 @@ The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-in
 
 An index is a collection of documents. All documents have a primary key, which is a mandatory field. This field is composed of a primary key attribute name and a unique value. All documents in a given index share the same primary key attribute but a different unique value.
 
-The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by MeiliSearch](/learn/core_concepts/documents.md#setting-the-primary-key).
+The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by Meilisearch](/learn/core_concepts/documents.md#setting-the-primary-key).
 
 [Learn more about document primary key](/learn/core_concepts/documents.md#primary-key)
 
@@ -71,7 +71,7 @@ You can alter the order in which ranking rules take effect, or define custom ran
 
 In your dataset, you may decide to create synonyms for words which have the same meaning. To do so, **a set of synonyms can be defined for an index**. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed.
 
-Since synonyms are linked to a given index, they won't apply to any other index on the same MeiliSearch instance.
+Since synonyms are linked to a given index, they won't apply to any other index on the same Meilisearch instance.
 
 [Learn more about synonyms](/reference/features/synonyms.md)
 
@@ -91,7 +91,7 @@ By default, every document field is searchable and returned on search queries.
 
 Fields can have either or both or none of the following properties that can be modified in the [settings](/reference/api/settings.md):
 
-- **Searchable**: The content of searchable fields is used by MeiliSearch to assess the relevancy of a document.
+- **Searchable**: The content of searchable fields is used by Meilisearch to assess the relevancy of a document.
 - **Displayed**: Documents returned upon search contain only displayed fields.
 
 By default, each field is stored and this behavior cannot be changed.

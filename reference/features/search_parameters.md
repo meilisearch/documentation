@@ -1,6 +1,6 @@
 # Search parameters
 
-Search parameters allow you greater control over the results returned by a MeiliSearch query.
+Search parameters allow you greater control over the results returned by a Meilisearch query.
 
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
@@ -33,14 +33,14 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 Sets the search terms.
 
 ::: warning
-MeiliSearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations.md#number-of-query-words).
+Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations.md#number-of-query-words).
 
 Additionally, keep in mind queries go through a normalization process that strips accents and diacritics, as well as making all terms lowercase.
 :::
 
 ### Placeholder search
 
-When `q` isn't specified, MeiliSearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -80,11 +80,11 @@ This will give you a list of documents that contain your query terms in at least
 
 ### Phrase search
 
-If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
+If you enclose search terms in double quotes (`"`), Meilisearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
 
 Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/advanced/datatypes.md). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
-You can combine phrase search and normal queries in a single search request. In this case, MeiliSearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
+You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
 
 #### Example
 
@@ -192,7 +192,7 @@ When `facetsDistribution` is set, the search results object contains **two addit
 - `facetsDistribution`: The number of remaining candidates for each specified facet
 - `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`)
 
-`exhaustiveFacetsCount` is `false` when the search matches contain too many different values for the given `facetName`s. In this case, MeiliSearch stops the distribution count to prevent slowing down the request.
+`exhaustiveFacetsCount` is `false` when the search matches contain too many different values for the given `facetName`s. In this case, Meilisearch stops the distribution count to prevent slowing down the request.
 
 ::: warning
 `exhaustiveFacetsCount` is not currently implemented and will always return `false`.
@@ -364,7 +364,7 @@ If you set `matches` to `true` and search for `winter feast`:
 
 <CodeSamples id="search_parameter_guide_matches_1" />
 
-You would get the following response with **information about the matches in the `_matchesInfo` object**. Note how MeiliSearch searches for `winter` and `feast` separately because of the whitespace:
+You would get the following response with **information about the matches in the `_matchesInfo` object**. Note how Meilisearch searches for `winter` and `feast` separately because of the whitespace:
 
 ```json
 {

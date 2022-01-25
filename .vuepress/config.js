@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.25',
+  title: 'Meilisearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
   themeConfig: {
     repo: 'meilisearch/MeiliSearch',
@@ -40,7 +40,7 @@ module.exports = {
     sidebar: {
       '/learn/': [
         {
-          title: '🔎 What is MeiliSearch?',
+          title: '🔎 What is Meilisearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
           sidebarDepth: 0,
@@ -84,7 +84,7 @@ module.exports = {
             '/learn/advanced/security',
             '/learn/advanced/sorting',
             {
-              title: 'Updating MeiliSearch',
+              title: 'Updating Meilisearch',
               path: '/learn/advanced/updating.md',
             },
             {
@@ -301,7 +301,7 @@ module.exports = {
       {
         prefix: ogprefix,
         property: 'og:title',
-        content: 'MeiliSearch Documentation',
+        content: 'Meilisearch Documentation',
       },
     ],
     ['meta', { prefix: ogprefix, property: 'og:type', content: 'website' }],
@@ -346,7 +346,7 @@ module.exports = {
       {
         prefix: ogprefix,
         property: 'og:site-name',
-        content: 'MeiliSearch Documentation',
+        content: 'Meilisearch Documentation',
       },
     ],
     [

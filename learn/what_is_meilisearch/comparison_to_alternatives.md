@@ -4,25 +4,25 @@
 
 [[toc]]
 
-## About MeiliSearch
+## About Meilisearch
 
-There are many search engines on the web, both open-source and otherwise. Deciding which search solution is the best fit for your project is very important, but also difficult. In this article, we'll go over the differences between MeiliSearch and other search engines:
+There are many search engines on the web, both open-source and otherwise. Deciding which search solution is the best fit for your project is very important, but also difficult. In this article, we'll go over the differences between Meilisearch and other search engines:
 
-- In the [comparison table](#comparison-table), we present a general overview of the differences between MeiliSearch and other search engines
+- In the [comparison table](#comparison-table), we present a general overview of the differences between Meilisearch and other search engines
 
-- In the [approach comparison](#approach-comparison), instead, we focus on how MeiliSearch measures against [ElasticSearch](#meilisearch-vs-elasticsearch) and [Algolia](#meilisearch-vs-algolia), currently two of the biggest solutions available in the market
+- In the [approach comparison](#approach-comparison), instead, we focus on how Meilisearch measures against [ElasticSearch](#meilisearch-vs-elasticsearch) and [Algolia](#meilisearch-vs-algolia), currently two of the biggest solutions available in the market
 
 - Finally, we end this article with [an in-depth analysis of the broader search engine landscape](#a-quick-look-at-the-search-engine-landscape)
 
 ::: note
-Please be advised that many of the search products described below are constantly evolving—just like MeiliSearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
+Please be advised that many of the search products described below are constantly evolving—just like Meilisearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
 :::
 
 ## Comparison table
 
 ### General Overview
 
-|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:----:|:----:|:-----:|:----:|
 | Source code licensing | [MIT](https://choosealicense.com/licenses/mit/) <br> (Fully open-source) |  Closed-source  | [GPL-3](https://choosealicense.com/licenses/gpl-3.0/) <br> (Fully open-source) | SSPL <br>([Not open-source](https://opensource.org/node/1099))  |
 | Built with | Rust <br> [Check out why we believe in Rust](https://www.abetterinternet.org/docs/memory-safety/). | C++ | C++ | Java |
@@ -36,7 +36,7 @@ Note: we are only listing libraries officially supported by the internal teams o
 
 Can't find a client you'd like us to support? [Submit your idea or vote for it](https://roadmap.meilisearch.com/tabs/1-under-consideration) 😇
 
-| SDK      | MeiliSearch | Algolia | Typesense | Elasticsearch |
+| SDK      | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | REST API | ✅ | ✅ | ✅ | ✅ |
 | [Javascript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
@@ -63,7 +63,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ##### Document schema
 
-|         | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|         | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Schemaless | ✅ | ✅ | 🔶 <br>Automatic schema detection is supported but needs to be specified | ✅ |
 | Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
@@ -71,7 +71,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ##### Relevancy
 
-|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Needs to be specified by fuzzy queries |
 | Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule | ❌|
@@ -84,14 +84,14 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ##### Security
 
-|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | API Key Management | ✅ | ✅ | ✅ | ✅ |
 | Tenant tokens & multi-tenant indexes | **Q1 2022** <br> Configurable end-user hard filters per index | ✅  <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Role-based |
 
 ##### Search
 
-|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
 | Multi-index search | Early 2022 | ✅ | ✅ | ✅ |
@@ -105,13 +105,13 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ##### Visualize
 
-|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | [Mini Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br> Cloud product | 🔶 <br> Cloud product | ✅ |
 
 #### Deployment
 
-|   | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
 | Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
@@ -123,7 +123,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ### Limits
 
-|  | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | No limitation | No limitation | No limitation |
 | Maximum index size | 100GB default, configurable  | 128Gb | Constrained by RAM | No limitation |
@@ -132,7 +132,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ### Community
 
-|  | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | GitHub stars of the main project | 20K | N/A | 9K | 57K |
 | Number of contributors on the main project | 75 | N/A | 20 | 1,700 |
@@ -140,7 +140,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ### Support
 
-|  | MeiliSearch | Algolia | Typesense | Elasticsearch |
+|  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Status page | ✅ | ✅ | ✅ | ✅ |
 | Free support channels | Instant messaging / chatbox (2-3h delay),<br> emails, <br> public Slack community, <br> GitHub issues & discussions,<br> Slack Connect | Instant messaging / chatbox, <br> public community forum |  Instant messaging/chatbox (24h-48h delay),<br> public Slack community, <br> GitHub issues. | Public Slack community, <br> public community forum,<br> GitHub issues |
@@ -148,26 +148,26 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ## Approach comparison
 
-### MeiliSearch vs Elasticsearch
+### Meilisearch vs Elasticsearch
 
 Elasticsearch has been designed as a backend search engine and, although it is not at first suited for this purpose, is commonly used to build search bars for the end-users.
-Unlike Elasticsearch, which is a general search engine, MeiliSearch focuses on delivering a specific kind of features.
+Unlike Elasticsearch, which is a general search engine, Meilisearch focuses on delivering a specific kind of features.
 
 Elasticsearch can handle search through massive amounts of data and perform text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to customize and tailor it to fit your needs.
-MeiliSearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing very large datasets is not possible.
+Meilisearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing very large datasets is not possible.
 
-Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to MeiliSearch.
-MeiliSearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides a prefix searching capability, makes search intuitive for users, and returns them their results instantly with near-perfect relevance.
+Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to Meilisearch.
+Meilisearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides a prefix searching capability, makes search intuitive for users, and returns them their results instantly with near-perfect relevance.
 
-### MeiliSearch vs Algolia
+### Meilisearch vs Algolia
 
-MeiliSearch was inspired by Algolia's product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. MeiliSearch is thus a new search engine based on the work of Algolia and recent research papers.
+Meilisearch was inspired by Algolia's product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. Meilisearch is thus a new search engine based on the work of Algolia and recent research papers.
 It provides similar features and reaches the same level of relevance just as quickly as its predecessor.
 
-Contrary to Algolia, MeiliSearch is open-source and written in Rust, a systems-level and modern programming language, that allows to rapidly build features. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.
+Contrary to Algolia, Meilisearch is open-source and written in Rust, a systems-level and modern programming language, that allows to rapidly build features. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.
 
 One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers.
-MeiliSearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to deploy and maintain than Algolia's.
+Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to deploy and maintain than Algolia's.
 
 ## A quick look at the search engine landscape
 
@@ -187,12 +187,12 @@ Since Lucene is the technology behind many open source or closed source search e
 
 #### Sonic
 
-Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution and, compared to MeiliSearch, it does not ensure relevancy ranking. Indeed, it does not store any documents but is comprised of an inverted index with a Levenshtein automaton, which means any application querying Sonic has to retrieve the search results from an external database using the IDs that are returned and then apply some relevancy ranking.
+Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution and, compared to Meilisearch, it does not ensure relevancy ranking. Indeed, it does not store any documents but is comprised of an inverted index with a Levenshtein automaton, which means any application querying Sonic has to retrieve the search results from an external database using the IDs that are returned and then apply some relevancy ranking.
 Its ability to run on a few MBs of RAM makes it a minimalist and resource-efficient alternative to database tools that can be too heavyweight to scale.
 
 #### Typesense
 
-Like MeiliSearch, Typesense is a lightweight open-source search engine optimized for speed. We are currently re-evaluating its features and functionality to better understand how it compares with MeiliSearch.
+Like Meilisearch, Typesense is a lightweight open-source search engine optimized for speed. We are currently re-evaluating its features and functionality to better understand how it compares with Meilisearch.
 
 #### Lucene derivatives
 
@@ -211,7 +211,7 @@ Bleve and Tantivy are search engine projects, respectively written in Golang and
 
 Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options, called index sharding, gives you the ability to divide indexes into physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing high-volume data streams, analyzing logs, and running complex queries. You can perform operations and analysis (e.g., calculate the average age of all users named "Thomas") on documents that match a specified query.
 
-Today, Lucene and Elasticsearch are dominant players in the open-source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of MeiliSearch or Algolia.
+Today, Lucene and Elasticsearch are dominant players in the open-source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of Meilisearch or Algolia.
 
 ### Closed source
 
@@ -236,11 +236,11 @@ Each Search solution fits best with the constraints of a particular use case. Si
 
 We cannot, therefore, compare ourselves with Lucene-based or other search engines targeted to specific tasks.
 
-In the particular use case we cover, the most similar solution to MeiliSearch is Algolia.
+In the particular use case we cover, the most similar solution to Meilisearch is Algolia.
 
 While Algolia offers the most advanced and powerful search features, this efficiency comes with an expensive pricing. Moreover, their service is marketed to big companies.
 
-MeiliSearch is dedicated to all types of developers. Our goal is to deliver a developer-friendly tool, easy to install, and to deploy. Because providing an out-of-the-box awesome search experience for the end-users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.
+Meilisearch is dedicated to all types of developers. Our goal is to deliver a developer-friendly tool, easy to install, and to deploy. Because providing an out-of-the-box awesome search experience for the end-users matters to us, we want to give everyone access to the best search experiences out there with minimum effort and without requiring any financial resources.
 
 Usually, when a developer is looking for a search tool to integrate into their application, they will go for ElasticSearch or less effective choices. Even if Elasticsearch is not best suited for this use case, it remains a great open-source solution. However, it requires technical know-how to execute advanced features and hence more time to customize it to your business.
 

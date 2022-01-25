@@ -45,7 +45,7 @@ Get the settings of an index.
 | **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
-| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
 [Learn more about the settings in this guide.](/reference/features/settings.md)
@@ -128,7 +128,7 @@ If the provided index does not exist, it will be created.
 | **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
-| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
 ### Example
@@ -165,7 +165,7 @@ All settings will be reset to their default value.
 | **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
-| **stopWords**             | [Strings] | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                              |
+| **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
 [Learn more about the settings](/reference/features/settings.md).

@@ -1,12 +1,12 @@
 # Geosearch
 
-MeiliSearch allows you to filter and sort results based on their geographic location. This can be useful when you only want results within a specific area or when sorting results based on their distance from a specific location.
+Meilisearch allows you to filter and sort results based on their geographic location. This can be useful when you only want results within a specific area or when sorting results based on their distance from a specific location.
 
 ## Preparing documents for location-based search
 
 In order to start filtering and sorting documents based on their geographic location, you must make sure they contain a valid `_geo` field.
 
-`_geo` is a reserved field. If you include it in your documents, MeiliSearch expects its value to conform to a specific format.
+`_geo` is a reserved field. If you include it in your documents, Meilisearch expects its value to conform to a specific format.
 
 When using JSON and NDJSON, `_geo` must contain an object with two keys: `lat` and `lng`. Both must contain a floating point number indicating, respectively, latitude and longitude:
 
@@ -91,7 +91,7 @@ Our restaurant dataset looks like this once we add geopositioning data:
 ```
 
 ::: warning
-Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause MeiliSearch to throw an [`invalid_geo_field`](/reference/api/error_codes.md#invalid-geo-field) error. In this case, the update will fail and no documents will be added or modified.
+Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_geo_field`](/reference/api/error_codes.md#invalid-geo-field) error. In this case, the update will fail and no documents will be added or modified.
 :::
 
 ### Using `_geo` with CSV
@@ -115,13 +115,13 @@ In order to filter results based on their location, you must add the `_geo` attr
 
 <CodeSamples id="geosearch_guide_filter_settings_1" />
 
-Note that MeiliSearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
+Note that Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
 [You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-filters)
 
 ### Usage
 
-Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `filterableAttributes` list, you can use [`filter`](/reference/features/search_parameters.md#filter) and `_geoRadius` to ensure MeiliSearch only returns results located within a specific geographic area.
+Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `filterableAttributes` list, you can use [`filter`](/reference/features/search_parameters.md#filter) and `_geoRadius` to ensure Meilisearch only returns results located within a specific geographic area.
 
 `_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
@@ -137,7 +137,7 @@ _geoRadius(lat, lng, distance_in_meters)
 { "filter": "_geoRadius(48.8583701, 2.2922926, 1000)" }
 ```
 
-If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, MeiliSearch will return an [`invalid_filter`](/reference/api/error_codes.md#invalid-filter) error.
+If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, Meilisearch will return an [`invalid_filter`](/reference/api/error_codes.md#invalid-filter) error.
 
 [You can read more about using `filter` in our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md#using-filters)
 
@@ -210,7 +210,7 @@ Before using geosearch for sorting, you must add the `_geo` attribute to the `so
 
 <CodeSamples id="geosearch_guide_sort_settings_1" />
 
-Note that MeiliSearch will rebuild your index whenever you update `sortableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
+Note that Meilisearch will rebuild your index whenever you update `sortableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
 [You can read more about configuring `sortableAttributes` in our dedicated sorting guide.](/learn/advanced/sorting.md#configuring-meilisearch-for-sorting-at-search-time)
 
@@ -236,7 +236,7 @@ The following sorting rule orders results according to how close they are to the
 }
 ```
 
-If either `lat` or `lng` is invalid or missing, MeiliSearch will return an [`invalid_sort`](/reference/api/error_codes.md#invalid-sort) error. An error will also be thrown if you fail to indicate a sorting order.
+If either `lat` or `lng` is invalid or missing, Meilisearch will return an [`invalid_sort`](/reference/api/error_codes.md#invalid-sort) error. An error will also be thrown if you fail to indicate a sorting order.
 
 [You can read more about sorting in our dedicated guide.](/learn/advanced/sorting.md#sorting-results-at-search-time)
 
@@ -334,7 +334,7 @@ With our example dataset, the results look like this:
 
 ### Ranking rules
 
-By default, MeiliSearch emphasizes relevant sorting over exhaustive sorting. This means our engine first finds the most relevant results and only then orders matches based on values given to the `sort` search parameter.
+By default, Meilisearch emphasizes relevant sorting over exhaustive sorting. This means our engine first finds the most relevant results and only then orders matches based on values given to the `sort` search parameter.
 
 This means that sorting with `_geoPoint` will often be a tie-breaker and not the most important factor when deciding which results a user will see first.
 
