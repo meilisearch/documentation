@@ -85,7 +85,15 @@ git clone https://github.com/meilisearch/MeiliSearch
 cd MeiliSearch
 ```
 
-In the cloned repository, compile MeiliSearch.
+In the cloned repository, you can choose which release you want to use.
+See the list of all release [here](https://github.com/meilisearch/MeiliSearch/releases).
+Then run the following command whith whichever tags you selected:
+
+```bash
+git checkout v0.25.2
+```
+
+The last part is to compile MeiliSearch.
 
 ```bash
 # Update the rust toolchain to the latest version
