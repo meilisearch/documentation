@@ -1,1 +1,13 @@
+// Color of links (<a>) across the documentation
 $accentColor = #E43288
+
+// Changes the color the code sample tabs
+// The tabs are created using the plugin: vuepress-plugin-element-tabs
+
+// Active tabs
+.el-tabs__item.is-active
+  color: $accentColor !important
+
+// None-active tabs on hover
+.el-tabs__item:not(.is-disabled):hover
+  color: $accentColor !important
