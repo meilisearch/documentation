@@ -125,6 +125,9 @@
 # New errors page
 /errors                                             /reference/api/error_codes.html
 
+# Rename Authentication guide
+/reference/features/authentication.html             /reference/features/security.html
+
 # Move Security guide
 /reference/features/security.html                   /learn/advanced/security.html
 
