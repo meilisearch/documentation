@@ -56,7 +56,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | [UI Search Kit](https://github.com/meilisearch/instant-meilisearch) | ✅ | ✅ | ✅ | ✅ |
 | [Docsearch](https://github.com/meilisearch/docs-scraper) | ✅ | ✅ | ✅ | ❌ |
 | [Strapi](https://github.com/meilisearch/strapi-plugin-meilisearch) | ✅ | ✅ | ❌ | ❌ |
-| [Gatsby](https://github.com/meilisearch/gatsby-plugin-meilisearch) | 🔶 <br> January 2022 | ✅ | ✅ | ❌ |
+| [Gatsby](https://github.com/meilisearch/gatsby-plugin-meilisearch) | ✅ | ✅ | ✅ | ❌ |
 | [Firebase](https://github.com/meilisearch/firestore-meilisearch) | 🔶 <br> January 2022 | ✅ | ✅ | ❌ |
 
 #### Configuration
