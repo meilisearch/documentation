@@ -7,7 +7,7 @@ module.exports = {
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
     lastUpdated: 'Last Updated',
-    logo: '/logo.png',
+    logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
@@ -248,6 +248,8 @@ module.exports = {
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
+    // Because colors can not be set through the settings of the plugin
+    // Change are done in .vuepress/styles/palette.styl
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
@@ -257,7 +259,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#3385ff',
+        color: '#FF4E62',
         staticIcon: true,
       },
     ],
@@ -284,6 +286,7 @@ module.exports = {
     ],
   ],
   head: [
+    ['link', { rel: 'icon', href: '/favicon-32x32.png' }],
     ['meta', { charset: 'utf-8' }],
     [
       'meta',
