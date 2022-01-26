@@ -42,4 +42,7 @@ div.route {
   margin-left: auto;
   margin-right: auto;
 }
+.route > div:hover {
+  background-color: #e64658;
+}
 </style>
