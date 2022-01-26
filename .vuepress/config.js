@@ -33,6 +33,36 @@ module.exports = {
               { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
             ],
           },
+          {
+            text: 'Frameworks',
+            items: [
+              { text: 'Rails', link: 'https://github.com/meilisearch/meilisearch-rails' },
+              { text: 'Laravel', link: 'https://github.com/laravel/scout' },
+            ],
+          },
+          {
+            text: 'Front-end tools',
+            items: [
+              { text: 'instant-meiliSearch', link: 'https://github.com/meilisearch/instant-meilisearch' },
+              { text: 'docs-searchbar.js', link: 'https://github.com/meilisearch/docs-searchbar.js' },
+            ],
+          },
+          {
+            text: 'Plugins',
+            items: [
+              { text: 'Gatsby', link: 'https://github.com/meilisearch/gatsby-plugin-meilisearch/' },
+              { text: 'Vuepress', link: 'https://github.com/meilisearch/vuepress-plugin-meilisearch' },
+              { text: 'Strapi', link: 'https://github.com/meilisearch/strapi-plugin-meilisearch/' },
+            ],
+          },
+          {
+            text: 'DevOp tools',
+            items: [
+              { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
+              { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
+              { text: 'AWS', link: 'https://github.com/meilisearch/meilisearch-aws' },
+            ],
+          },
         ],
       },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
