@@ -14,10 +14,9 @@ module.exports = {
       { text: 'Learn', link: '/learn/' },
       { text: 'Reference', link: '/reference/' },
       {
-        text: 'Resources',
+        text: 'Integrations',
         items: [
-          { text: 'FAQ', link: '/faq' },
-          { text: 'Open API', link: '/open-api-readme' },
+
           {
             text: 'SDKs',
             items: [
@@ -65,6 +64,7 @@ module.exports = {
           },
         ],
       },
+      { text: 'FAQ', link: '/faq' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
