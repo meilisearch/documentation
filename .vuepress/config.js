@@ -3,7 +3,7 @@ module.exports = {
   title: 'Meilisearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
   themeConfig: {
-    repo: 'meilisearch/MeiliSearch',
+    repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
     lastUpdated: 'Last Updated',
@@ -351,13 +351,13 @@ module.exports = {
     ],
     [
       'meta',
-      { property: 'twitter:title', content: 'MeiliSearch Documentation' },
+      { property: 'twitter:title', content: 'Meilisearch Documentation' },
     ],
     [
       'meta',
       {
         property: 'twitter:description',
-        content: 'The official documentation of MeiliSearch',
+        content: 'The official documentation of Meilisearch',
       },
     ],
     [
