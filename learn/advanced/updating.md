@@ -39,7 +39,7 @@ In this case, you need to **download the compatible version now** (i.e. `0.X.X` 
 :::: tabs
 
 ::: tab cURL
-If you downloaded Meilisearch using `curl`, find and download the compatible version [here](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
+If you downloaded Meilisearch using `curl`, find and download the compatible version [here](https://github.com/meilisearch/meilisearch/releases) before continuing.
 :::
 
 ::: tab Homebrew
@@ -58,7 +58,7 @@ Replace `0.X.X` with the version you would like to install.
 
 ```bash
 # clone Meilisearch and checkout the branch of the expected version
-git clone https://github.com/meilisearch/MeiliSearch
+git clone https://github.com/meilisearch/meilisearch
 cd MeiliSearch
 git checkout v0.X.X
 

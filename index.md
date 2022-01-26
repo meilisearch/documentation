@@ -25,11 +25,11 @@ Welcome to the Meilisearch documentation. Here you'll find everything you need t
 
 This documentation only reflects the latest version of Meilisearch. As long as we are pre-`v1.0`, **we do not provide multi-version documentation** and **[databases are not compatible between versions](/learn/advanced/updating.md).**
 
-The current version of [Meilisearch](https://github.com/meilisearch/MeiliSearch) can be found in the top-left of this site.
+The current version of [Meilisearch](https://github.com/meilisearch/meilisearch) can be found in the top-left of this site.
 
 ## Open-source
 
-Meilisearch and its documentation are both completely open source. You can **support the project by starring** [our main GitHub repository](https://github.com/meilisearch/MeiliSearch) or [contributing to the docs](/learn/contributing/contributing_to_docs.md).
+Meilisearch and its documentation are both completely open source. You can **support the project by starring** [our main GitHub repository](https://github.com/meilisearch/meilisearch) or [contributing to the docs](/learn/contributing/contributing_to_docs.md).
 
-<a class="github-button" href="https://github.com/meilisearch/MeiliSearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a><!-- prettier-ignore
+<a class="github-button" href="https://github.com/meilisearch/meilisearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a><!-- prettier-ignore
 --><script async defer src="https://buttons.github.io/buttons.js"></script>

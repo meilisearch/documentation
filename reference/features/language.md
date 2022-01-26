@@ -5,7 +5,7 @@
 - **Any language that uses whitespace to separate words**
 - **Chinese** (through [Jieba](https://github.com/messense/jieba-rs))
 
-We aim to provide global language support, and your feedback helps us [move closer to that goal](#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/MeiliSearch/issues/new/choose).
+We aim to provide global language support, and your feedback helps us [move closer to that goal](#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/meilisearch/issues/new/choose).
 
 If you'd like to learn more about how different languages are processed in Meilisearch, see our [tokenizer documentation](/learn/advanced/tokenization.md).
 
@@ -15,12 +15,12 @@ While we have employees from all over the world at Meilisearch, we don't speak e
 
 If you'd like to help us create a more global Meilisearch, please consider sharing your tests, results, and general feedback with us through [GitHub issues](https://github.com/meilisearch/Meilisearch/issues). Here are some of the languages that have been requested by users and their corresponding issue:
 
-- [Arabic](https://github.com/meilisearch/MeiliSearch/issues/554)
-- [Lao](https://github.com/meilisearch/MeiliSearch/issues/563)
-- [Persian/Farsi](https://github.com/meilisearch/MeiliSearch/issues/553)
-- [Thai](https://github.com/meilisearch/MeiliSearch/issues/864)
+- [Arabic](https://github.com/meilisearch/meilisearch/issues/554)
+- [Lao](https://github.com/meilisearch/meilisearch/issues/563)
+- [Persian/Farsi](https://github.com/meilisearch/meilisearch/issues/553)
+- [Thai](https://github.com/meilisearch/meilisearch/issues/864)
 
-If you'd like us to add or improve support for a language that isn't in the above list, please create an [issue](https://github.com/meilisearch/MeiliSearch/issues/new?assignees=&labels=&template=feature_request.md&title=) saying so, and then make a [pull request on the documentation](https://github.com/meilisearch/documentation/edit/master/reference/features/language.md) to add it to the above list.
+If you'd like us to add or improve support for a language that isn't in the above list, please create an [issue](https://github.com/meilisearch/meilisearch/issues/new?assignees=&labels=&template=feature_request.md&title=) saying so, and then make a [pull request on the documentation](https://github.com/meilisearch/documentation/edit/master/reference/features/language.md) to add it to the above list.
 
 ## FAQ
 

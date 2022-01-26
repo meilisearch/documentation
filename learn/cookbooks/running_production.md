@@ -2,7 +2,7 @@
 
 ## A quick introduction
 
-Hopefully, you already know that [Meilisearch](https://github.com/meilisearch/MeiliSearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
+Hopefully, you already know that [Meilisearch](https://github.com/meilisearch/meilisearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
 
 Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/getting_started/quick_start.md): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to Meilisearch, we suggest that you take a tour around the documentation.
 
@@ -58,7 +58,7 @@ The different Meilisearch installation options are detailed in [this guide](/lea
 
 You can always check the latest Meilisearch stable version, and get Meilisearch for the Operating System of your choice, by visiting the following link:
 
-**[Latest Meilisearch Stable Version](https://github.com/meilisearch/MeiliSearch/releases/latest)**
+**[Latest Meilisearch Stable Version](https://github.com/meilisearch/meilisearch/releases/latest)**
 
 Meilisearch is finally installed and ready to use. To make it accessible from everywhere in your system, move the binary file into your system binaries folder:
 

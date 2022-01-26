@@ -81,7 +81,7 @@ Meilisearch is written in `Rust`. To compile it, [installing the Rust toolchain]
 If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliSearch
+git clone https://github.com/meilisearch/meilisearch
 cd MeiliSearch
 ```
 
@@ -105,7 +105,7 @@ cargo build --release
 To install Meilisearch on Windows, you can:
 
 - use Docker (see "Docker" tab above)
-- [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
+- [download the latest binary](https://github.com/meilisearch/meilisearch/releases)
 - use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
 - compile from source (see "Source" tab above)
 

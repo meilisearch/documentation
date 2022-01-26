@@ -2,7 +2,7 @@
 
 ## Forum 📋
 
-Our preferred method of communication is our [forum on GitHub Discussions](https://github.com/meilisearch/MeiliSearch/discussions) (beta hype!). Asynchronous long-form discussion enables our increasingly distributed team and community to communicate across multiple timezones with minimal repetition.
+Our preferred method of communication is our [forum on GitHub Discussions](https://github.com/meilisearch/meilisearch/discussions) (beta hype!). Asynchronous long-form discussion enables our increasingly distributed team and community to communicate across multiple timezones with minimal repetition.
 
 Your project announcements, feature proposals, support queries and sweet, sweet praise all belongs in the forum.
 
@@ -14,6 +14,6 @@ We think chat and forum discussions are [highly complementary](https://blog.disc
 
 ## GitHub issues 🔩
 
-Bug reports should be added as issues in the corresponding repository, e.g. [meilisearch/MeiliSearch](https://github.com/meilisearch/MeiliSearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
+Bug reports should be added as issues in the corresponding repository, e.g. [meilisearch](https://github.com/meilisearch/meilisearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
 
 _Any suggestion or feedback is highly appreciated. Thank you for your support!_
