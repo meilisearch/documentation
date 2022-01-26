@@ -135,7 +135,7 @@ MeiliSearch **response**:
 
 ### Search preview
 
-We also deliver an out-of-the-box [search preview interface](/learn/what_is_meilisearch/search_preview.md) in which you can test MeiliSearch interactively.
+We also deliver an out-of-the-box [search preview](/learn/what_is_meilisearch/search_preview.md) in which you can test MeiliSearch interactively.
 
 To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
 This will lead you to a web page with a search bar that will allow you to search in the selected index.

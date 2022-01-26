@@ -51,4 +51,4 @@ Instead of showing you examples, why not just invite you to test MeiliSearch int
 
 There's no need to write a single line of front-end code. All you need to do is follow [this guide](/learn/what_is_meilisearch/search_preview.md) to give the search engine a try!
 
-![web interface](/web-interface.png)
+![Search preview](/search_preview.png)
