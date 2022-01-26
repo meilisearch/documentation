@@ -1,8 +1,8 @@
-# Update to the latest MeiliSearch version
+# Update to the latest Meilisearch version
 
-Currently, MeiliSearch databases can only be opened by the MeiliSearch version you used to create them. The following guide will walk you through all the steps to **migrate an existing database** from an older version of MeiliSearch to the most recent one.
+Currently, Meilisearch databases can only be opened by the Meilisearch version you used to create them. The following guide will walk you through all the steps to **migrate an existing database** from an older version of Meilisearch to the most recent one.
 
-If you already have a MeiliSearch database with some data you don’t want to lose, you are in the right place!
+If you already have a Meilisearch database with some data you don’t want to lose, you are in the right place!
 
 :::note
 If you have already **installed the latest version and manually indexed your data and settings**, you can ignore this guide.
@@ -10,13 +10,13 @@ If you have already **installed the latest version and manually indexed your dat
 
 ## Verify your database version
 
-Before we begin, you need to **verify the version of MeiliSearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a MeiliSearch instance:
+Before we begin, you need to **verify the version of Meilisearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a Meilisearch instance:
 
 ```bash
 ./meilisearch
 ```
 
-If MeiliSearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
+If Meilisearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
 
 ```bash
 curl -X GET 'http://127.0.0.1:7700/version'
@@ -32,14 +32,14 @@ The response should look something like this:
 }
 ```
 
-If you get the error `Cannot open database, expected MeiliSearch engine version: 0.X.X, current engine version 0.Y.Y`, your database is not compatible with the currently installed MeiliSearch version.
+If you get the error `Cannot open database, expected Meilisearch engine version: 0.X.X, current engine version 0.Y.Y`, your database is not compatible with the currently installed Meilisearch version.
 
 In this case, you need to **download the compatible version now** (i.e. `0.X.X` in the above error message) so that you can access and export your database.
 
 :::: tabs
 
 ::: tab cURL
-If you downloaded MeiliSearch using `curl`, find and download the compatible version [here](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
+If you downloaded Meilisearch using `curl`, find and download the compatible version [here](https://github.com/meilisearch/meilisearch/releases) before continuing.
 :::
 
 ::: tab Homebrew
@@ -57,8 +57,8 @@ brew install meilisearch@0.X.X
 Replace `0.X.X` with the version you would like to install.
 
 ```bash
-# clone MeiliSearch and checkout the branch of the expected version
-git clone https://github.com/meilisearch/MeiliSearch
+# clone Meilisearch and checkout the branch of the expected version
+git clone https://github.com/meilisearch/meilisearch
 cd MeiliSearch
 git checkout v0.X.X
 
@@ -101,29 +101,29 @@ docker run -it --rm \
 
 ### Proceed according to your database version
 
-Now that you know which MeiliSearch version your database is compatible with, proceed accordingly:
+Now that you know which Meilisearch version your database is compatible with, proceed accordingly:
 
 - **If your database version is v0.15.0 or above**, continue to the [next section](#updating-from-v0-15-0-or-above).
 - **If your version is v0.14.0 or below**, [go here](#updating-from-v0-14-0-or-below).
 
 ## Updating from v0.15.0 or above
 
-Because MeiliSearch v0.15.0 and above include the [dumps feature](/learn/advanced/dumps.md), updating is relatively simple.
+Because Meilisearch v0.15.0 and above include the [dumps feature](/learn/advanced/dumps.md), updating is relatively simple.
 
 In this guide, we will:
 
 1. [Set all fields as displayed attributes](#step-1-set-all-fields-as-displayed-attributes)
-2. [Create a dump using the MeiliSearch version that's compatible with your database](#step-2-create-the-dump)
+2. [Create a dump using the Meilisearch version that's compatible with your database](#step-2-create-the-dump)
 3. [Delete the database folder](#step-3-delete-the-database-folder)
-4. [Import the dump using the most recent MeiliSearch version](#step-4-import-the-dump)
+4. [Import the dump using the most recent Meilisearch version](#step-4-import-the-dump)
 
 ### Step 1: Set all fields as displayed attributes
 
 ::: note
-If your dump was created in MeiliSearch v0.21 or above, continue to step 2.
+If your dump was created in Meilisearch v0.21 or above, continue to step 2.
 :::
 
-When creating dumps, MeiliSearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/reference/features/field_properties.md#displayed-fields) in order to be saved in the dump.
+When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/reference/features/field_properties.md#displayed-fields) in order to be saved in the dump.
 
 Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
@@ -148,13 +148,13 @@ Now that all fields are displayed, proceed to the next step.
 
 ### Step 2: Create the dump
 
-Before creating your dump, make sure that your [dump directory](/reference/features/configuration.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your MeiliSearch directory.
+Before creating your dump, make sure that your [dump directory](/reference/features/configuration.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 ::: note
-If you are running MeiliSearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found in the configuration file directory, `cd /var/opt/meilisearch/dumps`.
+If you are running Meilisearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found in the configuration file directory, `cd /var/opt/meilisearch/dumps`.
 :::
 
-If you're unsure where your MeiliSearch directory is located, try this:
+If you're unsure where your Meilisearch directory is located, try this:
 
 :::: tabs
 
@@ -238,26 +238,26 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 
 ### Step 3: Delete the database folder
 
-To delete the old MeiliSearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
 
 ### Step 4: Import the dump
 
-Now that you’ve got your dump, [install the latest version of MeiliSearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
+Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
 
 ```bash
-# launch the latest version of MeiliSearch and import the specified dump file
+# launch the latest version of Meilisearch and import the specified dump file
 ./meilisearch --import-dump /dumps/your_dump_file.dump
 ```
 
 ::: warning
-If you are using MeiliSearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of MeiliSearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
+If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of Meilisearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
 :::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
 Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
 
-Congratulations! You have successfully migrated your MeiliSearch database to the latest version! 🎉
+Congratulations! You have successfully migrated your Meilisearch database to the latest version! 🎉
 
 ## Updating from v0.14.0 or below
 
@@ -269,7 +269,7 @@ In this guide, we will:
 2. [Set all fields as displayed attributes](#step-2-set-all-fields-as-displayed-attributes)
 3. [Save your documents](#step-3-save-your-documents)
 4. [Delete the database folder](#step-4-delete-the-database-folder)
-5. [Upload your data to the latest version of MeiliSearch](#step-5-upload-your-data-to-the-latest-version-of-meilisearch)
+5. [Upload your data to the latest version of Meilisearch](#step-5-upload-your-data-to-the-latest-version-of-meilisearch)
 
 If you don’t need to preserve index settings, skip directly to [step two](#step-2-set-all-fields-as-displayed-attributes).
 
@@ -325,11 +325,11 @@ curl -X GET \
 
 ### Step 4: Delete the database folder
 
-To delete the old MeiliSearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the MeiliSearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
 
-### Step 5: Upload your data to the latest version of MeiliSearch
+### Step 5: Upload your data to the latest version of Meilisearch
 
-Finally, [install the latest version of MeiliSearch](/learn/getting_started/installation.md) and upload your data as usual.
+Finally, [install the latest version of Meilisearch](/learn/getting_started/installation.md) and upload your data as usual.
 
 If you chose to save your settings, make sure to follow this order:
 
@@ -345,4 +345,4 @@ curl -X POST -H "Content-Type: application/json" -d @mydocuments.json \
 
 Since updating the settings requires re-indexing all documents, this order saves time and memory.
 
-Congratulations! You have successfully migrated your MeiliSearch database to the latest version! 🎉
+Congratulations! You have successfully migrated your Meilisearch database to the latest version! 🎉

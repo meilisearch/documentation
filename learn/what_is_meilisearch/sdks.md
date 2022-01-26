@@ -1,12 +1,12 @@
 # Official SDKs / libraries
 
-Our team and community have worked hard to bring MeiliSearch to almost all popular web development languages, frameworks, and deployment options.
+Our team and community have worked hard to bring Meilisearch to almost all popular web development languages, frameworks, and deployment options.
 
 New integrations are constantly in development. If you'd like to contribute, [see below](/learn/what_is_meilisearch/sdks.md#contributing).
 
 ### SDKs
 
-You can use MeiliSearch API wrappers in your favorite language. These libraries support all API routes.
+You can use Meilisearch API wrappers in your favorite language. These libraries support all API routes.
 
 - [.NET](https://github.com/meilisearch/meilisearch-dotnet)
 - [Dart](https://github.com/meilisearch/meilisearch-dart)
@@ -21,7 +21,7 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ### Framework integrations
 
-- Laravel: the official [Laravel-Scout](https://github.com/laravel/scout) package supports MeiliSearch.
+- Laravel: the official [Laravel-Scout](https://github.com/laravel/scout) package supports Meilisearch.
 - [Ruby on Rails](https://github.com/meilisearch/meilisearch-rails)
 - [Symfony](https://github.com/meilisearch/meilisearch-symfony)
 
@@ -30,17 +30,17 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 - [Angular](https://github.com/meilisearch/meilisearch-angular)
 - [React](https://github.com/meilisearch/meilisearch-react)
 - [Vue](https://github.com/meilisearch/meilisearch-vue)
-- [Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch): helps you integrate a great search experience with minimum efforts.
+- [Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch): helps you integrate a great search experience with minimum efforts.
 - [docs-searchbar.js](https://github.com/meilisearch/docs-searchbar.js): a search bar integration for all kinds of documentation.
 
 ### DevOps tools
 
 - [meilisearch-aws](https://github.com/meilisearch/meilisearch-aws)
-  - Guide: [How to deploy a MeiliSearch instance on Amazon Web Services](/learn/cookbooks/aws.md)
+  - Guide: [How to deploy a Meilisearch instance on Amazon Web Services](/learn/cookbooks/aws.md)
 - [meilisearch-digitalocean](https://github.com/meilisearch/meilisearch-digitalocean)
-  - Guide: [How to deploy a MeiliSearch instance on DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+  - Guide: [How to deploy a Meilisearch instance on DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
 - [meilisearch-gcp](https://github.com/meilisearch/meilisearch-gcp)
-  - Guide: [How to deploy a MeiliSearch instance on Google Cloud Platform](/learn/cookbooks/gcp.md)
+  - Guide: [How to deploy a Meilisearch instance on Google Cloud Platform](/learn/cookbooks/gcp.md)
 - [meilisearch-kubernetes](https://github.com/meilisearch/meilisearch-kubernetes)
 
 ### Platform plugins
@@ -50,11 +50,11 @@ You can use MeiliSearch API wrappers in your favorite language. These libraries 
 
 ### Other tools
 
-- [docs-scraper](https://github.com/meilisearch/docs-scraper): a scraper tool to automatically read the content of your documentation and store it into MeiliSearch.
+- [docs-scraper](https://github.com/meilisearch/docs-scraper): a scraper tool to automatically read the content of your documentation and store it into Meilisearch.
 
 ### Contributing
 
-If you want to build a new integration for MeiliSearch, you are more than welcome to and we would be happy to help you!
+If you want to build a new integration for Meilisearch, you are more than welcome to and we would be happy to help you!
 
 We are proud that some of our libraries were developed and are still maintained by external contributors! ♥️
 

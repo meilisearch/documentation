@@ -11,41 +11,41 @@ If you have any questions we want to hear from you. Your feedback will help us i
 
 [[toc]]
 
-## I have never used a search engine before. Can I use MeiliSearch anyway?
+## I have never used a search engine before. Can I use Meilisearch anyway?
 
-Of course! No knowledge of ElasticSearch or Solr is required to use MeiliSearch.
+Of course! No knowledge of ElasticSearch or Solr is required to use Meilisearch.
 
-MeiliSearch is really **easy to use** and thus accessible to all kinds of developers.
+Meilisearch is really **easy to use** and thus accessible to all kinds of developers.
 
-[Take a quick tour](/learn/getting_started/quick_start.md) to learn the basics of MeiliSearch!
+[Take a quick tour](/learn/getting_started/quick_start.md) to learn the basics of Meilisearch!
 
-We also provide a lot of tools, including [SDKs](/learn/what_is_meilisearch/sdks.md), to help you integrate easily MeiliSearch in your project. We're adding new tools every day!
+We also provide a lot of tools, including [SDKs](/learn/what_is_meilisearch/sdks.md), to help you integrate easily Meilisearch in your project. We're adding new tools every day!
 
 Plus, you can [contact us](#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
 
-## Do I need to configure MeiliSearch to get it working?
+## Do I need to configure Meilisearch to get it working?
 
-MeiliSearch configuration works out-of-the-box. It means, by default, MeiliSearch configures necessary settings for providing a powerful and relevant search.
+Meilisearch configuration works out-of-the-box. It means, by default, Meilisearch configures necessary settings for providing a powerful and relevant search.
 
-For example, without requiring any configuration, MeiliSearch is typo tolerant.
+For example, without requiring any configuration, Meilisearch is typo tolerant.
 Type `craete an index` in the search bar of this documentation to experience the typo tolerance of our search engine.
 
-To find out more about the relevancy of MeiliSearch, take a look at this detailed [explanation](/learn/core_concepts/relevancy.md#ranking-rules).
+To find out more about the relevancy of Meilisearch, take a look at this detailed [explanation](/learn/core_concepts/relevancy.md#ranking-rules).
 
-However, MeiliSearch is of course [highly customizable](/reference/api/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
+However, Meilisearch is of course [highly customizable](/reference/api/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
 
-## How to know if MeiliSearch perfectly fits my use cases?
+## How to know if Meilisearch perfectly fits my use cases?
 
-Since MeiliSearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/learn/getting_started/quick_start.md) to get a quick start!
+Since Meilisearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/learn/getting_started/quick_start.md) to get a quick start!
 
-Besides, we published a [comparison between MeiliSearch and other search engines](/learn/what_is_meilisearch/comparison_to_alternatives.md) with the goal of providing an overview of MeiliSearch alternatives.
+Besides, we published a [comparison between Meilisearch and other search engines](/learn/what_is_meilisearch/comparison_to_alternatives.md) with the goal of providing an overview of Meilisearch alternatives.
 
-## Which languages can MeiliSearch handle?
+## Which languages can Meilisearch handle?
 
-MeiliSearch works perfectly with English, kanji, and Romance languages.
+Meilisearch works perfectly with English, kanji, and Romance languages.
 If you have any hesitation about your language handling, please contact us.
 
-## Do you provide a real dataset to test MeiliSearch?
+## Do you provide a real dataset to test Meilisearch?
 
 In this documentation, we provide this <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a> dataset.
 
@@ -69,7 +69,7 @@ This response indicates that the operation has been taken into account and will 
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
 
-MeiliSearch API accepts JSON, CSV, and NDJSON formats.
+Meilisearch API accepts JSON, CSV, and NDJSON formats.
 In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
 
 The `400 - Bad request` response probably means that your data is not in an expected format.
@@ -77,7 +77,7 @@ The `400 - Bad request` response probably means that your data is not in an expe
 Most common errors:
 
 - Extraneous comma at the end of a line.
-- Data is not an array of objects: for the [document addition route](/reference/api/documents.md#add-or-replace-documents), MeiliSearch only accepts an array in the body even if there is only one document.
+- Data is not an array of objects: for the [document addition route](/reference/api/documents.md#add-or-replace-documents), Meilisearch only accepts an array in the body even if there is only one document.
 
 Wrong:
 
@@ -110,7 +110,7 @@ cat your_file.json | jq
 
 ## What do the different error types mean?
 
-MeiliSearch has the following types of errors:
+Meilisearch has the following types of errors:
 
 | Type            | Description                                                                                       |
 |-----------------|---------------------------------------------------------------------------------------------------|
@@ -131,7 +131,7 @@ Each document is required to contain a unique identifier. This identifier attrib
 
 How do I know the primary key of my index? [Check this route](/reference/api/indexes.md#get-one-index). The `null` value means it has not been defined yet.
 
-By default, the primary key will be inferred from the first document received. MeiliSearch will search for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`). If none has been found, no documents will be added.
+By default, the primary key will be inferred from the first document received. Meilisearch will search for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`). If none has been found, no documents will be added.
 
 If you get a `document id is missing` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending primary key's name as a query parameter [when adding documents](/reference/api/documents.md#add-or-replace-documents) should solve this issue.
 
@@ -182,50 +182,50 @@ Here is an example of a failed task:
 
 Check your error message for more information.
 
-## Is killing a MeiliSearch process safe?
+## Is killing a Meilisearch process safe?
 
-Killing MeiliSearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
+Killing Meilisearch is **safe**, even in the middle of a process (ex: adding a batch of documents). When you restart the server, it will start the task from the beginning.
 More information in the [asynchronous operations guide](/learn/advanced/asynchronous_operations.md).
 
-## Does MeiliSearch deliver an interface to search in my documents?
+## Does Meilisearch deliver an interface to search in my documents?
 
-Yes, a search preview interface is available on the default address and port of your MeiliSearch instance.
+Yes, a search preview is available on the default address and port of your Meilisearch instance.
 
-All you need to do is open your web browser and enter MeiliSearch’s address to visit it. This leads you to a web page with a search bar that allows you to search in a selected index.
+All you need to do is open your web browser and enter Meilisearch’s address to visit it. This leads you to a web page with a search bar that allows you to search in a selected index.
 
 Since the production environment requires an API-key for searching, search preview is only available in [development mode](/reference/features/configuration.md#environment).
 
-Here is more information about [MeiliSearch's search preview](/learn/what_is_meilisearch/search_preview.md).
+Here is more information about [Meilisearch's search preview](/learn/what_is_meilisearch/search_preview.md).
 
 ## I do not understand the relevancy of my search results.
 
 The search responses are sorted according to a set of consecutive rules called ranking rules.
-Here is more information about the [relevancy of MeiliSearch](/learn/core_concepts/relevancy.md).
+Here is more information about the [relevancy of Meilisearch](/learn/core_concepts/relevancy.md).
 
-MeiliSearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.
-All of the ranking rules can be modified via the [dedicated routes in the MeiliSearch API](/reference/api/ranking_rules.md).
+Meilisearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.
+All of the ranking rules can be modified via the [dedicated routes in the Meilisearch API](/reference/api/ranking_rules.md).
 
-## Do you provide a public roadmap for MeiliSearch and its integration tools?
+## Do you provide a public roadmap for Meilisearch and its integration tools?
 
-Yes, as MeiliSearch and its integration tools are opensource, we maintain a [public roadmap](https://roadmap.meilisearch.com/) for the general features we plan to do.
+Yes, as Meilisearch and its integration tools are opensource, we maintain a [public roadmap](https://roadmap.meilisearch.com/) for the general features we plan to do.
 
-For more accurate features and issues, everything is detailed in the issues of all our [GitHub repositories](https://github.com/meilisearch/MeiliSearch/issues).
+For more accurate features and issues, everything is detailed in the issues of all our [GitHub repositories](https://github.com/meilisearch/meilisearch/issues).
 
-## How can I contact the MeiliSearch team?
+## How can I contact the Meilisearch team?
 
 See our [contact page](/learn/what_is_meilisearch/contact.md).
 
-## I have just updated MeiliSearch, and I am getting an error: "Cannot open database, expected MeiliSearch engine version..."
+## I have just updated Meilisearch, and I am getting an error: "Cannot open database, expected Meilisearch engine version..."
 
-Until our first stable release (v1.0), MeiliSearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating MeiliSearch](/learn/getting_started/installation.md#updating-meilisearch) for more information.
+Until our first stable release (v1.0), Meilisearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating Meilisearch](/learn/getting_started/installation.md#updating-meilisearch) for more information.
 
-## What are the recommended requirements for hosting a MeiliSearch instance?
+## What are the recommended requirements for hosting a Meilisearch instance?
 
 **The short answer: we don't know yet!**
 
-Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a MeiliSearch database. At this stage, our engine is changing constantly, which means benchmarks are constantly out of date.
+Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a Meilisearch database. At this stage, our engine is changing constantly, which means benchmarks are constantly out of date.
 
-Once our engine is completely stable (v1), we will provide detailed benchmarks with different datasets. Until then, read on to learn how to optimize your MeiliSearch instance.
+Once our engine is completely stable (v1), we will provide detailed benchmarks with different datasets. Until then, read on to learn how to optimize your Meilisearch instance.
 
 ### Memory usage
 
@@ -253,12 +253,12 @@ Beware heavily multi-lingual datasets and datasets with many unique words, such 
 
 ### Search speed
 
-Because MeiliSearch uses a [memory map](/learn/advanced/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
+Because Meilisearch uses a [memory map](/learn/advanced/storage.md#lmdb), **search speed is based on the ratio between RAM and database size**. In other words:
 
 - A big database + a small amount of RAM => slow search
 - A small database + tons of RAM => lightning fast search
 
-MeiliSearch also uses disk space as [virtual memory](/learn/advanced/storage.md#memory-usage). This disk space does not correspond to database size; rather, it provides speed and flexibility to the engine by allowing it to go over the limits of physical RAM.
+Meilisearch also uses disk space as [virtual memory](/learn/advanced/storage.md#memory-usage). This disk space does not correspond to database size; rather, it provides speed and flexibility to the engine by allowing it to go over the limits of physical RAM.
 
 At this time, the number of CPU cores has no direct impact on index or search speed. However, **the more cores you provide to the engine, the more search queries it will be able to process at the same time**.
 
@@ -266,9 +266,9 @@ At this time, the number of CPU cores has no direct impact on index or search sp
 Our new engine (currently in development) **will support multi-core indexing at launch**.
 :::
 
-#### Speeding up MeiliSearch
+#### Speeding up Meilisearch
 
-MeiliSearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your MeiliSearch instance is querying slowly, there are two primary methods to speed it up:
+Meilisearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your Meilisearch instance is querying slowly, there are two primary methods to speed it up:
 
 1. Increase the amount of RAM (or virtual memory)
 2. Reduce the size of the database
@@ -282,16 +282,16 @@ In general, we recommend the former. However, if you need to reduce the size of 
 - [Stop words](/reference/api/stop_words.md) are essential to reducing database size
 - Not all attributes need to be [searchable](/reference/features/field_properties.md#searchable-fields). Avoid indexing unique IDs.
 
-## Why does MeiliSearch send data to Segment? Does MeiliSearch track its users?
+## Why does Meilisearch send data to Segment? Does Meilisearch track its users?
 
-**MeiliSearch will never track or identify individual users**. That being said, we do use Segment to collect anonymous data about user trends, feature usage, and bugs.
+**Meilisearch will never track or identify individual users**. That being said, we do use Segment to collect anonymous data about user trends, feature usage, and bugs.
 
 You can read more about what metrics we collect, why we collect them, and how to disable it on our [telemetry page](/learn/what_is_meilisearch/telemetry.md). Issues of transparency and privacy are very important to us, so if you feel we are lacking in this area please [open an issue](https://github.com/meilisearch/documentation/issues/new/choose) or send an email to our dedicated email address: [privacy@meilisearch.com](mailto:privacy@meilisearch.com).
 
-## Why does MeiliSearch crash when I try to add documents?
+## Why does Meilisearch crash when I try to add documents?
 
-Crashes that occur when trying to add documents are connected to MeiliSearch's indexer. For more information and possible solutions, read [our dedicated article on indexation](/learn/advanced/indexation.md#memory-crashes).
+Crashes that occur when trying to add documents are connected to Meilisearch's indexer. For more information and possible solutions, read [our dedicated article on indexation](/learn/advanced/indexation.md#memory-crashes).
 
 ## How can I speed up indexation when adding documents?
 
-Indexation is one of MeiliSearch's most resource-intensive processes. For more information on how to optimize it, take a look at [our dedicated indexation guide](/learn/advanced/indexation.md#improving-indexation-performance).
+Indexation is one of Meilisearch's most resource-intensive processes. For more information on how to optimize it, take a look at [our dedicated indexation guide](/learn/advanced/indexation.md#improving-indexation-performance).

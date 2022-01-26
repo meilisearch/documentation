@@ -1,6 +1,6 @@
 # Features
 
-All of MeiliSearch's features are provided right out of the box, and can be easily [configured](/reference/features/search_parameters.md). Here are a few of them that you should try out!
+All of Meilisearch's features are provided right out of the box, and can be easily [configured](/reference/features/search_parameters.md). Here are a few of them that you should try out!
 
 [[toc]]
 
@@ -10,18 +10,18 @@ Also called "instant search". Results are delivered while you're still inputting
 
 ## Ultra relevant
 
-MeiliSearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are designed to deliver an intuitive search experience with zero setup. They can be [customized](/reference/api/ranking_rules.md) to ensure perfect results for your dataset.
+Meilisearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are designed to deliver an intuitive search experience with zero setup. They can be [customized](/reference/api/ranking_rules.md) to ensure perfect results for your dataset.
 
 ## Typo tolerant
 
-Instead of letting typos ruin your search experience, MeiliSearch will always find the results you expect.
+Instead of letting typos ruin your search experience, Meilisearch will always find the results you expect.
 Read more about typo tolerance in [this dedicated guide](/learn/advanced/typotolerance.md).
 
 ## Synonyms
 
 ![search demo gif](/search-synonyms-typo.gif)
 
-MeiliSearch in action with `batman` and `joker` defined as synonyms.
+Meilisearch in action with `batman` and `joker` defined as synonyms.
 
 Defining synonyms lets you craft a more tailored, intuitive search experience.
 Read more about synonyms in [this dedicated guide](/reference/features/synonyms.md).
@@ -32,7 +32,7 @@ Read more about synonyms in [this dedicated guide](/reference/features/synonyms.
 
 ## Filters
 
-MeiliSearch allows you to define [filters](/learn/advanced/filtering_and_faceted_search.md) so you can filter through the results based on user-defined criteria.
+Meilisearch allows you to define [filters](/learn/advanced/filtering_and_faceted_search.md) so you can filter through the results based on user-defined criteria.
 
 ## Faceting
 
@@ -44,22 +44,22 @@ MeiliSearch allows you to define [filters](/learn/advanced/filtering_and_faceted
 
 ## Placeholder search
 
-If you make a search without inputting any query words, MeiliSearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule) and [sorting rules](https://docs.meilisearch.com/learn/advanced/sorting.html#sorting). This feature is called **placeholder search**.
+If you make a search without inputting any query words, Meilisearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule) and [sorting rules](https://docs.meilisearch.com/learn/advanced/sorting.html#sorting). This feature is called **placeholder search**.
 
 Placeholder searches are particularly effective when used with other features such as [faceting or filtering](/learn/advanced/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category. You can read more about this feature in our article on [search parameters](https://docs.meilisearch.com/reference/features/search_parameters.html#placeholder-search).
 
 ## Phrase search
 
-If you enclose search terms in double quotes (`"`), MeiliSearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
+If you enclose search terms in double quotes (`"`), Meilisearch will only return documents that contain those terms in the order they were given. This gives users the option to make more precise search queries.
 
-Phrase search is particularly useful when looking for a single result, such as searching for a book by ISBN. It is also possible to combine phrase searches with MeiliSearch's basic syntax so only parts of a query are matched strictly.
+Phrase search is particularly useful when looking for a single result, such as searching for a book by ISBN. It is also possible to combine phrase searches with Meilisearch's basic syntax so only parts of a query are matched strictly.
 
 ## API key management
 
-MeiliSearch allows you to protect your instances through the use of API keys. API keys give you control over which users can access what indexes, routes, and endpoints.
+Meilisearch allows you to protect your instances through the use of API keys. API keys give you control over which users can access what indexes, routes, and endpoints.
 
-API keys are managed by the master key. When you set a master key on your first launch, MeiliSearch generates two API keys called the `Default Search API Key` and the `Default Admin API Key`. You can read more them in our article on [security](/learn/advanced/security.md).
+API keys are managed by the master key. When you set a master key on your first launch, Meilisearch generates two API keys called the `Default Search API Key` and the `Default Admin API Key`. You can read more them in our article on [security](/learn/advanced/security.md).
 
 ## Comprehensive language support
 
-[MeiliSearch is multilingual](/reference/features/language.md)! We aim to support every language represented in our global community.
+[MeiliSearch is multilingual](/learn/what_is_meilisearch/language.md)! We aim to support every language represented in our global community.

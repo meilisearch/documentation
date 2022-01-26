@@ -1,18 +1,18 @@
 # Philosophy
 
-Finding a high-quality search engine can be difficult. We decided to create MeiliSearch because we noticed that no search engine on the market was powerful, simple, and accessible to individuals and small companies. **Ease of use** was our primary goal starting out, and continues to drive the development of MeiliSearch today.
+Finding a high-quality search engine can be difficult. We decided to create Meilisearch because we noticed that no search engine on the market was powerful, simple, and accessible to individuals and small companies. **Ease of use** was our primary goal starting out, and continues to drive the development of Meilisearch today.
 
 ### Simple and intuitive
 
 We always aim for a simple and intuitive experience for both developers and end-users.
 
-For developers, we're proud to say that MeiliSearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/api).
+For developers, we're proud to say that Meilisearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/api).
 
-For end-users, MeiliSearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results.
+For end-users, Meilisearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results.
 
 ### Highly customizable
 
-MeiliSearch works out-of-the-box with default settings that meet the needs of most projects. However, searching is still highly customizable.
+Meilisearch works out-of-the-box with default settings that meet the needs of most projects. However, searching is still highly customizable.
 
 It wouldn't be a search engine if there wasn't a notion of relevancy in the results returned.
 
@@ -22,7 +22,7 @@ You can also **configure the [search parameters](/reference/features/search_para
 
 ### Front-facing search
 
-MeiliSearch aims to be your go-to search backend when you want to build a great search experience for your end-users.
+Meilisearch aims to be your go-to search backend when you want to build a great search experience for your end-users.
 
 It's not designed for searching through large data collections (> 10M documents) or industrial applications.
 
@@ -30,6 +30,6 @@ As a result, we are fully committed to the philosophy of [prefix search](https:/
 
 ### Anti-pattern
 
-MeiliSearch should **not be your main data store**. MeiliSearch should contain only the data you want your users to search through. The more data MeiliSearch contains, the less relevant it is.
+Meilisearch should **not be your main data store**. Meilisearch should contain only the data you want your users to search through. The more data Meilisearch contains, the less relevant it is.
 
-MeiliSearch queries should be sent directly from the front-end. The more proxies there are between MeiliSearch and the end-user, the slower the queries and search experience will be.
+Meilisearch queries should be sent directly from the front-end. The more proxies there are between Meilisearch and the end-user, the slower the queries and search experience will be.

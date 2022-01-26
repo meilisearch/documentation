@@ -2,7 +2,7 @@
 
 **Relevancy** is a term referring to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa.
 
-MeiliSearch has a number of features for fine-tuning the relevancy of search results. The most important tool among them is **ranking rules**.
+Meilisearch has a number of features for fine-tuning the relevancy of search results. The most important tool among them is **ranking rules**.
 
 ## Ranking rules
 
@@ -12,13 +12,13 @@ In order to ensure relevant results, search responses are sorted based on a set 
 
 Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings.md). This array is **fully customizable**, meaning you can **delete existing rules, add new ones, and reorder them as needed**.
 
-Whenever a search query is made, MeiliSearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
+Whenever a search query is made, Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
 
 **The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/api/ranking_rules.md#update-ranking-rules).
 
 ### Built-in rules
 
-MeiliSearch contains six built-in ranking rules in the following order:
+Meilisearch contains six built-in ranking rules in the following order:
 
 1. Words
 2. Typo
@@ -114,7 +114,7 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 
 ### Custom rules
 
-For now, MeiliSearch supports two custom rules that can be added to [the ranking rules array](#behavior): one for ascending sort and one for descending sort.
+For now, Meilisearch supports two custom rules that can be added to [the ranking rules array](#behavior): one for ascending sort and one for descending sort.
 
 To add a custom ranking rule, you have to communicate the attribute name followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
 
@@ -159,7 +159,7 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ### Sorting and custom ranking rules
 
-MeiliSearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/features/search_parameters.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
+Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/features/search_parameters.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
 
 In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 

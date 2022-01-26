@@ -1,17 +1,17 @@
 # Data types
 
-This guide describes the different data types supported for the fields in a document and how MeiliSearch handles them.
+This guide describes the different data types supported for the fields in a document and how Meilisearch handles them.
 
 No matter the type, the value of a field will remain unchanged in the returned documents upon search.
 For example, if you have a complex field with nested objects, this field will be returned with the same complexity upon search.
 
-Based on their type, however, the fields will be handled and used in different ways by MeiliSearch. **The type affects how a field is used for search results**.
+Based on their type, however, the fields will be handled and used in different ways by Meilisearch. **The type affects how a field is used for search results**.
 
 [[toc]]
 
 ## String
 
-String is the primary type for indexing data in MeiliSearch. It enables to create the content in which to search. Strings are processed as detailed below.
+String is the primary type for indexing data in Meilisearch. It enables to create the content in which to search. Strings are processed as detailed below.
 
 String tokenization is the process of **splitting a string into a list of individual terms that are called tokens.**
 
@@ -123,7 +123,7 @@ These sentences will be separated by soft and hard spaces exactly as explained i
 
 ## `null`
 
-The `null` type can be pushed into MeiliSearch but it **won't be taken into account for indexing**.
+The `null` type can be pushed into Meilisearch but it **won't be taken into account for indexing**.
 
 ## Possible tokenization issues
 

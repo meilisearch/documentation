@@ -1,10 +1,10 @@
-# Use HTTP/2 and SSL with MeiliSearch
+# Use HTTP/2 and SSL with Meilisearch
 
 For those willing to use HTTP/2, please be aware that it is **only possible if your server is configured with SSL certificate**.
 
-Therefore, you will see how to launch a MeiliSearch server with SSL. This tutorial gives a short introduction to do it locally, but you can as well do the same thing on a remote server.
+Therefore, you will see how to launch a Meilisearch server with SSL. This tutorial gives a short introduction to do it locally, but you can as well do the same thing on a remote server.
 
-First of all, you need the binary of MeiliSearch, or you can also use docker. In the latter case, it is necessary to pass the parameters using environment variables and the SSL certificates via a volume.
+First of all, you need the binary of Meilisearch, or you can also use docker. In the latter case, it is necessary to pass the parameters using environment variables and the SSL certificates via a volume.
 
 A tool to generate SSL certificates is also required. In this How To, you will use [mkcert](https://github.com/FiloSottile/mkcert). However, if on a remote server, you can also use certbot or certificates signed by a Certificate Authority.
 
@@ -62,7 +62,7 @@ This time, start by generating the SSL certificates. mkcert creates two files: `
 mkcert '127.0.0.1'
 ```
 
-Then, use the certificate and the key to configure MeiliSearch with SSL.
+Then, use the certificate and the key to configure Meilisearch with SSL.
 
 ```bash
 ./meilisearch --ssl-cert-path ./127.0.0.1.pem --ssl-key-path ./127.0.0.1-key.pem

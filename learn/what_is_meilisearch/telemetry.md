@@ -4,7 +4,7 @@ sidebarDepth: 2
 
 # Telemetry
 
-MeiliSearch collects anonymized data from users in order to improve our product. This can be [deactivated at any time](#how-to-disable-data-collection), and any data that has already been collected can be [deleted on request](#how-to-delete-all-collected-data).
+Meilisearch collects anonymized data from users in order to improve our product. This can be [deactivated at any time](#how-to-disable-data-collection), and any data that has already been collected can be [deleted on request](#how-to-delete-all-collected-data).
 
 ## What tools do we use to collect and visualize data?
 
@@ -14,7 +14,7 @@ We use [Segment](https://segment.com/), a platform for data collection and manag
 
 Our data collection is focused on the following categories:
 
-- **System** metrics, such as the technical specs of the device running MeiliSearch, the software version, and the OS
+- **System** metrics, such as the technical specs of the device running Meilisearch, the software version, and the OS
 - **Performance** metrics, such as the success rate of search requests and the average latency
 - **Usage** metrics, aimed at evaluating our newest features. These change with each new version
 
@@ -24,7 +24,7 @@ See below for the [complete list of metrics we currently collect](#exhaustive-li
 
 - Identify or track users
 - Collect personal information such as IP addresses, email addresses, or website URLs
-- Store data from documents added to a MeiliSearch instance
+- Store data from documents added to a Meilisearch instance
 
 ## Why collect telemetry data?
 
@@ -32,7 +32,7 @@ We collect telemetry data for only two reasons: so that we can improve our produ
 
 In order to create a better product, we need reliable quantitative information. The data we collect helps us fix bugs, evaluate the success of features, and better understand our users' needs.
 
-We also need to prove that people are actually using MeiliSearch. Usage metrics help us justify our existence to investors so that we can keep this project alive.
+We also need to prove that people are actually using Meilisearch. Usage metrics help us justify our existence to investors so that we can keep this project alive.
 
 ## Why should you trust us?
 
@@ -42,7 +42,7 @@ No company is perfect. If you ever feel that we are being anything less than 100
 
 ## How to disable data collection
 
-Data collection can be disabled at any time by setting a command-line option or environment variable, then restarting the MeiliSearch instance.
+Data collection can be disabled at any time by setting a command-line option or environment variable, then restarting the Meilisearch instance.
 
 :::: tabs
 
@@ -84,37 +84,37 @@ systemctl restart meilisearch
 
 ::::
 
-For more information about configuring MeiliSearch, read our [configuration reference](/reference/features/configuration.md).
+For more information about configuring Meilisearch, read our [configuration reference](/reference/features/configuration.md).
 
 ## How to delete all collected data
 
-We, the MeiliSearch team, provide an email address so that users can request the complete removal of their data from all of our tools.
+We, the Meilisearch team, provide an email address so that users can request the complete removal of their data from all of our tools.
 
-To do so, send an email to [privacy@meilisearch.com](mailto:privacy@meilisearch.com) containing the unique identifier generated for your MeiliSearch installation (`Instance UID` when launching MeiliSearch). Any questions regarding the management of the data we collect can also be sent to this email address.
+To do so, send an email to [privacy@meilisearch.com](mailto:privacy@meilisearch.com) containing the unique identifier generated for your Meilisearch installation (`Instance UID` when launching Meilisearch). Any questions regarding the management of the data we collect can also be sent to this email address.
 
 ## Exhaustive list of all collected data
 
-Whenever an event is triggered that collects some piece of data, MeiliSearch does not send it immediately. Instead, it bundles it with other data in a batch of up to `500kb`. Batches are sent either every hour, or after reaching `500kb`—whichever occurs first. This is done in order to improve performance and reduce network traffic.
+Whenever an event is triggered that collects some piece of data, Meilisearch does not send it immediately. Instead, it bundles it with other data in a batch of up to `500kb`. Batches are sent either every hour, or after reaching `500kb`—whichever occurs first. This is done in order to improve performance and reduce network traffic.
 
 ::: tip Be advised!
-This list is liable to change with every new version of MeiliSearch. It's not because we're trying to be sneaky! It's because when we add new features we need to collect additional datapoints to see how they perform.
+This list is liable to change with every new version of Meilisearch. It's not because we're trying to be sneaky! It's because when we add new features we need to collect additional datapoints to see how they perform.
 :::
 
 | Metric name                             | Description                                                                                 | Example
 |-----------------------------------------|---------------------------------------------------------------------------------------------|--------------------
-| `context.app.version`                   | MeiliSearch version number                                                                  | 0.23.0
-| `infos.env`                             | MeiliSearch `env`                                                                           | production
+| `context.app.version`                   | Meilisearch version number                                                                  | 0.23.0
+| `infos.env`                             | Meilisearch `env`                                                                           | production
 | `infos.has_snapshot`                    | `true` if snapshots are activated, otherwise `false`                                        | true
-| `system.distribution`                   | Distribution on which MeiliSearch is launched                                               | Arch Linux
-| `system.kernel_version`                 | Kernel version on which MeiliSearch is launched                                             | 5.14.10
+| `system.distribution`                   | Distribution on which Meilisearch is launched                                               | Arch Linux
+| `system.kernel_version`                 | Kernel version on which Meilisearch is launched                                             | 5.14.10
 | `system.cores`                          | Number of cores                                                                             | 24
 | `system.ram_size`                       | Total RAM capacity. Expressed in `KB`                                                       | 16777216
 | `system.disk_size`                      | Total capacity of the largest disk. Expressed in `Bytes`                                    | 1048576000
-| `system.server_prodiver`                | Users can tell us on which provider MeiliSearch is hosted by filling the `MEILI_SERVER_PROVIDER` env var. This is also filled by our cloud deploy scripts, e.g. [GCP cloud-config.yaml](https://github.com/meilisearch/cloud-scripts/blob/56a7c2630c1a508e5ad0c0ba1d8cfeb8d2fa9ae0/scripts/providers/gcp/cloud-config.yaml#L33) | gcp
+| `system.server_prodiver`                | Users can tell us on which provider Meilisearch is hosted by filling the `MEILI_SERVER_PROVIDER` env var. This is also filled by our cloud deploy scripts, e.g. [GCP cloud-config.yaml](https://github.com/meilisearch/cloud-scripts/blob/56a7c2630c1a508e5ad0c0ba1d8cfeb8d2fa9ae0/scripts/providers/gcp/cloud-config.yaml#L33) | gcp
 | `stats.database_size`                   | Database size. Expressed in `Bytes`                                                         | 2621440
 | `stats.indexes_number`                  | Number of indexes                                                                           | 2
 | `start_since_days`                      | Number of days since instance was launched                                                  | 365
-| `user_agent`                            | User-agent header encountered during API calls                                              | ["MeiliSearch Ruby (2.1)", "Ruby (3.0)"]
+| `user_agent`                            | User-agent header encountered during API calls                                              | ["Meilisearch Ruby (2.1)", "Ruby (3.0)"]
 | `requests.99th_response_time`           | Highest latency from among the fastest 99% of successful search requests                    | 57ms
 | `requests.total_succeeded`              | Total number of successful search requests                                                  | 3456
 | `requests.total_failed`                 | Total number of failed search requests                                                      | 24

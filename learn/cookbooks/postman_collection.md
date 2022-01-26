@@ -1,8 +1,8 @@
-# Postman collection for MeiliSearch
+# Postman collection for Meilisearch
 
-Are you tired of using the `curl` command in your terminal to test MeiliSearch? It can be tedious to re-write every route when wanting to try out an API.
+Are you tired of using the `curl` command in your terminal to test Meilisearch? It can be tedious to re-write every route when wanting to try out an API.
 
-Postman is a platform that lets you create HTTP requests you can easily reuse and share with everyone. We provide a <a href="/postman/meilisearch-collection.json" download="meilisearch-postman-collection.json">Postman collection</a> containing all the routes of the MeiliSearch API! 🚀
+Postman is a platform that lets you create HTTP requests you can easily reuse and share with everyone. We provide a <a href="/postman/meilisearch-collection.json" download="meilisearch-postman-collection.json">Postman collection</a> containing all the routes of the Meilisearch API! 🚀
 
 ::: note
 If you don't have Postman already, you can [download it here](https://www.postman.com/downloads/).
@@ -23,7 +23,7 @@ Set the API key if needed (set to `masterKey` by default):
 
 ![Edit API Key](/postman/set_api_key.png)
 
-Set the host URL (set to MeiliSearch's local port by default) and the index UID (set to `indexUID` by default):
+Set the host URL (set to Meilisearch's local port by default) and the index UID (set to `indexUID` by default):
 
 ![Edit variables](/postman/set_variables.png)
 
@@ -33,6 +33,6 @@ The `url` and `indexUID` variables are used in all the collection routes, like i
 
 ## Start to use it!
 
-You can now [run your MeiliSearch instance](/learn/getting_started/installation.md) and create your first index:
+You can now [run your Meilisearch instance](/learn/getting_started/installation.md) and create your first index:
 
 ![Create index](/postman/create_index.png)

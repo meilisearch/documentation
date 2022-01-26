@@ -98,7 +98,7 @@
 # Bucket sort
 /reference/under_the_hood/bucket_sort.html                /learn/core_concepts/relevancy.html#behavior
 
-# Move updating MeiliSearch
+# Move updating Meilisearch
 /create/how_to/updating.html                         /learn/advanced/updating.html
 
 # Move guides (filtering, sorting, geosearch) to /learn
@@ -136,3 +136,6 @@
 
 # Move and rename Web interface/Search preview
 /reference/featues/web_interface.html               /learn/what_is_meilisearch/search_preview.html
+
+# Move Language guide
+/reference/features/language.html                   /learn/what_is_meilisearch/language.html

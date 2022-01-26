@@ -1,6 +1,6 @@
 # Sorting
 
-By default, MeiliSearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
+By default, Meilisearch focuses on ordering results according to their relevancy. You can alter this sorting behavior so users can decide at search time what type of results they want to see first.
 
 This can be useful in many situations, such as when a user wants to see the cheapest products available in a webshop.
 
@@ -8,22 +8,22 @@ This can be useful in many situations, such as when a user wants to see the chea
 Sorting at search time can be particularly effective when combined with [placeholder searches](/learn/what_is_meilisearch/features.md#placeholder-search).
 :::
 
-## Configuring MeiliSearch for sorting at search time
+## Configuring Meilisearch for sorting at search time
 
 To allow your users to sort results at search time you must:
 
 1. Decide which attributes you want to use for sorting
 2. Add those attributes to the `sortableAttributes` index setting
-3. Update MeiliSearch's [ranking rules](/learn/core_concepts/relevancy.md) (optional)
+3. Update Meilisearch's [ranking rules](/learn/core_concepts/relevancy.md) (optional)
 
 ### Select attributes for sorting
 
-MeiliSearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
+Meilisearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
 
 Currently, fields containing nested arrays and objects will be silently ignored.
 
 ::: warning
-If a field has values of different types across documents, MeiliSearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
+If a field has values of different types across documents, Meilisearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
 
 This can lead to unexpected behavior when sorting, so we strongly recommend you only allow sorting at query time on fields containing the same type of value.
 :::
@@ -87,9 +87,9 @@ If you are using this dataset in a webshop, you might want to allow your users t
 
 ### Customize ranking rule order (optional)
 
-When users sort results at search time, [MeiliSearch's ranking rules](/learn/core_concepts/relevancy.md) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
+When users sort results at search time, [Meilisearch's ranking rules](/learn/core_concepts/relevancy.md) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
 
-This is the default configuration of MeiliSearch's ranking rules:
+This is the default configuration of Meilisearch's ranking rules:
 
 ```json
 [
@@ -102,7 +102,7 @@ This is the default configuration of MeiliSearch's ranking rules:
 ]
 ```
 
-`"sort"` is in fifth place. This means it acts as a tie-breaker rule: MeiliSearch will first place results closely matching search terms at the top of the returned documents list and only then will apply the `"sort"` parameters as requested by the user. In other words, by default MeiliSearch provides a very relevant sorting.
+`"sort"` is in fifth place. This means it acts as a tie-breaker rule: Meilisearch will first place results closely matching search terms at the top of the returned documents list and only then will apply the `"sort"` parameters as requested by the user. In other words, by default Meilisearch provides a very relevant sorting.
 
 Placing `"sort"` ranking rule higher in the list will emphasize exhaustive sorting over relevant sorting: your results will more closely follow the sorting order your user chose, but will not be as relevant.
 
@@ -139,7 +139,7 @@ sort="price:desc,author:asc"
 
 We strongly recommend using `POST` over `GET` routes whenever possible.
 
-The order of `sort` values matter: the higher an attribute is in the search parameter value, the more MeiliSearch will prioritize it over attributes placed lower. In our example, if multiple documents have the same value for `price`, MeiliSearch will decide the order between these similarly-priced documents based on their `author`.
+The order of `sort` values matter: the higher an attribute is in the search parameter value, the more Meilisearch will prioritize it over attributes placed lower. In our example, if multiple documents have the same value for `price`, Meilisearch will decide the order between these similarly-priced documents based on their `author`.
 
 #### Example
 
