@@ -7,7 +7,7 @@ module.exports = {
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
     lastUpdated: 'Last Updated',
-    logo: '/logo.png',
+    logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
