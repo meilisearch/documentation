@@ -22,7 +22,7 @@ h1
     margin 1rem 0
   &.note
     background-color #fff
-    border-color #FF4E62
+    border-color #4f55e3;
 .code-copy
     position: sticky;
     left: 0px;
@@ -38,6 +38,9 @@ h1
   .el-tabs__item
    padding 0 15px
 
+
+// TODO: CSS is very ugly for efficienty purposes.
+// It should be cleaned
 .navbar, .links
   background-color: #fcfcff !important;
 .sidebar
@@ -47,17 +50,27 @@ h1
 .nav-link, .dropdown-title
   color: #4d336f !important;
   font-weight: 500 !important;
+.nav-link:hover, .dropdown-title:hover
+  color: #FF4E62 !important;
+  font-weight: 500 !important;
 .sidebar-heading.open,  .sidebar-heading
   color: #21004B !important;
   font-weight: 600 !important;
+.sidebar-heading.open:hover,  .sidebar-heading:hover
+  color: #FF4E62 !important;
+  font-weight: 600 !important;
 .sidebar-link
   color: #4d336f !important;
+.sidebar-link:hover
+  color: #FF4E62 !important;
 .router-link-exact-active, .router-link-active
   color: #21004B !important;
 
-// todo: text color in sidebar
-// todo: text color in sidebar
-// background color sidebar and links #fcfcff
-// background color body and html #f9f8ff
-// background color note and html #f9f8ff or #fff
+h1 a.header-anchor {
+  font-family: "Poppins";
+  padding-right: 0;
+}
 
+a:hover {
+  color: #e64658;
+}

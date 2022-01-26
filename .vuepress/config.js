@@ -259,7 +259,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#E43288',
+        color: '#FF4E62',
         staticIcon: true,
       },
     ],
@@ -286,6 +286,7 @@ module.exports = {
     ],
   ],
   head: [
+    ['link', { rel: 'icon', href: '/favicon-32x32.png' }],
     ['meta', { charset: 'utf-8' }],
     [
       'meta',
