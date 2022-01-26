@@ -12,6 +12,7 @@ module.exports = {
     smoothScroll: true,
     nav: [
       { text: 'Learn', link: '/learn/' },
+      { text: 'FAQ', link: '/faq' },
       { text: 'Reference', link: '/reference/' },
       {
         text: 'Integrations',
@@ -64,7 +65,6 @@ module.exports = {
           },
         ],
       },
-      { text: 'FAQ', link: '/faq' },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
     ],
     sidebar: {
