@@ -1,13 +1,13 @@
 # CODE-SAMPLES
 
-Code-sample is a MeiliSearch VuePress plugin that gathers sample files and adds them to the documentation.
+Code-sample is a Meilisearch VuePress plugin that gathers sample files and adds them to the documentation.
 
-Each official MeiliSearch SDK should provide a filled sample file in their respective language. The files are fetched by the documentation on each build (*see next chapter*).
+Each official Meilisearch SDK should provide a filled sample file in their respective language. The files are fetched by the documentation on each build (*see next chapter*).
 Each sample of the file is added to the right place in the documentation, depending on its `sampleId`.
 
 ## Sample files
 
-The sample file is a yaml file at the root of each MeiliSearch SDK.
+The sample file is a yaml file at the root of each Meilisearch SDK.
 Sample files are created based on the `sample-template.yaml` file.
 
 `sample-template` file:
@@ -20,7 +20,7 @@ create_an_index_1: |-
 
 This file is accessible publicly [here](https://docs.meilisearch.com/sample-template.yaml) or in the public directory: `.vuepress/public/sample-template.yaml`.
 
-Each official MeiliSearch SDK should have a sample file at its root with filled with samples in their respective language.
+Each official Meilisearch SDK should have a sample file at its root with filled with samples in their respective language.
 The name of the file should be `.code-samples.meilisearch.yaml`.
 
 JavaScript example:

@@ -7,7 +7,7 @@ Sortable attributes can also be updated through the [global settings route](/ref
 Attributes that can be used together with the [`sort` search parameter](/reference/features/search_parameters.md#sort). To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md)
 
 ::: warning
-Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
 :::
 
 ## Get sortable attributes

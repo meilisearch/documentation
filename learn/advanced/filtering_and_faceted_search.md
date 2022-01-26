@@ -1,6 +1,6 @@
 # Filtering and faceted search
 
-You can use MeiliSearch's filters to refine search results.
+You can use Meilisearch's filters to refine search results.
 
 Filters have several use-cases, such as restricting the results a specific user has access to or creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
 
@@ -10,7 +10,7 @@ Filters use [document fields](/learn/core_concepts/documents.md#fields) to estab
 
 To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
 
-**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by MeiliSearch before they can be used.
+**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by Meilisearch before they can be used.
 
 Updating `filterableAttributes` requires recreating the entire index. This may take a significant amount of time depending on your dataset size.
 
@@ -21,7 +21,7 @@ By default, `filterableAttributes` is empty. This means that filters do not work
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
 ::: warning
-MeiliSearch does not support filtering on nested arrays and objects [yet](https://roadmap.meilisearch.com/c/105-filter-on-nested-objects). Therefore, fields containing nested arrays and objects will be silently ignored.
+Meilisearch does not support filtering on nested arrays and objects [yet](https://roadmap.meilisearch.com/c/105-filter-on-nested-objects). Therefore, fields containing nested arrays and objects will be silently ignored.
 :::
 
 ### Example
@@ -246,7 +246,7 @@ When using a dataset of restaurants containing geopositioning data, we can filte
 
 ## Faceted search
 
-MeiliSearch filters can be used to build **faceted search** interfaces. This type of interface allows users to refine search results based on broad categories or **facets**. For example, a clothing webshop can use faceted search to allow users to easily explore items of a certain size or belonging to a specific brand.
+Meilisearch filters can be used to build **faceted search** interfaces. This type of interface allows users to refine search results based on broad categories or **facets**. For example, a clothing webshop can use faceted search to allow users to easily explore items of a certain size or belonging to a specific brand.
 
 Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**. Facets are used in the UI as filters which users can apply to refine the results in real-time.
 
@@ -256,7 +256,7 @@ This is common in ecommerce sites like Amazon: when users perform a search, they
 
 ### Filters or facets
 
-In MeiliSearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
+In Meilisearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
 
 ### Using facets
 
@@ -285,7 +285,7 @@ You can then use this filter to search for `thriller`:
 When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/features/search_parameters.md#facets-distribution) in combination with `filter` when searching.
 
 ::: note
-MeiliSearch does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
+Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
 :::
 
 Using `facetsDistribution` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
@@ -314,7 +314,7 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
 }
 ```
 
-`exhaustiveFacetsCount` is a boolean value that informs the user whether the facet count is exact or just an approximation. For performance reasons, MeiliSearch chooses to use approximate facet count values when there are too many documents across several different fields.
+`exhaustiveFacetsCount` is a boolean value that informs the user whether the facet count is exact or just an approximation. For performance reasons, Meilisearch chooses to use approximate facet count values when there are too many documents across several different fields.
 
 ::: warning
 `exhaustiveFacetsCount` is not currently implemented in and will always return `false`.

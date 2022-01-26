@@ -1,14 +1,14 @@
 # Dumps
 
-The `dumps` route allows the creation of database dumps. Dumps are `.dump` files that can be used to launch MeiliSearch. Dumps are compatible between MeiliSearch versions.
+The `dumps` route allows the creation of database dumps. Dumps are `.dump` files that can be used to launch Meilisearch. Dumps are compatible between Meilisearch versions.
 
-Creating a dump is also referred to as exporting it, whereas launching MeiliSearch with a dump is referred to as importing it.
+Creating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.
 
 During a [dump export](/reference/api/dump.md#create-a-dump), all indexes of the current instance are exported—together with their documents and settings—and saved as a single `.dump` file.
 
 During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same uid as an index in the dump file will be overwritten.
 
-Dump imports must be performed when launching a MeiliSearch instance [using the `import-dump` command-line option](/reference/features/configuration.md#import-dump).
+Dump imports must be performed when launching a Meilisearch instance [using the `import-dump` command-line option](/reference/features/configuration.md#import-dump).
 
 ## Create a dump
 
@@ -16,7 +16,7 @@ Dump imports must be performed when launching a MeiliSearch instance [using the 
 
 Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps directory](/reference/features/configuration.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
 
-**MeiliSearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, MeiliSearch will throw a [`dump_already_processing` error](/reference/api/error_codes.md#dump-already-processing). While a dump is processing, the **task queue is paused and no write operations can occur on the database.**
+**Meilisearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, Meilisearch will throw a [`dump_already_processing` error](/reference/api/error_codes.md#dump-already-processing). While a dump is processing, the **task queue is paused and no write operations can occur on the database.**
 
 ### Example
 

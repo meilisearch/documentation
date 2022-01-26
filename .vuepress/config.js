@@ -1,13 +1,13 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.25',
+  title: 'Meilisearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
   themeConfig: {
-    repo: 'meilisearch/MeiliSearch',
+    repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
     lastUpdated: 'Last Updated',
-    logo: '/logo.png',
+    logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
@@ -40,7 +40,7 @@ module.exports = {
     sidebar: {
       '/learn/': [
         {
-          title: '🔎 What is MeiliSearch?',
+          title: '🔎 What is Meilisearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
           sidebarDepth: 0,
@@ -85,7 +85,7 @@ module.exports = {
             '/learn/advanced/security',
             '/learn/advanced/sorting',
             {
-              title: 'Updating MeiliSearch',
+              title: 'Updating Meilisearch',
               path: '/learn/advanced/updating.md',
             },
             {
@@ -248,6 +248,8 @@ module.exports = {
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
+    // Because colors can not be set through the settings of the plugin
+    // Change are done in .vuepress/styles/palette.styl
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
@@ -257,7 +259,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#3385ff',
+        color: '#FF4E62',
         staticIcon: true,
       },
     ],
@@ -284,6 +286,7 @@ module.exports = {
     ],
   ],
   head: [
+    ['link', { rel: 'icon', href: '/favicon-32x32.png' }],
     ['meta', { charset: 'utf-8' }],
     [
       'meta',
@@ -301,7 +304,7 @@ module.exports = {
       {
         prefix: ogprefix,
         property: 'og:title',
-        content: 'MeiliSearch Documentation',
+        content: 'Meilisearch Documentation',
       },
     ],
     ['meta', { prefix: ogprefix, property: 'og:type', content: 'website' }],
@@ -346,18 +349,18 @@ module.exports = {
       {
         prefix: ogprefix,
         property: 'og:site-name',
-        content: 'MeiliSearch Documentation',
+        content: 'Meilisearch Documentation',
       },
     ],
     [
       'meta',
-      { property: 'twitter:title', content: 'MeiliSearch Documentation' },
+      { property: 'twitter:title', content: 'Meilisearch Documentation' },
     ],
     [
       'meta',
       {
         property: 'twitter:description',
-        content: 'The official documentation of MeiliSearch',
+        content: 'The official documentation of Meilisearch',
       },
     ],
     [

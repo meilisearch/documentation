@@ -1,6 +1,6 @@
 # Settings
 
-This page describes the **index-level settings** available in MeiliSearch and how to customize them.
+This page describes the **index-level settings** available in Meilisearch and how to customize them.
 
 | Variable                                                                          | Description                                                                      | Default value                                                                               |
 |-----------------------------------------------------------------------------------|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
@@ -10,7 +10,7 @@ This page describes the **index-level settings** available in MeiliSearch and ho
 | **[rankingRules](/reference/features/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#default-order) |
 | **[searchableAttributes](/reference/features/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                       |                                                     |
 | **[sortableAttributes](/reference/features/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
-| **[stopWords](/reference/features/settings.md#stop-words)**                       | List of words ignored by MeiliSearch when present in search queries              | `[]`                                                                                        |
+| **[stopWords](/reference/features/settings.md#stop-words)**                       | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                        |
 | **[synonyms](/reference/features/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                        |
 
 ## Displayed attributes
@@ -195,7 +195,7 @@ To add `the`, `a` and `an` to the stop words list, send:
 
 With the settings in the example above, `the`, `a` and `an` are now ignored by the sorting algorithm if they are present in search queries.
 
-Suppose you would like to search `the mask` in a movie database. Since `the` is ignored during search, MeiliSearch will look for every movie containing `mask` and not the millions ones containing `the`. `the` is a less relevant term than `mask` and also a very frequent word in English. By adding `the` to the stop words list, MeiliSearch will ignore this word, and thus be faster to answer without losing in relevancy.
+Suppose you would like to search `the mask` in a movie database. Since `the` is ignored during search, Meilisearch will look for every movie containing `mask` and not the millions ones containing `the`. `the` is a less relevant term than `mask` and also a very frequent word in English. By adding `the` to the stop words list, Meilisearch will ignore this word, and thus be faster to answer without losing in relevancy.
 
 ## Synonyms
 

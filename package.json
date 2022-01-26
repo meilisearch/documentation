@@ -1,7 +1,7 @@
 {
   "name": "documentation",
   "version": "1.0.0",
-  "description": "Documentation for MeiliSearch",
+  "description": "Documentation for Meilisearch",
   "main": "index.js",
   "scripts": {
     "pretest": "yarn style",

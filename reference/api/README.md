@@ -1,6 +1,6 @@
 # API references
 
-Welcome to the MeiliSearch API documentation.
+Welcome to the Meilisearch API documentation.
 
 ::: tip
 
@@ -14,7 +14,7 @@ Check out [the FAQ](/resources/faq.md) for answers to some common questions 💡
 
 #### Content type
 
-Any API request with a payload (`--data-binary`) requires a `Content-Type` header. MeiliSearch currently supports the following formats:
+Any API request with a payload (`--data-binary`) requires a `Content-Type` header. Meilisearch currently supports the following formats:
 
 - `Content-Type: application/json` for JSON
 - `Content-Type: application/x-ndjson` for NDJSON
@@ -73,7 +73,7 @@ If you're having trouble understanding an error, take a look at the [complete li
 
 ## Asynchronous operations
 
-MeiliSearch is an **asynchronous API**. This means that in response to most write requests, you will receive a summarized version of the `task` object:
+Meilisearch is an **asynchronous API**. This means that in response to most write requests, you will receive a summarized version of the `task` object:
 
 ```json
 {

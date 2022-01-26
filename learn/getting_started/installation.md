@@ -5,30 +5,30 @@
 :::: tabs
 
 ::: tab cURL
-Download the **latest stable release** of MeiliSearch with **cURL**.
+Download the **latest stable release** of Meilisearch with **cURL**.
 
-Launch MeiliSearch to start the server.
+Launch Meilisearch to start the server.
 
 ```bash
-# Install MeiliSearch
+# Install Meilisearch
 curl -L https://install.meilisearch.com | sh
 
-# Launch MeiliSearch
+# Launch Meilisearch
 ./meilisearch
 ```
 
 :::
 
 ::: tab Homebrew
-Download the **latest stable release** of MeiliSearch with **Homebrew**.
+Download the **latest stable release** of Meilisearch with **Homebrew**.
 
-Launch MeiliSearch to start the server.
+Launch Meilisearch to start the server.
 
 ```bash
-# Update brew and install MeiliSearch
+# Update brew and install Meilisearch
 brew update && brew install meilisearch
 
-# Launch MeiliSearch
+# Launch Meilisearch
 meilisearch
 ```
 
@@ -37,38 +37,38 @@ meilisearch
 ::: tab Docker
 Using **Docker** you can choose to run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
-This command starts the **latest stable release** of MeiliSearch.
+This command starts the **latest stable release** of Meilisearch.
 
 ```bash
-# Fetch the latest version of MeiliSearch image from DockerHub
+# Fetch the latest version of Meilisearch image from DockerHub
 docker pull getmeili/meilisearch:latest
 
-# Launch MeiliSearch
+# Launch Meilisearch
 docker run -it --rm \
     -p 7700:7700 \
     -v $(pwd)/data.ms:/data.ms \
     getmeili/meilisearch:latest
 ```
 
-Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. MeiliSearch writes data to the `data.ms` folder.
+Data written to a **Docker container is not persistent** and is deleted along with the container when the latter is stopped. Docker volumes are not deleted when containers are removed. It is then recommended to share volumes between your containers and your host machine to provide persistent storage. Meilisearch writes data to the `data.ms` folder.
 
 You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
 :::
 
 ::: tab APT
 
-Download the **latest stable release** of MeiliSearch with **APT**.
+Download the **latest stable release** of Meilisearch with **APT**.
 
-Launch MeiliSearch to start the server.
+Launch Meilisearch to start the server.
 
 ```bash
-# Add MeiliSearch package
+# Add Meilisearch package
 echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 
-# Update APT and install MeiliSearch
+# Update APT and install Meilisearch
 apt update && apt install meilisearch-http
 
-# Launch MeiliSearch
+# Launch Meilisearch
 meilisearch
 ```
 
@@ -76,16 +76,16 @@ meilisearch
 
 ::: tab Source
 
-MeiliSearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
+Meilisearch is written in `Rust`. To compile it, [installing the Rust toolchain](https://www.rust-lang.org/tools/install) is required.
 
 If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
-git clone https://github.com/meilisearch/MeiliSearch
+git clone https://github.com/meilisearch/meilisearch
 cd MeiliSearch
 ```
 
-In the cloned repository, compile MeiliSearch.
+In the cloned repository, compile Meilisearch.
 
 ```bash
 # Update the rust toolchain to the latest version
@@ -102,10 +102,10 @@ cargo build --release
 
 ::: tab Windows
 
-To install MeiliSearch on Windows, you can:
+To install Meilisearch on Windows, you can:
 
 - use Docker (see "Docker" tab above)
-- [download the latest binary](https://github.com/meilisearch/MeiliSearch/releases)
+- [download the latest binary](https://github.com/meilisearch/meilisearch/releases)
 - use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
 - compile from source (see "Source" tab above)
 
@@ -114,12 +114,12 @@ To learn more about the Windows command prompt, follow this [introductory guide]
 ::::
 
 ::: tip Compile for Best Performance
-For best performance, compile MeiliSearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
+For best performance, compile Meilisearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
 :::
 
 ## Cloud deploy
 
-To deploy MeiliSearch on a cloud service, follow one of our dedicated guides:
+To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
 - [AWS](/learn/cookbooks/aws.md)
 - [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
@@ -137,12 +137,12 @@ This is an example using the command line options.
 
 Here is a list of [all the options and how to use them](/reference/features/configuration.md).
 
-## Updating MeiliSearch
+## Updating Meilisearch
 
-Getting the latest version of MeiliSearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [Installation](/learn/getting_started/installation.md#download-and-launch) above).
+Getting the latest version of Meilisearch is a straightforward process: simply fetch and install the latest binary with your preferred method (see [Installation](/learn/getting_started/installation.md#download-and-launch) above).
 
-However, please note that **prior to our official release (`v1.0`), databases are not compatible across versions**. Any database created by MeiliSearch `v0.X` can only be read by that version.
+However, please note that **prior to our official release (`v1.0`), databases are not compatible across versions**. Any database created by Meilisearch `v0.X` can only be read by that version.
 
 ### Migrating your database to a later version
 
-If you get the error `Cannot open database, expected MeiliSearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of MeiliSearch, follow our [dedicated guide](/learn/advanced/updating.md).
+If you get the error `Cannot open database, expected Meilisearch engine version: X.X.X, current engine version Y.Y.Y`, your database is not compatible with the version you're using. To migrate your database to the most recent version of Meilisearch, follow our [dedicated guide](/learn/advanced/updating.md).
