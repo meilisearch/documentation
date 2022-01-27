@@ -1,10 +1,10 @@
 # Chapter 1: Filtering and sorting
 
-This guide picks up right after the [Quick start](/learn/getting_started/quick_start.md) and aims to introduce you to the main features of MeiliSearch. We recommend reading these chapters sequentially. We will be using the command line and the MeiliSearch search preview to demonstrate the features.
+Welcome to the Meilisearch 101! This guide aims to introduce you to the main features of Meilisearch as efficiently as possible. It assumes that you have completed the [Quick start](/learn/getting_started/quick_start.md) and already have a running Meilisearch instance.
 
-This chapter will walk you through how you can control what results you see first using filtering and sorting. You can also filter and sort based on geographical location.
+This chapter uses a dataset of meteors to demonstrate filtering, sorting, and geosearch. To follow along, first click this link to download the file: <a id="downloadMeteors" href="/meteors.json" download="meteors.json">meteors.json</a>. Then, move it into your working directory and run the following command:
 
-This chapter uses the meteors dataset.
+<CodeSamples id="getting_started_add_meteors_md" />
 
 ## Filtering
 
@@ -120,7 +120,7 @@ Let's say you want to find out which meteors crashed within a 210km radius of Be
   }
   ```
 
-You can also use geosearch to sort results based on their distance from a specific location. For example, the following code sample would display meteors in order of how close they were to the Taj Mahal:
+You can also use geosearch to sort results based on their distance from a specific location. This chapter uses wo of how of meteors with information about their size and location close they were to the Taj Mahal:
 
 <CodeSamples id= "getting_started_geoPoint_md" />
 
