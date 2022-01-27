@@ -11,8 +11,8 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
-      { text: 'Learn', link: '/learn/' },
-      { text: 'Reference', link: '/reference/' },
+      { text: 'Learn', link: '/learn/getting_started/quick_start' },
+      { text: 'Reference', link: '/reference/api/' },
       { text: 'FAQ', link: '/faq' },
       {
         text: 'Integrations',
@@ -213,20 +213,6 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '⭐ Feature references',
-          path: '/reference/features/',
-          collapsable: false,
-          children: [
-            '/reference/features/configuration',
-            '/reference/features/distinct',
-            '/reference/features/field_properties',
-            '/reference/features/search_parameters',
-            '/reference/features/settings',
-            '/reference/features/synonyms',
-            '/reference/features/web_interface',
-          ],
-        },
-        {
           title: '📒 API references',
           path: '/reference/api/',
           collapsable: false,
@@ -260,6 +246,20 @@ module.exports = {
             '/reference/api/version',
             '/reference/api/dump',
             '/reference/api/error_codes',
+          ],
+        },
+        {
+          title: '⭐ Feature references',
+          path: '/reference/features/',
+          collapsable: false,
+          children: [
+            '/reference/features/configuration',
+            '/reference/features/distinct',
+            '/reference/features/field_properties',
+            '/reference/features/search_parameters',
+            '/reference/features/settings',
+            '/reference/features/synonyms',
+            '/reference/features/web_interface',
           ],
         },
       ],
