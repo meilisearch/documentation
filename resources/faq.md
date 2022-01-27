@@ -1,15 +1,13 @@
 ---
 permalink: /faq.html
+sidebar: auto
 ---
 
 # FAQ
 
-This FAQ is still a work in progress.
-If you have any questions we want to hear from you. Your feedback will help us improve this page!
+This FAQ is created in collaboration with our users.
 
-#### Table of contents
-
-[[toc]]
+If you have any questions that aren't answered here, we want to hear from you! Your feedback will help us improve our documentation.
 
 ## I have never used a search engine before. Can I use Meilisearch anyway?
 
