@@ -49,6 +49,6 @@ Why should you use Meilisearch instead of any other existing solution? We try to
 
 Instead of showing you examples, why not just invite you to test Meilisearch interactively in the **out-of-the-box search preview** we deliver?
 
-There's no need to write a single line of front-end code. All you need to do is follow [this guide](/learn/what_is_meilisearch/search_preview.md) to give the search engine a try!
+There's no need to write a single line of front-end code. All you need to do is follow [this guide](/learn/getting_started/quick_start.md) to give the search engine a try!
 
-![Search preview](/search_preview.png)
+![Search preview](/search_preview_no_documents.png)

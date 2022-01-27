@@ -1,6 +1,6 @@
 # Search preview
 
-After adding documents to your Meilisearch instance, you can immediately start searching through your dataset using Meilisearch's search preview. This can be useful when you want to check documents have been properly indexed and Meilisearch is working as expected.
+After adding documents to your Meilisearch instance, you can immediately start searching through your dataset using Meilisearch's search preview. This can be useful when you want to check that documents have been properly indexed and Meilisearch is working as expected.
 
 If your Meilisearch instance does not have any indexes, you should see this screen.
 

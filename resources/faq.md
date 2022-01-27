@@ -193,7 +193,7 @@ Yes, a search preview is available on the default address and port of your Meili
 
 All you need to do is open your web browser and enter Meilisearch’s address to visit it. This leads you to a web page with a search bar that allows you to search in a selected index.
 
-Since the production environment requires an API-key for searching, search preview is only available in [development mode](/reference/features/configuration.md#environment).
+Since the production environment requires an API key for searching, the search preview is only available in [development mode](/reference/features/configuration.md#environment).
 
 Here is more information about [Meilisearch's search preview](/learn/what_is_meilisearch/search_preview.md).
 
