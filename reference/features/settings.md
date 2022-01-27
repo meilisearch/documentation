@@ -29,7 +29,7 @@ Documents returned upon search contain only displayed fields.
 
 #### Example
 
-By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `genre` and `release_date`.
+By adding the following settings, documents returned upon search will contain the fields `title`, `overview`, `genres` and `release_date`.
 
 <CodeSamples id="settings_guide_displayed_1" />
 
@@ -153,7 +153,7 @@ The content of the fields whose attributes are added to the [searchable-attribut
 
 #### Example
 
-By adding the following settings, the fields `title`, `description` and `genre` will be searched.
+By adding the following settings, the fields `title`, `overview` and `genres` will be searched.
 
 <CodeSamples id="settings_guide_searchable_1" />
 

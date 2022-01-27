@@ -75,13 +75,13 @@ List the settings.
   "distinctAttribute": null,
   "searchableAttributes": [
     "title",
-    "description",
+    "overview",
     "genres"
   ],
   "displayedAttributes": [
     "title",
-    "description",
-    "genre",
+    "overview",
+    "genres",
     "release_date"
   ],
   "stopWords": null,

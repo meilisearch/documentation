@@ -35,8 +35,8 @@ List the settings.
 ```json
 [
   "title",
-  "description",
-  "genre"
+  "overview",
+  "genres"
 ]
 ```
 
@@ -68,7 +68,7 @@ This means that a document with a match in an attribute at the start of the arra
 
 <CodeSamples id="update_searchable_attributes_1" />
 
-A match in title will make a document more relevant than another document with a match in description.
+A match in title will make a document more relevant than another document with a match in overview.
 
 #### Response: `202 Accepted`
 
