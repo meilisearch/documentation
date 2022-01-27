@@ -8,7 +8,7 @@ Welcome to the Meilisearch documentation. Here you'll find everything you need t
 
 **Enjoy a hands-on approach to learning**? Follow a [quick tutorial](/learn/getting_started/quick_start.md) to learn the basics of the engine.
 
-**Prefer to learn by reading**? You're not alone. Check out articles covering the most important [core concepts](/learn/core_concepts) of Meilisearch.
+**Prefer to learn by reading**? You're not alone. Check out articles covering the most important [core concepts](/learn/core_concepts/documents.md) of Meilisearch.
 
 **Announcing cloud-hosted Meilisearch:** Join the closed beta by [filling out this form](https://meilisearch.typeform.com/to/FtnzvZfh).
 

@@ -11,8 +11,8 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
-      { text: 'Learn', link: '/learn/' },
-      { text: 'Reference', link: '/reference/' },
+      { text: 'Learn', link: '/learn/getting_started/quick_start' },
+      { text: 'Reference', link: '/reference/api/' },
       {
         text: 'Resources',
         items: [
@@ -56,7 +56,7 @@ module.exports = {
         },
         {
           title: '🚀 Getting started',
-          path: '/learn/getting_started/',
+          path: '/learn/getting_started/quick_start',
           collapsable: false,
           children: [
             '/learn/getting_started/installation',
@@ -66,7 +66,7 @@ module.exports = {
         },
         {
           title: '💡 Core concepts',
-          path: '/learn/core_concepts/',
+          path: '/learn/core_concepts/documents',
           collapsable: false,
           children: [
             '/learn/core_concepts/documents',
@@ -76,7 +76,7 @@ module.exports = {
         },
         {
           title: '📚 Advanced topics',
-          path: '/learn/advanced/',
+          path: '/learn/advanced/asynchronous_operations',
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
@@ -124,7 +124,7 @@ module.exports = {
         },
         {
           title: '📕 Cookbooks',
-          path: '/learn/cookbooks/',
+          path: '/learn/cookbooks/running_production',
           collapsable: false,
           children: [
             {
@@ -171,7 +171,7 @@ module.exports = {
         },
         {
           title: '👐 Contributing',
-          path: '/learn/contributing/',
+          path: '/learn/contributing/contributing_to_docs',
           collapsable: false,
           children: [
             {
@@ -182,20 +182,6 @@ module.exports = {
         },
       ],
       '/reference/': [
-        {
-          title: '⭐ Feature references',
-          path: '/reference/features/',
-          collapsable: false,
-          children: [
-            '/reference/features/configuration',
-            '/reference/features/distinct',
-            '/reference/features/field_properties',
-            '/reference/features/search_parameters',
-            '/reference/features/settings',
-            '/reference/features/synonyms',
-            '/reference/features/web_interface',
-          ],
-        },
         {
           title: '📒 API references',
           path: '/reference/api/',
@@ -230,6 +216,20 @@ module.exports = {
             '/reference/api/version',
             '/reference/api/dump',
             '/reference/api/error_codes',
+          ],
+        },
+        {
+          title: '⭐ Feature references',
+          path: '/reference/features/configuration',
+          collapsable: false,
+          children: [
+            '/reference/features/configuration',
+            '/reference/features/distinct',
+            '/reference/features/field_properties',
+            '/reference/features/search_parameters',
+            '/reference/features/settings',
+            '/reference/features/synonyms',
+            '/reference/features/web_interface',
           ],
         },
       ],
