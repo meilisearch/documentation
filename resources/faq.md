@@ -5,7 +5,7 @@ sidebar: auto
 
 # FAQ
 
-This FAQ is still a work in progress.
+This FAQ is created in collaboration with our users.
 
 If you have any questions that aren't answered here, we want to hear from you! Your feedback will help us improve our documentation.
 
