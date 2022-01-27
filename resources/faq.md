@@ -7,7 +7,7 @@ sidebar: auto
 
 This FAQ is still a work in progress.
 
-If you have any questions, we want to hear from you! Your feedback will help us improve this page.
+If you have any questions that aren't answered here, we want to hear from you! Your feedback will help us improve our documentation.
 
 ## I have never used a search engine before. Can I use Meilisearch anyway?
 
