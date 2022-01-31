@@ -43,7 +43,7 @@ module.exports = {
           {
             text: 'Front-end tools',
             items: [
-              { text: 'instant-meiliSearch', link: 'https://github.com/meilisearch/instant-meilisearch' },
+              { text: 'instant-meilisearch', link: 'https://github.com/meilisearch/instant-meilisearch' },
               { text: 'docs-searchbar.js', link: 'https://github.com/meilisearch/docs-searchbar.js' },
             ],
           },
