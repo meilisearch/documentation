@@ -11,13 +11,13 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
-      { text: 'Learn', link: '/learn/' },
-      { text: 'Reference', link: '/reference/' },
+      { text: 'Learn', link: '/learn/getting_started/quick_start' },
+      { text: 'Reference', link: '/reference/api/' },
+      { text: 'FAQ', link: '/faq' },
       {
-        text: 'Resources',
+        text: 'Integrations',
         items: [
-          { text: 'FAQ', link: '/faq' },
-          { text: 'Open API', link: '/open-api-readme' },
+
           {
             text: 'SDKs',
             items: [
@@ -31,6 +31,36 @@ module.exports = {
               { text: 'Ruby', link: 'https://github.com/meilisearch/meilisearch-ruby' },
               { text: 'Rust', link: 'https://github.com/meilisearch/meilisearch-rust' },
               { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
+            ],
+          },
+          {
+            text: 'Frameworks',
+            items: [
+              { text: 'Rails', link: 'https://github.com/meilisearch/meilisearch-rails' },
+              { text: 'Laravel', link: 'https://github.com/laravel/scout' },
+            ],
+          },
+          {
+            text: 'Front-end tools',
+            items: [
+              { text: 'instant-meilisearch', link: 'https://github.com/meilisearch/instant-meilisearch' },
+              { text: 'docs-searchbar.js', link: 'https://github.com/meilisearch/docs-searchbar.js' },
+            ],
+          },
+          {
+            text: 'Plugins',
+            items: [
+              { text: 'Gatsby', link: 'https://github.com/meilisearch/gatsby-plugin-meilisearch/' },
+              { text: 'Vuepress', link: 'https://github.com/meilisearch/vuepress-plugin-meilisearch' },
+              { text: 'Strapi', link: 'https://github.com/meilisearch/strapi-plugin-meilisearch/' },
+            ],
+          },
+          {
+            text: 'DevOp tools',
+            items: [
+              { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
+              { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
+              { text: 'AWS', link: 'https://github.com/meilisearch/meilisearch-aws' },
             ],
           },
         ],
@@ -184,19 +214,6 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '⭐ Feature references',
-          path: '/reference/features/',
-          collapsable: false,
-          children: [
-            '/reference/features/configuration',
-            '/reference/features/distinct',
-            '/reference/features/field_properties',
-            '/reference/features/search_parameters',
-            '/reference/features/settings',
-            '/reference/features/synonyms',
-          ],
-        },
-        {
           title: '📒 API references',
           path: '/reference/api/',
           collapsable: false,
@@ -230,6 +247,19 @@ module.exports = {
             '/reference/api/version',
             '/reference/api/dump',
             '/reference/api/error_codes',
+          ],
+        },
+        {
+          title: '⭐ Feature references',
+          path: '/reference/features/',
+          collapsable: false,
+          children: [
+            '/reference/features/configuration',
+            '/reference/features/distinct',
+            '/reference/features/field_properties',
+            '/reference/features/search_parameters',
+            '/reference/features/settings',
+            '/reference/features/synonyms',
           ],
         },
       ],
