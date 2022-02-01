@@ -100,7 +100,7 @@ Your instance may take a minute or two to get up and running (see the **Instance
 
 ![Launch](/aws/09.launch.png)
 
-Once the instance is ready, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS**. You should see the Meilisearch [web interface](/reference/features/web_interface.md).
+Once the instance is ready, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS**. You should see the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview.md).
 
 ![Enjoy](/aws/10.enjoy.png)
 

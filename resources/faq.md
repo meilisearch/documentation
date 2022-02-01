@@ -187,13 +187,13 @@ More information in the [asynchronous operations guide](/learn/advanced/asynchro
 
 ## Does Meilisearch deliver an interface to search in my documents?
 
-Yes, a web interface is available on the default address and port of your Meilisearch instance.
+Yes, a search preview is available on the default address and port of your Meilisearch instance.
 
 All you need to do is open your web browser and enter Meilisearch’s address to visit it. This leads you to a web page with a search bar that allows you to search in a selected index.
 
-Since the production environment requires an API-key for searching, the web interface is only available in [development mode](/reference/features/configuration.md#environment).
+Since the production environment requires an API key for searching, the search preview is only available in [development mode](/reference/features/configuration.md#environment).
 
-Here is more information about the [Meilisearch web interface](/reference/features/web_interface.md).
+Here is more information about [Meilisearch's search preview](/learn/what_is_meilisearch/search_preview.md).
 
 ## I do not understand the relevancy of my search results.
 
