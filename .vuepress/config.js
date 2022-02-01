@@ -296,9 +296,9 @@ module.exports = {
     [
       'meilisearch',
       {
-        hostUrl: 'https://docs-search-bar.meilisearch.com',
+        hostUrl: 'https://ms-480d6ad12249-173.saas.meili.dev',
         apiKey:
-          'd79226ae89f29d4dadba8d0c30c240e435f584fb83a7ae573b13eb62edec35cd',
+          'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
         indexUid: 'docs',
         placeholder: 'Search as you type...',
       },
