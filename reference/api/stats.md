@@ -1,6 +1,6 @@
 # Stats
 
-The `/stats` route gives extended information and metrics about indexes and the MeiliSearch database.
+The `/stats` route gives extended information and metrics about indexes and the Meilisearch database.
 
 ## Get stats of an index
 

@@ -1,16 +1,16 @@
-# Deploy a MeiliSearch instance on Google Cloud Platform (GCP) Compute Engine
+# Deploy a Meilisearch instance on Google Cloud Platform (GCP) Compute Engine
 
-Using our GCP custom image, MeiliSearch can be deployed on GCP in just a few minutes.
+Using our GCP custom image, Meilisearch can be deployed on GCP in just a few minutes.
 
-The following guide will walk you through every step to deploy MeiliSearch in a GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
+The following guide will walk you through every step to deploy Meilisearch in a GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
 
 **Table of contents**:
 
 [[toc]]
 
-## Part 1: Deploy a MeiliSearch instance
+## Part 1: Deploy a Meilisearch instance
 
-### 1. Import MeiliSearch custom image on your GCP account
+### 1. Import Meilisearch custom image on your GCP account
 
 - Navigate to `Compute Engine` => `Images`.
 
@@ -34,7 +34,7 @@ meilisearch-image/meilisearch-v0.25.0-debian-10.vmdk
 
 - **The other fields are not required.**
 
-- Click on `Create`. You may have to wait up to 6 minutes while the MeiliSearch custom image imports to your account.
+- Click on `Create`. You may have to wait up to 6 minutes while the Meilisearch custom image imports to your account.
 
 ![Wait for the image to finish importing](/gcp/03.import-image.png)
 
@@ -46,7 +46,7 @@ meilisearch-image/meilisearch-v0.25.0-debian-10.vmdk
 
 - Give your instance a name
 
-- In the `Machine configuration` section, make sure to pick a `Machine type` with enough memory to run MeiliSearch according to your needs. More memory means faster searching.
+- In the `Machine configuration` section, make sure to pick a `Machine type` with enough memory to run Meilisearch according to your needs. More memory means faster searching.
 
 ![Machine configuration](/gcp/05.machine-configuration.png)
 
@@ -56,9 +56,9 @@ meilisearch-image/meilisearch-v0.25.0-debian-10.vmdk
 
 ![Boot disk](/gcp/06.boot-disk.png)
 
-- In the `Firewall` section, make sure to check the `Allow HTTP traffic` and `Allow HTTPS traffic` boxes so that your MeiliSearch instance can communicate with the internet.
+- In the `Firewall` section, make sure to check the `Allow HTTP traffic` and `Allow HTTPS traffic` boxes so that your Meilisearch instance can communicate with the internet.
 
-- Finally, click on the `Create` button. After a minute or two, your MeiliSearch instance should be up and running.
+- Finally, click on the `Create` button. After a minute or two, your Meilisearch instance should be up and running.
 
 ![Your instance is running!](/gcp/07.instance-running.png)
 
@@ -76,15 +76,15 @@ The server should answer with a `200 OK` status code as shown in the example bel
 
 ## Part 2: Set your instance to a production environment
 
-Configuring your MeiliSearch instance in a production environment is not just straightforward—it's completely automated. Establish an SSH connection with your instance, and a script will guide you through the process.
+Configuring your Meilisearch instance in a production environment is not just straightforward—it's completely automated. Establish an SSH connection with your instance, and a script will guide you through the process.
 
 ### 1. Make your domain name point to your instance IP
 
 If you want to use a custom domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, you can skip this step.
 
-![Domain to  MeiliSearch](/gcp/08.domain.png)
+![Domain to  Meilisearch](/gcp/08.domain.png)
 
-Your domain name should now be linked to your MeiliSearch instance. Run a health check to verify that your instance is running and your DNS is well configured:
+Your domain name should now be linked to your Meilisearch instance. Run a health check to verify that your instance is running and your DNS is well configured:
 
 ```bash
 curl -v http://<your-domain-name>/health
@@ -100,9 +100,9 @@ The server should answer with a `200 OK` status code as shown in the example bel
 
 ### 2. Set API key and SSL (HTTPS)
 
-MeiliSearch is currently running in a **development** environment. You haven't set up an API key, meaning that anyone can read/write from your MeiliSearch, and you aren't using HTTPS yet, which makes this configuration unsafe for **production**.
+Meilisearch is currently running in a **development** environment. You haven't set up an API key, meaning that anyone can read/write from your Meilisearch, and you aren't using HTTPS yet, which makes this configuration unsafe for **production**.
 
-To start the configuration process, connect via SSH to your new MeiliSearch instance and follow the instructions that appear.
+To start the configuration process, connect via SSH to your new Meilisearch instance and follow the instructions that appear.
 
 ### 2.2. Run the configuration script
 
@@ -157,9 +157,9 @@ If it’s your first time accessing the instance via SSH, a script will run auto
 meilisearch-setup
 ```
 
-### 3. Enjoy your ready-to-use MeiliSearch instance
+### 3. Enjoy your ready-to-use Meilisearch instance
 
-Your MeiliSearch instance is up and running on GCP and ready to be used in production.
+Your Meilisearch instance is up and running on GCP and ready to be used in production.
 
 To make sure that everything is running smoothly, do a final HTTP call to the `/health` route:
 
@@ -177,4 +177,4 @@ The server should answer with a `200 OK` status code as shown in the example bel
 ...
 ```
 
-You're all set to use MeiliSearch in production with GCP! If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
+You're all set to use Meilisearch in production with GCP! If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).

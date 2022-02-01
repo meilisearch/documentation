@@ -1,23 +1,23 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'MeiliSearch Documentation v0.25',
+  title: 'Meilisearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
   themeConfig: {
-    repo: 'meilisearch/MeiliSearch',
+    repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
     lastUpdated: 'Last Updated',
-    logo: '/logo.png',
+    logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
-      { text: 'Learn', link: '/learn/' },
-      { text: 'Reference', link: '/reference/' },
+      { text: 'Learn', link: '/learn/getting_started/quick_start' },
+      { text: 'Reference', link: '/reference/api/' },
+      { text: 'FAQ', link: '/faq' },
       {
-        text: 'Resources',
+        text: 'Integrations',
         items: [
-          { text: 'FAQ', link: '/faq' },
-          { text: 'Open API', link: '/open-api-readme' },
+
           {
             text: 'SDKs',
             items: [
@@ -33,6 +33,36 @@ module.exports = {
               { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
             ],
           },
+          {
+            text: 'Frameworks',
+            items: [
+              { text: 'Rails', link: 'https://github.com/meilisearch/meilisearch-rails' },
+              { text: 'Laravel', link: 'https://github.com/laravel/scout' },
+            ],
+          },
+          {
+            text: 'Front-end tools',
+            items: [
+              { text: 'instant-meilisearch', link: 'https://github.com/meilisearch/instant-meilisearch' },
+              { text: 'docs-searchbar.js', link: 'https://github.com/meilisearch/docs-searchbar.js' },
+            ],
+          },
+          {
+            text: 'Plugins',
+            items: [
+              { text: 'Gatsby', link: 'https://github.com/meilisearch/gatsby-plugin-meilisearch/' },
+              { text: 'Vuepress', link: 'https://github.com/meilisearch/vuepress-plugin-meilisearch' },
+              { text: 'Strapi', link: 'https://github.com/meilisearch/strapi-plugin-meilisearch/' },
+            ],
+          },
+          {
+            text: 'DevOp tools',
+            items: [
+              { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
+              { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
+              { text: 'AWS', link: 'https://github.com/meilisearch/meilisearch-aws' },
+            ],
+          },
         ],
       },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
@@ -40,7 +70,7 @@ module.exports = {
     sidebar: {
       '/learn/': [
         {
-          title: '🔎 What is MeiliSearch?',
+          title: '🔎 What is Meilisearch?',
           path: '/learn/what_is_meilisearch/',
           collapsable: false,
           sidebarDepth: 0,
@@ -50,6 +80,8 @@ module.exports = {
             '/learn/what_is_meilisearch/sdks',
             '/learn/what_is_meilisearch/comparison_to_alternatives',
             '/learn/what_is_meilisearch/telemetry',
+            '/learn/what_is_meilisearch/search_preview',
+            '/learn/what_is_meilisearch/language',
             '/learn/what_is_meilisearch/contact',
           ],
         },
@@ -84,7 +116,7 @@ module.exports = {
             '/learn/advanced/security',
             '/learn/advanced/sorting',
             {
-              title: 'Updating MeiliSearch',
+              title: 'Updating Meilisearch',
               path: '/learn/advanced/updating.md',
             },
             {
@@ -182,21 +214,6 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '⭐ Feature references',
-          path: '/reference/features/',
-          collapsable: false,
-          children: [
-            '/reference/features/configuration',
-            '/reference/features/distinct',
-            '/reference/features/field_properties',
-            '/reference/features/language',
-            '/reference/features/search_parameters',
-            '/reference/features/settings',
-            '/reference/features/synonyms',
-            '/reference/features/web_interface',
-          ],
-        },
-        {
           title: '📒 API references',
           path: '/reference/api/',
           collapsable: false,
@@ -232,6 +249,19 @@ module.exports = {
             '/reference/api/error_codes',
           ],
         },
+        {
+          title: '⭐ Feature references',
+          path: '/reference/features/',
+          collapsable: false,
+          children: [
+            '/reference/features/configuration',
+            '/reference/features/distinct',
+            '/reference/features/field_properties',
+            '/reference/features/search_parameters',
+            '/reference/features/settings',
+            '/reference/features/synonyms',
+          ],
+        },
       ],
     },
   },
@@ -248,6 +278,8 @@ module.exports = {
     ['sitemap', { hostname: 'https://docs.meilisearch.com' }],
     ['seo', {}],
     'img-lazy',
+    // Because colors can not be set through the settings of the plugin
+    // Change are done in .vuepress/styles/palette.styl
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
@@ -257,7 +289,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#3385ff',
+        color: '#FF4E62',
         staticIcon: true,
       },
     ],
@@ -284,6 +316,7 @@ module.exports = {
     ],
   ],
   head: [
+    ['link', { rel: 'icon', href: '/favicon-32x32.png' }],
     ['meta', { charset: 'utf-8' }],
     [
       'meta',
@@ -301,7 +334,7 @@ module.exports = {
       {
         prefix: ogprefix,
         property: 'og:title',
-        content: 'MeiliSearch Documentation',
+        content: 'Meilisearch Documentation',
       },
     ],
     ['meta', { prefix: ogprefix, property: 'og:type', content: 'website' }],
@@ -346,18 +379,18 @@ module.exports = {
       {
         prefix: ogprefix,
         property: 'og:site-name',
-        content: 'MeiliSearch Documentation',
+        content: 'Meilisearch Documentation',
       },
     ],
     [
       'meta',
-      { property: 'twitter:title', content: 'MeiliSearch Documentation' },
+      { property: 'twitter:title', content: 'Meilisearch Documentation' },
     ],
     [
       'meta',
       {
         property: 'twitter:description',
-        content: 'The official documentation of MeiliSearch',
+        content: 'The official documentation of Meilisearch',
       },
     ],
     [

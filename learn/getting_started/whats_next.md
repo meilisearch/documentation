@@ -1,6 +1,6 @@
 # What's next?
 
-MeiliSearch was built on a few core concepts. If you haven't already done so, we invite you to explore the following pages that will give you an essential insight into our search engine:
+Meilisearch was built on a few core concepts. If you haven't already done so, we invite you to explore the following pages that will give you an essential insight into our search engine:
 
 - [Documents](/learn/core_concepts/documents.md)
 - [Indexes](/learn/core_concepts/indexes.md)
@@ -16,6 +16,6 @@ And additional resources here:
 - [FAQ](/resources/faq.md)
 - [Advanced topics](/learn/advanced)
 - [Cookbooks](/learn/cookbooks)
-- [Postman collection](/learn/cookbooks/postman_collection.md): it can be tedious to re-write every route when wanting to try out an API. Try out MeiliSearch with our collection in Postman
+- [Postman collection](/learn/cookbooks/postman_collection.md): it can be tedious to re-write every route when wanting to try out an API. Try out Meilisearch with our collection in Postman
 
 More tutorials are currently in development and will be available soon.

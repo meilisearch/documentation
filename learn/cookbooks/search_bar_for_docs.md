@@ -2,41 +2,41 @@
 
 You might have noticed the search bar in this documentation.
 
-![MeiliSearch docs search bar demo](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
+![Meilisearch docs search bar demo](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
 
 And you are probably wanting the same for your own documentation!
 
 This tutorial will guide you through the steps of building a relevant and powerful search bar for your documentation 🚀
 
-1. [Run a MeiliSearch Instance](#run-a-meilisearch-instance)
+1. [Run a Meilisearch Instance](#run-a-meilisearch-instance)
 2. [Scrape your content](#scrape-your-content)
 3. [Integrate the Search Bar](#integrate-the-search-bar)
 
-## Run a MeiliSearch instance
+## Run a Meilisearch instance
 
-First of all, you need your documentation content to be scraped and pushed into a MeiliSearch instance.
+First of all, you need your documentation content to be scraped and pushed into a Meilisearch instance.
 
-You can install and run MeiliSearch on your machine using `curl`.
+You can install and run Meilisearch on your machine using `curl`.
 
 ```bash
 curl -L https://install.meilisearch.com | sh
 ./meilisearch --master-key=myMasterKey
 ```
 
-There are [other ways to install MeiliSearch](/learn/getting_started/quick_start.md#download-and-launch).
+There are [other ways to install Meilisearch](/learn/getting_started/quick_start.md#download-and-launch).
 
-MeiliSearch is open-source and can run either on your server or on any cloud provider.
+Meilisearch is open-source and can run either on your server or on any cloud provider.
 
 ::: note
 
-The host URL and the API key you will provide in the next steps correspond to the credentials of this MeiliSearch instance.
+The host URL and the API key you will provide in the next steps correspond to the credentials of this Meilisearch instance.
 In the example above, the host URL is `http://localhost:7700` and the API key is `myMasterKey`.
 
 :::
 
 ## Scrape your content
 
-The Meili team provides and maintains a [scraper tool](https://github.com/meilisearch/docs-scraper) to automatically read the content of your website and store it into an index in MeiliSearch.
+The Meili team provides and maintains a [scraper tool](https://github.com/meilisearch/docs-scraper) to automatically read the content of your website and store it into an index in Meilisearch.
 
 ### Configuration file
 
@@ -75,7 +75,7 @@ Here is an example of a basic configuration file:
 }
 ```
 
-The `index_uid` field is the index identifier in your MeiliSearch instance in which your website content is stored. The scraping tool will create a new index if it does not exist.
+The `index_uid` field is the index identifier in your Meilisearch instance in which your website content is stored. The scraping tool will create a new index if it does not exist.
 
 The `docs-content` class is the main container of the textual content in this example. Most of the time, this tag is a `<main>` or an `<article>` HTML element.
 
@@ -94,7 +94,7 @@ More [optional fields are available](https://github.com/meilisearch/docs-scraper
 
 ### Run the scraper
 
-You can run the scraper with Docker. With our local MeiliSearch instance set up at [the first step](#run-a-meilisearch-instance), we run:
+You can run the scraper with Docker. With our local Meilisearch instance set up at [the first step](#run-a-meilisearch-instance), we run:
 
 ```bash
 docker run -t --rm \
@@ -113,12 +113,12 @@ If you don't want to use Docker, here are [other ways to run the scraper](https:
 
 `<absolute-path-to-your-config-file>` should be the **absolute** path of your configuration file defined at [the previous step](#configuration-file).
 
-The API key should have the permissions to add documents into your MeiliSearch instance. In a production environment, we recommend providing the `Default Admin API Key` as it has enough permissions to perform such requests.
-_More about [MeiliSearch security](/learn/advanced/security.md)._
+The API key should have the permissions to add documents into your Meilisearch instance. In a production environment, we recommend providing the `Default Admin API Key` as it has enough permissions to perform such requests.
+_More about [Meilisearch security](/learn/advanced/security.md)._
 
 ::: tip
 
-We recommend running the scraper at each new deployment of your documentation, [as we do for the MeiliSearch's one](https://github.com/meilisearch/documentation/blob/master/.github/workflows/gh-pages-scraping.yml).
+We recommend running the scraper at each new deployment of your documentation, [as we do for the Meilisearch's one](https://github.com/meilisearch/documentation/blob/master/.github/workflows/gh-pages-scraping.yml).
 
 :::
 
@@ -128,7 +128,7 @@ If your documentation is not a VuePress application, you can directly go to [thi
 
 ### For VuePress documentation sites
 
-If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the MeiliSearch documentation.
+If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the Meilisearch documentation.
 
 ![VuePress plugin example](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
 
@@ -171,15 +171,15 @@ module.exports = {
 }
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the MeiliSearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
-`indexUid` is the index identifier in your MeiliSearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
+`indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 
 These three fields are mandatory, but more [optional fields are available](https://github.com/meilisearch/vuepress-plugin-meilisearch#customization) to customize your search bar.
 
 ::: warning
 
 Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/api/search.md) , such as the `Default Search API Key`, in a production environment.
-Read more about [MeiliSearch security](/learn/advanced/security.md).
+Read more about [Meilisearch security](/learn/advanced/security.md).
 
 :::
 
@@ -212,15 +212,15 @@ If you don't use VuePress for your documentation, we provide a [front-end SDK](h
 </html>
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the MeiliSearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
-`indexUid` is the index identifier in your MeiliSearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
+`indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
 
 ::: warning
 
 We strongly recommend providing a `Default Search API Key` in a production environment, which is enough to perform search requests.
 
-Read more about [MeiliSearch security](/learn/advanced/security.md).
+Read more about [Meilisearch security](/learn/advanced/security.md).
 
 :::
 
@@ -235,4 +235,4 @@ For more concrete examples, you can check out this [basic HTML file](https://git
 ## What's next?
 
 At this point you should have a working search engine on your website, congrats! 🎉
-You can check [this tutorial](/learn/cookbooks/running_production.md) if you now want to run MeiliSearch in production!
+You can check [this tutorial](/learn/cookbooks/running_production.md) if you now want to run Meilisearch in production!

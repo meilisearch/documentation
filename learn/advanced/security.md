@@ -1,12 +1,12 @@
 # Security and permissions
 
-This guide will teach you how to protect your MeiliSearch instance by setting a master key and how to authorize requests using API keys. You will also learn how to use your master key to create, list, update, and delete API keys with granular permissions.
+This guide will teach you how to protect your Meilisearch instance by setting a master key and how to authorize requests using API keys. You will also learn how to use your master key to create, list, update, and delete API keys with granular permissions.
 
-## Protecting a MeiliSearch instance
+## Protecting a Meilisearch instance
 
-**By default, MeiliSearch's API is unprotected**. This means all routes are publicly accessible, and require no authorization to access.
+**By default, Meilisearch's API is unprotected**. This means all routes are publicly accessible, and require no authorization to access.
 
-To protect a MeiliSearch instance from unauthorized use, you must supply a master key at launch. This master key can be an alphanumeric string of any length.
+To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key can be an alphanumeric string of any length.
 
 Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/reference/features/configuration.md#master-key).
 
@@ -38,7 +38,7 @@ set MEILI_MASTER_KEY="your_master_key"
 :::
 ::::
 
-Once you launch MeiliSearch with a master key, all API endpoints except [the health endpoint](/reference/api/health.md#get-health) are automatically protected from unauthorized requests.
+Once you launch Meilisearch with a master key, all API endpoints except [the health endpoint](/reference/api/health.md#get-health) are automatically protected from unauthorized requests.
 
 From that point on, API requests must include the `Authorization` header to be successful. Read on to learn more.
 
@@ -52,7 +52,7 @@ It is particularly important to protect an instance when dealing with sensitive 
 
 ### Using default API keys for authorization
 
-When you launch an instance for the first time, MeiliSearch will automatically generate two API keys: `Default Search API Key` and `Default Admin API Key`.
+When you launch an instance for the first time, Meilisearch will automatically generate two API keys: `Default Search API Key` and `Default Admin API Key`.
 
 As its name indicates, the `Default Search API Key` can only be used to access [the search route](/reference/api/search.md).
 
@@ -64,7 +64,7 @@ Both default API keys have access to all indexes in an instance and do not have 
 
 ### Differences between the master key and API keys
 
-MeiliSearch currently has two types of security keys: one master key and any number of API keys.
+Meilisearch currently has two types of security keys: one master key and any number of API keys.
 
 Though both types of keys help you protect your instance and your data, they serve distinct purposes and are managed in different ways.
 
@@ -72,15 +72,15 @@ API keys grant users access to a specific set of indexes, routes, and endpoints.
 
 For most of your day-to-day operations, you should use API keys when communicating with a protected instance.
 
-When you launch an instance for the first time, MeiliSearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](#using-default-api-keys-for-authorization).
+When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](#using-default-api-keys-for-authorization).
 
 While API keys are designed to have limited permissions, the master key grants users full control over an instance. The master key is the only key with access to endpoints for creating and deleting API keys. Since the master key is not an API key, it cannot be configured and listed through the `/keys` endpoints.
 
-Exposing your master key can give malicious users complete control over your MeiliSearch instance. We strongly recommend you **only use the master key when managing API keys**.
+Exposing your master key can give malicious users complete control over your Meilisearch instance. We strongly recommend you **only use the master key when managing API keys**.
 
 ## Using the master key to manage API keys
 
-MeiliSearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
+Meilisearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
 The master key is the only key with access to the [`/keys` route](/reference/api/keys.md). This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
 
@@ -112,7 +112,7 @@ We can update the `Default Search API Key` so regular users cannot perform searc
 
 To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key) which can only be accessed with the master key.
 
-MeiliSearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `indexes`.
+Meilisearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `indexes`.
 
 ### Creating an API key
 
@@ -144,7 +144,7 @@ It is good practice to always set an expiry date when creating a new API key. If
 
 ### Listing API keys
 
-You can use the [list keys endpoint](/reference/api/keys.md) to obtain information on any active key in your MeiliSearch instance. This is useful when you need an overview of existing keys and their permissions.
+You can use the [list keys endpoint](/reference/api/keys.md) to obtain information on any active key in your Meilisearch instance. This is useful when you need an overview of existing keys and their permissions.
 
 [`GET /keys`](/reference/api/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you need the master key to access this endpoint.
 
@@ -216,13 +216,13 @@ If you must continue using an expired key, you may use the [update key endpoint]
 
 ## Changing the master key
 
-To change the master key, first terminate your MeiliSearch instance. Then relaunch it, [supplying a new value for the master key](#protecting-a-meilisearch-instance).
+To change the master key, first terminate your Meilisearch instance. Then relaunch it, [supplying a new value for the master key](#protecting-a-meilisearch-instance).
 
 **Changing an instance's master key renders all active API keys invalid and generates new values for each one of them.** This is useful if your security is severely compromised and you must reset all API key values at once.
 
 ## Disabling security
 
-You can disable instance protection by restarting MeiliSearch without providing a master key:
+You can disable instance protection by restarting Meilisearch without providing a master key:
 
 :::: tabs
 ::: tab CLI
@@ -257,5 +257,5 @@ set MEILI_MASTER_KEY=
 ::::
 
 ::: danger
-We strongly advise against deactivating key-based security for any MeiliSearch instances used in production or containing sensitive information.
+We strongly advise against deactivating key-based security for any Meilisearch instances used in production or containing sensitive information.
 :::

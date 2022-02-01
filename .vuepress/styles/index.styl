@@ -1,9 +1,15 @@
 @import url('https://rsms.me/inter/inter.css');
 
+html
+  background-color: #f9f8ff !important;
 body
-  background-color: #fafafc
+  background-color: #f9f8ff
   font-family: 'Inter', sans-serif
-  color: #000000
+  color: #21004B
+
+h1
+  background-color: #f9f8ff
+  color: #21004B
 
 .custom-block
   .custom-block-title
@@ -15,8 +21,8 @@ body
     border-left-style solid
     margin 1rem 0
   &.note
-    background-color #f3f5f7
-    border-color #1e90ff
+    background-color #fff
+    border-color #4f55e3;
 .code-copy
     position: sticky;
     left: 0px;
@@ -28,6 +34,57 @@ body
 {$contentClass} a code
   color $accentColor
 
-.el-tabs 
+.el-tabs
   .el-tabs__item
    padding 0 15px
+
+
+// TODO: CSS is very ugly for efficienty purposes.
+// It should be cleaned
+.navbar, .links
+  background-color: #fcfcff !important;
+.sidebar
+  background-color: #fcfcff !important;
+.site-name
+  color: #21004B !important;
+.nav-link, .dropdown-title
+  color: #4d336f !important;
+  font-weight: 500 !important;
+.nav-link:hover, .dropdown-title:hover
+  color: #FF4E62 !important;
+  font-weight: 500 !important;
+.sidebar-heading.open,  .sidebar-heading
+  color: #21004B !important;
+  font-weight: 600 !important;
+.sidebar-heading.open:hover,  .sidebar-heading:hover
+  color: #FF4E62 !important;
+  font-weight: 600 !important;
+.sidebar-link
+  color: #4d336f !important;
+.sidebar-link:hover
+  color: #FF4E62 !important;
+.router-link-exact-active, .router-link-active
+  color: #21004B !important;
+
+h1 a.header-anchor {
+  font-family: "Poppins";
+  padding-right: 0;
+}
+
+a:hover {
+  color: #cd3e4e;
+}
+
+// Text color inside warning blocks
+.custom-block.warning a {
+    color: #FF4E62;
+}
+.custom-block.warning a:hover {
+    color: #cd3e4e;
+}
+.custom-block.warning {
+    color: #21004B;
+}
+body a {
+  text-decoration: none !important;
+}

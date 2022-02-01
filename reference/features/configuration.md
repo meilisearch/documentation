@@ -1,12 +1,12 @@
 # Configuration
 
-You can configure MeiliSearch with **environment variables** and **command-line options**.
+You can configure Meilisearch with **environment variables** and **command-line options**.
 
-The configuration options described here affect your entire MeiliSearch instance, not just a single index. For index settings, see [settings](/reference/features/settings.md).
+The configuration options described here affect your entire Meilisearch instance, not just a single index. For index settings, see [settings](/reference/features/settings.md).
 
 ## Configuring an instance with command-line options
 
-Pass command-line options and their respective values when launching a MeiliSearch instance.
+Pass command-line options and their respective values when launching a Meilisearch instance.
 
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
@@ -16,11 +16,11 @@ Pass command-line options and their respective values when launching a MeiliSear
 Server is listening on: http://127.0.0.1:7700
 ```
 
-In the previous example, `./meilisearch` is the command that launches a MeiliSearch instance and `--http-addr` is the option that sets the URL and port this instance will use. **All command-line options are prepended with `--`.**
+In the previous example, `./meilisearch` is the command that launches a Meilisearch instance and `--http-addr` is the option that sets the URL and port this instance will use. **All command-line options are prepended with `--`.**
 
 ## Configuring an instance with environment variables
 
-In order to configure a MeiliSearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
+In order to configure a Meilisearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
 
 Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. Some options (e.g. `--import-snapshots`) are not available as environment variables.
 
@@ -36,7 +36,7 @@ Server is listening on: http://127.0.0.1:7700
 
 ## Usage
 
-Command-line options take precedence over environment variables. If the same configuration option is specified both as a command-line option and as an environment variable, MeiliSearch will use the command-line option and its respective value.
+Command-line options take precedence over environment variables. If the same configuration option is specified both as a command-line option and as an environment variable, Meilisearch will use the command-line option and its respective value.
 
 **All configuration options must specify a value.** Using a command-line option or environment variable without specifying a value will throw an error and interrupt the launch process.
 
@@ -104,12 +104,12 @@ Configures the instance's environment. Value must be either `production` or `dev
 `production`:
 
 - Setting a [master key](/learn/advanced/security.md) is **mandatory**
-- The [web interface](/reference/features/web_interface.md#web-interface) is disabled
+- The [search preview interface](/learn/what_is_meilisearch/search_preview.md) is disabled
 
 `development`:
 
 - Setting a [master key](/learn/advanced/security.md) is **optional**
-- The web interface is enabled
+- Search preview is enabled
 
 ::: tip
 When the server environment is set to `development`, providing a master key is not mandatory. This is useful when debugging and prototyping, but dangerous otherwise since API routes are unprotected.
@@ -122,7 +122,7 @@ When the server environment is set to `development`, providing a master key is n
 **Default value**: `"127.0.0.1:7700"`
 **Expected value**: an HTTP address and port
 
-Sets the HTTP address and port MeiliSearch will use.
+Sets the HTTP address and port Meilisearch will use.
 
 ### Master key
 
@@ -131,17 +131,17 @@ Sets the HTTP address and port MeiliSearch will use.
 **Default value**: `None`
 **Expected value**: an alphanumeric string
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in MeiliSearch in our dedicated guide.](/learn/advanced/security.md)
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in Meilisearch in our dedicated guide.](/learn/advanced/security.md)
 
 ::: note
 You must supply an alphanumeric string when using this option.
 :::
 
-Providing a master key is mandatory when `--env` is set to `production`; if none is given, then MeiliSearch will throw an error and refuse to launch.
+Providing a master key is mandatory when `--env` is set to `production`; if none is given, then Meilisearch will throw an error and refuse to launch.
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
-[Learn more about MeiliSearch's use of security keys.](/learn/advanced/security.md)
+[Learn more about Meilisearch's use of security keys.](/learn/advanced/security.md)
 
 ### Disable analytics
 
@@ -150,9 +150,9 @@ If no master key is provided in a `development` environment, all routes will be 
 **Default value**: `false`
 **Expected value**: `true` or `false`
 
-Deactivates MeiliSearch's built-in telemetry when set to `true`.
+Deactivates Meilisearch's built-in telemetry when set to `true`.
 
-MeiliSearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving MeiliSearch, and can be [deleted at any time](/learn/what_is_meilisearch/telemetry.md#how-to-delete-all-collected-data).
+Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/learn/what_is_meilisearch/telemetry.md#how-to-delete-all-collected-data).
 
 [Read more about our policy on data collection](/learn/what_is_meilisearch/telemetry.md), or take a look at [the comprehensive list of all datapoints we collect](/learn/what_is_meilisearch/telemetry.md#exhaustive-list-of-all-collected-data).
 
@@ -163,7 +163,7 @@ MeiliSearch automatically collects data from all instances that do not opt out u
 **Default value**: `dumps/`
 **Expected value**: a filepath pointing to a valid directory
 
-Sets the directory where MeiliSearch will create dump files.
+Sets the directory where Meilisearch will create dump files.
 
 [Learn more about creating dumps](/reference/api/dump.md).
 
@@ -176,7 +176,7 @@ Sets the directory where MeiliSearch will create dump files.
 
 Imports the dump file located at the specified path. Path must point to a `.dump` file.
 
-MeiliSearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file.
+Meilisearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file.
 
 *This option is not available as an environment variable.*
 
@@ -187,15 +187,15 @@ MeiliSearch will only launch once the dump data has been fully indexed. The time
 **Default value**: `'INFO'`
 **Expected value**: one of `ERROR`, `WARN`, `INFO`, `DEBUG`, OR `TRACE`
 
-Defines how much detail should be present in MeiliSearch's logs.
+Defines how much detail should be present in Meilisearch's logs.
 
-MeiliSearch currently supports four log levels, listed in order of increasing verbosity:
+Meilisearch currently supports four log levels, listed in order of increasing verbosity:
 
-- `'ERROR'`: only log unexpected events indicating MeiliSearch is not functioning as expected
+- `'ERROR'`: only log unexpected events indicating Meilisearch is not functioning as expected
 - `'WARN:'` log all unexpected events, regardless of their severity
 - `'INFO:'` log all events. This is the default value of `--log-level`
-- `'DEBUG'`: log all events and include detailed information on MeiliSearch's internal processes. Useful when diagnosing issues and debugging
-- `'TRACE'`: log all events and include even more detailed information on MeiliSearch's internal processes. We do not advise using this level as it is extremely verbose. Use `DEBUG` before considering `TRACE`.
+- `'DEBUG'`: log all events and include detailed information on Meilisearch's internal processes. Useful when diagnosing issues and debugging
+- `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `DEBUG` before considering `TRACE`.
 
 ### Max index size
 
@@ -208,7 +208,7 @@ Sets the maximum size of the index. Value must be given in bytes or explicitly s
 
 The `index` stores processed data and is different from the `task` database, which handles [pending tasks](/learn/advanced/asynchronous_operations.md).
 
-[Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
+[Learn more about Meilisearch's database and storage engine.](/learn/advanced/storage.md)
 
 ### Max TASK_DB size
 
@@ -221,7 +221,7 @@ Sets the maximum size of the `task` database. Value must be given in bytes or ex
 
 The `task` database handles [pending tasks](/learn/advanced/asynchronous_operations.md). This is different from the `index` database, which only stores processed data.
 
-[Learn more about MeiliSearch's database and storage engine.](/learn/advanced/storage.md)
+[Learn more about Meilisearch's database and storage engine.](/learn/advanced/storage.md)
 
 ### Payload limit size
 
@@ -250,7 +250,7 @@ Activates scheduled snapshots when set to `true`. Snapshots are disabled by defa
 **Default value**: `snapshots/`
 **Expected value**: a filepath pointing to a valid directory
 
-Sets the directory where MeiliSearch will store snapshots.
+Sets the directory where Meilisearch will store snapshots.
 
 ### Snapshot interval
 
@@ -268,7 +268,7 @@ Defines the interval between each snapshot. Value must be given in seconds.
 **Default value**: `None`
 **Expected value**: a filepath pointing to a snapshot file
 
-Launches MeiliSearch after importing a previously-generated snapshot at the given filepath.
+Launches Meilisearch after importing a previously-generated snapshot at the given filepath.
 
 This command will throw an error if:
 
@@ -286,7 +286,7 @@ This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignor
 **Default value**: `false`
 **Expected value**: `true` or `false`
 
-Prevents a MeiliSearch instance from throwing an error when [`--import-snapshot`](#import-snapshot) does not point to a valid snapshot file.
+Prevents a Meilisearch instance from throwing an error when [`--import-snapshot`](#import-snapshot) does not point to a valid snapshot file.
 
 This command will throw an error if `--import-snapshot` is not defined.
 
@@ -299,7 +299,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 **Default value**: `false`
 **Expected value**: `true` or `false`
 
-Prevents a MeiliSearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and MeiliSearch will launch using the existing database.
+Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and Meilisearch will launch using the existing database.
 
 This command will throw an error if `--import-snapshot` is not defined.
 

@@ -1,6 +1,6 @@
 # Errors
 
-In this page you may find an exhaustive list of MeiliSearch API errors.
+In this page you may find an exhaustive list of Meilisearch API errors.
 
 ## Error list
 
@@ -62,7 +62,7 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 ### `internal`
 
-MeiliSearch experienced an internal error. Check the error message, and open an issue if necessary.
+ Meilisearch experienced an internal error. Check the error message, and open an issue if necessary.
 
 ### `missing_authorization_header`
 
@@ -74,7 +74,7 @@ The requested resources could not be found.
 
 ### `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/reference/features/configuration.md#payload-limit-size) to customize the maximum payload size accepted by MeiliSearch.
+The payload sent to the server was too large. Check out this [guide](/reference/features/configuration.md#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ### `unretrievable_document`
 
@@ -82,11 +82,11 @@ The document exists in store, but there was an error retrieving it. This probabl
 
 ### `invalid_content_type`
 
-The Content-Type header is not supported by MeiliSearch. Currently, MeiliSearch only supports JSON, CSV, and NDJSON.
+The Content-Type header is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
 
 ### `missing_content_type`
 
-The payload does not contain a Content-Type header. Currently, MeiliSearch only supports JSON, CSV, and NDJSON.
+The payload does not contain a Content-Type header. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
 
 ### `malformed_payload`
 
@@ -130,7 +130,7 @@ The host system partition has reached its maximum capacity and can no longer acc
 
 ### `database_size_limit_reached`
 
-The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by MeiliSearch, check out this [guide](/reference/features/configuration.md#max-task-db-size).
+The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by Meilisearch, check out this [guide](/reference/features/configuration.md#max-task-db-size).
 
 ### `index_primary_key_already_exists`
 

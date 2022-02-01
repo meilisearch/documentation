@@ -1,12 +1,12 @@
 # Quick start
 
-This quick tour will help you get started with MeiliSearch in just a few steps.
+This quick tour will help you get started with Meilisearch in just a few steps.
 
-All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with MeiliSearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)). You can find instructions to install each of our SDKs further down in the [add documents section](#add-documents) of this guide.
+All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)). You can find instructions to install each of our SDKs further down in the [add documents section](#add-documents) of this guide.
 
 ## Download and launch
 
-First of all, let's download and run MeiliSearch.
+First of all, let's download and run Meilisearch.
 
 ```bash
 curl -L https://install.meilisearch.com | sh
@@ -29,24 +29,24 @@ Database path:       "./data.ms"
 Server listening on: "127.0.0.1:7700"
 ```
 
-You can download & run MeiliSearch [in many different ways (i.e: docker, apt, homebrew, ...)](/learn/getting_started/installation.md).
+You can download & run Meilisearch [in many different ways (i.e: docker, apt, homebrew, ...)](/learn/getting_started/installation.md).
 
-[Environment variables and options](/reference/features/configuration.md) can be set before and on launch to configure MeiliSearch. Amongst all the options, you can use the **master key** and the **port** options.
+[Environment variables and options](/reference/features/configuration.md) can be set before and on launch to configure Meilisearch. Amongst all the options, you can use the **master key** and the **port** options.
 
-### Communicate with MeiliSearch
+### Communicate with Meilisearch
 
-Now that your MeiliSearch server is up and running, you should be able to communicate with it.
+Now that your Meilisearch server is up and running, you should be able to communicate with it.
 
 Communication to the server is done through a [RESTful API](/reference/api/README.md) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
 
 ## Add documents
 
-To add documents to MeiliSearch you must provide:
+To add documents to Meilisearch you must provide:
 
 - [Documents](/learn/core_concepts/documents.md) in the form of an array of JSON objects.
 - An [index](/learn/core_concepts/indexes.md) name (_uid_). An index is where the documents are stored.
 
-**If the index does not exist, MeiliSearch creates it when you first add documents.**
+**If the index does not exist, Meilisearch creates it when you first add documents.**
 
 To be processed, all documents must share one common field which will serve as [primary key](/learn/core_concepts/documents.md#primary-key) for the document. Values in that field must always be **unique**.
 
@@ -61,7 +61,7 @@ To be processed, all documents must share one common field which will serve as [
 
 The **primary key** is `id`, the **document's unique identifier** is `123`.
 
-There are [several ways to let MeiliSearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an attribute that contains the string `id` in a case-insensitive manner.
+There are [several ways to let Meilisearch know what the primary key](/learn/core_concepts/documents.md#primary-key) is. The easiest one is to have an attribute that contains the string `id` in a case-insensitive manner.
 
 Below is an example to showcase how to add documents to an index called `movies`. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file to your working directory.
 
@@ -71,7 +71,7 @@ Below is an example to showcase how to add documents to an index called `movies`
 
 ### Checking task status
 
-Most actions in MeiliSearch are [asynchronous](/learn/advanced/asynchronous_operations.md), including the document addition process.
+Most actions in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md), including the document addition process.
 
 Here's an example of the kind of response you should receive after adding documents.
 
@@ -91,15 +91,15 @@ See our guide on [asynchronous operations](/learn/advanced/asynchronous_operatio
 
 ## Search
 
-Now that your documents have been ingested into MeiliSearch, you are able to search them.
+Now that your documents have been ingested into Meilisearch, you are able to search them.
 
-MeiliSearch [offers many parameters](/reference/features/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
+Meilisearch [offers many parameters](/reference/features/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
 The search engine is now aware of your documents and can serve those via an HTTP server.
 
 <CodeSamples id="getting_started_search_md" />
 
-MeiliSearch **response**:
+Meilisearch **response**:
 
 ```json
 {
@@ -128,16 +128,16 @@ MeiliSearch **response**:
 ```
 
 ::: note
-**By default, MeiliSearch returns only the first 20 results** for a search query. You can read more about the limit parameter [here](/reference/features/search_parameters.md#limit).
+**By default, Meilisearch returns only the first 20 results** for a search query. You can read more about the limit parameter [here](/reference/features/search_parameters.md#limit).
 :::
 
 [API references](/reference/api/search.md)
 
-### Web interface
+### Search preview
 
-We also deliver an out-of-the-box [web interface](/reference/features/web_interface.md) in which you can test MeiliSearch interactively.
+We also deliver an out-of-the-box [search preview](/learn/what_is_meilisearch/search_preview.md) in which you can test Meilisearch interactively.
 
-To do so, open your web browser and enter MeiliSearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
+To do so, open your web browser and enter Meilisearch address (in our case: `http://127.0.0.1:7700`) into the browser address bar.
 This will lead you to a web page with a search bar that will allow you to search in the selected index.
 
 <br>
@@ -147,7 +147,7 @@ This will lead you to a web page with a search bar that will allow you to search
 
 The only step missing now is adding the search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the search components needed to start searching.
 
-[Instant MeiliSearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments, such as [JavaScript](https://github.com/meilisearch/meilisearch-js), [React](https://github.com/meilisearch/meilisearch-react), and [Vue.js](https://github.com/meilisearch/meilisearch-vue).
+[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) works on common front-end environments, such as [JavaScript](https://github.com/meilisearch/meilisearch-js), [React](https://github.com/meilisearch/meilisearch-react), and [Vue.js](https://github.com/meilisearch/meilisearch-vue).
 
 `instant-meilisearch` uses [InstantSearch](https://github.com/algolia/instantsearch.js) an open-source library that generates everything you need from a search interface.
 
@@ -331,4 +331,4 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 ::::
 
-You should now have a MeiliSearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/learn/getting_started/whats_next.md) to continue your MeiliSearch journey.
+You should now have a Meilisearch database and a working front-end search interface 🚀🔥 Check out [What’s Next](/learn/getting_started/whats_next.md) to continue your Meilisearch journey.

@@ -66,10 +66,10 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `uid` and `primaryKey`.
 
-If you do not supply a value for `primaryKey`, MeiliSearch will try to infer your dataset's unique identifier from first document you add to the index.
+If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from first document you add to the index.
 
 ::: note
-If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, MeiliSearch will automatically create it for you. This is called implicit index creation.
+If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, Meilisearch will automatically create it for you. This is called implicit index creation.
 :::
 
 Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)

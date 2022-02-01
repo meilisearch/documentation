@@ -44,7 +44,7 @@ Get [documents](/learn/core_concepts/documents.md) by batch.
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
 ::: note
-Documents are ordered by MeiliSearch depending on the hash of their id.
+Documents are ordered by Meilisearch depending on the hash of their id.
 :::
 
 #### Path variables

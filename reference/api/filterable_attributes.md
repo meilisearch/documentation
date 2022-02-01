@@ -7,7 +7,7 @@ Filterable attributes can also be updated through the [global settings route](/r
 Attributes that can be used as filters for filtering and faceted search. To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
 ::: warning
-Updating the settings means overwriting the default settings of MeiliSearch. You can reset to default values using the `DELETE` routes.
+Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
 :::
 
 ## Get filterable attributes
