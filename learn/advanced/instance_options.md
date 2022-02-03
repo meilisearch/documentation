@@ -1,4 +1,4 @@
-# Configuration
+# Instance options
 
 You can configure Meilisearch with **environment variables** and **command-line options**.
 
