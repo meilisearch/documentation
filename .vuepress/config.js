@@ -456,6 +456,15 @@ module.exports = {
     ],
     [
       'script',
+      {
+        src: 'https://thrilling-thirtyeight.meilisearch.com/script.js',
+        spa: 'auto',
+        site: 'QNBPJXIV',
+        defer: true,
+      },
+    ],
+    [
+      'script',
       {},
       `
       (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script")
