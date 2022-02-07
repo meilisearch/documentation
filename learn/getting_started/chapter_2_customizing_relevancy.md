@@ -1,10 +1,10 @@
 # Chapter 2: Fine-tuning search results
 
-MeiliSearch is designed to offer a great search experience out of the box, but sometimes you need greater control over results. The tools described below help you tailor the search experience to your particular dataset and use-case.
+Meilisearch is designed to offer a great search experience out of the box, but sometimes you need greater control over results. The tools described below help you tailor the search experience to your particular dataset and use-case.
 
 ## Ranking rules
 
-MeiliSearch sorts search responses based on a set of consecutive rules called ranking rules. These rules are stored in an array of strings called `rankingRules`, which is part of the `settings` object.
+Meilisearch sorts search responses based on a set of consecutive rules called ranking rules. These rules are stored in an array of strings called `rankingRules`, which is part of the `settings` object.
 
 The order in which ranking rules are applied matters. The first rule in the array has the most impact, and the last rule has the least. This is the default order:
 
@@ -29,7 +29,7 @@ You can read more about ranking rules in our [dedicated guide](/learn/core_conce
 
 ## Displayed attributes
 
-By default, all attributes are displayed in each matching document but you can update the settings to change that. If you access the MeiliSearch search preview at `http://127.0.0.1:7700/`, you will notice that you can view all of the attributes in the `movies` index.
+By default, all attributes are displayed in each matching document but you can update the settings to change that. If you access the Meilisearch search preview at `http://127.0.0.1:7700/`, you will notice that you can view all of the attributes in the `movies` index.
 
 ![search preview with default displayed attributes](/getting-started/default_displayed_attributes.png)
 
@@ -43,7 +43,7 @@ If you only want to view the `title`, `poster`, and `overview`:
 
 ## Distinct attribute
 
-MeiliSearch lets you set one field per index as the distinct attribute. The distinct attribute will always be unique among returned documents. This means there will never be more than one occurrence of the same value in the distinct attribute field among the returned documents.
+Meilisearch lets you set one field per index as the distinct attribute. The distinct attribute will always be unique among returned documents. This means there will never be more than one occurrence of the same value in the distinct attribute field among the returned documents.
 
 Suppose you have an e-commerce dataset with an index on jackets. There are several identical items with minor variations such as color or size.
 
@@ -75,13 +75,13 @@ Suppose you have an e-commerce dataset with an index on jackets. There are sever
 
 If you search for `lee leather jacket` with the default settings, you would get all three documents.
 
-If you set the `product_id` as the `distinctAttribute`, MeiliSearch will only return the first found document.
+If you set the `product_id` as the `distinctAttribute`, Meilisearch will only return the first found document.
 
 ## Searchable attributes
 
 By default, all attributes are searched for matching query words but you can configure the settings to change that.
 
-Let's look at MeiliSearch's search preview for this example. If you search for `2012` with the default settings, MeiliSearch searches for it everywhere.
+Let's look at Meilisearch's search preview for this example. If you search for `2012` with the default settings, Meilisearch searches for it everywhere.
 
 ![default searchableAttributes](/getting-started/default_searchableAttributes.gif)
 
@@ -89,11 +89,11 @@ If you update the `searchableAttributes` to only contain `title`:
 
 <CodeSamples id= "getting_started_update_searchableAttributes_md" />
 
-MeiliSearch will now only consider `title` during search and you will see fewer results.
+Meilisearch will now only consider `title` during search and you will see fewer results.
 
 ![title as the only searchableAttribute](/getting-started/title_searchableAttributes.gif)
 
-Please note that **MeiliSearch will still highlight matches in other attributes, but they won’t be used to compute results.**
+Please note that **Meilisearch will still highlight matches in other attributes, but they won’t be used to compute results.**
 
 The order of these `searchableAttributes` decides what field has more impact on relevancy. If you have something like:
 
@@ -108,11 +108,11 @@ matching words found in the `overview` field will have a higher impact on releva
 
 ## Stop words
 
-MeiliSearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English.
+Meilisearch allows you to create a list of words that is ignored in your search queries. These words are called stop words. A good example is the word `the` in English.
 
 <CodeSamples id= "getting_started_update_stop_words_md" />
 
-If you search the `movies` index for `the cat`, MeiliSearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
+If you search the `movies` index for `the cat`, Meilisearch will ignore all documents containing `the` and return the ones with `cat` improving the speed and relevancy of your search.
 
 You can read more about stop words in the [API reference](/reference/features/stop_words.md).
 

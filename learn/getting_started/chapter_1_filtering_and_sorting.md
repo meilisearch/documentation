@@ -8,7 +8,7 @@ This chapter uses a dataset of meteors to demonstrate filtering, sorting, and ge
 
 ## Filtering
 
-MeiliSearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to `filterableAttributes`.
+Meilisearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to `filterableAttributes`.
 
 Let's say you only want to view meteors that weigh less than 200g.
 
@@ -40,7 +40,7 @@ To learn more about `filterableAttributes` and how to configure them, refer to o
 
 ## Sorting
 
-By default, MeiliSearch orders results according to their relevancy. You can alter this sorting behavior as part of the search request, allowing users to decide which type of results they want to see first.
+By default, Meilisearch orders results according to their relevancy. You can alter this sorting behavior as part of the search request, allowing users to decide which type of results they want to see first.
 
 You can use any of the document fields as long as they contain numbers, strings, arrays of numbers, or arrays of strings by adding them to `sortableAttributes`. Let's sort the meteors in the previous example based on mass.
 
@@ -68,13 +68,13 @@ You can use any of the document fields as long as they contain numbers, strings,
   }
 ```
 
-You will see all meteors weighing less than 200g sorted based on increasing mass. If you use `mass:desc`, MeiliSearch will sort them based on decreasing mass.
+You will see all meteors weighing less than 200g sorted based on increasing mass. If you use `mass:desc`, Meilisearch will sort them based on decreasing mass.
 
 To learn more about `sortableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/sorting.md).
 
 ## Geosearch
 
-MeiliSearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field.
+Meilisearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field.
 
 Let's say you want to find out which meteors crashed within a 210km radius of Bern:
 
