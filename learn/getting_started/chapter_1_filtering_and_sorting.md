@@ -6,11 +6,21 @@ This chapter uses a dataset of meteors to demonstrate filtering, sorting, and ge
 
 <CodeSamples id="getting_started_add_meteors_md" />
 
+## Settings
+
+Every index contains a `settings` object that allows you to customize search behavior. Configuring this object is the first step to filtering and sorting your data.
+
+The `settings` object contains two arrays for this purpose: `filterableAttributes` and `sortableAttributes`.
+
+<CodeSamples id= "getting_started_configure_settings" />
+
+>Running the above code sample should set you up for the next sections.
+
 ## Filtering
 
-Meilisearch allows you to refine your search using filters. You can use any of the document fields for filtering by adding them to `filterableAttributes`.
+Meilisearch allows you to refine your search using filters. You can use any document fields for filtering by adding them to `filterableAttributes` as shown [above](#settings).
 
-Let's say you only want to view meteors that weigh less than 200g.
+Let's say you only want to view meteors that weigh less than 200g:
 
 <CodeSamples id= "getting_started_filtering_md" />
 
@@ -36,13 +46,17 @@ Let's say you only want to view meteors that weigh less than 200g.
 }
 ```
 
-To learn more about `filterableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/filtering_and_faceted_search.md).
+Filtering is intended to be combined with search queries to refine your results.
+
+To learn more about filters and how to configure them, refer to our [dedicated guide](/reference/features/filtering_and_faceted_search.md).
 
 ## Sorting
 
 By default, Meilisearch orders results according to their relevancy. You can alter this sorting behavior as part of the search request, allowing users to decide which type of results they want to see first.
 
-You can use any of the document fields as long as they contain numbers, strings, arrays of numbers, or arrays of strings by adding them to `sortableAttributes`. Let's sort the meteors in the previous example based on mass.
+You can use any document field for sorting as long as it contains numbers, strings, arrays of numbers, or arrays of strings and has been added to `sortableAttributes` as shown [above](#settings).
+
+Let's sort the meteors in the previous example based on mass:
 
 <CodeSamples id= "getting_started_sorting_md" />
 
@@ -68,13 +82,17 @@ You can use any of the document fields as long as they contain numbers, strings,
   }
 ```
 
-You will see all meteors weighing less than 200g sorted based on increasing mass. If you use `mass:desc`, Meilisearch will sort them based on decreasing mass.
+You will see all meteors weighing less than 200g sorted by increasing mass. To sort them in the opposite direction, you would use `mass:desc`.
 
-To learn more about `sortableAttributes` and how to configure them, refer to our [dedicated guide](/reference/features/sorting.md).
+Sorting is intended to be combined with search queries to refine your results.
+
+To learn more about sorting and how to configure it, refer to our [dedicated guide](/reference/features/sorting.md).
 
 ## Geosearch
 
-Meilisearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field.
+Meilisearch allows you to filter and sort results based on their geographic location. To use this feature, your documents need to have the `_geo` field, which must be added to `sortableAttributes` or `filterableAttributes` depending on your use case.
+
+### Filtering by geographical location
 
 Let's say you want to find out which meteors crashed within a 210km radius of Bern:
 
@@ -120,7 +138,9 @@ Let's say you want to find out which meteors crashed within a 210km radius of Be
   }
   ```
 
-You can also use geosearch to sort results based on their distance from a specific location. This chapter uses wo of how of meteors with information about their size and location close they were to the Taj Mahal:
+### Sorting by geographical location
+
+The following command sorts meteors by how close they were to the Taj Mahal:
 
 <CodeSamples id= "getting_started_geoPoint_md" />
 
@@ -166,6 +186,8 @@ You can also use geosearch to sort results based on their distance from a specif
   }
 ```
 
-This response returns an additional `_geoDistance` field. `_geoDistance` represents the distance between the Taj Mahal and each meteor in meters.
+This response returns an additional field, `_geoDistance`, representing the distance between the Taj Mahal and each meteor in meters.
 
 To learn more about geosearch and how to configure it, refer to our [dedicated guide](/reference/features/geosearch.md).
+
+The next chapter dives deeper into the `settings` object and how you can use it to fine-tune results.
