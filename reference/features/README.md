@@ -6,9 +6,4 @@ Understanding our reference documentation is easier with background knowledge of
 
 ## Table of contents
 
-[Configuration](/reference/features/configuration.md)
-[Distinct attribute](/reference/features/distinct.md)
-[Field properties](/reference/features/field_properties.md)
 [Search parameters](/reference/features/search_parameters.md)
-[Settings](/reference/features/settings.md)
-[Synonyms](/reference/features/synonyms.md)

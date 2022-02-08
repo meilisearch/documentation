@@ -6,7 +6,7 @@ _Child route of the [settings route](/reference/api/settings.md)._
 
 Synonyms can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-To learn more about synonyms, refer to our [dedicated guide](/reference/features/synonyms.md).
+To learn more about synonyms, refer to our [dedicated guide](/learn/configuration/synonyms.md).
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
@@ -16,7 +16,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/synonyms"/>
 
-Get the list of [synonyms](/reference/features/synonyms.md) of an index.
+Get the list of [synonyms](/learn/configuration/synonyms.md) of an index.
 
 #### Path variables
 
@@ -50,7 +50,7 @@ Get the list of [synonyms](/reference/features/synonyms.md) of an index.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/synonyms"/>
 
-Update the list of [synonyms](/reference/features/synonyms.md) of an index. Synonyms are [normalized](/reference/features/synonyms.md#normalization).
+Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization).
 
 #### Path variables
 
@@ -62,7 +62,7 @@ Update the list of [synonyms](/reference/features/synonyms.md) of an index. Syno
 
 An object that contains all synonyms and their associated words.
 
-[More information about the body](/reference/features/settings.md#synonyms).
+[More information about the body](/learn/configuration/settings.md#synonyms).
 
 #### Example
 
@@ -86,7 +86,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/synonyms"/>
 
-Reset the list of [synonyms](/reference/features/synonyms.md) of an index to its default value.
+Reset the list of [synonyms](/learn/configuration/synonyms.md) of an index to its default value.
 
 #### Default value
 

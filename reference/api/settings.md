@@ -15,7 +15,7 @@ These are the reference pages for the dedicated routes:
 - [Stop-words](/reference/api/stop_words.md)
 - [Synonyms](/reference/api/synonyms.md)
 
-To learn more about settings, refer to our [dedicated guide.](/reference/features/settings.md)
+To learn more about settings, refer to our [dedicated guide.](/learn/configuration/settings.md)
 
 ::: warning
 When you update a setting, you overwrite its default value. Use the `DELETE` route to reset any setting to its original value.
@@ -27,7 +27,7 @@ When you update a setting, you overwrite its default value. Use the `DELETE` rou
 
 Get the settings of an index.
 
-[Learn more about the settings.](/reference/features/settings.md)
+[Learn more about the settings.](/learn/configuration/settings.md)
 
 #### Path variables
 
@@ -48,7 +48,7 @@ Get the settings of an index.
 | **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
-[Learn more about the settings in this guide.](/reference/features/settings.md)
+[Learn more about the settings in this guide.](/learn/configuration/settings.md)
 
 ### Example
 
@@ -110,7 +110,7 @@ Updates in the settings route are **partial**. This means that any parameters no
 
 If the provided index does not exist, it will be created.
 
-[Learn more about the settings in this guide.](/reference/features/settings.md)
+[Learn more about the settings in this guide.](/learn/configuration/settings.md)
 
 #### Path variables
 
@@ -168,7 +168,7 @@ All settings will be reset to their default value.
 | **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
-[Learn more about the settings](/reference/features/settings.md).
+[Learn more about the settings](/learn/configuration/settings.md).
 
 #### Path variables
 

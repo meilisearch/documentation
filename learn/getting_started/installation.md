@@ -135,7 +135,7 @@ This is an example using the command line options.
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 ```
 
-Here is a list of [all the options and how to use them](/reference/features/configuration.md).
+Here is a list of [all the options and how to use them](/learn/configuration/instance_options.md).
 
 ## Updating Meilisearch
 

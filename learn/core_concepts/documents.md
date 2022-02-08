@@ -109,13 +109,13 @@ Take note that, in the case of strings, a value **[can contain at most 65535 pos
 
 You can also apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
-If you would like to adjust how a field gets handled by Meilisearch, you can do so in the [settings](/reference/features/settings.md#settings).
+If you would like to adjust how a field gets handled by Meilisearch, you can do so in the [settings](/learn/configuration/settings.md#settings).
 
 ### Field properties
 
-A field may also possess **[field properties](/reference/features/field_properties.md)**. Field properties determine the characteristics and behavior of the data added to that field.
+A field may also possess **[field properties](/learn/configuration/displayed_searchable_attributes.md)**. Field properties determine the characteristics and behavior of the data added to that field.
 
-At this time, there are two field properties: [searchable](/reference/features/field_properties.md#searchable-fields) and [displayed](/reference/features/field_properties.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
+At this time, there are two field properties: [searchable](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) and [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
 
 To clarify, a field may be:
 
@@ -124,7 +124,7 @@ To clarify, a field may be:
 - Both displayed and searchable (default)
 - Neither displayed nor searchable
 
-In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/reference/features/field_properties.md#data-storing) in the document.
+In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes.md#data-storing) in the document.
 
 ## Primary field
 
@@ -223,7 +223,7 @@ Take note that the document addition request in Meilisearch is atomic. This mean
 
 By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB.
 
-To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
+To upload more documents in one go, it is possible to [change the payload size limit](/learn/configuration/instance_options.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
 ```bash
 ./meilisearch --http-payload-size-limit=1048576000

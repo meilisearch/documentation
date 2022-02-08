@@ -6,7 +6,7 @@ The values associated with attributes in the `searchableAttributes` list are **s
 
 Searchable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-To learn more about searchable attributes, refer to our [dedicated guide](/reference/features/field_properties.md#searchable-fields).
+To learn more about searchable attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
@@ -16,7 +16,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/searchable-attributes" />
 
-Get the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
+Get the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index.
 
 #### Path variables
 
@@ -44,7 +44,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/searchable-attributes" />
 
-Update the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of an index.
+Update the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index.
 
 ::: warning
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
@@ -62,7 +62,7 @@ An array of strings that contains searchable attributes sorted by order of impor
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
-[More information about the body](/reference/features/settings.md#searchable-attributes).
+[More information about the body](/learn/configuration/settings.md#searchable-attributes).
 
 ### Example
 
@@ -88,7 +88,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/searchable-attributes"/>
 
-Reset the [searchable attributes](/reference/features/field_properties.md#searchable-fields) of the index to the default value.
+Reset the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of the index to the default value.
 
 #### Default value
 

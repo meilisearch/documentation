@@ -74,7 +74,7 @@ The requested resources could not be found.
 
 ### `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/reference/features/configuration.md#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
+The payload sent to the server was too large. Check out this [guide](/learn/configuration/instance_options.md#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ### `unretrievable_document`
 
@@ -130,7 +130,7 @@ The host system partition has reached its maximum capacity and can no longer acc
 
 ### `database_size_limit_reached`
 
-The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by Meilisearch, check out this [guide](/reference/features/configuration.md#max-task-db-size).
+The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by Meilisearch, check out this [guide](/learn/configuration/instance_options.md#max-task-db-size).
 
 ### `index_primary_key_already_exists`
 

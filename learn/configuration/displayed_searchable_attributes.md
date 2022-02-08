@@ -1,9 +1,9 @@
-# Field properties
+# Displayed and searchable attributes
 
 By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
-- [`searchableAttributes`](/reference/features/field_properties.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
-- [`displayedAttributes`](/reference/features/field_properties.md#displayed-fields): attributes whose fields are displayed in documents.
+- [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
+- [`displayedAttributes`](/learn/configuration/displayed_searchable_attributes.md#displayed-fields): attributes whose fields are displayed in documents.
 
 This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
 

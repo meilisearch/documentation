@@ -7,7 +7,7 @@ By default, all fields are considered to be `displayedAttributes`. This behavior
 
 Displayed attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-To learn more about displayed attributes, refer to our [dedicated guide](/reference/features/field_properties.md#displayed-fields).
+To learn more about displayed attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
@@ -17,7 +17,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes" />
 
-Get the [displayed attributes](/reference/features/settings.md#displayed-attributes) of an index.
+Get the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index.
 
 #### Path variables
 
@@ -46,7 +46,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/displayed-attributes" />
 
-Update the [displayed attributes](/reference/features/settings.md#displayed-attributes) of an index.
+Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index.
 
 ::: note
 `displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
@@ -62,7 +62,7 @@ Update the [displayed attributes](/reference/features/settings.md#displayed-attr
 
 An array of strings that contains attributes of an index to display.
 
-[More information about the body](/reference/features/settings.md#displayed-attributes).
+[More information about the body](/learn/configuration/settings.md#displayed-attributes).
 
 #### Example
 
@@ -86,7 +86,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
 
-Reset the [displayed attributes](/reference/features/settings.md#displayed-attributes) of the index to the default value.
+Reset the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of the index to the default value.
 
 #### Default value
 

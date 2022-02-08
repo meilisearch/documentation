@@ -123,7 +123,7 @@ In this guide, we will:
 If your dump was created in Meilisearch v0.21 or above, continue to step 2.
 :::
 
-When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/reference/features/field_properties.md#displayed-fields) in order to be saved in the dump.
+When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 
 Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
@@ -148,7 +148,7 @@ Now that all fields are displayed, proceed to the next step.
 
 ### Step 2: Create the dump
 
-Before creating your dump, make sure that your [dump directory](/reference/features/configuration.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
+Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 ::: note
 If you are running Meilisearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found in the configuration file directory, `cd /var/opt/meilisearch/dumps`.
@@ -242,7 +242,7 @@ To delete the old Meilisearch version, you need to delete the `data.ms` folder. 
 
 ### Step 4: Import the dump
 
-Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/reference/features/configuration.md#import-dump).
+Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/installation.md#download-and-launch) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
 
 ```bash
 # launch the latest version of Meilisearch and import the specified dump file
@@ -261,7 +261,7 @@ Congratulations! You have successfully migrated your Meilisearch database to the
 
 ## Updating from v0.14.0 or below
 
-Since these versions predate the [dumps feature](/learn/advanced/dumps.md), the best solution is to export your documents and your [index settings](/reference/features/settings.md) as `.JSON` files.
+Since these versions predate the [dumps feature](/learn/advanced/dumps.md), the best solution is to export your documents and your [index settings](/learn/configuration/settings.md) as `.JSON` files.
 
 In this guide, we will:
 
@@ -275,7 +275,7 @@ If you don’t need to preserve index settings, skip directly to [step two](#ste
 
 ### Step 1: Save your settings
 
-First, use the [get settings endpoint](/reference/api/settings.md#get-settings) to retrieve the [settings](/reference/features/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
+First, use the [get settings endpoint](/reference/api/settings.md#get-settings) to retrieve the [settings](/learn/configuration/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
 
 ```bash
 # the -o option saves the output as a local file
@@ -289,7 +289,7 @@ Repeat this process for all indexes you wish to migrate.
 
 ### Step 2: Set all fields as displayed attributes
 
-To prevent data loss, all fields must be set as [displayed](/reference/features/field_properties.md#displayed-fields).
+To prevent data loss, all fields must be set as [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
 By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 

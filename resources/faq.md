@@ -191,7 +191,7 @@ Yes, a search preview is available on the default address and port of your Meili
 
 All you need to do is open your web browser and enter Meilisearch’s address to visit it. This leads you to a web page with a search bar that allows you to search in a selected index.
 
-Since the production environment requires an API key for searching, the search preview is only available in [development mode](/reference/features/configuration.md#environment).
+Since the production environment requires an API key for searching, the search preview is only available in [development mode](/learn/configuration/instance_options.md#environment).
 
 Here is more information about [Meilisearch's search preview](/learn/what_is_meilisearch/search_preview.md).
 
@@ -275,10 +275,10 @@ In general, we recommend the former. However, if you need to reduce the size of 
 
 - **More relevancy rules => a larger database**
   - The proximity [ranking rule](/learn/core_concepts/relevancy.md#ranking-rules) alone can be responsible for almost 80% of database size
-- Adding many attributes to [filterableAttributes](/reference/features/settings.md#filterable-attributes) also consumes a large amount of disk space
+- Adding many attributes to [filterableAttributes](/learn/configuration/settings.md#filterable-attributes) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
 - [Stop words](/reference/api/stop_words.md) are essential to reducing database size
-- Not all attributes need to be [searchable](/reference/features/field_properties.md#searchable-fields). Avoid indexing unique IDs.
+- Not all attributes need to be [searchable](/learn/configuration/displayed_searchable_attributes.md#searchable-fields). Avoid indexing unique IDs.
 
 ## Why does Meilisearch send data to Segment? Does Meilisearch track its users?
 

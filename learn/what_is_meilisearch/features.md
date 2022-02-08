@@ -24,7 +24,7 @@ Read more about typo tolerance in [this dedicated guide](/learn/advanced/typotol
 Meilisearch in action with `batman` and `joker` defined as synonyms.
 
 Defining synonyms lets you craft a more tailored, intuitive search experience.
-Read more about synonyms in [this dedicated guide](/reference/features/synonyms.md).
+Read more about synonyms in [this dedicated guide](/learn/configuration/synonyms.md).
 
 ## Highlighting
 
@@ -44,7 +44,7 @@ Meilisearch allows you to define [filters](/learn/advanced/filtering_and_faceted
 
 ## Placeholder search
 
-If you make a search without inputting any query words, Meilisearch will return all the documents in that index sorted by its [custom ranking rules](/reference/features/settings.md#custom-ranking-rule) and [sorting rules](https://docs.meilisearch.com/learn/advanced/sorting.html#sorting). This feature is called **placeholder search**.
+If you make a search without inputting any query words, Meilisearch will return all the documents in that index sorted by its [custom ranking rules](/learn/configuration/settings.md#custom-ranking-rule) and [sorting rules](https://docs.meilisearch.com/learn/advanced/sorting.html#sorting). This feature is called **placeholder search**.
 
 Placeholder searches are particularly effective when used with other features such as [faceting or filtering](/learn/advanced/filtering_and_faceted_search.md#filters-or-facets), which allow users to narrow their searches and browse by category. You can read more about this feature in our article on [search parameters](https://docs.meilisearch.com/reference/features/search_parameters.html#placeholder-search).
 
