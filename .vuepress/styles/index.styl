@@ -27,6 +27,12 @@ a:hover {
   color: lighten($accentColor, 20%);
 }
 
+// @media (prefers-color-scheme: dark) {
+//   a:hover {
+//     color: lighten($accentDarkColor, 30%);
+//   }
+// }
+
 body > .nav-link:hover, body > .dropdown-title:hover
   color: $accentColor;
 
@@ -55,6 +61,25 @@ body > .nav-link:hover, body > .dropdown-title:hover
 .el-tabs__item:not(.is-disabled):hover
   color: $accentColor !important;
 
+
+// @media (prefers-color-scheme: dark) {
+//   .el-tabs--border-card>.el-tabs__header {
+//     color: $accentDarkColor;
+//     background-color: $codeBgColor !important;
+//     border: 1px solid $bgDarkColor !important;
+//   }
+
+//   .el-tabs__item.is-active {
+//     color: $accentDarkColor !important;
+//     background-color: darken($bgDarkColor, 20%) !important;
+//     border: 1px solid darken($bgDarkColor, 20%) !important;
+//   }
+
+//   .el-tabs {
+//     background-color: darken($bgDarkColor, 20%) !important;
+//     border: 1px solid darken($bgDarkColor, 20%) !important;
+//   }
+// }
 
 .el-tabs--border-card
   background-color: $codeBgColor;
@@ -88,8 +113,42 @@ body > .nav-link:hover, body > .dropdown-title:hover
       bottom: -6px !important;
     }
 
+// @media (prefers-color-scheme: dark) {
+//   .custom-block.note {
+//     background-color rgba(79, 85, 227, 0.1);
+//   }
+// }
 
 {$contentClass} a code
   color $accentColor;
 
+// .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+//   background-color: $accentColor !important;
+// }
+// .dsb-cursor .docs-searchbar-suggestion--content {
+//       background-color: rgba(black, 10%) !important;
+// }
+// .docs-searchbar-suggestion--highlight {
+//   background-color: rgba(0,0,0,0) !important;
+// }
+// // .docs-searchbar-suggestion--highlight {
+// //   background-color: $bgColor !important;
+// //   }
 
+// @media (prefers-color-scheme: dark) {
+//   .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+//     background-color: $accentColor !important;
+//   }
+//   .docs-searchbar-suggestion--highlight {
+//     background-color: rgba(0,0,0,0) !important;
+//   }
+//   // .dsb-cursor {
+//   //   background-color: rgba(0,0,0,0) !important;
+//   // }
+//   .dsb-cursor .docs-searchbar-suggestion--content {
+//       background-color: rgba(white, 10%) !important;
+//     }
+//   .meilisearch-autocomplete .dsb-dropdown-menu [class^=dsb-dataset-]{
+//     border: 1px solid $borderDarkColor !important;
+//     }
+// }

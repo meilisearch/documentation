@@ -1,3 +1,4 @@
+$contentClass = '.theme-default-content'
 // All variable that can impact the color of the documentation can be found here:
 // https://github.com/tolking/vuepress-theme-default-prefers-color-scheme/blob/master/styles/palette.styl
 
@@ -48,11 +49,13 @@ $warningBgDarkColor = rgba(185, 174, 119, 0.2) // Needs to change see lena
 
 $dropdownBgDarkColor = #333a3e // Usefull when updating doc-searchbar
 
-// Active tabs
-.el-tabs__item.is-active
-  color: $accentColor !important
+// // Active tabs
+// .el-tabs__item.is-active
+//   color: $accentColor !important
 
-// None-active tabs on hover
-.el-tabs__item:not(.is-disabled):hover
-  color: $accentColor !important
+// // None-active tabs on hover
+// .el-tabs__item:not(.is-disabled):hover
+//   color: $accentColor !important
 
+// No differences between header navbar background and global background
+// Lost change in color when hovering over header navbar links
