@@ -1,8 +1,8 @@
 <template>
   <!-- The click listener updates the prefered tabs language state in ./store.js -->
-  <div @click="updateLanguage">
+  <div class="merde" @click="updateLanguage">
     <!-- the active-name prop defines the current active tab -->
-    <tabs v-if="samples" type="border-card" :active-name="tabsLanguage">
+    <tabs v-if="samples" type="border-card" :active-name="tabsLanguage" class="tab-content">
       <!-- the `name` prop compares with the parent `active-name` to determine if it is the active tab or not -->
       <tab
         v-for="sample in samples"
@@ -43,6 +43,7 @@ export default {
   },
   created() {
     this.samples = CODE_SAMPLES[this.id]
+    console.log(this.$refs)
   },
   methods: {
     /*

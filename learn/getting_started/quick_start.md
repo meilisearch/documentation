@@ -1,3 +1,4 @@
+
 # Quick start
 
 In this quick start we will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, and adding a search bar.
