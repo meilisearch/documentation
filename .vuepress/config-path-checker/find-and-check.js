@@ -7,7 +7,7 @@ function checkPath(givenPath) {
     addError.call(this, {
       type: 'error',
       errMsg: 'Path in config.json file is missing a trailing slash',
-      fileUrl: path.join(__dirname, 'config.json'),
+      fileUrl: path.join(__dirname, 'find-and-check.js'),
       fullText: `path: '${givenPath}'`,
       path: givenPath,
     })
