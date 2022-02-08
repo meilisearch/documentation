@@ -31,7 +31,7 @@ Server listening on: "127.0.0.1:7700"
 
 You can download & run Meilisearch [in many different ways (i.e: docker, apt, homebrew, ...)](/learn/getting_started/installation.md).
 
-[Environment variables and options](/reference/features/configuration.md) can be set before and on launch to configure Meilisearch. Amongst all the options, you can use the **master key** and the **port** options.
+[Environment variables and options](/learn/configuration/instance_options.md) can be set before and on launch to configure Meilisearch. Amongst all the options, you can use the **master key** and the **port** options.
 
 ### Communicate with Meilisearch
 

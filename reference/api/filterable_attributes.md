@@ -53,7 +53,7 @@ Update an index's [filterable attributes list](/learn/advanced/filtering_and_fac
 
 An array of strings containing the attributes that can be used as filters at query time.
 
-[You can read more about this setting at the feature reference page.](/reference/features/settings.md#filterable-attributes)
+[You can read more about this setting at the feature reference page.](/learn/configuration/settings.md#filterable-attributes)
 
 ### Example
 

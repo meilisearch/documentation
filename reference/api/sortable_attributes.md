@@ -55,7 +55,7 @@ Update an index's sortable attributes list. This will re-index all documents in 
 
 An array of strings containing the attributes that can be used to sort search results at query time.
 
-[You can read more about this setting at the feature reference page.](/reference/features/settings.md#sortable-attributes)
+[You can read more about this setting at the feature reference page.](/learn/configuration/settings.md#sortable-attributes)
 
 ### Example
 

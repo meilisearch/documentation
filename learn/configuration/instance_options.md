@@ -2,7 +2,7 @@
 
 You can configure Meilisearch with **environment variables** and **command-line options**.
 
-The configuration options described here affect your entire Meilisearch instance, not just a single index. For index settings, see [settings](/reference/features/settings.md).
+The configuration options described here affect your entire Meilisearch instance, not just a single index. For index settings, see [settings](/learn/configuration/settings.md).
 
 ## Configuring an instance with command-line options
 
@@ -52,36 +52,36 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 
 ### General
 
-- [Database path](/reference/features/configuration.md#database-path)
-- [Environment](/reference/features/configuration.md#environment)
-- [HTTP address & port binding](/reference/features/configuration.md#http-address-port-binding)
-- [Master key](/reference/features/configuration.md#master-key)
+- [Database path](/learn/configuration/instance_options.md#database-path)
+- [Environment](/learn/configuration/instance_options.md#environment)
+- [HTTP address & port binding](/learn/configuration/instance_options.md#http-address-port-binding)
+- [Master key](/learn/configuration/instance_options.md#master-key)
 
 ### Advanced
 
-- [Disable analytics](/reference/features/configuration.md#disable-analytics)
-- [Dumps](/reference/features/configuration.md#dumps-destination)
-  - [Dumps destination](/reference/features/configuration.md#dumps-destination)
-  - [Import dump](/reference/features/configuration.md#import-dump)
-- [Log level](/reference/features/configuration.md#log-level)
-- [Max index size](/reference/features/configuration.md#max-index-size)
-- [Max TASK_DB size](/reference/features/configuration.md#max-task-db-size)
-- [Payload limit size](/reference/features/configuration.md#payload-limit-size)
-- [Snapshots](/reference/features/configuration.md#schedule-snapshot-creation):
-  - [Schedule snapshot creation](/reference/features/configuration.md#schedule-snapshot-creation)
-  - [Snapshot destination](/reference/features/configuration.md#snapshot-destination)
-  - [Snapshot interval](/reference/features/configuration.md#snapshot-interval)
-  - [Import snapshot](/reference/features/configuration.md#import-snapshot)
-  - [Ignore missing snapshot](/reference/features/configuration.md#ignore-missing-snapshot)
-  - [Ignore snapshot if DB exists](/reference/features/configuration.md#ignore-snapshot-if-db-exists)
-- [SSL configuration](/reference/features/configuration.md#ssl-authentication-path):
-  - [SSL authentication path](/reference/features/configuration.md#ssl-authentication-path)
-  - [SSL certificates path](/reference/features/configuration.md#ssl-certificates-path)
-  - [SSL key path](/reference/features/configuration.md#ssl-key-path)
-  - [SSL OCSP path](/reference/features/configuration.md#ssl-ocsp-path)
-  - [SSL require auth](/reference/features/configuration.md#ssl-require-auth)
-  - [SSL resumption](/reference/features/configuration.md#ssl-resumption)
-  - [SSL tickets](/reference/features/configuration.md#ssl-tickets)
+- [Disable analytics](/learn/configuration/instance_options.md#disable-analytics)
+- [Dumps](/learn/configuration/instance_options.md#dumps-destination)
+  - [Dumps destination](/learn/configuration/instance_options.md#dumps-destination)
+  - [Import dump](/learn/configuration/instance_options.md#import-dump)
+- [Log level](/learn/configuration/instance_options.md#log-level)
+- [Max index size](/learn/configuration/instance_options.md#max-index-size)
+- [Max TASK_DB size](/learn/configuration/instance_options.md#max-task-db-size)
+- [Payload limit size](/learn/configuration/instance_options.md#payload-limit-size)
+- [Snapshots](/learn/configuration/instance_options.md#schedule-snapshot-creation):
+  - [Schedule snapshot creation](/learn/configuration/instance_options.md#schedule-snapshot-creation)
+  - [Snapshot destination](/learn/configuration/instance_options.md#snapshot-destination)
+  - [Snapshot interval](/learn/configuration/instance_options.md#snapshot-interval)
+  - [Import snapshot](/learn/configuration/instance_options.md#import-snapshot)
+  - [Ignore missing snapshot](/learn/configuration/instance_options.md#ignore-missing-snapshot)
+  - [Ignore snapshot if DB exists](/learn/configuration/instance_options.md#ignore-snapshot-if-db-exists)
+- [SSL configuration](/learn/configuration/instance_options.md#ssl-authentication-path):
+  - [SSL authentication path](/learn/configuration/instance_options.md#ssl-authentication-path)
+  - [SSL certificates path](/learn/configuration/instance_options.md#ssl-certificates-path)
+  - [SSL key path](/learn/configuration/instance_options.md#ssl-key-path)
+  - [SSL OCSP path](/learn/configuration/instance_options.md#ssl-ocsp-path)
+  - [SSL require auth](/learn/configuration/instance_options.md#ssl-require-auth)
+  - [SSL resumption](/learn/configuration/instance_options.md#ssl-resumption)
+  - [SSL tickets](/learn/configuration/instance_options.md#ssl-tickets)
 
 ### Database path
 

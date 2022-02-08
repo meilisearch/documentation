@@ -12,7 +12,7 @@ Currently, Meilisearch has a number of known limitations. Some of these limitati
 
 ### Database size
 
-**Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
+**Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/learn/configuration/instance_options.md#max-index-size).
 
 **Explanation:** Meilisearch uses two databases: one for storage and one for tasks. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
@@ -75,4 +75,4 @@ If your query is `Hello - World`:
 
 **Limitation:** The default limit for the payload size is __~100MB__.
 
-**Explanation:** Meilisearch memory consumption can be an issue in some systems and keeping payload sizes relatively small ensures an optimal experience for most users. [This limit can be modified](/reference/features/configuration.md#payload-limit-size) if you want to take full advantage of particularly powerful hardware.
+**Explanation:** Meilisearch memory consumption can be an issue in some systems and keeping payload sizes relatively small ensures an optimal experience for most users. [This limit can be modified](/learn/configuration/instance_options.md#payload-limit-size) if you want to take full advantage of particularly powerful hardware.

@@ -37,7 +37,7 @@ The above code sample returns an object with the following details about the dum
 }
 ```
 
-After dump creation is finished, the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your  Meilisearch binary. You can customize [this using the `--dumps-dir` configuration option](/reference/features/configuration.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
+After dump creation is finished, the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your  Meilisearch binary. You can customize [this using the `--dumps-dir` configuration option](/learn/configuration/instance_options.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
 
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
 
@@ -61,7 +61,7 @@ For example, you can import a dump from Meilisearch v0.21 into v0.22 without any
 
 ### Importing a dump for v0.21 or above
 
-Once you have exported a dump you will be able to use the `.dump` file to [launch Meilisearch with the `--import-dump` command-line flag](/reference/features/configuration.md#import-dump).
+Once you have exported a dump you will be able to use the `.dump` file to [launch Meilisearch with the `--import-dump` command-line flag](/learn/configuration/instance_options.md#import-dump).
 
 As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the Meilisearch server start, after which you can begin searching through your data.
 

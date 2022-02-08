@@ -1,6 +1,6 @@
 # Keys
 
-The `keys` route allows you to create, manage, and delete API keys. In order to use these endpoints, the [master key must be set](/reference/features/configuration.md#master-key) and supplied in the header of the request:
+The `keys` route allows you to create, manage, and delete API keys. In order to use these endpoints, the [master key must be set](/learn/configuration/instance_options.md#master-key) and supplied in the header of the request:
 
 ```bash
 curl \

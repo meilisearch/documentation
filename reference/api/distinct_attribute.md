@@ -2,11 +2,11 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-[Distinct attribute](/reference/features/distinct.md) is a field whose value will always be **unique** in the returned documents.
+[Distinct attribute](/learn/configuration/distinct.md) is a field whose value will always be **unique** in the returned documents.
 
 Distinct attribute can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-To learn more about distinct attributes, refer to our [dedicated guide](/reference/features/settings.md#distinct-attribute).
+To learn more about distinct attributes, refer to our [dedicated guide](/learn/configuration/settings.md#distinct-attribute).
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
@@ -16,7 +16,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/distinct-attribute" />
 
-Get the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index.
+Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index.
 
 #### Path variables
 
@@ -38,7 +38,7 @@ Get the [distinct attribute](/reference/features/settings.md#distinct-attribute)
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/distinct-attribute" />
 
-Update the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index.
+Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index.
 
 #### Path variables
 
@@ -50,7 +50,7 @@ Update the [distinct attribute](/reference/features/settings.md#distinct-attribu
 
 A String: the field name.
 
-[More information about the body](/reference/features/settings.md#distinct-attribute).
+[More information about the body](/learn/configuration/settings.md#distinct-attribute).
 
 ::: warning
 If the field does not exist, no error will be thrown.
@@ -78,7 +78,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/distinct-attribute"/>
 
-Reset the [distinct attribute](/reference/features/settings.md#distinct-attribute) field of an index to its default value.
+Reset the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index to its default value.
 
 **Default value**: `null`
 

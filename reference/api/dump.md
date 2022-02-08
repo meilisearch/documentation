@@ -8,13 +8,13 @@ During a [dump export](/reference/api/dump.md#create-a-dump), all indexes of the
 
 During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same uid as an index in the dump file will be overwritten.
 
-Dump imports must be performed when launching a Meilisearch instance [using the `import-dump` command-line option](/reference/features/configuration.md#import-dump).
+Dump imports must be performed when launching a Meilisearch instance [using the `import-dump` command-line option](/learn/configuration/instance_options.md#import-dump).
 
 ## Create a dump
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps directory](/reference/features/configuration.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
+Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps directory](/learn/configuration/instance_options.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
 
 **Meilisearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, Meilisearch will throw a [`dump_already_processing` error](/reference/api/error_codes.md#dump-already-processing). While a dump is processing, the **task queue is paused and no write operations can occur on the database.**
 

@@ -84,7 +84,7 @@ systemctl restart meilisearch
 
 ::::
 
-For more information about configuring Meilisearch, read our [configuration reference](/reference/features/configuration.md).
+For more information about configuring Meilisearch, read our [configuration reference](/learn/configuration/instance_options.md).
 
 ## How to delete all collected data
 
