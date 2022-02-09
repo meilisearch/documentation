@@ -87,7 +87,7 @@ You can read more about displayed attributes in our [dedicated guide](/learn/con
 
 [Documents](/learn/core_concepts/documents.md) in Meilisearch are composed of multiple fields. By default, Meilisearch looks for matches in every field, but the `searchableAttributes` array in the `settings` object allows you to change that.
 
-For example, if you search the `movies` index for `2012`, Meilisearch searches for `2012` in every field: the `title`, `overview`, `release_year`, and so on. If you just want to search in the `title` field:
+For example, if you search the `movies` index for `2012`, Meilisearch searches for `2012` in every field: the `title`, `overview`, `release_year`, etc.. If you just want to search in the `title` field:
 
 <CodeSamples id= "getting_started_update_searchableAttributes_md" />
 
