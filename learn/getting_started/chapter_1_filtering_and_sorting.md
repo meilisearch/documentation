@@ -16,6 +16,8 @@ The `settings` object contains two arrays for this purpose: `filterableAttribute
 
 >Running the above code sample should set you up for the next sections.
 
+To learn more about the `settings` object and how to configure it, refer to our [dedicated guide](/reference/features/settings.md).
+
 ## Filtering
 
 Meilisearch allows you to refine your search using filters. You can use any document fields for filtering by adding them to `filterableAttributes` as shown [above](#settings).

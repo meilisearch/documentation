@@ -131,3 +131,5 @@ The `synonyms` array lets you associate certain words in your dataset, making yo
 This will set `winnie` and `piglet` as synonyms; searching for either word will show the same results.
 
 You can read more about it in our [dedicated guide](/reference/features/synonyms.md).
+
+The next chapter tackles more advanced topics including security and data backup.
