@@ -8,7 +8,7 @@ function checkPath(givenPath, elem) {
     addError.call(this, {
       type: 'error',
       errMsg: `In ${origin} the path is missing a trailing slash`,
-      fileUrl: path.join(process.cwd(), '/.vuepress/config.json'),
+      fileUrl: path.join(process.cwd(), '/.vuepress/config.js'),
       fullText: `path: '${givenPath}'`,
       path: givenPath,
     })
