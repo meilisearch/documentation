@@ -7,13 +7,8 @@ function checkPath(givenPath, elem) {
     const origin = (elem && elem.title) ? `section ${elem.title}` : 'config.json'
     addError.call(this, {
       type: 'error',
-<<<<<<< HEAD
       errMsg: `In ${origin} the path is missing a trailing slash`,
       fileUrl: path.join(process.cwd(), '/.vuepress/config.js'),
-=======
-      errMsg: 'Path in config.json file is missing a trailing slash',
-      fileUrl: path.join(__dirname, 'find-and-check.js'),
->>>>>>> ac54308b (Change link to file where the error originates)
       fullText: `path: '${givenPath}'`,
       path: givenPath,
     })
