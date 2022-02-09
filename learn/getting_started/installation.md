@@ -63,10 +63,10 @@ Launch Meilisearch to start the server.
 
 ```bash
 # Add Meilisearch package
-echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+sudo echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 
 # Update APT and install Meilisearch
-apt update && apt install meilisearch-http
+sudo apt update && sudo apt install meilisearch-http
 
 # Launch Meilisearch
 meilisearch
@@ -112,10 +112,6 @@ To install Meilisearch on Windows, you can:
 To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
 
 ::::
-
-::: tip Compile for Best Performance
-For best performance, compile Meilisearch on the machine you intend to run it on. This way, the binary is optimized for your specific architecture.
-:::
 
 ## Cloud deploy
 

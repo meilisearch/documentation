@@ -11,13 +11,13 @@ module.exports = {
     sidebarDepth: 1,
     smoothScroll: true,
     nav: [
-      { text: 'Learn', link: '/learn/' },
-      { text: 'Reference', link: '/reference/' },
+      { text: 'Learn', link: '/learn/getting_started/quick_start' },
+      { text: 'Reference', link: '/reference/api/' },
+      { text: 'FAQ', link: '/faq' },
       {
-        text: 'Resources',
+        text: 'Integrations',
         items: [
-          { text: 'FAQ', link: '/faq' },
-          { text: 'Open API', link: '/open-api-readme' },
+
           {
             text: 'SDKs',
             items: [
@@ -31,6 +31,36 @@ module.exports = {
               { text: 'Ruby', link: 'https://github.com/meilisearch/meilisearch-ruby' },
               { text: 'Rust', link: 'https://github.com/meilisearch/meilisearch-rust' },
               { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
+            ],
+          },
+          {
+            text: 'Frameworks',
+            items: [
+              { text: 'Rails', link: 'https://github.com/meilisearch/meilisearch-rails' },
+              { text: 'Laravel', link: 'https://github.com/laravel/scout' },
+            ],
+          },
+          {
+            text: 'Front-end tools',
+            items: [
+              { text: 'instant-meilisearch', link: 'https://github.com/meilisearch/instant-meilisearch' },
+              { text: 'docs-searchbar.js', link: 'https://github.com/meilisearch/docs-searchbar.js' },
+            ],
+          },
+          {
+            text: 'Plugins',
+            items: [
+              { text: 'Gatsby', link: 'https://github.com/meilisearch/gatsby-plugin-meilisearch/' },
+              { text: 'Vuepress', link: 'https://github.com/meilisearch/vuepress-plugin-meilisearch' },
+              { text: 'Strapi', link: 'https://github.com/meilisearch/strapi-plugin-meilisearch/' },
+            ],
+          },
+          {
+            text: 'DevOp tools',
+            items: [
+              { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
+              { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
+              { text: 'AWS', link: 'https://github.com/meilisearch/meilisearch-aws' },
             ],
           },
         ],
@@ -50,6 +80,7 @@ module.exports = {
             '/learn/what_is_meilisearch/sdks',
             '/learn/what_is_meilisearch/comparison_to_alternatives',
             '/learn/what_is_meilisearch/telemetry',
+            '/learn/what_is_meilisearch/search_preview',
             '/learn/what_is_meilisearch/language',
             '/learn/what_is_meilisearch/contact',
           ],
@@ -183,20 +214,6 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '⭐ Feature references',
-          path: '/reference/features/',
-          collapsable: false,
-          children: [
-            '/reference/features/configuration',
-            '/reference/features/distinct',
-            '/reference/features/field_properties',
-            '/reference/features/search_parameters',
-            '/reference/features/settings',
-            '/reference/features/synonyms',
-            '/reference/features/web_interface',
-          ],
-        },
-        {
           title: '📒 API references',
           path: '/reference/api/',
           collapsable: false,
@@ -230,6 +247,19 @@ module.exports = {
             '/reference/api/version',
             '/reference/api/dump',
             '/reference/api/error_codes',
+          ],
+        },
+        {
+          title: '⭐ Feature references',
+          path: '/reference/features/',
+          collapsable: false,
+          children: [
+            '/reference/features/configuration',
+            '/reference/features/distinct',
+            '/reference/features/field_properties',
+            '/reference/features/search_parameters',
+            '/reference/features/settings',
+            '/reference/features/synonyms',
           ],
         },
       ],
@@ -266,9 +296,9 @@ module.exports = {
     [
       'meilisearch',
       {
-        hostUrl: 'https://docs-search-bar.meilisearch.com',
+        hostUrl: 'https://ms-480d6ad12249-173.saas.meili.dev',
         apiKey:
-          'd79226ae89f29d4dadba8d0c30c240e435f584fb83a7ae573b13eb62edec35cd',
+          'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
         indexUid: 'docs',
         placeholder: 'Search as you type...',
       },
@@ -421,6 +451,15 @@ module.exports = {
         src: 'https://cdn.usefathom.com/script.js',
         spa: 'auto',
         site: 'WIMXMDAA',
+        defer: true,
+      },
+    ],
+    [
+      'script',
+      {
+        src: 'https://thrilling-thirtyeight.meilisearch.com/script.js',
+        spa: 'auto',
+        site: 'QNBPJXIV',
         defer: true,
       },
     ],

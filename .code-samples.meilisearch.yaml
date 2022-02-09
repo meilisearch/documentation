@@ -14,11 +14,12 @@ create_an_index_1: |-
     -X POST 'http://localhost:7700/indexes' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "uid": "movies"
+      "uid": "movies",
+      "primaryKey": "movie_id"
     }'
 update_an_index_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movie_review' \
+    -X PUT 'http://localhost:7700/indexes/movies' \
     -H 'Content-Type: application/json' \
     --data-binary '{
         "primaryKey" : "movie_review_id"

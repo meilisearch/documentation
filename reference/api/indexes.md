@@ -141,7 +141,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 ```json
 {
   "uid": 1,
-  "indexUid": "movie_review",
+  "indexUid": "movies",
   "status": "enqueued",
   "type": "indexUpdate",
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"

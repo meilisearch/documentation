@@ -159,7 +159,7 @@ Aside from the primary key, **documents in the same index are not required to sh
 
 The primary key  is a **mandatory attribute linked to a unique value** the [document id][document-id]. It is part of the [primary field][primary-field].
 
-Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in a document, **the document will not be stored.**
+Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in a document, **none of the documents will be stored.**
 
 #### Setting the primary key
 
