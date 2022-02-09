@@ -5,5 +5,3 @@ This section is where we document all of Meilisearch's user-facing features and 
 Understanding our reference documentation is easier with background knowledge of Meilisearch's [core concepts](/learn/core_concepts). If you're a **new user**, you might prefer to start with an [explanation of Meilisearch's features](/learn/what_is_meilisearch/features.md) or our [quick start guide](/learn/getting_started/quick_start.md).
 
 ## Table of contents
-
-[Search parameters](/reference/features/search_parameters.md)

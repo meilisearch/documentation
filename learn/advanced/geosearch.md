@@ -121,7 +121,7 @@ Note that Meilisearch will rebuild your index whenever you update `filterableAtt
 
 ### Usage
 
-Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `filterableAttributes` list, you can use [`filter`](/reference/features/search_parameters.md#filter) and `_geoRadius` to ensure Meilisearch only returns results located within a specific geographic area.
+Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `filterableAttributes` list, you can use [`filter`](/reference/api/search.md#filter) and `_geoRadius` to ensure Meilisearch only returns results located within a specific geographic area.
 
 `_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
@@ -131,7 +131,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 `lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
 
-`_geoRadius` must always be used with the [`filter` search parameter](/reference/features/search_parameters.md#filter). The following filter expression would only include results within 1km of the Eiffel Tower:
+`_geoRadius` must always be used with the [`filter` search parameter](/reference/api/search.md#filter). The following filter expression would only include results within 1km of the Eiffel Tower:
 
 ```json
 { "filter": "_geoRadius(48.8583701, 2.2922926, 1000)" }
@@ -216,7 +216,7 @@ Note that Meilisearch will rebuild your index whenever you update `sortableAttri
 
 ### Usage
 
-Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `sortableAttributes` list, you can use `_geoPoint` and [`sort`](/reference/features/search_parameters.md#sort) to order results based on their distance from a geographic location.
+Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `sortableAttributes` list, you can use `_geoPoint` and [`sort`](/reference/api/search.md#sort) to order results based on their distance from a geographic location.
 
 `_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
 

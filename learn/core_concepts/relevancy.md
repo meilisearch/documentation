@@ -159,7 +159,7 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ### Sorting and custom ranking rules
 
-Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/features/search_parameters.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
+Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/api/search.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
 
 In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 

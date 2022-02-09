@@ -1,6 +1,6 @@
 # Features
 
-All of Meilisearch's features are provided right out of the box, and can be easily [configured](/reference/features/search_parameters.md). Here are a few of them that you should try out!
+All of Meilisearch's features are provided right out of the box, and can be easily [configured](/reference/api/search.md). Here are a few of them that you should try out!
 
 [[toc]]
 
@@ -28,7 +28,7 @@ Read more about synonyms in [this dedicated guide](/learn/configuration/synonyms
 
 ## Highlighting
 
-[Highlight](/reference/features/search_parameters.md#attributes-to-highlight) query terms so that matches pop out to the eye. Users don't need to read the entire text to find the match.
+[Highlight](/reference/api/search.md#attributes-to-highlight) query terms so that matches pop out to the eye. Users don't need to read the entire text to find the match.
 
 ## Filters
 

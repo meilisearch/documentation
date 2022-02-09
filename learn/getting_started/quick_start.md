@@ -93,7 +93,7 @@ See our guide on [asynchronous operations](/learn/advanced/asynchronous_operatio
 
 Now that your documents have been ingested into Meilisearch, you are able to search them.
 
-Meilisearch [offers many parameters](/reference/features/search_parameters.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
+Meilisearch [offers many parameters](/reference/api/search.md) that you can play with to refine your search or change the format of the returned documents. However, by default, the search is already relevant.
 
 The search engine is now aware of your documents and can serve those via an HTTP server.
 
@@ -128,7 +128,7 @@ Meilisearch **response**:
 ```
 
 ::: note
-**By default, Meilisearch returns only the first 20 results** for a search query. You can read more about the limit parameter [here](/reference/features/search_parameters.md#limit).
+**By default, Meilisearch returns only the first 20 results** for a search query. You can read more about the limit parameter [here](/reference/api/search.md#limit).
 :::
 
 [API references](/reference/api/search.md)
