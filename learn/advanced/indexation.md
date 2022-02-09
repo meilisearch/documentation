@@ -42,13 +42,13 @@ If you encounter performance issues during the indexation we recommend trying th
     "id": 1,
     "title": "Pride and Prejudice",
     "author": "Jane Austin",
-    "genres": "romance"
+    "genre": "romance"
   },
   {
     "id": 2,
     "title": "Le Petit Prince",
     "author": "Antoine de Saint-Exupéry",
-    "genres": "adventure"
+    "genre": "adventure"
   }
 ]
 ```
