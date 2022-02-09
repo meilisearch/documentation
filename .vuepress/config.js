@@ -113,7 +113,6 @@ module.exports = {
             '/learn/configuration/instance_options',
             {
               title: 'Index settings',
-              path: '/learn/configuration/settings/',
               collapsable: false,
               children: [
                 '/learn/configuration/settings',
