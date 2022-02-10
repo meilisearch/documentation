@@ -154,13 +154,13 @@ update_settings_1: |-
         "distinctAttribute": "movie_id",
         "searchableAttributes": [
             "title",
-            "description",
-            "genre"
+            "overview",
+            "genres"
         ],
         "displayedAttributes": [
             "title",
-            "description",
-            "genre",
+            "overview",
+            "genres",
             "release_date"
         ],
         "stopWords": [
@@ -260,8 +260,8 @@ update_searchable_attributes_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '[
         "title",
-        "description",
-        "genre"
+        "overview",
+        "genres"
     ]'
 reset_searchable_attributes_1: |-
   curl \
@@ -275,8 +275,8 @@ update_displayed_attributes_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '[
         "title",
-        "description",
-        "genre",
+        "overview",
+        "genres",
         "release_date"
     ]'
 reset_displayed_attributes_1: |-
@@ -306,8 +306,8 @@ field_properties_guide_searchable_1: |-
     --data-binary '{
         "searchableAttributes": [
             "title",
-            "description",
-            "genre"
+            "overview",
+            "genres"
         ]
     }'
 field_properties_guide_displayed_1: |-
@@ -317,8 +317,8 @@ field_properties_guide_displayed_1: |-
     --data-binary '{
         "displayedAttributes": [
             "title",
-            "description",
-            "genre",
+            "overview",
+            "genres",
             "release_date"
         ]
     }'
@@ -423,8 +423,8 @@ settings_guide_searchable_1: |-
     --data-binary '{
         "searchableAttributes": [
             "title",
-            "description",
-            "genre"
+            "overview",
+            "genres"
         ]
     }'
 settings_guide_displayed_1: |-
@@ -434,8 +434,8 @@ settings_guide_displayed_1: |-
     --data-binary '{
         "displayedAttributes": [
             "title",
-            "description",
-            "genre",
+            "overview",
+            "genres",
             "release_date"
         ]
     }'

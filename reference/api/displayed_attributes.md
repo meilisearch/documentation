@@ -36,8 +36,8 @@ List the settings.
 ```json
 [
   "title",
-  "description",
-  "genre",
+  "overview",
+  "genres",
   "release_date"
 ]
 ```
