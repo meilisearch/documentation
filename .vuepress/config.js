@@ -115,7 +115,10 @@ module.exports = {
               title: 'Index settings',
               collapsable: false,
               children: [
-                '/learn/configuration/settings',
+                {
+                  title: 'Overview',
+                  path: '/learn/configuration/settings',
+                },
                 '/learn/configuration/distinct',
                 '/learn/configuration/displayed_searchable_attributes',
                 '/learn/configuration/synonyms',

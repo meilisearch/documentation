@@ -1,4 +1,4 @@
-# Settings
+# Index settings
 
 This page describes the **index-level settings** available in Meilisearch and how to customize them.
 
