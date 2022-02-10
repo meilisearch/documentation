@@ -195,7 +195,7 @@ If [using the `GET` route to perform a search](/reference/api/search.md#search-i
 This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
 :::
 
-## Parameters
+### Overview
 
 | Query Parameter                                       | Description                                        | Default Value |
 |-------------------------------------------------------|----------------------------------------------------|---------------|
@@ -211,7 +211,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
-## Query (q)
+### Query (q)
 
 **Parameter**: `q`
 **Expected value**: any string
@@ -225,7 +225,7 @@ Meilisearch only considers the first ten words of any given search query. This i
 Additionally, keep in mind queries go through a normalization process that strips accents and diacritics, as well as making all terms lowercase.
 :::
 
-### Placeholder search
+#### Placeholder search
 
 When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/reference/features/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
 
@@ -237,7 +237,7 @@ Placeholder search is particularly useful when building a [faceted search UI](/l
 
 :::
 
-### Example
+##### Example
 
 You can search for films mentioning `shifu` by setting the `q` parameter:
 
@@ -265,7 +265,7 @@ This will give you a list of documents that contain your query terms in at least
 }
 ```
 
-### Phrase search
+#### Phrase search
 
 If you enclose search terms in double quotes (`"`), Meilisearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
 
@@ -273,11 +273,11 @@ Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,
 
 You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
 
-#### Example
+##### Example
 
 <CodeSamples id="phrase_search_1" />
 
-## Offset
+### Offset
 
 **Parameter**: `offset`
 **Expected value**: any positive integer
@@ -289,13 +289,13 @@ Sets the starting point in the search results, effectively skipping over a given
 This parameter can be used together with `limit` in order to paginate results.
 :::
 
-### Example
+#### Example
 
 If you want to skip the **first** result in a query, set `offset` to `1`:
 
 <CodeSamples id="search_parameter_guide_offset_1" />
 
-## Limit
+### Limit
 
 **Parameter**: `limit`
 **Expected value**: any positive integer
@@ -307,13 +307,13 @@ Sets the maximum number of documents returned by a single query.
 This parameter is often used together with `offset` in order to paginate results.
 :::
 
-### Example
+#### Example
 
 If you want your query to return only **two** documents, set `limit` to `2`:
 
 <CodeSamples id="search_parameter_guide_limit_1" />
 
-## Filter
+### Filter
 
 **Parameter**: `filter`
 **Expected value**: a filter expression written as a string or an array of strings
@@ -323,7 +323,7 @@ Uses filter expressions to refine search results. Attributes used as filter crit
 
 [Read our guide on filtering, faceted search and filter expressions.](/learn/advanced/filtering_and_faceted_search.md)
 
-### Example
+#### Example
 
 You can write a filter expression in string syntax using logical connectives:
 
@@ -341,7 +341,7 @@ You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
-### Filtering results `_geoRadius`
+#### Filtering results `_geoRadius`
 
 If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
 
@@ -355,7 +355,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-## Facets distribution
+### Facets distribution
 
 **Parameter**: `facetsDistribution`
 **Expected value**: an array of `attribute`s or `["*"]`
@@ -372,7 +372,7 @@ This parameter can take two values:
 If an attribute used on `facetsDistribution` has not been added to the `filterableAttributes` list, it will be ignored.
 :::
 
-### Returned fields
+#### Returned fields
 
 When `facetsDistribution` is set, the search results object contains **two additional fields**:
 
@@ -387,7 +387,7 @@ When `facetsDistribution` is set, the search results object contains **two addit
 
 [Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#facets-distribution)
 
-### Example
+#### Example
 
 Given a movie database, suppose that you want to know the number of `Batman` movies per genre:
 
@@ -415,7 +415,7 @@ You would get the following response:
 }
 ```
 
-## Attributes to retrieve
+### Attributes to retrieve
 
 **Parameter**: `attributesToRetrieve`
 **Expected value**: an array of `attribute`s or `["*"]`
@@ -429,13 +429,13 @@ If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes`
 If an attribute has been removed from `displayedAttributes`, `attributesToRetrieve` will silently ignore it and the field will not appear in your returned documents.
 :::
 
-### Example
+#### Example
 
 To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["overview", "title"]`.
 
 <CodeSamples id="search_parameter_guide_retrieve_1" />
 
-## Attributes to crop
+### Attributes to crop
 
 **Parameter**: `attributesToCrop`
 **Expected value**: an array of attribute or `["*"]`
@@ -453,7 +453,7 @@ Instead of supplying individual `attributes`, you can provide `["*"]` as a value
 
 If no query word is present in the cropped field, the crop will start from the first word.
 
-### Example
+#### Example
 
 If you use `shifu` as a search query and set the value of the `cropLength` parameter to `10`:
 
@@ -478,7 +478,7 @@ You will get the following response with the **cropped text in the `_formatted` 
 }
 ```
 
-## Crop length
+### Crop length
 
 **Parameter**: `cropLength`
 **Expected value**: a positive integer
@@ -488,7 +488,7 @@ Configures the number of characters to keep on each side of the matching query t
 
 If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 
-## Attributes to highlight
+### Attributes to highlight
 
 **Parameter**: `attributesToHighlight`
 **Expected value**: an array of attributes or `["*"]`
@@ -506,7 +506,7 @@ It is not possible to change the `<em>` tag or its attributes.
 If you need finer control over the formatted output, we recommend using [the `matches` search parameter](#matches).
 :::
 
-### Example
+#### Example
 
 The following query highlights matches present in the `overview` attribute:
 
@@ -531,7 +531,7 @@ The highlighted version of the text would then be found in the `_formatted` obje
 }
 ```
 
-## Matches
+### Matches
 
 **Parameter**: `matches`
 **Expected value**: `true` or `false`
@@ -545,7 +545,7 @@ The beginning of a matching term within a field is indicated by `start`, and its
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
 :::
 
-### Example
+#### Example
 
 If you set `matches` to `true` and search for `winter feast`:
 
@@ -583,7 +583,7 @@ You would get the following response with **information about the matches in the
 }
 ```
 
-## Sort
+### Sort
 
 **Parameter**: `sort`
 **Expected value**: a list of attributes written as an array or as a comma-separated string
@@ -605,13 +605,13 @@ When using the `GET` route, `sort` expects the list as a comma-separated string.
 
 [Read more about sorting search results in our dedicated guide.](/learn/advanced/sorting.md)
 
-### Example
+#### Example
 
 You can search for science fiction books ordered from cheapest to most expensive:
 
 <CodeSamples id="search_parameter_guide_sort_1" />
 
-### Sorting results with `_geoPoint`
+#### Sorting results with `_geoPoint`
 
 When dealing with documents containing geolocation data, you can use `_geoPoint` to sort results based on their distance from a specific geographic location.
 
