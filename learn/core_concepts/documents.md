@@ -109,7 +109,7 @@ Take note that, in the case of strings, a value **[can contain at most 65535 pos
 
 You can also apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
-If you would like to adjust how a field gets handled by Meilisearch, you can do so in the [settings](/learn/configuration/settings.md#settings).
+If you would like to adjust how a field gets handled by Meilisearch, you can do so in the [settings](/learn/configuration/settings.md).
 
 ### Field properties
 
