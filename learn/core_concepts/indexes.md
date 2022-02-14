@@ -73,7 +73,7 @@ In your dataset, you may decide to create synonyms for words which have the same
 
 Since synonyms are linked to a given index, they won't apply to any other index on the same Meilisearch instance.
 
-[Learn more about synonyms](/reference/features/synonyms.md)
+[Learn more about synonyms](/learn/configuration/synonyms.md)
 
 ## Stop words
 
@@ -96,4 +96,4 @@ Fields can have either or both or none of the following properties that can be m
 
 By default, each field is stored and this behavior cannot be changed.
 
-[Learn more about field properties](/reference/features/field_properties.md)
+[Learn more about field properties](/learn/configuration/displayed_searchable_attributes.md)

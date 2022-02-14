@@ -8,7 +8,7 @@ This guide will teach you how to protect your Meilisearch instance by setting a 
 
 To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key can be an alphanumeric string of any length.
 
-Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/reference/features/configuration.md#master-key).
+Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/learn/configuration/instance_options.md#master-key).
 
 :::: tabs
 ::: tab CLI
