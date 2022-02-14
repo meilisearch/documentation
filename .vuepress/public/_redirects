@@ -152,3 +152,6 @@
 
 # Remove search parameters feature reference
 /reference/features/search_parameters.html          /reference/api/search.html
+
+# Remove Feature reference
+/reference/features/                                /reference/

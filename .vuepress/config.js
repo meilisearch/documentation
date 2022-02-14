@@ -270,13 +270,6 @@ module.exports = {
             '/reference/api/error_codes',
           ],
         },
-        {
-          title: '⭐ Feature references',
-          path: '/reference/features/',
-          collapsable: false,
-          children: [
-          ],
-        },
       ],
     },
   },
