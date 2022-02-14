@@ -6,6 +6,4 @@ This is **timeless knowledge**. We recommend keeping it open in a spare tab, whe
 
 ## Table of contents
 
-- [⭐ Features](/reference/features)
 - [📒 API](/reference/api)
-- [🛠️ Under the hood](/learn/advanced)
