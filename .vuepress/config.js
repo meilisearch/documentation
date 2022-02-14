@@ -275,7 +275,6 @@ module.exports = {
           path: '/reference/features/',
           collapsable: false,
           children: [
-            '/reference/features/search_parameters',
           ],
         },
       ],

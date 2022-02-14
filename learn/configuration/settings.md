@@ -83,7 +83,7 @@ List of attributes that can be used for [filtering and faceted search](/learn/ad
 By default, `filterableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
 
 ::: tip
-Configuring `filterableAttributes` is necessary in order to use the [`filter` search parameter](/reference/features/search_parameters.md#filter).
+Configuring `filterableAttributes` is necessary in order to use the [`filter` search parameter](/reference/api/search.md#filter).
 :::
 
 [Learn more about filtering and faceted search in our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
@@ -164,7 +164,7 @@ List of attributes that can be used for [sorting](/learn/advanced/sorting.md).
 By default, `sortableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
 
 ::: tip
-Configuring `sortableAttributes` is necessary in order to use the [`sort` search parameter](/reference/features/search_parameters.md#sort).
+Configuring `sortableAttributes` is necessary in order to use the [`sort` search parameter](/reference/api/search.md#sort).
 :::
 
 [Learn more about sorting in our dedicated guide.](/learn/advanced/sorting.md)

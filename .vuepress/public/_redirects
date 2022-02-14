@@ -149,3 +149,6 @@
 /reference/features/field_properties.html              /learn/configuration/displayed_searchable_attributes.html
 /reference/features/synonyms.html              /learn/configuration/synonyms.html
 /reference/features/settings.html              /learn/configuration/settings.html
+
+# Remove search parameters feature reference
+/reference/features/search_parameters.html          /reference/api/search.html
