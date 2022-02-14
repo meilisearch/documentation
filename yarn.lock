@@ -1161,6 +1161,11 @@
   optionalDependencies:
     prettier "^1.18.2"
 
+"@vue/devtools-api@^6.0.0-beta.11":
+  version "6.0.8"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.8.tgz#78708d2d437093224f00b775f8808e2c35d024a3"
+  integrity sha512-bzei608bPVQE2yq9Ghrjn/dnpf27mWfrr0q0ZQiuZoO3LQqFG0T1xSGz+9vw1j9KAZM2Cu9vdQMkddDxqzZGNg==
+
 "@vuepress/core@1.8.2":
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/@vuepress/core/-/core-1.8.2.tgz#4f5bafc894691bfea4146294a582a129483daf2a"
@@ -9327,10 +9332,12 @@ vuepress@^1.8.2:
     opencollective-postinstall "^2.0.2"
     update-notifier "^4.0.0"
 
-vuex@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
-  integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==
+vuex@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.0.2.tgz#f896dbd5bf2a0e963f00c67e9b610de749ccacc9"
+  integrity sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"
 
 watchpack-chokidar2@^2.0.1:
   version "2.0.1"
