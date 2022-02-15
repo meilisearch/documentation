@@ -159,7 +159,7 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ### Sorting and custom ranking rules
 
-Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/features/search_parameters.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
+Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/api/search.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
 
 In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 
@@ -188,7 +188,7 @@ In a typical dataset, some fields are more relevant to search than others. A `ti
 
 By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the indexed documents. However, it can also be set manually.
 
-For a more detailed look at this subject, see our reference page for [the searchable attributes list](/reference/features/field_properties.md#the-searchableattributes-list).
+For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
 
 ### Example
 

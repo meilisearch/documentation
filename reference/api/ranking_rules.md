@@ -70,7 +70,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 - To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
-[More information about the body](/reference/features/settings.md#ranking-rules).
+[More information about the body](/learn/configuration/settings.md#ranking-rules).
 
 ### Example
 

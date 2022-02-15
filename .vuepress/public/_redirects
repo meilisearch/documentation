@@ -142,3 +142,16 @@
 
 # Move Language guide
 /reference/features/language.html                   /learn/what_is_meilisearch/language.html
+
+# Move settings, configuration, distinct, field properties, synonyms
+/reference/features/configuration.html              /learn/configuration/instance_options.html
+/reference/features/distinct.html              /learn/configuration/distinct.html
+/reference/features/field_properties.html              /learn/configuration/displayed_searchable_attributes.html
+/reference/features/synonyms.html              /learn/configuration/synonyms.html
+/reference/features/settings.html              /learn/configuration/settings.html
+
+# Remove search parameters feature reference
+/reference/features/search_parameters.html          /reference/api/search.html
+
+# Remove Feature reference
+/reference/features/                                /reference/

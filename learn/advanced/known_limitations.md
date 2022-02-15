@@ -6,7 +6,7 @@ Currently, Meilisearch has a number of known limitations. Some of these limitati
 
 ### Number of query words
 
-**Limitation:** The maximum number of terms taken into account for each [search query](/reference/features/search_parameters.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
+**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
 
 **Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 
@@ -75,4 +75,4 @@ If your query is `Hello - World`:
 
 **Limitation:** The default limit for the payload size is **~100MB**.
 
-**Explanation:** Meilisearch memory consumption can be an issue in some systems and keeping payload sizes relatively small ensures an optimal experience for most users. [This limit can be modified](/reference/features/configuration.md#payload-limit-size) if you want to take full advantage of particularly powerful hardware.
+**Explanation:** Meilisearch memory consumption can be an issue in some systems and keeping payload sizes relatively small ensures an optimal experience for most users. [This limit can be modified](/learn/configuration/instance_options.md#payload-limit-size) if you want to take full advantage of particularly powerful hardware.

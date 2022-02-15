@@ -60,7 +60,7 @@ An array of strings that contains the stop-words.
 
 If a list of stop-words already exists it will be overwritten (_replaced_).
 
-[More information about the body](/reference/features/settings.md#stop-words).
+[More information about the body](/learn/configuration/settings.md#stop-words).
 
 ### Example
 

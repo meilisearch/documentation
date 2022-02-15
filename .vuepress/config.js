@@ -106,6 +106,27 @@ module.exports = {
           ],
         },
         {
+          title: '⚙️ Configuration',
+          collapsable: false,
+          path: '/learn/configuration/instance_options/',
+          children: [
+            '/learn/configuration/instance_options',
+            {
+              title: 'Index settings',
+              collapsable: false,
+              children: [
+                {
+                  title: 'Overview',
+                  path: '/learn/configuration/settings',
+                },
+                '/learn/configuration/distinct',
+                '/learn/configuration/displayed_searchable_attributes',
+                '/learn/configuration/synonyms',
+              ],
+            },
+          ],
+        },
+        {
           title: '📚 Advanced topics',
           path: '/learn/advanced/',
           collapsable: false,
@@ -247,19 +268,6 @@ module.exports = {
             '/reference/api/version',
             '/reference/api/dump',
             '/reference/api/error_codes',
-          ],
-        },
-        {
-          title: '⭐ Feature references',
-          path: '/reference/features/',
-          collapsable: false,
-          children: [
-            '/reference/features/configuration',
-            '/reference/features/distinct',
-            '/reference/features/field_properties',
-            '/reference/features/search_parameters',
-            '/reference/features/settings',
-            '/reference/features/synonyms',
           ],
         },
       ],
