@@ -12,13 +12,13 @@ Currently, Meilisearch has a number of known limitations. Some of these limitati
 
 ### Database size
 
-**Limitation:** The default maximum database size is __100GiB__. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
+**Limitation:** The default maximum database size is **100GiB**. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
 
 **Explanation:** Meilisearch uses two databases: one for storage and one for tasks. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
 ### Maximum words per attribute
 
-**Limitation:** Meilisearch can index a maximum of __65535 positions per attribute__. Any words exceeding the 65535 position limit will be silently ignored.
+**Limitation:** Meilisearch can index a maximum of **65535 positions per attribute**. Any words exceeding the 65535 position limit will be silently ignored.
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
 
@@ -73,6 +73,6 @@ If your query is `Hello - World`:
 
 ### Payload size
 
-**Limitation:** The default limit for the payload size is __~100MB__.
+**Limitation:** The default limit for the payload size is **~100MB**.
 
 **Explanation:** Meilisearch memory consumption can be an issue in some systems and keeping payload sizes relatively small ensures an optimal experience for most users. [This limit can be modified](/reference/features/configuration.md#payload-limit-size) if you want to take full advantage of particularly powerful hardware.
