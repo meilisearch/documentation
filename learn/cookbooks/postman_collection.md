@@ -19,9 +19,9 @@ Once you have downloaded the [Postman collection](/postman/meilisearch-collectio
 
 ![Edit](/postman/edit.png)
 
-Set the API key if needed (set to `masterKey` by default):
+Set the token if needed (set to `masterKey` by default):
 
-![Edit API Key](/postman/set_api_key.png)
+![Edit API Key](/postman/set_token.png)
 
 Set the host URL (set to Meilisearch's local port by default) and the index UID (set to `indexUID` by default):
 
