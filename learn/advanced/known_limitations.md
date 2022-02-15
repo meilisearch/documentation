@@ -12,7 +12,7 @@ Currently, Meilisearch has a number of known limitations. Some of these limitati
 
 ### Database size
 
-**Limitation:** The default maximum database size is **100GiB**. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/reference/features/configuration.md#max-index-size).
+**Limitation:** The default maximum database size is **100GiB**. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/learn/configuration/instance_options.md#max-index-size).
 
 **Explanation:** Meilisearch uses two databases: one for storage and one for tasks. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
