@@ -66,7 +66,7 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 ### `missing_authorization_header`
 
-The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [security](/learn/advanced/security.md) for more information.
+The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [security](/learn/security/master_api_keys.md) for more information.
 
 ### `not_found`
 
@@ -118,7 +118,7 @@ The provided `_geo` field of one or more documents is invalid. Read more about `
 
 ### `invalid_api_key`
 
-The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](/learn/advanced/security.md).
+The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](/learn/security/master_api_keys.md).
 
 ### `invalid_store_file`
 
