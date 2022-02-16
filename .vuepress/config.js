@@ -145,6 +145,14 @@ module.exports = {
             },
           ],
         },
+        { title: '🔐 Security and permissions',
+          collapsable: false,
+          path: '/learn/security/master_api_keys/',
+          children: [
+            '/learn/security/master_api_keys',
+            '/learn/security/tenant_tokens',
+          ],
+        },
         {
           title: '📚 Advanced topics',
           path: '/learn/advanced/asynchronous_operations/',
@@ -153,7 +161,6 @@ module.exports = {
             '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
-            '/learn/advanced/security',
             '/learn/advanced/sorting',
             {
               title: 'Updating Meilisearch',
