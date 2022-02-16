@@ -149,10 +149,12 @@ If no master key is provided in a `development` environment, all routes will be 
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
-**Default value**: `false`
-**Expected value**: `true` or `false`
+**Default value**: N/A
+**Expected value**: N/A
 
 Deactivates Meilisearch's built-in telemetry when set to `true`.
+
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
 
 Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/learn/what_is_meilisearch/telemetry.md#how-to-delete-all-collected-data).
 
@@ -273,6 +275,8 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 
 Activates scheduled snapshots when set to `true`. Snapshots are disabled by default.
 
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+
 [Learn more about snapshots](/learn/advanced/snapshots.md).
 
 ### Snapshot destination
@@ -389,6 +393,8 @@ Makes SSL authentication mandatory.
 
 Sends a fatal alert if the client does not complete client authentication.
 
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+
 ### SSL resumption
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
@@ -397,6 +403,8 @@ Sends a fatal alert if the client does not complete client authentication.
 
 Activates SSL session resumption.
 
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+
 ### SSL tickets
 
 **Environment variable**: `MEILI_SSL_TICKETS`
@@ -404,3 +412,5 @@ Activates SSL session resumption.
 **Default value**: `None`
 
 Activates SSL tickets.
+
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
