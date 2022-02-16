@@ -62,7 +62,7 @@ docker run -it --rm \
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
 
-You can learn more about Docker on the [official documentation](https://docs.docker.com/get-docker/).
+You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
 :::
 
 ::: tab APT
