@@ -1,4 +1,4 @@
-# Security and permissions
+# Master key and API keys
 
 This guide will teach you how to protect your Meilisearch instance by setting a master key and how to authorize requests using API keys. You will also learn how to use your master key to create, list, update, and delete API keys with granular permissions.
 

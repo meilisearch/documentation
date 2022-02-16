@@ -174,3 +174,6 @@
 /reference/api/                                     /reference/api/overview.html
 /learn/                                             /learn/getting_started/quick_start.html
 /reference/                                         /reference/api/overview.html
+
+# Create new security and permissions section
+/learn/advanced/security.html                       /learn/security/master_api_keys.html

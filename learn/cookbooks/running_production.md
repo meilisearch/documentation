@@ -103,7 +103,7 @@ In Debian and other Linux distributions, `systemd` allows you to create and mana
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
 
-To run Meilisearch in a production environment, use the `--env` flag. Set the master key using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/advanced/security.md#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
+To run Meilisearch in a production environment, use the `--env` flag. Set the master key using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
 
 Remember to choose a safe and random key and avoid exposing it in publicly accessible applications. You can change the master key with the following command:
 
@@ -123,7 +123,7 @@ EOF
 ```
 
 ::: tip
-For more information on Meilisearch security and API keys see the [security docs](/learn/advanced/security.md). You can check our [quick start](/learn/getting_started/quick_start.md#step-1-setup-and-installation) guide for more information on how to get Meilisearch up and running.
+For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys.md). You can check our [quick start](/learn/getting_started/quick_start.md#step-1-setup-and-installation) guide for more information on how to get Meilisearch up and running.
 :::
 
 As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.
