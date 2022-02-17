@@ -53,7 +53,7 @@ Take note that whenever you launch Meilisearch from a snapshot, it will **stop p
 1. A database already exists (i.e. you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary)
 2. No snapshot is found at the given path
 
-In both cases, **this behavior is [configurable](/learn/configuration/instance_options.md#ignore-missing-snapshot-)**.
+In both cases, **this behavior is [configurable](/learn/configuration/instance_options.md#ignore-missing-snapshot)**.
 
 If you don't want Meilisearch to throw an error when finding that a database already exists, you can add the following flag: `--ignore-snapshot-if-db-exists=true`. When using this flag, Meilisearch will use the existing database to start an instance instead of throwing an error. The snapshot will be ignored.
 
