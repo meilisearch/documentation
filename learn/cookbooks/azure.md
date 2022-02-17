@@ -12,7 +12,7 @@ If you don't have yet an Azure subscription, you can [create one here](https://a
 
 ## One-Click Deploy
 
-You can deploy a Meilisearch instance via the official [Meilisearch Docker image]() by clicking the following button 
+You can deploy a Meilisearch instance via the official [Meilisearch Docker image](https://hub.docker.com/r/getmeili/meilisearch) by clicking the following button 
 
 [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json).
 
@@ -60,7 +60,7 @@ The one-click button create a storage with the "LRS" redundancy option. That mea
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
 ::: tip
-Meilisearch has a snapshot and dump features that could help you achieve backup capabilities. See [Data Backup documentation](learn/advanced/snapshots_vs_dumps) for more information.
+Meilisearch has a snapshot and dump features that could help you achieve backup capabilities. See [Data Backup documentation](/learn/advanced/snapshots_vs_dumps.md) for more information.
 :::
 
 ### Always-on
