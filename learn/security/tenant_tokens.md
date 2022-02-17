@@ -2,7 +2,7 @@
 
 When developing complex applications or handling sensitive data, the control over security and permissions offered by API keys might not be enough. This is where tenant tokens and multitenancy come in.
 
-In this guide you'll first learn what multitenancy is, how tenant tokens solve it. Then, you'll see how to generate and use tokens using one of our official SDKs or from scratch.
+In this guide you'll first learn what multitenancy is and how tenant tokens solve it. Then, you'll see how to generate and use tokens using either one of our official SDKs or completely from scratch.
 
 ## What is multitenancy?
 
@@ -23,27 +23,73 @@ In this guide you'll first learn what multitenancy is, how tenant tokens solve i
 
 There are no specific instance options or index settings required to activate tenant tokens. Any publicly available API endpoint that can be accessed with an API key will seamlessly accept a valid tenant token.
 
-The quickest method to generate tenant tokens is using one of our official SDKs. Using an SDK is our recommended method for token generation, so this guide will cover that scenario first. It is also possible to generate the token from scratch.
+The quickest method to generate tenant tokens is using one of our official SDKs.  It is also possible to generate the token from scratch, without any any dependencies.
 
 ### Tenant token anatomy
 
-A tenant token is made ouf of two parts: header and payload.
-#### Token header
-The header must specify that this is a JWT token. Meilisearch does not currently accept any other types of tokens.
+Before generating a token, it is helpful to understand what it is and what are its components.
 
-The header must also specify which encryption algorithm has been used to protect the token. Meilisearch currently accepts three algorithms:
+A tenant token is made ouf of three parts: header, payload, and signature.
+#### Token header
+
+The header contains preliminary information regarding the token and how it was constructed. A header must have two fields:
+
+```json
+{
+  "typ": "JWT",
+  "alg": "HS256"
+}
+```
+
+`typ` specifies the token type. Meilisearch only accepts [JWT tokens](https://jwt.io/).
+
+`alg` specifies which encryption algorithm has been used to protect the token. Meilisearch accepts three algorithms:
 
 - `HS256`
 - `HS384`
 - `HS512`
 
+::: note
+Discussing the differences between these algorithms is out of scope for this article. You can find more information on [how to choose the best solution for your application in this guide by `someone`](need to find a link).
+:::
+
 #### Token payload
 
-The payload contains three fields: `apiKeyPrefix`, `exp`, and `searchRules`.
+The payload contains instructions to your Meilisearch instance. It must have three fields:
 
-- `apiKeyPrefix` is a string contain the first 8 characters of a valid Meilisearch API key;
-- `exp` sets the token expiry date, represented in UNIX epoch;
-- `searchRules` contains a set of rules that will be enforced to any queries using this token
+```json
+{
+    "apiKeyPrefix": "rkDxFUHd",
+    "exp": 1641835850,
+    "searchRules": {
+        "*": {
+            "filter": "user_id = 1"
+        }
+    }
+}
+```
+
+`apiKeyPrefix` must contain the first 8 characters of a valid Meilisearch API key and proves the token is allowed to access a resource.
+
+`exp` must contain a UNIX epoch specifying when the token's expiry date. Once a token is expired, it cannot be used anymore and must be regenerated.
+
+`searchRules` must contain a JSON object specifying rules that will be enforced on any queries using this token. Each rule is itself a JSON object and must follow this pattern:
+
+```json
+{
+ "[index_name]": {
+   "[search_parameter]": "[value]"
+ }
+}
+```
+
+In the example payload, the token has one search rule that applies to all indexes in that instance, represented by the wildcard `*`. 
+
+```json
+"*": {
+  "filter": "user_id = 1"
+}
+```
 
 #### Search rules
 
