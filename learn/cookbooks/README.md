@@ -14,6 +14,7 @@ This is not the best section for Meilisearch beginners. If you'd like to follow 
 ### Deployment
 
 - [Deploy Meilisearch on AWS](/learn/cookbooks/aws.md)
+- [Deploy Meilisearch on Azure](/learn/cookbooks/azure.md)
 - [Deploy Meilisearch on GCP](/learn/cookbooks/gcp.md)
 - [Deploy Meilisearch on DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
 - [Deploy Meilisearch on Qovery](/learn/cookbooks/qovery.md)
