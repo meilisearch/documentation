@@ -12,13 +12,13 @@ If you don't have yet an Azure subscription, you can [create one here](https://a
 
 ## One-Click Deploy
 
-You can deploy a Meilisearch instance via the official [Meilisearch Docker image](https://hub.docker.com/r/getmeili/meilisearch) by clicking the following button 
+You can deploy a Meilisearch instance via the official [Meilisearch Docker image](https://hub.docker.com/r/getmeili/meilisearch) by clicking the following button:
 
 [![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json).
 
 ![The Azure portal prompting for information to deploy Meilisearch](/azure/01.azure-deploy-button.png)
 
-When clicking this button, you'll be redirected to the Azure Portal, and asked a few questions: 
+When clicking this button, you'll be redirected to the Azure Portal, and asked a few questions:
 
 - **Region**: This is the deployment region. You should select a region close to you or your users,
 - **Environment**: The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This settings has no effects on the type of resources deployed. It's just for convenience.
@@ -44,10 +44,10 @@ While Meilisearch is usually exposed on port `7700`, this deployment will expose
 
 This button uses an Infrastructure as code bicep file. The code is opensource and hosted on [GitHub](https://github.com/cmaneu/meilisearch-on-azure). You can submit PRs if needed, or use it in your own projects.
 
-This code will setup two main components: 
+This code will setup two main components:
 
 - An **Azure App Service** instance to host Meilisearch container
-- An **Azure File Share** who is volume-mapped into the Meilisearch container for database persistence. 
+- An **Azure File Share** who is volume-mapped into the Meilisearch container for database persistence.
 
 ## Production-ready deployment
 
@@ -65,7 +65,7 @@ Meilisearch has a snapshot and dump features that could help you achieve backup 
 
 ### Always-on
 
-To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deallocated. When the next client hit your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range. 
+To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deallocated. When the next client hit your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range.
 
 You can avoid this _cold start_ by enabling the _Always-on_ feature, either in the Azure portal or in the Infrastructure as Code.
 
