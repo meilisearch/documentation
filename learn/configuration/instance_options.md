@@ -18,6 +18,16 @@ Server is listening on: http://127.0.0.1:7700
 
 In the previous example, `./meilisearch` is the command that launches a Meilisearch instance and `--http-addr` is the option that sets the URL and port this instance will use. **All command-line options are prepended with `--`.**
 
+Some of these options are command-line flags and unlike command-line options, **they don't take any values**.
+
+```bash
+./meilisearch --no-analytics
+```
+
+The above example disables analytics for the Meilisearch instance without accepting any values.
+
+We will refer to command-line with the :triangular_flag_on_post: emoji on this page.
+
 ## Configuring an instance with environment variables
 
 In order to configure a Meilisearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
@@ -59,7 +69,7 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 
 ### Advanced
 
-- [Disable analytics](/learn/configuration/instance_options.md#disable-analytics)
+- [Disable analytics](/learn/configuration/instance_options.md#disable-analytics) :triangular_flag_on_post:
 - [Dumps](/learn/configuration/instance_options.md#dumps-destination)
   - [Dumps destination](/learn/configuration/instance_options.md#dumps-destination)
   - [Import dump](/learn/configuration/instance_options.md#import-dump)
@@ -68,20 +78,20 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 - [Max TASK_DB size](/learn/configuration/instance_options.md#max-task-db-size)
 - [Payload limit size](/learn/configuration/instance_options.md#payload-limit-size)
 - [Snapshots](/learn/configuration/instance_options.md#schedule-snapshot-creation):
-  - [Schedule snapshot creation](/learn/configuration/instance_options.md#schedule-snapshot-creation)
+  - [Schedule snapshot creation](/learn/configuration/instance_options.md#schedule-snapshot-creation) :triangular_flag_on_post:
   - [Snapshot destination](/learn/configuration/instance_options.md#snapshot-destination)
   - [Snapshot interval](/learn/configuration/instance_options.md#snapshot-interval)
   - [Import snapshot](/learn/configuration/instance_options.md#import-snapshot)
-  - [Ignore missing snapshot](/learn/configuration/instance_options.md#ignore-missing-snapshot)
-  - [Ignore snapshot if DB exists](/learn/configuration/instance_options.md#ignore-snapshot-if-db-exists)
+  - [Ignore missing snapshot](/learn/configuration/instance_options.md#ignore-missing-snapshot) :triangular_flag_on_post:
+  - [Ignore snapshot if DB exists](/learn/configuration/instance_options.md#ignore-snapshot-if-db-exists) :triangular_flag_on_post:
 - [SSL configuration](/learn/configuration/instance_options.md#ssl-authentication-path):
   - [SSL authentication path](/learn/configuration/instance_options.md#ssl-authentication-path)
   - [SSL certificates path](/learn/configuration/instance_options.md#ssl-certificates-path)
   - [SSL key path](/learn/configuration/instance_options.md#ssl-key-path)
   - [SSL OCSP path](/learn/configuration/instance_options.md#ssl-ocsp-path)
-  - [SSL require auth](/learn/configuration/instance_options.md#ssl-require-auth)
-  - [SSL resumption](/learn/configuration/instance_options.md#ssl-resumption)
-  - [SSL tickets](/learn/configuration/instance_options.md#ssl-tickets)
+  - [SSL require auth](/learn/configuration/instance_options.md#ssl-require-auth) :triangular_flag_on_post:
+  - [SSL resumption](/learn/configuration/instance_options.md#ssl-resumption) :triangular_flag_on_post:
+  - [SSL tickets](/learn/configuration/instance_options.md#ssl-tickets) :triangular_flag_on_post:
 
 ### Database path
 
@@ -143,16 +153,20 @@ If no master key is provided in a `development` environment, all routes will be 
 
 [Learn more about Meilisearch's use of security keys.](/learn/advanced/security.md)
 
-### Disable analytics
+### Disable analytics :triangular_flag_on_post:
+
+::: warning
+This is a CLI flag and does not take any values. Assigning a value will throw an error.
+:::
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
-**Default value**: N/A
-**Expected value**: N/A
+**Default value**: Enabled
+**Expected value**: `true` or `false`
 
 Deactivates Meilisearch's built-in telemetry when set to `true`.
 
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals. An absent environment variable will also be considered as false, everything else is considered `true`.
 
 Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/learn/what_is_meilisearch/telemetry.md#how-to-delete-all-collected-data).
 
@@ -234,7 +248,11 @@ The `task` database handles [pending tasks](/learn/advanced/asynchronous_operati
 
 Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-### Schedule snapshot creation
+### Schedule snapshot creation :triangular_flag_on_post:
+
+::: warning
+This is a CLI flag and does not take any values. Assigning a value will throw an error.
+:::
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
@@ -243,7 +261,7 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 
 Activates scheduled snapshots when set to `true`. Snapshots are disabled by default.
 
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals. An absent environment variable will also be considered as false, everything else is considered `true`.
 
 [Learn more about snapshots](/learn/advanced/snapshots.md).
 
@@ -283,7 +301,11 @@ This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignor
 
 *This option is not available as an environment variable.*
 
-### Ignore missing snapshot
+### Ignore missing snapshot :triangular_flag_on_post:
+
+::: warning
+This is a CLI flag and does not take any values. Assigning a value will throw an error.
+:::
 
 **Environment variable**: N/A
 **CLI option**: `--ignore-missing-snapshot`
@@ -296,7 +318,11 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 *This option is not available as an environment variable.*
 
-### Ignore snapshot if DB exists
+### Ignore snapshot if DB exists :triangular_flag_on_post:
+
+::: warning
+This is a CLI flag and does not take any values. Assigning a value will throw an error.
+:::
 
 **Environment variable**: N/A
 **CLI option**: `--ignore-snapshot-if-db-exists`
@@ -351,7 +377,11 @@ Sets the server's OCSP file. *Optional*
 
 Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 
-### SSL require auth
+### SSL require auth :triangular_flag_on_post:
+
+::: warning
+This is a CLI flag and does not take any values. Assigning a value will throw an error.
+:::
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
 **CLI option**: `--ssl-require-auth`
@@ -361,9 +391,13 @@ Makes SSL authentication mandatory.
 
 Sends a fatal alert if the client does not complete client authentication.
 
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals. An absent environment variable will also be considered as false, everything else is considered `true`.
 
-### SSL resumption
+### SSL resumption :triangular_flag_on_post:
+
+::: warning
+This is a CLI flag and does not take any values. Assigning a value will throw an error.
+:::
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
 **CLI option**: `--ssl-resumption`
@@ -371,9 +405,13 @@ The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as fals
 
 Activates SSL session resumption.
 
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals. An absent environment variable will also be considered as false, everything else is considered `true`.
 
-### SSL tickets
+### SSL tickets :triangular_flag_on_post:
+
+::: warning
+This is a CLI flag and does not take any values. Assigning a value will throw an error.
+:::
 
 **Environment variable**: `MEILI_SSL_TICKETS`
 **CLI option**: `--ssl-tickets`
@@ -381,4 +419,4 @@ The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as fals
 
 Activates SSL tickets.
 
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals, everything else is considered `true`.
+The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as false literals. An absent environment variable will also be considered as false, everything else is considered `true`.
