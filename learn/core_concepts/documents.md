@@ -95,7 +95,7 @@ Documents have a **soft maximum of 1000 fields**; beyond that the [ranking rules
 
 Additionally, every document must have at minimum one field containing the **[primary key][primary-key]** and a **[unique id][document-id]**.
 
-If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
+If you try to [index a document](/learn/getting_started/quick_start.md#step-2-add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
 
 ## Fields
 

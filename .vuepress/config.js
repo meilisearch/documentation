@@ -87,12 +87,20 @@ module.exports = {
         },
         {
           title: '🚀 Getting started',
-          path: '/learn/getting_started/',
+          path: '/learn/getting_started/quick_start/',
           collapsable: false,
           children: [
-            '/learn/getting_started/installation',
             '/learn/getting_started/quick_start',
-            '/learn/getting_started/whats_next',
+            {
+              title: 'MeiliSearch 101',
+              path: '/learn/getting_started/filtering_and_sorting/',
+              collapsable: false,
+              children: [
+                '/learn/getting_started/filtering_and_sorting',
+                '/learn/getting_started/customizing_relevancy',
+                '/learn/getting_started/getting_ready_for_production',
+              ],
+            },
           ],
         },
         {

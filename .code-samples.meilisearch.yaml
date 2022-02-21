@@ -450,12 +450,14 @@ settings_guide_sortable_1: |-
       ]
     }'
 add_movies_json_1: |-
-  curl -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
-  -H 'Content-Type: application/json' \
+  curl \
+    -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
+    -H 'Content-Type: application/json' \
     --data-binary @movies.json
 documents_guide_add_movie_1: |-
-  curl -X POST `http://localhost:7700/indexes/movies/documents` \
-  -H 'Content-Type: application/json' \
+  curl \
+    -X POST `http://localhost:7700/indexes/movies/documents` \
+    -H 'Content-Type: application/json' \
     --data-binary '[
       {
         "movie_id": "123sq178",
@@ -469,6 +471,11 @@ getting_started_add_documents_md: |-
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
   ```
+getting_started_check_task_status_md: |-
+  ```bash
+  curl \
+    -X GET 'http://localhost:7700/indexes/movies/tasks/0'
+  ```  
 getting_started_search_md: |-
   ```bash
   curl \
@@ -476,6 +483,93 @@ getting_started_search_md: |-
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "botman" }'
   ```
+getting_started_add_meteorites_md: |-
+  curl \
+    -X POST 'http://127.0.0.1:7700/indexes/meteorites/documents' \
+    -H 'Content-Type: application/json' \
+    --data-binary @meteorites.json
+getting_started_update_rankingRules_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[ 
+        "exactness",
+        "words",
+        "typo",
+        "proximity",
+        "attribute",
+        "sort",
+        "release_date:asc",
+        "rank:desc"
+    ]'
+getting_started_update_displayedAttributes_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+        "title",
+        "overview",
+        "poster"
+    ]'
+getting_started_update_searchableAttributes_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+        "title"
+    ]'    
+getting_started_update_stop_words_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
+    -H 'Content-Type: application/json' \
+    --data-binary '["the"]'
+getting_started_synonyms_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "winnie": ["piglet"], "piglet": ["winnie"]
+      }'
+getting_started_filtering_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{"filter": "mass < 200"}'
+getting_started_geoRadius_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'  
+getting_started_geoPoint_md: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
+getting_started_sorting_md: |-
+   curl \
+    -X POST 'http://localhost:7700/indexes/meteorites/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{"filter": "mass < 200",
+      "sort": [
+        "mass:asc"
+      ]}'
+getting_started_configure_settings: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/meteorites/settings' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+        "filterableAttributes": [
+            "mass",
+            "_geo"
+        ],
+        "sortableAttributes": [
+            "mass",
+            "_geo"
+        ]
+    }'        
+getting_started_communicating_with_a_protected_instance: |-
+  curl -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
+    -H 'Authorization: Bearer apiKey' 
 faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -498,11 +592,12 @@ faceted_search_facets_distribution_1: |-
     --data-binary '{ "q": "Batman", "facetsDistribution": ["genres"] }'
 faceted_search_walkthrough_filter_1: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
 post_dump_1: |-
-  curl -X POST 'http://localhost:7700/dumps'
+  curl \
+    -X POST 'http://localhost:7700/dumps'
 get_dump_status_1: |-
   curl -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
 phrase_search_1: |-
@@ -514,44 +609,44 @@ authorization_header_1: |-
     -H 'Authorization: Bearer masterKey'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "author",
-    "price"
-  ]'
+    -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "author",
+      "price"
+    ]'
 sorting_guide_update_ranking_rules_1: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/books/settings/ranking-rules' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "words",
-    "sort",
-    "typo",
-    "proximity",
-    "attribute",
-    "exactness"
-  ]'
+    -X POST 'http://localhost:7700/indexes/books/settings/ranking-rules' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "words",
+      "sort",
+      "typo",
+      "proximity",
+      "attribute",
+      "exactness"
+    ]'
 sorting_guide_sort_parameter_1: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/books/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "science fiction",
-    "sort": [
-      "price:asc"
-    ]
-  }'
+    -X POST 'http://localhost:7700/indexes/books/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "science fiction",
+      "sort": [
+        "price:asc"
+      ]
+    }'
 sorting_guide_sort_parameter_2: |-
   curl \
-  -X POST 'http://localhost:7700/indexes/books/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "butler",
-    "sort": [
-      "author:desc"
-    ]
-  }'
+    -X POST 'http://localhost:7700/indexes/books/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "butler",
+      "sort": [
+        "author:desc"
+      ]
+    }'
 get_sortable_attributes_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/books/settings/sortable-attributes'
@@ -584,11 +679,13 @@ geosearch_guide_filter_settings_1: |-
         "_geo"
     ]'
 geosearch_guide_filter_usage_1: |-
-  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000)" }'
 geosearch_guide_filter_usage_2: |-
-  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.4628328, 9.1076931, 2000) AND type = pizza" }'
 geosearch_guide_sort_settings_1: |-
@@ -599,11 +696,13 @@ geosearch_guide_sort_settings_1: |-
         "_geo",
     ]'
 geosearch_guide_sort_usage_1: |-
-  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
 geosearch_guide_sort_usage_2: |-
-  curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
 security_guide_search_key_1: |-
