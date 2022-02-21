@@ -206,6 +206,10 @@ module.exports = {
                   path: '/learn/cookbooks/aws',
                 },
                 {
+                  title: 'Deploy on Azure',
+                  path: '/learn/cookbooks/azure',
+                },
+                {
                   title: 'Deploy on GCP',
                   path: '/learn/cookbooks/gcp',
                 },
