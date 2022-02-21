@@ -39,9 +39,9 @@ The response from the [task API](/reference/api/tasks.md) will always include th
 | `details`    | object  | Detailed information on the task payload                                                               |
 | `error`      | object  | Error details and context. Only present when a task has the `failed` status                                                |
 | `duration`   | string  | The total elapsed time the task spent in the `processing` state, in ISO 8601 format     |
-| `enqueuedAt` | string  | The date and time when the task was first `enqueued`, in ISO 8601 format                           |
-| `startedAt`  | string  | The date and time when the task began `processing`, in ISO 8601 format                                                                                                                       |
-| `finishedAt` | string  | The date and time when the task finished processing, whether `failed` or `succeeded`, in ISO 8601 format.                                                                                                                          |
+| `enqueuedAt` | string  | The date and time when the task was first `enqueued`, in RFC 3339 format                           |
+| `startedAt`  | string  | The date and time when the task began `processing`, in RFC 3339 format                                                                                                                       |
+| `finishedAt` | string  | The date and time when the task finished processing, whether `failed` or `succeeded`, in RFC 3339 format.                                                                                                                          |
 
 If a task fails due to an error, all error fields will be appended to the task response in an `error` object.
 
@@ -55,7 +55,7 @@ All asynchronous operations return a summarized version of the [`task` object](#
 | `indexUid`   | string  | Unique index identifier                  |
 | `status`     | string  | Status of the task. Value is `enqueued`  |
 | `type`       | string  | Type of task                             |
-| `enqueuedAt` | string  | Represents the date and time in the ISO 8601 format when the task has been `enqueued`                                                        |
+| `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued`                                                        |
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
