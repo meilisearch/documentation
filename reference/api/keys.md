@@ -96,15 +96,15 @@ Only the key's [permitted actions](#actions) can be used on these indexes.
 
 #### `expiresAt`
 
-Date and time when the key will expire, represented in ISO 8601 format. `null` if the key never expires.
+Date and time when the key will expire, represented in RFC 3339 format. `null` if the key never expires.
 
 #### `createdAt`
 
-Date and time when the key was created, represented in ISO 8601 format.
+Date and time when the key was created, represented in RFC 3339 format.
 
 #### `updatedAt`
 
-Date and time when the key was last updated, represented in ISO 8601 format.
+Date and time when the key was last updated, represented in RFC 3339 format.
 
 ## Get one key
 
@@ -204,7 +204,7 @@ Only the key's [permitted actions](#actions) can be used on these indexes.
 **Type:** string
 **Default value:** none
 
-Date and time when the key will expire, represented in ISO 8601 format. `null` if the key never expires.
+Date and time when the key will expire, represented in RFC 3339 format. `null` if the key never expires.
 
 ### Example
 
