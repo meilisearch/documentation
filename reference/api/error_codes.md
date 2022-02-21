@@ -150,7 +150,7 @@ The `indexes` field for the provided API key resource is invalid. It should be a
 
 ### `invalid_api_key_expires_at`
 
-The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the ISO 8601 format or be set to `null`.
+The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the RFC 3339 format or be set to `null`.
 
 ### `api_key_not_found`
 
