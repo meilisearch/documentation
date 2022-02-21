@@ -155,3 +155,6 @@
 
 # Remove Feature reference
 /reference/features/                                /reference/
+
+# Remove Installation page
+/learn/getting_started/installation.html        /learn/getting_started/quick_start.html

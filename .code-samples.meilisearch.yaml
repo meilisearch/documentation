@@ -554,6 +554,7 @@ getting_started_sorting: |-
         "mass:asc"
       ]}'
 getting_started_configure_settings: |-
+  ```bash
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/settings' \
     -H 'Content-Type: application/json' \
@@ -568,6 +569,7 @@ getting_started_configure_settings: |-
         ]
     }'
 getting_started_communicating_with_a_protected_instance: |-
+  ```bash
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
     -H 'Authorization: Bearer apiKey'
 faceted_search_update_settings_1: |-

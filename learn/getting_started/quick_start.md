@@ -73,13 +73,13 @@ Launch Meilisearch to start the server.
 
 ```bash
 # Add Meilisearch package
-echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+sudo echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 
 # Update APT and install Meilisearch
-apt update && apt install meilisearch-http
+sudo apt update && apt install meilisearch-http
 
 # Launch Meilisearch
-meilisearch
+sudo meilisearch
 ```
 
 :::
@@ -92,10 +92,17 @@ If the Rust toolchain is already installed, clone the repository on your local s
 
 ```bash
 git clone https://github.com/meilisearch/Meilisearch
-cd Meilisearch
+cd meilisearch
 ```
 
-In the cloned repository, compile Meilisearch.
+In the cloned repository, choose the release you want to use. You can find the full list [here](https://github.com/meilisearch/MeiliSearch/releases).
+
+Now, run the following command with the tag you selected:
+
+```bash
+git checkout v0.25.2
+
+#Compile Meilisearch using:
 
 ```bash
 # Update the rust toolchain to the latest version
@@ -105,7 +112,7 @@ rustup update
 cargo build --release
 
 # Execute the server binary
-./target/release/Meilisearch
+./target/release/meilisearch
 ```
 
 :::
@@ -130,6 +137,8 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 - [AWS](/learn/cookbooks/aws.md)
 - [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
 - [Qovery](/learn/cookbooks/qovery.md)
+- [GCP](/learn/cookbooks/gcp.md)
+- [Azure](/learn/cookbooks/azure.md)
 
 ### Running Meilisearch
 
@@ -168,7 +177,7 @@ The previous command added documents from `movies.json` to a new index called `m
     "uid": 0,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentsAddition",
+    "type": "documentAddition",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -229,10 +238,12 @@ In the above code sample, the parameter `q` represents the search query. The doc
     },
     …
   ],
-  "offset": 0,
-  "limit": 20,
-  "processingTimeMs": 2,
-  "query": "botman"
+  "nbHits":66,
+  "exhaustiveNbHits":false,
+  "query":"botman",
+  "limit":20,
+  "offset":0,
+  "processingTimeMs":12
 }
 ```
 
@@ -423,7 +434,7 @@ To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meil
 
 1. Create an `html` file, for example, `index.html`
 2. Open it in a text editor (e.g. Notepad, Sublime Text, Visual Studio Code)
-3. Copy-paste any of the code examples below and save the file
+3. Copy-paste any of the code examples above and save the file
 4. Open `index.html` in your browser (double click on it in your folder)
 
 You should now have a working front-end search interface 🚀🔥
