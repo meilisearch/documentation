@@ -4,7 +4,7 @@ Welcome to the Meilisearch 101! This guide aims to introduce you to the main fea
 
 This chapter uses a dataset of meteorites to demonstrate filtering, sorting, and geosearch. To follow along, first click this link to download the file: <a id="downloadmeteorites" href="/meteorites.json" download="meteorites.json">meteorites.json</a>. Then, move it into your working directory and run the following command:
 
-<CodeSamples id="getting_started_add_meteorites_md" />
+<CodeSamples id="getting_started_add_meteorites" />
 
 Each meteorite in our dataset contains information on things such as their mass and their geographic coordinates. In Meilisearch, we refer to these bits of data associated with a document as  'fields'. Every field has a name, which we call an 'attribute' and a value.
 
@@ -26,7 +26,7 @@ Meilisearch allows you to refine your search using filters. You can use any docu
 
 Let's say you only want to view meteorites that weigh less than 200g:
 
-<CodeSamples id= "getting_started_filtering_md" />
+<CodeSamples id= "getting_started_filtering" />
 
 ```json
 {
@@ -62,7 +62,7 @@ You can use any document field for sorting as long as it contains numbers, strin
 
 Let's sort the meteorites in the previous example based on mass:
 
-<CodeSamples id= "getting_started_sorting_md" />
+<CodeSamples id= "getting_started_sorting" />
 
 ```json
 {
@@ -100,7 +100,7 @@ Meilisearch allows you to filter and sort results based on their geographic loca
 
 Let's say you want to find out which meteorites crashed within a 210km radius of Bern:
 
-<CodeSamples id= "getting_started_geoRadius_md" />
+<CodeSamples id= "getting_started_geoRadius" />
 
 ```json
 {
@@ -146,7 +146,7 @@ Let's say you want to find out which meteorites crashed within a 210km radius of
 
 The following command sorts meteorites by how close they were to the Taj Mahal:
 
-<CodeSamples id= "getting_started_geoPoint_md" />
+<CodeSamples id= "getting_started_geoPoint" />
 
 ```json
 {

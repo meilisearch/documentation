@@ -31,7 +31,7 @@ You can read more about each ranking rule and what it does in our [dedicated gui
 
 In this example, we change the order of the ranking rules for the `movies` index by moving `exactness` to the top:
 
-<CodeSamples id= "getting_started_update_rankingRules_md" />
+<CodeSamples id= "getting_started_update_rankingRules" />
 
 You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy.md).
 
@@ -41,7 +41,7 @@ By default, all attributes are displayed in search results but the `displayedAtt
 
 If you only want to display the `title`, `poster`, and `overview` for the `movies` index:
 
-<CodeSamples id= "getting_started_update_displayedAttributes_md" />
+<CodeSamples id= "getting_started_update_displayedAttributes" />
 
 You can read more about displayed attributes in our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
@@ -89,7 +89,7 @@ You can read more about displayed attributes in our [dedicated guide](/learn/con
 
 For example, if you search the `movies` index for `2012`, Meilisearch searches for `2012` in every field: the `title`, `overview`, `release_year`, and so on. If you just want to search in the `title` field:
 
-<CodeSamples id= "getting_started_update_searchableAttributes_md" />
+<CodeSamples id= "getting_started_update_searchableAttributes" />
 
 Meilisearch will now only consider `title` during search and you will see fewer results.
 
@@ -106,7 +106,7 @@ The order of the `searchableAttributes` array corresponds to the order of import
 ```json
   [
     "overview",
-    "title", 
+    "title",
   ]
 ```
 
@@ -116,7 +116,7 @@ With the above order, matching words found in the `overview` field will have a h
 
 Meilisearch allows you to ignore certain words in your search queries by adding them to the `stopWords` array. A good example is the word `the` in English.
 
-<CodeSamples id= "getting_started_update_stop_words_md" />
+<CodeSamples id= "getting_started_update_stop_words" />
 
 If you search for `the cat` after running the above command, Meilisearch will consider your search query to be `cat`, improving the speed and relevancy of your search.
 
@@ -126,7 +126,7 @@ You can read more about stop words in the [API reference](/reference/api/stop_wo
 
 The `synonyms` array lets you associate certain words in your dataset, telling Meilisearch that they are equivalent and interchangeable.
 
-<CodeSamples id= "getting_started_synonyms_md" />
+<CodeSamples id= "getting_started_synonyms" />
 
 This will set `winnie` and `piglet` as synonyms; searching for either word will show the same results.
 

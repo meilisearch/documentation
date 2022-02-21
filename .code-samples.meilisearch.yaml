@@ -475,7 +475,7 @@ getting_started_check_task_status_md: |-
   ```bash
   curl \
     -X GET 'http://localhost:7700/indexes/movies/tasks/0'
-  ```  
+  ```
 getting_started_search_md: |-
   ```bash
   curl \
@@ -483,16 +483,16 @@ getting_started_search_md: |-
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "botman" }'
   ```
-getting_started_add_meteorites_md: |-
+getting_started_add_meteorites: |-
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/meteorites/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @meteorites.json
-getting_started_update_rankingRules_md: |-
+getting_started_update_rankingRules: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
-    --data-binary '[ 
+    --data-binary '[
         "exactness",
         "words",
         "typo",
@@ -502,7 +502,7 @@ getting_started_update_rankingRules_md: |-
         "release_date:asc",
         "rank:desc"
     ]'
-getting_started_update_displayedAttributes_md: |-
+getting_started_update_displayedAttributes: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
@@ -511,42 +511,42 @@ getting_started_update_displayedAttributes_md: |-
         "overview",
         "poster"
     ]'
-getting_started_update_searchableAttributes_md: |-
+getting_started_update_searchableAttributes: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
         "title"
-    ]'    
-getting_started_update_stop_words_md: |-
+    ]'
+getting_started_update_stop_words: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
     -H 'Content-Type: application/json' \
     --data-binary '["the"]'
-getting_started_synonyms_md: |-
+getting_started_synonyms: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "winnie": ["piglet"], "piglet": ["winnie"]
       }'
-getting_started_filtering_md: |-
+getting_started_filtering: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{"filter": "mass < 200"}'
-getting_started_geoRadius_md: |-
+getting_started_geoRadius: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-type:application/json' \
-    --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'  
-getting_started_geoPoint_md: |-
+    --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'
+getting_started_geoPoint: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc"] }'
-getting_started_sorting_md: |-
-   curl \
+getting_started_sorting: |-
+  curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{"filter": "mass < 200",
@@ -566,10 +566,10 @@ getting_started_configure_settings: |-
             "mass",
             "_geo"
         ]
-    }'        
+    }'
 getting_started_communicating_with_a_protected_instance: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
-    -H 'Authorization: Bearer apiKey' 
+    -H 'Authorization: Bearer apiKey'
 faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -745,7 +745,7 @@ document_guide_create_index_primary_key: |-
       "uid": "movies",
       "primaryKey": "reference_number"
     }'
-document_guide_add_document_primary_key: |-      
+document_guide_add_document_primary_key: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents?primaryKey=reference_number' \
     -H 'Content-Type: application/json' \
@@ -755,4 +755,4 @@ document_guide_add_document_primary_key: |-
         "poster": "https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
         "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
         "release_date": "2019-03-23"
-     }]' 
+     }]'
