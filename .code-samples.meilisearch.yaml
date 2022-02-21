@@ -572,7 +572,7 @@ getting_started_communicating_with_a_protected_instance: |-
     -H 'Authorization: Bearer apiKey' 
 faceted_search_update_settings_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/patient_medical_records/settings' \
+    -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
         "filterableAttributes": [
