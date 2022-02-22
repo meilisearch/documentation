@@ -76,10 +76,10 @@ Launch Meilisearch to start the server.
 sudo echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
 
 # Update APT and install Meilisearch
-sudo apt update && apt install meilisearch-http
+sudo apt update && sudo apt install meilisearch-http
 
 # Launch Meilisearch
-sudo meilisearch
+meilisearch
 ```
 
 :::
@@ -91,18 +91,19 @@ Meilisearch is written in `Rust`. To compile it, [install the Rust toolchain](ht
 If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
-git clone https://github.com/meilisearch/Meilisearch
+git clone https://github.com/meilisearch/meilisearch
 cd meilisearch
 ```
 
-In the cloned repository, choose the release you want to use. You can find the full list [here](https://github.com/meilisearch/MeiliSearch/releases).
+Choose the release you want to use. You can find the full list [here](https://github.com/meilisearch/meilisearch/releases).
 
-Now, run the following command with the tag you selected:
+In the cloned repository, run the following command replacing `vX.Y.Z` with the tag you selected:
 
 ```bash
 git checkout v0.25.2
+```
 
-#Compile Meilisearch using:
+Finally, update the rust toolchain, compile the project, and execute the binary.
 
 ```bash
 # Update the rust toolchain to the latest version

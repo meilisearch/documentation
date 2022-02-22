@@ -35,6 +35,7 @@ Meilisearch allows you to restrict access to API endpoints. You can protect your
 
 ```bash
 ./meilisearch --master-key="your_master_key"
+```
 
 :::
 
