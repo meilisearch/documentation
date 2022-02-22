@@ -42,7 +42,7 @@ After dump creation is finished, the dump file is added to the dump directory. B
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
 
 ::: note
-Unlike [tasks](/learn/advanced/asynchronous_operations.md), dumps have no queue. **Meilisearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, Meilisearch will throw an [error](/reference/api/error_codes.md#dump-already-processing). While a dump is processing, the **task queue is paused and no write operations can occur on the database.** This is also true for [snapshots](/learn/advanced/snapshots.md#snapshots).
+Unlike [tasks](/learn/advanced/asynchronous_operations.md), dumps have no queue. **Meilisearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, Meilisearch will throw an [error](/errors). The task queue can receive other future operations to perform but will not process any further tasks during dump creation. It will still accept new tasks in the queue. This is also true for [snapshots](/learn/advanced/snapshots.md#snapshots).
 :::
 
 ::: warning
@@ -50,6 +50,8 @@ If you restart Meilisearch after creating a dump, you will not be able to use th
 :::
 
 ## Importing a dump
+
+When a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed, except importing the dump into the database at that time.
 
 Dumps in v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/api/version.md#example) and proceed accordingly.
 
