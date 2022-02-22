@@ -465,15 +465,19 @@ documents_guide_add_movie_1: |-
       }
     ]'
 getting_started_add_documents_md: |-
+  ```bash
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
+  ```
 getting_started_check_task_status_md: |-
+  ```bash
   curl \
     -X GET 'http://localhost:7700/indexes/movies/tasks/0'
   ```
 getting_started_search_md: |-
+  ```bash
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
