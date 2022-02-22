@@ -19,7 +19,7 @@ You can read about all of them in our [configuration guide](/learn/configuration
 
 Meilisearch offers two options for backing up your data: `dumps` and `snapshots`.
 
-Dumps export data in a raw unprocessed form and can be used to migrate your database between different tools or Meilisearch versions. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to rebuild an identical database.
+Dumps export data in a raw unprocessed form and can be used to migrate your database between Meilisearch versions. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to rebuild an identical database.
 
 Snapshots, on the other hand, are an exact copy of your database. The documents in a snapshot are already "indexed" and ready to go, therefore they import faster than dumps. However, as a result, **snapshots are not compatible between different versions of Meilisearch.** You can schedule snapshots at regular intervals and use them for rolling back data.
 
@@ -33,7 +33,9 @@ Meilisearch allows you to restrict access to API endpoints. You can protect your
 
 ::: tab CLI
 
+```bash
 ./meilisearch --master-key="your_master_key"
+```
 
 :::
 
@@ -41,13 +43,17 @@ Meilisearch allows you to restrict access to API endpoints. You can protect your
 
 Linux/MacOS:
 
+```bash
 export MEILI_MASTER_KEY="your_master_key"
 ./meilisearch
+```
 
 Windows:
 
+```bash
 set MEILI_MASTER_KEY="your_master_key"
 ./meilisearch
+```
 
 :::
 
