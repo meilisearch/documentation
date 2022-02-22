@@ -46,12 +46,14 @@ Linux/MacOS:
 ```bash
 export MEILI_MASTER_KEY="your_master_key"
 ./meilisearch
+```
 
 Windows:
 
 ```bash
 set MEILI_MASTER_KEY="your_master_key"
 ./meilisearch
+```
 
 :::
 

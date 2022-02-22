@@ -262,14 +262,7 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the components needed to start searching.
 
-### Let's try it!
-
-1. Create an `html` file, for example, `index.html`
-2. Open it in a text editor (e.g. Notepad, Sublime Text, Visual Studio Code)
-3. Copy-paste any of the code examples above and save the file
-4. Open `index.html` in your browser (double click on it in your folder)
-
-You should now have a working front-end search interface 🚀🔥
+To learn more about instant-meilisearch, refer to its [documentation](https://github.com/meilisearch/instant-meilisearch#readme) located in the project repository.
 
 ## What's next?
 
