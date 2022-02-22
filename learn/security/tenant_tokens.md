@@ -1,123 +1,44 @@
 # Tenant tokens
 
-When developing complex applications or handling sensitive data, the control over security and permissions offered by API keys might not be enough. This is where tenant tokens and multitenancy come in.
+Tenant tokens are Meilisearch's answer to the problems that arise when complex applications must handle sensitive data belonging to many different users—a situation often described as multitenancy.
 
-In this guide you'll first learn what multitenancy is and how tenant tokens solve it. Then, you'll see how to generate and use tokens using either one of our official SDKs or completely from scratch.
+In this guide you'll first learn what multitenancy is and how tenant tokens solve it. Then, you'll see how to generate and use tokens, whether with our official SDKs or otherwise.
 
 ## What is multitenancy?
 
-In software development, multitenancy means that multiple users with different interests—also called tenants—share the same computing resources. Despite coexisting in the same environment, tenants are never aware of one another and do not have access to each other's data. Proper multitenancy is crucial in cloud computing services such as Digital Ocean's droplets or Amazons AWS.
+In software development, multitenancy means that multiple users with different interests—also called tenants—share the same computing resources. Despite coexisting in the same environment, tenants must never be aware of one another and should not have access to each other's data. Proper multitenancy is crucial in cloud computing services such as [Digital Ocean's Droplets](https://www.digitalocean.com/products/droplets) or [Amazon's AWS](https://aws.amazon.com/).
 
-Depending on the type of application you are developing with Meilisearch, it is possible you will face similar challenges. For example, if your application handles sensitive data like medical records, it is very important that a user can only search through their own information.
+Depending on the type of application you are developing with Meilisearch, it is possible you will face similar challenges. For example, if your application handles sensitive data like medical records, it is very important to ensure users can only search through their own documents.
 
 ### What are tenant tokens and how do they solve multitenancy in Meilisearch?
 
 Tokens are a form of short-lived authorization and authentication. They are essentially small packages of encrypted data containing proof a user can access a certain resource.
 
-Tokens can contain not only security data, but also instructions on how that resource is presented to the user. Meilisearch uses this information to force every query made with a tenant token to follow certain rules.
+Tokens contain not only security credentials, but also instructions on how that resource must be presented to the user. These instructions are enforced in every query made with that specific token.
 
-To continue with the medical records example, you can create a token every time a user logs into your application. This token contains data informing Meilisearch that the user has access to certain resources, as long as they belong to that specific user.
+For example, you can program your healthcare application so it generates a token when a user logs in. If the user's unique identifier is `1`, token data will look like this:
+
+```json
+{
+  "apiKeyPrefix": "rkDxFUHd",
+  "exp": 1641835850,
+  "searchRules": {
+    "patient_medical_records": {
+      "filter": "user_id = 1",
+    }
+  }
+}
+```
+
+This token fragment contains data informing Meilisearch that your user is authorized to search the `patient_medical_records` index. The token tells Meilisearch to only return documents whose `user_id` attribute has a value of `1`.
 
 ## Generating tenant tokens
 
-There are no specific instance options or index settings required to activate tenant tokens. Instead, all a developer must to in order to use tenant tokens is to generate a token.
-
-Once the token is ready, you can seamlessly substitute an API key with it when accessing an API route.
+There are no specific instance options or index settings required to activate tenant tokens. Instead, all a developer must to in order to use tenant tokens is to generate a token. Once the token is ready, you can seamlessly substitute an API key with it when accessing an API route.
 
 The quickest method to generate tenant tokens is using one of our official SDKs.  It is also possible to generate the token from scratch, without any any dependencies.
 
-### Tenant token anatomy
-
-Before generating a token, it is helpful to understand what it is and what are its components.
-
-A tenant token is made out of two parts: header and payload.
-
-#### Token header
-
-The header contains preliminary information regarding the token and how it was constructed. A header must have two fields:
-
-```json
-{
-  "typ": "JWT",
-  "alg": "HS256"
-}
-```
-
-`typ` specifies the token type. Meilisearch only accepts [JWT tokens](https://jwt.io/).
-
-`alg` specifies which encryption algorithm is used for the token signature. Meilisearch accepts three algorithms:
-
-- `HS256`
-- `HS384`
-- `HS512`
-
-::: note
-Discussing the differences between these algorithms is out of scope for this article. You can find more information on [how to choose the best solution for your application in this guide by `someone`](need to find a link).
-:::
-
-#### Token payload
-
-The payload contains instructions to your Meilisearch instance. It must have three fields:
-
-```json
-{
-  "apiKeyPrefix": "rkDxFUHd",
-  "exp": 1641835850,
-  "searchRules": {
-    "*": {
-      "filter": "user_id = 1"
-    }
-  }
-}
-```
-
-`apiKeyPrefix` must be a string matching the first 8 characters of a valid Meilisearch API key. This proves the token is allowed to access a resource.
-
-`exp` must contain a UNIX epoch specifying when the token's expiry date. For security reasons, tokens are meant to be short-lived. Once a token is expired, it cannot be used anymore and must be regenerated.
-
-`searchRules` must contain a JSON object specifying rules that will be enforced on any queries using this token. Each rule is itself a JSON object and must follow this pattern:
-
-```json
-{
- "[index_name]": {
-   "[search_parameter]": "[value]"
- }
-}
-```
-
-The object key must be an index name. Its value must consist of any number of `key:value` pairs. The `key` must be a [search parameter](/reference/api/search.md#search-parameters) and the value must be a valid parameter.
-
-In the example payload, the token has one search rule that applies to all indexes in that instance, represented by the wildcard `*`. This search rule itself forces every query using this token to only return results whose `user_id` equals `1`.
-
-```json
-"*": {
-  "filter": "user_id = 1"
-}
-```
-
-A token may contain rulesets for any number of indexes. Each ruleset may contain any number of search rules. When both a wildcard ruleset and a ruleset specific to one index apply, specific rulesets overwrite the wildcard. In the example below, we must declare `"filter": "user_id = 1"` twice—once when dealing with the global case for all indexes, and once when defining rules that only apply to the `medical_records` index:
-
-```json
-{
-  "apiKeyPrefix": "rkDxFUHd",
-  "exp": 1641835850,
-  "searchRules": {
-    "*": {
-      "filter": "user_id = 1"
-    },
-    "medical_records": {
-      "filter": "user_id = 1",
-      "sort": "date:desc"
-    }
-  }
-}
-```
-
 ### Generating tenant tokens with an SDK
-
-Token generation requires no particular configuration of your instance or indexes; all you need to do to get started with tenant tokens is a process generating the tokens on your application's back-end.
-
-The easiest way to generate Meilisearch tenant tokens is using one of our SDKs.
 
 If you are developing an application that deals with medical records, it is very likely you have many users. Since medical records are an extremely sensitive type of data, it is fundamental that each user can only see their own records and not anyone else's.
 
@@ -140,6 +61,10 @@ const expiryDate = 1645461882;
 const token = client.generateTenantToken(searchRules, expiryDate, apiKey);
 ```
 
+As you can see, there are three main elements necessary to generate a tenant token: search rules, expiry dates, and API keys.
+
+### Using a tenant token with an SDK
+
 The resulting token, stored on the `token` variable, can then be sent back to the front-end and used to make queries that will only return results whose `user_id` attribute equals the current user's ID:
 
 ```js
@@ -151,19 +76,122 @@ const medicalRecordsIndex = client.index('patient_medical_records');
 const search = client.search('blood test');
 ```
 
-::: warning
-Creating a token requires an API key with access to [the search endpoint](/reference/api/search.md). For security reasons, we strongly recommend you avoid exposing the API key whenever possible and **always generate tokens on your application's back-end**.
+Applications may use tenant tokens and API keys used interchangeably when searching, providing they access to the same endpoints and indexes. The same application might use a general API key for searches on public information and tenant tokens when a user searches on private data.
+
+### Search rules
+
+Search rules are a set of instructions defining search parameters that will be enforced in every query made with a specific tenant token. 
+
+`searchRules` must contain a JSON object specifying rules that will be enforced on any queries using this token. Each rule is itself a JSON object and must follow this pattern:
+
+```json
+{
+ "[index_name]": {
+   "[search_parameter]": "[value]"
+ }
+}
+```
+
+The object key must be an index name. Its value must consist of any number of `key:value` pairs. The `key` must be a [search parameter](/reference/api/search.md#search-parameters) and the value must be a valid argument for that parameter.
+
+This example rule declares that every search made in the `patient_medical_records` index must return results chronologically sorted results:
+
+```json
+{
+  "patient_medical_records": {
+    "sort": "date:desc"
+  }
+}
+```
+
+Search rules can combine any number of search parameters. This rule requires all results to be sorted chronologically and excludes documents not belonging to belonging to a specific user:
+
+```json
+{
+  "patient_medical_records": {
+    "sort": "date:desc",
+    "filter": "user_id = 1"
+  }
+}
+```
+
+It is also possible to create search rules that apply to all indexes in an instance by using the `*` wildcard. The following search rule forces every query using its token to only return results whose `user_id` equals `1`:
+
+```json
+{
+  "*": {
+    "filter": "user_id = 1"
+  }
+}
+```
+
+A token may contain rulesets for any number of indexes. Each ruleset may contain any number of search rules. **When both a `*` wildcard ruleset and a ruleset specific to one index apply, specific rulesets overwrite the wildcard.**
+
+In the example below, we must declare `"filter": "user_id = 1"` twice—once when dealing with the global case for all indexes, and once when defining rules that only apply to the `medical_records` index:
+
+```json
+{
+  "apiKeyPrefix": "rkDxFUHd",
+  "exp": 1641835850,
+  "searchRules": {
+    "*": {
+      "filter": "user_id = 1"
+    },
+    "medical_records": {
+      "filter": "user_id = 1",
+      "sort": "date:desc"
+    }
+  }
+}
+```
+
+### API Keys
+
+Creating a token requires an API key. A token has access to the same indexes as the API key used to generate it.
+
+For security reasons, we strongly recommend you avoid exposing the API key whenever possible and **always generate tokens on your application's back-end**.
+
+When using an official Meilisearch SDK, you may indicate which API key you wish to use when generating a token. Consult the documentation of the SDK you are using for more specific instructions.
+
+In the previous example, the API key is stored in `apiKey`:
+
+```js
+const apiKey = '[an_api_key]';
+const token = client.generateTenantToken(searchRules, expiryDate, apiKey);
+```
+
+::: note
+If an API key expires, any token tenants created with it will become invalid. The same applies if the API key is deleted or regenerated due to a changed master key.
 :::
 
-### Other ways of generating tenant tokens
+### Expiry date
 
-Though Meilisearch recommends generating tokens with an official SDK, token creation requires no specific method. Since tenant tokens follow the JWT standard, you can use a number of [compatible third-party helper libraries](https://jwt.io/libraries).
+It is possible to define an expiry date when generating a token. This is good security practice and Meilisearch recommends setting relatively short token expiry dates whenever possible. The expiry date must be written as a UNIX timestamp.
 
-You may also skip all assistance and generate a token from scratch.
+::: danger
+The only way to revoke a token without an expiry date is to delete its parent API key.
+
+Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
+:::
+
+When using an official Meilisearch SDK, you may indicate the expiry date when generating a token. Consult the documentation of the SDK you are using for more specific instructions.
+
+In the previous example, the expiry date is stored in `apiKey`:
+
+```js
+const expiryDate = 1645461882;
+const token = client.generateTenantToken(searchRules, expiryDate, apiKey);
+```
+
+### Generating tenant tokens without a Meilisearch SDK
+
+Though Meilisearch recommends using an official SDK, token creation requires no specific method. Since tenant tokens follow the JWT standard, you can use a number of [compatible third-party helper libraries](https://jwt.io/libraries). You may also skip all assistance and generate a token from scratch.
 
 ::: note
 The following examples use javascript for the sake of simplicity, but Meilisearch should be compatible with the majority of modern stacks and languages.
 :::
+
+#### Token header
 
 The first step when generating a tenant token is to create a header stating token type and the chosen encryption algorithm. Once that is done you must encode the header object into `base64`:
 
@@ -176,7 +204,15 @@ let header = {
 const base64Header = base64Encode(header);
 ```
 
-Once the header is ready, you must create a payload. First, you must extract the first eight characters from a valid API key with access to the search endpoint:
+The encryption algorithm indicated by `alg` can be one of: `HS256`, `HS384`, or `HS512`. The choice of algorithm has no impact in tenant token behavior.
+
+Meilisearch only supports JWT tokens and `typ` must always be `JWT`.
+
+#### Token payload
+
+Once the header is ready, you must create a payload. In this case, payload means the data containing the token's API key prefix, search rules, and optional expiry date.
+
+First, you must extract the first eight characters from a valid API key with access to the search endpoint:
 
 ```js
 const meiliSearchApikey = '[an_api_key]';
@@ -204,7 +240,7 @@ const payload = {
 
 ```
 
-As you may have noticed, you can also optionally set an expiry date for your token. Tokens are invalid once past their expiry date.
+You can also optionally set an expiry date for your token. Tokens are invalid once past their expiry date.
 
 Like the header, it is necessary to encode the payload:
 
@@ -212,19 +248,23 @@ Like the header, it is necessary to encode the payload:
 const base64Payload = base64Encode(payload);
 ```
 
-Tokens following the JWT standard must be signed. The signature is created by concatenating the encoded header and payload using a `.` as the separator, then encrypting the resulting string. **The encryption key must be the same you used when prefixing your payload.**
+#### Signing a token
+
+Tokens following the JWT standard must be signed. The signature is created by concatenating the encoded header and payload using a `.` as the separator, then encrypting the resulting string. **The encryption key must be the same you used when generating the payload's API key prefix.**
 
 ```js
 const signature = HS256(base64Header + '.' + base64Payload, meiliSearchApiKey);
 ```
 
-This example uses an HS256 encryption algorithm. You may also use HS384 and HS512.
+This example uses an HS256 encryption algorithm. **The encryption algorithm you use must be the same as the one indicate in the token's header.**
 
-The remaining step is putting it all together, using a `.` to separate each element of the token:
+The remaining step is putting it all together. Concatenate the header, payload, and signature using a `.` to separate each element of the token:
 
 ```js
 const yourTenantToken = base64Header + '.' + base64Payload + '.' + signature;
 ```
+
+#### Using a tenant token without an SDK
 
 Your token is ready. Tenant tokens can seamlessly replace any requests made to the search endpoint:
 
@@ -233,3 +273,7 @@ curl \
   -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
   -H 'Authorization: Bearer [yourTenantToken]'
 ```
+
+::: note
+The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
+:::
