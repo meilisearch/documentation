@@ -259,3 +259,7 @@ set MEILI_MASTER_KEY=
 ::: danger
 We strongly advise against deactivating key-based security for any Meilisearch instances used in production or containing sensitive information.
 :::
+
+## Further security measures
+
+API keys alone might not be enough to handle more complex situations such as multi-tenant indexes. If your application must manage several users and sensitive data, we recommend you [consider using tenant tokens](/learn/security/tenant_tokens.md).
