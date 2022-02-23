@@ -145,7 +145,8 @@ module.exports = {
             },
           ],
         },
-        { title: '🔐 Security and permissions',
+        {
+          title: '🔐 Security and permissions',
           collapsable: false,
           path: '/learn/security/master_api_keys/',
           children: [

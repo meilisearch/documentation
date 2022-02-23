@@ -1,6 +1,7 @@
 # Tenant tokens
 
 In this guide you'll first learn [what multitenancy is](#what-is-multitenancy) and [how tenant tokens help managing complex applications and sensitive data](#what-are-tenant-tokens-and-how-do-they-solve-multitenancy-in-meilisearch). Then, you'll see [how to generate and use tokens](#generating-tenant-tokens-with-an-sdk), whether with an official SDK or [otherwise](#generating-tenant-tokens-without-a-meilisearch-sdk). The guide ends with a quick explanation of [the main tenant token settings](#tenant-token-settings).
+
 ## What is multitenancy?
 
 In software development, multitenancy means that multiple users with different interests—also called tenants—share the same computing resources. Despite existing in the same environment, tenants are not aware of one another and do not have access to each other's data. Proper multitenancy is crucial in cloud computing services such as [Digital Ocean's Droplets](https://www.digitalocean.com/products/droplets) and [Amazon's AWS](https://aws.amazon.com/).
@@ -61,7 +62,7 @@ const expiryDate = 1645461882;
 const token = client.generateTenantToken(searchRules, expiryDate, apiKey);
 ```
 
-As you can see, there are three main elements necessary to generate a tenant token: [search rules](#search-rules), [expiry dates](#expiry-dates), and [API keys](#api-keys). You can read more about each one these in [this guide's final section](#tenant-token-settings).
+As you can see, there are three main elements necessary to generate a tenant token: [search rules](#search-rules), [expiry dates](#expiry-date), and [API keys](#api-keys). You can read more about each one these in [this guide's final section](#tenant-token-settings).
 
 ### Using a tenant token with an SDK
 
@@ -283,4 +284,3 @@ In the previous example, the expiry date is stored in `apiKey`:
 const expiryDate = 1645461882;
 const token = client.generateTenantToken(searchRules, expiryDate, apiKey);
 ```
-
