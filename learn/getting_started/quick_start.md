@@ -62,7 +62,7 @@ docker run -it --rm \
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
 
-This method is not recommended for macOS or Windows, because I/O between the host and the container can be very slow. For these operating systems, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
+On macOS and Windows, you must be careful not to mount volumes from the host to the container because I/O operations between the filesystems will be very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
 
 You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
 :::
@@ -124,6 +124,7 @@ cargo build --release
 
 To install Meilisearch on Windows, you can:
 
+- use Docker (see "Docker" tab above)
 - [download the latest binary](https://github.com/meilisearch/Meilisearch/releases)
 - use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
 - compile from source (see "Source" tab above)
