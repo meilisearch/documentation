@@ -86,7 +86,7 @@ Applications may use tenant tokens and API keys interchangeably when searching. 
 
 Though [Meilisearch recommends using an official SDK](#generating-tenant-tokens-with-an-sdk), this is not a requirement. Since tenant tokens follow the JWT standard, you can use a number of [compatible third-party helper libraries](https://jwt.io/libraries). You may also skip all assistance and generate a token from scratch.
 
-The full process requires you to [create a token header](#creating-a-token-header), [prepare a data payload](#preparing-a-data-payload) with at least one set of search rules, and then [sign the token](#signing-a-token) with an API key.
+The full process requires you to [create a token header](#creating-a-token-header), [prepare a data payload](#preparing-the-token-payload) with at least one set of search rules, and then [sign the token](#signing-a-token) with an API key.
 
 ::: note
 The following examples use javascript for the sake of simplicity, but Meilisearch should be compatible with the majority of modern stacks and languages.
@@ -109,7 +109,7 @@ The encryption algorithm indicated by `alg` can be one of: `HS256`, `HS384`, or 
 
 Meilisearch only supports JWT tokens and `typ` must always be `JWT`.
 
-### Token payload
+### Preparing the token payload
 
 Once the header is ready, you must create a payload. In this case, payload means the data containing the token's API key prefix, search rules, and optional expiry date.
 
