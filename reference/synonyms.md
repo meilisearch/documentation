@@ -1,10 +1,10 @@
 # Synonyms
 
-_Child route of the [settings route](/reference/api/settings.md)._
+_Child route of the [settings route](/reference/settings.md)._
 
 `Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
 
-Synonyms can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
+Synonyms can also be updated directly through the [global settings route](/reference/settings.md#update-settings) along with the other settings.
 
 To learn more about synonyms, refer to our [dedicated guide](/learn/configuration/synonyms.md).
 
@@ -80,7 +80,7 @@ An object that contains all synonyms and their associated words.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Reset synonyms
 
@@ -114,4 +114,4 @@ Empty object : `{}`
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).

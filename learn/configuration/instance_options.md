@@ -131,7 +131,7 @@ Sets the HTTP address and port Meilisearch will use.
 **Default value**: `None`
 **Expected value**: an alphanumeric string
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in Meilisearch in our dedicated guide.](/learn/advanced/security.md)
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in Meilisearch in our dedicated guide.](/learn/advanced/security.md)
 
 ::: note
 You must supply an alphanumeric string when using this option.
@@ -165,7 +165,7 @@ Meilisearch automatically collects data from all instances that do not opt out u
 
 Sets the directory where Meilisearch will create dump files.
 
-[Learn more about creating dumps](/reference/api/dump.md).
+[Learn more about creating dumps](/reference/dump.md).
 
 ### Import dump
 

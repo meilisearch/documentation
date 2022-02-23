@@ -16,7 +16,7 @@ Before we begin, you need to **verify the version of Meilisearch that's compatib
 ./meilisearch
 ```
 
-If Meilisearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
+If Meilisearch launches successfully, use the [get version endpoint](/reference/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
 
 ```bash
 curl -X GET 'http://127.0.0.1:7700/version'
@@ -123,9 +123,9 @@ In this guide, we will:
 If your dump was created in Meilisearch v0.21 or above, continue to step 2.
 :::
 
-When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
+When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/documents.md#get-documents). This means that all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 
-Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
+Start by using the [get displayed attributes endpoint](/reference/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
 ```bash
 # whenever you see :index_uid, replace it with your index's unique id
@@ -135,14 +135,14 @@ curl -X GET \
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
 
-If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
+If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
 ```bash
 curl -X DELETE \
   'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
 ```
 
-This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
+This command returns a `uid`. You can use this to [track the status of the operation](/reference/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
 
 Now that all fields are displayed, proceed to the next step.
 
@@ -202,7 +202,7 @@ It should return something like this:
 
 ::::
 
-To create a dump, use the [create dump endpoint](/reference/api/dump.md#create-a-dump).
+To create a dump, use the [create dump endpoint](/reference/dump.md#create-a-dump).
 
 ```bash
 curl -X POST 'http://127.0.0.1:7700/dumps'
@@ -218,7 +218,7 @@ The server should return a response that looks like this:
 }
 ```
 
-This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
+This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/dump.md#get-dump-status).
 
 ```bash
 # replace :dump_uid with the uid returned by the previous command
@@ -255,7 +255,7 @@ If you are using Meilisearch v0.20 or below, migration should be done in two ste
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
-Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
+Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/displayed_attributes.md#update-displayed-attributes).
 
 Congratulations! You have successfully migrated your Meilisearch database to the latest version! 🎉
 
@@ -275,7 +275,7 @@ If you don’t need to preserve index settings, skip directly to [step two](#ste
 
 ### Step 1: Save your settings
 
-First, use the [get settings endpoint](/reference/api/settings.md#get-settings) to retrieve the [settings](/learn/configuration/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
+First, use the [get settings endpoint](/reference/settings.md#get-settings) to retrieve the [settings](/learn/configuration/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
 
 ```bash
 # the -o option saves the output as a local file
@@ -291,7 +291,7 @@ Repeat this process for all indexes you wish to migrate.
 
 To prevent data loss, all fields must be set as [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
-By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
+By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/displayed_attributes.md#get-displayed-attributes):
 
 ```bash
 curl -X GET \
@@ -300,7 +300,7 @@ curl -X GET \
 
 If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
 
-If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
+If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
 ```bash
 curl -X DELETE \
@@ -313,7 +313,7 @@ Now that all fields are displayed, proceed to the next step.
 
 ### Step 3: Save your documents
 
-Use the [get documents endpoint](/reference/api/documents.md#get-documents) to retrieve your documents and save them using the method you prefer. Make sure to set the `limit` on documents returned so that, if you have some number of documents `n`, `limit ≥ n`. Otherwise, you risk data loss.
+Use the [get documents endpoint](/reference/documents.md#get-documents) to retrieve your documents and save them using the method you prefer. Make sure to set the `limit` on documents returned so that, if you have some number of documents `n`, `limit ≥ n`. Otherwise, you risk data loss.
 
 ```bash
 # the -o option saves the output as a local file

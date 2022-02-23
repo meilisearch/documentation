@@ -6,14 +6,14 @@ It is possible to modify all the settings at once using the [`update settings` e
 
 These are the reference pages for the dedicated routes:
 
-- [Displayed attributes](/reference/api/displayed_attributes.md)
-- [Distinct attribute](/reference/api/distinct_attribute.md)
-- [Filterable attributes](/reference/api/filterable_attributes.md)
-- [Ranking rules](/reference/api/ranking_rules.md)
-- [Searchable attributes](/reference/api/searchable_attributes.md)
-- [Sortable attributes](/reference/api/sortable_attributes.md)
-- [Stop-words](/reference/api/stop_words.md)
-- [Synonyms](/reference/api/synonyms.md)
+- [Displayed attributes](/reference/displayed_attributes.md)
+- [Distinct attribute](/reference/distinct_attribute.md)
+- [Filterable attributes](/reference/filterable_attributes.md)
+- [Ranking rules](/reference/ranking_rules.md)
+- [Searchable attributes](/reference/searchable_attributes.md)
+- [Sortable attributes](/reference/sortable_attributes.md)
+- [Stop-words](/reference/stop_words.md)
+- [Synonyms](/reference/synonyms.md)
 
 To learn more about settings, refer to our [dedicated guide.](/learn/configuration/settings.md)
 
@@ -147,7 +147,7 @@ If the provided index does not exist, it will be created.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Reset settings
 
@@ -192,4 +192,4 @@ All settings will be reset to their default value.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).

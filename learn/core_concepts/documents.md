@@ -190,10 +190,10 @@ If no corresponding attribute is found, the index will have no known primary key
 #### Missing primary key error
 
 ::: warning
-If you get the [`primary_key_inference_failed` error](/reference/api/error_codes.md#primary-key-inference-failed), the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
+If you get the [`primary_key_inference_failed` error](/reference/error_codes.md#primary-key-inference-failed), the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
 :::
 
-Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).
+Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/documents.md#add-or-replace-documents) or [the update index route](/reference/indexes.md#create-an-index).
 
 ### Document Id
 
@@ -233,7 +233,7 @@ The above code sets the payload limit to 1GB, instead of the 100MB default.
 
 **Meilisearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase the size of your batch as this could cause Meilisearch to crash.
 
-When using the [route to add new documents](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
+When using the [route to add new documents](/reference/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 
 <CodeSamples id="documents_guide_add_movie_1" />
 

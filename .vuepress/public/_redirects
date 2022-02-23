@@ -161,3 +161,6 @@
 
 #Remove What's next page
 /learn/getting_started/whats_next.html        /learn/getting_started/quick_start.html
+
+#Remove /reference/api/ folder
+/reference/api/                             /reference/

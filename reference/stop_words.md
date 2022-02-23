@@ -1,6 +1,6 @@
 # Stop-words
 
-_Child route of the [settings route](/reference/api/settings.md)._
+_Child route of the [settings route](/reference/settings.md)._
 
 The stop-words route allows you to add a list of words ignored in your search queries. During a search, the stop words contained in your search query will be ignored by the sorting algorithm.
 
@@ -10,7 +10,7 @@ When you add a common English word such as `the` to the stop-words list, Meilise
 Stop-words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
 :::
 
-Stop-words can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
+Stop-words can also be updated directly through the [global settings route](/reference/settings.md#update-settings) along with the other settings.
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
@@ -78,7 +78,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Reset stop-words
 
@@ -112,4 +112,4 @@ Empty array: `[]`
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).

@@ -30,7 +30,7 @@ Type `craete an index` in the search bar of this documentation to experience the
 
 To find out more about the relevancy of Meilisearch, take a look at this detailed [explanation](/learn/core_concepts/relevancy.md#ranking-rules).
 
-However, Meilisearch is of course [highly customizable](/reference/api/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
+However, Meilisearch is of course [highly customizable](/reference/settings.md) in order to adapt the search to your needs by setting synonyms, stop words, and custom ranking rules.
 
 ## How to know if Meilisearch perfectly fits my use cases?
 
@@ -63,19 +63,19 @@ All asynchronous operations return a summarized version of the [`task` object](/
 }
 ```
 
-This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
 
 Meilisearch API accepts JSON, CSV, and NDJSON formats.
-In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
+In case of a [document addition](/reference/documents.md#add-or-replace-documents), only an array of objects is expected.
 
 The `400 - Bad request` response probably means that your data is not in an expected format.
 
 Most common errors:
 
 - Extraneous comma at the end of a line.
-- Data is not an array of objects: for the [document addition route](/reference/api/documents.md#add-or-replace-documents), Meilisearch only accepts an array in the body even if there is only one document.
+- Data is not an array of objects: for the [document addition route](/reference/documents.md#add-or-replace-documents), Meilisearch only accepts an array in the body even if there is only one document.
 
 Wrong:
 
@@ -127,11 +127,11 @@ Most common reasons:
 
 Each document is required to contain a unique identifier. This identifier attribute is the `primary key`.
 
-How do I know the primary key of my index? [Check this route](/reference/api/indexes.md#get-one-index). The `null` value means it has not been defined yet.
+How do I know the primary key of my index? [Check this route](/reference/indexes.md#get-one-index). The `null` value means it has not been defined yet.
 
 By default, the primary key will be inferred from the first document received. Meilisearch will search for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`). If none has been found, no documents will be added.
 
-If you get a `document id is missing` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending primary key's name as a query parameter [when adding documents](/reference/api/documents.md#add-or-replace-documents) should solve this issue.
+If you get a `document id is missing` error, the primary key was not recognized. This means your primary key is wrongly formatted. Sending primary key's name as a query parameter [when adding documents](/reference/documents.md#add-or-replace-documents) should solve this issue.
 
 Note that the primary key value must contain only `A-Z a-z 0-9` and `-_` characters.
 
@@ -201,7 +201,7 @@ The search responses are sorted according to a set of consecutive rules called r
 Here is more information about the [relevancy of Meilisearch](/learn/core_concepts/relevancy.md).
 
 Meilisearch applies these ranking rules in default order. This order can be modified. Furthermore, these rules can be deleted and new ones can be added.
-All of the ranking rules can be modified via the [dedicated routes in the Meilisearch API](/reference/api/ranking_rules.md).
+All of the ranking rules can be modified via the [dedicated routes in the Meilisearch API](/reference/ranking_rules.md).
 
 ## Do you provide a public roadmap for Meilisearch and its integration tools?
 
@@ -246,7 +246,7 @@ The following factors have a great impact on the size of your database (in no pa
 - The number of different words present in the dataset
 
 :::tip
-Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes) unless they are useful as search criteria.
+Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/searchable_attributes.md#update-searchable-attributes) unless they are useful as search criteria.
 :::
 
 ### Search speed
@@ -277,7 +277,7 @@ In general, we recommend the former. However, if you need to reduce the size of 
   - The proximity [ranking rule](/learn/core_concepts/relevancy.md#ranking-rules) alone can be responsible for almost 80% of database size
 - Adding many attributes to [filterableAttributes](/learn/configuration/settings.md#filterable-attributes) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
-- [Stop words](/reference/api/stop_words.md) are essential to reducing database size
+- [Stop words](/reference/stop_words.md) are essential to reducing database size
 - Not all attributes need to be [searchable](/learn/configuration/displayed_searchable_attributes.md#searchable-fields). Avoid indexing unique IDs.
 
 ## Why does Meilisearch send data to Segment? Does Meilisearch track its users?

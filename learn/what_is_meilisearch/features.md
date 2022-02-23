@@ -1,6 +1,6 @@
 # Features
 
-All of Meilisearch's features are provided right out of the box, and can be easily [configured](/reference/api/search.md). Here are a few of them that you should try out!
+All of Meilisearch's features are provided right out of the box, and can be easily [configured](/reference/search.md). Here are a few of them that you should try out!
 
 [[toc]]
 
@@ -10,7 +10,7 @@ Also called "instant search". Results are delivered while you're still inputting
 
 ## Ultra relevant
 
-Meilisearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are designed to deliver an intuitive search experience with zero setup. They can be [customized](/reference/api/ranking_rules.md) to ensure perfect results for your dataset.
+Meilisearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are designed to deliver an intuitive search experience with zero setup. They can be [customized](/reference/ranking_rules.md) to ensure perfect results for your dataset.
 
 ## Typo tolerant
 
@@ -28,7 +28,7 @@ Read more about synonyms in [this dedicated guide](/learn/configuration/synonyms
 
 ## Highlighting
 
-[Highlight](/reference/api/search.md#attributes-to-highlight) query terms so that matches pop out to the eye. Users don't need to read the entire text to find the match.
+[Highlight](/reference/search.md#attributes-to-highlight) query terms so that matches pop out to the eye. Users don't need to read the entire text to find the match.
 
 ## Filters
 

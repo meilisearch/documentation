@@ -190,7 +190,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for both `GET` and `POST` routes.
 
 ::: warning
-If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
+If [using the `GET` route to perform a search](/reference/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
 
 This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
 :::
@@ -319,7 +319,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 **Expected value**: a filter expression written as a string or an array of strings
 **Default value**: `[]`
 
-Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
+Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/filterable_attributes.md).
 
 [Read our guide on filtering, faceted search and filter expressions.](/learn/advanced/filtering_and_faceted_search.md)
 

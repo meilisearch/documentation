@@ -10,11 +10,11 @@ In order to ensure relevant results, search responses are sorted based on a set 
 
 ### Behavior
 
-Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings.md). This array is **fully customizable**, meaning you can **delete existing rules, add new ones, and reorder them as needed**.
+Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/settings.md). This array is **fully customizable**, meaning you can **delete existing rules, add new ones, and reorder them as needed**.
 
 Whenever a search query is made, Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
 
-**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/api/ranking_rules.md#update-ranking-rules).
+**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/ranking_rules.md#update-ranking-rules).
 
 ### Built-in rules
 
@@ -124,7 +124,7 @@ To add a custom ranking rule, you have to communicate the attribute name followe
 
 **The attribute must have either a numeric or a string value** in all of the documents contained in that index.
 
-Add this rule to the existing list of ranking rules using the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+Add this rule to the existing list of ranking rules using the [update ranking rules endpoint](/reference/ranking_rules.md#update-ranking-rules).
 
 #### Example
 
@@ -142,7 +142,7 @@ The following example will create a rule that makes movies with a good rank more
 movie_ranking:desc
 ```
 
-To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/reference/api/ranking_rules.md#update-ranking-rules),
+To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/reference/ranking_rules.md#update-ranking-rules),
 
 ```json
 [
@@ -159,7 +159,7 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ### Sorting and custom ranking rules
 
-Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/api/search.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
+Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/search.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
 
 In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 
@@ -180,7 +180,7 @@ By default, the built-in rules are executed in the following order.
 ]
 ```
 
-Depending on your needs, you might want to change this order of importance. To do so, you can use the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+Depending on your needs, you might want to change this order of importance. To do so, you can use the [update ranking rules endpoint](/reference/ranking_rules.md#update-ranking-rules).
 
 ## Attribute ranking order
 

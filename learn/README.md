@@ -4,7 +4,7 @@ Welcome to Meilisearch's learning center. These resources are aimed at first-tim
 
 ## Our philosophy
 
-Meilisearch has been developed to provide an **easily integrated search solution** with a **simple and intuitive implementation process**. If you're an experienced developer looking to dive right in, we encourage you to check out our [API references](/reference/api).
+Meilisearch has been developed to provide an **easily integrated search solution** with a **simple and intuitive implementation process**. If you're an experienced developer looking to dive right in, we encourage you to check out our [API references](/reference).
 
 However, if you prefer a more guided or hands-on approach, you're not alone! We offer descriptions of all of Meilisearch's [core concepts](/learn/core_concepts), as well as a [quick start guide](/learn/getting_started/quick_start.md) that should teach you everything you need to start creating your own projects.
 

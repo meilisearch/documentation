@@ -38,13 +38,13 @@ set MEILI_MASTER_KEY="your_master_key"
 :::
 ::::
 
-Once you launch Meilisearch with a master key, all API endpoints except [the health endpoint](/reference/api/health.md#get-health) are automatically protected from unauthorized requests.
+Once you launch Meilisearch with a master key, all API endpoints except [the health endpoint](/reference/health.md#get-health) are automatically protected from unauthorized requests.
 
 From that point on, API requests must include the `Authorization` header to be successful. Read on to learn more.
 
 ## Communicating with a protected instance
 
-After an instance is secured, only the [`GET /health` endpoint](/reference/api/health.md) will be publicly available. To access any other API endpoint, you must add a security key with suitable permissions to your request.
+After an instance is secured, only the [`GET /health` endpoint](/reference/health.md) will be publicly available. To access any other API endpoint, you must add a security key with suitable permissions to your request.
 
 It is particularly important to protect an instance when dealing with sensitive data. You can use API keys to ensure only authorized people can search through an index containing medical records:
 
@@ -54,7 +54,7 @@ It is particularly important to protect an instance when dealing with sensitive 
 
 When you launch an instance for the first time, Meilisearch will automatically generate two API keys: `Default Search API Key` and `Default Admin API Key`.
 
-As its name indicates, the `Default Search API Key` can only be used to access [the search route](/reference/api/search.md).
+As its name indicates, the `Default Search API Key` can only be used to access [the search route](/reference/search.md).
 
 The second automatically-generated key, `Default Admin API Key`, has access to all API routes except `/keys`. You should avoid exposing the default admin key in publicly accessible code.
 
@@ -68,7 +68,7 @@ Meilisearch currently has two types of security keys: one master key and any num
 
 Though both types of keys help you protect your instance and your data, they serve distinct purposes and are managed in different ways.
 
-API keys grant users access to a specific set of indexes, routes, and endpoints. You can also configure them to expire after a certain date. They can be configured by using the [`/keys` route](/reference/api/keys.md).
+API keys grant users access to a specific set of indexes, routes, and endpoints. You can also configure them to expire after a certain date. They can be configured by using the [`/keys` route](/reference/keys.md).
 
 For most of your day-to-day operations, you should use API keys when communicating with a protected instance.
 
@@ -82,7 +82,7 @@ Exposing your master key can give malicious users complete control over your Mei
 
 Meilisearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
-The master key is the only key with access to the [`/keys` route](/reference/api/keys.md). This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
+The master key is the only key with access to the [`/keys` route](/reference/keys.md). This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
 
 Though the default API keys are usually enough to manage the security needs of most applications, this might not be the case when dealing with privacy-sensitive data. In these situations, the fine-grained control offered by the `/keys` endpoint allows you to clearly decide who can access what information and for how long.
 
@@ -110,19 +110,19 @@ We can update the `Default Search API Key` so regular users cannot perform searc
 }
 ```
 
-To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key) which can only be accessed with the master key.
+To update an API key, you must use the [update API key endpoint](/reference/keys.md#update-a-key) which can only be accessed with the master key.
 
 Meilisearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `indexes`.
 
 ### Creating an API key
 
-You can create API keys by using the [create key endpoint](/reference/api/keys.md#create-a-key). This endpoint is always protected and can only be accessed with the master key.
+You can create API keys by using the [create key endpoint](/reference/keys.md#create-a-key). This endpoint is always protected and can only be accessed with the master key.
 
 Since we have altered the permissions in our default search key, we need to create a new API key so authorized users can search through out `patient_medical_records` index:
 
 <CodeSamples id="security_guide_create_key_1" />
 
-All [`/keys` endpoints](/reference/api/keys.md) are synchronous, so your key will be generated immediately:
+All [`/keys` endpoints](/reference/keys.md) are synchronous, so your key will be generated immediately:
 
 ```json
 {
@@ -144,11 +144,11 @@ It is good practice to always set an expiry date when creating a new API key. If
 
 ### Listing API keys
 
-You can use the [list keys endpoint](/reference/api/keys.md) to obtain information on any active key in your Meilisearch instance. This is useful when you need an overview of existing keys and their permissions.
+You can use the [list keys endpoint](/reference/keys.md) to obtain information on any active key in your Meilisearch instance. This is useful when you need an overview of existing keys and their permissions.
 
-[`GET /keys`](/reference/api/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you need the master key to access this endpoint.
+[`GET /keys`](/reference/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you need the master key to access this endpoint.
 
-[`GET /keys/:key`](/reference/api/keys.md#get-one-key) returns information on a single key. `:key` should be replaced with the full `key` value obtained during key creation.
+[`GET /keys/:key`](/reference/keys.md#get-one-key) returns information on a single key. `:key` should be replaced with the full `key` value obtained during key creation.
 
 We can query our instance to confirm which active keys can search our `patient_medical_records` index:
 
@@ -202,7 +202,7 @@ We can query our instance to confirm which active keys can search our `patient_m
 
 ### Deleting an API key
 
-If a key is no longer useful or has been compromised, you can use [delete key endpoint](/reference/api/keys.md#delete-a-key) to disable it before its expiry date.
+If a key is no longer useful or has been compromised, you can use [delete key endpoint](/reference/keys.md#delete-a-key) to disable it before its expiry date.
 
 If we accidentally exposed our `Search patient records key`, we can delete it to prevent unauthorized parties from gaining access to our `patient_medical_records` index:
 
@@ -210,9 +210,9 @@ If we accidentally exposed our `Search patient records key`, we can delete it to
 
 ### Expired keys
 
-Once a key is past its `expiresAt` date, using it for API authorization will return an error. Expired keys will still be returned by the [list keys endpoint](/reference/api/keys.md#get-all-keys).
+Once a key is past its `expiresAt` date, using it for API authorization will return an error. Expired keys will still be returned by the [list keys endpoint](/reference/keys.md#get-all-keys).
 
-If you must continue using an expired key, you may use the [update key endpoint](/reference/api/keys.md#update-a-key) to set a new `expiresAt` date and effectively reactivate it.
+If you must continue using an expired key, you may use the [update key endpoint](/reference/keys.md#update-a-key) to set a new `expiresAt` date and effectively reactivate it.
 
 ## Changing the master key
 

@@ -4,7 +4,7 @@ A dump is a compressed file containing an export of your Meilisearch instance. I
 
 ## Creating a dump
 
-To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). The dump creation process is an asynchronous task that takes time proportional to the size of your dataset.
+To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/dump.md#create-a-dump). The dump creation process is an asynchronous task that takes time proportional to the size of your dataset.
 
 <CodeSamples id="post_dump_1" />
 
@@ -18,7 +18,7 @@ The above code triggers a dump creation process. It also returns an object conta
 }
 ```
 
-You can use the returned `uid` (unique identifier indicating when the dump was triggered) to track its progress with the [get dump status route](/reference/api/dump.md#get-dump-status). The returned status could be:
+You can use the returned `uid` (unique identifier indicating when the dump was triggered) to track its progress with the [get dump status route](/reference/dump.md#get-dump-status). The returned status could be:
 
 - `in_progress`: Dump creation is in progress
 - `failed`: An error occurred during dump process, and the task was aborted
@@ -51,7 +51,7 @@ If you restart Meilisearch after creating a dump, you will not be able to use th
 
 ## Importing a dump
 
-Dumps in v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/api/version.md#example) and proceed accordingly.
+Dumps in v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/version.md#example) and proceed accordingly.
 
 ::: note
 We do not recommend using dumps from a new Meilisearch version to import an older version.
