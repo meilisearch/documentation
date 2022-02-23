@@ -107,24 +107,23 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.db_path`                         | `true` if `--db-path`/`MEILI_DB_PATH` is specified, otherwise `false`                       | true
 | `infos.import_dump`                     | `true` if `--import-dump` is specified, otherwise `false`                                   | true
 | `infos.dumps_dir`                       | `true` if `--dumps-dir`/`MEILI_DUMPS_DIR` is specified, otherwise `false`                   | true
-| `infos.ignore_missing_dump`             | `true` if `--ignore-missing-dump` is set to true, otherwise `false`                   | true
-| `infos.ignore_dump_if_db_exists`        | `true` if `--ignore-dump-if-db-exists` is set to true, otherwise `false`              | true
+| `infos.ignore_missing_dump`             | `true` if `--ignore-missing-dump` is activated, otherwise `false`                           | true
+| `infos.ignore_dump_if_db_exists`        | `true` if `--ignore-dump-if-db-exists` is activated, otherwise `false`                      | true
 | `infos.import_snapshot`                 | `true` if `--import-snapshot` is specified, otherwise `false`                               | true
-| `infos.schedule_snapshot`               | `true` if `--schedule-snapshot`/`MEILI_SCHEDULE_SNAPSHOT` is set to true, otherwise `false` | true
-| `infos.snapshot_dir`                    | `true` if `--snapshot-dir`/`MEILI_SNAPSHOT_DIR` is specified to true, otherwise `false`     | true
+| `infos.schedule_snapshot`               | `true` if `--schedule-snapshot`/`MEILI_SCHEDULE_SNAPSHOT` is activated, otherwise `false`   | true
+| `infos.snapshot_dir`                    | `true` if `--snapshot-dir`/`MEILI_SNAPSHOT_DIR` is specified, otherwise `false`             | true
 | `infos.snapshot_interval_sec`           | Value of `--snapshot-interval-sec`/`MEILI_SNAPSHOT_INTERVAL_SEC` in seconds                 | 86400
-| `infos.ignore_missing_snapshot`         | `true` if `--ignore-missing-snapshot` is specified to true, otherwise `false`               | true
-| `infos.ignore_snapshot_if_db_exists`    | `true` if `--ignore_snapshot_if_db_exists` is specified to true, otherwise `false`          | true
+| `infos.ignore_missing_snapshot`         | `true` if `--ignore-missing-snapshot` is activated, otherwise `false`                       | true
+| `infos.ignore_snapshot_if_db_exists`    | `true` if `--ignore-snapshot-if-db-exists` is activated, otherwise `false`                  | true
 | `infos.http_addr`                       | `true` if `--http-addr`/`MEILI_HTTP_ADDR` is specified, otherwise `false`                   | true
 | `infos.max_index_size`                  | Value of `--max-index-size`/`MEILI_INDEX_SIZE` in bytes                                     | 336042103
 | `infos.max_task_db_size`                | Value of `--max-task-db-size`/`MEILI_MAX_TASK_DB_SIZE` in bytes                             | 336042103
 | `infos.http_payload_size_limit`         | Value of `--http-payload-size-limit`/`MEILI_HTTP_PAYLOAD_SIZE_LIMIT` in bytes               | 336042103
-| `infos.enable_autobatching`             | `true` if `--enable-autobatching` is specified to true, otherwise `false`                   | true
+| `infos.enable_autobatching`             | `true` if `--enable-autobatching` is activated, otherwise `false`                           | true
 | `infos.max_batch_size`                  | Value of `--max-batch-size` in integer, otherwise `null`                                    | 1000
 | `infos.max_documents_per_batch`         | Value of `--max-documents-per-batch` in integer, otherwise `null`                           | 1000
 | `infos.debounce_duration_secs`          | Value of `--debounce-duration-secs` in seconds, otherwise `0`                               | 3600
 | `infos.log_level`                       | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
-
 | `system.distribution`                   | Distribution on which Meilisearch is launched                                               | Arch Linux
 | `system.kernel_version`                 | Kernel version on which Meilisearch is launched                                             | 5.14.10
 | `system.cores`                          | Number of cores                                                                             | 24
