@@ -124,3 +124,9 @@ security_guide_search_key_1: |-
 document_guide_create_index_primary_key: |-
 document_guide_add_document_primary_key: |-
 authentication_header_1: |-
+tenant_token_guide_search_no_sdk_1: |-
+tenant_token_guide_generate_sdk_1: |-
+tenant_token_guide_search_sdk_1: |-
+tenant_token_guide_fragment_rules_1: |-
+tenant_token_guide_fragment_key_1: |-
+tenant_token_guide_fragment_expiry_1: |-
