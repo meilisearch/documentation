@@ -5,7 +5,7 @@ In this guide you'll first learn [what multitenancy is](#what-is-multitenancy) a
 
 In software development, multitenancy means that multiple users with different interests—also called tenants—share the same computing resources. Despite existing in the same environment, tenants are not aware of one another and do not have access to each other's data. Proper multitenancy is crucial in cloud computing services such as [Digital Ocean's Droplets](https://www.digitalocean.com/products/droplets) and [Amazon's AWS](https://aws.amazon.com/).
 
-Depending on the type of application you are developing with Meilisearch, it is possible you will face similar challenges. For example, if your application handles sensitive data like medical records, it is very important to ensure users can only search through their own documents.
+Depending on the type of application you are developing with Meilisearch, it is possible you will face similar challenges. For example, if your application handles sensitive data like medical records, it is very important to make sure users can only search through their own documents.
 
 ### What are tenant tokens and how do they solve multitenancy in Meilisearch?
 
@@ -39,11 +39,12 @@ The quickest method to generate tenant tokens is [using one of our official SDKs
 
 ## Generating tenant tokens with an SDK
 
-If you are developing an application allowing users to search through their  medical records, it is fundamental that each user can only see their own records and not anyone else's.
+If you are developing an application that allows patients to search through medical records, it is crucial that each user can only see their own records and not anyone else's.
 
 The code in this example imports the SDK, creates a filter based on the current user's ID, and feeds that data into the SDK's `generateTenantToken` function:
 
 ```js
+// placeholder code sample. Final version will be supplied by the integrations team
 const client = new Meilisearch({host: 'meilisearch'});
 
 const apiKey = '[an_api_key]';
@@ -60,7 +61,7 @@ const expiryDate = 1645461882;
 const token = client.generateTenantToken(searchRules, expiryDate, apiKey);
 ```
 
-As you can see, there are three main elements necessary to generate a tenant token: [search rules](#search-rules), [expiry dates](#expiry-dates), and [API keys](#api-keys). You can find a full description of each one these further down the guide.
+As you can see, there are three main elements necessary to generate a tenant token: [search rules](#search-rules), [expiry dates](#expiry-dates), and [API keys](#api-keys). You can read more about each one these in [this guide's final section](#tenant-token-settings).
 
 ### Using a tenant token with an SDK
 
