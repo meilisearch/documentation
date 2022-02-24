@@ -63,8 +63,22 @@ If your query is `Hello - World`:
 
 **Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a datatype whose size is limited to approximately 500 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 500 bytes.
 
-### Maximum number of concatenated filters
+### Maximum filter depth
 
 **Limitation:** Meilisearch does not accept searches with more than 2000 `OR` filters.
 
 **Explanation:** `OR` filters create nested structures which can lead to a stack overflow.
+
+### Example
+
+If you tried filtering what users have access to a certain index using either of the following queries, they will not work:
+
+```
+user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR user = 2001
+```
+
+```
+[
+  ["user = 1", "user = 2", […], "user = 1500", "user = 1501", […], "user = 2000", "user = 2001"]
+]
+```  
