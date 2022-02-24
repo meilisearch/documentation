@@ -16,7 +16,7 @@ Dump imports must be performed when launching a Meilisearch instance [using the 
 
 Triggers a dump creation process. Once the process is complete, a dump is created in the [dumps directory](/learn/configuration/instance_options.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
 
-**Meilisearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, Meilisearch will throw a [`dump_already_processing` error](/reference/api/error_codes.md#dump-already-processing). The task queue can receive other future operations to perform but will not process any further tasks during dump creation. It will still accept new tasks in the queue.
+**Meilisearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, Meilisearch will throw a [`dump_already_processing` error](/reference/api/error_codes.md#dump-already-processing). The task queue will not process any further tasks during dump creation, but you can still add new requests to the queue.
 
 ### Example
 
