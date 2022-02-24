@@ -201,7 +201,7 @@ Prevents a Meilisearch instance from throwing an error when `--import-dump` does
 
 If the `--ignore-missing-dump` flag is not specified, and the file cannot be found, an error occurs in the CLI.
 
-*This option is not available as an environment variable.*
+_This option is not available as an environment variable._
 
 ### Ignore dump if DB exists
 
@@ -217,7 +217,7 @@ Prevents a Meilisearch instance with an existing database from throwing an error
 
 This command will throw an error if `--import-dump` is not defined.
 
-*This option is not available as an environment variable.*
+_This option is not available as an environment variable._
 
 ### Log level
 
