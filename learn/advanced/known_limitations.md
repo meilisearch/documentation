@@ -69,9 +69,9 @@ If your query is `Hello - World`:
 
 **Explanation:** `OR` filters create nested structures which can lead to a stack overflow.
 
-### Example
+#### Example
 
-If you tried filtering what users have access to a certain index using either of the following queries, they will not work:
+Either of these filter expressions would cause a search query to fail:
 
 ```
 user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR user = 2001
