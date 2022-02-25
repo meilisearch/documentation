@@ -62,7 +62,7 @@ docker run -it --rm \
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
 
-On macOS and Windows, you must be careful not to mount volumes from the host to the container because I/O operations between the filesystems will be very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
+On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
 
 You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
 :::
