@@ -2,17 +2,13 @@
 
 Currently, Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that Meilisearch uses under the hood.
 
-## Number of query words
+This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size), a [default database size limit of 100GiB](/learn/configuration/instance_options.md#max-index-size), and a [default search limit of 20 hits](/reference/api/search.md#limit). 
+
+## Maximum number of query words
 
 **Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
 
 **Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
-
-## Database size
-
-**Limitation:** The default maximum database size is **100GiB**. This size can be modified using the options `--max-index-size` & `--max-task-db-size` as described in the [configuration reference](/learn/configuration/instance_options.md#max-index-size).
-
-**Explanation:** Meilisearch uses two databases: one for storage and one for tasks. On launch, LMDB needs to know the maximum size that it will need to reserve on disk for both of them.
 
 ## Maximum words per attribute
 
@@ -49,7 +45,7 @@ If your query is `Hello - World`:
 `-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
 :::
 
-## Maximum attributes per document
+## Maximum number of attributes per document
 
 **Limitation:** Meilisearch can index a maximum of **65,536 attributes per document**. If a document contains more than 65,536 attributes, an error will be thrown.
 
