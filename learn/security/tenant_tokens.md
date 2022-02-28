@@ -32,7 +32,7 @@ This token fragment contains data proving the user is authorized to search the `
 
 ### Tenant tokens in Meilisearch
 
-Tenant tokens do not require you to configure any specific instance options or index settings.
+Tenant tokens do not require you to configure any specific [instance options](/learn/configuration/instance_options.md) or [index settings](/learn/configuration/settings.md).
 
 To use tenant tokens, you only need to have a system for token generation in place. Once a token has been generated, you can seamlessly substitute an API key with it when accessing the API's search endpoint.
 
@@ -89,7 +89,7 @@ Though [Meilisearch recommends using an official SDK](#generating-tenant-tokens-
 The full process requires you to [create a token header](#creating-a-token-header), [prepare a data payload](#preparing-the-token-payload) with at least one set of search rules, and then [sign the token](#signing-a-token) with an API key.
 
 ::: note
-The following examples use javascript for the sake of simplicity, but Meilisearch should be compatible with the majority of modern stacks and languages.
+The following examples use JavaScript for the sake of simplicity, but Meilisearch should be compatible with the majority of modern stacks and languages.
 :::
 
 ### Creating a token header
@@ -156,7 +156,7 @@ Tokens following the JWT standard must be signed. The signature is created by co
 const signature = HS256(base64Header + '.' + base64Payload, meiliSearchApiKey);
 ```
 
-This example uses an HS256 encryption algorithm. **The encryption algorithm you use must be the same as the one indicate in the token's header.**
+This example uses an HS256 encryption algorithm. **The encryption algorithm you use must be the same as the one indicated in the token's header.**
 
 The remaining step is putting it all together. Concatenate the header, payload, and signature using a `.` to separate each element of the token:
 
@@ -192,7 +192,7 @@ Search rules are a set of instructions defining search parameters that will be e
 
 The object key must be an index name. Its value must consist of any number of `key:value` pairs. The `key` must be a [search parameter](/reference/api/search.md#search-parameters) and the value must be a valid argument for that parameter.
 
-This example rule declares that every search made in the `patient_medical_records` index must return results chronologically sorted results:
+This example rule declares that every search made in the `patient_medical_records` index must return chronologically sorted results:
 
 ```json
 {
@@ -286,7 +286,7 @@ If an API key expires, any token tenants created with it will become invalid. Th
 It is possible to define an expiry date when generating a token. This is good security practice and Meilisearch recommends setting relatively short token expiry dates whenever possible. The expiry date must be written as a UNIX timestamp.
 
 ::: danger
-The only way to revoke a token without an expiry date is to delete its parent API key.
+The only way to revoke a token without an expiry date is to [delete](/reference/api/keys.md#delete-a-key) its parent API key.
 
 Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
 :::
