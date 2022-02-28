@@ -1,7 +1,5 @@
 # Comparison to alternatives
 
-## Table of contents
-
 [[toc]]
 
 ## About Meilisearch
