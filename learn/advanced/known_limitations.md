@@ -2,7 +2,7 @@
 
 Currently, Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that Meilisearch uses under the hood.
 
-This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size), a [default database size limit of 100GiB](/learn/configuration/instance_options.md#max-index-size), and a [default search limit of 20 hits](/reference/api/search.md#limit). 
+This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size), a [default database size limit of 100GiB](/learn/configuration/instance_options.md#max-index-size), and a [default search limit of 20 hits](/reference/api/search.md#limit).
 
 ## Maximum number of query words
 
