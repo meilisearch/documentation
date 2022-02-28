@@ -10,7 +10,7 @@ This guide covers hard limits that cannot be altered. Meilisearch also has some 
 
 **Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 
-## Maximum words per attribute
+## Maximum number of words per attribute
 
 **Limitation:** Meilisearch can index a maximum of **65535 positions per attribute**. Any words exceeding the 65535 position limit will be silently ignored.
 
