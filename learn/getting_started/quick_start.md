@@ -57,7 +57,7 @@ docker pull getmeili/meilisearch:latest
 docker run -it --rm \
     -p 7700:7700 \
     -v $(pwd)/data.ms:/data.ms \
-    getmeili/Meilisearch:latest
+    getmeili/meilisearch:latest
 ```
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
