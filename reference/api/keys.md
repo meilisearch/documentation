@@ -110,7 +110,7 @@ Date and time when the key was last updated, represented in ISO 8601 format.
 
 <RouteHighlighter method="GET" route="/keys/:key"/>
 
-Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](http://docs.meilisearch.com/errors#api_key_not_found).
+Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found).
 
 #### Path variables
 
