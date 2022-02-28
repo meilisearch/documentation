@@ -69,13 +69,13 @@ If your query is `Hello - World`:
 
 **Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a datatype whose size is limited to approximately 500 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 500 bytes.
 
-### Maximum filter depth
+## Maximum filter depth
 
 **Limitation:** Meilisearch does not accept searches with more than 2000 `OR` filters.
 
 **Explanation:** `OR` filters create nested structures which can lead to a stack overflow.
 
-#### Example
+### Example
 
 Either of these filter expressions would cause a search query to fail:
 
