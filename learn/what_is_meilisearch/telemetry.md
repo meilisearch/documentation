@@ -116,12 +116,12 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.ignore_missing_snapshot`         | `true` if `--ignore-missing-snapshot` is activated, otherwise `false`                       | true
 | `infos.ignore_snapshot_if_db_exists`    | `true` if `--ignore-snapshot-if-db-exists` is activated, otherwise `false`                  | true
 | `infos.http_addr`                       | `true` if `--http-addr`/`MEILI_HTTP_ADDR` is specified, otherwise `false`                   | true
-| `infos.max_index_size`                  | Value of `--max-index-size`/`MEILI_INDEX_SIZE` in bytes                                     | 336042103
+| `infos.max_index_size`                  | Value of `--max-index-size`/`MEILI_MAX_INDEX_SIZE` in bytes                                     | 336042103
 | `infos.max_task_db_size`                | Value of `--max-task-db-size`/`MEILI_MAX_TASK_DB_SIZE` in bytes                             | 336042103
 | `infos.http_payload_size_limit`         | Value of `--http-payload-size-limit`/`MEILI_HTTP_PAYLOAD_SIZE_LIMIT` in bytes               | 336042103
 | `infos.enable_autobatching`             | `true` if `--enable-autobatching` is activated, otherwise `false`                           | true
-| `infos.max_batch_size`                  | Value of `--max-batch-size` in integer, otherwise `null`                                    | 1000
-| `infos.max_documents_per_batch`         | Value of `--max-documents-per-batch` in integer, otherwise `null`                           | 1000
+| `infos.max_batch_size`                  | Value of `--max-batch-size`, otherwise `null`                                    | 1000
+| `infos.max_documents_per_batch`         | Value of `--max-documents-per-batch`, otherwise `null`                           | 1000
 | `infos.debounce_duration_secs`          | Value of `--debounce-duration-secs` in seconds, otherwise `0`                               | 3600
 | `infos.log_level`                       | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
 | `system.distribution`                   | Distribution on which Meilisearch is launched                                               | Arch Linux
