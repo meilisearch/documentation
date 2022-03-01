@@ -12,7 +12,7 @@ module.exports = {
     smoothScroll: true,
     nav: [
       { text: 'Learn', link: '/learn/getting_started/quick_start' },
-      { text: 'Reference', link: '/reference/api/' },
+      { text: 'Reference', link: '/reference/api/overview' },
       { text: 'FAQ', link: '/faq' },
       {
         text: 'Integrations',
@@ -71,10 +71,14 @@ module.exports = {
       '/learn/': [
         {
           title: '🔎 What is Meilisearch?',
-          path: '/learn/what_is_meilisearch/',
+          path: '/learn/what_is_meilisearch/overview/',
           collapsable: false,
           sidebarDepth: 0,
           children: [
+            {
+              title: 'Overview',
+              path: '/learn/what_is_meilisearch/overview',
+            },
             '/learn/what_is_meilisearch/features',
             '/learn/what_is_meilisearch/philosophy',
             '/learn/what_is_meilisearch/sdks',
@@ -105,7 +109,7 @@ module.exports = {
         },
         {
           title: '💡 Core concepts',
-          path: '/learn/core_concepts/',
+          path: '/learn/core_concepts/documents/',
           collapsable: false,
           children: [
             '/learn/core_concepts/documents',
@@ -136,7 +140,7 @@ module.exports = {
         },
         {
           title: '📚 Advanced topics',
-          path: '/learn/advanced/',
+          path: '/learn/advanced/asynchronous_operations/',
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
@@ -184,13 +188,12 @@ module.exports = {
         },
         {
           title: '📕 Cookbooks',
-          path: '/learn/cookbooks/',
+          path: '/learn/cookbooks/running_production/',
           collapsable: false,
           children: [
             {
               title: 'Run in production',
               path: '/learn/cookbooks/running_production',
-              sidebarDepth: 0,
             },
             {
               title: 'Use with Postman',
@@ -235,9 +238,13 @@ module.exports = {
         },
         {
           title: '👐 Contributing',
-          path: '/learn/contributing/',
+          path: '/learn/contributing/overview/',
           collapsable: false,
           children: [
+            {
+              title: 'Overview',
+              path: '/learn/contributing/overview',
+            },
             {
               title: 'Contributing to the docs',
               path: '/learn/contributing/contributing_to_docs',
@@ -247,8 +254,8 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '📒 API references',
-          path: '/reference/api/',
+          title: '📒 API reference',
+          path: '/reference/api/indexes/',
           collapsable: false,
           children: [
             '/reference/api/indexes',
