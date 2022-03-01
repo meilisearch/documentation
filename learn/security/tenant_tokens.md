@@ -1,6 +1,6 @@
 # Multitenancy and tenant tokens
 
-In this guide you'll first learn [what multitenancy is](#what-is-multitenancy) and [how tenant tokens help managing complex applications and sensitive data](#what-are-tenant-tokens-and-how-do-they-solve-multitenancy-in-meilisearch). Then, you'll see [how to generate and use tokens](#generating-tenant-tokens-with-an-sdk), whether with an official SDK or [otherwise](#generating-tenant-tokens-without-a-meilisearch-sdk). The guide ends with a quick explanation of [the main tenant token settings](#tenant-token-settings).
+In this guide you'll first learn [what multitenancy is](#what-is-multitenancy) and [how tenant tokens help managing complex applications and sensitive data](#what-are-tenant-tokens-and-how-do-they-solve-multitenancy-in-meilisearch). Then, you'll see [how to generate and use tokens](#generating-tenant-tokens-with-an-sdk), whether with an official SDK or [otherwise](#generating-tenant-tokens-without-a-meilisearch-sdk). The guide ends with a quick explanation of [the main tenant token settings](#tenant-token-payload-reference).
 
 ## What is multitenancy?
 
@@ -74,7 +74,7 @@ Though [Meilisearch recommends using an official SDK](#generating-tenant-tokens-
 
 The full process requires you to [create a token header](#step-1-creating-a-token-header), [prepare a data payload](#step-2-preparing-the-token-payload) with at least one set of search rules, and then [sign the token](#step-3-signing-a-token) with an API key.
 
-If you are already familiar with the creation of JWTs and only want to know about the specific requirements of a tenant token payload, take a look at this guide's [token payload reference](#tenan-token-payload-reference).
+If you are already familiar with the creation of JWTs and only want to know about the specific requirements of a tenant token payload, take a look at this guide's [token payload reference](#tenant-token-payload-reference).
 
 ::: note
 The following examples use JavaScript for the sake of simplicity, but Meilisearch should be compatible with the majority of modern stacks and languages.
@@ -140,7 +140,7 @@ Like the header, it is necessary to encode the payload:
 const base64Payload = base64Encode(payload);
 ```
 
-You can read more about each of element of the tenant token payload in [this guide's final section](#tenant-token-settings).
+You can read more about each of element of the tenant token payload in [this guide's final section](#tenant-token-payload-reference).
 
 ### Step 3: Signing a token
 
