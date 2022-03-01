@@ -1,16 +1,18 @@
-# Instance options
+# Configure Meilisearch at launch
 
 You can configure Meilisearch with **environment variables** and **command-line options**.
 
-The configuration options described here affect your entire Meilisearch instance, not just a single index. For index settings, see [settings](/learn/configuration/settings.md).
+These startup options affect your entire Meilisearch instance, not just a single index. For index settings, see [settings](/learn/configuration/settings.md).
 
-## Configuring an instance with command-line options
+## Command-line options and flags
 
-Pass command-line options and their respective values when launching a Meilisearch instance.
+Pass command-line options and their respective values when launching a Meilisearch instance. Command-line options take precedence over environment variables.
 
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 ```
+
+**Response:**
 
 ```bash
 Server is listening on: http://127.0.0.1:7700
@@ -26,9 +28,9 @@ Some of these options are command-line flags and unlike command-line options, **
 
 The above example disables analytics for the Meilisearch instance without accepting any values.
 
-## Configuring an instance with environment variables
+## Environment variables
 
-In order to configure a Meilisearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
+To configure a Meilisearch instance using environment variables, set the environment variable prior to launching the instance. If you are unsure how to do this, read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#command-line-options-and-flags) instead.
 
 Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. Some options (e.g. `--import-snapshots`) are not available as environment variables.
 
@@ -38,22 +40,10 @@ export MEILI_HTTP_ADDR=127.0.0.1:7700
 ./meilisearch
 ```
 
+**Response:**
+
 ```bash
 Server is listening on: http://127.0.0.1:7700
-```
-
-## Usage
-
-Command-line options take precedence over environment variables. If the same configuration option is specified both as a command-line option and as an environment variable, Meilisearch will use the command-line option and its respective value.
-
-Some configuration options must specify a value. Using a command-line option or environment variable without specifying a value will throw an error and interrupt the launch process.
-
-```bash
-./meilisearch --schedule-snapshot
-```
-
-```bash
-error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value but none was supplied
 ```
 
 ## Options
