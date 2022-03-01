@@ -113,7 +113,6 @@ module.exports = {
             {
               title: 'Configure Meilisearch at launch',
               path: '/learn/configuration/instance_options',
-              sidebarDepth: 2,
             },
             {
               title: 'Index settings',
