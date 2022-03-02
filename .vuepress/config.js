@@ -372,7 +372,7 @@ module.exports = {
         prefix: ogprefix,
         property: 'og:image',
         content:
-          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png',
+          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb_vmbpxo.png',
       },
     ],
     [
@@ -381,7 +381,7 @@ module.exports = {
         prefix: ogprefix,
         property: 'og:image-secure-url',
         content:
-          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png',
+          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb_vmbpxo.png',
       },
     ],
     [
@@ -418,7 +418,7 @@ module.exports = {
       {
         property: 'twitter:image',
         content:
-          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png',
+          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb_vmbpxo.png',
       },
     ],
     [
