@@ -69,6 +69,6 @@ You can customize all API keys, including altering their expiration dates and up
 
 Hopefully these chapters have given you a basic introduction to Meilisearch and some of the things it can do. Once you get a hang of the basics, the possibilities are endless. To continue exploring Meilisearch, check out:
 
-- [Advanced topics](/learn/advanced/README.md)
-- [API references](/reference/api/README.md)
+- [Advanced topics](/learn/advanced/asynchronous_operations.md)
+- [API references](/reference/api/overview.md)
 - [Configuration](/learn/configuration/instance_options.md)
