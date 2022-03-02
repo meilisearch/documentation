@@ -4,10 +4,21 @@ html
 body
   font-family: 'Inter', sans-serif;
 
-h1, h2, h3 {
+h1 {
+  color: $accentColor;
+}
+
+h2, h3, {
   font-family: "Poppins";
   color: $titlesColor;
 }
+
+@media (prefers-color-scheme: dark) {
+  h2, h3 {
+  color: $titlesDarkColor;
+  }
+}
+
 
 h1 > a.header-anchor, h2 > a.header-anchor, h3 > a.header-anchor {
   padding-right: 0;
@@ -18,7 +29,7 @@ body a {
 }
 
 a:hover {
-  color: lighten($accentColor, 20%);
+  color: $linkHoverColor;
 }
 
 // @media (prefers-color-scheme: dark) {
@@ -55,25 +66,40 @@ body > .nav-link:hover, body > .dropdown-title:hover
 .el-tabs__item:not(.is-disabled):hover
   color: $accentColor !important;
 
+.el-tabs--border-card>.el-tabs__header {
+  border-radius: 0px 8px !important;
+  background-color: #E9E5ED !important;
+}
+.el-tabs__item.is-active {
+  border-radius: 0px 8px !important;
+}
 
-// @media (prefers-color-scheme: dark) {
-//   .el-tabs--border-card>.el-tabs__header {
-//     color: $accentDarkColor;
-//     background-color: $codeBgColor !important;
-//     border: 1px solid $bgDarkColor !important;
-//   }
 
-//   .el-tabs__item.is-active {
-//     color: $accentDarkColor !important;
-//     background-color: darken($bgDarkColor, 20%) !important;
-//     border: 1px solid darken($bgDarkColor, 20%) !important;
-//   }
+@media (prefers-color-scheme: dark) {
+  .el-tabs--border-card>.el-tabs__header {
+    color: $accentDarkColor;
+    background-color: #11071D !important;
+    border: 1px solid $bgDarkColor !important;
+  }
 
-//   .el-tabs {
-//     background-color: darken($bgDarkColor, 20%) !important;
-//     border: 1px solid darken($bgDarkColor, 20%) !important;
-//   }
-// }
+  .el-tabs__item.is-active {
+    color: $accentDarkColor !important;
+    background-color: #170E23 !important;
+    border-right: 1px solid #251D30 !important;
+    border-left: 1px solid #251D30 !important;
+  }
+
+  // wrapper arround the code in tabs
+  .el-tabs {
+    background-color: #170E23 !important;
+    border: 1px solid #251D30 !important;
+    border-radius: 8px;
+  }
+  // Content of code
+  .extra-class > pre {
+      background-color: #11071D !important;
+  }
+}
 
 .el-tabs--border-card
   background-color: $codeBgColor;
@@ -116,33 +142,75 @@ body > .nav-link:hover, body > .dropdown-title:hover
 {$contentClass} a code
   color $accentColor;
 
-// .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
-//   background-color: $accentColor !important;
-// }
-// .dsb-cursor .docs-searchbar-suggestion--content {
-//       background-color: rgba(black, 10%) !important;
-// }
-// .docs-searchbar-suggestion--highlight {
-//   background-color: rgba(0,0,0,0) !important;
-// }
-// // .docs-searchbar-suggestion--highlight {
-// //   background-color: $bgColor !important;
-// //   }
+.meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+  background-color: $titlesColor !important;
+}
+.dsb-cursor .docs-searchbar-suggestion--content {
+  background-color: rgba(black, 10%) !important;
+}
+// TODO: Pas dans le titre
+.docs-searchbar-suggestion--highlight {
+  background-color: rgba(0,0,0,0) !important;
+  color: $titlesColor !important;
+}
 
-// @media (prefers-color-scheme: dark) {
-//   .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
-//     background-color: $accentColor !important;
-//   }
-//   .docs-searchbar-suggestion--highlight {
-//     background-color: rgba(0,0,0,0) !important;
-//   }
-//   // .dsb-cursor {
-//   //   background-color: rgba(0,0,0,0) !important;
-//   // }
-//   .dsb-cursor .docs-searchbar-suggestion--content {
-//       background-color: rgba(white, 10%) !important;
-//     }
-//   .meilisearch-autocomplete .dsb-dropdown-menu [class^=dsb-dataset-]{
-//     border: 1px solid $borderDarkColor !important;
-//     }
+// .docs-searchbar-suggestion--content > .docs-searchbar-suggestion--highlight {
+//   background-color: rgba(0,0,0,0) !important;
+//   color: $textDarkColor !important;
 // }
+
+// .docs-searchbar-suggestion--highlight {
+//   background-color: $bgColor !important;
+//   }
+
+@media (prefers-color-scheme: dark) {
+  #meilisearch-search-input {
+    background-color: #11071D !important;
+  }
+
+  .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+    background-color: #11071D !important;
+  }
+  // .dsb-cursor .docs-searchbar-suggestion--content {
+  //   background-color: rgba(black, 10%) !important;
+  // }
+  // TODO: Pas dans le titre
+  .docs-searchbar-suggestion--highlight {
+    background-color: rgba(0,0,0,0) !important;
+    color: $titlesColor !important;
+  }
+  .meilisearch-search-wrapper div[data-ds-theme="dark"]
+  .meilisearch-autocomplete .dsb-dropdown-menu [class^=dsb-dataset-],
+  .meilisearch-search-wrapper div[data-ds-theme="dark"]
+  .meilisearch-autocomplete .docs-searchbar-suggestion {
+  background-color: $bgDarkColor !important;
+  }
+
+  // TODO: FIX CA
+  .dsb-dataset-1, .dsb-dropdown-menu{
+    background-color: $bgDarkColor !important;
+  }
+  // .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+  //   background-color: $accentColor !important;
+  // }
+  // .docs-searchbar-suggestion--highlight {
+  //   background-color: rgba(0,0,0,0) !important;
+  // }
+  // .dsb-cursor {
+
+  // }
+  // .dsb-cursor .docs-searchbar-suggestion--content {
+  //     background-color: rgba(white, 10%) !important;
+  //   }
+  // .meilisearch-autocomplete .dsb-dropdown-menu [class^=dsb-dataset-]{
+  //   border: 1px solid $borderDarkColor !important;
+  //   }
+}
+
+// TODO docs-searchbar #textColor
+// TODO couleur du code casse
+// TODO clipboard rose titre
+// todo fix le border radius des code samples
+
+
+// background dark de docs-searchbar meme que background des codes
