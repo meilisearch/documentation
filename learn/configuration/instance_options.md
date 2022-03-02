@@ -1,36 +1,36 @@
-# Instance options
+---
+sidebarDepth: 2
+---
 
-You can configure Meilisearch with **environment variables** and **command-line options**.
+# Configure Meilisearch at launch
 
-The configuration options described here affect your entire Meilisearch instance, not just a single index. For index settings, see [settings](/learn/configuration/settings.md).
+You can configure Meilisearch at launch with **environment variables** and **command-line options**.
 
-## Configuring an instance with command-line options
+These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/learn/configuration/settings.md).
 
-Pass command-line options and their respective values when launching a Meilisearch instance.
+## Command-line options and flags
+
+Pass **command-line options** and their respective values when launching a Meilisearch instance.
 
 ```bash
 ./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
 ```
 
-```bash
-Server is listening on: http://127.0.0.1:7700
-```
+In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `--db-path` and `--http-addr` are options that modify this instance's behavior.
 
-In the previous example, `./meilisearch` is the command that launches a Meilisearch instance and `--http-addr` is the option that sets the URL and port this instance will use. **All command-line options are prepended with `--`.**
-
-Some of these options are command-line flags and unlike command-line options, **they don't take any values**. If you use the flag, it counts as `true` and if you don't, it counts as `false`.
+Meilisearch also has a number of **command-line flags.** Unlike command-line options, **command-line flags don't take values**. If a flag is given, it is activated and changes Meilisearch's default behavior.
 
 ```bash
 ./meilisearch --no-analytics
 ```
 
-The above example disables analytics for the Meilisearch instance without accepting any values.
+The above command-line flag disables analytics for the Meilisearch instance without accepting any value.
 
-## Configuring an instance with environment variables
+**Both command-line options and command-line flags take precedence over environment variables.** All command-line options and flags are prepended with `--`.
 
-In order to configure a Meilisearch instance using environment variables, you have to set the environment variable prior to launching the instance. If it's your first time doing this you may want to read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#configuring-an-instance-with-command-line-options) instead.
+## Environment variables
 
-Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. Some options (e.g. `--import-snapshots`) are not available as environment variables.
+To configure a Meilisearch instance using environment variables, set the environment variable prior to launching the instance. If you are unsure how to do this, read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#command-line-options-and-flags) instead.
 
 ```bash
 export MEILI_DB_PATH=./meilifiles
@@ -38,58 +38,11 @@ export MEILI_HTTP_ADDR=127.0.0.1:7700
 ./meilisearch
 ```
 
-```bash
-Server is listening on: http://127.0.0.1:7700
-```
+In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `MEILI_DB_PATH` and `MEILI_HTTP_ADDR` are environment variables that modify this instance's behavior.
 
-## Usage
+Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. **Some options (e.g. `--import-snapshots`) are not available as environment variables.**
 
-Command-line options take precedence over environment variables. If the same configuration option is specified both as a command-line option and as an environment variable, Meilisearch will use the command-line option and its respective value.
-
-Some configuration options must specify a value. Using a command-line option or environment variable without specifying a value will throw an error and interrupt the launch process.
-
-```bash
-./meilisearch --schedule-snapshot
-```
-
-```bash
-error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value but none was supplied
-```
-
-## Options
-
-### General
-
-- [Database path](/learn/configuration/instance_options.md#database-path)
-- [Environment](/learn/configuration/instance_options.md#environment)
-- [HTTP address & port binding](/learn/configuration/instance_options.md#http-address-port-binding)
-- [Master key](/learn/configuration/instance_options.md#master-key)
-
-### Advanced
-
-- [Disable analytics](/learn/configuration/instance_options.md#disable-analytics)
-- [Dumps](/learn/configuration/instance_options.md#dumps-destination)
-  - [Dumps destination](/learn/configuration/instance_options.md#dumps-destination)
-  - [Import dump](/learn/configuration/instance_options.md#import-dump)
-- [Log level](/learn/configuration/instance_options.md#log-level)
-- [Max index size](/learn/configuration/instance_options.md#max-index-size)
-- [Max TASK_DB size](/learn/configuration/instance_options.md#max-task-db-size)
-- [Payload limit size](/learn/configuration/instance_options.md#payload-limit-size)
-- [Snapshots](/learn/configuration/instance_options.md#schedule-snapshot-creation):
-  - [Schedule snapshot creation](/learn/configuration/instance_options.md#schedule-snapshot-creation)
-  - [Snapshot destination](/learn/configuration/instance_options.md#snapshot-destination)
-  - [Snapshot interval](/learn/configuration/instance_options.md#snapshot-interval)
-  - [Import snapshot](/learn/configuration/instance_options.md#import-snapshot)
-  - [Ignore missing snapshot](/learn/configuration/instance_options.md#ignore-missing-snapshot)
-  - [Ignore snapshot if DB exists](/learn/configuration/instance_options.md#ignore-snapshot-if-db-exists)
-- [SSL configuration](/learn/configuration/instance_options.md#ssl-authentication-path):
-  - [SSL authentication path](/learn/configuration/instance_options.md#ssl-authentication-path)
-  - [SSL certificates path](/learn/configuration/instance_options.md#ssl-certificates-path)
-  - [SSL key path](/learn/configuration/instance_options.md#ssl-key-path)
-  - [SSL OCSP path](/learn/configuration/instance_options.md#ssl-ocsp-path)
-  - [SSL require auth](/learn/configuration/instance_options.md#ssl-require-auth)
-  - [SSL resumption](/learn/configuration/instance_options.md#ssl-resumption)
-  - [SSL tickets](/learn/configuration/instance_options.md#ssl-tickets)
+## All instance options
 
 ### Database path
 
@@ -329,7 +282,9 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 *This option is not available as an environment variable.*
 
-### SSL authentication path
+### SSL options
+
+#### SSL authentication path
 
 **Environment variable**: `MEILI_SSL_AUTH_PATH`
 **CLI option**: `--ssl-auth-path`
@@ -338,7 +293,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 Enables client authentication in the specified path.
 
-### SSL certificates path
+#### SSL certificates path
 
 **Environment variable**: `MEILI_SSL_CERT_PATH`
 **CLI option**: `--ssl-cert-path`
@@ -349,7 +304,7 @@ Sets the server's SSL certificates.
 
 Value must be a path to PEM-formatted certificates. The first certificate should certify the KEYFILE supplied by `--ssl-key-path`. The last certificate should be a root CA.
 
-### SSL key path
+#### SSL key path
 
 **Environment variable**: `MEILI_SSL_KEY_PATH`
 **CLI option**: `--ssl-key-path`
@@ -360,7 +315,7 @@ Sets the server's SSL keyfiles.
 
 Value must be a path to an RSA private key or PKCS8-encoded private key, both in PEM format.
 
-### SSL OCSP path
+#### SSL OCSP path
 
 **Environment variable**: `MEILI_SSL_OCSP_PATH`
 **CLI option**: `--ssl-ocsp-path`
@@ -371,7 +326,7 @@ Sets the server's OCSP file. *Optional*
 
 Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 
-### SSL require auth
+#### SSL require auth
 
 ::: warning
 This is a CLI flag and does not take any values. Assigning a value will throw an error.
@@ -387,7 +342,7 @@ Sends a fatal alert if the client does not complete client authentication.
 
 The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`, everything else is considered `true`.
 
-### SSL resumption
+#### SSL resumption
 
 ::: warning
 This is a CLI flag and does not take any values. Assigning a value will throw an error.
@@ -401,7 +356,7 @@ Activates SSL session resumption.
 
 The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`, everything else is considered `true`.
 
-### SSL tickets
+#### SSL tickets
 
 ::: warning
 This is a CLI flag and does not take any values. Assigning a value will throw an error.
