@@ -62,9 +62,9 @@ error: The argument '--schedule-snapshot <schedule-snapshot>' requires a value b
 - [Disable analytics](/learn/configuration/instance_options.md#disable-analytics)
 - [Dumps](/learn/configuration/instance_options.md#dumps-destination)
   - [Dumps destination](/learn/configuration/instance_options.md#dumps-destination)
-  - [Import dump](/learn/configuration/instance_options.md#import-dump) 🚩
-  - [Ignore missing dump](/learn/configuration/instance_options.md#ignore-missing-dump)  🚩
-  - [Ignore dump if DB exists](/learn/configuration/instance_options.md#ignore-dump-if-db-exists)  🚩
+  - [Import dump](/learn/configuration/instance_options.md#import-dump)
+  - [Ignore missing dump](/learn/configuration/instance_options.md#ignore-missing-dump)
+  - [Ignore dump if DB exists](/learn/configuration/instance_options.md#ignore-dump-if-db-exists)
 - [Log level](/learn/configuration/instance_options.md#log-level)
 - [Max index size](/learn/configuration/instance_options.md#max-index-size)
 - [Max TASK_DB size](/learn/configuration/instance_options.md#max-task-db-size)
@@ -179,7 +179,7 @@ Imports the dump file located at the specified path. Path must point to a `.dump
 
 Meilisearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file.
 
-If the flag is specified when a database exists, an error occurs in the CLI.
+If the option is specified when a database exists, an error occurs in the CLI.
 
 _This option is not available as an environment variable._
 
