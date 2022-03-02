@@ -2,6 +2,13 @@
 
 In this page you may find an exhaustive list of Meilisearch API errors.
 
+## The basics
+
+- Why do you get an error?
+- Types of errors
+
+## Error format
+
 ## Error list
 
 ### `index_creation_failed`
