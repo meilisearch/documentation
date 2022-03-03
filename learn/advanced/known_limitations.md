@@ -79,7 +79,7 @@ If your query is `Hello - World`:
 
 Either of these filter expressions would cause a search query to fail:
 
-```json
+```sql
 user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR user = 2001
 ```
 
