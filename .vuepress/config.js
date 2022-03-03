@@ -255,9 +255,13 @@ module.exports = {
       '/reference/': [
         {
           title: '📒 API reference',
-          path: '/reference/api/indexes/',
+          path: '/reference/api/overview/',
           collapsable: false,
           children: [
+            {
+              title: 'Overview',
+              path: '/reference/api/overview',
+            },
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
