@@ -279,7 +279,18 @@ module.exports = {
             '/reference/api/health',
             '/reference/api/version',
             '/reference/api/dump',
-            '/reference/api/error_codes',
+          ],
+        },
+        {
+          title: 'Errors',
+          path: '/reference/errors/',
+          collapsable: false,
+          children: [
+            {
+              title: 'Overview',
+              path: '/reference/errors/overview',
+            },
+            '/reference/errors/error_codes',
           ],
         },
       ],
