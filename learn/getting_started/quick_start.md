@@ -45,7 +45,7 @@ meilisearch
 :::
 
 ::: tab Docker
-When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/Meilisearch/tags).
+When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 These commands launch the **latest stable release** of Meilisearch.
 
