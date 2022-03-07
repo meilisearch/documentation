@@ -1,24 +1,4 @@
-
 # Quick start
-
-
-> Hello dolly
-it is me dolly
-
-::: warning
-If you restart Meilisearch after creating a dump, you will not be able to use the dumps endpoint to find out that dump's `status`. This has no effect on the dump file itself.
-:::
-
-::: note
-We do not recommend using dumps from a new Meilisearch version to import an older version.
-
-For example, you can import a dump from Meilisearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
-:::
-
-
-::: tip
-Sorting at search time can be particularly effective when combined with [placeholder searches](/learn/what_is_meilisearch/features.md#placeholder-search).
-:::
 
 This quick tour will help you get started with Meilisearch in just a few steps.
 
