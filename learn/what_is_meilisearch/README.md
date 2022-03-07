@@ -50,4 +50,4 @@ Instead of showing you examples, why not just invite you to test MeiliSearch int
 
 There's no need to write a single line of front-end code. All you need to do is follow [this guide](/reference/features/web_interface.md) to give the search engine a try!
 
-![MeiliSearch web interface](/web-interface.png)
+![Meilisearch web interface](/web-interface.png)

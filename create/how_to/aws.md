@@ -103,7 +103,7 @@ Your instance may take a minute or two to get up and running (see the **Instance
 
 Once the **Instance state** is **Running**, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS** displayed in your AWS instances dashboard. You should see the MeiliSearch [web interface](/reference/features/web_interface.md).
 
-![MeiliSearch web interface allowing users to search an example dataset](/aws/10.enjoy.png)
+![Meilisearch web interface allowing users to search an example dataset](/aws/10.enjoy.png)
 
 Your MeiliSearch instance is now ready to use!
 
@@ -121,7 +121,7 @@ Configuring your MeiliSearch instance in a production environment is not just st
 
 If you want to use your own domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, **you can skip this step**.
 
-![An interface for editing DNS records. The A record is set to my-aws-instance](/aws/11.domain.png)
+![An interface for editing DNS records with "Type": A, "Name": my-aws-instance, "IPv4 address": 35.180.61.104, and "TTL": Auto](/aws/11.domain.png)
 
 Your domain name should now be linked to your MeiliSearch instance. Run a health check to verify that your instance is running and your DNS is well configured:
 
