@@ -2,8 +2,8 @@
 # Quick start
 
 
-> Hello darling
-it is me darling
+> Hello dolly
+it is me dolly
 
 ::: warning
 If you restart Meilisearch after creating a dump, you will not be able to use the dumps endpoint to find out that dump's `status`. This has no effect on the dump file itself.

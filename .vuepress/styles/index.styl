@@ -4,42 +4,49 @@ html
 body
   font-family: 'Inter', sans-serif;
 
+// # text color in light
 h1 {
   color: $accentColor;
 }
 
+// ## and ### text color in light
 h2, h3, {
   font-family: "Poppins";
   color: $titlesColor;
 }
 
+// ## and ### text color in dark
 @media (prefers-color-scheme: dark) {
   h2, h3 {
   color: $titlesDarkColor;
   }
 }
 
+// Text color in code samples
+.theme-default-content pre code, .theme-default-content pre[class*='language-'] code,
+.theme-default-content code .token.punctuation {
+   color: $preTextColor !important;
+}
 
+// Remove unwanted padding from headers
 h1 > a.header-anchor, h2 > a.header-anchor, h3 > a.header-anchor {
   padding-right: 0;
 }
 
+// Remove underlines of links
 body a {
   text-decoration: none !important;
 }
 
+// Change hover color of links
 a:hover {
   color: $linkHoverColor;
 }
 
-// @media (prefers-color-scheme: dark) {
-//   a:hover {
-//     color: lighten($accentDarkColor, 30%);
-//   }
-// }
-
+// Dropdown from navbar
 body > .nav-link:hover, body > .dropdown-title:hover
   color: $accentColor;
+
 
 
 /*
@@ -108,11 +115,18 @@ body > .nav-link:hover, body > .dropdown-title:hover
 .el-tabs__item:not(.is-disabled):hover
   color: $accentColor !important;
 
+// Shadow border when going from tab to tab using the arrows of the keyboard
+.el-tabs__item:focus.is-active.is-focus:not(:active) {
+  box-shadow: 0 0 2px 2px $accentDarkColor inset !important;
+}
+
 /*
 *
 * END TABS
 */
 
+
+// Tips/Warning/Error blocks
 .custom-block
   .custom-block-title
     font-weight 600;
@@ -125,6 +139,8 @@ body > .nav-link:hover, body > .dropdown-title:hover
   &.note
     background-color rgba(79, 85, 227, 0.1);
     border-color #4f55e3;
+
+// Clipboard logo
 .code-copy
     position: sticky;
     left: 0px;
@@ -133,14 +149,15 @@ body > .nav-link:hover, body > .dropdown-title:hover
       bottom: -6px !important;
     }
 
-// @media (prefers-color-scheme: dark) {
-//   .custom-block.note {
-//     background-color rgba(79, 85, 227, 0.1);
-//   }
-// }
+
 
 {$contentClass} a code
   color $accentColor;
+
+/*
+**
+** Docs searchbar styling (search experience)
+*/
 
 .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
   background-color: $titlesColor !important;
@@ -154,14 +171,6 @@ body > .nav-link:hover, body > .dropdown-title:hover
   color: $titlesColor !important;
 }
 
-// .docs-searchbar-suggestion--content > .docs-searchbar-suggestion--highlight {
-//   background-color: rgba(0,0,0,0) !important;
-//   color: $textDarkColor !important;
-// }
-
-// .docs-searchbar-suggestion--highlight {
-//   background-color: $bgColor !important;
-//   }
 
 @media (prefers-color-scheme: dark) {
   #meilisearch-search-input {
@@ -171,46 +180,21 @@ body > .nav-link:hover, body > .dropdown-title:hover
   .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
     background-color: #11071D !important;
   }
-  // .dsb-cursor .docs-searchbar-suggestion--content {
-  //   background-color: rgba(black, 10%) !important;
-  // }
-  // TODO: Pas dans le titre
+
   .docs-searchbar-suggestion--highlight {
     background-color: rgba(0,0,0,0) !important;
-    color: $titlesColor !important;
+    color: $accentColor !important;
   }
   .meilisearch-search-wrapper div[data-ds-theme="dark"]
   .meilisearch-autocomplete .dsb-dropdown-menu [class^=dsb-dataset-],
   .meilisearch-search-wrapper div[data-ds-theme="dark"]
   .meilisearch-autocomplete .docs-searchbar-suggestion {
-  background-color: $bgDarkColor !important;
-  }
-
-  // TODO: FIX CA
-  .dsb-dataset-1, .dsb-dropdown-menu{
     background-color: $bgDarkColor !important;
   }
-  // .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
-  //   background-color: $accentColor !important;
-  // }
-  // .docs-searchbar-suggestion--highlight {
-  //   background-color: rgba(0,0,0,0) !important;
-  // }
-  // .dsb-cursor {
 
-  // }
-  // .dsb-cursor .docs-searchbar-suggestion--content {
-  //     background-color: rgba(white, 10%) !important;
-  //   }
-  // .meilisearch-autocomplete .dsb-dropdown-menu [class^=dsb-dataset-]{
-  //   border: 1px solid $borderDarkColor !important;
-  //   }
+  .dsb-dataset-1, .dsb-dropdown-menu{
+    background-color: $bgDarkColor !important;
+    border: 1px solid $bgDarkColor;
+  }
 }
 
-// TODO docs-searchbar #textColor
-// TODO couleur du code casse
-// TODO clipboard rose titre
-// todo fix le border radius des code samples
-
-
-// background dark de docs-searchbar meme que background des codes
