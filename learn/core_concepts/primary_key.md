@@ -2,9 +2,9 @@
 
 The primary key is a **mandatory attribute linked to a unique value** the [document id](/learn/core_concepts/documents.md#document-id). It is part of the [primary field](/learn/core_concepts/documents.md#primary-field).
 
-Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in a document, **no documents will be stored.**
+Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.**The primary key ensures that there are no identical documents in the same index.
 
-The primary key ensures that there are no identical documents in the same index.
+Meilisearch expects the primary to only be of type `integer` or `string`, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 
 ## Setting the primary key
 
@@ -12,18 +12,17 @@ There are several ways to set the primary key for an index:
 
 ### Setting the primary key on index creation
 
-The code below creates an index called `movies` with `reference_number` as primary key:
+The code below creates an index called `books` with `reference_number` as primary key:
 
 <CodeSamples id="document_guide_create_index_primary_key" />
 
 ```json
 {
     "uid":1,
-    "indexUid":"movies",
+    "indexUid":"books",
     "status":"succeeded",
     "type":"indexCreation",
-    "details":
-    {
+    "details":{
         "primaryKey":"reference_number"
         },
     "duration":"PT0.006751S",
@@ -42,11 +41,10 @@ The code below adds a document and sets `reference_number` as the index's primar
 ```json
 {
     "uid":1,
-    "indexUid":"movies",
+    "indexUid":"books",
     "status":"succeeded",
     "type":"documentAddition",
-    "details":
-    {
+    "details":{
         "receivedDocuments":1,
         "indexedDocuments":1
         },
@@ -59,7 +57,7 @@ The code below adds a document and sets `reference_number` as the index's primar
 
 ### Meilisearch guesses your primary key
 
-If the primary key has neither been set at index creation nor as a parameter of the [add documents]((/reference/api/documents.md#add-or-replace-documents)) route, Meilisearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
+If the primary key has neither been set at index creation nor as a parameter of the [add documents](/reference/api/documents.md#add-or-replace-documents) route, Meilisearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `BookId`, `ID`, `123id123`) and set it as that index's primary key.
 
 If no corresponding attribute is found, the index will have no known primary key, and therefore, **no documents will be added**.
 
@@ -77,13 +75,11 @@ This happens when you add documents for the first time and none of them have a p
     "indexUid":"books",
     "status":"failed",
     "type":"documentAddition",
-    "details":
-    {
+    "details":{
         "receivedDocuments":5,
         "indexedDocuments":null
         },
-    "error":
-    {
+    "error":{
         "message":"The primary key inference process failed because the engine did not find any fields containing `id` substring in their name. If your document identifier does not contain any `id` substring, you can set the primary key of the index.",
         "code":"primary_key_inference_failed",
         "type":"invalid_request",
@@ -98,7 +94,7 @@ This happens when you add documents for the first time and none of them have a p
 
 ### `missing_document_id`
 
-This happens when your index already has a primary key but one of the documents you are currently trying to add is missing this attribute.
+This happens when your index already has a primary key, but one of the documents you are currently trying to add is missing this attribute.
 
 ```json
 {
@@ -106,14 +102,12 @@ This happens when your index already has a primary key but one of the documents 
     "indexUid":"books",
     "status":"failed",
     "type":"documentAddition",
-    "details":
-    {
+    "details":{
         "receivedDocuments":1,
         "indexedDocuments":null
         },
-    "error":
-    {
-        "message":"Document doesn't have a `id` attribute: `{\"title\":\"Solaris\",\"author\":\"Stanislaw Lem\",\"genres\":[\"science fiction\"],\"price\":5.0,\"priority\":10}`.",
+    "error":{
+        "message":"Document doesn't have a `id` attribute: `{\"title\":\"Solaris\",\"author\":\"Stanislaw Lem\",\"genres\":[\"science fiction\"],\"price\":5.0.",
         "code":"missing_document_id",
         "type":"invalid_request",
         "link":"https://docs.meilisearch.com/errors#missing_document_id"
@@ -135,8 +129,7 @@ This happens when your primary key does not have the correct format. The primary
     "indexUid":"books",
     "status":"failed",
     "type":"documentAddition",
-    "details":
-    {
+    "details":{
         "receivedDocuments":5,
         "indexedDocuments":null
         },
@@ -151,5 +144,3 @@ This happens when your primary key does not have the correct format. The primary
     "finishedAt":"2021-12-30T11:28:59.084803Z"
 }
 ```
-
-Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).
