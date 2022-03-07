@@ -1,7 +1,7 @@
 module.exports = {
   plugins: [
     [
-      '@vuepress/last-updated',
+      '@vuepress/last-updated', false,
       {
         transformer: (timestamp, lang) => {
           // Don't forget to install moment yourself
