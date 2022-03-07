@@ -323,7 +323,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#FF4E62',
+        color: '#FF5CAA',
         staticIcon: true,
       },
     ],
