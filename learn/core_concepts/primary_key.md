@@ -57,22 +57,24 @@ The code below adds a document and sets `reference_number` as the index's primar
 }
 ```
 
-### MeiliSearch guesses your primary key
+### Meilisearch guesses your primary key
 
-If the primary key has neither been set at index creation nor as a parameter of the add documents route, MeiliSearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
+If the primary key has neither been set at index creation nor as a parameter of the [add documents]((/reference/api/documents.md#add-or-replace-documents)) route, Meilisearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `MovieId`, `ID`, `123id123`) and set it as that index's primary key.
 
 If no corresponding attribute is found, the index will have no known primary key, and therefore, **no documents will be added**.
 
 ## Primary key errors
 
-### Primary key inference failed
+This section will cover some primary key errors and how to resolve them.
+
+### `primary_key_inference_failed`
 
 This happens when you add documents for the first time and none of them have a primary key attribute.
 
 ```json
 {
     "uid":1,
-    "indexUid":"books3",
+    "indexUid":"books",
     "status":"failed",
     "type":"documentAddition",
     "details":
@@ -94,14 +96,14 @@ This happens when you add documents for the first time and none of them have a p
 }
 ```
 
-### Document id is missing
+### `missing_document_id`
 
 This happens when your index already has a primary key but one of the documents you are currently trying to add is missing this attribute.
 
 ```json
 {
     "uid":1,
-    "indexUid":"books3",
+    "indexUid":"books",
     "status":"failed",
     "type":"documentAddition",
     "details":
@@ -123,14 +125,14 @@ This happens when your index already has a primary key but one of the documents 
 }
 ```
 
-### Document identifier is invalid
+### `invalid_document_id`
 
 This happens when your primary key does not have the correct format. The primary key can only be of type `integer` or `string`, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 
 ```json
 {
     "uid":1,
-    "indexUid":"books4",
+    "indexUid":"books",
     "status":"failed",
     "type":"documentAddition",
     "details":
@@ -149,9 +151,5 @@ This happens when your primary key does not have the correct format. The primary
     "finishedAt":"2021-12-30T11:28:59.084803Z"
 }
 ```
-
-::: warning
-If you get the [`missing_primary_key` error](https://docs.meilisearch.com/errors/#missing_primary_key), the primary key was not recognized. This means **your primary key is wrongly formatted or absent**.
-:::
 
 Manually adding the primary key can be accomplished by using its name as a parameter for [the add document route](/reference/api/documents.md#add-or-replace-documents) or [the update index route](/reference/api/indexes.md#create-an-index).
