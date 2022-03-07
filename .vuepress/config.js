@@ -282,7 +282,7 @@ module.exports = {
           ],
         },
         {
-          title: 'Errors',
+          title: ' ⚠️ Errors',
           path: '/reference/errors/',
           collapsable: false,
           children: [

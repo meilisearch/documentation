@@ -6,6 +6,8 @@ sidebarDepth: 2
 
 # Error list
 
+- How are we listing these errors?
+
 In this page you may find an exhaustive list of Meilisearch API errors.
 
 ## `index_creation_failed`

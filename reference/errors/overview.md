@@ -21,6 +21,8 @@ We use the following HTTP status code in the response depending on the success o
 | 403 | ❌ **Forbidden** The API key doesn't have the permissions to perform the request       |
 | 404 | ❌ **Not Found** The requested resource doesn't exist                               |
 
+## Error types
+
 Meilisearch has the following types of errors:
 
 | Type            | Description                                                                                       |
@@ -30,6 +32,7 @@ Meilisearch has the following types of errors:
 | `auth`            | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx`. |
 
 1. Do we have any suggestions on  how we would like the users to handle these errors?
+2. It it a good idea to group errors based on situations?
 
 ## Error format
 
@@ -47,6 +50,6 @@ All errors contain a JSON body that explains the error:
 An error contains the following fields:
 
 - `message` : A human-readable description of the error
-- `code` : An [error code](#error-list) describing the error
-- `type` : The [error type](lala)
+- `code` : An [error code](/reference/errors/error_codes.md)
+- `type` : The [error type](#error-type)
 - `link` : A link to the the relevant section of the documentation
