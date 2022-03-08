@@ -8,9 +8,9 @@ You have been warned.
 
 :::
 
-Auto-batching is an experimental feature designed to improve indexation speed and performance.
+Auto-batching is an experimental feature designed to improve indexation speed.
 
-If auto-batching is enabled, multiple document addition requests may be automatically combined into a batch and processed together, resulting in faster indexing.
+When auto-batching is enabled, consecutive document addition requests may be automatically combined into a batch and processed together, resulting in faster indexing.
 
 We would like your feedback on this feature! [Join the discussion](https://github.com/meilisearch/meilisearch/discussions/2070).
 
