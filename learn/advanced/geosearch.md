@@ -121,7 +121,7 @@ Note that Meilisearch will rebuild your index whenever you update `filterableAtt
 
 ### Usage
 
-Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `filterableAttributes` list, you can use [`filter`](/reference/api/search.md#filter) and `_geoRadius` to ensure Meilisearch only returns results located within a specific geographic area.
+Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `filterableAttributes` list, you can use the [`filter` search parameter](/reference/api/search.md#filter) along with `_geoRadius`, a special filter rule, to ensure Meilisearch only returns results located within a specific geographic area.
 
 `_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
@@ -129,15 +129,7 @@ Once you made sure all your documents contain valid geolocation data and added t
 _geoRadius(lat, lng, distance_in_meters)
 ```
 
-`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
-
-`_geoRadius` must always be used with the [`filter` search parameter](/reference/api/search.md#filter). The following filter expression would only include results within 1km of the Eiffel Tower:
-
-```json
-{ "filter": "_geoRadius(45.472735, 9.184019, 1000)" }
-```
-
-If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, Meilisearch will return an [`invalid_filter`](/reference/api/error_codes.md#invalid-filter) error.
+`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter. If any of these three parameters are invalid or missing, Meilisearch will return an [`invalid_filter`](/reference/api/error_codes.md#invalid-filter) error.
 
 [You can read more about using `filter` in our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md#using-filters)
 
@@ -147,11 +139,11 @@ If any of `lat`, `lng`, or `distance_in_meters` are invalid or missing, Meilisea
 
 ### Examples
 
-`_geoRadius` works like any other filter rule. We can search for places to eat near the centre of Milan:
+`_geoRadius` works like any other filter rule. Using our <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json">example dataset</a>, we can search for places to eat near the centre of Milan:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-Using our example dataset, returned results look like this:
+The results should look like this:
 
 ```json
 [
@@ -183,6 +175,8 @@ Using our example dataset, returned results look like this:
 It is also possible to use `_geoRadius` together with other filters. We can narrow down our previous search so it only includes pizzerias:
 
 <CodeSamples id="geosearch_guide_filter_usage_2" />
+
+The above command will only work if you have previously added `type` to `filterableAttributes`.
 
 ```json
 [
@@ -216,25 +210,13 @@ Note that Meilisearch will rebuild your index whenever you update `sortableAttri
 
 ### Usage
 
-Once you made sure all your documents contain valid geolocation data and added the `_geo` attribute to the `sortableAttributes` list, you can use `_geoPoint` and [`sort`](/reference/api/search.md#sort) to order results based on their distance from a geographic location.
-
-`_geoPoint` is a sorting function that requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`):
+Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `sortableAttributes` list, you can use the [`sort` search parameter](/reference/api/search.md#sort) along with `_geoPoint`, a special sorting function, to order results based on their distance from a geographic location.
 
 ```
 _geoPoint(0.0, 0.0):asc
 ```
 
-Ascending sort will prioritize results closer to the specified location. Conversely, descending sort will bring items more distant from the specified location to the top of the results.
-
-The following sorting rule orders results according to how close they are to the Eiffel Tower:
-
-```json
-{
-  "sort": [
-    "_geoPoint(45.472735, 9.184019):asc"
-  ]
-}
-```
+`_geoPoint` requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`). Ascending sort will prioritize results closer to the specified location, while descending sort will put the most distant results first.
 
 If either `lat` or `lng` is invalid or missing, Meilisearch will return an [`invalid_sort`](/reference/api/error_codes.md#invalid-sort) error. An error will also be thrown if you fail to indicate a sorting order.
 
@@ -250,7 +232,7 @@ The `_geoPoint` sorting function can be used like any other sorting rule. We can
 
 <CodeSamples id="geosearch_guide_sort_usage_1" />
 
-With our example dataset, the results look like this:
+With our <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json">restaurants dataset</a>, the results look like this:
 
 ```json
 [
@@ -266,17 +248,6 @@ With our example dataset, the results look like this:
     }
   },
   {
-    "id": 1,
-    "name": "Nàpiz' Milano",
-    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
-    "type": "pizza",
-    "rating": 9,
-    "_geo": {
-      "lat": 45.4777599, 
-      "lng": 9.1967508
-    }
-  },
-  {
     "id": 3,
     "name": "Artico Gelateria Tradizionale",
     "address": "Via Dogana, 1, 20123 Milan, Italy",
@@ -286,13 +257,26 @@ With our example dataset, the results look like this:
       "lat": 45.4632046,
       "lng": 9.1719421
     }
+  },
+  {
+    "id": 1,
+    "name": "Nàpiz' Milano",
+    "address": "Viale Vittorio Veneto, 30, 20124, Milan, Italy",
+    "type": "pizza",
+    "rating": 9,
+    "_geo": {
+      "lat": 45.4777599, 
+      "lng": 9.1967508
+    }
   }
 ]
 ```
 
-`_geoPoint` also works when used together with other sorting rules. We can sort restaurants based on proximity to the Eiffel Tower and good ratings:
+`_geoPoint` also works when used together with other sorting rules. We can sort restaurants based on their proximity to the Eiffel Tower and their rating:
 
 <CodeSamples id="geosearch_guide_sort_usage_2" />
+
+The above command will only work if you have previously added `rating` to `sortableAttributes`.
 
 ```json
 [
@@ -334,13 +318,11 @@ With our example dataset, the results look like this:
 
 ### Ranking rules
 
-By default, Meilisearch emphasizes relevant sorting over exhaustive sorting. This means our engine first finds the most relevant results and only then orders matches based on values given to the `sort` search parameter.
+By default, Meilisearch emphasizes relevant sorting over exhaustive sorting. This means our engine first finds the most relevant results and only then orders matches based on values given to the `sort` search parameter. As a result, sorting with `_geoPoint` will rarely be the most important factor in deciding which results users see first. More often, it will be a tie-breaker between results that are considered equally relevant to the given search query.
 
-This means that sorting with `_geoPoint` will often be a tie-breaker and not the most important factor when deciding which results a user will see first.
+Since `_geoPoint` is part of the `sort` search parameter, its weight when ranking results is controlled by the position of the `"sort"` rule in the `rankingRules` array.
 
-Since `_geoPoint` is used with the `sort` search parameter, its weight when ranking results is controlled by the position of `"sort"` ranking rule.
-
-[You can read more about the `"sort"` ranking rule and how to customize it on our dedicated sorting guide.](/learn/advanced/sorting.md#sorting-and-custom-ranking-rules)
+[You can read more about the `"sort"` ranking rule and how to customize it in our dedicated sorting guide.](/learn/advanced/sorting.md#sorting-and-custom-ranking-rules)
 
 ## Finding the distance between a document and a `_geoPoint`
 
