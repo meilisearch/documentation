@@ -759,9 +759,4 @@ document_guide_add_document_primary_key: |-
 tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
-    -H 'Authorization: Bearer [yourTenantToken]'
-tenant_token_guide_generate_sdk_1: |-
-tenant_token_guide_search_sdk_1: |-
-tenant_token_guide_fragment_rules_1: |-
-tenant_token_guide_fragment_key_1: |-
-tenant_token_guide_fragment_expiry_1: |-
+    -H 'Authorization: Bearer yourTenantToken'
