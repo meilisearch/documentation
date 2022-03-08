@@ -6,10 +6,10 @@ We would like your feedback on this feature! [Join the discussion](https://githu
 
 ## Enable auto-batching
 
-To enable auto-batching, start Meilisearch while supplying the `--enable-autobatching` CLI flag:
+To enable auto-batching, start Meilisearch while supplying the `--enable-auto-batching` CLI flag:
 
 ```
-./meilisearch --enable-autobatching
+./meilisearch --enable-auto-batching
 ```
 
 For document addition requests to be added to the same batch, they need to:
