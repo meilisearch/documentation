@@ -23,6 +23,24 @@ In this page you may find an exhaustive list of Meilisearch API errors.
 
 An index with this UID already exists, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
+```json
+"error":{
+    "message":"Index `movies` already exists.",
+    "code":"index_already_exists",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#index_already_exists"
+    }
+```
+
+### Cause / Common causes
+
+You cannot have two indexes with the same name
+
+### Solution / Troubleshooting steps
+
+1. rename this index
+2. rename the existing index to something else
+
 ## `index_not_found`
 
 An index with this UID was not found, check out our guide on [index creation](/learn/core_concepts/indexes.md).
