@@ -1,6 +1,16 @@
 # Auto-batching
 
-If enabled, multiple document addition requests will be automatically combined into a batch and processed together to speed up indexation.
+::: warning
+
+🚨 This is an experimental feature 🚨
+Using it may result in unexpected crashes, bugs, or holes in the space-time continuum.
+You have been warned.
+
+:::
+
+Auto-batching is an experimental feature designed to improve indexation speed and performance.
+
+If auto-batching is enabled, multiple document addition requests may be automatically combined into a batch and processed together, resulting in faster indexing.
 
 We would like your feedback on this feature! [Join the discussion](https://github.com/meilisearch/meilisearch/discussions/2070).
 
@@ -17,6 +27,8 @@ For document addition requests to be added to the same batch, they need to:
 - Target the same index
 - Have the same update method (e.g. [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents)
 - Be immediately consecutive
+
+By default, **auto-batching will not delay processing a request in order to batch multiple requests together.** If it can process the request individually, it will; it is only document addition requests received during indexing that are batched together. [This behavior can be altered using a command-line option](#customization-options).
 
 After enabling autobatching, the field `batchUid` will appear in all [Task API](/reference/api/tasks.md) responses.
 

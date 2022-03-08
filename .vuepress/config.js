@@ -239,15 +239,15 @@ module.exports = {
         {
           title: '🧪 Experimental',
           collapsable: false,
-          path: '/learn/experimental/',
+          path: '/learn/experimental/overview/',
           children: [
             {
               title: 'Overview',
-              path: '/learn/experimental/',
+              path: '/learn/experimental/overview',
             },
             {
               title: 'Auto-batching',
-              path: '/learn/experimental/autobatching',
+              path: '/learn/experimental/auto-batching',
             },
           ],
         },
