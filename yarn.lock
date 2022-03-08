@@ -2371,7 +2371,7 @@ chalk@^4.0.0:
 
 check-md@1.0.0, "check-md@https://github.com/bidoubiwa/check-md#add_ignore_pattern":
   version "1.0.1"
-  resolved "https://github.com/bidoubiwa/check-md#e135a42adc659ea0bec6d330c3ef5263d69a072c"
+  resolved "https://github.com/bidoubiwa/check-md#e02c680f53dd65a3f24289fcf0cd13da519da275"
   dependencies:
     chalk "^4.0.0"
     commander "^5.0.0"
