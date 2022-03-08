@@ -2,6 +2,7 @@ const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
   title: 'Meilisearch Documentation v0.25',
   description: 'Open source Instant Search Engine',
+  theme: 'default-prefers-color-scheme',
   themeConfig: {
     repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
@@ -10,6 +11,7 @@ module.exports = {
     logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
+
     nav: [
       { text: 'Learn', link: '/learn/getting_started/quick_start' },
       { text: 'Reference', link: '/reference/api/' },
@@ -289,7 +291,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#FF4E62',
+        color: '#FF5CAA',
         staticIcon: true,
       },
     ],
@@ -301,6 +303,7 @@ module.exports = {
           'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
         indexUid: 'docs',
         placeholder: 'Search as you type...',
+        enableDarkMode: true, // Default: false
       },
     ],
     [
