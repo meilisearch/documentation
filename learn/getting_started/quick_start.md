@@ -139,6 +139,7 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
 - [AWS](/learn/cookbooks/aws.md)
 - [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Koyeb](/learn/cookbooks/koyeb.md)
 - [Qovery](/learn/cookbooks/qovery.md)
 - [GCP](/learn/cookbooks/gcp.md)
 - [Azure](/learn/cookbooks/azure.md)
