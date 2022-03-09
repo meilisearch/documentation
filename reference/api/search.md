@@ -1,3 +1,9 @@
+---
+
+sidebarDepth: 2
+
+---
+
 # Search
 
 Meilisearch exposes 2 routes to perform searches:

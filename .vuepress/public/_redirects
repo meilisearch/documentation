@@ -164,3 +164,13 @@
 
 # Remove Getting Started README.md
 /learn/getting_started/                             /learn/getting_started/quick_start.html
+
+# Remove READMEs
+/learn/what_is_melisearch/                          /learn/what_is_meilisearch/overview.html
+/learn/core_concepts/                               /learn/core_concepts/documents.html
+/learn/advanced/                                    /learn/advanced/asynchronous_operations.html
+/learn/cookbooks/                                   /learn/cookbooks/running_production.html
+/learn/contributing/                                /learn/contributing/overview.html
+/reference/api/                                     /reference/api/overview.html
+/learn/                                             /learn/getting_started/quick_start.html
+/reference/                                         /reference/api/overview.html

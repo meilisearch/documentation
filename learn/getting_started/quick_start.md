@@ -45,7 +45,7 @@ meilisearch
 :::
 
 ::: tab Docker
-When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/Meilisearch/tags).
+When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 These commands launch the **latest stable release** of Meilisearch.
 
@@ -270,4 +270,4 @@ To learn more about instant-meilisearch, refer to its [documentation](https://gi
 
 You now know all the basics: how to install Meilisearch, create an index, add documents, check the status of an asynchronous task, and perform a search.
 
-To keep going, continue to the [Meilisearch 101](/learn/getting_started/filtering_and_sorting.md) for a guided overview of the main features, or check out the [API references](/reference/api/README.md) to dive right in!
+To keep going, continue to the [Meilisearch 101](/learn/getting_started/filtering_and_sorting.md) for a guided overview of the main features, or check out the [API references](/reference/api/overview.md) to dive right in!

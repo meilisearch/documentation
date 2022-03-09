@@ -1,4 +1,4 @@
-# API references
+# API reference
 
 Welcome to the Meilisearch API documentation.
 
@@ -69,7 +69,7 @@ Response body:
 }
 ```
 
-If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `code` values and descriptions.
+If you're having trouble understanding an error, take a look at the [complete list](/reference/api/error_codes.md) of `code` values and descriptions.
 
 ## Asynchronous operations
 
