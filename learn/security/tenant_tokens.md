@@ -26,7 +26,7 @@ The code in this example imports the SDK, creates a filter based on the current 
 
 <CodeSamples id="tenant_token_guide_generate_sdk_1" />
 
-There are three important parameters to keep in mind when using an SDK to generate a tenant token: **search rules**, **API key**, and **expiration date**. Together,  they make the token's payload.
+There are three important parameters to keep in mind when using an SDK to generate a tenant token: **search rules**, **API key**, and **expiration date**. Together, they make the token's payload.
 
 **Search rules** must be a JSON object specifying the restrictions that will be applied to search requests on a given index. It must contain at least one search rule. [To learn more about search rules, take a look at our tenant token payload reference.](#search-rules)
 
