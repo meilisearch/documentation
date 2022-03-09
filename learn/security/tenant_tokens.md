@@ -28,17 +28,17 @@ The code in this example imports the SDK, creates a filter based on the current 
 
 There are three important parameters to keep in mind when using an SDK to generate a tenant token: **search rules**, **API key**, and **expiration date**. Together,  they make the token's payload.
 
-**Search rules** must be a JSON object specifying the restrictions that will be applied to search requests on a given index. It must contain at least one search rule. [More information here.](#search-rules)
+**Search rules** must be a JSON object specifying the restrictions that will be applied to search requests on a given index. It must contain at least one search rule. [To learn more about search rules, take a look at our tenant token payload reference.](#search-rules)
 
 As its name indicates, **API key** must be a valid Meilisearch API key. A tenant token will have access to the same indexes as the API key used when generating it. If no API key is provided, the SDK might be able to infer it automatically.
 
-**Expiration date** is optional when using an SDK. Tokens becomes invalid after their expiration date. Tokens without an expiration date will expire when their parent API key does.
+**Expiration date** is optional when using an SDK. Tokens become invalid after their expiration date. Tokens without an expiration date will expire when their parent API key does.
 
 You can read more about each element of a tenant token payload in [this guide's final section](#tenant-token-payload-reference).
 
 ### Using a tenant token with an SDK
 
-The resulting token can then be sent back to the front-end. There, you can use it to make queries that will only return results whose `user_id` attribute equals the current user's ID:
+After creating a token, you can sent it back to the front-end. There, you can use it to make queries that will only return results whose `user_id` attribute equals the current user's ID:
 
 <CodeSamples id="tenant_token_guide_search_sdk_1" />
 
@@ -83,7 +83,7 @@ const token = jwt.sign(tokenPayload, apiKey, {algorithm: 'HS256'});
 
 For more information on each one of the tenant token fields, consult the [token payload reference](#tenant-token-payload-reference).
 
-The `tokenPayload` is passed to `node-jsonwebtoken`'s `sign` method, together with the complete API key used in the payload and the chosen encryption algorithm. Meilisearch supports the following encryption algorithms: `HS256`, `HS384`, and `HS512`.
+`tokenPayload` is passed to `node-jsonwebtoken`'s `sign` method, together with the complete API key used in the payload and the chosen encryption algorithm. Meilisearch supports the following encryption algorithms: `HS256`, `HS384`, and `HS512`.
 
 Though this example used `node-jsonwebtoken`, a NodeJS package, you may use any JWT-compatible library in whatever language you feel comfortable.
 
@@ -95,7 +95,7 @@ After signing the token, you can use it to make search queries in the same way y
 The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
 :::
 
-### Generating a tenant token with from scratch
+### Generating a tenant token from scratch
 
 Generating tenant tokens without a library is possible, but requires considerably more effort.
 
@@ -112,15 +112,16 @@ The token header must specify a `JWT` type and an encryption algorithm. Supporte
 } 
 ```
 
-The token payload contains most of the relevant token data. It must be an object containing a set of search rules and the first 8 characters of Meilisearch API key. You may optionally set an expiration date for your token. Consult the [token payload reference](#tenant-token-payload-reference) for more information.
+The token payload contains most of the relevant token data. It must be an object containing a set of search rules and the first 8 characters of Meilisearch API key. You may optionally set an expiration date for your token. Consult the [token payload reference](#tenant-token-payload-reference) for more information on how the requirements for each payload field.
 
 ```json
 {
   "exp": 1646756934,
   "apiKeyPrefix": "12345678",
   "searchRules": {
-  "patient_medical_records": {
-    "filter": "user_id = 1"
+    "patient_medical_records": {
+      "filter": "user_id = 1"
+    }
   }
 }
 ```
@@ -138,6 +139,10 @@ The `curl` example presented here is only for illustration purposes. In producti
 ## Tenant token payload reference
 
 Meilisearch's tenant tokens are JWTs. Their payload is made of three elements: [search rules](#search-rules), an [API key](#api-keys), and an optional [expiration date](#expiry-date).
+
+You can see each one of them assigned to its own variable in this example:
+
+<CodeSamples id="tenant_token_guide_generate_sdk_1" />
 
 ### Search rules
 
