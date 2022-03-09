@@ -24,7 +24,6 @@ In this page you may find an exhaustive list of Meilisearch API errors.
 An index with this UID already exists, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
 ```json
-"error":
 {
     "message":"Index `movies` already exists.",
     "code":"index_already_exists",
@@ -69,6 +68,23 @@ The index was not found
 
 There is an error in the provided index format, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
+```json
+{
+    "message":"`movies%$#@` is not a valid index uid. Index uid can be an integer or a string containing only alphanumeric characters, hyphens (-) and underscores (_).",
+    "code":"invalid_index_uid",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_index_uid"
+}
+```
+
+### Cause / Common causes
+
+1. the `uid` is invalid.
+
+### Solution / Troubleshooting steps
+
+1. Ensure your `uid` is an integer or a string containing only alphanumeric characters, hyphens (-) and underscores (_).
+
 ## `index_not_accessible`
 
 An internal error occurred while trying to access the requested index.
@@ -110,17 +126,84 @@ A document exceeds the maximum limit of 65,535 fields.
 
 A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones.
 
+```json
+{
+    "message":"Document doesn't have a `movie_review_id` attribute: `{\"i\":1,\"title\":\"Solaris^&*^*)($\",\"author\":\"Stanislaw Lem\",\"genres\":[\"science fiction\"],\"price\":5.0,\"priority\":10}`.","code":"missing_document_id",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#missing_document_id"
+}
+```
+
+### Cause / Common causes
+
+One or more documents don't have the primary key
+
+### Solution / Troubleshooting steps
+
+1. Ensure all documents have the field that you set as the primary key
+
 ## `invalid_document_id`
 
 The provided document identifier does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
+
+```json
+{
+    "message":"Document identifier `1&)&)(` is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).","code":"invalid_document_id",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_document_id"}
+}
+```
+
+### Cause / Common causes
+
+The document id format is incorrect
+
+### Solution / Troubleshooting steps
+
+1. Ensure the document identifier is be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).",
 
 ## `invalid_filter`
 
 The filter provided with the search is invalid. This may be due to syntax errors in the `filter` parameter, using reserved fields as filter expressions, or neglecting to add the filtering attributes to `filterableAttributes`. For troubleshooting, check our [guide on filtering](/learn/advanced/filtering_and_faceted_search.md).
 
+```json
+{
+    "message":"Attribute `mass` is not filterable. Available filterable attributes are: `_geo`.\n1:5 mass < 200",
+    "code":"invalid_filter",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_filter"
+}
+```
+
+### Cause / Common causes
+
+1. the attribute you are filtering by has not been added to `filterableAttributes`
+
+### Solution / Troubleshooting steps
+
+1. Add the attribute to [`filterableAttributes`](/learn/advanced/geosearch.md#configuration)
+2. check for typos
+
 ## `invalid_sort`
 
 The sort value is invalid. This may be due to syntax errors in the `sort` parameter, using reserved fields as sort expressions, or neglecting to add the sorting attributes to `sortableAttributes`. For troubleshooting, check our [guide on sorting](/learn/advanced/sorting.md).
+
+```json
+{
+    "message":"Attribute `_geo` is not sortable. Available sortable attributes are: ``.","code":"invalid_sort",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_sort"}
+}
+```
+
+### Cause / Common causes
+
+1. the attribute you are sorting by has not been added to `sortableAttributes`
+
+### Solution / Troubleshooting steps
+
+1. Add the attribute to [`sortableAttributes`](/learn/advanced/geosearch.md#configuration)
+2. check for typos
 
 ## `bad_request`
 
@@ -129,6 +212,24 @@ The request is invalid, check the error message for more information.
 ## `document_not_found`
 
 The requested document can't be retrieved. Either it doesn't exist, or the database was left in an inconsistent state.
+
+```json
+{
+    "message":"Document `25684` not found.",
+    "code":"document_not_found",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#document_not_found"}
+```
+
+### Cause / Common causes
+
+1. no document with this id exists
+2. more details on "the database was left in an inconsistent state"
+
+### Solution / Troubleshooting steps
+
+1. check for typos
+2. ensure you have a document with this id
 
 ## `internal`
 
@@ -188,9 +289,44 @@ The Content-Type header was specified, but no request body was sent to the serve
 
 Dump creation is already in progress. A new dump creation process can be triggered after the current one has been completed.
 
+```json
+{
+    "message":"A dump is already processing. You must wait until the current process is finished before requesting another dump.",
+    "code":"dump_already_processing",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#dump_already_processing"
+}
+```
+
+### Cause / Common causes
+
+Meilisearch can only process one dump at a time
+
+### Solution / Troubleshooting steps
+
+1. Wait for the first dump to finish processing before starting another one
+
 ## `dump_not_found`
 
 The requested dump could not be found.  
+
+```json
+{
+    "message":"Dump `20120309-101325228` not found.",
+    "code":"dump_not_found",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#dump_not_found"
+}
+```
+
+### Cause / Common causes
+
+The requested dump could not be found.
+
+### Solution / Troubleshooting steps
+
+1. check the dump `uid` for typos
+2. ensure the dump you are looking for exists
 
 ## `dump_process_failed`
 
@@ -200,13 +336,65 @@ An error occurred during dump creation process, task aborted.
 
 The provided ranking rules are invalid. This may be due to syntax errors in your ranking rules or specifying custom ranking rules on reserved fields or reserved expressions. For more information on ranking rule configuration, check our [relevancy guide](/learn/core_concepts/relevancy.md#ranking-rules).
 
+```json
+{
+    "message":"`typ` ranking rule is invalid. Valid ranking rules are Words, Typo, Sort, Proximity, Attribute, Exactness and custom ranking rules.",
+    "code":"invalid_ranking_rule",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_ranking_rule"
+}
+```
+
+### Cause / Common causes
+
+1. typos in ranking rule
+2. using a non-existent ranking rule
+
+### Solution / Troubleshooting steps
+
+1. check the ranking rules for typos for typos. Valid ranking rules: Words, Typo, Sort, Proximity, Attribute, Exactness
+
 ## `invalid_geo_field`
 
 The provided `_geo` field of one or more documents is invalid. Read more about `_geo` and how to troubleshoot it in [our dedicated guide](/learn/advanced/geosearch.md).
 
+```json
+{
+    "message":"The document with the id: `1` contains an invalid _geo field: `{\"lat\":\"50.775000\",\"lng\":6.08333}`.",
+    "code":"invalid_geo_field",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_geo_field"
+}
+```
+
+### Cause / Common causes
+
+1. The `_geo` field is not formatted correctly in one or more of your documents
+
+### Solution / Troubleshooting steps
+
+1. Make sure the `geo` field has the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search)
+
 ## `invalid_api_key`
 
 The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](/learn/advanced/security.md).
+
+```json
+{
+    "message":"The provided API key is invalid.",
+    "code":"invalid_api_key",
+    "type":"auth",
+    "link":"https://docs.meilisearch.com/errors#invalid_api_key"
+}
+```
+
+### Cause / Common causes
+
+Your API key is invalid
+
+### Solution / Troubleshooting steps
+
+1. check for typos
 
 ## `invalid_store_file`
 
@@ -256,6 +444,21 @@ The `indexes` field for the provided API key resource is invalid. It should be a
 ## `invalid_api_key_expires_at`
 
 The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the ISO 8601 format or be set to `null`.
+
+```json
+{
+    "message":"`expiresAt` field value `\"2002-04-02T00:42:42Z\"` is invalid. It should follow the RFC 3339 format to represents a date or datetime in the future or specified as a null value. e.g. 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM:SS'.",
+    "code":"invalid_api_key_expires_at",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_api_key_expires_at"}
+```
+
+### Cause / Common causes
+
+### Solution / Troubleshooting steps
+
+1. rename this index
+2. rename the existing index to something else
 
 ## `api_key_not_found`
 
