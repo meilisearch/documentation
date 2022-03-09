@@ -24,12 +24,13 @@ In this page you may find an exhaustive list of Meilisearch API errors.
 An index with this UID already exists, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
 ```json
-"error":{
+"error":
+{
     "message":"Index `movies` already exists.",
     "code":"index_already_exists",
     "type":"invalid_request",
     "link":"https://docs.meilisearch.com/errors#index_already_exists"
-    }
+}
 ```
 
 ### Cause / Common causes
@@ -44,6 +45,25 @@ You cannot have two indexes with the same name
 ## `index_not_found`
 
 An index with this UID was not found, check out our guide on [index creation](/learn/core_concepts/indexes.md).
+
+```json
+"error":
+{
+    "message":"Index `moviesss` not found.",
+    "code":"index_not_found",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#index_not_found"
+}
+```
+
+### Cause / Common causes
+
+The index was not found
+
+### Solution / Troubleshooting steps
+
+1. Check for typos in the index name
+2. Make sure an index with this name exists
 
 ## `invalid_index_uid`
 
@@ -60,6 +80,27 @@ The database is in an invalid state. Deleting the database and re-indexing shoul
 ## `primary_key_inference_failed`
 
 The first provided document contains no fields with the substring `id`. [Manually designate the primary key](/learn/core_concepts/documents.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
+
+```json
+"error":
+{
+  "message":"The primary key inference process failed because the engine did not find any fields containing `id` substring in their name. If your document identifier does not contain any `id` substring, you can set the primary key of the index.",
+  "code":"primary_key_inference_failed",
+  "type":"invalid_request",
+  "link":"https://docs.meilisearch.com/errors#primary_key_inference_failed"
+}
+```
+
+### Cause / Common causes
+
+One or more of your documents don't contain a field that has `id` as a substring, hence Meilisearch was unable to set the primary key.
+
+### Solution / Troubleshooting steps
+
+1. Add the substring `id` to one of your fields
+2. Manually set the primary key (add link)
+3. Ensure none of your documents is missing the primary key field
+4. The primary key does not follow the format
 
 ## `document_fields_limit_reached`
 
@@ -121,6 +162,24 @@ The payload does not contain a Content-Type header. Currently, Meilisearch only 
 
 The Content-Type header does not match the request body payload format or the format is invalid.
 
+```json
+"error":
+{
+    "message":"The `json` payload provided is malformed. `Couldn't serialize document value: expected `,` or `}` at line 12 column 5`.",
+    "code":"malformed_payload",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#malformed_payload"
+}
+```
+
+### Cause / Common causes
+
+1. Your json file does not have the correct format
+
+### Solution / Troubleshooting steps
+
+1. Check for typos or missing commas or brackets in your file
+
 ## `missing_payload`
 
 The Content-Type header was specified, but no request body was sent to the server or the request body is empty.  
@@ -165,6 +224,23 @@ The requested database has reached its maximum size; no further documents can be
 
 The requested index already has a primary key that cannot be changed.
 
+```json
+{
+    "message":"Index already has a primary key: `id`.",
+    "code":"index_primary_key_already_exists",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#index_primary_key_already_exists"
+}
+```
+
+### Cause / Common causes
+
+You are trying to update the primary for an index that already has one
+
+### Solution / Troubleshooting steps
+
+You cannot change the primary key for an index once it has been set
+
 ## `invalid_api_key_description`
 
 The `description` field for the provided API key resource is invalid. It should either be a string or `null`.
@@ -192,3 +268,20 @@ The payload is missing one or more required fields.
 ## `task_not_found`
 
 The requested task does not exist. Please ensure that you are using the correct `uid`.
+
+```json
+{
+    "message":"Task `210` not found.",
+    "code":"task_not_found",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#task_not_found"}
+}
+```
+
+### Cause / Common causes
+
+You are using the wrong `uid`
+
+### Solution / Troubleshooting steps
+
+1. Ensure you are using the correct `uid`
