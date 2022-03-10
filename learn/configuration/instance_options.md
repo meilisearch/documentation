@@ -195,6 +195,7 @@ This is a CLI flag and does not take any values. Assigning a value will throw an
 
 Prevents Meilisearch from throwing an error when `--import-dump` does not point to a valid dump file. Instead, Meilisearch will start normally without importing any dump.
 
+This option will trigger an error if `--import-dump` is not defined.
 
 _This option is not available as an environment variable._
 
