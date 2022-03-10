@@ -262,9 +262,9 @@ module.exports = {
             },
             {
               title: 'Auto-batching',
-              path: '/learn/experimental/auto-batching'
+              path: '/learn/experimental/auto-batching',
             },
-          ]
+          ],
         },
         {
           title: '👐 Contributing',
