@@ -207,7 +207,7 @@ Because tenant tokens are generated in your application, Meilisearch cannot chec
 Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search.md#filter).
 :::
 
-### API Keys
+### API Key
 
 Creating a token requires an API key. A token has access to the same indexes as the API key used to generate it.
 
