@@ -112,7 +112,7 @@ The token header must specify a `JWT` type and an encryption algorithm. Supporte
 } 
 ```
 
-The token payload contains most of the relevant token data. It must be an object containing a set of search rules and the first 8 characters of a Meilisearch API key. You may optionally set an expiration date for your token. Consult the [token payload reference](#tenant-token-payload-reference) for more information on how the requirements for each payload field.
+The token payload contains most of the relevant token data. It must be an object containing a set of search rules and the first 8 characters of a Meilisearch API key. You may optionally set an expiration date for your token. Consult the [token payload reference](#tenant-token-payload-reference) for more information on the requirements for each payload field.
 
 ```json
 {
