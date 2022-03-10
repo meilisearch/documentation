@@ -234,6 +234,21 @@ module.exports = {
           ],
         },
         {
+          title: '🧪 Experimental',
+          collapsable: false,
+          path: '/learn/experimental/overview/',
+          children: [
+            {
+              title: 'Overview',
+              path: '/learn/experimental/overview',
+            },
+            {
+              title: 'Auto-batching',
+              path: '/learn/experimental/auto-batching',
+            },
+          ],
+        },
+        {
           title: '👐 Contributing',
           path: '/learn/contributing/',
           collapsable: false,
