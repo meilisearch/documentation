@@ -109,7 +109,7 @@ If no master key is provided in a `development` environment, all routes will be 
 ### Disable analytics
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
@@ -200,7 +200,7 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 ### Schedule snapshot creation
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
@@ -249,7 +249,7 @@ This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignor
 ### Ignore missing snapshot
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: N/A
@@ -264,7 +264,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 ### Ignore snapshot if DB exists
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: N/A
@@ -323,7 +323,7 @@ Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 #### SSL require auth
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
@@ -337,7 +337,7 @@ Sends a fatal alert if the client does not complete client authentication.
 #### SSL resumption
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
@@ -349,7 +349,7 @@ Activates SSL session resumption.
 #### SSL tickets
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_TICKETS`
