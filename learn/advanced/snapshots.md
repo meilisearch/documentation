@@ -1,6 +1,6 @@
 # Snapshots
 
-A snapshot is an exact copy of the database (i.e. the `data.ms` folder) at the time the snapshot was created. Besides compression, snapshots do not go through any processing. They can be thought of as "pre-compiled copies".
+A snapshot is an exact copy of the database (i.e. the data.ms folder) at the time the snapshot was created. Besides compression, snapshots do not go through any processing. They can be thought of as "pre-compiled copies".
 
 Using this feature, it is possible to schedule snapshot creation at custom intervals and use existing snapshots to restore Meilisearch.
 

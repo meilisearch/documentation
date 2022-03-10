@@ -6,7 +6,7 @@ _The following is a guest post by Romaric Philogène, CEO and Co-Founder of Qove
 
 In this tutorial I explain how to deploy a pre-configured Meilisearch instance in one click.
 
-_Qovery provides free Cloud hosting with databases, SSL, a global CDN, and automatic deploys with Git._
+*Qovery provides free Cloud hosting with databases, SSL, a global CDN, and automatic deploys with Git.*
 
 Deploying Meilisearch with Qovery provides:
 

@@ -66,7 +66,7 @@ The `databaseSize` field shows the size of the database in bytes.
 
 #### `lastUpdate`
 
-The `lastUpdate` field shows when the last update was made to the database in the ISO 8601 format.
+The `lastUpdate` field shows when the last update was made to the database in the RFC 3339 format.
 
 ### Example
 

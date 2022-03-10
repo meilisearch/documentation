@@ -52,7 +52,7 @@ apt install curl -y
 curl -L https://install.meilisearch.com | sh
 ```
 
-The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/quick_start.md#step-1-setup-and-installation).
+The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/installation.md#download-and-launch).
 
 **There are many different ways to get Meilisearch running on your machine.** As an open-source project, you can always compile the latest stable release of Meilisearch from its source code to ensure the binary uses your architecture in the best possible way.
 
@@ -76,14 +76,14 @@ meilisearch
 You should see the following successful response:
 
 ```
-888b     d888          d8b 888 d8b                                            888
-8888b   d8888          Y8P 888 Y8P                                            888
-88888b.d88888              888                                                888
-888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
+888b     d888          d8b 888 d8b  .d8888b.                                    888
+8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
+88888b.d88888              888     Y88b.                                        888
+888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
 
 Database path: "./data.ms"
 Server listening on: "127.0.0.1:7700"
@@ -123,7 +123,7 @@ EOF
 ```
 
 ::: tip
-For more information on Meilisearch security and API keys see the [security docs](/learn/advanced/security.md). You can check our [quick start](/learn/getting_started/quick_start.md#step-1-setup-and-installation) guide for more information on how to get Meilisearch up and running.
+For more information on Meilisearch security and API keys see the [security docs](/learn/advanced/security.md). For more information on Meilisearch options and flags see the [installation docs](/learn/getting_started/installation.md#download-and-launch).
 :::
 
 As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.

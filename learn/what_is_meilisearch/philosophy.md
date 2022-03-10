@@ -6,7 +6,7 @@ Finding a high-quality search engine can be difficult. We decided to create Meil
 
 We always aim for a simple and intuitive experience for both developers and end-users.
 
-For developers, we're proud to say that Meilisearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/api/overview.md).
+For developers, we're proud to say that Meilisearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/api).
 
 For end-users, Meilisearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results.
 

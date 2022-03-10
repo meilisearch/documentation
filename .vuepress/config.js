@@ -12,7 +12,7 @@ module.exports = {
     smoothScroll: true,
     nav: [
       { text: 'Learn', link: '/learn/getting_started/quick_start' },
-      { text: 'Reference', link: '/reference/api/overview' },
+      { text: 'Reference', link: '/reference/api/' },
       { text: 'FAQ', link: '/faq' },
       {
         text: 'Integrations',
@@ -71,14 +71,10 @@ module.exports = {
       '/learn/': [
         {
           title: '🔎 What is Meilisearch?',
-          path: '/learn/what_is_meilisearch/overview/',
+          path: '/learn/what_is_meilisearch/',
           collapsable: false,
           sidebarDepth: 0,
           children: [
-            {
-              title: 'Overview',
-              path: '/learn/what_is_meilisearch/overview',
-            },
             '/learn/what_is_meilisearch/features',
             '/learn/what_is_meilisearch/philosophy',
             '/learn/what_is_meilisearch/sdks',
@@ -91,25 +87,17 @@ module.exports = {
         },
         {
           title: '🚀 Getting started',
-          path: '/learn/getting_started/quick_start/',
+          path: '/learn/getting_started/',
           collapsable: false,
           children: [
+            '/learn/getting_started/installation',
             '/learn/getting_started/quick_start',
-            {
-              title: 'MeiliSearch 101',
-              path: '/learn/getting_started/filtering_and_sorting/',
-              collapsable: false,
-              children: [
-                '/learn/getting_started/filtering_and_sorting',
-                '/learn/getting_started/customizing_relevancy',
-                '/learn/getting_started/getting_ready_for_production',
-              ],
-            },
+            '/learn/getting_started/whats_next',
           ],
         },
         {
           title: '💡 Core concepts',
-          path: '/learn/core_concepts/documents/',
+          path: '/learn/core_concepts/',
           collapsable: false,
           children: [
             '/learn/core_concepts/documents',
@@ -140,7 +128,7 @@ module.exports = {
         },
         {
           title: '📚 Advanced topics',
-          path: '/learn/advanced/asynchronous_operations/',
+          path: '/learn/advanced/',
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
@@ -188,12 +176,13 @@ module.exports = {
         },
         {
           title: '📕 Cookbooks',
-          path: '/learn/cookbooks/running_production/',
+          path: '/learn/cookbooks/',
           collapsable: false,
           children: [
             {
               title: 'Run in production',
               path: '/learn/cookbooks/running_production',
+              sidebarDepth: 0,
             },
             {
               title: 'Use with Postman',
@@ -215,10 +204,6 @@ module.exports = {
                 {
                   title: 'Deploy on AWS',
                   path: '/learn/cookbooks/aws',
-                },
-                {
-                  title: 'Deploy on Azure',
-                  path: '/learn/cookbooks/azure',
                 },
                 {
                   title: 'Deploy on GCP',
@@ -247,19 +232,15 @@ module.exports = {
             },
             {
               title: 'Auto-batching',
-              path: '/learn/experimental/auto-batching',
+              path: '/learn/experimental/auto-batching'
             },
-          ],
+          ]
         },
         {
           title: '👐 Contributing',
-          path: '/learn/contributing/overview/',
+          path: '/learn/contributing/',
           collapsable: false,
           children: [
-            {
-              title: 'Overview',
-              path: '/learn/contributing/overview',
-            },
             {
               title: 'Contributing to the docs',
               path: '/learn/contributing/contributing_to_docs',
@@ -269,14 +250,10 @@ module.exports = {
       ],
       '/reference/': [
         {
-          title: '📒 API reference',
-          path: '/reference/api/overview/',
+          title: '📒 API references',
+          path: '/reference/api/',
           collapsable: false,
           children: [
-            {
-              title: 'Overview',
-              path: '/reference/api/overview',
-            },
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
@@ -398,7 +375,7 @@ module.exports = {
         prefix: ogprefix,
         property: 'og:image',
         content:
-          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb_vmbpxo.png',
+          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png',
       },
     ],
     [
@@ -407,7 +384,7 @@ module.exports = {
         prefix: ogprefix,
         property: 'og:image-secure-url',
         content:
-          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb_vmbpxo.png',
+          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png',
       },
     ],
     [
@@ -444,7 +421,7 @@ module.exports = {
       {
         property: 'twitter:image',
         content:
-          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb_vmbpxo.png',
+          'https://res.cloudinary.com/meilisearch/image/upload/v1582134509/og-image_dlbsnb.png',
       },
     ],
     [

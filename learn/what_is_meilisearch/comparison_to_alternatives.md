@@ -1,5 +1,7 @@
 # Comparison to alternatives
 
+## Table of contents
+
 [[toc]]
 
 ## About Meilisearch
@@ -55,7 +57,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | [Docsearch](https://github.com/meilisearch/docs-scraper) | ✅ | ✅ | ✅ | ❌ |
 | [Strapi](https://github.com/meilisearch/strapi-plugin-meilisearch) | ✅ | ✅ | ❌ | ❌ |
 | [Gatsby](https://github.com/meilisearch/gatsby-plugin-meilisearch) | ✅ | ✅ | ✅ | ❌ |
-| [Firebase](https://github.com/meilisearch/firestore-meilisearch) | 🔶 <br> End of March 2022 | ✅ | ✅ | ❌ |
+| [Firebase](https://github.com/meilisearch/firestore-meilisearch) | 🔶 <br> January 2022 | ✅ | ✅ | ❌ |
 
 #### Configuration
 
@@ -123,7 +125,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Maximum number of indexes | No limitation | 1000, increasing limit possible by contacting support | No limitation | No limitation |
+| Maximum number of indexes | No limitation | No limitation | No limitation | No limitation |
 | Maximum index size | 100GB default, configurable  | 128Gb | Constrained by RAM | No limitation |
 | Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
 | Maximum document size | No limitation | 100KB, configurable | No limitation | 100KB default, configurable  |

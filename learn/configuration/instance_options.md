@@ -178,7 +178,7 @@ Imports the dump file located at the specified path. Path must point to a `.dump
 
 Meilisearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file.
 
-_This option is not available as an environment variable._
+*This option is not available as an environment variable.*
 
 ### Log level
 
@@ -277,7 +277,7 @@ This command will throw an error if:
 
 This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively.
 
-_This option is not available as an environment variable._
+*This option is not available as an environment variable.*
 
 ### Ignore missing snapshot
 
@@ -290,7 +290,7 @@ Prevents a Meilisearch instance from throwing an error when [`--import-snapshot`
 
 This command will throw an error if `--import-snapshot` is not defined.
 
-_This option is not available as an environment variable._
+*This option is not available as an environment variable.*
 
 ### Ignore snapshot if DB exists
 
@@ -303,7 +303,7 @@ Prevents a Meilisearch instance with an existing database from throwing an error
 
 This command will throw an error if `--import-snapshot` is not defined.
 
-_This option is not available as an environment variable._
+*This option is not available as an environment variable.*
 
 ### SSL authentication path
 
@@ -343,7 +343,7 @@ Value must be a path to an RSA private key or PKCS8-encoded private key, both in
 **Default value**: `None`
 **Expected value**: a filepath pointing to a valid OCSP certificate
 
-Sets the server's OCSP file. _Optional_
+Sets the server's OCSP file. *Optional*
 
 Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 

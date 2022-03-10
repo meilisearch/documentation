@@ -96,21 +96,21 @@ Only the key's [permitted actions](#actions) can be used on these indexes.
 
 #### `expiresAt`
 
-Date and time when the key will expire, represented in ISO 8601 format. `null` if the key never expires.
+Date and time when the key will expire, represented in RFC 3339 format. `null` if the key never expires.
 
 #### `createdAt`
 
-Date and time when the key was created, represented in ISO 8601 format.
+Date and time when the key was created, represented in RFC 3339 format.
 
 #### `updatedAt`
 
-Date and time when the key was last updated, represented in ISO 8601 format.
+Date and time when the key was last updated, represented in RFC 3339 format.
 
 ## Get one key
 
 <RouteHighlighter method="GET" route="/keys/:key"/>
 
-Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found).
+Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](http://docs.meilisearch.com/errors#api_key_not_found).
 
 #### Path variables
 
@@ -204,7 +204,7 @@ Only the key's [permitted actions](#actions) can be used on these indexes.
 **Type:** string
 **Default value:** none
 
-Date and time when the key will expire, represented in ISO 8601 format. `null` if the key never expires.
+Date and time when the key will expire, represented in RFC 3339 format. `null` if the key never expires.
 
 ### Example
 

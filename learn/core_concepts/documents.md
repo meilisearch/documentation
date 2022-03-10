@@ -95,7 +95,7 @@ Documents have a **soft maximum of 1000 fields**; beyond that the [ranking rules
 
 Additionally, every document must have at minimum one field containing the **[primary key][primary-key]** and a **[unique id][document-id]**.
 
-If you try to [index a document](/learn/getting_started/quick_start.md#step-2-add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
+If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
 
 ## Fields
 
@@ -105,7 +105,7 @@ An attribute functions a bit like a variable in most programming languages, i.e.
 
 Every field has a [data type](/learn/advanced/datatypes.md) dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-Take note that, in the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute). Words exceeding the 65535 position limit will be ignored.**
+Take note that, in the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-words-per-attribute). Words exceeding the 65535 position limit will be ignored.**
 
 You can also apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 

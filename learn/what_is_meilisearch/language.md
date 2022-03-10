@@ -24,7 +24,7 @@ If you'd like us to add or improve support for a language that isn't in the abov
 
 ## FAQ
 
-### What do you mean when you say Meilisearch offers _optimized_ support for a language?
+### What do you mean when you say Meilisearch offers *optimized* support for a language?
 
 Under the hood, Meilisearch relies on tokenizers that identify the most important parts of each document in a given dataset. We currently use two tokenization pipelines: one for languages that separate words with spaces and one specifically tailored for Chinese. Languages that delimit their words in other ways will still work, but the quality and relevancy of search results may vary significantly.
 
