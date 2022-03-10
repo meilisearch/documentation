@@ -10,6 +10,6 @@ This is not necessarily the case for experimental features. **Experimental featu
 
 **Each experimental feature added to Meilisearch has an associated discussion on our [core GitHub repository](https://github.com/meilisearch/meilisearch/discussions/categories/general?discussions_q=category%3AGeneral+experimental).**
 
-The feedback from these discussions helps us to evaluate the success or failure of experimental features, as well as potentially to evolve them into a stable, non-experimental state.
+The feedback from these discussions helps us evaluate the success or failure of experimental features, as well as potentially evolve them into a stable, non-experimental state.
 
 Whether you want to share a bug report, an opinion, or a story about your experience with the feature, we are grateful for your contribution!
