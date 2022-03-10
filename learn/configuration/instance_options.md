@@ -195,6 +195,7 @@ This is a CLI flag and does not take any values. Assigning a value will throw an
 
 Prevents Meilisearch from throwing an error when `--import-dump` does not point to a valid dump file. Instead, Meilisearch will start normally without importing any dump.
 
+This option will trigger an error if `--import-dump` is not defined.
 
 _This option is not available as an environment variable._
 
@@ -311,7 +312,7 @@ This command will throw an error if:
 
 This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively.
 
-*This option is not available as an environment variable.*
+_This option is not available as an environment variable._
 
 ### Ignore missing snapshot
 
@@ -337,7 +338,7 @@ Prevents a Meilisearch instance with an existing database from throwing an error
 
 This command will throw an error if `--import-snapshot` is not defined.
 
-*This option is not available as an environment variable.*
+_This option is not available as an environment variable._
 
 ### SSL authentication path
 
