@@ -38,7 +38,7 @@ You can read more about each element of a tenant token payload in [this guide's 
 
 ### Using a tenant token with an SDK
 
-After creating a token, you can sent it back to the front-end. There, you can use it to make queries that will only return results whose `user_id` attribute equals the current user's ID:
+After creating a token, you can send it back to the front-end. There, you can use it to make queries that will only return results whose `user_id` attribute equals the current user's ID:
 
 <CodeSamples id="tenant_token_guide_search_sdk_1" />
 
