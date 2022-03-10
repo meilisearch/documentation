@@ -138,7 +138,7 @@ The `curl` example presented here is only for illustration purposes. In producti
 
 ## Tenant token payload reference
 
-Meilisearch's tenant tokens are JWTs. Their payload is made of three elements: [search rules](#search-rules), an [API key](#api-keys), and an optional [expiration date](#expiry-date).
+Meilisearch's tenant tokens are JWTs. Their payload is made of three elements: [search rules](#search-rules), an [API key](#api-key), and an optional [expiration date](#expiry-date).
 
 You can see each one of them assigned to its own variable in this example:
 
