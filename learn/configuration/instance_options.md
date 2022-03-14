@@ -18,13 +18,13 @@ Pass **command-line options** and their respective values when launching a Meili
 
 In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `--db-path` and `--http-addr` are options that modify this instance's behavior.
 
-Meilisearch also has a number of **command-line flags.** Unlike command-line options, **command-line flags don't take values**. If a flag is given, it is activated and changes Meilisearch's default behavior.
+Meilisearch also has a number of **command-line flags.** Unlike command-line options, **flags don't take values**. If a flag is given, it is activated and changes Meilisearch's default behavior.
 
 ```bash
 ./meilisearch --no-analytics
 ```
 
-The above command-line flag disables analytics for the Meilisearch instance without accepting any value.
+The above flag disables analytics for the Meilisearch instance and does not accept a value.
 
 **Both command-line options and command-line flags take precedence over environment variables.** All command-line options and flags are prepended with `--`.
 
