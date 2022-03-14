@@ -173,25 +173,23 @@ Sets the directory where Meilisearch will create dump files.
 
 **Environment variable**: N/A
 **CLI option**: `--import-dump`
-**Default**: Disabled
+**Default value**: none
+**Expected value**: a filepath pointing to a `.dump` file
 
 Imports the dump file located at the specified path. Path must point to a `.dump` file. If a database already exists, Meilisearch will throw an error and abort launch.
 
 Meilisearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file.
-
-If the option is specified when a database exists, an error occurs in the CLI.
 
 _This option is not available as an environment variable._
 
 ### Ignore missing dump
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: N/A
 **CLI option**: `--ignore-missing-dump`
-**Default**: Disabled
 
 Prevents Meilisearch from throwing an error when `--import-dump` does not point to a valid dump file. Instead, Meilisearch will start normally without importing any dump.
 
@@ -202,12 +200,11 @@ _This option is not available as an environment variable._
 ### Ignore dump if DB exists
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: N/A
 **CLI option**: `--ignore-dump-if-db-exists`
-**Default**: Disabled
 
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-dump`. Instead, the dump will be ignored and Meilisearch will launch using the existing database.
 
