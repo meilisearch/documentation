@@ -330,7 +330,8 @@ module.exports = {
       {
         pattern: '**/*.md',
         strictExt: true,
-        ignorePattern: ['errors', 'document_structure'],
+        ignoreFilePattern: ['errors', 'document_structure'],
+        ignoreHashPattern: ['actions-2'],
         exitLevel: 'warn',
       },
     ],
