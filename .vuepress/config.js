@@ -110,10 +110,14 @@ module.exports = {
           collapsable: false,
           path: '/learn/configuration/instance_options/',
           children: [
-            '/learn/configuration/instance_options',
+            {
+              title: 'Configure Meilisearch at launch',
+              path: '/learn/configuration/instance_options',
+            },
             {
               title: 'Index settings',
               collapsable: false,
+              path: '/learn/configuration/settings/',
               children: [
                 {
                   title: 'Overview',
@@ -127,6 +131,15 @@ module.exports = {
           ],
         },
         {
+          title: '🔐 Security and permissions',
+          collapsable: false,
+          path: '/learn/security/master_api_keys/',
+          children: [
+            '/learn/security/master_api_keys',
+            '/learn/security/tenant_tokens',
+          ],
+        },
+        {
           title: '📚 Advanced topics',
           path: '/learn/advanced/',
           collapsable: false,
@@ -134,7 +147,6 @@ module.exports = {
             '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
-            '/learn/advanced/security',
             '/learn/advanced/sorting',
             {
               title: 'Updating Meilisearch',
@@ -218,6 +230,21 @@ module.exports = {
                   path: '/learn/cookbooks/qovery',
                 },
               ],
+            },
+          ],
+        },
+        {
+          title: '🧪 Experimental',
+          collapsable: false,
+          path: '/learn/experimental/overview/',
+          children: [
+            {
+              title: 'Overview',
+              path: '/learn/experimental/overview',
+            },
+            {
+              title: 'Auto-batching',
+              path: '/learn/experimental/auto-batching',
             },
           ],
         },
