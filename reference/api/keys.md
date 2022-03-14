@@ -197,7 +197,7 @@ A list of API actions permitted for the key. `["*"]` for all actions.
 
 An array of indexes the key is authorized to act on. `["*"]` for all indexes.
 
-Only the key's [permitted actions](#actions) can be used on these indexes.
+Only the key's [permitted actions](#actions-2) can be used on these indexes.
 
 #### `expiresAt`
 
