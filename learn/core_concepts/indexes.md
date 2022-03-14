@@ -15,7 +15,7 @@ Suppose you manage [a database that contains information about movies](https://i
 
 Each index holds information about the fields found in the documents, including how they are handled by Meilisearch and their order of importance. In addition, each has its own set of synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
 
-For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
+For example, it means you could create on the same server synonyms for a `movies` index and different synonyms for a `costumes` index.
 
 ## Index creation
 
