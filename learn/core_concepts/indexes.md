@@ -37,7 +37,8 @@ The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-in
 
 ```json
 {
-  "uid": "movie",
+  "uid": "movies",
+  "name":"movies",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
