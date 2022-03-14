@@ -152,9 +152,9 @@ Search rules are a set of instructions defining search parameters that will be e
 
 ```json
 {
- "[index_name]": {
-   "[search_parameter]": "[value]"
- }
+  "[index_name]": {
+    "[search_parameter]": "[value]"
+  }
 }
 ```
 
