@@ -40,6 +40,8 @@ export MEILI_HTTP_ADDR=127.0.0.1:7700
 
 In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `MEILI_DB_PATH` and `MEILI_HTTP_ADDR` are environment variables that modify this instance's behavior.
 
+Environment variables for command-line flags accept `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`. Any other value is considered `true`.
+
 Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. **Some options (e.g. `--import-snapshots`) are not available as environment variables.**
 
 ## All instance options
@@ -107,16 +109,13 @@ If no master key is provided in a `development` environment, all routes will be 
 ### Disable analytics
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
-**Default**: Enabled
 
-Deactivates Meilisearch's built-in telemetry when enabled.
-
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`, everything else is considered `true`.
+Deactivates Meilisearch's built-in telemetry when provided.
 
 Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/learn/what_is_meilisearch/telemetry.md#how-to-delete-all-collected-data).
 
@@ -201,16 +200,13 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 ### Schedule snapshot creation
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
-**Default**: Disabled
 
-Activates scheduled snapshots when enabled. Snapshots are disabled by default.
-
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`, everything else is considered `true`.
+Activates scheduled snapshots when provided. Snapshots are disabled by default.
 
 [Learn more about snapshots](/learn/advanced/snapshots.md).
 
@@ -253,12 +249,11 @@ This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignor
 ### Ignore missing snapshot
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: N/A
 **CLI option**: `--ignore-missing-snapshot`
-**Default**: Disabled
 
 Prevents a Meilisearch instance from throwing an error when [`--import-snapshot`](#import-snapshot) does not point to a valid snapshot file.
 
@@ -269,12 +264,11 @@ This command will throw an error if `--import-snapshot` is not defined.
 ### Ignore snapshot if DB exists
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: N/A
 **CLI option**: `--ignore-snapshot-if-db-exists`
-**Default**: Disabled
 
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and Meilisearch will launch using the existing database.
 
@@ -329,7 +323,7 @@ Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 #### SSL require auth
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
@@ -340,12 +334,10 @@ Makes SSL authentication mandatory.
 
 Sends a fatal alert if the client does not complete client authentication.
 
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`, everything else is considered `true`.
-
 #### SSL resumption
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
@@ -354,12 +346,10 @@ This is a CLI flag and does not take any values. Assigning a value will throw an
 
 Activates SSL session resumption.
 
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`, everything else is considered `true`.
-
 #### SSL tickets
 
 ::: warning
-This is a CLI flag and does not take any values. Assigning a value will throw an error.
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_TICKETS`
@@ -367,5 +357,3 @@ This is a CLI flag and does not take any values. Assigning a value will throw an
 **Default value**: `None`
 
 Activates SSL tickets.
-
-The environment variable accepts `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`, everything else is considered `true`.
