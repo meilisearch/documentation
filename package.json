@@ -38,10 +38,11 @@
     "vuepress-plugin-container": "^2.1.5",
     "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-img-lazy": "^1.0.4",
-    "vuepress-plugin-meilisearch": "^0.10.8",
+    "vuepress-plugin-meilisearch": "0.11.3",
     "vuepress-plugin-seo": "^0.1.4",
     "vuepress-plugin-sitemap": "^2.3.1",
     "vuepress-plugin-zooming": "^1.1.8",
+    "vuepress-theme-default-prefers-color-scheme": "^2.0.0",
     "vuex": "^3.6.2"
   },
   "engines": {
@@ -51,7 +52,6 @@
     "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#add_ignore_pattern"
   },
   "devDependencies": {
-    "vue-eslint-parser": "^7.10.0",
     "babel-eslint": "^10.1.0",
     "bent": "^7.3.12",
     "eslint": "^7.25.0",
@@ -64,6 +64,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.9.0",
     "js-yaml": "^3.14.1",
+    "vue-eslint-parser": "^7.10.0",
     "markdownlint-cli": "^0.31.1",
     "vuepress-plugin-check-md": "^0.0.2"
   }

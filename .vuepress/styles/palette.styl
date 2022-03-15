@@ -1,14 +1,54 @@
+$contentClass = '.theme-default-content'
+// All variable that can impact the color of the documentation can be found here:
+// https://github.com/tolking/vuepress-theme-default-prefers-color-scheme/blob/master/styles/palette.styl
+
 // Color of links (<a>) across the documentation
-$accentColor = #FF4E62;
+$accentColor = #FF5CAA
+$linkHoverColor = #D94E91
+$accentDarkColor = #FF85BF
 
-// Changes the color the code sample tabs
-// The tabs are created using the plugin: vuepress-plugin-element-tabs
+// for ##, ###, #### headers
+$titlesColor = #4F55E3
+$titlesDarkColor = #7B80EA
 
-// Active tabs
-.el-tabs__item.is-active
-  color: $accentColor !important
+// Text color of code samples. Same both in light and dark mode
+$preTextColor ?= #FAFBFE
 
-// None-active tabs on hover
-.el-tabs__item:not(.is-disabled):hover
-  color: $accentColor !important
+// Color of text throughout the documentation
+$textColor = #261A59
+$textDarkColor = #FAFBFE
 
+// Background color of documentation
+$bgColor = #f9f8ff
+$bgDarkColor = #1D1428
+
+// Background of code block with 3 backticks ```
+$codeBgLightColor = #282c34
+$codeBgColor ?= #FAFBFE
+
+// Color of borders
+$borderColor = #E9E5ED
+$borderDarkColor = #352A43
+
+// Border of tables for example the `response body` inside the API references
+$tableBorderColor = #dfe2e5
+$tableBorderDarkColor = $borderDarkColor
+
+// Color of background of code inside simple ticks ``
+// Remove `?` to apply color
+$miniCodeBgColor ?= rgba(27,31,35,0.05)
+$miniCodeBgDarkColor ?= rgba(255,255,255,0.1)
+
+
+// BADGES: note, warning, etc..
+
+$tipBgColor = rgba(66, 185, 131, 0.1)
+$tipBgDarkColor = rgba(66, 185, 131, 0.1)
+
+$warningColor = darken(#e7c000, 30%)
+$warningDarkColor ?= $warningColor
+
+$warningBgColor = rgba(255, 229, 100, 0.3)
+$warningBgDarkColor = rgba(185, 174, 119, 0.2)
+
+$dropdownBgDarkColor = #333a3e // Usefull when updating doc-searchbar

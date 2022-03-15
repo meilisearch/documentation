@@ -2,6 +2,7 @@ const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
   title: 'Meilisearch Documentation v0.26',
   description: 'Open source Instant Search Engine',
+  theme: 'default-prefers-color-scheme',
   themeConfig: {
     repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
@@ -10,6 +11,7 @@ module.exports = {
     logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
+
     nav: [
       { text: 'Learn', link: '/learn/getting_started/quick_start' },
       { text: 'API Reference', link: '/reference/api/overview' },
@@ -349,7 +351,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#FF4E62',
+        color: '#FF5CAA',
         staticIcon: true,
       },
     ],
@@ -361,6 +363,7 @@ module.exports = {
           'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
         indexUid: 'docs',
         placeholder: 'Search as you type...',
+        enableDarkMode: true, // Default: false
       },
     ],
     [
@@ -377,6 +380,9 @@ module.exports = {
   ],
   head: [
     ['link', { rel: 'icon', href: '/favicon-32x32.png' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap' }],
     ['meta', { charset: 'utf-8' }],
     [
       'meta',
