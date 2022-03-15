@@ -194,6 +194,7 @@ module.exports = {
             '/reference/api/get',
             '/reference/api/get_visual_ref1',
             '/reference/api/get_visual_ref_2',
+            '/reference/api/get_visual_ref_3',
             '/reference/api/post',
             '/reference/api/put',
             '/reference/api/patch',
