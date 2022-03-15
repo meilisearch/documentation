@@ -237,7 +237,24 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 ## `missing_authorization_header`
 
+```json
+{
+    "message":"The Authorization header is missing. It must use the bearer authorization method",
+    "code":"missing_authorization_header",
+    "type":"auth",
+    "link":"https://docs.meilisearch.com/errors#missing_authorization_header"
+}
+```
+
+### Cause / Common causes
+
 The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [security](/learn/advanced/security.md) for more information.
+
+### Solution / Troubleshooting steps
+
+1. Add your API key to your header:
+
+<CodeSamples id="get_all_keys_1"/>
 
 ## `not_found`
 
@@ -254,6 +271,45 @@ The document exists in store, but there was an error retrieving it. This probabl
 ## `invalid_content_type`
 
 The Content-Type header is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
+
+:::: tabs
+
+::: tab Error 1
+
+```json
+{
+    "message":"The Content-Type `application/x-www-form-urlencoded` is invalid. Accepted values for the Content-Type header are: `application/json`",
+    "code":"invalid_content_type",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_content_type"
+}
+```
+
+:::
+
+::: tab Error 2
+
+```json
+{
+    "message":"The Content-Type `application/x-www-form-urlencoded` is invalid. Accepted values for the Content-Type header are: `application/json`, `application/x-ndjson`, `text/csv`",
+    "code":"invalid_content_type",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_content_type"
+}
+```
+
+:::
+
+::::
+
+### Cause / Common causes
+
+1. You are using an invalid Content-Type header
+2. You are missing the Content-Type header
+
+### Solution / Troubleshooting steps
+
+Ensure you are using the correct Content-Type header. Meilisearch only accepts JSON, CSV, and NDJSON for adding documents and JSON for the rest
 
 ## `missing_content_type`
 
@@ -433,13 +489,78 @@ You cannot change the primary key for an index once it has been set
 
 The `description` field for the provided API key resource is invalid. It should either be a string or `null`.
 
+```json
+{
+    "message":"`description` field value `456` is invalid. It should be a string or specified as a null value.",
+    "code":"invalid_api_key_description",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_api_key_description"
+}
+```
+
+### Cause / Common causes
+
+1. Your format for description is incorrect
+
+### Solution / Troubleshooting steps
+
+1. Ensure you are using the correct format for the description, it should either be a string or specified as a `null` value.
+
 ## `invalid_api_key_actions`
 
 The `actions` field for the provided API key resource is invalid. It should be an array of strings representing action names.
 
+```json
+{
+    "message":"`actions` field value `[\"document.add\"]` is invalid. It should be an array of string representing action names.",
+    "code":"invalid_api_key_actions",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_api_key_actions"
+}
+```
+
+### Cause / Common causes
+
+1. You are using an invalid action
+2. Your format for listing `actions` is incorrect, it should be an array of strings representing action names.
+
+### Solution / Troubleshooting steps
+
+1. Ensure you are using a [valid action](/reference/api/keys.md#actions-2)
+2. Ensure you are using the correct format for listing `actions`:
+
+```json
+    "actions": [
+      "documents.add"
+    ],
+```
+
 ## `invalid_api_key_indexes`
 
 The `indexes` field for the provided API key resource is invalid. It should be an array of strings representing index names.
+
+```json
+{
+    "message":"`indexes` field value `\"products\"` is invalid. It should be an array of string representing index names.",
+    "code":"invalid_api_key_indexes",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#invalid_api_key_indexes"
+}
+```
+
+### Cause / Common causes
+
+Your format for listing indexes is incorrect, it should be an array of strings representing index names.
+
+### Solution / Troubleshooting steps
+
+1. Ensure you are using the correct format for indexes:
+
+```json
+    "indexes": [
+        "products"
+    ],
+```
 
 ## `invalid_api_key_expires_at`
 
@@ -464,6 +585,23 @@ The `expiresAt` field for the provided API key resource is invalid. It should ei
 
 The requested API key could not be found.
 
+```json
+{
+    "message":"API key `d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4` not found.","code":"api_key_not_found",
+    "type":"invalid_request",
+    "link":"https://docs.meilisearch.com/errors#api_key_not_found"
+}    
+```
+
+### Cause / Common causes
+
+1. the requested key does not exist
+
+### Solution / Troubleshooting steps
+
+1. Check for typos in the key name
+2. Make sure a key with this name exists
+
 ## `missing_parameter`
 
 The payload is missing one or more required fields.
@@ -477,7 +615,7 @@ The requested task does not exist. Please ensure that you are using the correct 
     "message":"Task `210` not found.",
     "code":"task_not_found",
     "type":"invalid_request",
-    "link":"https://docs.meilisearch.com/errors#task_not_found"}
+    "link":"https://docs.meilisearch.com/errors#task_not_found"
 }
 ```
 

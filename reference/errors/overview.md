@@ -1,13 +1,11 @@
 # Errors
 
-In this page you may find an exhaustive list of Meilisearch API errors.
-
 ## The basics
 
 - Why do you get an error?
 - Types of errors
 
-We use the following HTTP status code in the response depending on the success or failure:
+We use the following HTTP status codes in the response depending on success or failure:
 
 | Status Code         | Description                                                     |
 |---------------------|-----------------------------------------------------------------|
