@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "bcad3eea-34e4-421e-a3a2-c019641f680f",
-		"name": "Meilisearch v0.25",
+		"_postman_id": "4b0f742b-ebc4-4809-9e8d-25b3a0a01a32",
+		"name": "Meilisearch v0.26",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -329,7 +329,7 @@
 			]
 		},
 		{
-			"name": "Task Status",
+			"name": "Tasks",
 			"item": [
 				{
 					"name": "Get all tasks",
@@ -1380,12 +1380,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/keys",
+							"raw": "{{url}}/keys/kN2aK9EO8a7b627e425717d9196c8081552ca004e513545ed178f8a56981dbd3080d4a5b",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"keys"
+								"keys",
+								"kN2aK9EO8a7b627e425717d9196c8081552ca004e513545ed178f8a56981dbd3080d4a5b"
 							]
 						}
 					},

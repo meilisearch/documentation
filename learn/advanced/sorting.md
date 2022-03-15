@@ -114,7 +114,7 @@ If your users care more about finding cheaper books than they care about finding
 
 ## Sorting results at search time
 
-After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/features/search_parameters.md#sort) to control the sorting order of your search results.
+After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/search.md#sort) to control the sorting order of your search results.
 
 ### Using `sort`
 

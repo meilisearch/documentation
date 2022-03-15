@@ -1,4 +1,4 @@
-# Security and permissions
+# Master key and API keys
 
 This guide will teach you how to protect your Meilisearch instance by setting a master key and how to authorize requests using API keys. You will also learn how to use your master key to create, list, update, and delete API keys with granular permissions.
 
@@ -8,7 +8,7 @@ This guide will teach you how to protect your Meilisearch instance by setting a 
 
 To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key can be an alphanumeric string of any length.
 
-Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/reference/features/configuration.md#master-key).
+Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/learn/configuration/instance_options.md#master-key).
 
 :::: tabs
 ::: tab CLI
@@ -259,3 +259,7 @@ set MEILI_MASTER_KEY=
 ::: danger
 We strongly advise against deactivating key-based security for any Meilisearch instances used in production or containing sensitive information.
 :::
+
+## Further security measures
+
+API keys alone might not be enough to handle more complex situations such as multi-tenant indexes. If your application must manage several users and sensitive data, we recommend you [consider using tenant tokens](/learn/security/tenant_tokens.md).

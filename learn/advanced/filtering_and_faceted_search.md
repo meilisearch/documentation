@@ -51,7 +51,7 @@ If you want to filter results based on the `director` and `genres` attributes, y
 
 ## Using filters
 
-Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/features/search_parameters.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
+Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
 
@@ -270,7 +270,7 @@ Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` 
 
 #### Example
 
-Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/reference/features/settings.md#filterable-attributes), and you want to get movies classified as either `Horror` **or** `Mystery` **and** directed by `Jordan Peele`.
+Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/learn/configuration/settings.md#filterable-attributes), and you want to get movies classified as either `Horror` **or** `Mystery` **and** directed by `Jordan Peele`.
 
 ```SQL
 [["genres = horror", "genres = mystery"], "director = 'Jordan Peele'"]
@@ -282,7 +282,7 @@ You can then use this filter to search for `thriller`:
 
 ### Facets distribution
 
-When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/features/search_parameters.md#facets-distribution) in combination with `filter` when searching.
+When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/api/search.md#facets-distribution) in combination with `filter` when searching.
 
 ::: note
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
@@ -296,7 +296,7 @@ In the example below, [IMDb](https://www.imdb.com) displays the facet count in p
 
 #### Using facet distribution
 
-[`facetsDistribution` is a search parameter](/reference/features/search_parameters.md#facets-distribution) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
+[`facetsDistribution` is a search parameter](/reference/api/search.md#facets-distribution) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
 Using the `facetsDistribution` search parameter adds two new keys to the returned object: `facetsDistribution` and `exhaustiveFacetsCount`.
 

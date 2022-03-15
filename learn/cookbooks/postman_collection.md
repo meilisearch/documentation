@@ -19,9 +19,9 @@ Once you have downloaded the [Postman collection](/postman/meilisearch-collectio
 
 ![Edit](/postman/edit.png)
 
-Set the API key if needed (set to `masterKey` by default):
+Set the token if needed (set to `masterKey` by default):
 
-![Edit API Key](/postman/set_api_key.png)
+![Edit API Key](/postman/set_token.png)
 
 Set the host URL (set to Meilisearch's local port by default) and the index UID (set to `indexUID` by default):
 
@@ -33,6 +33,6 @@ The `url` and `indexUID` variables are used in all the collection routes, like i
 
 ## Start to use it!
 
-You can now [run your Meilisearch instance](/learn/getting_started/installation.md) and create your first index:
+You can now [run your Meilisearch instance](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and create your first index:
 
 ![Create index](/postman/create_index.png)

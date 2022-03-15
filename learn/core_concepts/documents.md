@@ -36,7 +36,7 @@ As an example, let's say you are creating an **[index][indexes]** that contains 
 {
   "id": "1564saqw12ss",
   "title": "Kung Fu Panda",
-  "genre": "Children's Animation",
+  "genres": "Children's Animation",
   "release-year": 2008,
   "cast": [
     { "Jack Black": "Po" },
@@ -45,7 +45,7 @@ As an example, let's say you are creating an **[index][indexes]** that contains 
 }
 ```
 
-In the above example, `"id"`, `"title"`, `"genre"`, `"release-year"`, and `"cast"` are **attributes**.
+In the above example, `"id"`, `"title"`, `"genres"`, `"release-year"`, and `"cast"` are **attributes**.
 Each attribute must be associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`.
 At minimum, the document must contain one field with the **[primary key][primary-key]** attribute and a unique **[document id][document-id]** as its value. Above, that's: `"id": "1564saqw12ss"`.
 
@@ -61,7 +61,7 @@ The above JSON document would look like this in NDJSON:
 { 
   "id": "1564saqw12ss", 
   "title": "Kung Fu Panda", 
-  "genre": "Children's Animation", 
+  "genres": "Children's Animation", 
   "release-year": 2008, 
   "cast": [
     { "Jack Black": "Po" },
@@ -79,7 +79,7 @@ Compared to JSON, CSV has better writing performance and is less CPU and memory 
 The above JSON document would look like this in CSV:
 
 ```csv
-  "id:string","title:string","genre:string","release-year:number"
+  "id:string","title:string","genres:string","release-year:number"
   "1564saqw12ss","Kung Fu Panda","Children's Animation","2008"
 ```
 
@@ -95,7 +95,7 @@ Documents have a **soft maximum of 1000 fields**; beyond that the [ranking rules
 
 Additionally, every document must have at minimum one field containing the **[primary key][primary-key]** and a **[unique id][document-id]**.
 
-If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
+If you try to [index a document](/learn/getting_started/quick_start.md#step-2-add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
 
 ## Fields
 
@@ -105,17 +105,17 @@ An attribute functions a bit like a variable in most programming languages, i.e.
 
 Every field has a [data type](/learn/advanced/datatypes.md) dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-Take note that, in the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-words-per-attribute). Words exceeding the 65535 position limit will be ignored.**
+Take note that, in the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute). Words exceeding the 65535 position limit will be ignored.**
 
 You can also apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones.
 
-If you would like to adjust how a field gets handled by Meilisearch, you can do so in the [settings](/reference/features/settings.md#settings).
+If you would like to adjust how a field gets handled by Meilisearch, you can do so in the [settings](/learn/configuration/settings.md).
 
 ### Field properties
 
-A field may also possess **[field properties](/reference/features/field_properties.md)**. Field properties determine the characteristics and behavior of the data added to that field.
+A field may also possess **[field properties](/learn/configuration/displayed_searchable_attributes.md)**. Field properties determine the characteristics and behavior of the data added to that field.
 
-At this time, there are two field properties: [searchable](/reference/features/field_properties.md#searchable-fields) and [displayed](/reference/features/field_properties.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
+At this time, there are two field properties: [searchable](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) and [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields). A field can have one, both, or neither of these properties. **By default, all fields in a document are both displayed and searchable.**
 
 To clarify, a field may be:
 
@@ -124,7 +124,7 @@ To clarify, a field may be:
 - Both displayed and searchable (default)
 - Neither displayed nor searchable
 
-In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/reference/features/field_properties.md#data-storing) in the document.
+In the latter case, the field will be completely ignored when a search is performed. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes.md#data-storing) in the document.
 
 ## Primary field
 
@@ -223,7 +223,7 @@ Take note that the document addition request in Meilisearch is atomic. This mean
 
 By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB.
 
-To upload more documents in one go, it is possible to [change the payload size limit](/reference/features/configuration.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
+To upload more documents in one go, it is possible to [change the payload size limit](/learn/configuration/instance_options.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
 ```bash
 ./meilisearch --http-payload-size-limit=1048576000

@@ -52,7 +52,7 @@ apt install curl -y
 curl -L https://install.meilisearch.com | sh
 ```
 
-The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/installation.md#download-and-launch).
+The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/quick_start.md#step-1-setup-and-installation).
 
 **There are many different ways to get Meilisearch running on your machine.** As an open-source project, you can always compile the latest stable release of Meilisearch from its source code to ensure the binary uses your architecture in the best possible way.
 
@@ -76,14 +76,14 @@ meilisearch
 You should see the following successful response:
 
 ```
-888b     d888          d8b 888 d8b  .d8888b.                                    888
-8888b   d8888          Y8P 888 Y8P d88P  Y88b                                   888
-88888b.d88888              888     Y88b.                                        888
-888Y88888P888  .d88b.  888 888 888  "Y888b.    .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888     "Y88b. d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888       "888 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888 Y88b  d88P Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  "Y8888P"   "Y8888  "Y888888 888     "Y8888P 888  888
+888b     d888          d8b 888 d8b                                            888
+8888b   d8888          Y8P 888 Y8P                                            888
+88888b.d88888              888                                                888
+888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
 
 Database path: "./data.ms"
 Server listening on: "127.0.0.1:7700"
@@ -103,7 +103,7 @@ In Debian and other Linux distributions, `systemd` allows you to create and mana
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
 
-To run Meilisearch in a production environment, use the `--env` flag. Set the master key using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/advanced/security.md#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
+To run Meilisearch in a production environment, use the `--env` flag. Set the master key using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
 
 Remember to choose a safe and random key and avoid exposing it in publicly accessible applications. You can change the master key with the following command:
 
@@ -123,7 +123,7 @@ EOF
 ```
 
 ::: tip
-For more information on Meilisearch security and API keys see the [security docs](/learn/advanced/security.md). For more information on Meilisearch options and flags see the [installation docs](/learn/getting_started/installation.md#download-and-launch).
+For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys.md). You can check our [quick start](/learn/getting_started/quick_start.md#step-1-setup-and-installation) guide for more information on how to get Meilisearch up and running.
 :::
 
 As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.

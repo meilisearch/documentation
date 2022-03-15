@@ -1,9 +1,9 @@
-# Field properties
+# Displayed and searchable attributes
 
 By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
-- [`searchableAttributes`](/reference/features/field_properties.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
-- [`displayedAttributes`](/reference/features/field_properties.md#displayed-fields): attributes whose fields are displayed in documents.
+- [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
+- [`displayedAttributes`](/learn/configuration/displayed_searchable_attributes.md#displayed-fields): attributes whose fields are displayed in documents.
 
 This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
 
@@ -50,7 +50,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 #### Example
 
-Suppose that you manage a database of movies with the following fields: `id`, `description`, `genre`, `title`, `release_date`. These fields all contain useful information; however, **some are more useful to search than others**. To make the `id` and `release_date` fields non-searchable and re-order the remaining fields by importance, you might update the searchable attributes list in the following way.
+Suppose that you manage a database of movies with the following fields: `id`, `overview`, `genres`, `title`, `release_date`. These fields all contain useful information; however, **some are more useful to search than others**. To make the `id` and `release_date` fields non-searchable and re-order the remaining fields by importance, you might update the searchable attributes list in the following way.
 
 <CodeSamples id="field_properties_guide_searchable_1" />
 
@@ -68,7 +68,7 @@ This list can be restricted to a selected set of attributes in the settings.
 
 #### Example
 
-Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `description`, `release_date` and `genre`.
+Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `overview`, `release_date` and `genres`.
 
 <CodeSamples id="field_properties_guide_displayed_1" />
 

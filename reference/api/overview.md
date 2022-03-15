@@ -1,4 +1,4 @@
-# API references
+# API reference
 
 Welcome to the Meilisearch API documentation.
 
@@ -28,7 +28,7 @@ For almost all routes, you need to be recognized by the server to check your per
 
 <CodeSamples id="authorization_header_1" />
 
-Please read about [security keys](/learn/advanced/security.md) and [how to manage them](/reference/api/keys.md) for more information.
+Please read about [security keys](/learn/security/master_api_keys.md) and [how to manage them](/reference/api/keys.md) for more information.
 
 `Authorization: Bearer $API_KEY`
 
@@ -69,7 +69,7 @@ Response body:
 }
 ```
 
-If you're having trouble understanding an error, take a look at the [complete list](https://docs.meilisearch.com/errors) of `code` values and descriptions.
+If you're having trouble understanding an error, take a look at the [complete list](/reference/api/error_codes.md) of `code` values and descriptions.
 
 ## Asynchronous operations
 

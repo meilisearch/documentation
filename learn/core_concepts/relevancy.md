@@ -95,7 +95,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 
 ### Attribute
 
-`If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `description`.
+`If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `overview`.
 
 The `attribute` rule sorts the results by [attribute importance](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
@@ -159,7 +159,7 @@ To add a rule to the existing ranking rule, you have to add the rule to the exis
 
 ### Sorting and custom ranking rules
 
-Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/features/search_parameters.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
+Meilisearch allows users to define [sorting order at query time](/learn/advanced/sorting.md) by using the [`sort` search parameter](/reference/api/search.md#sort). There is some overlap between sorting and custom ranking rules, but the two do have different uses.
 
 In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 
@@ -184,23 +184,23 @@ Depending on your needs, you might want to change this order of importance. To d
 
 ## Attribute ranking order
 
-In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `description` or its `release_date`.
+In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `overview` or its `release_date`.
 
 By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the indexed documents. However, it can also be set manually.
 
-For a more detailed look at this subject, see our reference page for [the searchable attributes list](/reference/features/field_properties.md#the-searchableattributes-list).
+For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
 
 ### Example
 
 ```json
 [
   "title", 
-  "description", 
+  "overview", 
   "release_date"
 ]
 ```
 
-With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `description` or `release_date`. If you searched "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.
+With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `overview` or `release_date`. If you searched "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.
 
 :::note
 The `attribute` rule's position in [`rankingRules`](#default-order) determines how the results are sorted. Meaning, **if `attribute` is at the bottom of the ranking rules list, it will have almost no impact on your search results.**

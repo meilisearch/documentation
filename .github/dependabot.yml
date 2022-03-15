@@ -12,4 +12,5 @@ updates:
       - dependency-name: "babel-eslint"
       - dependency-name: "js-yaml"
       - dependency-name: "*prettier*"
+      - dependency-name: "vuex"
   rebase-strategy: disabled

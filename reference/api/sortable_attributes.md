@@ -4,7 +4,7 @@ _Child route of the [settings route](/reference/api/settings.md)._
 
 Sortable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
 
-Attributes that can be used together with the [`sort` search parameter](/reference/features/search_parameters.md#sort). To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md)
+Attributes that can be used together with the [`sort` search parameter](/reference/api/search.md#sort). To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md)
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
@@ -55,7 +55,7 @@ Update an index's sortable attributes list. This will re-index all documents in 
 
 An array of strings containing the attributes that can be used to sort search results at query time.
 
-[You can read more about this setting at the feature reference page.](/reference/features/settings.md#sortable-attributes)
+[You can read more about this setting at the feature reference page.](/learn/configuration/settings.md#sortable-attributes)
 
 ### Example
 

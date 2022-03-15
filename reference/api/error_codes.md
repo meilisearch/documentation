@@ -66,7 +66,7 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 ### `missing_authorization_header`
 
-The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [security](/learn/advanced/security.md) for more information.
+The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [security](/learn/security/master_api_keys.md) for more information.
 
 ### `not_found`
 
@@ -74,7 +74,7 @@ The requested resources could not be found.
 
 ### `payload_too_large`
 
-The payload sent to the server was too large. Check out this [guide](/reference/features/configuration.md#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
+The payload sent to the server was too large. Check out this [guide](/learn/configuration/instance_options.md#payload-limit-size) to customize the maximum payload size accepted by Meilisearch.
 
 ### `unretrievable_document`
 
@@ -118,7 +118,7 @@ The provided `_geo` field of one or more documents is invalid. Read more about `
 
 ### `invalid_api_key`
 
-The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](/learn/advanced/security.md).
+The requested resources are protected with an API key. The provided API key is invalid. Read more about it at in our [dedicated guide](/learn/security/master_api_keys.md).
 
 ### `invalid_store_file`
 
@@ -130,7 +130,7 @@ The host system partition has reached its maximum capacity and can no longer acc
 
 ### `database_size_limit_reached`
 
-The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by Meilisearch, check out this [guide](/reference/features/configuration.md#max-task-db-size).
+The requested database has reached its maximum size; no further documents can be added. For information on customizing the maximum database size accepted by Meilisearch, check out this [guide](/learn/configuration/instance_options.md#max-task-db-size).
 
 ### `index_primary_key_already_exists`
 
@@ -150,7 +150,7 @@ The `indexes` field for the provided API key resource is invalid. It should be a
 
 ### `invalid_api_key_expires_at`
 
-The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the ISO 8601 format or be set to `null`.
+The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the RFC 3339 format or be set to `null`.
 
 ### `api_key_not_found`
 

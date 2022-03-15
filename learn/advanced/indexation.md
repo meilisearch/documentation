@@ -30,7 +30,9 @@ If you encounter performance issues during the indexation we recommend trying th
 
 - Indexation is a memory-intensive and multi-threaded operation. This means **the more memory and processor cores available, the faster Meilisearch will index new documents**. When trying to improve indexation speed, using a machine with more processor cores is more effective than increasing RAM.
 
-- **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/reference/features/configuration.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
+- **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/configuration/instance_options.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
+
+  - If you want to speed up indexation but don't wish to batch documents manually, consider giving our [experimental auto-batcher](/learn/experimental/auto-batching.md) a try.
 
 - **Meilisearch should not be your main database**. The more documents you add, the longer will indexation and search take, so you should only index documents you want to retrieve when searching.
 
@@ -53,7 +55,7 @@ If you encounter performance issues during the indexation we recommend trying th
 ]
 ```
 
-- When creating a new index, first [configure its settings](/reference/features/settings.md) and only then add your documents. Following this order will significantly reduce indexation time.
+- When creating a new index, first [configure its settings](/learn/configuration/settings.md) and only then add your documents. Following this order will significantly reduce indexation time.
 
 - Since indexation speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance.
 
