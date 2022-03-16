@@ -1,10 +1,10 @@
 # GET
 
-## Get one index
+## Get distinct attribute
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid"/>
+<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/distinct-attribute"/>
 
-Get information about an index.
+Get the distinct attribute field of an index.
 
 ### Path variables
 
@@ -17,7 +17,7 @@ Get information about an index.
 
 ### Example
 
-<CodeSamples id='get_one_index_1' />
+<CodeSamples id='get_distinct_attribute_1'/>
 
 #### Response
 
@@ -26,26 +26,12 @@ Get information about an index.
 ::: tab 200 Ok
 
 ```json
-{
-  "uid": "movies",
-  "primaryKey": "movie_id",
-  "createdAt": "2019-11-20T09:40:33.711324Z",
-  "updatedAt": "2019-11-20T10:16:42.761858Z"
-}
+"skuid"
 ```
 
 :::
 
 ::: tab failure1
-
-```json
-{
-  "message":"Index `moviess` not found.",
-  "code":"index_not_found",
-  "type":"invalid_request",
-  "link":"https://docs.meilisearch.com/errors#index_not_found"
-}
-```
 
 :::
 

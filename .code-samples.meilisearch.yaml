@@ -560,3 +560,6 @@ geosearch_guide_sort_usage_2: |-
   curl -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "sort": ["_geoPoint(48.8583701,2.2922926):asc", "rating:desc"] }'
+get_task_1: |-
+  curl \
+    -X GET 'http://localhost:7700/tasks/1'    

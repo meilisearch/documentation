@@ -76,6 +76,8 @@ Get a single task.
 
 #### Example
 
+<CodeSamples id="get_task_1" />
+
 Returns the `task` object:
 
 ##### Response
