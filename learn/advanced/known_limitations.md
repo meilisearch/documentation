@@ -82,3 +82,9 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
   ["user = 1", "user = 2", […], "user = 1500", "user = 1501", […], "user = 2000", "user = 2001"]
 ]
 ```  
+
+## Size of numeric fields
+
+**Limitation:** Meilisearch can only exactly represent integers between -2⁵³ and 2⁵³.
+
+**Explanation:** Meilisearch stores numbers as double-precision floating-point numbers. Hence, it can only exactly represent integers between -2⁵³ and 2⁵³. This allows for greater precision and increases the range of magnitudes that can be represented.
