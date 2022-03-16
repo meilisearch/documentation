@@ -215,7 +215,7 @@ If the `status` field has the value `enqueued` or `processing`, all you have to 
 
 ## Step 3: Search
 
-Now that you have Meilisearch setup, you can start searching!
+Now that you have Meilisearch set up, you can start searching!
 
 <CodeSamples id="getting_started_search_md" />
 
