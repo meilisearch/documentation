@@ -58,7 +58,7 @@ module.exports = {
             ],
           },
           {
-            text: 'DevOp tools',
+            text: 'DevOps tools',
             items: [
               { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
               { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
