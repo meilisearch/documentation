@@ -292,6 +292,7 @@ module.exports = {
               title: 'Overview',
               path: '/reference/api/overview',
             },
+            '/reference/api/sample_ref',
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
