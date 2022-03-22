@@ -32,7 +32,7 @@ Setting up a master key is optional but strongly recommended when running in pro
 
 Copy the public URL (e.g. `https://meili-myorg.koyeb.app`) from the [Koyeb control panel](https://app.koyeb.com) and paste it in your browser.
 
-You land on the MeiliSearch dashboard, where you are asked to authenticate using your master key.
+You should land on the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview.md), where you are asked to enter your master key.
 
 You are now ready to [create your first index](/learn/getting_started/quick_start.md)!
 
