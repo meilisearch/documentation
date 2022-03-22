@@ -42,6 +42,22 @@ curl \
 | `dumps.get`        | Provides access to the [get dump status](/reference/api/dump.md#get-dump-status) endpoint. **Not restricted by `indexes`.** |
 | `version`          | Provides access to the [get Meilisearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint. |
 
+```json
+{
+  "description": "Add documents: Products API key",
+  "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "actions": [
+    "documents.add"
+  ],
+  "indexes": [
+    "products"
+  ],
+  "expiresAt": "2021-11-13T00:00:00Z",
+  "createdAt": "2021-11-12T10:00:00Z",
+  "updatedAt": "2021-11-12T10:00:00Z"
+}
+```
+
 ## Get all keys
 
 <RouteHighlighter method="GET" route="/keys"/>
