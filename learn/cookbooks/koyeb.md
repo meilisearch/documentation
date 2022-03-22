@@ -30,7 +30,7 @@ Setting up a master key is optional but strongly recommended when running in pro
 
 ### Test Meilisearch
 
-Copy the public URL (e.g. `https://meili-myorg.koyeb.app`) from the [Koyeb control panel](https://app.koyeb.com) and paste it your browser.
+Copy the public URL (e.g. `https://meili-myorg.koyeb.app`) from the [Koyeb control panel](https://app.koyeb.com) and paste it in your browser.
 
 You land on the MeiliSearch dashboard, where you are asked to authenticate using your master key.
 
