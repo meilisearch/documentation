@@ -15,7 +15,6 @@ Welcome to the Meilisearch documentation. Here you'll find everything you need t
 - [Deploy Meilisearch on AWS](/learn/cookbooks/aws.md)
 - [Deploy Meilisearch on GCP](/learn/cookbooks/gcp.md)
 - [Deploy Meilisearch on DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
-- [Deploy Meilisearch on Koyeb](/learn/cookbooks/koyeb.md)
 
 ## Version compatibility
 
