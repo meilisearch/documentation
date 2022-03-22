@@ -34,6 +34,6 @@ Copy the public URL (e.g. `https://meili-myorg.koyeb.app`) from the [Koyeb contr
 
 You land on the MeiliSearch dashboard, where you are asked to authenticate using your master key.
 
-You are now ready to create your first index!
+You are now ready to [create your first index](/learn/getting_started/quick_start.md)!
 
 **Enjoy**!
