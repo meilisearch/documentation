@@ -28,7 +28,7 @@ python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).deco
 Setting up a master key is optional but strongly recommended when running in production. Unsetting the master key will make your Meilisearch instance unprotected and publicly accessible.
 :::
 
-### Test Meilisearch.
+### Test Meilisearch
 
 Copy the public URL (e.g. `https://meili-myorg.koyeb.app`) from the [Koyeb control panel](https://app.koyeb.com) and paste it your browser.
 
