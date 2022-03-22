@@ -4,7 +4,7 @@ This chapter will help you get ready to use Meilisearch in production by coverin
 
 ## Instance options
 
-Meilisearch allows you to configure your entire instance through **[environment variables](/learn/configuration/instance_options.md#configuring-an-instance-with-environment-variables)** before launch or **[command-line options](/learn/configuration/instance_options.md#configuring-an-instance-with-command-line-options)** at launch.
+Meilisearch allows you to configure your entire instance through **[environment variables](/learn/configuration/instance_options.md#environment-variables)** before launch or **[command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags)** at launch.
 
 Meilisearch has configuration options for many critical actions, such as:
 
@@ -63,7 +63,7 @@ Once this has been done, you must supply an API key with sufficient permissions 
 
 <CodeSamples id= getting_started_communicating_with_a_protected_instance />
 
-You can customize all API keys, including altering their expiration dates and updating their permissions. Read more about Meilisearch and security in our [dedicated guide](/learn/advanced/security.md).
+You can customize all API keys, including altering their expiration dates and updating their permissions. Read more about Meilisearch and security in our [dedicated guide](/learn/security/master_api_keys.md).
 
 ## What's next
 

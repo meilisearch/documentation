@@ -1,28 +1,146 @@
 @import url('https://rsms.me/inter/inter.css');
 
 html
-  background-color: #f9f8ff !important;
 body
-  background-color: #f9f8ff
-  font-family: 'Inter', sans-serif
-  color: #21004B
+  font-family: 'Inter', sans-serif;
 
-h1
-  background-color: #f9f8ff
-  color: #21004B
+// # text color in light
+h1 {
+  color: $accentColor;
+}
 
+// ## and ### text color in light
+h2, h3, {
+  font-family: "Poppins";
+  color: $titlesColor;
+}
+
+// ## and ### text color in dark
+@media (prefers-color-scheme: dark) {
+  h2, h3 {
+  color: $titlesDarkColor;
+  }
+}
+
+// Text color in code samples
+.theme-default-content pre code, .theme-default-content pre[class*='language-'] code,
+.theme-default-content code .token.punctuation {
+   color: $preTextColor !important;
+}
+
+// Remove unwanted padding from headers
+h1 > a.header-anchor, h2 > a.header-anchor, h3 > a.header-anchor {
+  padding-right: 0;
+}
+
+// Remove underlines of links
+body a {
+  text-decoration: none !important;
+}
+
+// Change hover color of links
+a:hover {
+  color: $linkHoverColor;
+}
+
+// Dropdown from navbar
+body > .nav-link:hover, body > .dropdown-title:hover
+  color: $accentColor;
+
+
+
+/*
+* TABS
+*
+* Changes the color the code sample tabs
+* The tabs are created using the plugin: vuepress-plugin-element-tabs
+*
+*/
+
+.el-tabs
+  .el-tabs__item
+   padding 0 15px;
+
+// Non active
+.el-tabs--border-card>.el-tabs__header {
+  color: $accentColor;
+}
+
+// Active tabs
+.el-tabs__item.is-active
+  color: $accentColor !important;
+
+.el-tabs__item:not(.is-disabled):hover
+  color: $accentColor !important;
+
+.el-tabs--border-card>.el-tabs__header {
+  border-radius: 0px 8px !important;
+  background-color: #E9E5ED !important;
+}
+.el-tabs__item.is-active {
+  border-radius: 0px 8px !important;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .el-tabs--border-card>.el-tabs__header {
+    color: $accentDarkColor;
+    background-color: #11071D !important;
+    border: 1px solid $bgDarkColor !important;
+  }
+
+  .el-tabs__item.is-active {
+    color: $accentDarkColor !important;
+    background-color: #170E23 !important;
+    border-right: 1px solid #251D30 !important;
+    border-left: 1px solid #251D30 !important;
+  }
+
+  // wrapper arround the code in tabs
+  .el-tabs {
+    background-color: #170E23 !important;
+    border: 1px solid #251D30 !important;
+    border-radius: 8px;
+  }
+  // Content of code
+  .extra-class > pre {
+      background-color: #11071D !important;
+  }
+}
+
+.el-tabs--border-card
+  background-color: $codeBgColor;
+
+// None-active tabs on hover
+.el-tabs__item:not(.is-disabled):hover
+  color: $accentColor !important;
+
+// Shadow border when going from tab to tab using the arrows of the keyboard
+.el-tabs__item:focus.is-active.is-focus:not(:active) {
+  box-shadow: 0 0 2px 2px $accentDarkColor inset !important;
+}
+
+/*
+*
+* END TABS
+*/
+
+
+// Tips/Warning/Error blocks
 .custom-block
   .custom-block-title
-    font-weight 600
-    margin-bottom -0.4rem
+    font-weight 600;
+    margin-bottom -0.4rem;
   &.note
-    padding .1rem 1.5rem
-    border-left-width .5rem
-    border-left-style solid
+    padding .1rem 1.5rem;
+    border-left-width .5rem;
+    border-left-style solid;
     margin 1rem 0
   &.note
-    background-color #fff
+    background-color rgba(79, 85, 227, 0.1);
     border-color #4f55e3;
+
+// Clipboard logo
 .code-copy
     position: sticky;
     left: 0px;
@@ -31,60 +149,52 @@ h1
       bottom: -6px !important;
     }
 
+
+
 {$contentClass} a code
-  color $accentColor
+  color $accentColor;
 
-.el-tabs
-  .el-tabs__item
-   padding 0 15px
+/*
+**
+** Docs searchbar styling (search experience)
+*/
 
-
-// TODO: CSS is very ugly for efficienty purposes.
-// It should be cleaned
-.navbar, .links
-  background-color: #fcfcff !important;
-.sidebar
-  background-color: #fcfcff !important;
-.site-name
-  color: #21004B !important;
-.nav-link, .dropdown-title
-  color: #4d336f !important;
-  font-weight: 500 !important;
-.nav-link:hover, .dropdown-title:hover
-  color: #FF4E62 !important;
-  font-weight: 500 !important;
-.sidebar-heading.open,  .sidebar-heading
-  color: #21004B !important;
-  font-weight: 600 !important;
-.sidebar-heading.open:hover,  .sidebar-heading:hover
-  color: #FF4E62 !important;
-  font-weight: 600 !important;
-.sidebar-link
-  color: #4d336f !important;
-.sidebar-link:hover
-  color: #FF4E62 !important;
-.router-link-exact-active, .router-link-active
-  color: #21004B !important;
-
-h1 a.header-anchor {
-  font-family: "Poppins";
-  padding-right: 0;
+.meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+  background-color: $titlesColor !important;
+}
+.dsb-cursor .docs-searchbar-suggestion--content {
+  background-color: rgba(black, 10%) !important;
+}
+// TODO: Pas dans le titre
+.docs-searchbar-suggestion--highlight {
+  background-color: rgba(0,0,0,0) !important;
+  color: $titlesColor !important;
 }
 
-a:hover {
-  color: #cd3e4e;
+
+@media (prefers-color-scheme: dark) {
+  #meilisearch-search-input {
+    background-color: #11071D !important;
+  }
+
+  .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+    background-color: #11071D !important;
+  }
+
+  .docs-searchbar-suggestion--highlight {
+    background-color: rgba(0,0,0,0) !important;
+    color: $accentColor !important;
+  }
+  .meilisearch-search-wrapper div[data-ds-theme="dark"]
+  .meilisearch-autocomplete .dsb-dropdown-menu [class^=dsb-dataset-],
+  .meilisearch-search-wrapper div[data-ds-theme="dark"]
+  .meilisearch-autocomplete .docs-searchbar-suggestion {
+    background-color: $bgDarkColor !important;
+  }
+
+  .dsb-dataset-1, .dsb-dropdown-menu{
+    background-color: $bgDarkColor !important;
+    border: 1px solid $bgDarkColor;
+  }
 }
 
-// Text color inside warning blocks
-.custom-block.warning a {
-    color: #FF4E62;
-}
-.custom-block.warning a:hover {
-    color: #cd3e4e;
-}
-.custom-block.warning {
-    color: #21004B;
-}
-body a {
-  text-decoration: none !important;
-}

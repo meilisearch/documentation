@@ -32,6 +32,8 @@ If you encounter performance issues during the indexation we recommend trying th
 
 - **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/configuration/instance_options.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
 
+  - If you want to speed up indexation but don't wish to batch documents manually, consider giving our [experimental auto-batcher](/learn/experimental/auto-batching.md) a try.
+
 - **Meilisearch should not be your main database**. The more documents you add, the longer will indexation and search take, so you should only index documents you want to retrieve when searching.
 
 - By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields Meilisearch needs to index, the faster is the indexation process.

@@ -1,7 +1,8 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'Meilisearch Documentation v0.25',
+  title: 'Meilisearch Documentation v0.26',
   description: 'Open source Instant Search Engine',
+  theme: 'default-prefers-color-scheme',
   themeConfig: {
     repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
@@ -10,9 +11,10 @@ module.exports = {
     logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
+
     nav: [
       { text: 'Learn', link: '/learn/getting_started/quick_start' },
-      { text: 'Reference', link: '/reference/api/overview' },
+      { text: 'API Reference', link: '/reference/api/overview' },
       { text: 'FAQ', link: '/faq' },
       {
         text: 'Integrations',
@@ -56,7 +58,7 @@ module.exports = {
             ],
           },
           {
-            text: 'DevOp tools',
+            text: 'DevOps tools',
             items: [
               { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
               { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
@@ -66,6 +68,7 @@ module.exports = {
         ],
       },
       { text: 'Slack', link: 'https://slack.meilisearch.com' },
+      { text: 'Blog', link: 'https://blog.meilisearch.com/' },
     ],
     sidebar: {
       '/learn/': [
@@ -122,10 +125,14 @@ module.exports = {
           collapsable: false,
           path: '/learn/configuration/instance_options/',
           children: [
-            '/learn/configuration/instance_options',
+            {
+              title: 'Configure Meilisearch at launch',
+              path: '/learn/configuration/instance_options',
+            },
             {
               title: 'Index settings',
               collapsable: false,
+              path: '/learn/configuration/settings/',
               children: [
                 {
                   title: 'Overview',
@@ -139,6 +146,15 @@ module.exports = {
           ],
         },
         {
+          title: '🔐 Security and permissions',
+          collapsable: false,
+          path: '/learn/security/master_api_keys/',
+          children: [
+            '/learn/security/master_api_keys',
+            '/learn/security/tenant_tokens',
+          ],
+        },
+        {
           title: '📚 Advanced topics',
           path: '/learn/advanced/asynchronous_operations/',
           collapsable: false,
@@ -146,7 +162,6 @@ module.exports = {
             '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
-            '/learn/advanced/security',
             '/learn/advanced/sorting',
             {
               title: 'Updating Meilisearch',
@@ -241,6 +256,21 @@ module.exports = {
           ],
         },
         {
+          title: '🧪 Experimental',
+          collapsable: false,
+          path: '/learn/experimental/overview/',
+          children: [
+            {
+              title: 'Overview',
+              path: '/learn/experimental/overview',
+            },
+            {
+              title: 'Auto-batching',
+              path: '/learn/experimental/auto-batching',
+            },
+          ],
+        },
+        {
           title: '👐 Contributing',
           path: '/learn/contributing/overview/',
           collapsable: false,
@@ -306,7 +336,8 @@ module.exports = {
       {
         pattern: '**/*.md',
         strictExt: true,
-        ignorePattern: ['errors', 'document_structure'],
+        ignoreFilePattern: ['errors', 'document_structure'],
+        ignoreHashPattern: ['actions-2'],
         exitLevel: 'warn',
       },
     ],
@@ -324,7 +355,7 @@ module.exports = {
     [
       'vuepress-plugin-code-copy',
       {
-        color: '#FF4E62',
+        color: '#FF5CAA',
         staticIcon: true,
       },
     ],
@@ -336,6 +367,7 @@ module.exports = {
           'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
         indexUid: 'docs',
         placeholder: 'Search as you type...',
+        enableDarkMode: true, // Default: false
       },
     ],
     [
@@ -352,6 +384,9 @@ module.exports = {
   ],
   head: [
     ['link', { rel: 'icon', href: '/favicon-32x32.png' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com' }],
+    ['link', { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap' }],
     ['meta', { charset: 'utf-8' }],
     [
       'meta',
