@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This guide explains how to deploy a ready-to-use Meilisearch service on Koyeb.
+This guide explains how to deploy a ready-to-use Meilisearch instance on Koyeb.
 
 [Koyeb](https://www.koyeb.com) is a developer-friendly serverless platform to deploy apps globally. The platform lets you seamlessly run Docker containers, web apps, and APIs with git-based deployment, TLS encryption, native autoscaling, a global edge network, and built-in service mesh & discovery.
 
