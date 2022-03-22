@@ -43,7 +43,7 @@ You can also set a password for `root` user if you prefer this authentication me
 
 ### 6. Choose your droplet name and tags
 
-Here you can select the name that will be visible everywhere in your DigitalOcean account. Choose wisely!Droplets can only contain alphanumeric characters, dashes, and periods.
+Here you can select the name that will be visible everywhere in your DigitalOcean account. Choose wisely! Droplets can only contain alphanumeric characters, dashes, and periods.
 
 ![Adding 'meilisearch-droplet-name' as the hostname](/digitalocean/06.droplet-name.png)
 
