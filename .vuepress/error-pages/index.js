@@ -23,7 +23,7 @@ module.exports = {
     const errorsPages = []
     errorsPages.push({
       path: '/errors/', // Cannot be errors. Works in development mode but not production
-      content: `## MeiliSearch Errors
+      content: `## Meilisearch Errors
 ${errors.map(err => `
 <h4 id="${err.code}"><a href="#${err.code}" class="header-anchor">#</a> <code>${err.code}</code></h4>
 
