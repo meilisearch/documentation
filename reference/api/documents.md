@@ -108,7 +108,7 @@ For a partial update of the document see [add or update documents](/reference/ap
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
 | **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the index _(optional)_ |     none      |
 
-If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
@@ -162,7 +162,7 @@ If the provided index does not exist, it will be created.
 | ------------- | ------------- |
 | **index_uid** | The index UID |
 
-If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Query parameters
 
