@@ -19,9 +19,8 @@ Read more about typo tolerance in [this dedicated guide](/learn/advanced/typotol
 
 ## Synonyms
 
-![search demo gif](/search-synonyms-typo.gif)
-
-Meilisearch in action with `batman` and `joker` defined as synonyms.
+![Search demo gif updating results on the Meilisearch search preview for synonyms 'batman' and 'joker'](/search-synonyms-typo.gif)
+_MeiliSearch in action with `batman` and `joker` defined as synonyms_
 
 Defining synonyms lets you craft a more tailored, intuitive search experience.
 Read more about synonyms in [this dedicated guide](/learn/configuration/synonyms.md).
