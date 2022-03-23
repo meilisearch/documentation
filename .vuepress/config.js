@@ -349,7 +349,6 @@ module.exports = {
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
-    [require('./custom-timestamp')],
     [require('./code-samples')],
     [
       'vuepress-plugin-code-copy',
