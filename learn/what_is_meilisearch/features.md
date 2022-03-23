@@ -62,4 +62,4 @@ API keys are managed by the master key. When you set a master key on your first 
 
 ## Comprehensive language support
 
-[MeiliSearch is multilingual](/learn/what_is_meilisearch/language.md)! We aim to support every language represented in our global community.
+[Meilisearch is multilingual](/learn/what_is_meilisearch/language.md)! We aim to support every language represented in our global community.
