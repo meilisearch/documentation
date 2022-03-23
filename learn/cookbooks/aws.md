@@ -149,7 +149,7 @@ Open a terminal window and navigate to wherever you saved your [key pair](#_8-se
 Run the following command to secure your key pair.
 
 ```bash
-chmod 400 <YourMeiliSearchKeyPair>.pem
+chmod 400 <YourMeilisearchKeyPair>.pem
 ```
 
 ### 2.2. Run the configuration script

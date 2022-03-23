@@ -99,7 +99,7 @@ module.exports = {
           children: [
             '/learn/getting_started/quick_start',
             {
-              title: 'MeiliSearch 101',
+              title: 'Meilisearch 101',
               path: '/learn/getting_started/filtering_and_sorting/',
               collapsable: false,
               children: [
