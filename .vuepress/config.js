@@ -244,6 +244,10 @@ module.exports = {
                   path: '/learn/cookbooks/digitalocean_droplet',
                 },
                 {
+                  title: 'Deploy on Koyeb',
+                  path: '/learn/cookbooks/koyeb',
+                },
+                {
                   title: 'Deploy on Qovery',
                   path: '/learn/cookbooks/qovery',
                 },
