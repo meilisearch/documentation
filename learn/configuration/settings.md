@@ -83,7 +83,7 @@ List of attributes that can be used for [filtering and faceted search](/learn/ad
 By default, `filterableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
 
 ::: tip
-Configuring `filterableAttributes` is necessary in order to use the [`filter` search parameter](/reference/api/search.md#filter).
+Configuring `filterableAttributes` is necessary in order to use the [`filter` search parameter](/reference/search.md#filter).
 :::
 
 [Learn more about filtering and faceted search in our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
@@ -141,7 +141,7 @@ With the settings in the example above, documents will be sorted by decreasing n
 
 ## Searchable attributes
 
-The content of the fields whose attributes are added to the [searchable-attributes list](/reference/api/searchable_attributes.md) are **searched for matching query words**.
+The content of the fields whose attributes are added to the [searchable-attributes list](/reference/searchable_attributes.md) are **searched for matching query words**.
 
 `searchableAttributes=[<String>, <String>, ...]`
 
@@ -164,7 +164,7 @@ List of attributes that can be used for [sorting](/learn/advanced/sorting.md).
 By default, `sortableAttributes` is an empty array. It expects an array of attributes whose corresponding values are either numbers or strings. `null` fields or fields that contain empty arrays are silently ignored, but an error will be thrown if the field's value is an object.
 
 ::: tip
-Configuring `sortableAttributes` is necessary in order to use the [`sort` search parameter](/reference/api/search.md#sort).
+Configuring `sortableAttributes` is necessary in order to use the [`sort` search parameter](/reference/search.md#sort).
 :::
 
 [Learn more about sorting in our dedicated guide.](/learn/advanced/sorting.md)
@@ -185,7 +185,7 @@ A set of words defined for an index. Because some words neither add semantic val
 
   An array of strings that contains the stop words.
 
-[Learn more about stop words](/reference/api/stop_words.md)
+[Learn more about stop words](/reference/stop_words.md)
 
 #### Example
 

@@ -19,11 +19,11 @@ For example, it means you could create on the same server synonyms for a `movie`
 
 ## Index creation
 
-An index is created the first time documents are added to it or manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
+An index is created the first time documents are added to it or manually using the [create index endpoint](/reference/indexes.md#create-an-index).
 
 #### Example
 
-Let's use the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents) to add documents to a new Meilisearch instance without an index.
+Let's use the [add or replace documents endpoint](/reference/documents.md#add-or-replace-documents) to add documents to a new Meilisearch instance without an index.
 
 We will create an index called `movies`. The code below will create the `movies` index and add a sample document to it.
 
@@ -33,7 +33,7 @@ We will create an index called `movies`. The code below will create the `movies`
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
-The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
+The `uid` is set at [index creation time](/reference/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
 {
@@ -79,17 +79,17 @@ Since synonyms are linked to a given index, they won't apply to any other index 
 
 Sometimes you may want to ignore certain words in documents and search queries. To do so, **a set of stop words can be defined for an index**. Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (for example, `the` or `of` in English).
 
-Words added to the [stop words list](/reference/api/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
+Words added to the [stop words list](/reference/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
 
 For example, suppose you want to search for `the great gatsby`. You would prefer to receive documents containing the terms `great gatsby`, rather than documents containing the terms `the great`, or just `the`. In this case, adding `the` to the stop word list would improve performance and make search results more relevant.
 
-[Learn more about stop words](/reference/api/stop_words.md)
+[Learn more about stop words](/reference/stop_words.md)
 
 ## Field properties
 
 By default, every document field is searchable and returned on search queries.
 
-Fields can have either or both or none of the following properties that can be modified in the [settings](/reference/api/settings.md):
+Fields can have either or both or none of the following properties that can be modified in the [settings](/reference/settings.md):
 
 - **Searchable**: The content of searchable fields is used by Meilisearch to assess the relevancy of a document.
 - **Displayed**: Documents returned upon search contain only displayed fields.

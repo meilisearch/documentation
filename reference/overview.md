@@ -20,7 +20,7 @@ Any API request with a payload (`--data-binary`) requires a `Content-Type` heade
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
 
-The only endpoints which currently accept NDJSON and CSV `Content-Type` are the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints. For all others, use `Content-Type: application/json`.
+The only endpoints which currently accept NDJSON and CSV `Content-Type` are the [add documents](/reference/documents.md#add-or-replace-documents) and [update documents](/reference/documents.md#add-or-update-documents) endpoints. For all others, use `Content-Type: application/json`.
 
 #### Authorization
 
@@ -28,7 +28,7 @@ For almost all routes, you need to be recognized by the server to check your per
 
 <CodeSamples id="authorization_header_1" />
 
-Please read about [security keys](/learn/security/master_api_keys.md) and [how to manage them](/reference/api/keys.md) for more information.
+Please read about [security keys](/learn/security/master_api_keys.md) and [how to manage them](/reference/keys.md) for more information.
 
 `Authorization: Bearer $API_KEY`
 
@@ -69,7 +69,7 @@ Response body:
 }
 ```
 
-If you're having trouble understanding an error, take a look at the [complete list](/reference/api/error_codes.md) of `code` values and descriptions.
+If you're having trouble understanding an error, take a look at the [complete list](/reference/error_codes.md) of `code` values and descriptions.
 
 ## Asynchronous operations
 
@@ -85,6 +85,6 @@ Meilisearch is an **asynchronous API**. This means that in response to most writ
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 See more information about [asynchronous operations](/learn/advanced/asynchronous_operations.md).

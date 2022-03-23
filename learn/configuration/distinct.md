@@ -1,6 +1,6 @@
 # Distinct attribute
 
-The [distinct attribute](/reference/api/distinct_attribute.md) is a special, user-designated field. It is most commonly used to prevent Meilisearch from returning a set of several similar documents, instead forcing it to return only one.
+The [distinct attribute](/reference/distinct_attribute.md) is a special, user-designated field. It is most commonly used to prevent Meilisearch from returning a set of several similar documents, instead forcing it to return only one.
 
 :::note
 There can be only one `distinctAttribute` per index. Trying to set multiple fields as a `distinctAttribute` will return an error.
@@ -72,4 +72,4 @@ After setting the distinct attribute as shown above, querying for `lee leather j
 }
 ```
 
-For more in-depth information on distinct attribute, consult the [API reference](/reference/api/distinct_attribute.md).
+For more in-depth information on distinct attribute, consult the [API reference](/reference/distinct_attribute.md).

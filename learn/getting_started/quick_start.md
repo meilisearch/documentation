@@ -188,7 +188,7 @@ The previous command added documents from `movies.json` to a new index called `m
 
 Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
 
-Use the returned `uid` to [check the status](/reference/api/tasks.md) of your documents:
+Use the returned `uid` to [check the status](/reference/tasks.md) of your documents:
 
 <CodeSamples id="getting_started_check_task_status_md" />
 
@@ -251,7 +251,7 @@ In the above code sample, the parameter `q` represents the search query. The doc
 }
 ```
 
-By default, Meilisearch only returns the first 20 results for a search query. This can be changed using the [`limit` parameter](/reference/api/search.md#limit).
+By default, Meilisearch only returns the first 20 results for a search query. This can be changed using the [`limit` parameter](/reference/search.md#limit).
 
 ## Step 4: Search preview
 
@@ -271,4 +271,4 @@ To learn more about instant-meilisearch, refer to its [documentation](https://gi
 
 You now know all the basics: how to install Meilisearch, create an index, add documents, check the status of an asynchronous task, and perform a search.
 
-To keep going, continue to the [Meilisearch 101](/learn/getting_started/filtering_and_sorting.md) for a guided overview of the main features, or check out the [API references](/reference/api/overview.md) to dive right in!
+To keep going, continue to the [Meilisearch 101](/learn/getting_started/filtering_and_sorting.md) for a guided overview of the main features, or check out the [API references](/reference/overview.md) to dive right in!

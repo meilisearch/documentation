@@ -178,7 +178,7 @@ These three fields are mandatory, but more [optional fields are available](https
 
 ::: warning
 
-Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/api/search.md) , such as the `Default Search API Key`, in a production environment.
+Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/search.md) , such as the `Default Search API Key`, in a production environment.
 Read more about [Meilisearch security](/learn/security/master_api_keys.md).
 
 :::

@@ -36,7 +36,7 @@ If you encounter performance issues during the indexation we recommend trying th
 
 - **Meilisearch should not be your main database**. The more documents you add, the longer will indexation and search take, so you should only index documents you want to retrieve when searching.
 
-- By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](https://docs.meilisearch.com/reference/api/searchable_attributes.html#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields Meilisearch needs to index, the faster is the indexation process.
+- By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](https://docs.meilisearch.com/reference/searchable_attributes.html#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields Meilisearch needs to index, the faster is the indexation process.
 
 ```json
 [

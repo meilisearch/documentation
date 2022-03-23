@@ -1,10 +1,10 @@
 # Ranking rules
 
-_Child route of the [settings route](/reference/api/settings.md)._
+_Child route of the [settings route](/reference/settings.md)._
 
 Ranking rules are built-in rules that allow you to **customize the relevancy of your search results**. They are stored in an array and applied in order of appearance.
 
-Ranking rules can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
+Ranking rules can also be updated directly through the [global settings route](/reference/settings.md#update-settings) along with the other settings.
 
 To learn more about ranking rules, refer to our [dedicated guide](/learn/core_concepts/relevancy.md).
 
@@ -88,7 +88,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Reset ranking rules
 
@@ -98,7 +98,7 @@ Reset the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an
 
 ::: tip
 Note that resetting the ranking rules is not the same as removing them.
-To remove a ranking rule, use the [add or replace ranking rules route](/reference/api/ranking_rules.md#update-ranking-rules).
+To remove a ranking rule, use the [add or replace ranking rules route](/reference/ranking_rules.md#update-ranking-rules).
 :::
 
 #### Default value
@@ -138,4 +138,4 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).

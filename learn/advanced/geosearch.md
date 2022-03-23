@@ -91,7 +91,7 @@ Our restaurant dataset looks like this once we add geopositioning data:
 ```
 
 ::: warning
-Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_geo_field`](/reference/api/error_codes.md#invalid-geo-field) error. In this case, the update will fail and no documents will be added or modified.
+Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_geo_field`](/reference/error_codes.md#invalid-geo-field) error. In this case, the update will fail and no documents will be added or modified.
 :::
 
 ### Using `_geo` with CSV
@@ -121,7 +121,7 @@ Note that Meilisearch will rebuild your index whenever you update `filterableAtt
 
 ### Usage
 
-Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `filterableAttributes` list, you can use the [`filter` search parameter](/reference/api/search.md#filter) along with `_geoRadius`, a special filter rule, to ensure Meilisearch only returns results located within a specific geographic area.
+Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `filterableAttributes` list, you can use the [`filter` search parameter](/reference/search.md#filter) along with `_geoRadius`, a special filter rule, to ensure Meilisearch only returns results located within a specific geographic area.
 
 `_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
@@ -129,12 +129,12 @@ Once you are sure that all your documents contain valid geolocation data and tha
 _geoRadius(lat, lng, distance_in_meters)
 ```
 
-`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter. If any of these three parameters are invalid or missing, Meilisearch will return an [`invalid_filter`](/reference/api/error_codes.md#invalid-filter) error.
+`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter. If any of these three parameters are invalid or missing, Meilisearch will return an [`invalid_filter`](/reference/error_codes.md#invalid-filter) error.
 
 [You can read more about using `filter` in our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md#using-filters)
 
 ::: warning
-`_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_filter`](/reference/api/error_codes.md#invalid-filter) error.
+`_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_filter`](/reference/error_codes.md#invalid-filter) error.
 :::
 
 ### Examples
@@ -210,7 +210,7 @@ Note that Meilisearch will rebuild your index whenever you update `sortableAttri
 
 ### Usage
 
-Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `sortableAttributes` list, you can use the [`sort` search parameter](/reference/api/search.md#sort) along with `_geoPoint`, a special sorting function, to order results based on their distance from a geographic location.
+Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `sortableAttributes` list, you can use the [`sort` search parameter](/reference/search.md#sort) along with `_geoPoint`, a special sorting function, to order results based on their distance from a geographic location.
 
 ```
 _geoPoint(0.0, 0.0):asc
@@ -218,12 +218,12 @@ _geoPoint(0.0, 0.0):asc
 
 `_geoPoint` requires two floating point numbers indicating a location's latitude and longitude. You must also specify whether the sort should be ascending (`asc`) or descending (`desc`). Ascending sort will prioritize results closer to the specified location, while descending sort will put the most distant results first.
 
-If either `lat` or `lng` is invalid or missing, Meilisearch will return an [`invalid_sort`](/reference/api/error_codes.md#invalid-sort) error. An error will also be thrown if you fail to indicate a sorting order.
+If either `lat` or `lng` is invalid or missing, Meilisearch will return an [`invalid_sort`](/reference/error_codes.md#invalid-sort) error. An error will also be thrown if you fail to indicate a sorting order.
 
 [You can read more about sorting in our dedicated guide.](/learn/advanced/sorting.md#sorting-results-at-search-time)
 
 ::: warning
-`_geo`, `_geoDistance`, and `_geoRadius` are not valid `sort` values. Trying to use any of them with the `sort` search parameter will result in an [`invalid_sort`](/reference/api/error_codes.md#invalid-sort) error.
+`_geo`, `_geoDistance`, and `_geoRadius` are not valid `sort` values. Trying to use any of them with the `sort` search parameter will result in an [`invalid_sort`](/reference/error_codes.md#invalid-sort) error.
 :::
 
 ### Examples

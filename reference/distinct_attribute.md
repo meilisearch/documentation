@@ -1,10 +1,10 @@
 # Distinct attribute
 
-_Child route of the [settings route](/reference/api/settings.md)._
+_Child route of the [settings route](/reference/settings.md)._
 
 [Distinct attribute](/learn/configuration/distinct.md) is a field whose value will always be **unique** in the returned documents.
 
-Distinct attribute can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
+Distinct attribute can also be updated directly through the [global settings route](/reference/settings.md#update-settings) along with the other settings.
 
 To learn more about distinct attributes, refer to our [dedicated guide](/learn/configuration/settings.md#distinct-attribute).
 
@@ -72,7 +72,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Reset distinct attribute
 
@@ -104,4 +104,4 @@ Reset the [distinct attribute](/learn/configuration/settings.md#distinct-attribu
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).

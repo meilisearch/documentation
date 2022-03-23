@@ -30,7 +30,7 @@ This can lead to unexpected behavior when sorting, so we strongly recommend you 
 
 ### Adding attributes to `sortableAttributes`
 
-After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/sortable_attributes.md).
+After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/sortable_attributes.md).
 
 `sortableAttributes` accepts an array of strings, each corresponding to one attribute. Note that the attribute order in `sortableAttributes` has no impact on sorting.
 
@@ -114,7 +114,7 @@ If your users care more about finding cheaper books than they care about finding
 
 ## Sorting results at search time
 
-After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/search.md#sort) to control the sorting order of your search results.
+After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/search.md#sort) to control the sorting order of your search results.
 
 ### Using `sort`
 

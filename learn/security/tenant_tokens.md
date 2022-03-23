@@ -160,7 +160,7 @@ Search rules are a set of instructions defining search parameters that will be e
 
 The object key must be an index name. You may also use the `*` wildcard instead of a specific index name—in this case, search rules will be applied to all indexes.
 
-The object value must consist of `search_parameter:value` pairs. Currently, **tenant tokens only support the `filter` [search parameter](/reference/api/search.md#filter)**.
+The object value must consist of `search_parameter:value` pairs. Currently, **tenant tokens only support the `filter` [search parameter](/reference/search.md#filter)**.
 
 In this example, all queries across all indexes will only return documents whose `user_id` equals `1`:
 
@@ -204,7 +204,7 @@ The previous rules can be combined in one tenant token:
 ::: danger
 Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules will only throw errors when they are used in a query.
 
-Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search.md#filter).
+Consult the search API reference for [more information on Meilisearch filter syntax](/reference/search.md#filter).
 :::
 
 ### API Key
@@ -232,7 +232,7 @@ The expiry date must be a UNIX timestamp or `null`. Additionally, a token's expi
 Setting a token expiry date is optional, but recommended. A token without an expiry date never expires and can be used indefinitely as long as its parent API key remains valid.
 
 ::: danger
-The only way to revoke a token without an expiry date is to [delete](/reference/api/keys.md#delete-a-key) its parent API key.
+The only way to revoke a token without an expiry date is to [delete](/reference/keys.md#delete-a-key) its parent API key.
 
 Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
 :::

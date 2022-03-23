@@ -1,8 +1,8 @@
 # Filterable attributes
 
-_Child route of the [settings route](/reference/api/settings.md)._
+_Child route of the [settings route](/reference/settings.md)._
 
-Filterable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
+Filterable attributes can also be updated through the [global settings route](/reference/settings.md#update-settings).
 
 Attributes that can be used as filters for filtering and faceted search. To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
@@ -71,7 +71,7 @@ An array of strings containing the attributes that can be used as filters at que
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Reset filterable attributes
 
@@ -105,4 +105,4 @@ An empty array (`[]`).
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).

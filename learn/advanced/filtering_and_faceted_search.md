@@ -8,7 +8,7 @@ Filters have several use-cases, such as restricting the results a specific user 
 
 Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria.
 
-To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
+To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/filterable_attributes.md).
 
 **This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by Meilisearch before they can be used.
 
@@ -45,13 +45,13 @@ Suppose you have a collection of movies containing the following fields:
 ]
 ```
 
-If you want to filter results based on the `director` and `genres` attributes, you must add them to the [`filterableAttributes` list](/reference/api/filterable_attributes.md):
+If you want to filter results based on the `director` and `genres` attributes, you must add them to the [`filterableAttributes` list](/reference/filterable_attributes.md):
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
 ## Using filters
 
-Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
+Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/search.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
 
@@ -99,7 +99,7 @@ As no specific schema is enforced at indexing, the filtering engine will try to 
 You can build filter expressions by grouping basic conditions. Filter expressions can be written as strings, arrays, or a mix of both.
 
 ::: warning
-The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-index-with-get-route) only accepts string filter expressions.
+The [`GET` route of the search endpoint](/reference/search.md#search-in-an-index-with-get-route) only accepts string filter expressions.
 :::
 
 #### Creating filter expressions with strings
@@ -188,7 +188,7 @@ Suppose that you have a dataset containing several movies in the following forma
 ]
 ```
 
-If you want to enable filtering using `director`, `release_date`, `genres`, and `rating`, you must add these attributes to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
+If you want to enable filtering using `director`, `release_date`, `genres`, and `rating`, you must add these attributes to the [`filterableAttributes` index setting](/reference/filterable_attributes.md).
 
 You can then restrict a search so it only returns movies released after 18 March 1995 with the following filter containing a single condition:
 
@@ -282,7 +282,7 @@ You can then use this filter to search for `thriller`:
 
 ### Facets distribution
 
-When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/api/search.md#facets-distribution) in combination with `filter` when searching.
+When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/search.md#facets-distribution) in combination with `filter` when searching.
 
 ::: note
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
@@ -296,7 +296,7 @@ In the example below, [IMDb](https://www.imdb.com) displays the facet count in p
 
 #### Using facet distribution
 
-[`facetsDistribution` is a search parameter](/reference/api/search.md#facets-distribution) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
+[`facetsDistribution` is a search parameter](/reference/search.md#facets-distribution) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
 Using the `facetsDistribution` search parameter adds two new keys to the returned object: `facetsDistribution` and `exhaustiveFacetsCount`.
 

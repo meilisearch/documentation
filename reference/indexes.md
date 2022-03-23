@@ -69,7 +69,7 @@ Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two ar
 If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from first document you add to the index.
 
 ::: note
-If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, Meilisearch will automatically create it for you. This is called implicit index creation.
+If you try to add [documents](/reference/documents.md) or [settings](/reference/settings.md) to an index that does not exist, Meilisearch will automatically create it for you. This is called implicit index creation.
 :::
 
 Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
@@ -104,7 +104,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `uid` to [track the status of your request](/reference/tasks.md#get-task).
 
 ## Update an index
 
@@ -112,7 +112,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
 
-If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/api/indexes.md#get-one-index) to verify it.
+If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/indexes.md#get-one-index) to verify it.
 
 ::: note
 It is not possible to change an index's `uid`.
@@ -148,7 +148,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `uid` to [track the status of your request](/reference/tasks.md#get-task).
 
 ## Delete an index
 
@@ -180,4 +180,4 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `uid` to [track the status of your request](/reference/tasks.md#get-task).

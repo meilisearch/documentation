@@ -2,11 +2,11 @@
 
 Currently, Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that Meilisearch uses under the hood.
 
-This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size), a [default database size limit of 100GiB](/learn/configuration/instance_options.md#max-index-size), and a [default search limit of 20 hits](/reference/api/search.md#limit).
+This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size), a [default database size limit of 100GiB](/learn/configuration/instance_options.md#max-index-size), and a [default search limit of 20 hits](/reference/search.md#limit).
 
 ## Maximum number of query words
 
-**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
+**Limitation:** The maximum number of terms taken into account for each [search query](/reference/search.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
 
 **Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 

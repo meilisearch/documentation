@@ -24,11 +24,11 @@ Currently, these are Meilisearch's asynchronous operations:
 
 ## Understanding tasks
 
-Most of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need your task's `uid`.
+Most of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/tasks.md) to find the detailed status of your request. To do so, you will need your task's `uid`.
 
 ### Response
 
-The response from the [task API](/reference/api/tasks.md) will always include the following fields in the stated order:
+The response from the [task API](/reference/tasks.md) will always include the following fields in the stated order:
 
 | Field        | Type    | Description                                                                                                      |
 |--------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------|
@@ -57,7 +57,7 @@ All asynchronous operations return a summarized version of the [`task` object](#
 | `type`       | string  | Type of task                             |
 | `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued`                                                        |
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ### Task `status`
 
@@ -70,7 +70,7 @@ Task responses always contain a field indicating the request's current `status`.
 
 ### Examples
 
-Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `uid` in response.
+Suppose you add a new document to your instance using the [add documents endpoint](/reference/documents.md#add-or-replace-documents) and receive a `uid` in response.
 
 When you query the task endpoint using this `uid`, you see that it has been enqueued:
 
@@ -140,7 +140,7 @@ Had the task failed, the response would have included an `error` object:
 1. When you make a task request, Meilisearch puts it in the task queue, sets the task's `status` to `enqueued` and returns a [`task` object](/learn/advanced/asynchronous_operations.md#response)
 2. When your task reaches the front of the queue, Meilisearch begins working on it and changes the request `status` to `processing`
 3. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
-4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-all-tasks)
+4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/tasks.md#get-all-tasks)
 
 ### Dumps
 
@@ -161,7 +161,7 @@ What happens to an asynchronous operation when Meilisearch is terminated changes
 - `succeeded`: there will be no data loss since the request was successfully completed
 - `failed`: the task failed and nothing has been altered in the database
 
-You can use [the `/tasks` route](/reference/api/tasks.md) to determine a task's `status`.
+You can use [the `/tasks` route](/reference/tasks.md) to determine a task's `status`.
 
 ### Example
 

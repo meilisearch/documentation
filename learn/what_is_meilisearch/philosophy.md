@@ -6,7 +6,7 @@ Finding a high-quality search engine can be difficult. We decided to create Meil
 
 We always aim for a simple and intuitive experience for both developers and end-users.
 
-For developers, we're proud to say that Meilisearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/api/overview.md).
+For developers, we're proud to say that Meilisearch requires very little configuration to get up and running. Communication to the server is done through a [RESTful API](/reference/overview.md).
 
 For end-users, Meilisearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results.
 
@@ -18,7 +18,7 @@ It wouldn't be a search engine if there wasn't a notion of relevancy in the resu
 
 The returned results are **sorted according to a set of consecutive rules called [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules)**. You can delete existing rules, add new ones, or even change the order in which they are executed.
 
-You can also **configure the [search parameters](/reference/api/search.md)** to refine your search even further. We support [filters](/learn/advanced/filtering_and_faceted_search.md) and [faceting](/learn/advanced/filtering_and_faceted_search.md#faceted-search).
+You can also **configure the [search parameters](/reference/search.md)** to refine your search even further. We support [filters](/learn/advanced/filtering_and_faceted_search.md) and [faceting](/learn/advanced/filtering_and_faceted_search.md#faceted-search).
 
 ### Front-facing search
 

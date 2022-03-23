@@ -94,7 +94,7 @@ Add a list of [documents](/learn/core_concepts/documents.md) or replace them if 
 
 If you send an already existing document (same [document id](/learn/core_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
 
-For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
+For a partial update of the document see [add or update documents](/reference/documents.md#add-or-update-documents).
 
 #### Path variables
 
@@ -142,7 +142,7 @@ The body is composed of a **JSON array** of documents.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Add or update documents
 
@@ -152,7 +152,7 @@ Add a list of documents or update them if they already exist. If the provided in
 
 If you send an already existing document (same [documentId](/learn/core_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
-To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents.md#add-or-replace-documents).
+To completely overwrite a document, check out the [add or replace documents route](/reference/documents.md#add-or-replace-documents).
 
 If the provided index does not exist, it will be created.
 
@@ -187,7 +187,7 @@ The body is composed of a **JSON array** of documents.
 
 <CodeSamples id="add_or_update_documents_1" />
 
-This document is an update of the document found in [add or replace document](/reference/api/documents.md#add-or-replace-documents).
+This document is an update of the document found in [add or replace document](/reference/documents.md#add-or-replace-documents).
 
 The documents are matched because they have the same [primary key](/learn/core_concepts/documents.md#primary-field) value `id: 287947`. This route will update the `title` field as it changed from `Shazam` to `Shazam ⚡️` and add the new `genres` field to that document. The rest of the document will remain unchanged.
 
@@ -203,7 +203,7 @@ The documents are matched because they have the same [primary key](/learn/core_c
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Delete all documents
 
@@ -233,7 +233,7 @@ Delete all documents in the specified index.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Delete one document
 
@@ -264,7 +264,7 @@ Delete one document based on its unique id.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Delete documents by batch
 
@@ -302,4 +302,4 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).

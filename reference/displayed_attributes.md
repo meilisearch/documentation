@@ -1,11 +1,11 @@
 # Displayed attributes
 
-_Child route of the [settings route](/reference/api/settings.md)._
+_Child route of the [settings route](/reference/settings.md)._
 
 The fields whose attributes are added to the displayed-attributes list are **displayed in each matching document**.
 By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings.  Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
 
-Displayed attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
+Displayed attributes can also be updated directly through the [global settings route](/reference/settings.md#update-settings) along with the other settings.
 
 To learn more about displayed attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
@@ -49,7 +49,7 @@ List the settings.
 Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index.
 
 ::: note
-`displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
+`displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
 :::
 
 #### Path variables
@@ -80,7 +80,7 @@ An array of strings that contains attributes of an index to display.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
 
 ## Reset displayed attributes
 
@@ -114,4 +114,4 @@ All attributes found in the documents added to the index.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `uid` to get more details on [the status of the task](/reference/tasks.md#get-task).
