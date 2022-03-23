@@ -32,7 +32,7 @@ Visit [the Qovery dashboard](https://start.qovery.com) to create an account if y
 
 - Click on the "use a template" button.
 - Select "Meilisearch".
-- Select your Github or Gitlab repository where Qovery will save your configuration files (Qovery uses Git as the source of truth).
+- Select your GitHub or GitLab repository where Qovery will save your configuration files (Qovery uses Git as the source of truth).
 - Click on "deploy".
 
 Congrats 🔥 - Your Meilisearch instance is deployed and ready to be used 🎉
