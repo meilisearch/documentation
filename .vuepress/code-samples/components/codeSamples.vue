@@ -43,7 +43,6 @@ export default {
   },
   created() {
     this.samples = CODE_SAMPLES[this.id]
-    console.log(this.$refs)
   },
   methods: {
     /*
