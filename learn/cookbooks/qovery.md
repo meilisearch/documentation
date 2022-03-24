@@ -21,13 +21,13 @@ Visit the [Qovery dashboard](https://start.qovery.com) to create an account if y
 * Click on **Create project** and give a name to your project
 * Click on **Next**
 
-![Create a project](https://hub.qovery.com/img/heroku/heroku-2.png)
+!["Create Project" button](https://hub.qovery.com/img/heroku/heroku-2.png)
 
 ### 3. Create a new environment
 
 * Click on **Create environment** and give it a name (e.g. staging, production).
 
-![Create a new environment](https://hub.qovery.com/img/heroku/heroku-3.png)
+!["Create environment" button](https://hub.qovery.com/img/heroku/heroku-3.png)
 
 ### 4. Add your Meilisearch app
 
@@ -35,7 +35,7 @@ Visit the [Qovery dashboard](https://start.qovery.com) to create an account if y
 * Define the main branch name and the root application path
 * Click on **Create**
 
-![Add your application](https://hub.qovery.com/img/rust/rust.png)
+![Choose your repository in the "Create Application" pop-up](https://hub.qovery.com/img/rust/rust.png)
 
 After the application has been created:
 
@@ -47,13 +47,13 @@ After the application has been created:
 
 To add storage, go to your application **Settings**:
 
-![Add storage](https://hub.qovery.com/img/add-storage.png)
+![Set storage to 10GB SSD](https://hub.qovery.com/img/add-storage.png)
 
 ### 6. Deploy the app on Qovery
 
 All you have to do now is to navigate to your application and click on **Deploy**.
 
-![Deploy the app](https://hub.qovery.com/img/heroku/heroku-1.png)
+![Choose "Deploy" from the "Actions" dropdown](https://hub.qovery.com/img/heroku/heroku-1.png)
 
 That's it! Watch the status and wait until the app is deployed.
 
