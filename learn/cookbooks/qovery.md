@@ -28,7 +28,7 @@ Visit [the Qovery dashboard](https://start.qovery.com) to create an account if y
 
 ### 3. Deploy Meilisearch
 
-![meilisearch template](https://github.com/Qovery/public-resources/raw/master/screenshots/meilisearch-template.png)
+![Selecting the Meilisearch template](https://github.com/Qovery/public-resources/raw/master/screenshots/meilisearch-template.png)
 
 - Click on the "use a template" button.
 - Select "Meilisearch".
