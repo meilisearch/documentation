@@ -229,7 +229,7 @@ The default behavior of this library fits perfectly for a documentation search b
 
 ::: note
 
-For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/master/scripts/playground.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/master/MeiliSearchBox.vue).
+For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/main/scripts/playground.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/master/MeiliSearchBox.vue).
 
 :::
 
