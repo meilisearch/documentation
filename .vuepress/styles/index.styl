@@ -160,17 +160,36 @@ body > .nav-link:hover, body > .dropdown-title:hover
 */
 
 .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
-  background-color: $titlesColor !important;
+  color: $accentColor !important;
+  background-color: #E1E0EE !important;
 }
 .dsb-cursor .docs-searchbar-suggestion--content {
   background-color: rgba(black, 10%) !important;
 }
+
+.docs-searchbar-suggestion--subcategory-column-text {
+  color: #492E6C !important;
+}
+
+.docs-searchbar-suggestion--content:hover {
+  // background-color: #F1F1F9 !important;
+}
 // TODO: Pas dans le titre
 .docs-searchbar-suggestion--highlight {
   background-color: rgba(0,0,0,0) !important;
-  color: $titlesColor !important;
+  color: $accentColor !important;
 }
 
+// Find which elements is used for hover
+.meilisearch-search-wrapper .meilisearch-autocomplete .docs-searchbar-suggestion .docs-searchbar-suggestion--content:hover {
+    background-color: red !important;
+  }
+.meilisearch-search-wrapper .meilisearch-autocomplete .docs-searchbar-suggestion .docs-searchbar-suggestion--content:focus {
+    background-color: red !important;
+  }
+.meilisearch-search-wrapper .meilisearch-autocomplete .docs-searchbar-suggestion .docs-searchbar-suggestion--content:active {
+    background-color: red !important;
+  }
 
 @media (prefers-color-scheme: dark) {
   #meilisearch-search-input {

@@ -366,6 +366,7 @@ module.exports = {
         indexUid: 'docs',
         placeholder: 'Search as you type...',
         enableDarkMode: true, // Default: false
+        debug: true,
       },
     ],
     [
