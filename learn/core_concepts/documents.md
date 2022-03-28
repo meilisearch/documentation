@@ -138,7 +138,7 @@ Therefore, every document in the same index **must possess the exact same primar
 
 Suppose we have an index called `movie` that contains 200,000 documents. As shown below, each document is identified by a **primary field** containing the **primary key** `movie_id` and a **unique value** (the document id).
 
-Aside from the primary key, **documents in the same index are not required to share attributes**, e.g. you could have a document in this index without the "title" attribute.
+Aside from the primary key, **documents in the same index are not required to share attributes**, e.g. you could have a document in this index without the `title` attribute.
 
 ```json
 [
@@ -157,39 +157,11 @@ Aside from the primary key, **documents in the same index are not required to sh
 
 ### Primary key
 
-The primary key  is a **mandatory attribute linked to a unique value** the [document id][document-id]. It is part of the [primary field][primary-field].
-
-Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in a document, **none of the documents will be stored.**
-
-There are several ways to set the primary key for an index:
-
-- You can set it manually [on index creation](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-index-creation)
-- You can set it manually [on document addition](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition)
-- If no primary key is set, Meilisearch automatically [guesses the primary key](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) when you add documents
+The primary key  is a **mandatory attribute linked to a unique value** the [document id][document-id]. It is part of the [primary field][primary-field]. To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
 
 ### Document Id
 
-The document id is the value associated to the primary key. It is part of the primary field, and acts as a unique identifier for each of the documents of a given index.
-
-This unique value ensures that two documents in the same index cannot be exactly alike. If two documents in the same index have the same id, then they are treated as the same document and the more recent one will replace the older.
-
-The document id must contain only `A-Z a-z 0-9` and `-_` characters.
-
-#### Example:
-
-Good:
-
-```json
-"id": "_Aabc012_"
-```
-
-Bad:
-
-```json
-"id": "@BI+* ^5h2%"
-```
-
-Take note that the document addition request in Meilisearch is atomic. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added**.
+The document id is the value associated to the primary key. It is part of the primary field, and acts as a unique identifier for each of the documents of a given index. To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
 
 ## Upload
 

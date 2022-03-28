@@ -1,10 +1,52 @@
 # Primary key
 
-The primary key is a **mandatory attribute linked to a unique value**, the [document id](/learn/core_concepts/documents.md#document-id). It is part of the [primary field](/learn/core_concepts/documents.md#primary-field).
+## Primary field
 
-Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.** The primary key ensures that there are no identical documents in the same index.
+[Documents](/learn/core_concepts/documents.md) in Meilisearch are composed of fields. A field is a set of two data items linked together: an attribute and a value.
+
+The [primary field](/learn/core_concepts/documents.md#primary-field) is a special field that must be present in all documents. Its attribute is the **primary key** and its value is the **[document id](/learn/core_concepts/documents.html#document-id)**. It uniquely identifies each document.
+
+### Document Id
+
+The document id is the value associated to the primary key. It is part of the primary field, and acts as a unique identifier for each of the documents of a given index.
+
+This unique value ensures that two documents in the same index cannot be exactly alike. If two documents in the same index have the same id, then they are treated as the same document and the more recent one will replace the older.
+
+The document id must contain only `A-Z a-z 0-9` and `-_` characters.
+
+#### Example:
+
+Good:
+
+```json
+"id": "_Aabc012_"
+```
+
+Bad:
+
+```json
+"id": "@BI+* ^5h2%"
+```
+
+## Primary key
+
+The primary key is a **mandatory attribute**. Each [index](/learn/core_concepts/indexes.md) recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.** The primary key ensures that there are no identical documents in the same index.
 
 Meilisearch expects the primary to only be of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
+
+### Example
+
+```json
+{
+    "id": 1,
+    "title": "Diary of a Wimpy Kid",
+    "author": "Jeff Kinney",
+    "genres": ["comedy","humor"],
+    "price": 5.00
+  }
+```
+
+Each document in the above index is identified by a **primary field** containing the **primary key** `id` and a **unique value**, `1` for this document.
 
 ## Setting the primary key
 
