@@ -238,7 +238,7 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 
 ### Step 3: Delete the database folder
 
-To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
 ### Step 4: Import the dump
 
@@ -325,7 +325,7 @@ curl -X GET \
 
 ### Step 4: Delete the database folder
 
-To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
 ### Step 5: Upload your data to the latest version of Meilisearch
 
