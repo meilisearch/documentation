@@ -315,12 +315,11 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
 </html>
 ```
 
-The code above comes in multiple parts:
+Here's what's happening:
 
-- The first four lines of the `<body>` adds two container elements: `#searchbox` and `#hits`. `instant-meilisearch` creates the search bar inside `#searchbox` and lists search results in `#hits`
+- The first four lines of the `<body>` add two container elements: `#searchbox` and `#hits`. `instant-meilisearch` creates the search bar inside `#searchbox` and lists search results in `#hits`
 - The first two`<script src="…">` tags import libraries needed to run `instant-meilisearch`
 - The third and final `<script>` tag  is where you customize `instant-meilisearch`
-
 
 :::
 
@@ -368,17 +367,16 @@ The following example uses [Vue 2](https://vuejs.org/), the second major release
 </html>
 ```
 
-The code above comes in multiple parts:
+Here's what's happening:
 
 - To use `instant-meilisearch` with Vue, you must add `<ais-instant-search>`, `<ais-search-box>`, and `<ais-hits>` to your application's HTML. These components are mandatory when generating the`instant-meilisearch` interface
-- Other Vue components such as `<ais-configure>` and `<ais-highlight>` are optional. They allow you greater control over `instant-meilisearch`'s behavior and appearance
+- Other Vue components such as `<ais-configure>` and `<ais-highlight>` are optional. They offer greater control over `instant-meilisearch`'s behavior and appearance
 - The first two`<script src="..">` tags import libraries needed to run `instant-meilisearch` with Vue
 - The third and final `<script>` creates a new Vue instance and instructs it to use `instant-meilisearch`
 
-
 :::note
 
-The above example uses Vue 2, you can refer to [this GitHub issue](https://github.com/meilisearch/meilisearch-vue/issues/102) to learn more about Vue 3.
+The above example uses Vue 2. Refer to [this GitHub issue](https://github.com/meilisearch/meilisearch-vue/issues/102) to learn more about Vue 3.
 
 :::
 
@@ -427,13 +425,11 @@ The following code sample uses [React](https://reactjs.org/), a JavaScript libra
 </html>
 ```
 
-The code above comes in multiple parts:
+Here's what's happening:
 
 - The `< div id="app">` inside `<body>` is React's entry point. `instant-meilisearch` creates the search bar and the search result container inside this HTML element by manipulating the DOM
 - The first four`<script src="…">` tags import all the libraries required to run `instant-meilisearch` in [React](https://reactjs.org/).
 - The last `<script>` tag initializes React, customizes `instant-meilisearch`, and creates all the required UI elements inside `<div id="app">`
-
-To use `instant-meilisearch` in `React` using `npm` or `yarn` please visit [meilisearch-react](https://github.com/meilisearch/meilisearch-react).
 
 :::
 
