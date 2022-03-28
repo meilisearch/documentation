@@ -1,38 +1,64 @@
 # Deploy a Meilisearch instance on Qovery
 
-_The following is a guest post by Romaric Philogène, CEO and Co-Founder of Qovery._
+[Qovery](https://www.qovery.com) is a fully-managed cloud platform that runs on your AWS, DigitalOcean, or Scaleway account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
 
-## Introduction
+Qovery provides **free hosting** for individual developers and includes the following features:
 
-In this tutorial I explain how to deploy a pre-configured Meilisearch instance in one click.
+* Continuous, automatic builds & deploys from GitHub and GitLab
+* Automatic SSL certificates through [Let's Encrypt](https://letsencrypt.org)
+* Free SSD storage
+* Unlimited collaborators
+* Unlimited [custom domains](https://hub.qovery.com/docs/using-qovery/configuration/application/#domains)
 
-_Qovery provides free Cloud hosting with databases, SSL, a global CDN, and automatic deploys with Git._
+## Setup
 
-Deploying Meilisearch with Qovery provides:
+### 1. Create a Qovery account
 
-- A pre-configured Meilisearch instance.
-- A free SSD storage.
-- A free SSL.
-- Optional: custom domain.
-
-## Step-by-step Meilisearch deployment
-
-### 1. Create a Qovery Account
-
-Visit [the Qovery dashboard](https://start.qovery.com) to create an account if you don't already have one.
+Visit the [Qovery dashboard](https://start.qovery.com) to create an account if you don't already have one.
 
 ### 2. Create a project
 
-- Click on the "create a project" button and give a name to your project, e.g. `Meilisearch`.
-- Click on "next".
+* Click on **Create project** and give a name to your project
+* Click on **Next**
 
-### 3. Deploy Meilisearch
+!["Create Project" button](https://hub.qovery.com/img/heroku/heroku-2.png)
 
-![Selecting the Meilisearch template](https://github.com/Qovery/public-resources/raw/master/screenshots/meilisearch-template.png)
+### 3. Create a new environment
 
-- Click on the "use a template" button.
-- Select "Meilisearch".
-- Select your GitHub or GitLab repository where Qovery will save your configuration files (Qovery uses Git as the source of truth).
-- Click on "deploy".
+* Click on **Create environment** and give it a name (e.g. staging, production).
 
-Congrats 🔥 - Your Meilisearch instance is deployed and ready to be used 🎉
+!["Create environment" button](https://hub.qovery.com/img/heroku/heroku-3.png)
+
+### 4. Add your Meilisearch app
+
+* Click on **Create an application**, give it a name, and select the GitHub or GitLab repository where your Meilisearch app is located
+* Define the main branch name and the root application path
+* Click on **Create**
+
+![Choose your repository in the "Create Application" pop-up](https://hub.qovery.com/img/rust/rust.png)
+
+After the application has been created:
+
+* Navigate to your application **Settings**
+* Select **Port**
+* Add port used by your Meilisearch application
+
+### 5. Add storage
+
+To add storage, go to your application **Settings**:
+
+![Set storage to 10GB SSD](https://hub.qovery.com/img/add-storage.png)
+
+### 6. Deploy the app on Qovery
+
+All you have to do now is to navigate to your application and click on **Deploy**.
+
+![Choose "Deploy" from the "Actions" dropdown](https://hub.qovery.com/img/heroku/heroku-1.png)
+
+That's it! Watch the status and wait until the app is deployed.
+
+To open the application in your browser, click on **Action** and **Open** in your application overview.
+
+## Support
+
+Chat with Qovery developers on [Discord](https://discord.qovery.com) if you need help.
