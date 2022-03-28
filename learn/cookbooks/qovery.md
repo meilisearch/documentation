@@ -1,6 +1,6 @@
 # Deploy a Meilisearch instance on Qovery
 
-[Qovery](https://www.qovery.com) is a fully-managed cloud platform that runs on your AWS, Digital Ocean and Scaleway account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
+[Qovery](https://www.qovery.com) is a fully-managed cloud platform that runs on your AWS, DigitalOcean, or Scaleway account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
 
 Qovery provides **free hosting** for individual developers and includes the following features:
 
@@ -31,7 +31,7 @@ Visit the [Qovery dashboard](https://start.qovery.com) to create an account if y
 
 ### 4. Add your Meilisearch app
 
-* Click on **Create an application**, give it a name and select your GitHub or GitLab repository where your Meilisearch app is located
+* Click on **Create an application**, give it a name, and select the GitHub or GitLab repository where your Meilisearch app is located
 * Define the main branch name and the root application path
 * Click on **Create**
 
