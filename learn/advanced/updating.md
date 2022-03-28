@@ -238,7 +238,7 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 
 ### Step 3: Delete the database folder
 
-To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
 ### Step 4: Import the dump
 
@@ -250,7 +250,7 @@ Now that you’ve got your dump, [install the latest version of Meilisearch](/le
 ```
 
 ::: warning
-If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of Meilisearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
+If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
 :::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
@@ -325,7 +325,7 @@ curl -X GET \
 
 ### Step 4: Delete the database folder
 
-To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
 ### Step 5: Upload your data to the latest version of Meilisearch
 

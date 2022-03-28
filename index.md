@@ -26,5 +26,5 @@ The current version of [Meilisearch](https://github.com/meilisearch/meilisearch)
 
 Meilisearch and its documentation are both completely open source. You can **support the project by starring** [our main GitHub repository](https://github.com/meilisearch/meilisearch) or [contributing to the docs](/learn/contributing/contributing_to_docs.md).
 
-<a class="github-button" href="https://github.com/meilisearch/meilisearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/MeiliSearch on GitHub">Star</a><!-- prettier-ignore
+<a class="github-button" href="https://github.com/meilisearch/meilisearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/meilisearch on GitHub">Star</a><!-- prettier-ignore
 --><script async defer src="https://buttons.github.io/buttons.js"></script>

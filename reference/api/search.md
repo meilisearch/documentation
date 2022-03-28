@@ -47,7 +47,7 @@ This is the preferred route to perform search when an API key is required, as it
 
 #### Placeholder search
 
-Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy.md#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules) are taken into account.
+Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy.md#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules) are taken into account.
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -233,7 +233,7 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 #### Placeholder search
 
-When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/configuration/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/configuration/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -633,7 +633,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
     "id": 1,
     "name": "Nàpiz' Milano",
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     },
     "_geoDistance": 1532

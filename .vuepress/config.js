@@ -7,7 +7,6 @@ module.exports = {
     repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
-    lastUpdated: 'Last Updated',
     logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
@@ -58,7 +57,7 @@ module.exports = {
             ],
           },
           {
-            text: 'DevOp tools',
+            text: 'DevOps tools',
             items: [
               { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
               { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
@@ -99,7 +98,7 @@ module.exports = {
           children: [
             '/learn/getting_started/quick_start',
             {
-              title: 'MeiliSearch 101',
+              title: 'Meilisearch 101',
               path: '/learn/getting_started/filtering_and_sorting/',
               collapsable: false,
               children: [
@@ -244,6 +243,10 @@ module.exports = {
                   path: '/learn/cookbooks/digitalocean_droplet',
                 },
                 {
+                  title: 'Deploy on Koyeb',
+                  path: '/learn/cookbooks/koyeb',
+                },
+                {
                   title: 'Deploy on Qovery',
                   path: '/learn/cookbooks/qovery',
                 },
@@ -346,7 +349,6 @@ module.exports = {
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
-    [require('./custom-timestamp')],
     [require('./code-samples')],
     [
       'vuepress-plugin-code-copy',

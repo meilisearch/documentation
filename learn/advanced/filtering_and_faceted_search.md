@@ -252,7 +252,7 @@ Faceted search provides users with a quick way to narrow down search results by 
 
 This is common in ecommerce sites like Amazon: when users perform a search, they are presented not only with a list of results, but also with a list of facets which you can see on the sidebar in the image below:
 
-![Amazon UI](/faceted-search/facets-amazon.png)
+![Screenshot of an Amazon product search page displaying faceting UI](/faceted-search/facets-amazon.png)
 
 ### Filters or facets
 

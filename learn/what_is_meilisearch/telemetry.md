@@ -49,7 +49,7 @@ Data collection can be disabled at any time by setting a command-line option or 
 ::: tab Command-line option
 
 ```bash
-meilisearch --no-analytics=true
+meilisearch --no-analytics
 ```
 
 :::
@@ -72,7 +72,7 @@ meilisearch
 
 nano /etc/systemd/system/meilisearch.service
 
-# Then add --no-analytics=true at the end of the command in ExecStart
+# Then add --no-analytics at the end of the command in ExecStart
 # Don't forget to save and quit!
 # Finally, run the following two commands:
 

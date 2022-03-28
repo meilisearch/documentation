@@ -2,7 +2,7 @@
 
 You might have noticed the search bar in this documentation.
 
-![Meilisearch docs search bar demo](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
+![MeiliSearch docs search bar updating results for 'faq'](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
 
 And you are probably wanting the same for your own documentation!
 
@@ -130,7 +130,7 @@ If your documentation is not a VuePress application, you can directly go to [thi
 
 If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the Meilisearch documentation.
 
-![VuePress plugin example](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
+![Search bar demo for 'synon' using the Vuepress plugin](/tuto-searchbar-for-docs/vuepress-plugin-example.png)
 
 In your VuePress project:
 
@@ -187,7 +187,8 @@ Read more about [Meilisearch security](/learn/security/master_api_keys.md).
 
 If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
 
-![docs-searchbar.js example](/tuto-searchbar-for-docs/docs-searchbar-example.png)
+![Docxtemplater search bar updating results for 'html'](/tuto-searchbar-for-docs/docxtemplater-searchbar-demo.gif)
+_[Docxtemplater](https://docxtemplater.com/) searchbar demo_
 
 ```html
 <!DOCTYPE html>
@@ -228,7 +229,7 @@ The default behavior of this library fits perfectly for a documentation search b
 
 ::: note
 
-For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/master/scripts/playground.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/master/MeiliSearchBox.vue).
+For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/main/scripts/playground.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/main/MeiliSearchBox.vue).
 
 :::
 

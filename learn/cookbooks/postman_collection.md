@@ -13,26 +13,26 @@ It's free and available on many OS distributions.
 
 Once you have downloaded the [Postman collection](/postman/meilisearch-collection.json), you need to import it into Postman.
 
-![Collection import](/postman/import.png)
+![The "Import" button](/postman/import.png)
 
 ## Edit the configuration
 
-![Edit](/postman/edit.png)
+![Selecting "Edit" from the overflow menu](/postman/edit.png)
 
 Set the token if needed (set to `masterKey` by default):
 
-![Edit API Key](/postman/set_token.png)
+![The "Token" field set to masterKey and "Type" to Bearer Token in the "Authorization" tab.](/postman/set_token.png)
 
 Set the host URL (set to Meilisearch's local port by default) and the index UID (set to `indexUID` by default):
 
-![Edit variables](/postman/set_variables.png)
+![Setting the "url" to http://localhost:7700/ and "indexUID" to indexUId in the Variables tab.](/postman/set_variables.png)
 
 The `url` and `indexUID` variables are used in all the collection routes, like in this one:
 
-![URL example](/postman/url.png)
+![Highlighting {{url}} and {{indexUID}}](/postman/url.png)
 
 ## Start to use it!
 
 You can now [run your Meilisearch instance](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and create your first index:
 
-![Create index](/postman/create_index.png)
+![The "Send" button](/postman/create_index.png)

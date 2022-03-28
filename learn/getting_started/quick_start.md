@@ -139,6 +139,7 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
 - [AWS](/learn/cookbooks/aws.md)
 - [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [Koyeb](/learn/cookbooks/koyeb.md)
 - [Qovery](/learn/cookbooks/qovery.md)
 - [GCP](/learn/cookbooks/gcp.md)
 - [Azure](/learn/cookbooks/azure.md)
@@ -214,7 +215,7 @@ If the `status` field has the value `enqueued` or `processing`, all you have to 
 
 ## Step 3: Search
 
-Now that you have Meilisearch setup, you can start searching!
+Now that you have Meilisearch set up, you can start searching!
 
 <CodeSamples id="getting_started_search_md" />
 
@@ -254,7 +255,7 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 ## Step 4: Search preview
 
-Meilisearch offers a web interface where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
+Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
 ![Screenshot of Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
 
