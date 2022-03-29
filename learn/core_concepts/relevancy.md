@@ -186,7 +186,7 @@ Depending on your needs, you might want to change this order of importance. To d
 
 In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `overview` or its `release_date`.
 
-By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the indexed documents. However, it can also be set manually.
+By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the internal representation of documents. However, it can also be set manually.
 
 For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
 
