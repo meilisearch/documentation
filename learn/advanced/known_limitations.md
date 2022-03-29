@@ -87,4 +87,4 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 **Limitation:** Meilisearch can only exactly represent integers between -2⁵³ and 2⁵³.
 
-**Explanation:** Meilisearch stores numbers as double-precision floating-point numbers. This means it can only exactly represent integers between -2⁵³ and 2⁵³. Double-precision floating-point numbers allow for greater precision and increase the range of magnitudes that can be represented.
+**Explanation:** Meilisearch stores numeric values as double-precision floating-point numbers. This allows for greater precision and increases the range of magnitudes that can be represented.
