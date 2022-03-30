@@ -20,13 +20,15 @@ Explain what  the random API does.
 
 ## The random object (complex)
 
-**Name**: Complex1
+### `Complex1`
+
 **Type**: String
 **Description**: lalala
 
 ***
 
-**Name**: Complex2
+### `Complex2`
+
 **Type**: Object
 **Description**: lalala
 
@@ -38,13 +40,15 @@ Explain what  the random API does.
 
 ***
 
-**Name**: Complex3
+### `Complex3`
+
 **Type**: Integer
 **Description**: lalala
 
 ***
 
-**Name**: Complex4
+### `Complex4`
+
 **Type**: Object
 **Description**: lalala
 
@@ -77,7 +81,7 @@ Explain what  the random API does.
 
 <RouteHighlighter method="GET" route="/random"/>
 
-Returns a list of [random objects](#the-random-object).
+Returns a list of [random objects](#the-random-object-simple).
 
 ### Response: `200 Ok`
 
@@ -103,7 +107,7 @@ Returns a list of [random objects](#the-random-object).
 
 <RouteHighlighter method="GET" route="/random/:random"/>
 
-Returns a [random object](#the-random-object).
+Returns a [random object](#the-random-object-simple).
 
 ### Response: `200 Ok`
 
@@ -132,7 +136,7 @@ Description.
 
 Code sample
 
-Returns a [random object](#the-random-object).
+Returns a [random object](#the-random-object-simple).
 
 #### Response: `201 Created`
 
@@ -146,7 +150,74 @@ Returns a [random object](#the-random-object).
 
 ### Request body (complex)
 
+#### * `Complex1`
 
+**Type**: String
+**Default value**: 10
+**Description**: lalala
+
+***
+
+#### `Complex2`
+
+**Type**: Object
+**Default value**: None
+**Description**: lalala
+
+|Name|Type|Description|
+|---|-----|-----------|
+|`varA`|string|lalal|
+|`varB`|integer|lall|
+|`varC`|integer|lall|
+
+***
+
+#### `Complex3`
+
+**Type**: Integer
+**Default value**: 10
+**Description**: lalala
+
+***
+
+#### `Complex4`
+
+**Type**: Object
+**Default value**: None
+**Description**: lalala
+
+|Name|Type|Description|
+|---|-----|-----------|
+|`varX`|string|lalal|
+|`varY`|integer|lall|
+|`varZ`|integer|lall|
+
+***
+
+### Example
+
+Code sample
+
+Returns a [random object](#the-random-object-complex).
+
+#### Response: `201 Created`
+
+```json
+{
+    "Complex1": "la",
+    "Complex2": {
+          "varA": "Hello",
+          "varB": 10,
+          "varC": "Hi"
+    },
+    "Complex3": 11,
+    "Complex4": {
+        "varX": "Hello",
+        "varY": 10,
+        "varZ": 3
+    }  
+}
+```
 
 ## Update
 
@@ -154,7 +225,7 @@ Returns a [random object](#the-random-object).
 
 Description.
 
-### Request body
+### Request body (simple)
 
 |Name|Type|Description|Default value|
 |---|-----|-----------|-------------|
@@ -165,7 +236,7 @@ Description.
 
 Code sample
 
-Returns a [random object](#the-random-object).
+Returns a [random object](#the-random-object-simple).
 
 #### Response: `201 Created`
 
@@ -177,11 +248,82 @@ Returns a [random object](#the-random-object).
 }
 ```
 
+### Request body (complex)
+
+#### * `Complex1`
+
+**Type**: String
+**Default value**: 10
+**Description**: lalala
+
+***
+
+#### `Complex2`
+
+**Type**: Object
+**Default value**: None
+**Description**: lalala
+
+|Name|Type|Description|
+|---|-----|-----------|
+|`varA`|string|lalal|
+|`varB`|integer|lall|
+|`varC`|integer|lall|
+
+***
+
+#### `Complex3`
+
+**Type**: Integer
+**Default value**: 10
+**Description**: lalala
+
+***
+
+#### `Complex4`
+
+**Type**: Object
+**Default value**: None
+**Description**: lalala
+
+|Name|Type|Description|
+|---|-----|-----------|
+|`varX`|string|lalal|
+|`varY`|integer|lall|
+|`varZ`|integer|lall|
+
+***
+
+### Example
+
+Code sample
+
+Returns a [random object](#the-random-object-complex).
+
+#### Response: `201 Created`
+
+```json
+{
+    "Complex1": "la",
+    "Complex2": {
+          "varA": "Hello",
+          "varB": 10,
+          "varC": "Hi"
+    },
+    "Complex3": 11,
+    "Complex4": {
+        "varX": "Hello",
+        "varY": 10,
+        "varZ": 3
+    }  
+}
+```
+
 ## Delete all
 
 <RouteHighlighter method="DELETE" route="/random"/>
 
-Deletes all [random objects](#the-random-object).
+Deletes all [random objects](#the-random-object-simple).
 
 ### Example
 
@@ -193,7 +335,7 @@ Code sample
 
 <RouteHighlighter method="DELETE" route="/random/:random"/>
 
-Deletes the specified [random object](#the-random-object).
+Deletes the specified [random object](#the-random-object-simple).
 
 ### Example
 
