@@ -37,7 +37,7 @@ The document id is the value associated to the primary key. It is part of the pr
 
 This unique value ensures that two documents in the same index cannot be exactly alike. If two documents in the same index have the same id, then they are treated as the same document and the more recent one will replace the older.
 
-The document id must contain only `A-Z a-z 0-9` and `-_` characters.
+The document id must of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
 
 #### Example:
 
@@ -58,8 +58,6 @@ Take note that the document addition request in Meilisearch is atomic. This mean
 ## Primary key
 
 The primary key is a **mandatory attribute**. Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.** The primary key ensures that there are no identical documents in the same index.
-
-Meilisearch expects the primary to only be of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
 
 ### Example
 
@@ -190,7 +188,7 @@ This happens when your index already has a primary key, but one of the documents
 
 ### `invalid_document_id`
 
-This happens when your primary key does not have the correct format. The primary key can only be of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
+This happens when your document id does not have the correct format. The document id can only be of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
 
 ```json
 {
