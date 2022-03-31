@@ -6,9 +6,9 @@ Explain what  the random API does.
 
 |Name|Type|Description|
 |---|-----|-----------|
-|`varA`|string|lalal|
-|`varB`|integer|lall|
-|`varC`|integer|lall|
+|`varA`|string||
+|`varB`|integer||
+|`varC`|integer||
 
 ```json
 {
@@ -23,40 +23,40 @@ Explain what  the random API does.
 ### `Complex1`
 
 **Type**: String
-**Description**: lalala
+**Description**:
 
 ***
 
 ### `Complex2`
 
 **Type**: Object
-**Description**: lalala
+**Description**:
 
 |Name|Type|Description|
 |---|-----|-----------|
-|`varA`|string|lalal|
-|`varB`|integer|lall|
-|`varC`|integer|lall|
+|`varA`|string||
+|`varB`|integer||
+|`varC`|integer||
 
 ***
 
 ### `Complex3`
 
 **Type**: Integer
-**Description**: lalala
+**Description**:
 
 ***
 
 ### `Complex4`
 
 **Type**: Object
-**Description**: lalala
+**Description**:
 
 |Name|Type|Description|
 |---|-----|-----------|
-|`varX`|string|lalal|
-|`varY`|integer|lall|
-|`varZ`|integer|lall|
+|`varX`|string||
+|`varY`|integer||
+|`varZ`|integer||
 
 ***
 
@@ -129,8 +129,8 @@ Description.
 
 |Name|Type|Description|Default value|
 |---|-----|-----------|-------------|
-|`varA` |string | lala|`null`|
-|`varB` *|integer|lalal|None|
+|`varA` |string | |`null`|
+|`varB` *|integer||None|
 
 ### Example
 
@@ -154,7 +154,7 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: String
 **Default value**: 10
-**Description**: lalala
+**Description**:
 
 ***
 
@@ -162,13 +162,13 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: Object
 **Default value**: None
-**Description**: lalala
+**Description**:
 
 |Name|Type|Description|
 |---|-----|-----------|
-|`varA`|string|lalal|
-|`varB`|integer|lall|
-|`varC`|integer|lall|
+|`varA`|string||
+|`varB`|integer||
+|`varC`|integer||
 
 ***
 
@@ -176,7 +176,7 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: Integer
 **Default value**: 10
-**Description**: lalala
+**Description**:
 
 ***
 
@@ -184,13 +184,13 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: Object
 **Default value**: None
-**Description**: lalala
+**Description**:
 
 |Name|Type|Description|
 |---|-----|-----------|
-|`varX`|string|lalal|
-|`varY`|integer|lall|
-|`varZ`|integer|lall|
+|`varX`|string||
+|`varY`|integer||
+|`varZ`|integer||
 
 ***
 
@@ -229,8 +229,8 @@ Description.
 
 |Name|Type|Description|Default value|
 |---|-----|-----------|-------------|
-|`varA` |string | lala|`null`|
-|`varB` *|integer|lalal|None|
+|`varA` |string | |`null`|
+|`varB` *|integer||None|
 
 ### Example
 
@@ -254,7 +254,7 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: String
 **Default value**: 10
-**Description**: lalala
+**Description**:
 
 ***
 
@@ -262,13 +262,13 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: Object
 **Default value**: None
-**Description**: lalala
+**Description**:
 
 |Name|Type|Description|
 |---|-----|-----------|
-|`varA`|string|lalal|
-|`varB`|integer|lall|
-|`varC`|integer|lall|
+|`varA`|string||
+|`varB`|integer||
+|`varC`|integer||
 
 ***
 
@@ -276,7 +276,7 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: Integer
 **Default value**: 10
-**Description**: lalala
+**Description**:
 
 ***
 
@@ -284,13 +284,13 @@ Returns a [random object](#the-random-object-simple).
 
 **Type**: Object
 **Default value**: None
-**Description**: lalala
+**Description**:
 
 |Name|Type|Description|
 |---|-----|-----------|
-|`varX`|string|lalal|
-|`varY`|integer|lall|
-|`varZ`|integer|lall|
+|`varX`|string||
+|`varY`|integer||
+|`varZ`|integer||
 
 ***
 
