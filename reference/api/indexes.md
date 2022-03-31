@@ -110,7 +110,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 <RouteHighlighter method="PUT" route="/indexes/:uid"/>
 
-Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
+Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/the_primary_key.md#primary-key).
 
 If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/api/indexes.md#get-one-index) to verify it.
 

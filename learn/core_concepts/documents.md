@@ -128,40 +128,9 @@ In the latter case, the field will be completely ignored when a search is perfor
 
 ## Primary field
 
-The primary field is a special field that must be present in all documents. Its attribute is the [primary key][primary-key] and its value is the [document id][document-id].
+The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/the_primary_key.md#primary-key) and its value is the [document id](/learn/core_concepts/the_primary_key.md#document-id).
 
-The primary field serves the important role of uniquely identifying each document stored in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
-
-Therefore, every document in the same index **must possess the exact same primary key** associated with a unique **document id** as value.
-
-#### Example:
-
-Suppose we have an index called `movie` that contains 200,000 documents. As shown below, each document is identified by a **primary field** containing the **primary key** `movie_id` and a **unique value** (the document id).
-
-Aside from the primary key, **documents in the same index are not required to share attributes**, e.g. you could have a document in this index without the `title` attribute.
-
-```json
-[
-  {
-    "movie_id": "1564saqw12ss",
-    "title": "Kung fu Panda",
-    "runtime": 95
-  },
-  {
-    "movie_id": "15k1j2kkw223s",
-    "title": "Batman Begins",
-    "gritty reboot": true
-  }
-]
-```
-
-### Primary key
-
-The primary key  is a **mandatory attribute linked to a unique value** the [document id][document-id]. It is part of the [primary field][primary-field]. To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
-
-### Document Id
-
-The document id is the value associated to the primary key. It is part of the primary field, and acts as a unique identifier for each of the documents of a given index. To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
+To learn more, refer to the [primary key explanation](/learn/core_concepts/the_primary_key.md).
 
 ## Upload
 
@@ -182,7 +151,7 @@ When using the [route to add new documents](/reference/api/documents.md#add-or-u
 <CodeSamples id="documents_guide_add_movie_1" />
 
 [primary-field]: /learn/core_concepts/documents.md#primary-field
-[primary-key]: /learn/core_concepts/documents.md#primary-key
-[document-id]: /learn/core_concepts/documents.md#document-id
+[primary-key]: /learn/core_concepts/the_primary_key.md#primary-key
+[document-id]: /learn/core_concepts/the_primary_key.md#document-id
 [fields]: /learn/core_concepts/documents.md#fields
 [indexes]: /learn/core_concepts/indexes.md

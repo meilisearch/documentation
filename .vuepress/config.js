@@ -118,7 +118,7 @@ module.exports = {
             '/learn/core_concepts/documents',
             '/learn/core_concepts/indexes',
             '/learn/core_concepts/relevancy',
-            '/learn/core_concepts/primary_key',
+            '/learn/core_concepts/the_primary_key',
           ],
         },
         {

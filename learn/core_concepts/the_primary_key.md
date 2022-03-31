@@ -1,12 +1,37 @@
-# Primary key
+# The primary key
 
 ## Primary field
 
 [Documents](/learn/core_concepts/documents.md) in Meilisearch are composed of fields. A field is a set of two data items linked together: an attribute and a value.
 
-The [primary field](/learn/core_concepts/documents.md#primary-field) is a special field that must be present in all documents. Its attribute is the **primary key** and its value is the **[document id](/learn/core_concepts/documents.html#document-id)**. It uniquely identifies each document.
+The primary field is a special field that must be present in all documents. Its attribute is the **[primary key](#primary-key)** and its value is the **[document id](#document-id)**. It uniquely identifies each document in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
 
-### Document Id
+#### Example:
+
+Suppose we have an index called `books` that contains 200,000 documents. As shown below, each document is identified by a **primary field** containing the **primary key** `id` and a **unique value** (the document id).
+
+Aside from the primary key, **documents in the same index are not required to share attributes**, e.g. you could have a document in this index without the `title` attribute.
+
+```json
+[
+  {
+    "id": 1,
+    "title": "Diary of a Wimpy Kid: Rodrick Rules",
+    "author": "Jeff Kinney",
+    "genres": ["comedy","humor"],
+    "price": 5.00
+  },
+  {
+   "id": 1,
+    "title": "Diary of a Wimpy Kid: The Last Straw",
+    "author": "Jeff Kinney",
+    "genres": ["comedy","humor"],
+    "price": 5.00
+  }
+]
+```
+
+### Document id
 
 The document id is the value associated to the primary key. It is part of the primary field, and acts as a unique identifier for each of the documents of a given index.
 
@@ -28,9 +53,11 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
+Take note that the document addition request in Meilisearch is atomic. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added.**
+
 ## Primary key
 
-The primary key is a **mandatory attribute**. Each [index](/learn/core_concepts/indexes.md) recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.** The primary key ensures that there are no identical documents in the same index.
+The primary key is a **mandatory attribute**. Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.** The primary key ensures that there are no identical documents in the same index.
 
 Meilisearch expects the primary to only be of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
 
@@ -176,7 +203,8 @@ This happens when your primary key does not have the correct format. The primary
         "indexedDocuments":null
         },
     "error":{
-        "message":"Document identifier `1@` is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).","code":"invalid_document_id",
+        "message":"Document identifier `1@` is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).",
+        "code":"invalid_document_id",
         "type":"invalid_request",
         "link":"https://docs.meilisearch.com/errors#invalid_document_id"
         },

@@ -147,7 +147,7 @@ Good:
 "id": "_Aabc012_"
 ```
 
-See more [information about the primary key](/learn/core_concepts/documents.md#primary-key).
+See more [information about the primary key](/learn/core_concepts/the_primary_key.md#primary-key).
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
