@@ -6,7 +6,7 @@
 
 The primary field is a special field that must be present in all documents. Its attribute is the **[primary key](#primary-key)** and its value is the **[document id](#document-id)**. It uniquely identifies each document in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
 
-#### Example:
+### Example:
 
 Suppose we have an index called `books` that contains 200,000 documents. As shown below, each document is identified by a **primary field** containing the **primary key** `id` and a **unique value** (the document id).
 
@@ -55,11 +55,11 @@ Bad:
 
 Take note that the document addition request in Meilisearch is atomic. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added.**
 
-## Primary key
+### Primary key
 
 The primary key is a **mandatory attribute**. Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.** The primary key ensures that there are no identical documents in the same index.
 
-### Example
+#### Example
 
 ```json
 {
