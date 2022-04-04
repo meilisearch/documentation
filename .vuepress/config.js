@@ -364,7 +364,7 @@ module.exports = {
         apiKey:
           'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
         indexUid: 'docs',
-        placeholder: 'Search as you type...',
+        placeholder: 'Search as you type…',
         // Warning! When updating docs-searchbar to the latest version, change `true` with `auto`
         enableDarkMode: true, // Default: false
       },
