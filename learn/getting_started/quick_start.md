@@ -265,7 +265,185 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the components needed to start searching.
 
-To learn more about instant-meilisearch, refer to its [documentation](https://github.com/meilisearch/instant-meilisearch#readme) located in the project repository.
+:::: tabs
+
+::: tab JavaScript
+
+The following code sample uses plain [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="searchbox" focus></div>
+      <div id="hits"></div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.3.2/dist/instant-meilisearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+  <script>
+    const search = instantsearch({
+      indexName: "movies",
+      searchClient: instantMeiliSearch(
+        "http://localhost:7700"
+      )
+      });
+      search.addWidgets([
+        instantsearch.widgets.searchBox({
+          container: "#searchbox"
+        }),
+        instantsearch.widgets.configure({ hitsPerPage: 8 }),
+        instantsearch.widgets.hits({
+          container: "#hits",
+          templates: {
+          item: `
+            <div>
+            <div class="hit-name">
+                  {{#helpers.highlight}}{ "attribute": "title" }{{/helpers.highlight}}
+            </div>
+            </div>
+          `
+          }
+        })
+      ]);
+      search.start();
+  </script>
+</html>
+```
+
+Here's what's happening:
+
+- The first four lines of the `<body>` add two container elements: `#searchbox` and `#hits`. `instant-meilisearch` creates the search bar inside `#searchbox` and lists search results in `#hits`
+- The first two`<script src="…">` tags import libraries needed to run `instant-meilisearch`
+- The third and final `<script>` tag  is where you customize `instant-meilisearch`
+
+:::
+
+::: tab Vue.js
+
+The following example uses [Vue 2](https://vuejs.org/), the second major release of a JavaScript framework for building web user interfaces.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+</head>
+
+<body>
+  <div id="app" class="wrapper">
+    <ais-instant-search :search-client="searchClient" index-name="movies">
+      <ais-configure :hits-per-page.camel="10" />
+      <ais-search-box placeholder="Search here…" class="searchbox"></ais-search-box>
+      <ais-hits>
+        <div slot="item" slot-scope="{ item }">
+          <ais-highlight :hit="item" attribute="title" />
+        </div>
+      </ais-hits>
+    </ais-instant-search>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-instantsearch/vue2/umd/index.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+<script>
+  Vue.use(VueInstantSearch)
+  var app = new Vue({
+    el: '#app',
+    data: {
+      searchClient: instantMeiliSearch('http://127.0.0.1:7700')
+    }
+  })
+</script>
+
+</html>
+```
+
+Here's what's happening:
+
+- To use `instant-meilisearch` with Vue, you must add `<ais-instant-search>`, `<ais-search-box>`, and `<ais-hits>` to your application's HTML. These components are mandatory when generating the`instant-meilisearch` interface
+- Other Vue components such as `<ais-configure>` and `<ais-highlight>` are optional. They offer greater control over `instant-meilisearch`'s behavior and appearance
+- The first two`<script src="..">` tags import libraries needed to run `instant-meilisearch` with Vue
+- The third and final `<script>` creates a new Vue instance and instructs it to use `instant-meilisearch`
+
+:::note
+
+The above example uses Vue 2. Refer to [this GitHub issue](https://github.com/meilisearch/meilisearch-vue/issues/102) to learn more about Vue 3.
+
+:::
+
+::: tab React
+
+The following code sample uses [React](https://reactjs.org/), a JavaScript library for building web user interfaces.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/templates/basic_search.css" />
+  </head>
+  <body>
+      <div id="app" class="wrapper"></div>
+  </body>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
+  <script>
+    const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
+    const searchClient = instantMeiliSearch(
+      "http://localhost:7700"
+    );
+    const App = () => (
+      React.createElement(InstantSearch, {
+        indexName: "movies",
+        searchClient: searchClient
+      }, [
+        React.createElement(SearchBox, { key: 1 }),
+        React.createElement(Hits, { hitComponent: Hit, key: 2 }),
+        React.createElement(Configure, { hitsPerPage: 10 })]
+      )
+    );
+    function Hit(props) {
+        return React.createElement(Highlight, {
+          attribute: "title",
+          hit: props.hit
+        })
+    }
+    const domContainer = document.querySelector('#app');
+    ReactDOM.render(React.createElement(App), domContainer);
+  </script>
+</html>
+```
+
+Here's what's happening:
+
+- The `< div id="app">` inside `<body>` is React's entry point. `instant-meilisearch` creates the search bar and the search result container inside this HTML element by manipulating the DOM
+- The first four`<script src="…">` tags import all the libraries required to run `instant-meilisearch` in [React](https://reactjs.org/).
+- The last `<script>` tag initializes React, customizes `instant-meilisearch`, and creates all the required UI elements inside `<div id="app">`
+
+:::
+
+::::
+
+### Let's try it!
+
+1. Create an empty file  and name it `index.html`
+2. Open it in a text editor like Notepad, Sublime Text, or Visual Studio Code
+3. Copy-paste one of the code samples above—either vanilla JavaScript, Vue 2, or React— and save the file
+4. Open `index.html` in your browser by double-clicking it in your folder
+
+You should now have a working front-end search interface 🚀🔥
 
 ## What's next?
 
