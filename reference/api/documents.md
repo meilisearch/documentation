@@ -8,7 +8,7 @@ Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
 
 ## Get one document
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:document_id"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/documents/{document_id}"/>
 
 Get one [document](/learn/core_concepts/documents.md) using its unique id.
 
@@ -37,7 +37,7 @@ Get one [document](/learn/core_concepts/documents.md) using its unique id.
 
 ## Get documents
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/documents"/>
 
 Get [documents](/learn/core_concepts/documents.md) by batch.
 
@@ -88,7 +88,7 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 ## Add or replace documents
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents"/>
 
 Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
 
@@ -146,7 +146,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Add or update documents
 
-<RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/documents"/>
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
@@ -207,7 +207,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Delete all documents
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/documents"/>
 
 Delete all documents in the specified index.
 
@@ -237,7 +237,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Delete one document
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:document_id"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/documents/{document_id}"/>
 
 Delete one document based on its unique id.
 
@@ -268,7 +268,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Delete documents by batch
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete-batch"/>
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 
 Delete a selection of documents based on array of document id's.
 

@@ -14,7 +14,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get ranking rules
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/ranking-rules" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/ranking-rules" />
 
 Get the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index.
 
@@ -50,7 +50,7 @@ List the settings.
 
 ## Update ranking rules
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/ranking-rules" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/ranking-rules" />
 
 Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index.
 
@@ -92,7 +92,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset ranking rules
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules" />
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/ranking-rules" />
 
 Reset the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index to their default value.
 

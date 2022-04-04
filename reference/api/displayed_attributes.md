@@ -15,7 +15,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get displayed attributes
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/displayed-attributes" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
 Get the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index.
 
@@ -44,7 +44,7 @@ List the settings.
 
 ## Update displayed attributes
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/displayed-attributes" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
 Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index.
 
@@ -84,7 +84,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset displayed attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/displayed-attributes"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/displayed-attributes"/>
 
 Reset the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of the index to the default value.
 

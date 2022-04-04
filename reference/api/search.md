@@ -15,7 +15,7 @@ Other than the differences mentioned above, the two routes are strictly equivale
 
 ## Search in an index with POST route
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/search"/>
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/search"/>
 
 Search for documents matching a specific query in the given index.
 
@@ -105,7 +105,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search in an index with GET route
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/search"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/search"/>
 
 Search for documents matching a specific query in the given index.
 

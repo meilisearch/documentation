@@ -18,7 +18,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get stop-words
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/stop-words" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/stop-words" />
 
 Get the stop-words list of an index.
 
@@ -44,7 +44,7 @@ Get the stop-words list of an index.
 
 ## Update stop-words
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/stop-words" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/stop-words" />
 
 Update the list of stop-words of an index.
 
@@ -82,7 +82,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset stop-words
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/stop-words" />
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/stop-words" />
 
 Reset the list of stop-words of an index to its default value.
 

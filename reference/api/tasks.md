@@ -55,7 +55,7 @@ Tasks are displayed in descending order by `uid`. This means that **the most rec
 
 ## Get task
 
-<RouteHighlighter method="GET" route="/tasks/:uid"/>
+<RouteHighlighter method="GET" route="/tasks/{uid}"/>
 
 Get a single [task](/learn/advanced/asynchronous_operations.md).
 
@@ -98,7 +98,7 @@ Here is an example response representing [a processed task](/learn/advanced/asyn
 
 ## Get all tasks by index
 
-<RouteHighlighter method="GET" route="/indexes/:indexUid/tasks"/>
+<RouteHighlighter method="GET" route="/indexes/{indexUid}/tasks"/>
 
 List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index](/learn/core_concepts/indexes.md).
 
@@ -147,7 +147,7 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
 
 ## Get task by index
 
-<RouteHighlighter method="GET" route="/indexes/:indexUid/tasks/:uid"/>
+<RouteHighlighter method="GET" route="/indexes/{indexUid}/tasks/{uid}"/>
 
 Get a single [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
 

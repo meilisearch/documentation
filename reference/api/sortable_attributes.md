@@ -12,7 +12,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get sortable attributes
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/sortable-attributes" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
 Get an index's [`sortableAttributes`](/learn/advanced/sorting.md).
 
@@ -39,7 +39,7 @@ List the settings.
 
 ## Update sortable attributes
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/sortable-attributes" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
 Update an index's sortable attributes list. This will re-index all documents in the index.
 
@@ -77,7 +77,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset sortable attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/sortable-attributes"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/sortable-attributes"/>
 
 Reset an index's sortable attributes list back to its default value.
 

@@ -108,7 +108,7 @@ Date and time when the key was last updated, represented in RFC 3339 format.
 
 ## Get one key
 
-<RouteHighlighter method="GET" route="/keys/:key"/>
+<RouteHighlighter method="GET" route="/keys/{key}"/>
 
 Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found).
 
@@ -230,7 +230,7 @@ Date and time when the key will expire, represented in RFC 3339 format. `null` i
 
 ## Update a key
 
-<RouteHighlighter method="PATCH" route="/keys/:key"/>
+<RouteHighlighter method="PATCH" route="/keys/{key}"/>
 
 Update the description, permissions, or expiration date of an API key. To learn more about the variables sent in the body of the request, see the [create key](#body) endpoint.
 
@@ -268,7 +268,7 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 ## Delete a key
 
-<RouteHighlighter method="DELETE" route="/keys/:key"/>
+<RouteHighlighter method="DELETE" route="/keys/{key}"/>
 
 Delete the specified API key.
 

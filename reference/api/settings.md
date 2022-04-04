@@ -23,7 +23,7 @@ When you update a setting, you overwrite its default value. Use the `DELETE` rou
 
 ## Get settings
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings" />
 
 Get the settings of an index.
 
@@ -100,7 +100,7 @@ List the settings.
 
 ## Update settings
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings" />
 
 Update the settings of an index.
 
@@ -151,7 +151,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset settings
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings"/>
 
 Reset the settings of an index.
 
