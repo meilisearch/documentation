@@ -30,7 +30,7 @@ There are three important parameters to keep in mind when using an SDK to genera
 
 **Search rules** must be a JSON object specifying the restrictions that will be applied to search requests on a given index. It must contain at least one search rule. [To learn more about search rules, take a look at our tenant token payload reference.](#search-rules)
 
-As its name indicates, **API key** must be a valid Meilisearch API key. A tenant token will have access to the same indexes as the API key used when generating it. If no API key is provided, the SDK might be able to infer it automatically.
+As its name indicates, **API key** must be a valid Meilisearch API key with access to [the search action](/reference/api/search.md). A tenant token will have access to the same indexes as the API key used when generating it. If no API key is provided, the SDK might be able to infer it automatically.
 
 **Expiration date** is optional when using an SDK. Tokens become invalid after their expiration date. Tokens without an expiration date will expire when their parent API key does.
 
@@ -209,7 +209,7 @@ Consult the search API reference for [more information on Meilisearch filter syn
 
 ### API Key
 
-Creating a token requires an API key. A token has access to the same indexes as the API key used to generate it.
+Creating a token requires an API key with access to [the search action](/reference/api/search.md). A token has access to the same indexes and routes as the API key used to generate it.
 
 Since a master key is not an API key, **you cannot use a master key to create a tenant token**.
 
