@@ -33,6 +33,8 @@ We will create an index called `movies`. The code below will create the `movies`
 
 The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
 
+The `uid` must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
+
 The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
