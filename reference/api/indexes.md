@@ -37,13 +37,7 @@ List all [indexes](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="GET" route="/indexes/:uid"/>
 
-Get information about an [index](/learn/core_concepts/indexes.md).
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **uid** | The index UID |
+Get information about an [index](/learn/core_concepts/indexes.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Example
 
@@ -110,7 +104,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 <RouteHighlighter method="PUT" route="/indexes/:uid"/>
 
-Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
+Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/api/indexes.md#get-one-index) to verify it.
 
@@ -119,12 +113,6 @@ It is not possible to change an index's `uid`.
 :::
 
 This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **uid** | The index UID |
 
 ### Body
 
@@ -154,15 +142,9 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:uid"/>
 
-Delete an [index](/learn/core_concepts/indexes.md).
+Delete an [index](/learn/core_concepts/indexes.md).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **uid** | The index UID |
 
 ### Example
 

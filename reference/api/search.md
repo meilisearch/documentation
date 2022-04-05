@@ -17,15 +17,9 @@ Other than the differences mentioned above, the two routes are strictly equivale
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/search"/>
 
-Search for documents matching a specific query in the given index.
+Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Body
 
@@ -107,15 +101,9 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/search"/>
 
-Search for documents matching a specific query in the given index.
+Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 This route should only be used when no API key is required. If an API key is required, use the POST route instead.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Query parameters
 

@@ -6,13 +6,7 @@ The `/stats` route gives extended information and metrics about indexes and the 
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/stats"/>
 
-Get stats of an index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Get stats of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Fields returned
 

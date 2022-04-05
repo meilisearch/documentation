@@ -14,13 +14,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Get an index's [`filterableAttributes`](/learn/advanced/filtering_and_faceted_search.md).
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Get an index's [`filterableAttributes`](/learn/advanced/filtering_and_faceted_search.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Example
 
@@ -41,13 +35,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/:index_uid/settings/filterable-attributes" />
 
-Update an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md). This will re-index all documents in the index.
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Update an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md). This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Body
 
@@ -77,17 +65,11 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/filterable-attributes"/>
 
-Reset an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md) back to its default value.
+Reset an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md) back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Default value
 
 An empty array (`[]`).
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 ### Example
 
