@@ -15,14 +15,14 @@ create_an_index_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "uid": "movies",
-      "primaryKey": "movie_id"
+      "primaryKey": "id"
     }'
 update_an_index_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/movies' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "primaryKey" : "movie_review_id"
+        "primaryKey" : "id"
     }'
 delete_an_index_1: |-
   curl \
