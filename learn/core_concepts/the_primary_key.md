@@ -8,9 +8,7 @@ The primary field is a special field that must be present in all documents. Its 
 
 ### Example:
 
-Suppose we have an index called `books` that contains 200,000 documents. As shown below, each document is identified by a **primary field** containing the **primary key** `id` and a **unique value** (the document id).
-
-Aside from the primary key, **documents in the same index are not required to share attributes**, e.g. you could have a document in this index without the `title` attribute.
+Suppose we have a dataset containing several books. Each document contains several fields with data on the book's `author`, `title`, and `price`. More importantly, each document contains a **primary field** indicating the books'  **primary key** `id` and a **document id**.
 
 ```json
 [
@@ -22,24 +20,26 @@ Aside from the primary key, **documents in the same index are not required to sh
     "price": 5.00
   },
   {
-   "id": 1,
-    "title": "Diary of a Wimpy Kid: The Last Straw",
-    "author": "Jeff Kinney",
-    "genres": ["comedy","humor"],
+   "id": 2,
+    "title": "Black Leopard, Red Wolf",
+    "author": "Marlon James",
+    "genres": ["fantasy","drama"],
     "price": 5.00
   }
 ]
 ```
 
+Aside from the primary key, **documents in the same index are not required to share attributes**. A book in this dataset could be missing a `title` or `genre` attribute and still be successfully indexed by Meilisearch.
+
 ### Document id
 
-The document id is the value associated to the primary key. It is part of the primary field, and acts as a unique identifier for each of the documents of a given index.
+The document id is the value associated with the primary key. It is part of the primary field, and acts as a unique identifier for each documents in a given index.
 
 This unique value ensures that two documents in the same index cannot be exactly alike. If two documents in the same index have the same id, then they are treated as the same document and the more recent one will replace the older.
 
-The document id must of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
+The document id must be an integer or a string. If the id is a string, it can only contain alphanumeric characters (`a-z`, `A-Z`, `0-9`), hyphens (`-`), and underscores (`_`).
 
-#### Example:
+#### Example
 
 Good:
 
@@ -53,7 +53,7 @@ Bad:
 "id": "@BI+* ^5h2%"
 ```
 
-Take note that the document addition request in Meilisearch is atomic. This means that **if even a single document id is incorrectly formatted, an error will occur and none of your documents will be added.**
+Document addition requests in Meilisearch are atomic. This means that **if the primary field value of even a single document in a batch is incorrectly formatted, an error will occur and Meilisearch will not index documents in that batch.**
 
 ### Primary key
 
@@ -71,15 +71,15 @@ The primary key is a **mandatory attribute**. Each index recognizes **only one**
   }
 ```
 
-Each document in the above index is identified by a **primary field** containing the **primary key** `id` and a **unique value**, `1` for this document.
+Each document in the above index is identified by a primary field containing the primary key `id` and a unique document id value.
 
 ## Setting the primary key
 
-There are several ways to set the primary key for an index:
+You can set the primary key explicitly or let Meilisearch infer it from your dataset—whatever your choice, an index can only one primary key. If you try to index a document that has no primary key, Meilisearch will immediately interrupt the process and no documents will be added to your index.
 
 ### Setting the primary key on index creation
 
-The code below creates an index called `books` with `reference_number` as primary key:
+When creating an index manually, you can explicitly indicate the primary key you want this index to use. The code below creates an index called `books` and sets `reference_number` as its primary key:
 
 <CodeSamples id="document_guide_create_index_primary_key" />
 
@@ -99,9 +99,11 @@ The code below creates an index called `books` with `reference_number` as primar
 }    
 ```
 
+Once a primary key has been explicitly set for an index, it cannot be changed. 
+
 ### Setting the primary key on document addition
 
-The code below adds a document and sets `reference_number` as the index's primary key:
+You can also explicitly state your documents' primary key by including it in your document addition request. The code below adds a document and sets `reference_number` as the index's primary key:
 
 <CodeSamples id="document_guide_add_document_primary_key" />
 
@@ -122,11 +124,13 @@ The code below adds a document and sets `reference_number` as the index's primar
 }
 ```
 
+Once a primary key has been explicitly set for an index, it cannot be changed. 
+
 ### Meilisearch guesses your primary key
 
 If the primary key has neither been set at index creation nor as a parameter of the [add documents](/reference/api/documents.md#add-or-replace-documents) route, Meilisearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `BookId`, `ID`, `123id123`) and set it as that index's primary key.
 
-If no corresponding attribute is found, the index will have no known primary key, and therefore, **no documents will be added**.
+If Meilisearch cannot find a suitable attribute, the document addition process will be interrupted and no documents will be added to your index.
 
 ## Primary key errors
 
