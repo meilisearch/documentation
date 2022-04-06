@@ -1,8 +1,12 @@
+---
+
+sidebarDepth: 2
+
+---
+
 # Features
 
 All of Meilisearch's features are provided right out of the box, and can be easily [configured](/reference/api/search.md). Here are a few of them that you should try out!
-
-[[toc]]
 
 ## Search as you type
 

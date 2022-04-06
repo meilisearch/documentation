@@ -1,6 +1,10 @@
-# Comparison to alternatives
+---
 
-[[toc]]
+sidebarDepth: 2
+
+---
+
+# Comparison to alternatives
 
 ## About Meilisearch
 
