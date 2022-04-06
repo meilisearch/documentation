@@ -4,7 +4,6 @@ module.exports = {
   description: 'Open source Instant Search Engine',
   theme: 'default-prefers-color-scheme',
   themeConfig: {
-    repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
     logo: '/logo.svg',
@@ -13,12 +12,11 @@ module.exports = {
 
     nav: [
       { text: 'Learn', link: '/learn/getting_started/quick_start' },
-      { text: 'API Reference', link: '/reference/api/overview' },
+      { text: 'Reference', link: '/reference/api/overview' },
       { text: 'FAQ', link: '/faq' },
       {
         text: 'Integrations',
         items: [
-
           {
             text: 'SDKs',
             items: [
@@ -66,8 +64,15 @@ module.exports = {
           },
         ],
       },
-      { text: 'Slack', link: 'https://slack.meilisearch.com' },
-      { text: 'Blog', link: 'https://blog.meilisearch.com/' },
+      {
+        text: 'More Meilisearch',
+        items: [
+          { text: 'GitHub', link: 'https://github.com/meilisearch/meilisearch' },
+          { text: 'Slack', link: 'https://slack.meilisearch.com' },
+          { text: 'Blog', link: 'https://blog.meilisearch.com/' },
+          { text: 'meilisearch.com', link: 'https://meilisearch.com' },
+        ],
+      },
     ],
     sidebar: {
       '/learn/': [
