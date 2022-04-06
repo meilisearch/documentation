@@ -128,7 +128,7 @@ When creating dumps, Meilisearch calls the same method as the [get documents end
 Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
 ```bash
-# whenever you see :index_uid, replace it with your index's unique id
+# whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
   'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
@@ -221,7 +221,7 @@ The server should return a response that looks like this:
 This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 ```bash
-# replace :dump_uid with the uid returned by the previous command
+# replace {dump_uid} with the uid returned by the previous command
 curl -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status'
 ```
 
@@ -317,7 +317,7 @@ Use the [get documents endpoint](/reference/api/documents.md#get-documents) to r
 
 ```bash
 # the -o option saves the output as a local file
-# whenever you see :index_uid, replace it with your index's unique id
+# whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
   'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \
   -o mydocuments.json
