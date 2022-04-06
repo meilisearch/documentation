@@ -30,6 +30,7 @@ module.exports = {
               { text: 'Ruby', link: 'https://github.com/meilisearch/meilisearch-ruby' },
               { text: 'Rust', link: 'https://github.com/meilisearch/meilisearch-rust' },
               { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
+              { text: 'Firebase', link: 'https://github.com/meilisearch/firestore-meilisearch' },
             ],
           },
           {
