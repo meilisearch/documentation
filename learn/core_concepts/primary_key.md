@@ -1,10 +1,10 @@
-# The primary key
+# Primary key
 
 ## Primary field
 
 [Documents](/learn/core_concepts/documents.md) in Meilisearch are composed of fields. A field is a set of two data items linked together: an attribute and a value.
 
-The primary field is a special field that must be present in all documents. Its attribute is the **[primary key](#primary-key)** and its value is the **[document id](#document-id)**. It uniquely identifies each document in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
+The primary field is a special field that must be present in all documents. Its attribute is the **[primary key](#primary-key-2)** and its value is the **[document id](#document-id)**. It uniquely identifies each document in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
 
 ### Example:
 
@@ -31,11 +31,29 @@ Suppose we have a dataset containing several books. Each document contains sever
 
 Aside from the primary key, **documents in the same index are not required to share attributes**. A book in this dataset could be missing a `title` or `genre` attribute and still be successfully indexed by Meilisearch.
 
+### Primary key
+
+The primary key is the attribute of the primary field and it must be shared across all documents in an index. If no primary key is found in one document, **none of the documents will be stored.**
+
+#### Example
+
+```json
+{
+    "id": 1,
+    "title": "Diary of a Wimpy Kid",
+    "author": "Jeff Kinney",
+    "genres": ["comedy","humor"],
+    "price": 5.00
+  }
+```
+
+Each document in the above index is identified by a primary field containing the primary key `id` and a unique document id value.
+
 ### Document id
 
 The document id is the value associated with the primary key. It is part of the primary field, and acts as a unique identifier for each documents in a given index.
 
-This unique value ensures that two documents in the same index cannot be exactly alike. If two documents in the same index have the same id, then they are treated as the same document and the more recent one will replace the older.
+Two documents in an index can have the same values for all attributes except the primary key. If two documents in the same index have the same id, then they are treated as the same document and **the preceding document will be overwritten**.
 
 The document id must be an integer or a string. If the id is a string, it can only contain alphanumeric characters (`a-z`, `A-Z`, `0-9`), hyphens (`-`), and underscores (`_`).
 
@@ -54,24 +72,6 @@ Bad:
 ```
 
 Document addition requests in Meilisearch are atomic. This means that **if the primary field value of even a single document in a batch is incorrectly formatted, an error will occur and Meilisearch will not index documents in that batch.**
-
-### Primary key
-
-The primary key is a **mandatory attribute**. Each index recognizes **only one** primary key attribute. Once a primary key has been set for an index, it **cannot be changed anymore**. If no primary key is found in one document, **none of the documents will be stored.** The primary key ensures that there are no identical documents in the same index.
-
-#### Example
-
-```json
-{
-    "id": 1,
-    "title": "Diary of a Wimpy Kid",
-    "author": "Jeff Kinney",
-    "genres": ["comedy","humor"],
-    "price": 5.00
-  }
-```
-
-Each document in the above index is identified by a primary field containing the primary key `id` and a unique document id value.
 
 ## Setting the primary key
 
@@ -99,7 +99,7 @@ When creating an index manually, you can explicitly indicate the primary key you
 }    
 ```
 
-Once a primary key has been explicitly set for an index, it cannot be changed. 
+Once a primary key has been explicitly set for an index, it cannot be changed.
 
 ### Setting the primary key on document addition
 
@@ -124,7 +124,7 @@ You can also explicitly state your documents' primary key by including it in you
 }
 ```
 
-Once a primary key has been explicitly set for an index, it cannot be changed. 
+Once a primary key has been explicitly set for an index, it cannot be changed.
 
 ### Meilisearch guesses your primary key
 

@@ -128,9 +128,9 @@ In the latter case, the field will be completely ignored when a search is perfor
 
 ## Primary field
 
-The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/the_primary_key.md#primary-key) and its value is the [document id](/learn/core_concepts/the_primary_key.md#document-id).
+The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id).
 
-To learn more, refer to the [primary key explanation](/learn/core_concepts/the_primary_key.md).
+To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
 
 ## Upload
 
@@ -151,7 +151,7 @@ When using the [route to add new documents](/reference/api/documents.md#add-or-u
 <CodeSamples id="documents_guide_add_movie_1" />
 
 [primary-field]: /learn/core_concepts/documents.md#primary-field
-[primary-key]: /learn/core_concepts/the_primary_key.md#primary-key
-[document-id]: /learn/core_concepts/the_primary_key.md#document-id
+[primary-key]: /learn/core_concepts/primary_key.md#primary-key-2
+[document-id]: /learn/core_concepts/primary_key.md#document-id
 [fields]: /learn/core_concepts/documents.md#fields
 [indexes]: /learn/core_concepts/indexes.md
