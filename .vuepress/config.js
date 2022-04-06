@@ -66,7 +66,7 @@ module.exports = {
         ],
       },
       {
-        text: 'More Meili',
+        text: 'More Meilisearch',
         items: [
           { text: 'GitHub', link: 'https://github.com/meilisearch/meilisearch' },
           { text: 'Slack', link: 'https://slack.meilisearch.com' },
