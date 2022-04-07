@@ -12,7 +12,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get filterable attributes
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/filterable-attributes" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
 Get an index's [`filterableAttributes`](/learn/advanced/filtering_and_faceted_search.md).
 
@@ -39,7 +39,7 @@ List the settings.
 
 ## Update filterable attributes
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/filterable-attributes" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
 Update an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md). This will re-index all documents in the index.
 
@@ -75,7 +75,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset filterable attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/filterable-attributes"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/filterable-attributes"/>
 
 Reset an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md) back to its default value.
 

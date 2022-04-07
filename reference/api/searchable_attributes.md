@@ -14,7 +14,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get searchable attributes
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/searchable-attributes" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Get the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index.
 
@@ -42,7 +42,7 @@ List the settings.
 
 ## Update searchable attributes
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/searchable-attributes" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Update the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index.
 
@@ -86,7 +86,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset searchable attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/searchable-attributes"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/searchable-attributes"/>
 
 Reset the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of the index to the default value.
 

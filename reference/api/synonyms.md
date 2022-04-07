@@ -14,7 +14,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get synonyms
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/synonyms"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/synonyms"/>
 
 Get the list of [synonyms](/learn/configuration/synonyms.md) of an index.
 
@@ -48,7 +48,7 @@ Get the list of [synonyms](/learn/configuration/synonyms.md) of an index.
 
 ## Update synonyms
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/synonyms"/>
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/synonyms"/>
 
 Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization).
 
@@ -84,7 +84,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset synonyms
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/synonyms"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/synonyms"/>
 
 Reset the list of [synonyms](/learn/configuration/synonyms.md) of an index to its default value.
 

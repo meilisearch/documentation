@@ -128,9 +128,9 @@ When creating dumps, Meilisearch calls the same method as the [get documents end
 Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
 ```bash
-# whenever you see :index_uid, replace it with your index's unique id
+# whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
@@ -139,7 +139,7 @@ If it's something else, then you need to use the [reset displayed attributes end
 
 ```bash
 curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
@@ -221,8 +221,8 @@ The server should return a response that looks like this:
 This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 ```bash
-# replace :dump_uid with the uid returned by the previous command
-curl -X GET 'http://127.0.0.1:7700/dumps/:dump_uid/status'
+# replace {dump_uid} with the uid returned by the previous command
+curl -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status'
 ```
 
 Once the response to the previous command looks like this (`"status": "done"`), move on.
@@ -280,7 +280,7 @@ First, use the [get settings endpoint](/reference/api/settings.md#get-settings) 
 ```bash
 # the -o option saves the output as a local file
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings' -o mysettings.json
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json
 ```
 
 Repeat this process for all indexes you wish to migrate.
@@ -295,7 +295,7 @@ By default, all fields are added to the displayed attributes list. Still, it's a
 
 ```bash
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
@@ -304,7 +304,7 @@ If it's something else, then you need to use the [reset displayed-attributes end
 
 ```bash
 curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
@@ -317,9 +317,9 @@ Use the [get documents endpoint](/reference/api/documents.md#get-documents) to r
 
 ```bash
 # the -o option saves the output as a local file
-# whenever you see :index_uid, replace it with your index's unique id
+# whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/documents?limit=n' \
+  'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \
   -o mydocuments.json
 ```
 
@@ -336,11 +336,11 @@ If you chose to save your settings, make sure to follow this order:
 ```bash
 # update your settings
 curl -X POST -H "Content-Type: application/json" -d @mysettings.json \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings'
 
 # then, add your documents
 curl -X POST -H "Content-Type: application/json" -d @mydocuments.json \
-  'http://127.0.0.1:7700/indexes/:index_uid/documents'
+  'http://127.0.0.1:7700/indexes/{index_uid}/documents'
 ```
 
 Since updating the settings requires re-indexing all documents, this order saves time and memory.

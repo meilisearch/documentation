@@ -31,7 +31,7 @@ We will create an index called `movies`. The code below will create the `movies`
 
 ## Index UID
 
-The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
+The `uid` is the **unique** identifier of a given index. It is used on every `indexes/{index_uid}` route as the `{index_uid}` parameter.
 
 The `uid` must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 

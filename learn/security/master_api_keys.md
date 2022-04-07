@@ -148,7 +148,7 @@ You can use the [list keys endpoint](/reference/api/keys.md) to obtain informati
 
 [`GET /keys`](/reference/api/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you need the master key to access this endpoint.
 
-[`GET /keys/:key`](/reference/api/keys.md#get-one-key) returns information on a single key. `:key` should be replaced with the full `key` value obtained during key creation.
+[`GET /keys/{key}`](/reference/api/keys.md#get-one-key) returns information on a single key. `{key}` should be replaced with the full `key` value obtained during key creation.
 
 We can query our instance to confirm which active keys can search our `patient_medical_records` index:
 

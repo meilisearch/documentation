@@ -44,7 +44,7 @@ List all [indexes](/learn/core_concepts/indexes.md).
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/:uid"/>
+<RouteHighlighter method="GET" route="/indexes/{uid}"/>
 
 Get information about an [index](/learn/core_concepts/indexes.md).
 
@@ -118,7 +118,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/:uid"/>
+<RouteHighlighter method="PUT" route="/indexes/{uid}"/>
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
 
@@ -162,7 +162,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid"/>
+<RouteHighlighter method="DELETE" route="/indexes/{uid}"/>
 
 Delete an [index](/learn/core_concepts/indexes.md).
 
