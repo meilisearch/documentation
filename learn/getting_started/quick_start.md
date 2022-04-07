@@ -400,7 +400,7 @@ The following code sample uses [React](https://reactjs.org/), a JavaScript libra
   <script src="https://cdn.jsdelivr.net/npm/react-instantsearch-dom@6.7.0/dist/umd/ReactInstantSearchDOM.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script>
-    const { InstantSearch, SearchBox, Hits, Highlight, Configure }  = ReactInstantSearchDOM;
+    const { InstantSearch, SearchBox, Hits, Highlight, Configure } = ReactInstantSearchDOM;
     const searchClient = instantMeiliSearch(
       "http://localhost:7700"
     );
@@ -414,12 +414,14 @@ The following code sample uses [React](https://reactjs.org/), a JavaScript libra
         React.createElement(Configure, { hitsPerPage: 10 })]
       )
     );
-    function Hit(props) {
-        return React.createElement(Highlight, {
-          attribute: "title",
-          hit: props.hit
-        })
-    }
+
+    const Hit = (props) => (
+      React.createElement(Highlight, {
+        attribute: "title",
+        hit: props.hit
+      })
+    );
+    
     const domContainer = document.querySelector('#app');
     ReactDOM.render(React.createElement(App), domContainer);
   </script>
