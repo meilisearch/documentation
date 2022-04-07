@@ -6,9 +6,9 @@
 
 The primary field is a special field that must be present in all documents. Its attribute is the **[primary key](#primary-key-2)** and its value is the **[document id](#document-id)**. It uniquely identifies each document in an index, ensuring that **it is impossible to have two exactly identical documents** present in the same index.
 
-### Example:
+### Example
 
-Suppose we have a dataset containing several books. Each document contains several fields with data on the book's `author`, `title`, and `price`. More importantly, each document contains a **primary field** indicating the books'  **primary key** `id` and a **document id**.
+Suppose we have a dataset containing several books. Each document contains a number fields with data on the book's `author`, `title`, and `price`. More importantly, each document contains a **primary field** indicating the books'  **primary key** `id` and a **document id**.
 
 ```json
 [
