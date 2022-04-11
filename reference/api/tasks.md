@@ -63,7 +63,7 @@ Get a single [task](/learn/advanced/asynchronous_operations.md).
 
 | Variable      | Description           |
 | ------------- | --------------------- |
-| **task_uid**  | The task identifier |
+| **uid**  | The task identifier |
 
 ### Example
 
@@ -106,7 +106,7 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **indexUid** | The index UID |
 
 ### Example
 
@@ -155,8 +155,8 @@ Get a single [task](/learn/advanced/asynchronous_operations.md) in a given [inde
 
 | Variable      | Description           |
 | ------------- | --------------------- |
-| **index_uid** | The index UID         |
-| **task_uid**  | The task identifier |
+| **indexUid** | The index UID         |
+| **uid**  | The task identifier |
 
 ### Example
 

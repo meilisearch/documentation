@@ -52,7 +52,7 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
@@ -134,7 +134,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Body
 
@@ -172,7 +172,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **index_uid** | The index UID |
+| **uid** | The index UID |
 
 ### Example
 
