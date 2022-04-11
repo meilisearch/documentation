@@ -44,7 +44,7 @@ List all [indexes](/learn/core_concepts/indexes.md).
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/{uid}"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}"/>
 
 Get information about an [index](/learn/core_concepts/indexes.md).
 
@@ -52,7 +52,7 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Example
 
@@ -76,7 +76,7 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `uid` and `primaryKey`.
 
-If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from first document you add to the index.
+If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from the first document you add to the index.
 
 ::: note
 If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, Meilisearch will automatically create it for you. This is called implicit index creation.
@@ -118,7 +118,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/{uid}"/>
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}"/>
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).
 
@@ -134,7 +134,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Body
 
@@ -162,7 +162,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/{uid}"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}"/>
 
 Delete an [index](/learn/core_concepts/indexes.md).
 
@@ -172,7 +172,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 | Variable      | Description   |
 | ------------- | ------------- |
-| **uid** | The index UID |
+| **index_uid** | The index UID |
 
 ### Example
 
