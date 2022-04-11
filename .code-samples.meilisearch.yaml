@@ -471,11 +471,9 @@ getting_started_add_documents_md: |-
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
   ```
-getting_started_check_task_status_md: |-
-  ```bash
+getting_started_check_task_status: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/tasks/0'
-  ```
 getting_started_search_md: |-
   ```bash
   curl \
@@ -488,7 +486,7 @@ getting_started_add_meteorites: |-
     -X POST 'http://127.0.0.1:7700/indexes/meteorites/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @meteorites.json
-getting_started_update_rankingRules: |-
+getting_started_update_ranking_rules: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
@@ -502,7 +500,7 @@ getting_started_update_rankingRules: |-
         "release_date:asc",
         "rank:desc"
     ]'
-getting_started_update_displayedAttributes: |-
+getting_started_update_displayed_attributes: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
@@ -511,7 +509,7 @@ getting_started_update_displayedAttributes: |-
         "overview",
         "poster"
     ]'
-getting_started_update_searchableAttributes: |-
+getting_started_update_searchable_attributes: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
@@ -535,12 +533,12 @@ getting_started_filtering: |-
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{"filter": "mass < 200"}'
-getting_started_geoRadius: |-
+getting_started_geo_radius: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(46.9480, 7.4474, 210000)" }'
-getting_started_geoPoint: |-
+getting_started_geo_point: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-type:application/json' \

@@ -100,7 +100,7 @@ Meilisearch allows you to filter and sort results based on their geographic loca
 
 Let's say you want to find out which meteorites crashed within a 210km radius of Bern:
 
-<CodeSamples id= "getting_started_geoRadius" />
+<CodeSamples id= "getting_started_geo_radius" />
 
 ```json
 {
@@ -146,7 +146,7 @@ Let's say you want to find out which meteorites crashed within a 210km radius of
 
 The following command sorts meteorites by how close they were to the Taj Mahal:
 
-<CodeSamples id= "getting_started_geoPoint" />
+<CodeSamples id= "getting_started_geo_point" />
 
 ```json
 {

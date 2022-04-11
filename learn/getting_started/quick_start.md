@@ -190,7 +190,7 @@ Most database operations in Meilisearch are [asynchronous](/learn/advanced/async
 
 Use the returned `uid` to [check the status](/reference/api/tasks.md) of your documents:
 
-<CodeSamples id="getting_started_check_task_status_md" />
+<CodeSamples id="getting_started_check_task_status" />
 
 If the document addition is successful, the response should look like this:
 
