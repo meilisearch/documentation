@@ -59,6 +59,7 @@ module.exports = {
             text: 'DevOps tools',
             items: [
               { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
+              { text: 'DigitalOcean', link: 'https://github.com/meilisearch/meilisearch-digitalocean' },
               { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
               { text: 'AWS', link: 'https://github.com/meilisearch/meilisearch-aws' },
             ],
