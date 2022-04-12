@@ -232,7 +232,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 
-Delete a selection of documents based on array of document id's. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Delete a selection of documents based on an array of document IDs. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
