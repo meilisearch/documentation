@@ -53,7 +53,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 | field                | Description                    |    type    |
 | -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `[result]` |
+| **hits**             | Results of the query           | `array of objects` |
 | **offset**           | Number of documents skipped    |  `number`  |
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
@@ -135,7 +135,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 | field                | Description                    |    type    |
 | -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `[result]` |
+| **hits**             | Results of the query           | `array of objects` |
 | **offset**           | Number of documents skipped    |  `number`  |
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
