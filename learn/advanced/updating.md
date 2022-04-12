@@ -240,6 +240,12 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 
 To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
+::: tip
+
+If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
+
+:::
+
 ### Step 4: Import the dump
 
 Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
