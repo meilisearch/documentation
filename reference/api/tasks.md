@@ -137,7 +137,7 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
 
 <RouteHighlighter method="GET" route="/indexes/:indexUid/tasks/:uid"/>
 
-Get a single [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) and task [`uid`](/learn/advanced/asynchronous_operations.md#response) are required.
+Get a single [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md). Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and task [`uid`](/learn/advanced/asynchronous_operations.md#response) are required.
 
 ### Example
 
