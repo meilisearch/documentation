@@ -13,13 +13,14 @@ If you have already **installed the latest version and manually indexed your dat
 Before we begin, you need to **verify the version of Meilisearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a Meilisearch instance:
 
 ```bash
-./meilisearch
+./meilisearch --master=key="your_master_key"
 ```
 
 If Meilisearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
 
 ```bash
-curl -X GET 'http://127.0.0.1:7700/version'
+curl -X GET 'http://127.0.0.1:7700/version' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 The response should look something like this:
@@ -130,7 +131,8 @@ Start by using the [get displayed attributes endpoint](/reference/api/displayed_
 ```bash
 # whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
@@ -139,7 +141,8 @@ If it's something else, then you need to use the [reset displayed attributes end
 
 ```bash
 curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
@@ -205,7 +208,8 @@ It should return something like this:
 To create a dump, use the [create dump endpoint](/reference/api/dump.md#create-a-dump).
 
 ```bash
-curl -X POST 'http://127.0.0.1:7700/dumps'
+curl -X POST 'http://127.0.0.1:7700/dumps' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 The server should return a response that looks like this:
@@ -222,7 +226,8 @@ This process can take some time. Since dump creation is an [asynchronous operati
 
 ```bash
 # replace {dump_uid} with the uid returned by the previous command
-curl -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status'
+curl -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 Once the response to the previous command looks like this (`"status": "done"`), move on.
@@ -252,7 +257,7 @@ Now that you’ve got your dump, [install the latest version of Meilisearch](/le
 
 ```bash
 # launch the latest version of Meilisearch and import the specified dump file
-./meilisearch --import-dump /dumps/your_dump_file.dump
+./meilisearch --import-dump /dumps/your_dump_file.dump  --master=key="your_master_key"
 ```
 
 ::: warning
@@ -286,7 +291,8 @@ First, use the [get settings endpoint](/reference/api/settings.md#get-settings) 
 ```bash
 # the -o option saves the output as a local file
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 Repeat this process for all indexes you wish to migrate.
@@ -301,7 +307,8 @@ By default, all fields are added to the displayed attributes list. Still, it's a
 
 ```bash
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
@@ -310,7 +317,8 @@ If it's something else, then you need to use the [reset displayed-attributes end
 
 ```bash
 curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
@@ -326,7 +334,8 @@ Use the [get documents endpoint](/reference/api/documents.md#get-documents) to r
 # whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
   'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \
-  -o mydocuments.json
+  -o mydocuments.json \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 ### Step 4: Delete the database folder
@@ -342,11 +351,13 @@ If you chose to save your settings, make sure to follow this order:
 ```bash
 # update your settings
 curl -X POST -H "Content-Type: application/json" -d @mysettings.json \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings' \
+  -H 'Authorization: Bearer masterKey'
 
 # then, add your documents
 curl -X POST -H "Content-Type: application/json" -d @mydocuments.json \
-  'http://127.0.0.1:7700/indexes/{index_uid}/documents'
+  'http://127.0.0.1:7700/indexes/{index_uid}/documents' \
+  -H 'Authorization: Bearer masterKey'
 ```
 
 Since updating the settings requires re-indexing all documents, this order saves time and memory.
