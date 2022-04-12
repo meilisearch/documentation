@@ -16,13 +16,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Get the list of [synonyms](/learn/configuration/synonyms.md) of an index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Get the list of [synonyms](/learn/configuration/synonyms.md) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -50,13 +44,7 @@ Get the list of [synonyms](/learn/configuration/synonyms.md) of an index.
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization).
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -86,17 +74,11 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Reset the list of [synonyms](/learn/configuration/synonyms.md) of an index to its default value.
+Reset the list of [synonyms](/learn/configuration/synonyms.md) of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
 Empty object : `{}`
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Example
 

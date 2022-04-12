@@ -17,13 +17,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
-Get the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Get the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -46,17 +40,11 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
-Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index.
+Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ::: note
 `displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
 :::
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Body
 
@@ -86,17 +74,11 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/displayed-attributes"/>
 
-Reset the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of the index to the default value.
+Reset the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of the index to the default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
 All attributes found in the documents added to the index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Example
 

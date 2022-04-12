@@ -25,15 +25,9 @@ When you update a setting, you overwrite its default value. Use the `DELETE` rou
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings" />
 
-Get the settings of an index.
+Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 [Learn more about the settings.](/learn/configuration/settings.md)
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 ### Response body
 
@@ -102,7 +96,7 @@ List the settings.
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings" />
 
-Update the settings of an index.
+Update the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 Passing `null` to an index setting will reset it to its default value.
 
@@ -111,12 +105,6 @@ Updates in the settings route are **partial**. This means that any parameters no
 If the provided index does not exist, it will be created.
 
 [Learn more about the settings in this guide.](/learn/configuration/settings.md)
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 ### Body
 
@@ -153,7 +141,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings"/>
 
-Reset the settings of an index.
+Reset the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 All settings will be reset to their default value.
 
@@ -169,12 +157,6 @@ All settings will be reset to their default value.
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
 
 [Learn more about the settings](/learn/configuration/settings.md).
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Example
 

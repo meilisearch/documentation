@@ -38,7 +38,8 @@ The task queue will not process any further tasks during dump creation, but you 
 
 <RouteHighlighter method="GET" route="/dumps/{dump_uid}/status"/>
 
-Get the status of a dump creation process using the uid returned after calling the [dump creation route](/reference/api/dump.md#create-a-dump).
+Get the status of a dump creation process using the uid returned after calling the [dump creation route](/reference/api/dump.md#create-a-dump). The dump `uid` is required.
+
 The returned status could be:
 
 - `in_progress`: Dump creation is in progress
