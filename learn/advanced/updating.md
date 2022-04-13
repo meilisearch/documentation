@@ -18,9 +18,7 @@ Before we begin, you need to **verify the version of Meilisearch that's compatib
 
 If Meilisearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
 
-```bash
-curl -X GET 'http://127.0.0.1:7700/version'
-```
+<CodeSamples id="updating_guide_check_version" />
 
 The response should look something like this:
 
@@ -127,20 +125,13 @@ When creating dumps, Meilisearch calls the same method as the [get documents end
 
 Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
-```bash
-# whenever you see {index_uid}, replace it with your index's unique id
-curl -X GET \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
-```
+<CodeSamples id="updating_guide_get_displayed_attributes_1" />
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
 
 If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
-```bash
-curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
-```
+<CodeSamples id="updating_guide_reset_displayed_attributes_1" />
 
 This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
 
@@ -204,9 +195,7 @@ It should return something like this:
 
 To create a dump, use the [create dump endpoint](/reference/api/dump.md#create-a-dump).
 
-```bash
-curl -X POST 'http://127.0.0.1:7700/dumps'
-```
+<CodeSamples id="updating_guide_create_dump" />
 
 The server should return a response that looks like this:
 
@@ -220,10 +209,7 @@ The server should return a response that looks like this:
 
 This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
-```bash
-# replace {dump_uid} with the uid returned by the previous command
-curl -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status'
-```
+<CodeSamples id="updating_guide_get_dump_status" />
 
 Once the response to the previous command looks like this (`"status": "done"`), move on.
 
@@ -283,11 +269,7 @@ If you don’t need to preserve index settings, skip directly to [step two](#ste
 
 First, use the [get settings endpoint](/reference/api/settings.md#get-settings) to retrieve the [settings](/learn/configuration/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
 
-```bash
-# the -o option saves the output as a local file
-curl -X GET \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json
-```
+<CodeSamples id="updating_guide_get_settings" />
 
 Repeat this process for all indexes you wish to migrate.
 
@@ -299,19 +281,13 @@ To prevent data loss, all fields must be set as [displayed](/learn/configuration
 
 By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
-```bash
-curl -X GET \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
-```
+<CodeSamples id="updating_guide_get_displayed_attributes_2" />
 
 If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
 
 If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
-```bash
-curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
-```
+<CodeSamples id="updating_guide_reset_displayed_attributes_2" />
 
 This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
 
@@ -321,13 +297,7 @@ Now that all fields are displayed, proceed to the next step.
 
 Use the [get documents endpoint](/reference/api/documents.md#get-documents) to retrieve your documents and save them using the method you prefer. Make sure to set the `limit` on documents returned so that, if you have some number of documents `n`, `limit ≥ n`. Otherwise, you risk data loss.
 
-```bash
-# the -o option saves the output as a local file
-# whenever you see {index_uid}, replace it with your index's unique id
-curl -X GET \
-  'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \
-  -o mydocuments.json
-```
+<CodeSamples id="updating_guide_retrieve_documents" />
 
 ### Step 4: Delete the database folder
 
@@ -339,15 +309,9 @@ Finally, [install the latest version of Meilisearch](/learn/getting_started/quic
 
 If you chose to save your settings, make sure to follow this order:
 
-```bash
-# update your settings
-curl -X POST -H "Content-Type: application/json" -d @mysettings.json \
-  'http://127.0.0.1:7700/indexes/{index_uid}/settings'
+<CodeSamples id="updating_guide_update_settings" />
 
-# then, add your documents
-curl -X POST -H "Content-Type: application/json" -d @mydocuments.json \
-  'http://127.0.0.1:7700/indexes/{index_uid}/documents'
-```
+<CodeSamples id="updating_guide_add_documents" />
 
 Since updating the settings requires re-indexing all documents, this order saves time and memory.
 

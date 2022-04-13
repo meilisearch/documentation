@@ -758,3 +758,47 @@ tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer yourTenantToken'
+updating_guide_check_version: |-
+  curl \
+    -X GET 'http://127.0.0.1:7700/version'    
+updating_guide_get_displayed_attributes_1: |-
+# whenever you see {index_uid}, replace it with your index's unique id
+  curl \
+    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'    
+updating_guide_reset_displayed_attributes_1: |-
+  curl \
+    -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
+updating_guide_create_dump: |-
+  curl \
+    -X POST 'http://127.0.0.1:7700/dumps'
+updating_guide_get_dump_status: |-
+# replace {dump_uid} with the uid returned by the previous command
+  curl \
+    -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status'
+updating_guide_get_settings: |-
+# the -o option saves the output as a local file
+  curl \
+    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json    
+updating_guide_get_displayed_attributes_2: |-
+# whenever you see {index_uid}, replace it with your index's unique id
+  curl \
+    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'    
+updating_guide_reset_displayed_attributes_2: |-
+  curl \
+    -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
+updating_guide_retrieve_documents: |-
+# the -o option saves the output as a local file
+  curl \
+    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \
+  -o mydocuments.json
+updating_guide_update_settings: |-
+# update your settings
+  curl \
+    -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/settings' \
+    -H "Content-Type: application/json" -d @mysettings.json \
+updating_guide_add_documents: |-
+# then, add your documents
+  curl \
+    -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/documents' \
+    -H "Content-Type: application/json" -d @mydocuments.json \
+  
