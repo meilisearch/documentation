@@ -196,18 +196,18 @@ If the document addition is successful, the response should look like this:
 
 ```json
 {
-   "uid":0,
-   "indexUid":"movies",
-   "status":"succeeded",
-   "type":"documentAddition",
+   "uid": 0,
+   "indexUid": "movies",
+   "status": "succeeded",
+   "type": "documentAddition",
    "details":{
-      "receivedDocuments":19547,
-      "indexedDocuments":19547
+      "receivedDocuments": 19547,
+      "indexedDocuments": 19547
    },
-   "duration":"PT0.030750S",
-   "enqueuedAt":"2021-12-20T12:39:18.349288Z",
-   "startedAt":"2021-12-20T12:39:18.352490Z",
-   "finishedAt":"2021-12-20T12:39:18.380038Z"
+   "duration": "PT0.030750S",
+   "enqueuedAt": "2021-12-20T12:39:18.349288Z",
+   "startedAt": "2021-12-20T12:39:18.352490Z",
+   "finishedAt": "2021-12-20T12:39:18.380038Z"
 }
 ```
 
@@ -242,12 +242,12 @@ In the above code sample, the parameter `q` represents the search query. The doc
     },
     …
   ],
-  "nbHits":66,
-  "exhaustiveNbHits":false,
-  "query":"botman",
-  "limit":20,
-  "offset":0,
-  "processingTimeMs":12
+  "nbHits": 66,
+  "exhaustiveNbHits": false,
+  "query": "botman",
+  "limit": 20,
+  "offset": 0,
+  "processingTimeMs": 12
 }
 ```
 

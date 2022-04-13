@@ -115,7 +115,7 @@ The body is composed of a **JSON array** of documents.
 
 ```json
 {
-    "uid":1,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentAddition",
