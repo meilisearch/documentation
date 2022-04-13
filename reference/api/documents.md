@@ -92,7 +92,7 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#primary-key-2)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
+If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
 
 For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
 
@@ -150,7 +150,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [documentId](/learn/core_concepts/primary_key.md#primary-key-2)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
+If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
 To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents.md#add-or-replace-documents).
 

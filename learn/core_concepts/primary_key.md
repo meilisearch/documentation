@@ -8,7 +8,7 @@ The primary field is a special field that must be present in all documents. Its 
 
 ### Example
 
-Suppose we have a dataset containing several books. Each document contains a number fields with data on the book's `author`, `title`, and `price`. More importantly, each document contains a **primary field** indicating the books'  **primary key** `id` and a **document id**.
+Suppose we have an index of books. Each document contains a number of fields with data on the book's `author`, `title`, and `price`. More importantly, each document contains a **primary field** consisting of the index's **primary key** `id` and a **unique id**.
 
 ```json
 [
@@ -20,7 +20,7 @@ Suppose we have a dataset containing several books. Each document contains a num
     "price": 5.00
   },
   {
-   "id": 2,
+    "id": 2,
     "title": "Black Leopard, Red Wolf",
     "author": "Marlon James",
     "genres": ["fantasy","drama"],
@@ -29,11 +29,13 @@ Suppose we have a dataset containing several books. Each document contains a num
 ]
 ```
 
-Aside from the primary key, **documents in the same index are not required to share attributes**. A book in this dataset could be missing a `title` or `genre` attribute and still be successfully indexed by Meilisearch.
+Aside from the primary key, **documents in the same index are not required to share attributes**. A book in this dataset could be missing the `title` or `genre` attribute and still be successfully indexed by Meilisearch, provided it has the `id` attribute.
 
 ### Primary key
 
-The primary key is the attribute of the primary field and it must be shared across all documents in an index. If no primary key is found in one document, **none of the documents will be stored.**
+The primary key is the attribute of the primary field.
+
+Every index has a primary key, an attribute that must be shared across all documents in that index. If you attempt to add documents to an index and even a single one is missing the primary key, **none of the documents will be stored.**
 
 #### Example
 
@@ -51,7 +53,7 @@ Each document in the above index is identified by a primary field containing the
 
 ### Document id
 
-The document id is the value associated with the primary key. It is part of the primary field, and acts as a unique identifier for each documents in a given index.
+The document id is the value associated with the primary key. It is part of the primary field, and acts as a unique identifier for each document in a given index.
 
 Two documents in an index can have the same values for all attributes except the primary key. If two documents in the same index have the same id, then they are treated as the same document and **the preceding document will be overwritten**.
 
@@ -79,7 +81,9 @@ You can set the primary key explicitly or let Meilisearch infer it from your dat
 
 ### Setting the primary key on index creation
 
-When creating an index manually, you can explicitly indicate the primary key you want this index to use. The code below creates an index called `books` and sets `reference_number` as its primary key:
+When creating an index manually, you can explicitly indicate the primary key you want that index to use.
+
+The code below creates an index called `books` and sets `reference_number` as its primary key:
 
 <CodeSamples id="document_guide_create_index_primary_key" />
 
@@ -99,13 +103,15 @@ When creating an index manually, you can explicitly indicate the primary key you
 }    
 ```
 
-Once a primary key has been explicitly set for an index, it cannot be changed.
-
 ### Setting the primary key on document addition
 
-You can also explicitly state your documents' primary key by including it in your document addition request. The code below adds a document and sets `reference_number` as the index's primary key:
+When adding documents to an empty index, you can explicitly set the index's primary key as part of the document addition request.
+
+The code below adds a document to the `books` index and sets `reference_number` as that index's primary key:
 
 <CodeSamples id="document_guide_add_document_primary_key" />
+
+**Response:**
 
 ```json
 {
@@ -124,21 +130,20 @@ You can also explicitly state your documents' primary key by including it in you
 }
 ```
 
-Once a primary key has been explicitly set for an index, it cannot be changed.
 
 ### Meilisearch guesses your primary key
 
-If the primary key has neither been set at index creation nor as a parameter of the [add documents](/reference/api/documents.md#add-or-replace-documents) route, Meilisearch will search your first document for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `BookId`, `ID`, `123id123`) and set it as that index's primary key.
+If the primary key has neither been set at index creation nor as a parameter of the [add documents](/reference/api/documents.md#add-or-replace-documents) route, Meilisearch will look for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `BookId`, `ID`, `123id123`) in your first document and set it as that index's primary key.
 
 If Meilisearch cannot find a suitable attribute, the document addition process will be interrupted and no documents will be added to your index.
 
 ## Primary key errors
 
-This section will cover some primary key errors and how to resolve them.
+This section covers some primary key errors and how to resolve them.
 
 ### `primary_key_inference_failed`
 
-This happens when you add documents for the first time and none of them have a primary key attribute.
+This error occurs when you add documents for the first time and Meilisearch [fails to guess your primary key](#meilisearch-guesses-your-primary-key). It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition), or ensuring that all documents you add possess an `id` attribute.
 
 ```json
 {
@@ -165,7 +170,7 @@ This happens when you add documents for the first time and none of them have a p
 
 ### `missing_document_id`
 
-This happens when your index already has a primary key, but one of the documents you are currently trying to add is missing this attribute.
+This error occurs when your index already has a primary key, but one of the documents you are trying to add is missing this attribute.
 
 ```json
 {
