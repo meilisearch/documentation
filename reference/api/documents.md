@@ -17,7 +17,7 @@ Get one [document](/learn/core_concepts/documents.md) using its unique id.
 | Variable        | Description                                                       |
 | --------------- | ----------------------------------------------------------------- |
 | **index_uid**   | The index UID                                                     |
-| **document_id** | [The document id](/learn/core_concepts/primary_key.md#document-id) |
+| **document_id** | The document id |
 
 ### Example
 
