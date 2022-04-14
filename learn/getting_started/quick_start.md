@@ -75,7 +75,7 @@ docker run -it --rm \
     -p 7700:7700 \
     -e "MEILI_MASTER_KEY=XXXYYYYZZZ"
     -v $(pwd)/data.ms:/data.ms \
-    getmeili/meilisearch:latest
+    getmeili/meilisearch:latest \
     /meilisearch --enable-auto-batching 
 ```
 
