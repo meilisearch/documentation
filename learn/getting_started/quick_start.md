@@ -64,6 +64,21 @@ Data written to a **Docker container is not persistent** and is wiped every time
 
 On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
 
+Another exemple with ENV for set **MEILI_MASTER_KEY** et argument cli for **auto-batching** and  **latest stable release** of Meilisearch.
+
+```bash
+# Fetch the latest version of Meilisearch image from DockerHub
+docker pull getmeili/meilisearch:latest
+
+# Launch Meilisearch
+docker run -it --rm \
+    -p 7700:7700 \
+    -e "MEILI_MASTER_KEY=XXXYYYYZZZ"
+    -v $(pwd)/data.ms:/data.ms \
+    getmeili/meilisearch:latest
+    /meilisearch --enable-auto-batching 
+```
+
 You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
 :::
 
