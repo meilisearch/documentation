@@ -20,7 +20,7 @@ If Meilisearch launches successfully, use the [get version endpoint](/reference/
 
 ```bash
 curl -X GET 'http://127.0.0.1:7700/version' \
-  -H 'Authorization: Bearer masterKey'
+  -H 'Authorization: Bearer apiKey'
 ```
 
 The response should look something like this:
@@ -132,7 +132,7 @@ Start by using the [get displayed attributes endpoint](/reference/api/displayed_
 # whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
   'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-  -H 'Authorization: Bearer masterKey'
+  -H 'Authorization: Bearer apiKey'
 ```
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
@@ -142,7 +142,7 @@ If it's something else, then you need to use the [reset displayed attributes end
 ```bash
 curl -X DELETE \
   'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-  -H 'Authorization: Bearer masterKey'
+  -H 'Authorization: Bearer apiKey'
 ```
 
 This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
@@ -209,7 +209,7 @@ To create a dump, use the [create dump endpoint](/reference/api/dump.md#create-a
 
 ```bash
 curl -X POST 'http://127.0.0.1:7700/dumps' \
-  -H 'Authorization: Bearer masterKey'
+  -H 'Authorization: Bearer apiKey'
 ```
 
 The server should return a response that looks like this:
@@ -227,7 +227,7 @@ This process can take some time. Since dump creation is an [asynchronous operati
 ```bash
 # replace {dump_uid} with the uid returned by the previous command
 curl -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status' \
-  -H 'Authorization: Bearer masterKey'
+  -H 'Authorization: Bearer apiKey'
 ```
 
 Once the response to the previous command looks like this (`"status": "done"`), move on.
