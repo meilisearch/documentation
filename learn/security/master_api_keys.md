@@ -6,7 +6,7 @@ This guide will teach you how to protect your Meilisearch instance by setting a 
 
 **By default, Meilisearch's API is unprotected**. This means all routes are publicly accessible, and require no authorization to access.
 
-To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key can be an alphanumeric string of any length.
+To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key can be of any length, but must be composed of valid UTF-8 characters.
 
 Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/learn/configuration/instance_options.md#master-key).
 
@@ -148,7 +148,7 @@ You can use the [list keys endpoint](/reference/api/keys.md) to obtain informati
 
 [`GET /keys`](/reference/api/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you need the master key to access this endpoint.
 
-[`GET /keys/:key`](/reference/api/keys.md#get-one-key) returns information on a single key. `:key` should be replaced with the full `key` value obtained during key creation.
+[`GET /keys/{key}`](/reference/api/keys.md#get-one-key) returns information on a single key. `{key}` should be replaced with the full `key` value obtained during key creation.
 
 We can query our instance to confirm which active keys can search our `patient_medical_records` index:
 

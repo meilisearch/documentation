@@ -56,7 +56,7 @@ Also, note the documents with attributes containing the query words at the begin
 Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant, but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant, but might not always follow the order defined by the user.
 
 ::: note
-Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](https://docs.meilisearch.com/reference/features/search_parameters.html#sort). If a search request does not contain `sort` or if its value is invalid, this rule will be ignored.
+Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](/reference/api/search.md#sort). If a search request does not contain `sort` or if its value is invalid, this rule will be ignored.
 :::
 
 #### 6. Exactness
@@ -69,7 +69,7 @@ Results are sorted by **the similarity of the matched words with the query words
 
 ::: tab Typo
 
-![Image from alias](/ranking-rules/vogli3.png)
+![Demonstrating the typo ranking rule by searching for 'vogli'](/ranking-rules/vogli3.png)
 
 ### Typo
 
@@ -81,7 +81,7 @@ The `typo` rule sorts the results by increasing number of typos on matched query
 :::
 
 ::: tab Proximity
-![Image from alias](/ranking-rules/new_road.png)
+![Demonstrating the proximity ranking rule by searching for 'new road'](/ranking-rules/new_road.png)
 
 ### Proximity
 
@@ -91,7 +91,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 :::
 
 ::: tab Attribute
-![Image from alias](/ranking-rules/belgium.png)
+![Demonstrating the attribute ranking rule by searching for 'belgium'](/ranking-rules/belgium.png)
 
 ### Attribute
 
@@ -102,7 +102,7 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 :::
 
 ::: tab Exactness
-![Image from alias](/ranking-rules/knight.png)
+![Demonstrating the exactness ranking rule by searching for 'Knight'](/ranking-rules/knight.png)
 
 ### Exactness
 
@@ -171,11 +171,11 @@ By default, the built-in rules are executed in the following order.
 
 ```json
 [
-  "words", 
-  "typo", 
-  "proximity", 
-  "attribute", 
-  "sort", 
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
   "exactness"
 ]
 ```
@@ -194,8 +194,8 @@ For a more detailed look at this subject, see our reference page for [the search
 
 ```json
 [
-  "title", 
-  "overview", 
+  "title",
+  "overview",
   "release_date"
 ]
 ```

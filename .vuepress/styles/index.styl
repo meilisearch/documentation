@@ -159,18 +159,33 @@ body > .nav-link:hover, body > .dropdown-title:hover
 ** Docs searchbar styling (search experience)
 */
 
-.meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
-  background-color: $titlesColor !important;
-}
+
 .dsb-cursor .docs-searchbar-suggestion--content {
   background-color: rgba(black, 10%) !important;
 }
-// TODO: Pas dans le titre
+
+
 .docs-searchbar-suggestion--highlight {
   background-color: rgba(0,0,0,0) !important;
-  color: $titlesColor !important;
+  color: $accentColor !important;
 }
 
+// Color when hovering on focussing a hit
+.meilisearch-search-wrapper .meilisearch-autocomplete .dsb-suggestion.dsb-cursor .docs-searchbar-suggestion:not(.suggestion-layout-simple) .docs-searchbar-suggestion--content {
+  background-color: #F1F1F9 !important; // Hover and focus over hits
+}
+
+  // TODO: change the color of the borders with: #655678
+
+@media (prefers-color-scheme: light) {
+  .docs-searchbar-suggestion--subcategory-column-text {
+    color: #492E6C !important;
+  }
+  .meilisearch-autocomplete .docs-searchbar-suggestion--category-header {
+    color: #492E6C !important;
+    background-color: #E1E0EE !important;
+  }
+}
 
 @media (prefers-color-scheme: dark) {
   #meilisearch-search-input {
@@ -196,5 +211,12 @@ body > .nav-link:hover, body > .dropdown-title:hover
     background-color: $bgDarkColor !important;
     border: 1px solid $bgDarkColor;
   }
+
+  .meilisearch-search-wrapper .meilisearch-autocomplete .dsb-suggestion.dsb-cursor .docs-searchbar-suggestion:not(.suggestion-layout-simple) .docs-searchbar-suggestion--content {
+    background-color: #2A2234 !important; // Hover and focus over hits
+  }
+
+  // TODO: change the color of the borders with: #655678
+
 }
 

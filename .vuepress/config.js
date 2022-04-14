@@ -4,22 +4,19 @@ module.exports = {
   description: 'Open source Instant Search Engine',
   theme: 'default-prefers-color-scheme',
   themeConfig: {
-    repo: 'meilisearch/Meilisearch',
     docsRepo: 'meilisearch/documentation',
     editLinks: true,
-    lastUpdated: 'Last Updated',
     logo: '/logo.svg',
     sidebarDepth: 1,
     smoothScroll: true,
 
     nav: [
       { text: 'Learn', link: '/learn/getting_started/quick_start' },
-      { text: 'API Reference', link: '/reference/api/overview' },
+      { text: 'Reference', link: '/reference/api/overview' },
       { text: 'FAQ', link: '/faq' },
       {
         text: 'Integrations',
         items: [
-
           {
             text: 'SDKs',
             items: [
@@ -33,6 +30,7 @@ module.exports = {
               { text: 'Ruby', link: 'https://github.com/meilisearch/meilisearch-ruby' },
               { text: 'Rust', link: 'https://github.com/meilisearch/meilisearch-rust' },
               { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
+              { text: 'Firebase', link: 'https://github.com/meilisearch/firestore-meilisearch' },
             ],
           },
           {
@@ -61,14 +59,22 @@ module.exports = {
             text: 'DevOps tools',
             items: [
               { text: 'Kubernetes', link: 'https://github.com/meilisearch/meilisearch-kubernetes' },
+              { text: 'DigitalOcean', link: 'https://github.com/meilisearch/meilisearch-digitalocean' },
               { text: 'GCP', link: 'https://github.com/meilisearch/meilisearch-gcp' },
               { text: 'AWS', link: 'https://github.com/meilisearch/meilisearch-aws' },
             ],
           },
         ],
       },
-      { text: 'Slack', link: 'https://slack.meilisearch.com' },
-      { text: 'Blog', link: 'https://blog.meilisearch.com/' },
+      {
+        text: 'More Meilisearch',
+        items: [
+          { text: 'GitHub', link: 'https://github.com/meilisearch/meilisearch' },
+          { text: 'Slack', link: 'https://slack.meilisearch.com' },
+          { text: 'Blog', link: 'https://blog.meilisearch.com/' },
+          { text: 'meilisearch.com', link: 'https://meilisearch.com' },
+        ],
+      },
     ],
     sidebar: {
       '/learn/': [
@@ -99,7 +105,7 @@ module.exports = {
           children: [
             '/learn/getting_started/quick_start',
             {
-              title: 'MeiliSearch 101',
+              title: 'Meilisearch 101',
               path: '/learn/getting_started/filtering_and_sorting/',
               collapsable: false,
               children: [
@@ -351,7 +357,6 @@ module.exports = {
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
-    [require('./custom-timestamp')],
     [require('./code-samples')],
     [
       'vuepress-plugin-code-copy',
@@ -367,7 +372,8 @@ module.exports = {
         apiKey:
           'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
         indexUid: 'docs',
-        placeholder: 'Search as you type...',
+        placeholder: 'Search as you type…',
+        // Warning! When updating docs-searchbar to the latest version, change `true` with `auto`
         enableDarkMode: true, // Default: false
       },
     ],

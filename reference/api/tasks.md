@@ -55,15 +55,9 @@ Tasks are displayed in descending order by `uid`. This means that **the most rec
 
 ## Get task
 
-<RouteHighlighter method="GET" route="/tasks/:uid"/>
+<RouteHighlighter method="GET" route="/tasks/{uid}"/>
 
-Get a single [task](/learn/advanced/asynchronous_operations.md).
-
-#### Path variables
-
-| Variable      | Description           |
-| ------------- | --------------------- |
-| **uid**  | The task identifier |
+Get a single [task](/learn/advanced/asynchronous_operations.md). The task `uid` is required.
 
 ### Example
 
@@ -98,15 +92,9 @@ Here is an example response representing [a processed task](/learn/advanced/asyn
 
 ## Get all tasks by index
 
-<RouteHighlighter method="GET" route="/indexes/:indexUid/tasks"/>
+<RouteHighlighter method="GET" route="/indexes/{indexUid}/tasks"/>
 
-List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index](/learn/core_concepts/indexes.md).
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **indexUid** | The index UID |
+List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index](/learn/core_concepts/indexes.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Example
 
@@ -147,16 +135,9 @@ List all [tasks](/learn/advanced/asynchronous_operations.md) for a given [index]
 
 ## Get task by index
 
-<RouteHighlighter method="GET" route="/indexes/:indexUid/tasks/:uid"/>
+<RouteHighlighter method="GET" route="/indexes/{indexUid}/tasks/{uid}"/>
 
-Get a single [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md).
-
-#### Path variables
-
-| Variable      | Description           |
-| ------------- | --------------------- |
-| **indexUid** | The index UID         |
-| **uid**  | The task identifier |
+Get a single [task](/learn/advanced/asynchronous_operations.md) in a given [index](/learn/core_concepts/indexes.md). Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and task [`uid`](/learn/advanced/asynchronous_operations.md#response) are required.
 
 ### Example
 

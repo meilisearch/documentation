@@ -15,17 +15,11 @@ Other than the differences mentioned above, the two routes are strictly equivale
 
 ## Search in an index with POST route
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/search"/>
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/search"/>
 
-Search for documents matching a specific query in the given index.
+Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Body
 
@@ -47,7 +41,7 @@ This is the preferred route to perform search when an API key is required, as it
 
 #### Placeholder search
 
-Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy.md#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules) are taken into account.
+Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy.md#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules) are taken into account.
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -59,7 +53,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 | field                | Description                    |    type    |
 | -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `[result]` |
+| **hits**             | Results of the query           | `array of objects` |
 | **offset**           | Number of documents skipped    |  `number`  |
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
@@ -105,17 +99,11 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search in an index with GET route
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/search"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/search"/>
 
-Search for documents matching a specific query in the given index.
+Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 This route should only be used when no API key is required. If an API key is required, use the POST route instead.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Query parameters
 
@@ -147,7 +135,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 | field                | Description                    |    type    |
 | -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `[result]` |
+| **hits**             | Results of the query           | `array of objects` |
 | **offset**           | Number of documents skipped    |  `number`  |
 | **limit**            | Number of documents to take    |  `number`  |
 | **nbHits**           | Total number of matches        |  `number`  |
@@ -233,7 +221,7 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 #### Placeholder search
 
-When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/configuration/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](https://docs.meilisearch.com/learn/core_concepts/relevancy.html#ranking-rules) **do not apply.**
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/configuration/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -633,7 +621,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
     "id": 1,
     "name": "Nàpiz' Milano",
     "_geo": {
-      "lat": 45.4777599, 
+      "lat": 45.4777599,
       "lng": 9.1967508
     },
     "_geoDistance": 1532

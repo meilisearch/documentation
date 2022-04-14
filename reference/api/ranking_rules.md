@@ -14,15 +14,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get ranking rules
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/ranking-rules" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Get the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Get the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
@@ -50,15 +44,9 @@ List the settings.
 
 ## Update ranking rules
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/ranking-rules" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -92,9 +80,9 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset ranking rules
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/ranking-rules" />
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Reset the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index to their default value.
+Reset the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ::: tip
 Note that resetting the ranking rules is not the same as removing them.
@@ -115,12 +103,6 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
   "exactness"
 ]
 ```
-
-#### Path Variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Example
 

@@ -12,15 +12,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get sortable attributes
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/sortable-attributes" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Get an index's [`sortableAttributes`](/learn/advanced/sorting.md).
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Get an index's [`sortableAttributes`](/learn/advanced/sorting.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Example
 
@@ -39,17 +33,11 @@ List the settings.
 
 ## Update sortable attributes
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/sortable-attributes" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Update an index's sortable attributes list. This will re-index all documents in the index.
+Update an index's sortable attributes list. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 [You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting.md)
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 ### Body
 
@@ -77,19 +65,13 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset sortable attributes
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/sortable-attributes"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/sortable-attributes"/>
 
-Reset an index's sortable attributes list back to its default value.
+Reset an index's sortable attributes list back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Default value
 
 An empty array (`[]`).
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 ### Example
 

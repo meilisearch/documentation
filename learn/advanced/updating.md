@@ -128,9 +128,9 @@ When creating dumps, Meilisearch calls the same method as the [get documents end
 Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
 ```bash
-# whenever you see :index_uid, replace it with your index's unique id
+# whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
@@ -139,7 +139,7 @@ If it's something else, then you need to use the [reset displayed attributes end
 
 ```bash
 curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
@@ -221,8 +221,8 @@ The server should return a response that looks like this:
 This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
 
 ```bash
-# replace :dump_uid with the uid returned by the previous command
-curl -X GET 'http://127.0.0.1:7700/dumps/:dump_uid/status'
+# replace {dump_uid} with the uid returned by the previous command
+curl -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status'
 ```
 
 Once the response to the previous command looks like this (`"status": "done"`), move on.
@@ -238,7 +238,13 @@ Once the response to the previous command looks like this (`"status": "done"`), 
 
 ### Step 3: Delete the database folder
 
-To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
+
+::: tip
+
+If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
+
+:::
 
 ### Step 4: Import the dump
 
@@ -250,7 +256,7 @@ Now that you’ve got your dump, [install the latest version of Meilisearch](/le
 ```
 
 ::: warning
-If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of Meilisearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
+If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
 :::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
@@ -280,7 +286,7 @@ First, use the [get settings endpoint](/reference/api/settings.md#get-settings) 
 ```bash
 # the -o option saves the output as a local file
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings' -o mysettings.json
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json
 ```
 
 Repeat this process for all indexes you wish to migrate.
@@ -295,7 +301,7 @@ By default, all fields are added to the displayed attributes list. Still, it's a
 
 ```bash
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
@@ -304,7 +310,7 @@ If it's something else, then you need to use the [reset displayed-attributes end
 
 ```bash
 curl -X DELETE \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings/displayed-attributes'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes'
 ```
 
 This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
@@ -317,15 +323,15 @@ Use the [get documents endpoint](/reference/api/documents.md#get-documents) to r
 
 ```bash
 # the -o option saves the output as a local file
-# whenever you see :index_uid, replace it with your index's unique id
+# whenever you see {index_uid}, replace it with your index's unique id
 curl -X GET \
-  'http://127.0.0.1:7700/indexes/:index_uid/documents?limit=n' \
+  'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \
   -o mydocuments.json
 ```
 
 ### Step 4: Delete the database folder
 
-To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](https://docs.meilisearch.com/reference/features/configuration.html#database-path).
+To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
 ### Step 5: Upload your data to the latest version of Meilisearch
 
@@ -336,11 +342,11 @@ If you chose to save your settings, make sure to follow this order:
 ```bash
 # update your settings
 curl -X POST -H "Content-Type: application/json" -d @mysettings.json \
-  'http://127.0.0.1:7700/indexes/:index_uid/settings'
+  'http://127.0.0.1:7700/indexes/{index_uid}/settings'
 
 # then, add your documents
 curl -X POST -H "Content-Type: application/json" -d @mydocuments.json \
-  'http://127.0.0.1:7700/indexes/:index_uid/documents'
+  'http://127.0.0.1:7700/indexes/{index_uid}/documents'
 ```
 
 Since updating the settings requires re-indexing all documents, this order saves time and memory.

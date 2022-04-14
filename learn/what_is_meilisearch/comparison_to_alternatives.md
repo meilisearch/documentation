@@ -1,6 +1,10 @@
-# Comparison to alternatives
+---
 
-[[toc]]
+sidebarDepth: 2
+
+---
+
+# Comparison to alternatives
 
 ## About Meilisearch
 
@@ -55,7 +59,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | [Docsearch](https://github.com/meilisearch/docs-scraper) | ✅ | ✅ | ✅ | ❌ |
 | [Strapi](https://github.com/meilisearch/strapi-plugin-meilisearch) | ✅ | ✅ | ❌ | ❌ |
 | [Gatsby](https://github.com/meilisearch/gatsby-plugin-meilisearch) | ✅ | ✅ | ✅ | ❌ |
-| [Firebase](https://github.com/meilisearch/firestore-meilisearch) | 🔶 <br> End of March 2022 | ✅ | ✅ | ❌ |
+| [Firebase](https://github.com/meilisearch/firestore-meilisearch) | ✅ | ✅ | ✅ | ❌ |
 
 #### Configuration
 

@@ -14,15 +14,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 ## Get distinct attribute
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/settings/distinct-attribute" />
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Example
 
@@ -36,15 +30,9 @@ Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute
 
 ## Update distinct attribute
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/settings/distinct-attribute" />
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -76,17 +64,11 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Reset distinct attribute
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/settings/distinct-attribute"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/distinct-attribute"/>
 
-Reset the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index to its default value.
+Reset the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 **Default value**: `null`
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Example
 

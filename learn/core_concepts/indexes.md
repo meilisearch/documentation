@@ -15,7 +15,7 @@ Suppose you manage [a database that contains information about movies](https://i
 
 Each index holds information about the fields found in the documents, including how they are handled by Meilisearch and their order of importance. In addition, each has its own set of synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes.**
 
-For example, it means you could create on the same server synonyms for a `movie` index and different synonyms for a `costumes` index.
+For example, it means you could create on the same server synonyms for a `movies` index and different synonyms for a `costumes` index.
 
 ## Index creation
 
@@ -31,13 +31,16 @@ We will create an index called `movies`. The code below will create the `movies`
 
 ## Index UID
 
-The `uid` is the **unique** identifier of a given index. It is used on every `indexes/:index_uid` route as the `:index_uid` parameter.
+The `uid` is the **unique** identifier of a given index. It is used on every `indexes/{index_uid}` route as the `{index_uid}` parameter.
+
+The `uid` must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 
 The `uid` is set at [index creation time](/reference/api/indexes.md#create-an-index). Once a `uid` has been defined for an index, you cannot create another index with the same `uid` and the identifier **cannot be changed anymore**.
 
 ```json
 {
-  "uid": "movie",
+  "uid": "movies",
+  "name":"movies",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }

@@ -8,16 +8,9 @@ Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
 
 ## Get one document
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/documents/:document_id"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/documents/{document_id}"/>
 
-Get one [document](/learn/core_concepts/documents.md) using its unique id.
-
-#### Path variables
-
-| Variable        | Description                                                       |
-| --------------- | ----------------------------------------------------------------- |
-| **index_uid**   | The index UID                                                     |
-| **document_id** | The document id |
+Get one [document](/learn/core_concepts/documents.md) using its unique id.  Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/documents.md#document-id) are required.
 
 ### Example
 
@@ -37,21 +30,15 @@ Get one [document](/learn/core_concepts/documents.md) using its unique id.
 
 ## Get documents
 
-<RouteHighlighter method="GET" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}/documents"/>
 
-Get [documents](/learn/core_concepts/documents.md) by batch.
+Get [documents](/learn/core_concepts/documents.md) by batch. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
 ::: note
 Documents are ordered by Meilisearch depending on the hash of their id.
 :::
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Query parameters
 
@@ -88,19 +75,13 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 ## Add or replace documents
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents"/>
 
-Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created.
+Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
 
 For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
 
 #### Query parameters
 
@@ -146,9 +127,9 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Add or update documents
 
-<RouteHighlighter method="PUT" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/documents"/>
 
-Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
+Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
@@ -156,13 +137,7 @@ To completely overwrite a document, check out the [add or replace documents rout
 
 If the provided index does not exist, it will be created.
 
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
-
-If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Query parameters
 
@@ -207,15 +182,9 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Delete all documents
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/documents"/>
 
-Delete all documents in the specified index.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Delete all documents in the specified index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Example
 
@@ -237,16 +206,9 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Delete one document
 
-<RouteHighlighter method="DELETE" route="/indexes/:index_uid/documents/:document_id"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/documents/{document_id}"/>
 
-Delete one document based on its unique id.
-
-#### Path variables
-
-| Variable        | Description                                                       |
-| --------------- | ----------------------------------------------------------------- |
-| **index_uid**   | The index UID                                                     |
-| **document_id** | [The document id](/learn/core_concepts/primary_key.md#document-id) |
+Delete one document based on its unique id. Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/documents.md#document-id) are required.
 
 ### Example
 
@@ -268,15 +230,9 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 ## Delete documents by batch
 
-<RouteHighlighter method="POST" route="/indexes/:index_uid/documents/delete-batch"/>
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 
-Delete a selection of documents based on array of document id's.
-
-#### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **index_uid** | The index UID |
+Delete a selection of documents based on array of document id's. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 

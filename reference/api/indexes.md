@@ -19,31 +19,34 @@ List all [indexes](/learn/core_concepts/indexes.md).
 ```json
 [
   {
-    "uid": "movies",
-    "primaryKey": "movie_id",
-    "createdAt": "2019-11-20T09:40:33.711324Z",
-    "updatedAt": "2019-11-20T10:16:42.761858Z"
+    "uid":"books",
+    "name":"books",
+    "createdAt":"2022-03-08T10:00:27.377346Z",
+    "updatedAt":"2022-03-08T10:00:27.391209Z",
+    "primaryKey":"id"
   },
   {
-    "uid": "movie_reviews",
-    "primaryKey": null,
-    "createdAt": "2019-11-20T09:40:33.711324Z",
-    "updatedAt": "2019-11-20T10:16:42.761858Z"
+    "uid":"meteorites",
+    "name":"meteorites",
+    "createdAt":"2022-03-08T10:00:44.518768Z",
+    "updatedAt":"2022-03-08T10:00:44.582083Z",
+    "primaryKey":"id"
+  },
+  {
+    "uid":"movies",
+    "name":"movies",
+    "createdAt":"2022-02-10T07:45:15.628261Z",
+    "updatedAt":"2022-02-21T15:28:43.496574Z",
+    "primaryKey":"id"
   }
-]
+]  
 ```
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/:uid"/>
+<RouteHighlighter method="GET" route="/indexes/{uid}"/>
 
-Get information about an [index](/learn/core_concepts/indexes.md).
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **uid** | The index UID |
+Get information about an [index](/learn/core_concepts/indexes.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Example
 
@@ -53,10 +56,11 @@ Get information about an [index](/learn/core_concepts/indexes.md).
 
 ```json
 {
-  "uid": "movies",
-  "primaryKey": "movie_id",
-  "createdAt": "2019-11-20T09:40:33.711324Z",
-  "updatedAt": "2019-11-20T10:16:42.761858Z"
+  "uid":"movies",
+  "name":"movies",
+  "createdAt":"2022-02-10T07:45:15.628261Z",
+  "updatedAt":"2022-02-21T15:28:43.496574Z",
+  "primaryKey":"id"
 }
 ```
 
@@ -84,7 +88,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 ```json
 {
   "uid": "movies",
-  "primaryKey": "movie_id"
+  "primaryKey": "id"
 }
 ```
 
@@ -108,9 +112,9 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/:uid"/>
+<RouteHighlighter method="PUT" route="/indexes/{uid}"/>
 
-Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/primary_key.md#primary-key-2).
+Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/api/indexes.md#get-one-index) to verify it.
 
@@ -119,12 +123,6 @@ It is not possible to change an index's `uid`.
 :::
 
 This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **uid** | The index UID |
 
 ### Body
 
@@ -152,17 +150,11 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/:uid"/>
+<RouteHighlighter method="DELETE" route="/indexes/{uid}"/>
 
-Delete an [index](/learn/core_concepts/indexes.md).
+Delete an [index](/learn/core_concepts/indexes.md).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
-
-### Path variables
-
-| Variable      | Description   |
-| ------------- | ------------- |
-| **uid** | The index UID |
 
 ### Example
 

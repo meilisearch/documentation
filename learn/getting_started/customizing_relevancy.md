@@ -31,7 +31,7 @@ You can read more about each ranking rule and what it does in our [dedicated gui
 
 In this example, we change the order of the ranking rules for the `movies` index by moving `exactness` to the top:
 
-<CodeSamples id= "getting_started_update_rankingRules" />
+<CodeSamples id= "getting_started_update_ranking_rules" />
 
 You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy.md).
 
@@ -41,7 +41,7 @@ By default, all attributes are displayed in search results but the `displayedAtt
 
 If you only want to display the `title`, `poster`, and `overview` for the `movies` index:
 
-<CodeSamples id= "getting_started_update_displayedAttributes" />
+<CodeSamples id= "getting_started_update_displayed_attributes" />
 
 You can read more about displayed attributes in our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
@@ -89,7 +89,7 @@ You can read more about displayed attributes in our [dedicated guide](/learn/con
 
 For example, if you search the `movies` index for `2012`, Meilisearch searches for `2012` in every field: the `title`, `overview`, `release_year`, and so on. If you just want to search in the `title` field:
 
-<CodeSamples id= "getting_started_update_searchableAttributes" />
+<CodeSamples id= "getting_started_update_searchable_attributes" />
 
 Meilisearch will now only consider `title` during search and you will see fewer results.
 
