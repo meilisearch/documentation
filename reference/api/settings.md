@@ -14,6 +14,7 @@ These are the reference pages for the dedicated routes:
 - [Sortable attributes](/reference/api/sortable_attributes.md)
 - [Stop-words](/reference/api/stop_words.md)
 - [Synonyms](/reference/api/synonyms.md)
+- [Typo tolerance](/reference/api/typo_tolerance.md)
 
 To learn more about settings, refer to our [dedicated guide.](/learn/configuration/settings.md)
 
@@ -41,6 +42,7 @@ Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
 | **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **typoTolerance**         | Object    | Typo tolerance settings                                                          | `{}`                                                                                              |
 
 [Learn more about the settings in this guide.](/learn/configuration/settings.md)
 
@@ -88,7 +90,16 @@ List the settings.
       "wolverine",
       "xmen"
     ]
-  }
+  },
+  "typoTolerance": {
+    "enabled": true, 
+    "minWordSizeForTypos": {
+      "oneTypo": 5,
+      "twoTypos": 10
+      },
+      "disableOnWords": [],
+      "disableOnAttributes": []
+      }
 }
 ```
 
@@ -118,6 +129,7 @@ If the provided index does not exist, it will be created.
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
 | **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
+| **typoTolerance**         | Object    | Typo tolerance settings                                                          | `{}`                                                                                              |
 
 ### Example
 
@@ -155,7 +167,7 @@ All settings will be reset to their default value.
 | **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
 | **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
 | **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-
+| **typoTolerance**         | Object    | Typo tolerance settings                                                          | `{}`                                                                                              |
 [Learn more about the settings](/learn/configuration/settings.md).
 
 #### Example

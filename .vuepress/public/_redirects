@@ -177,3 +177,6 @@
 
 # Create new security and permissions section
 /learn/advanced/security.html                       /learn/security/master_api_keys.html
+
+# rename Typo tolerance levenshtein algorithm
+/learn/advanced/typotolerance.html                    /learn/advanced/levenshtein_algorithm.html

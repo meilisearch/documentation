@@ -12,6 +12,7 @@ This page describes the **index-level settings** available in Meilisearch and ho
 | **[sortableAttributes](/learn/configuration/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
 | **[stopWords](/learn/configuration/settings.md#stop-words)**                       | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                        |
 | **[synonyms](/learn/configuration/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                        |
+| **[typoTolerance](/learn/configuration/settings.md#typo-tolerance)**               |Typo tolerance settings                                             | `{}`                                                                                        |
 
 ## Displayed attributes
 
@@ -216,3 +217,9 @@ Suppose you have an e-commerce dataset. For an index that contains information a
 <CodeSamples id="settings_guide_synonyms_1" />
 
 By doing so, when searching for `black sweater`, results for `black jumper` will also be returned.
+
+## Typo tolerance
+
+The typo tolerance settings for an index. Typo tolerance allows users to make mistakes when typing and still find something.
+
+Typo tolerance is enabled by default.

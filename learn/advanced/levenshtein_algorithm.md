@@ -1,6 +1,6 @@
-# Typo tolerance
+# Levenshtein algorithm
 
-Meilisearch **is [typo tolerant](/learn/advanced/typotolerance.md#typo-tolerance-rules)**; this means **it understands your search even if there are typos or spelling mistakes**.
+Meilisearch **is [typo tolerant](/learn/configuration/typo_tolerance.md)**; this means **it understands your search even if there are typos or spelling mistakes**.
 
 #### Example
 
@@ -52,7 +52,11 @@ There are some rules about what can be considered "similar". These rules are **b
 - If the query word is between 5 and 8 characters long, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
 - If the query word contains more than 8 characters, we accept a maximum of **two typos**.
 
-This means that "saturday", which is 7 characters long use the second rule, and every document containing words that only have **one typo** will match. For example:
+:::note
+You can configure these rules using the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
+:::
+
+This means that "saturday", which is 7 characters long uses the second rule, and every document containing words that only have **one typo** will match. For example:
 
 - "saturday" is accepted because it is the same word
 - "sat" is not accepted because the query word is not a prefix of it (it is the opposite)
