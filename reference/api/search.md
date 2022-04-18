@@ -20,7 +20,7 @@ Other than the differences mentioned above, the two routes are strictly equivale
 Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 :::note
-This route has a [hard limit of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrap your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
+This route has a [non-customizable limit of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrap your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
 :::
 
 This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
@@ -108,7 +108,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 :::note
-This route has a [hard limit of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrap your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
+This route has a [non-customizable limit of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrap your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
 :::
 
 This route should only be used when no API key is required. If an API key is required, use the POST route instead.
