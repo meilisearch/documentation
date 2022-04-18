@@ -203,7 +203,7 @@ module.exports = {
                 '/learn/advanced/prefix',
                 '/learn/advanced/storage',
                 '/learn/advanced/tokenization',
-                'learn/advanced/levenshtein_algorithm',
+                '/learn/advanced/levenshtein_algorithm',
               ],
             },
           ],
