@@ -818,3 +818,15 @@ typo_tolerance_guide_4: |-
         "twoTypos": 10
       }
     }'
+settings_guide_typo_tolerance_1: |-
+  curl \
+      -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+      -H 'Content-Type: application/json' \
+      --data-binary '{
+        "disableOnAttributes": [
+          "title"
+      ],
+        "minWordSizeForTypos": {
+          "twoTypos": 12
+        }
+        }'

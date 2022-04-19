@@ -4,7 +4,7 @@ Typo tolerance allows users to find documents they're looking for even when they
 
 ## Configuring typo tolerance
 
-Typo tolerance is enabled by default in Meilisearch, but you can disable it if needed:
+Typo tolerance is enabled by default, but you can disable it if needed:
 
 <CodeSamples id="typo_tolerance_guide_1" />
 
@@ -32,7 +32,7 @@ Meilisearch won't apply typo tolerance on the query term `Shrek` or `shrek` at s
 
 ### `minWordSizeForTypos`
 
-By default, Meilisearch applies typo tolerance to a query term if its length is at least 5 characters. Meilisearch will accept two typos for words with at least 9 characters.
+By default, Meilisearch applies typo tolerance to a query if its length is at least 5 characters. To accept two typos, the query should be at least 9 characters.
 
 If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than 5 characters.
 
@@ -56,7 +56,7 @@ When updating the `minWordSizeForTypos` object, keep in mind that:
 
 The [`typo` ranking rule](/learn/core_concepts/relevancy.md#_2-typo)  sorts the results by increasing number of typos on matched query words. Documents with 0 typos will rank highest. This rule does not impact the typo tolerance setting.
 
-If you disable the `typo` ranking rule, but enable typo tolerance for an index, Meilisearch will use it to match documents but won't sort them based on increasing number of typos.
+If you don't use the `typo` ranking rule, but enable typo tolerance for an index, Meilisearch will use typo tolerance to match documents but won't sort them based on increasing number of typos.
 
 ## How are typos calculated
 

@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-The `typo-tolerance` route allows you to customize the typo tolerance settings for an index.
+The `typo-tolerance` route allows you to configure the typo tolerance settings for an index.
 
 Typo tolerance settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
@@ -40,7 +40,7 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 
 #### `enabled`
 
-Whether the typo tolerance is enabled or not.
+Whether typo tolerance is enabled or not.
 
 #### `disableOnAttributes`
 
@@ -69,7 +69,7 @@ Partially update the typo tolerance settings for an index. The index [`uid`](/le
 
 #### `enabled`
 
-**Type:** Boolean
+**Type:** boolean
 **Default value:** `true`
 
 Whether typo tolerance is enabled or not.
