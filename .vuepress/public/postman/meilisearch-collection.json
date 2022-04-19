@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "4b0f742b-ebc4-4809-9e8d-25b3a0a01a32",
-		"name": "Meilisearch v0.26",
+		"_postman_id": "157465d2-dee4-4327-b787-6187d51fbe12",
+		"name": "Meilisearch v0.27",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -268,6 +268,11 @@
 									"disabled": true
 								},
 								{
+									"key": "cropMarker",
+									"value": "[...]",
+									"disabled": true
+								},
+								{
 									"key": "filter",
 									"value": "genre=\"fantasy\"",
 									"disabled": true
@@ -285,6 +290,16 @@
 								{
 									"key": "sort",
 									"value": "price",
+									"disabled": true
+								},
+								{
+									"key": "highlightPreTag",
+									"value": "<mark>",
+									"disabled": true
+								},
+								{
+									"key": "highlightPostTag",
+									"value": "</mark>",
 									"disabled": true
 								}
 							]
@@ -1188,6 +1203,81 @@
 										"{{indexUID}}",
 										"settings",
 										"sortable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get typo-tolerance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"typo-tolerance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update typo-tolerance",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"minWordLengthForTypo\": {\n        \"oneTypo\": 2,\n        \"twoTypos\": 11\n    },\n    \"disableOnWords\": [\"Prince\"],\n    \"disableOnAttributes\": [\"genre\"]\n\n}"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"typo-tolerance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset typo-tolerance",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"typo-tolerance"
 									]
 								}
 							},
