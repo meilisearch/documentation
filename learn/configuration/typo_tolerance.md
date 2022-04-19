@@ -2,6 +2,14 @@
 
 Typo tolerance allows users to find documents they're looking for even when they make mistakes while typing. Meilisearch allows you to [configure the typo tolerance feature for each index](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
+:::note
+Meilisearch considers a typo on a query's first character as two typos. This increases performance during search.
+:::
+
+:::note
+Concatenating two strings will count as one typo.
+:::
+
 ## Configuring typo tolerance
 
 Typo tolerance is enabled by default, but you can disable it if needed:
@@ -35,13 +43,6 @@ Meilisearch won't apply typo tolerance on the query term `Shrek` or `shrek` at s
 By default, Meilisearch applies typo tolerance to a query if its length is at least 5 characters. To accept two typos, the query should be at least 9 characters.
 
 If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than 5 characters.
-
-:::note
-
-- A typo on a query's first character will count as two typos
-- Concatenating strings will count as one typo
-
-:::
 
 You can override these default settings using the `minWordSizeForTypos` object. The code sample below sets the minimum word size for one typo to 4 and the minimum word size for two typos to 10.
 
