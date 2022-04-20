@@ -177,11 +177,11 @@ update_settings_1: |-
             "logan": ["wolverine"]
         },
         "typoTolerance": {
-            "disableOnAttributes": ["title"],
-            "minWordSizeForTypos": {
+          "minWordSizeForTypos": {
                 "oneTypo": 8,
                 "twoTypos": 10
-      }
+      },
+            "disableOnAttributes": ["title"]
     }'
 reset_settings_1: |-
   curl \
@@ -772,13 +772,13 @@ update_typo_tolerance: |-
     -X POST 'http://localhost:7700/indexes/books/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "disableOnAttributes": [
-        "title"
-    ],
       "minWordSizeForTypos": {
         "oneTypo": 4,
         "twoTypos": 10
-      }
+      },
+      "disableOnAttributes": [
+        "title"
+    ]
       }'
 reset_typo_tolerance: |-
   curl \
@@ -823,10 +823,10 @@ settings_guide_typo_tolerance_1: |-
       -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
       -H 'Content-Type: application/json' \
       --data-binary '{
-        "disableOnAttributes": [
-          "title"
-      ],
         "minWordSizeForTypos": {
           "twoTypos": 12
-        }
+        },
+        "disableOnAttributes": [
+          "title"
+      ]
         }'

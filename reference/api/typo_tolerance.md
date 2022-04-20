@@ -27,12 +27,12 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 ```json
  {
         "enabled": true,
-        "disableOnAttributes": [],
-        "disableOnWords": [],
         "minWordSizeForTypos": {
             "oneTypo": 5,
             "twoTypos": 9
-        }
+        },
+        "disableOnWords": [],
+        "disableOnAttributes": []
     }
 ```
 
@@ -42,14 +42,6 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 
 Whether typo tolerance is enabled or not.
 
-#### `disableOnAttributes`
-
-An array of attributes with the typo tolerance feature disabled.
-
-#### `disableOnWords`
-
-An array of words with the typo tolerance feature disabled.
-
 #### `minWordSizeForTypos`
 
 Customize typo tolerance for 1 or 2 typos.
@@ -58,6 +50,14 @@ Customize typo tolerance for 1 or 2 typos.
 |------------|----------------------------------------------|
 | `oneTypo`  | The minimum word size for tolerating 1 typo  |
 | `twoTypos` | The minimum word size for tolerating 2 typos |
+
+#### `disableOnWords`
+
+An array of words with the typo tolerance feature disabled.
+
+#### `disableOnAttributes`
+
+An array of attributes with the typo tolerance feature disabled.
 
 ## Update typo tolerance
 
@@ -74,20 +74,6 @@ Partially update the typo tolerance settings for an index. The index [`uid`](/le
 
 Whether typo tolerance is enabled or not.
 
-#### `disableOnAttributes`
-
-**Type:** array
-**Default value:** `[]`
-
-An array of attributes with the typo tolerance feature disabled.
-
-#### `disableOnWords`
-
-**Type:** array
-**Default value:** `[]`
-
-An array of words with the typo tolerance feature disabled.
-
 #### `minWordSizeForTypos`
 
 **Type:** object
@@ -98,6 +84,20 @@ Customize typo tolerance for 1 or 2 typos.
 |------------|-------------------------------------------------------------------------------|---------|---------------|
 | `oneTypo`  | The minimum word size for tolerating 1 typo, must be between `0` and `255`    | integer | `5`           |
 | `twoTypos` | The minimum word size for tolerating 2 typos, must be between `0` and `255`   | integer | `9`           |
+
+#### `disableOnWords`
+
+**Type:** array
+**Default value:** `[]`
+
+An array of words with the typo tolerance feature disabled.
+
+#### `disableOnAttributes`
+
+**Type:** array
+**Default value:** `[]`
+
+An array of attributes with the typo tolerance feature disabled.
 
 #### Example
 

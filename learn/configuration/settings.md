@@ -225,9 +225,9 @@ The typo tolerance settings for an index. Typo tolerance allows users to make mi
 The `typoTolerance` object is composed of the following fields:
 
 - `enabled`
-- `disableOnAttributes`
-- `disableOnWords`
 - `minWordSizeForTypos`
+- `disableOnWords`
+- `disableOnAttributes`
 
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
 
