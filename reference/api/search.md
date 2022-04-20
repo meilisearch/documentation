@@ -498,17 +498,13 @@ Crop markers are only added where content has been actually removed. For example
 **Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
-Highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` only works on values of the following types: string, number, array, object.
+Highlights matching query terms in the specified attributes.  `attributesToHighlight` only works on values of the following types: string, number, array, object.
+
+By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
 When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
 You can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
-
-::: tip
-It is not possible to change the `<em>` tag or its attributes.
-
-If you need finer control over the formatted output, we recommend using [the `matches` search parameter](#matches).
-:::
 
 #### Example
 
@@ -534,6 +530,45 @@ The highlighted version of the text would then be found in the `_formatted` obje
   }
 }
 ```
+
+### Highlight tags
+
+**Parameter**: `highlightPreTag` and `highlightPostTag`
+**Expected value**: a string
+**Default value**: `<em>` and `</em>`
+
+`highlightPreTag` and `highlightPostTag` configure what string of text appears respective before and after a word highlighted by `attributesToHighlight`.
+
+It is possible to use `highlightPreTag` and `highlightPostTag` to enclose terms between any string of text. `<em>`, `<strong>`, `*`, and `__` are all equally supported values.
+
+#### Example
+
+The following query encloses highlighted matches in `<span>` tags with a `class` attribute:
+
+<CodeSamples id="search_parameter_guide_highlight_tag_1" />
+
+You can find the highlighted query terms inside the `_formatted` property:
+
+```json
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "The <span class=\"highlight\">Winter Feast</span> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <span class=\"highlight\">Winter Feast</span> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+    "release_date": 1290729600
+  }
+}
+```
+
+::: danger
+Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in conjunction, be careful to ensure tags are correctly matched. In the above example, not setting `highlightPostTag` would result in malformed HTML: `<span>Winter Feast</em>`.
+:::
 
 ### Matches
 

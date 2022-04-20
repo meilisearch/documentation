@@ -367,6 +367,16 @@ search_parameter_guide_highlight_1: |-
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'
+search_parameter_guide_highlight_tag_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+      "q": "winter feast", 
+      "attributesToHighlight": ["overview"],
+      "highlightPreTag": "<span class=\"highlight\">",
+      "highlightPostTag": "</span>"
+    }'
 search_parameter_guide_matches_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
