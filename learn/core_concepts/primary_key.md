@@ -134,7 +134,7 @@ The code below adds a document to the `books` index and sets `reference_number` 
 
 ### Changing your primary key with the update index endpoint
 
-To change the primary key of an index that already contains documents, you must [delete all documents](/reference/api/documents.md#delete-all-documents) from that index, [change the primary key](/reference/api/indexes.md#update-an-index), then [add them](/reference/api/documents.md#add-or-replace-documents) again.
+The primary key cannot be changed while documents are present in the index. To change the primary key of an index that already contains documents, you must therefore [delete all documents](/reference/api/documents.md#delete-all-documents) from that index, [change the primary key](/reference/api/indexes.md#update-an-index), then [add them](/reference/api/documents.md#add-or-replace-documents) again.
 
 The code below updates the primary key to `title`:
 
@@ -160,7 +160,7 @@ The code below updates the primary key to `title`:
 
 ### Meilisearch guesses your primary key
 
-If the primary key has neither been set at index creation nor as a parameter of the [add documents](/reference/api/documents.md#add-or-replace-documents) route, Meilisearch will look for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `BookId`, `ID`, `123id123`) in your first document and set it as that index's primary key.
+If you attempt to add documents to an index without previously setting its primary key, Meilisearch will automatically look for an attribute that contains the string `id` in a case-insensitive manner (e.g., `uid`, `BookId`, `ID`, `123id123`) in your first document and set it as that index's primary key.
 
 If Meilisearch cannot find a suitable attribute, the document addition process will be interrupted and no documents will be added to your index.
 
