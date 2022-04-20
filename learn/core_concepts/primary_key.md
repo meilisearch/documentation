@@ -53,9 +53,11 @@ Each document in the above index is identified by a primary field containing the
 
 ### Document id
 
-The document id is the value associated with the primary key. It is part of the primary field, and acts as a unique identifier for each document in a given index.
+The document id is the value associated with the primary key. It is part of the primary field and acts as a unique identifier for each document in a given index.
 
-The document id must be an integer or a string. If the id is a string, it can only contain alphanumeric characters (`a-z`, `A-Z`, `0-9`), hyphens (`-`), and underscores (`_`).
+Two documents in an index can have the same values for all attributes except the primary key. If two documents in the same index have the same id, then they are treated as the same document and **the preceding document will be overwritten**.
+
+Document addition requests in Meilisearch are atomic. This means that **if the primary field value of even a single document in a batch is incorrectly formatted, an error will occur, and Meilisearch will not index documents in that batch.**
 
 #### Example
 
@@ -73,9 +75,7 @@ Bad:
 
 #### Formatting the document id
 
-Two documents in an index can have the same values for all attributes except the primary key. If two documents in the same index have the same id, then they are treated as the same document and **the preceding document will be overwritten**.
-
-Document addition requests in Meilisearch are atomic. This means that **if the primary field value of even a single document in a batch is incorrectly formatted, an error will occur and Meilisearch will not index documents in that batch.**
+The document id must be an integer or a string. If the id is a string, it can only contain alphanumeric characters (`a-z`, `A-Z`, `0-9`), hyphens (`-`), and underscores (`_`).
 
 ## Setting the primary key
 
