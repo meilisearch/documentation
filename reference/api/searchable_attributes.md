@@ -30,7 +30,8 @@ List the settings.
 [
   "title",
   "overview",
-  "genres"
+  "genres",
+  "release_date.year"
 ]
 ```
 
@@ -39,6 +40,8 @@ List the settings.
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Update the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+If your dataset contains nested structures, you can use dot notation to set a nested field as a searchable attribute.
 
 ::: warning
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
