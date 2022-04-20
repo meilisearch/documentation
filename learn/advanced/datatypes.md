@@ -1,11 +1,6 @@
 # Data types
 
-This guide describes the different data types supported for the fields in a document and how Meilisearch handles them.
-
-No matter the type, the value of a field will remain unchanged in the returned documents upon search.
-For example, if you have a complex field with nested objects, this field will be returned with the same complexity upon search.
-
-Based on their type, however, the fields will be handled and used in different ways by Meilisearch. **The type affects how a field is used for search results**.
+This article describes how Meilisearch handles the different types of data in your documents. The behavior described here concerns only Meilisearch's internal processes and can be helpful in understanding how the tokenizer works, but keep in mind that **the value of a field remains unchanged in returned documents**. For example, if a document contains a nested object, this value will keep the exact same structure upon search.
 
 [[toc]]
 
@@ -37,8 +32,7 @@ To demonstrate how a string is split by space, let's say you have the following 
 "Bruce Willis,Vin Diesel"
 ```
 
-In the example above, the distance between `Bruce` and `Willis` is equal to **1**. The distance between `Vin` and `Diesel` is equal to **1** too.
-But, the distance between `Bruce` and `Vin` is equal to **8**. The same goes for `Bruce` and `Diesel`, or `Willis` and `Vin`, or also `Willis` and `Diesel`.
+In the example above, the distance between `Bruce` and `Willis` is equal to **1**. The distance between `Vin` and `Diesel` is also **1**. However, the distance between `Bruce` and `Vin` is equal to **8**. The same goes for `Bruce` and `Diesel`, or `Willis` and `Vin`, or also `Willis` and `Diesel`.
 
 Let's see another example. Given two documents:
 
@@ -55,8 +49,7 @@ Let's see another example. Given two documents:
 ]
 ```
 
-When making a query on `Bruce Willis`, `002` will be the first document returned and `001` will be the second one.
-This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
+When making a query on `Bruce Willis`, `002` will be the first document returned and `001` will be the second one. This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
 
 ## Numeric
 
@@ -70,13 +63,106 @@ You can also create [filters](/learn/advanced/filtering_and_faceted_search.md). 
 
 A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (i.e. `true` and `false`). Booleans can be searched as they are converted to strings.
 
+## Object
+
+JSON objects are written in key/value pairs and surrounded by curly braces. When parsing simple non-nested objects, Meilisearch flattens the object, converting both key and value into strings.
+
+### Example
+
+```json
+{
+  "movie_id": "1564saqw12ss",
+  "title": "Kung fu Panda"
+}
+```
+
+In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as sentences. The colon `:` and comma `,` characters are used as separators.
+
+```json
+"movie_id. 1564saqw12ss. title. Kung fu Panda."
+```
+
+These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
+
+### Nested objects
+
+An object can also contain other objects, creating nested structures of objects within objects. In these cases, Meilisearch first eliminates nesting, then proceeds to flatten the object as usual.
+
+In the example below, the `patient_name` key contains an object:
+
+```json
+{
+  "id": 0,
+  "patient_name": {
+    "forename": "Imogen",
+    "surname": "Temult"
+  }
+}
+```
+
+Meilisearch uses dot notation to eliminate nesting:
+
+```json
+{
+  "id": 0,
+  "patient_name.forename": "Imogen",
+  "patient_name.surname": "Temult",
+}
+```
+
+Once that is done, the object can be flattened into a string:
+
+```json
+"id: 0, patient_name.forename: Imogen, patient_name.surname: Temult"
+```
+
+This behavior remains the same regardless of nesting depth.
+
+Meilisearch also eliminates nesting in arrays of objects. In this case, values are grouped by key:
+
+```json
+{
+  "id": 0,
+  "patient_name": "Imogen Temult",
+  "appointments": [
+    {
+      "date": "2022-01-01",
+      "doctor": "Jester Lavorre",
+      "ward": "psychiatry"
+    },
+    {
+      "date": "2019-01-01",
+      "doctor": "Dorian Storm"
+    },
+  ]
+}
+```
+
+Would be parsed as:
+
+```json
+{
+  "id": 0,
+  "patient_name": "Imogen Temult",
+  "appointments.date": ["2022-01-01", "2019-01-01"],
+  "appointments.doctor": ["Jester Lavorre", "Dorian Storm"],
+  "appointments.ward": ["psichiatry"]
+}
+```
+
+This flattened object is an intermediary representation of Meilisearch's inner workings to facilitate indexation. During search, the returned document will keep its original structure.
+
+## `null`
+
+The `null` type can be pushed into Meilisearch but it **won't be taken into account for indexing**.
+
 ## Array
 
-An array represents a collection of elements that can be strings or arrays for instance. An array is recursively broken into separate string tokens, which means separate words.
+An array is an ordered list of values. These values can be of any type: numbers, strings, booleans, objects, or even other arrays.
 
-After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
+Meilisearch flattens arrays and concatenates them into strings. Non-string values are converted as described in this article's previous sections.
 
-### Examples
+### Example
 
 The following input:
 
@@ -96,34 +182,8 @@ Will be processed as if all elements were arranged at the same level:
 "Bruce Willis. Vin Diesel. Kung Fu Panda."
 ```
 
-The strings above will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
+Once the above array has been flattened, it will be parsed exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
-## Object
-
-JSON objects are written in key/value pairs and surrounded by curly braces. An object is broken into separate string tokens, which means separate words.
-
-After the tokenizing process, each word is indexed and stored in the global dictionary of the corresponding index.
-
-### Example
-
-```json
-{
-  "movie_id": "1564saqw12ss",
-  "title": "Kung fu Panda"
-}
-```
-
-In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as sentences. The colon `:` and comma `,` characters are used as separators.
-
-```json
-"movie_id. 1564saqw12ss. title. Kung fu Panda."
-```
-
-These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
-
-## `null`
-
-The `null` type can be pushed into Meilisearch but it **won't be taken into account for indexing**.
 
 ## Possible tokenization issues
 
