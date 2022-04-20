@@ -184,7 +184,6 @@ Will be processed as if all elements were arranged at the same level:
 
 Once the above array has been flattened, it will be parsed exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
-
 ## Possible tokenization issues
 
 Even if it behaves exactly as expected, the tokenization process may lead to unintuitive results in some cases, such as:
