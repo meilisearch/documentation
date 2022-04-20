@@ -478,9 +478,19 @@ You will get the following response with the **cropped text in the `_formatted` 
 **Expected value**: a positive integer
 **Default value**: `10`
 
-Configures the number of words to keep around the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter.
+Configures the number of words to keep around the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter. This value includes the query terms contained in the cropped text.
 
 If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
+
+### Crop marker
+
+**Parameter**: `cropMarker`
+**Expected value**: a string
+**Default value**: `"…"`
+
+Configures the string marking crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be present in both sides of the crop.
+
+Crop markers are only added where content has been actually removed. For example, if the cropped text includes the first word of the field value, the crop marker will not be added to the beginning of the cropped result.
 
 ### Attributes to highlight
 
