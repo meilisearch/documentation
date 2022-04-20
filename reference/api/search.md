@@ -32,7 +32,7 @@ This is the preferred route to perform search when an API key is required, as it
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length                         | `200`         |
+| **[cropLength](#crop-length)**                        | Maximum field value length in words                         | `10`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
@@ -116,7 +116,7 @@ This route should only be used when no API key is required. If an API key is req
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length                         | `200`         |
+| **[cropLength](#crop-length)**                        | Maximum field value length in words                         | `10`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
@@ -200,7 +200,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length                         | `200`         |
+| **[cropLength](#crop-length)**                        | Maximum field value length in words                         | `10`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
@@ -435,21 +435,21 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 **Expected value**: an array of attribute or `["*"]`
 **Default value**: `null`
 
-Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter.
+Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter. By default, crop boundaries will be indicated by the ellipsis character (`…`)—this can be configured using the [`cropMarker`](#crop-marker) search parameter.
+
+cropped fields indicate where crop happened with a `cropMarker`, which by default is the ellipsis ch
 
 When this parameter is set, a field called `_formatted` will be added to `hits`. The cropped version of each document will be available there.
 
-Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:25", "attributeNameB:150"]`. The custom crop length set in this way has priority over the `cropLength` parameter.
+Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:10", "attributeNameB:15"]`. The custom crop length set in this way has priority over the `cropLength` parameter.
 
 Instead of supplying individual `attributes`, you can provide `["*"]` as a value: `attributesToCrop=["*"]`. This will crop the values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
 
-**Cropping starts at the first occurrence of the search query**. It only keeps `cropLength` characters on each side of the first match, rounded to match word boundaries.
-
-If no query word is present in the cropped field, the crop will start from the first word.
+**Cropping starts at the first occurrence of the search query.** If a query contains several terms, cropping will start at the first occurrence of any of those terms. If no query word is present in the cropped field, the crop will start from the first word.
 
 #### Example
 
-If you use `shifu` as a search query and set the value of the `cropLength` parameter to `10`:
+If you use `shifu` as a search query and set the value of the `cropLength` parameter to `5`:
 
 <CodeSamples id="search_parameter_guide_crop_1" />
 
@@ -466,7 +466,7 @@ You will get the following response with the **cropped text in the `_formatted` 
     "id": "50393",
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "this year Shifu informs",
+    "overview": "…this year Shifu informs Po…",
     "release_date": 1290729600
   }
 }
@@ -476,9 +476,9 @@ You will get the following response with the **cropped text in the `_formatted` 
 
 **Parameter**: `cropLength`
 **Expected value**: a positive integer
-**Default value**: `200`
+**Default value**: `10`
 
-Configures the number of characters to keep on each side of the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter. Note that this means there can be up to `2 * cropLength` characters in the cropped field.
+Configures the number of words to keep around the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter.
 
 If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 

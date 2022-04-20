@@ -361,7 +361,7 @@ search_parameter_guide_crop_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 10 }'
+    --data-binary '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 5 }'
 search_parameter_guide_highlight_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
