@@ -4,21 +4,25 @@ Adding new documents to an index is a multi-threaded and memory-intensive operat
 
 ## RAM
 
-Our indexer uses the `sysinfo` Rust library to calculate a machine's total memory size. Meilisearch then adapts its behavior so indexation uses a maximum two thirds of available resources. This process helps us with two very important things:
+By default, our indexer uses the `sysinfo` Rust library to calculate a machine's total memory size. Meilisearch then adapts its behavior so indexation uses a maximum two thirds of available resources. Alternatively, you can use the `--max-indexing-memory` instance option to manually control the maximum amount of RAM Meilisearch can consume.
 
-1. We minimize crashes due to RAM over-consumption by making sure indexation does not use more resources than available in a machine
+In both cases, it is important to prevent Meilisearch from using all available memory during indexation for two reasons:
 
-2. The remaining memory ensures that users experience no slowdown when using your application while the indexer is processing an update
+1. Minimize crashes due to RAM over-consumption
+
+2. Ensure search users experience no slowdown when using your application while the indexer is processing an update
 
 Crashes caused by memory overconsumption can still happen in two cases:
 
-1. `sysinfo` may not be able to calculate the amount of available RAM for certain OSes. Meilisearch still makes an educated estimate and adapts its the behavior based on that, but crashes may still happen in this case. [Follow this link for an exhaustive list of OSes supported by `sysinfo`](https://docs.rs/sysinfo/0.20.0/sysinfo/#supported-oses).
+1. When letting Meilisearch automatically set the maximum amount of memory used during indexation, `sysinfo` may not be able to calculate the amount of available RAM for certain OSes. Meilisearch still makes an educated estimate and adapts its the behavior based on that, but crashes may still happen in this case. [Follow this link for an exhaustive list of OSes supported by `sysinfo`](https://docs.rs/sysinfo/0.20.0/sysinfo/#supported-oses)
 
-2. Lower-end machines might struggle when processing huge datasets. Splitting your data payload into smaller batches can help in this case. [For more information, consult the section below](#memory-crashes).
+2. Lower-end machines might struggle when processing huge datasets. Splitting your data payload into smaller batches can help in this case. [For more information, consult the section below](#memory-crashes)
 
 ## Multi-threading
 
 In machines with multi-core processors, the indexer avoids using more than half of the available processing units. For example, if your machine has twelve cores, the indexer will try to use six of them at most. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
+
+You can override Meilisearch's default threading limit by using the `--max-indexation-threads` instance option. Allowing Meilisearch to use all processor cores for indexation might negatively impact your users' search experience.
 
 Multi-threading is unfortunately not possible in machines with only one processor core.
 
