@@ -362,6 +362,15 @@ search_parameter_guide_crop_1: |-
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 5 }'
+search_parameter_guide_crop_marker_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+      "q": "shifu", 
+      "cropMarker": "[…]",
+      "attributesToCrop": ["overview"], 
+    }'
 search_parameter_guide_highlight_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \

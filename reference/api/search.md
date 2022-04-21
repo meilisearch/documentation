@@ -444,17 +444,17 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 **Expected value**: an array of attribute or `["*"]`
 **Default value**: `null`
 
-Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter. By default, crop boundaries will be indicated by the ellipsis character (`…`)—this can be configured using the [`cropMarker`](#crop-marker) search parameter.
+Crops the selected fields to the length indicated by the [`cropLength`](#crop-length) parameter.
 
-cropped fields indicate where crop happened with a `cropMarker`, which by default is the ellipsis ch
+By default, crop boundaries are marked by the ellipsis character (`…`). You can change this by using the [`cropMarker`](#crop-marker) search parameter.
 
-When this parameter is set, a field called `_formatted` will be added to `hits`. The cropped version of each document will be available there.
+When `attributesToCrop` is set, each returned document contains an extra field called `_formatted`. This object contains the cropped version of the selected attributes.
 
-Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:10", "attributeNameB:15"]`. The custom crop length set in this way has priority over the `cropLength` parameter.
+Optionally, you can indicate a custom crop length for any attributes given to `attributesToCrop`: `attributesToCrop=["attributeNameA:5", "attributeNameB:9"]`. If configured, these values have priority over `cropLength`.
 
-Instead of supplying individual `attributes`, you can provide `["*"]` as a value: `attributesToCrop=["*"]`. This will crop the values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
+Instead of supplying individual attributes, you can provide `["*"]` as a wildcard: `attributesToCrop=["*"]`. This causes `_formatted` to include the cropped values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
 
-**Cropping starts at the first occurrence of the search query.** If a query contains several terms, cropping will start at the first occurrence of any of those terms. If no query word is present in the cropped field, the crop will start from the first word.
+**Cropping starts at the first occurrence of any one of the terms present in the search query.** If Meilisearch does not find any query terms in a field, cropping begins at the first word.
 
 #### Example
 
@@ -497,9 +497,32 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 **Expected value**: a string
 **Default value**: `"…"`
 
-Configures the string marking crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be present in both sides of the crop.
+Sets a string marking crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be present in both sides of the crop.
 
 Crop markers are only added where content has been actually removed. For example, if the cropped text includes the first word of the field value, the crop marker will not be added to the beginning of the cropped result.
+
+#### Example
+
+When searching for `winter feast`, you can use `cropMarker` to change the default `…`:
+
+<CodeSamples id="search_parameter_guide_crop_marker_1" />
+
+```json
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "[…]villager. But this year Shifu informs Po that as Dragon[…]",
+    "release_date": 1290729600
+  }
+}
+```
 
 ### Attributes to highlight
 
@@ -509,11 +532,11 @@ Crop markers are only added where content has been actually removed. For example
 
 Highlights matching query terms in the specified attributes.  `attributesToHighlight` only works on values of the following types: string, number, array, object.
 
-By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
-
 When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-You can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
+Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
+
+By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
 #### Example
 
@@ -546,9 +569,9 @@ The highlighted version of the text would then be found in the `_formatted` obje
 **Expected value**: a string
 **Default value**: `<em>` and `</em>`
 
-`highlightPreTag` and `highlightPostTag` configure what string of text appears respective before and after a word highlighted by `attributesToHighlight`.
+`highlightPreTag` and `highlightPostTag` configure what string of text appears respectively before and after a word highlighted by `attributesToHighlight`.
 
-It is possible to use `highlightPreTag` and `highlightPostTag` to enclose terms between any string of text. `<em>`, `<strong>`, `*`, and `__` are all equally supported values.
+It is possible to use `highlightPreTag` and `highlightPostTag` to enclose terms between any string of text, not only HTML tags: `<em>`, `<strong>`, `*`, and `__` are all equally supported values.
 
 #### Example
 
