@@ -32,8 +32,11 @@ This is the preferred route to perform search when an API key is required, as it
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length in words                         | `10`         |
+| **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `…`           |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
+| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `<em>`        |
+| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `</em>`       |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -116,8 +119,11 @@ This route should only be used when no API key is required. If an API key is req
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length in words                         | `10`         |
+| **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `…`           |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
+| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `<em>`        |
+| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `</em>`       |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -200,8 +206,11 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length in words                         | `10`         |
+| **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `…`           |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
+| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `<em>`        |
+| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `</em>`       |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
