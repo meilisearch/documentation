@@ -44,12 +44,12 @@ Whether typo tolerance is enabled or not.
 
 #### `minWordSizeForTypos`
 
-Customize typo tolerance for 1 or 2 typos.
+Customize the minimum word length for tolerating 1 or 2 typos.
 
 | Name       | Description                                  |
 |------------|----------------------------------------------|
-| `oneTypo`  | The minimum word size for tolerating 1 typo  |
-| `twoTypos` | The minimum word size for tolerating 2 typos |
+| `oneTypo`  | The minimum word size for accepting 1 typo  |
+| `twoTypos` | The minimum word size for accepting 2 typos |
 
 #### `disableOnWords`
 
@@ -57,7 +57,7 @@ An array of words with the typo tolerance feature disabled.
 
 #### `disableOnAttributes`
 
-An array of attributes with the typo tolerance feature disabled.
+An array of attributes on which the typo tolerance feature is disabled.
 
 ## Update typo tolerance
 
@@ -78,12 +78,12 @@ Whether typo tolerance is enabled or not.
 
 **Type:** object
 
-Customize typo tolerance for 1 or 2 typos.
+Customize the minimum word length for tolerating 1 or 2 typos.
 
-| Name       | Description                                                                   | Type    | Default value |
-|------------|-------------------------------------------------------------------------------|---------|---------------|
-| `oneTypo`  | The minimum word size for tolerating 1 typo, must be between `0` and `255`    | integer | `5`           |
-| `twoTypos` | The minimum word size for tolerating 2 typos, must be between `0` and `255`   | integer | `9`           |
+| Name       | Description                                                                       | Type    | Default value |
+|------------|-----------------------------------------------------------------------------------|---------|---------------|
+| `oneTypo`  | The minimum word size for accepting 1 typo, must be between `0` and `twoTypos`   | integer | `5`           |
+| `twoTypos` | The minimum word size for accepting 2 typos, must be between `oneTypo` and `255` | integer | `9`           |
 
 #### `disableOnWords`
 

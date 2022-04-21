@@ -220,19 +220,21 @@ By doing so, when searching for `black sweater`, results for `black jumper` will
 
 ## Typo tolerance
 
-The typo tolerance settings for an index. Typo tolerance allows users to make mistakes when typing and still find something. [Disabling typo tolerance will not impact the `typo` ranking rule.](/learn/configuration/typo_tolerance.md#impact-of-typo-tolerance-on-the-typo-ranking-rule)
+The typo tolerance settings for an index. Typo tolerance allows users to make mistakes when typing and still find results close to their query.
 
-The `typoTolerance` object is composed of the following fields:
+The `typoTolerance` object allows you to configure the following:
 
-- `enabled`
-- `minWordSizeForTypos`
-- `disableOnWords`
-- `disableOnAttributes`
+- enable or disable the typo tolerance feature with the `enabled` field
+- set the minimum word size for typos  with `minWordSizeForTypos`
+- disable typos on specific words with `disableOnWords`
+- disable typos on specific document attributes with `disableOnAttributes`
+
+[Disabling typo tolerance will not impact the `typo` ranking rule.](/learn/configuration/typo_tolerance.md#impact-of-typo-tolerance-on-the-typo-ranking-rule)
 
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
 
 ### Example
 
-By adding the following settings, you will disable typo tolerance for `title` and set the minimum words size for 2 typos to 10 characters.
+By adding the following settings, you will disable typo tolerance for `title` and set the minimum words size for 2 typos to `10` characters.
 
 <CodeSamples id="settings_guide_typo_tolerance_1" />
