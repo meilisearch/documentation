@@ -1,6 +1,8 @@
 # Data types
 
-This article describes how Meilisearch handles the different types of data in your documents. The behavior described here concerns only Meilisearch's internal processes and can be helpful in understanding how the tokenizer works, but keep in mind that **the value of a field remains unchanged in returned documents**. For example, if a document contains a nested object, this value will keep the exact same structure upon search.
+This article explains how Meilisearch handles the different types of data in your dataset.
+
+**The behavior described here concerns only Meilisearch's internal processes** and can be helpful in understanding how the tokenizer works. The value of a field, meanwhile, remains unchanged for most practical purposes not related to Meilisearch's inner workings.
 
 [[toc]]
 
@@ -65,7 +67,7 @@ A Boolean value, which is either `true` or `false`, is received and converted to
 
 ## Object
 
-JSON objects are written in key/value pairs and surrounded by curly braces. When parsing simple non-nested objects, Meilisearch flattens the object, converting both key and value into strings.
+JSON objects are written in key/value pairs and surrounded by curly braces. When parsing objects, Meilisearch flattens it, converting both key and value into strings.
 
 ### Example
 
@@ -76,13 +78,13 @@ JSON objects are written in key/value pairs and surrounded by curly braces. When
 }
 ```
 
-In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as sentences. The colon `:` and comma `,` characters are used as separators.
+In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as separate sentences.
 
 ```json
 "movie_id. 1564saqw12ss. title. Kung fu Panda."
 ```
 
-These sentences will be separated by soft and hard spaces exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
+Once the object is flattened, Meilisearch continues parsing it as a [regular string](/learn/advanced/datatypes.md#string).
 
 ### Nested objects
 
@@ -113,7 +115,7 @@ Meilisearch uses dot notation to eliminate nesting:
 Once that is done, the object can be flattened into a string:
 
 ```json
-"id: 0, patient_name.forename: Imogen, patient_name.surname: Temult"
+"id. 0. patient_name.forename. Imogen. patient_name.surname. Temult."
 ```
 
 This behavior remains the same regardless of nesting depth.
@@ -138,7 +140,7 @@ Meilisearch also eliminates nesting in arrays of objects. In this case, values a
 }
 ```
 
-Would be parsed as:
+Resulting in:
 
 ```json
 {
@@ -150,7 +152,7 @@ Would be parsed as:
 }
 ```
 
-This flattened object is an intermediary representation of Meilisearch's inner workings to facilitate indexation. During search, the returned document will keep its original structure.
+This flattened object is an intermediary representation of Meilisearch's inner workings to facilitate indexation. When searching, the returned document will keep its original structure.
 
 ## `null`
 
