@@ -1246,7 +1246,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"minWordLengthForTypo\": {\n        \"oneTypo\": 2,\n        \"twoTypos\": 11\n    },\n    \"disableOnWords\": [\"Prince\"],\n    \"disableOnAttributes\": [\"genre\"]\n\n}"
+									"raw": "{\n    \"minWordSizeForTypos\": {\n        \"oneTypo\": 2,\n        \"twoTypos\": 11\n    },\n    \"disableOnWords\": [\"Prince\"],\n    \"disableOnAttributes\": [\"genre\"]\n\n}"
 								},
 								"url": {
 									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
