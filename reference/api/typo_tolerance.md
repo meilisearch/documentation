@@ -44,7 +44,7 @@ Whether typo tolerance is enabled or not.
 
 #### `minWordSizeForTypos`
 
-Customize the minimum word length for tolerating 1 or 2 typos.
+Customize the minimum word length for accepting 1 or 2 typos.
 
 | Name       | Description                                  |
 |------------|----------------------------------------------|
@@ -78,12 +78,12 @@ Whether typo tolerance is enabled or not.
 
 **Type:** object
 
-Customize the minimum word length for tolerating 1 or 2 typos.
+Customize the minimum word length for accepting 1 or 2 typos.
 
 | Name       | Description                                                                       | Type    | Default value |
 |------------|-----------------------------------------------------------------------------------|---------|---------------|
-| `oneTypo`  | The minimum word size for accepting 1 typo, must be between `0` and `twoTypos`   | integer | `5`           |
-| `twoTypos` | The minimum word size for accepting 2 typos, must be between `oneTypo` and `255` | integer | `9`           |
+| `oneTypo`  | The minimum word size for accepting 1 typo, must be between `0` and `twoTypos`    | integer | `5`           |
+| `twoTypos` | The minimum word size for accepting 2 typos, must be between `oneTypo` and `255`  | integer | `9`           |
 
 #### `disableOnWords`
 
@@ -97,7 +97,7 @@ An array of words on which the typo tolerance feature is disabled.
 **Type:** array
 **Default value:** `[]`
 
-An array of attributes for which the typo tolerance feature is disabled.
+An array of attributes on which the typo tolerance feature is disabled.
 
 #### Example
 

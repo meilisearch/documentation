@@ -2,12 +2,8 @@
 
 Typo tolerance allows users to make mistakes when typing and still find results close to their query, e.g., typing `phnoe` instead of `phone`. Meilisearch allows you to [configure the typo tolerance feature for each index](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
-:::note
+::: note
 Meilisearch considers a typo on a query's first character as two typos. This increases performance during search.
-:::
-
-:::note
-Concatenating two strings will count as one typo.
 :::
 
 ## Configuring typo tolerance
@@ -20,9 +16,15 @@ Disabling typo tolerance will mean Meilisearch no longer applies typo tolerance 
 
 ### `minWordSizeForTypos`
 
-By default, Meilisearch applies typo tolerance to a query term if its length is at least 5 characters. To accept two typos, the query term should be at least 9 characters.
+By default, Meilisearch applies typo tolerance to a query term if its length is at least `5` characters. The query term should be at least `9` characters long to accept two typos.
 
-If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than 5 characters.
+::: note
+Concatenating two query terms will count as one typo.
+
+If you type `La tableau`, Meilisearch will concatenate it to `Letableau`. This concatenation will count as one typo. This rule applies to all [space separators](/learn/advanced/datatypes.md#string).
+:::
+
+If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than `5` characters.
 
 You can override these default settings using the `minWordSizeForTypos` object. The code sample below sets the minimum word size for one typo to `4` and the minimum word size for two typos to `10`.
 
@@ -43,7 +45,7 @@ You can disable typo tolerance for a list of query terms by adding them to `disa
 
 Meilisearch won't apply typo tolerance on the query term `Shrek` or `shrek` at search time to match documents.
 
-:::note
+::: note
 `disableOnWords` is case insensitive.
 :::
 
@@ -63,4 +65,24 @@ If you don't use the `typo` ranking rule but enable typo tolerance for an index,
 
 ## How are typos calculated
 
-Meilisearch uses the Levenshtein algorithm to check if words match. You can find more details in our [dedicated guide](/learn/advanced/levenshtein_algorithm.md).
+Typo tolerance is applied before sorting documents. It aggregates them and chooses which documents contain words similar to the queried words. Meilisearch then uses the [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to check if the words match. It accepts every word that **starts with the query words or has the same length**.
+
+The Levenshtein distance between two words _M_ and _P_ is called "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations:
+
+- substitution of a character of _M_ by a character other than _P_ (e.g., **k**itten → **s**itten)
+- insertion in _M_ of a character of _P_ (e.g., siting → sit**t**ing)
+- deletion of a character from _M_ (e.g., satu**r**day → satuday)
+
+By default, Meilisearch uses the following rules for matching documents, you can configure them using the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance). These rules are **by word** and not for the whole query string.
+
+- If the query word is between `1` and `4` characters, **no typo** is allowed. Only documents that contain words that **start with** or are of the **same length** with this query word are considered valid
+- If the query word is between `5` and `8` characters, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
+- If the query word contains more than `8` characters, we accept a maximum of **two typos**
+
+This means that "saturday" which is `7` characters long, uses the second rule, and matches every document containing **one typo**. For example:
+
+- "saturday" is accepted because it is the same word
+- "sat" is not accepted because the query word is not a prefix of it (it is the opposite)
+- "satuday" is accepted because it contains **one typo**
+- "s**u**tuday" is not accepted because it contains **two typos**
+- "**c**aturday" is not accepted because it contains **two typos**
