@@ -71,7 +71,7 @@ curl http://<your-external-ip>/health
 The server should answer with a `200 OK` status code as shown in the example below:
 
 ```bash
-{"status":"available"}
+{"status": "available"}
 ```
 
 ## Part 2: Set your instance to a production environment

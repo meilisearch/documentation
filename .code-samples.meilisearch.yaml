@@ -331,7 +331,7 @@ filtering_guide_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q":"Batman",  "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
+    --data-binary '{ "q": "Batman", "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
 filtering_guide_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
