@@ -1794,7 +1794,7 @@ autocomplete.js@0.36.0:
   dependencies:
     immediate "^3.2.3"
 
-autocomplete.js@^0.38.0:
+autocomplete.js@^0.38.1:
   version "0.38.1"
   resolved "https://registry.yarnpkg.com/autocomplete.js/-/autocomplete.js-0.38.1.tgz#9b006c985d996165ebbc62af33f5b4c32d209cc2"
   integrity sha512-6pSJzuRMY3pqpozt+SXThl2DmJfma8Bi3SVFbZHS0PW/N72bOUv+Db0jAh2cWOhTsA4X+GNmKvIl8wExJTnN9w==
@@ -2798,12 +2798,12 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cross-fetch@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.4.tgz#9723f3a3a247bf8b89039f3a380a9244e8fa2f39"
-  integrity sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==
+cross-fetch@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
+  integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
   dependencies:
-    node-fetch "2.6.1"
+    node-fetch "2.6.7"
 
 cross-spawn@^3.0.0:
   version "3.0.1"
@@ -3266,14 +3266,13 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docs-searchbar.js@^1.3.2:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-1.3.3.tgz#f36b4679ec705a2f4cac90fbaced7effae7ebfb5"
-  integrity sha512-YUQFAGMj/i5M+qwtwJsxVDghBBd0s96xw94XRMIfyGUK8kmmHBDbaQPxMAFUlJpbF2/oXiIejPu5edy3ane4qg==
+docs-searchbar.js@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-2.1.1.tgz#ed9519c0f39a99ad9d231963245e4fc81edd994b"
+  integrity sha512-K9QkhpLUi8KRoEoI8Gz7dOAYHSPUZ0uB3qb0QkWsq9cU+FAMCZPQoePfN9TObTKcX95AYQUXHV2cgd1StHYWrg==
   dependencies:
-    autocomplete.js "^0.38.0"
-    hogan.js "^3.0.2"
-    meilisearch "^0.20.1"
+    autocomplete.js "^0.38.1"
+    meilisearch "^0.25.0"
     to-factory "^1.0.0"
     zepto "^1.2.0"
 
@@ -5900,12 +5899,12 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-meilisearch@^0.20.1:
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.20.2.tgz#9461219064ec9bba8ea01ca160f82fa54ba99637"
-  integrity sha512-h40DJXx/yen3juPLB2uskH95jw4ETKSBM3fv87aYPSpWOfZci0aTR5YZ515KHGCfEExQeoeFoUxEfGyhaYWHUA==
+meilisearch@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.25.0.tgz#8e980fbdd36b9fe6ed606205e262418f21e64d84"
+  integrity sha512-TSIJTh5lva7WHBaoG3arNYQXuIAQkcD3BY09h2nHhjHS/wzxWKJM45x5bEC67Grw8zXihVqqmWty4a4ps4S+tg==
   dependencies:
-    cross-fetch "^3.1.4"
+    cross-fetch "^3.1.5"
 
 memory-fs@^0.4.1:
   version "0.4.1"
@@ -6207,10 +6206,12 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-node-fetch@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
+node-fetch@2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+  integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+  dependencies:
+    whatwg-url "^5.0.0"
 
 node-forge@^0.10.0:
   version "0.10.0"
@@ -8776,6 +8777,11 @@ tr46@^1.0.1:
   dependencies:
     punycode "^2.1.0"
 
+tr46@~0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
+  integrity sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
+
 trim-newlines@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-1.0.0.tgz#5887966bb582a4503a41eb524f7d35011815a613"
@@ -9258,12 +9264,12 @@ vuepress-plugin-img-lazy@^1.0.4:
     markdown-it-img-lazy "^1.0.2"
     markdown-it-imsize "^2.0.1"
 
-vuepress-plugin-meilisearch@0.11.3:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.11.3.tgz#c19028b70be54b6d624e03dedfda1d40d971452c"
-  integrity sha512-MstoQVr+5sRi77ErNfKNn3wf/tS1A9mV7r4QdTzRABEG9Nz5LnDuOv4njI0Z6ciT+NSMnZxn0JA2Gomiz4EqSg==
+vuepress-plugin-meilisearch@0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.1.tgz#4b9d1d92462118d82e23cb6cee010e123892714a"
+  integrity sha512-ivXmYtTWStLMfXwn1qMN8HEbKiUP55tEj4mir/ZubQ+jRZNnSHNEAE8Ce0Xs0SpqCwxcoZCuGTsLYCyJw1vdXA==
   dependencies:
-    docs-searchbar.js "^1.3.2"
+    docs-searchbar.js "^2.1.1"
 
 vuepress-plugin-seo@^0.1.4:
   version "0.1.4"
@@ -9337,6 +9343,11 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   integrity sha512-O84QOnr0icsbFGLS0O3bI5FswxzRr8/gHwWkDlQFskhSPryQXvrTMxjxGP4+iWYoauLoBvfDpkrOauZ+0iZpDA==
   dependencies:
     minimalistic-assert "^1.0.0"
+
+webidl-conversions@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
+  integrity sha1-JFNCdeKnvGvnvIZhHMFq4KVlSHE=
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
@@ -9488,6 +9499,14 @@ websocket-extensions@>=0.1.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
+
+whatwg-url@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-5.0.0.tgz#966454e8765462e37644d3626f6742ce8b70965d"
+  integrity sha1-lmRU6HZUYuN2RNNib2dCzotwll0=
+  dependencies:
+    tr46 "~0.0.3"
+    webidl-conversions "^3.0.0"
 
 whatwg-url@^7.0.0:
   version "7.1.0"
