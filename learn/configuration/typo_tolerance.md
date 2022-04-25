@@ -65,7 +65,7 @@ If you don't use the `typo` ranking rule but enable typo tolerance for an index,
 
 ## How are typos calculated
 
-Typo tolerance is applied before sorting documents. It aggregates them and chooses which documents contain words similar to the queried words. Meilisearch then uses the [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to check if the words match. It accepts every word that **starts with the query words or has the same length**.
+Typo tolerance is applied before sorting documents. It aggregates them and chooses which documents contain words similar to the queried words. Meilisearch then uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to check if the words match. It accepts every word that **starts with the query words or has the same length**.
 
 The Levenshtein distance between two words _M_ and _P_ is called "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations:
 
@@ -79,7 +79,7 @@ By default, Meilisearch uses the following rules for matching documents, you can
 - If the query word is between `5` and `8` characters, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
 - If the query word contains more than `8` characters, we accept a maximum of **two typos**
 
-This means that "saturday" which is `7` characters long, uses the second rule, and matches every document containing **one typo**. For example:
+This means that "saturday" which is `7` characters long, uses the second rule and matches every document containing **one typo**. For example:
 
 - "saturday" is accepted because it is the same word
 - "sat" is not accepted because the query word is not a prefix of it (it is the opposite)
