@@ -91,10 +91,10 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 ## Maximum number of results per search
 
-**Limitation:** Meilisearch returns 1000 documents per search.
+**Limitation:** Meilisearch returns up to 1000 documents per search.
 
-**Explanation:** This non-customizable limit ensures the database is protected from scraping. This limit only applies to the [search route](/reference/api/search.md). If you want to scrap your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
+**Explanation:** This non-customizable limit ensures the database is protected from malicious scraping. This limit only applies to the [search route](/reference/api/search.md). If you want to get all documents in your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
 
-:::note
+::: note
 This limit is different from the [`limit` search parameter](/reference/api/search.md#limit). Whereas `limit` restricts the number of results sent to the front-end, this means Meilisearch only has 1000 search results.
 :::
