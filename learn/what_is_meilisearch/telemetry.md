@@ -145,11 +145,11 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `q.max_terms_number`                    | Highest number of terms given for the `q` parameter                                         | 5
 | `pagination.max_limit`                  | Highest value given for the `limit` parameter                                               | 60
 | `pagination.max_offset`                 | Highest value given for the `offset` parameter                                              | 1000
-| `formatting.highlight_pre_tag`          | `true` if `highlightPreTag` was used in this batch, otherwise `false`                       | false
-| `formatting.highlight_post_tag`         | `true` if `highlightPostTag` was used in this batch, otherwise `false`                      | false
-| `formatting.crop_length`                | `true` if `cropLength` was used in this batch, otherwise `false`                            | false
-| `formatting.crop_marker`                | `true` if `cropMarker` was used in this batch, otherwise `false`                            | false
-| `formatting.matches`                    | `true` if `matches` was used in this batch, otherwise `false`                               | false
+| `formatting.highlight_pre_tag`          | `true` if `highlightPreTag` was used, otherwise `false`                                     | false
+| `formatting.highlight_post_tag`         | `true` if `highlightPostTag` was used, otherwise `false`                                    | false
+| `formatting.crop_length`                | `true` if `cropLength` was used, otherwise `false`                                          | false
+| `formatting.crop_marker`                | `true` if `cropMarker` was used, otherwise `false`                                          | false
+| `formatting.matches`                    | `true` if `matches` was used, otherwise `false`                                             | false
 | `primary_key`                           | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
 | `payload_type`                          | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                        | `true` if a document addition or update request triggered index creation, otherwise `false` | true
