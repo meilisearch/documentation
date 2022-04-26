@@ -441,7 +441,7 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 ### Attributes to crop
 
 **Parameter**: `attributesToCrop`
-**Expected value**: an array of attribute or `["*"]`
+**Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
 Crops the selected fields to the length indicated by the [`cropLength`](#crop-length) parameter.
@@ -497,7 +497,7 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 **Expected value**: a string
 **Default value**: `"…"`
 
-Sets a string marking crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be present in both sides of the crop.
+Sets a string marking crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be present on both sides of the crop.
 
 Crop markers are only added where content has been actually removed. For example, if the cropped text includes the first word of the field value, the crop marker will not be added to the beginning of the cropped result.
 
@@ -565,7 +565,7 @@ The highlighted version of the text would then be found in the `_formatted` obje
 
 ### Highlight tags
 
-**Parameter**: `highlightPreTag` and `highlightPostTag`
+**Parameters**: `highlightPreTag` and `highlightPostTag`
 **Expected value**: a string
 **Default value**: `<em>` and `</em>`
 
