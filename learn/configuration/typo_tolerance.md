@@ -82,7 +82,6 @@ By default, Meilisearch uses the following rules for matching documents, you can
 This means that "saturday" which is `7` characters long, uses the second rule and matches every document containing **one typo**. For example:
 
 - "saturday" is accepted because it is the same word
-- "sat" is not accepted because the query word is not a prefix of it (it is the opposite)
 - "satuday" is accepted because it contains **one typo**
 - "s**u**tuday" is not accepted because it contains **two typos**
 - "**c**aturday" is not accepted because it contains **two typos**
