@@ -124,6 +124,7 @@ module.exports = {
             '/learn/core_concepts/documents',
             '/learn/core_concepts/indexes',
             '/learn/core_concepts/relevancy',
+            '/learn/core_concepts/primary_key',
           ],
         },
         {
@@ -343,7 +344,7 @@ module.exports = {
         pattern: '**/*.md',
         strictExt: true,
         ignoreFilePattern: ['errors', 'document_structure'],
-        ignoreHashPattern: ['actions-2'],
+        ignoreHashPattern: ['actions-2', 'primary-key-2'],
         exitLevel: 'warn',
       },
     ],
