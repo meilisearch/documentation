@@ -372,8 +372,7 @@ module.exports = {
           '06UKvqod16fff6018934c85a4d393534b1b96cd6c3a5ee492bcd4a4e720e26fb24ef1cbb',
         indexUid: 'docs',
         placeholder: 'Search as you type…',
-        // Warning! When updating docs-searchbar to the latest version, change `true` with `auto`
-        enableDarkMode: true, // Default: false
+        enableDarkMode: 'auto', // Default: false
       },
     ],
     [
