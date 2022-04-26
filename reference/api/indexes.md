@@ -116,7 +116,6 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-
 You can freely update the primary key of an index as long as it contains no documents.
 
 To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key, and finally, index your dataset again.
