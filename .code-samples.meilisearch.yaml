@@ -764,10 +764,10 @@ tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer yourTenantToken'
-get_typo_tolerance: |-
+get_typo_tolerance_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/books/settings/typo-tolerance'
-update_typo_tolerance: |-
+update_typo_tolerance_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
@@ -780,7 +780,7 @@ update_typo_tolerance: |-
         "title"
     ]
       }'
-reset_typo_tolerance: |-
+reset_typo_tolerance_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/typo-tolerance'
 typo_tolerance_guide_1: |-
@@ -828,5 +828,5 @@ settings_guide_typo_tolerance_1: |-
         },
         "disableOnAttributes": [
           "title"
-      ]
+        ]
         }'

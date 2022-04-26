@@ -20,7 +20,7 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 
 ### Example
 
-<CodeSamples id="get_typo_tolerance" />
+<CodeSamples id="get_typo_tolerance_1" />
 
 #### Response: `200 OK`
 
@@ -101,7 +101,7 @@ An array of attributes on which the typo tolerance feature is disabled.
 
 #### Example
 
-<CodeSamples id="update_typo_tolerance" />
+<CodeSamples id="update_typo_tolerance_1" />
 
 #### Response: `200 OK`
 
@@ -124,7 +124,7 @@ Reset an index's typo tolerance settings to their default value. The index [`uid
 
 #### Example
 
-<CodeSamples id="reset_typo_tolerance" />
+<CodeSamples id="reset_typo_tolerance_1" />
 
 #### Response: `200 OK`
 
