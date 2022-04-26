@@ -6,13 +6,21 @@ This repository is the documentation for the **open-source search engine API [Me
 
 ## Contributing
 
-Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you! If you think something is missing or could be improved, issues are highly appreciated.
+Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you!
 
-Before contributing, please leave a comment on an [issue](https://github.com/meilisearch/documentation/issues) letting us know you're interested. Only submit a Pull Request after you have been assigned a corresponding issue.
+Before opening a PR, please look through our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for the problem you'd like to solve. If yes, please leave a comment letting us know you're interested. If no, please open a new issue describing the problem and telling us you want to work on it.
 
-See something wrong that's not on the list? Great! Open a new issue describing the problem and tell us you want to work on it.
+To contribute, clone this repository, commit your changes and open a pull request. [Read more about working on the docs site locally.](#local-development)
 
-To contribute, clone this repository, commit your changes and open a pull request.
+### 🚨 Warning regarding PRs 🚨
+
+Our only major requirement for PR contributions is that the author responds to communication requests within a reasonable timeframe.
+
+Once you've opened a PR on this repo, one of our team members will stop by shortly to review it. If your PR is approved, nothing further is required from you. However, if in seven days you have not responded to a request for further changes or more information, we will consider the PR abandoned and close it.
+
+If this happens to you and you think there has been some mistake, please let us know and we will try to rectify the situation.
+
+## Local development
 
 ### Requirements
 
