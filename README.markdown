@@ -10,7 +10,7 @@ Hey, thank you so much for wanting to contribute! If you'd like to help improve 
 
 Before opening an issue or PR, please look through our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for your problem. If yes, please leave a comment letting us know that you're waiting for a fix or willing to work on it yourself. If not, please open a new issue describing the problem and informing us whether you want to work on it or not.
 
-To contribute, clone this repository, commit your changes and open a pull request. [Read more about working on the docs site locally.](#local-development)
+To contribute, clone this repository, commit your changes and open a pull request. [Read more about working on this site locally.](#local-development)
 
 ### 🚨 Warning regarding PRs 🚨
 
