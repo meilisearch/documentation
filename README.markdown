@@ -8,7 +8,7 @@ This repository is the documentation for the **open-source search engine API [Me
 
 Hey, thank you so much for wanting to contribute! If you'd like to help improve this documentation, we'd love to have you!
 
-Before opening a PR, please look through our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for the problem you'd like to solve. If yes, please leave a comment letting us know you're interested. If no, please open a new issue describing the problem and telling us you want to work on it.
+Before opening an issue or PR, please look through our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for your problem. If yes, please leave a comment letting us know that you're waiting for a fix or willing to work on it yourself. If not, please open a new issue describing the problem and informing us whether you want to work on it or not.
 
 To contribute, clone this repository, commit your changes and open a pull request. [Read more about working on the docs site locally.](#local-development)
 
