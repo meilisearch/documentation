@@ -116,12 +116,12 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.ignore_missing_snapshot`         | `true` if `--ignore-missing-snapshot` is activated, otherwise `false`                       | true
 | `infos.ignore_snapshot_if_db_exists`    | `true` if `--ignore-snapshot-if-db-exists` is activated, otherwise `false`                  | true
 | `infos.http_addr`                       | `true` if `--http-addr`/`MEILI_HTTP_ADDR` is specified, otherwise `false`                   | true
-| `infos.max_index_size`                  | Value of `--max-index-size`/`MEILI_MAX_INDEX_SIZE` in bytes                                     | 336042103
+| `infos.max_index_size`                  | Value of `--max-index-size`/`MEILI_MAX_INDEX_SIZE` in bytes                                 | 336042103
 | `infos.max_task_db_size`                | Value of `--max-task-db-size`/`MEILI_MAX_TASK_DB_SIZE` in bytes                             | 336042103
 | `infos.http_payload_size_limit`         | Value of `--http-payload-size-limit`/`MEILI_HTTP_PAYLOAD_SIZE_LIMIT` in bytes               | 336042103
 | `infos.enable_autobatching`             | `true` if `--enable-autobatching` is activated, otherwise `false`                           | true
-| `infos.max_batch_size`                  | Value of `--max-batch-size`, otherwise `null`                                    | 1000
-| `infos.max_documents_per_batch`         | Value of `--max-documents-per-batch`, otherwise `null`                           | 1000
+| `infos.max_batch_size`                  | Value of `--max-batch-size`, otherwise `null`                                               | 1000
+| `infos.max_documents_per_batch`         | Value of `--max-documents-per-batch`, otherwise `null`                                      | 1000
 | `infos.debounce_duration_secs`          | Value of `--debounce-duration-secs` in seconds, otherwise `0`                               | 3600
 | `infos.log_level`                       | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
 | `system.distribution`                   | Distribution on which Meilisearch is launched                                               | Arch Linux
@@ -138,18 +138,18 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `requests.total_succeeded`              | Total number of successful search requests                                                  | 3456
 | `requests.total_failed`                 | Total number of failed search requests                                                      | 24
 | `requests.total_received`               | Total number of received search requests                                                    | 3480
-| `sort.with_geoPoint`                    | `true` if the sort rule `_geoPoint` was used, otherwise `false`                             | true
+| `sort.with_geoPoint`                    | `true` if the sort rule `_geoPoint` was specified, otherwise `false`                        | true
 | `sort.avg_criteria_number`              | Average number of sort criteria among all search requests containing the `sort` parameter   | 2
-| `filter.with_geoRadius`                 | `true` if the filter rule `_geoRadius` was used, otherwise `false`                          | false
+| `filter.with_geoRadius`                 | `true` if the filter rule `_geoRadius` was specified, otherwise `false`                     | false
 | `filter.most_used_syntax`               | Most used filter syntax among all search requests containing the `filter` parameter         | string
 | `q.max_terms_number`                    | Highest number of terms given for the `q` parameter                                         | 5
 | `pagination.max_limit`                  | Highest value given for the `limit` parameter                                               | 60
 | `pagination.max_offset`                 | Highest value given for the `offset` parameter                                              | 1000
-| `formatting.highlight_pre_tag`          | `true` if `highlightPreTag` was used, otherwise `false`                                     | false
-| `formatting.highlight_post_tag`         | `true` if `highlightPostTag` was used, otherwise `false`                                    | false
-| `formatting.crop_length`                | `true` if `cropLength` was used, otherwise `false`                                          | false
-| `formatting.crop_marker`                | `true` if `cropMarker` was used, otherwise `false`                                          | false
-| `formatting.matches`                    | `true` if `matches` was used, otherwise `false`                                             | false
+| `formatting.highlight_pre_tag`          | `true` if `highlightPreTag` was specified, otherwise `false`                                | false
+| `formatting.highlight_post_tag`         | `true` if `highlightPostTag` was specified, otherwise `false`                               | false
+| `formatting.crop_length`                | `true` if `cropLength` was specified, otherwise `false`                                     | false
+| `formatting.crop_marker`                | `true` if `cropMarker` was specified, otherwise `false`                                     | false
+| `formatting.matches`                    | `true` if `matches` was specified, otherwise `false`                                        | false
 | `primary_key`                           | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
 | `payload_type`                          | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                        | `true` if a document addition or update request triggered index creation, otherwise `false` | true
