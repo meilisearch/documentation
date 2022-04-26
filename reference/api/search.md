@@ -33,10 +33,10 @@ This is the preferred route to perform search when an API key is required, as it
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
-| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `…`           |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
-| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `<em>`        |
-| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `</em>`       |
+| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -120,10 +120,10 @@ This route should only be used when no API key is required. If an API key is req
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
-| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `…`           |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
-| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `<em>`        |
-| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `</em>`       |
+| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -207,10 +207,10 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
-| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `…`           |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
-| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `<em>`        |
-| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `</em>`       |
+| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -454,7 +454,7 @@ Optionally, you can indicate a custom crop length for any attributes given to `a
 
 Instead of supplying individual attributes, you can provide `["*"]` as a wildcard: `attributesToCrop=["*"]`. This causes `_formatted` to include the cropped values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
 
-**Cropping starts at the first occurrence of any one of the terms present in the search query.** If Meilisearch does not find any query terms in a field, cropping begins at the first word.
+**Cropping starts at the first occurrence of any one of the terms present in the search query.** If Meilisearch does not find any query terms in a field, cropping begins at the first word in that field.
 
 #### Example
 
@@ -487,9 +487,11 @@ You will get the following response with the **cropped text in the `_formatted` 
 **Expected value**: a positive integer
 **Default value**: `10`
 
-Configures the number of words to keep around the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter. This value includes the query terms contained in the cropped text.
+Configures the number of words to keep around the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter. This value includes the query terms contained in the cropped text, as well as terms configured as stop words.
 
 If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
+
+If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom crop length for an attribute, that value has priority over `cropLength`.
 
 ### Crop marker
 
@@ -538,6 +540,10 @@ Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*
 
 By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
+::: note
+`attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/synonyms.md) and [stop words](/reference/api/stop_words.md).
+:::
+
 #### Example
 
 The following query highlights matches present in the `overview` attribute:
@@ -567,11 +573,11 @@ The highlighted version of the text would then be found in the `_formatted` obje
 
 **Parameters**: `highlightPreTag` and `highlightPostTag`
 **Expected value**: a string
-**Default value**: `<em>` and `</em>`
+**Default value**: `"<em>"` and `"</em>"`
 
-`highlightPreTag` and `highlightPostTag` configure what string of text appears respectively before and after a word highlighted by `attributesToHighlight`.
+`highlightPreTag` and `highlightPostTag` configure what string of text appears respectively before and after a word highlighted by `attributesToHighlight`. If `attributesToHighlight` has not been specified, `highlightPreTag` and `highlightPostTag` have no effect on the returned search results.
 
-It is possible to use `highlightPreTag` and `highlightPostTag` to enclose terms between any string of text, not only HTML tags: `<em>`, `<strong>`, `*`, and `__` are all equally supported values.
+It is possible to use `highlightPreTag` and `highlightPostTag` to enclose terms between any string of text, not only HTML tags: `"<em>"`, `"<strong>"`, `"*"`, and `"__"` are all equally supported values.
 
 #### Example
 
