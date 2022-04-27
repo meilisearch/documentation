@@ -4,7 +4,7 @@ If you are a current user of Algolia and are looking for a practical guide to mi
 
 This guide will walk you through exporting your Algolia data and indexing it in Meilisearch using a Node.js script. If you would prefer to skip directly to the finished script, [click here](#finished-script).
 
-We also provide a comparison of Meilisearch and Algolia's [APIs](#apis) and [index settings and parameters](#settings-and-parameters) to help you get Meilisearch set up with similar settings.
+We also provide a comparison of Meilisearch and Algolia's [APIs](#apis), [index settings and parameters](#settings-and-parameters), and [front-end components](#front-end-components) to help you get Meilisearch set up with similar settings.
 
 ## Migration script
 
@@ -235,6 +235,55 @@ This section compares Algolia and Meilisearch's respective API methods. We have 
 | Create API Key | `client.addApiKey(array acl)` | `client.createKey(object configuration)` |
 | Update API Key | `client.updateApiKey(string apiKey, object configuration)` | `client.updateKey(string apiKey, object configuration)` |
 | Delete API Key | `client.deleteApiKey(string apiKey)` | `client.deleteKey(string apiKey)` |
+
+## Front-end components
+
+[InstantSearch](https://github.com/algolia/instantsearch.js) is a collection of open-source tools maintained by Algolia and used to generate front-end search UI components.
+
+[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) is a plugin for connecting your Meilisearch instance with InstantSearch, giving you access to many (but not all) of the same front-end components as Algolia users. The compatibilities are detailed in the tables below.
+
+### ✅ Compatible Features
+
+- `instantsearch`
+- `highlight`
+- `snippet`
+- `menu`
+- `searchBox`
+- `middleware`
+- `geoSearch`
+- `currentRefinements`
+- `ratingMenu`
+- `configure`
+- `renderState`
+- `refinementList`
+- `rangeInput`
+- `clearRefinements`
+- `voiceSearch`
+- `hits`
+- `hierarchicalMenu`
+- `menuSelect`
+- `pagination`
+- `insights`
+- `infiniteHits`
+- `rangeSlider`
+- `toggleRefinement`
+- `hitsPerPage`
+- `breadcrumb`
+- `stats`
+- `sortBy`
+- `routing`
+
+### ❌ Incompatible Features
+
+- `index`
+- `autocomplete`
+- `answers`
+- `queryRuleCustomData`
+- `queryRuleContext`
+- `relevantSort`
+- `analytics`
+
+Check out [Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch#readme) for more detailed explanations.
 
 ## Conclusion
 
