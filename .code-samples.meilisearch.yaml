@@ -177,11 +177,11 @@ update_settings_1: |-
             "logan": ["wolverine"]
         },
         "typoTolerance": {
-          "minWordSizeForTypos": {
+            "minWordSizeForTypos": {
                 "oneTypo": 8,
                 "twoTypos": 10
-      },
-            "disableOnAttributes": ["title"]
+        },
+        "disableOnAttributes": ["title"]
     }'
 reset_settings_1: |-
   curl \
@@ -778,7 +778,7 @@ update_typo_tolerance_1: |-
       },
       "disableOnAttributes": [
         "title"
-    ]
+      ]
       }'
 reset_typo_tolerance_1: |-
   curl \
