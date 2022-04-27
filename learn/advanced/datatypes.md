@@ -91,7 +91,6 @@ During indexation, Meilisearch's tokenizer uses dot notation to eliminate nestin
 
 This behavior remains the same regardless of nesting depth. If the example above includes home and work addresses, dot notation ensures that no information is lost when flattening nested objects:
 
-
 ```json
 {
   "id": 0,
