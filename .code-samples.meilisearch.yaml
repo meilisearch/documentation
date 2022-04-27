@@ -182,7 +182,8 @@ update_settings_1: |-
                 "twoTypos": 10
         },
         "disableOnAttributes": ["title"]
-    }'
+        }
+      }'
 reset_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings'
