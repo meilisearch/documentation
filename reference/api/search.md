@@ -452,9 +452,9 @@ When `attributesToCrop` is set, each returned document contains an extra field c
 
 Optionally, you can indicate a custom crop length for any attributes given to `attributesToCrop`: `attributesToCrop=["attributeNameA:5", "attributeNameB:9"]`. If configured, these values have priority over `cropLength`.
 
-Instead of supplying individual attributes, you can provide `["*"]` as a wildcard: `attributesToCrop=["*"]`. This causes `_formatted` to include the cropped values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
+Instead of supplying individual attributes, you can provide `["*"]` as a wildcard: `attributesToCrop=["*"]`. This causes `_formatted` to include the cropped values of all attributes present in [`displayedAttributes`](/reference/api/displayed_attributes.md).
 
-**Cropping starts at the first occurrence of any one of the terms present in the search query.** If Meilisearch does not find any query terms in a field, cropping begins at the first word in that field.
+**Meilisearch crops around the first occurrence of any one of the terms present in the search query.** If Meilisearch does not find any query terms in a field, cropping begins at the first word in that field.
 
 #### Example
 
@@ -487,7 +487,11 @@ You will get the following response with the **cropped text in the `_formatted` 
 **Expected value**: a positive integer
 **Default value**: `10`
 
-Configures the number of words to keep around the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter. This value includes the query terms contained in the cropped text, as well as terms configured as stop words.
+Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop).
+
+Query terms are counted as part of the cropped value length. If `cropLength` is set to `2` and you search for one term, the cropped field will contain two words in total: `"…Shifu informs…"`.
+
+Stop-words are also counted against this number. If `cropLength` is set to `3` and you search for one term, the result might contain a stop-word: `"The Winter Feast…"`.
 
 If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 
@@ -500,6 +504,8 @@ If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom
 **Default value**: `"…"`
 
 Sets a string marking crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be present on both sides of the crop.
+
+If `cropMarker` is set to `null` or an empty string, no markers will be included in the returned results.
 
 Crop markers are only added where content has been actually removed. For example, if the cropped text includes the first word of the field value, the crop marker will not be added to the beginning of the cropped result.
 
@@ -536,7 +542,7 @@ Highlights matching query terms in the specified attributes.  `attributesToHighl
 
 When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
+Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`displayedAttributes`](/reference/api/displayed_attributes.md) will be assigned to `attributesToHighlight`.
 
 By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
