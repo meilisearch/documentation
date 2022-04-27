@@ -34,7 +34,7 @@ Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute
 
 Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If your dataset contains nested structures, you can use dot notation to set a nested field as a distinct attribute.
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"product.skuid"`.
 
 #### Body
 

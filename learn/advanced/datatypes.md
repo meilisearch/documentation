@@ -2,9 +2,7 @@
 
 This article explains how Meilisearch handles the different types of data in your dataset.
 
-**The behavior described here concerns only Meilisearch's internal processes** and can be helpful in understanding how the tokenizer works. The value of a field, meanwhile, remains unchanged for most practical purposes not related to Meilisearch's inner workings.
-
-[[toc]]
+**The behavior described here concerns only Meilisearch's internal processes** and can be helpful in understanding how the tokenizer works. Docyument fields remain unchanged for most practical purposes not related to Meilisearch's inner workings.
 
 ## String
 
@@ -65,30 +63,9 @@ You can also create [filters](/learn/advanced/filtering_and_faceted_search.md). 
 
 A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (i.e. `true` and `false`). Booleans can be searched as they are converted to strings.
 
-## Object
+### Objects
 
-JSON objects are written in key/value pairs and surrounded by curly braces. When parsing objects, Meilisearch flattens it, converting both key and value into strings.
-
-### Example
-
-```json
-{
-  "movie_id": "1564saqw12ss",
-  "title": "Kung fu Panda"
-}
-```
-
-In the example above, `movie_id`, `1564saqw12ss`, `title`, `Kung fu Panda` are all considered as separate sentences.
-
-```json
-"movie_id. 1564saqw12ss. title. Kung fu Panda."
-```
-
-Once the object is flattened, Meilisearch continues parsing it as a [regular string](/learn/advanced/datatypes.md#string).
-
-### Nested objects
-
-An object can also contain other objects, creating nested structures of objects within objects. In these cases, Meilisearch first eliminates nesting, then proceeds to flatten the object as usual.
+When a document field contains an object, Meilisearch flattens it and brings the object's keys and values to the root level of the document itself.
 
 In the example below, the `patient_name` key contains an object:
 
@@ -102,7 +79,7 @@ In the example below, the `patient_name` key contains an object:
 }
 ```
 
-Meilisearch uses dot notation to eliminate nesting:
+During indexation, Meilisearch's tokenizer uses dot notation to eliminate nesting:
 
 ```json
 {
@@ -112,13 +89,22 @@ Meilisearch uses dot notation to eliminate nesting:
 }
 ```
 
-Once that is done, the object can be flattened into a string:
+This behavior remains the same regardless of nesting depth. If the example above includes home and work addresses, dot notation ensures that no information is lost when flattening nested objects:
+
 
 ```json
-"id. 0. patient_name.forename. Imogen. patient_name.surname. Temult."
+{
+  "id": 0,
+  "patient_name.forename": "Imogen",
+  "patient_name.surname": "Temult",
+  "address.home.street": "Largo Isarco, 2",
+  "address.home.postcode": "20139",
+  "address.home.city": "Milano",
+  "address.work.street": "Ca' Corner Della Regina, 2215",
+  "address.work.postcode": "30135",
+  "address.work.city": "Venezia",
+}
 ```
-
-This behavior remains the same regardless of nesting depth.
 
 Meilisearch also eliminates nesting in arrays of objects. In this case, values are grouped by key:
 
@@ -152,7 +138,7 @@ Resulting in:
 }
 ```
 
-This flattened object is an intermediary representation of Meilisearch's inner workings to facilitate indexation. When searching, the returned document will keep its original structure.
+This flattened object is an intermediary representation used during indexation. When searching, the returned document will keep its original structure.
 
 ## `null`
 

@@ -37,7 +37,7 @@ List the settings.
 
 Update an index's sortable attributes list. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If your dataset contains nested structures, you can use dot notation to set a nested field as a searchable attribute.
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `["author.surname"]`.
 
 [You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting.md)
 
