@@ -122,7 +122,10 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.enable_autobatching`                        | `true` if `--enable-autobatching` is activated, otherwise `false`                           | true
 | `infos.max_batch_size`                             | Value of `--max-batch-size`, otherwise `null`                                               | 1000
 | `infos.max_documents_per_batch`                    | Value of `--max-documents-per-batch`, otherwise `null`                                      | 1000
-| `infos.debounce_duration_secs`                     | Value of `--debounce-duration-secs` in seconds, otherwise `0`                               | 3600
+| `infos.debounce_duration_sec`                      | Value of `--debounce-duration-sec` in seconds, otherwise `0`                                | 3600
+| `infos.log_level`                                  | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
+| `infos.max_indexing_memory`                        | Value of `--max-indexing-memory`/`MEILI_MAX_INDEXING_MEMORY` in bytes                       | 336042103
+| `infos.max_indexing_threads`                       | Value of `--max-indexing-threads`/`MEILI_MAX_INDEXING_THREADS` in integer                   | 4
 | `infos.log_level`                                  | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
 | `system.distribution`                              | Distribution on which Meilisearch is launched                                               | Arch Linux
 | `system.kernel_version`                            | Kernel version on which Meilisearch is launched                                             | 5.14.10
