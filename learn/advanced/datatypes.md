@@ -2,7 +2,7 @@
 
 This article explains how Meilisearch handles the different types of data in your dataset.
 
-**The behavior described here concerns only Meilisearch's internal processes** and can be helpful in understanding how the tokenizer works. Docyument fields remain unchanged for most practical purposes not related to Meilisearch's inner workings.
+**The behavior described here concerns only Meilisearch's internal processes** and can be helpful in understanding how the tokenizer works. Document fields remain unchanged for most practical purposes not related to Meilisearch's inner workings.
 
 ## String
 
@@ -49,7 +49,7 @@ Let's see another example. Given two documents:
 ]
 ```
 
-When making a query on `Bruce Willis`, `002` will be the first document returned and `001` will be the second one. This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002` whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
+When making a query on `Bruce Willis`, `002` will be the first document returned, and `001` will be the second one. This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002`, whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
 
 ## Numeric
 
@@ -131,9 +131,15 @@ Resulting in:
 {
   "id": 0,
   "patient_name": "Imogen Temult",
-  "appointments.date": ["2022-01-01", "2019-01-01"],
-  "appointments.doctor": ["Jester Lavorre", "Dorian Storm"],
-  "appointments.ward": ["psichiatry"]
+  "appointments.date": [
+     "2022-01-01",
+      "2019-01-01"
+   ],
+  "appointments.doctor":[
+      "Jester Lavorre",
+      "Dorian Storm"
+   ],
+  "appointments.ward": ["psychiatry"]
 }
 ```
 
