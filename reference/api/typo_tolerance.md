@@ -112,8 +112,7 @@ An array of attributes on which the typo tolerance feature is disabled.
     "status": "enqueued",
     "type": "settingsUpdate",
     "enqueuedAt": "2022-04-14T20:56:44.991039Z"
-    }
-
+}
 ```
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
@@ -135,7 +134,7 @@ Reset an index's typo tolerance settings to their default value. The index [`uid
     "status": "enqueued",
     "type": "settingsUpdate",
     "enqueuedAt": "2022-04-14T20:53:32.863107Z"
-    }
+}
 ```
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
