@@ -4,7 +4,7 @@ If you are a current user of Algolia and are looking for a practical guide to mi
 
 This guide will walk you through exporting your Algolia data and indexing it in Meilisearch using a Node.js script. If you would prefer to skip directly to the finished script, [click here](#finished-script).
 
-We also provide a comparison of Meilisearch and Algolia's [APIs](#apis), [index settings and parameters](#settings-and-parameters), and [front-end components](#front-end-components) to help make your transition as seamless as possible.
+After the script, you will find a comparison of Meilisearch and Algolia's [APIs](#apis), [index settings and parameters](#settings-and-parameters), and [front-end components](#front-end-components) to help make your transition as seamless as possible.
 
 ## Migration script
 
@@ -14,7 +14,7 @@ Migrating indexes from Algolia to Meilisearch is a straightforward process:
 2. Upload your data to Meilisearch
 3. (optional) Configure your settings to approximate the settings of your Algolia index
 
-We provide a [Node.js](https://nodejs.org/en/) script for uploading Algolia index data to Meilisearch. This script is not limited to JavaScript developers and has no impact on the programming language that will be used with Meilisearch in the future.
+This guide will use a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. This script is not limited to JavaScript developers and has no impact on the programming language used with Meilisearch in the future.
 
 Before continuing, make sure you have both Meilisearch and Node.js installed, and access to a command-line terminal.
 
@@ -36,11 +36,11 @@ Next, create a `script.js` file:
 touch script.js
 ```
 
-This is where we will add the migration code.
+This file will hold the migration code.
 
 ### Install required packages
 
-To get started, we'll need two different packages. The first is `algoliasearch`, the JavaScript client for the Algolia API, and the second is `meilisearch`, the JavaScript client for the Meilisearch API.
+To get started, you'll need two different packages. The first is `algoliasearch`, the JavaScript client for the Algolia API, and the second is `meilisearch`, the JavaScript client for the Meilisearch API.
 
 ```bash
 npm install algoliasearch meilisearch
@@ -67,7 +67,7 @@ Replace `INDEX_NAME` with the name of the Algolia index you would like to migrat
 
 ### Fetch data from Algolia
 
-To fetch all index data at once we can use Algolia's [`browseObjects`](https://www.algolia.com/doc/api-reference/api-methods/browse/) method.
+To fetch all Algolia index data at once, use Algolia's [`browseObjects`](https://www.algolia.com/doc/api-reference/api-methods/browse/) method.
 
 ```jsx
 let records = [];
@@ -82,7 +82,7 @@ On each batch of hits, the `batch` callback method is invoked, and the content i
 
 #### Nested objects
 
-Meilisearch versions prior to v0.27.0 have limited support for nested fields, meaning that nested objects must be flattened manually. For this reason we recommend using [the latest version of Meilisearch](https://github.com/meilisearch/MeiliSearch/releases). If this is impossible, try the modified data retrieval process below.
+Meilisearch versions prior to v0.27.0 have limited support for nested fields, meaning that **nested objects must be flattened manually**. This can be avoided entirely by using [the latest version of Meilisearch](https://github.com/meilisearch/MeiliSearch/releases). If this is impossible for some reason, try the modified data retrieval process below.
 
 Let's say your document structure looks like this:
 
@@ -97,7 +97,7 @@ Let's say your document structure looks like this:
 }
 ```
 
-To export this data from Algolia and simultaneously flatten it, we will use the same `browseObjects` method as described above. However, before concatenation, we will modify the object to flatten `address` into `address.country`:
+To export this data from Algolia and simultaneously flatten it, use the same `browseObjects` method as described above. However, before concatenation, modify the object to flatten `address` into `address.country`:
 
 ```jsx
 let records = [];
@@ -112,7 +112,7 @@ await algoliaIndex.browseObjects({
 });
 ```
 
-A similar process can be applied to all nested objects.
+Adapt this principle to your own dataset by replacing `address` and `address.country` with a parent object and nested field, respectively.
 
 ### Create Meilisearch client
 
@@ -212,7 +212,7 @@ In Meilisearch, [index settings](/learn/configuration/settings.md) and [search p
 
 ## APIs
 
-This section compares Algolia and Meilisearch's respective API methods. We have used JavaScript for reference.
+This section compares Algolia and Meilisearch's respective API methods, using JavaScript for reference.
 
 | Topic | Algolia | Meilisearch |
 | --- | --- | --- |
