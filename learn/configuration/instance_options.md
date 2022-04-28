@@ -231,7 +231,7 @@ Setting `--max-indexing-memory` to a value bigger than or equal to your machine'
 
 Sets the maximum number of threads Meilisearch can use during indexation. By default, the indexer avoids using more than half of a machine's total processing units. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
 
-If the `--max-indexing-threads` is higher than the real number of cores available in the machine, Meilisearch uses the maximum number of available cores.
+If `--max-indexing-threads` is higher than the real number of cores available in the machine, Meilisearch uses the maximum number of available cores.
 
 In single-core machines, Meilisearch has no choice but to use the only core available for indexation. This may lead to a degraded search experience during indexation.
 
