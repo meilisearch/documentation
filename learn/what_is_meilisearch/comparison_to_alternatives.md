@@ -165,6 +165,8 @@ Meilisearch was inspired by Algolia's product and the algorithms behind it. We i
 
 Meilisearch provides similar features and reaches the same level of relevance just as quickly as its predecessor.
 
+If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/getting_started/algolia_migration.md).
+
 #### Key similarities
 
 Some of the most significant similarities between Algolia and Meilisearch are listed below:
@@ -178,16 +180,16 @@ Some of the most significant similarities between Algolia and Meilisearch are li
 
 #### Key differences
 
-Contrary to Algolia, Meilisearch is open-source and written in Rust, a systems-level and modern programming language, that allows to rapidly build features. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.
+Contrary to Algolia, Meilisearch is open-source and written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside Virtual Machines, containers, or even Lambda@Edge a seamless operation.
 
 One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers.
-Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to deploy and maintain than Algolia's.
+Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet, but we hope one day to offer a highly available cloud solution that is simpler to deploy and maintain than Algolia's.
 
 #### Pricing
 
-The [pricing model for Algolia](https://www.algolia.com/pricing/) is based on the number of records kept and the number of API operations performed. It is prohibitively expensive for small and medium-sized businesses. Meilisearch, on the other hand, is **open-source** and can be **self-hosted**.
+The [pricing model for Algolia](https://www.algolia.com/pricing/) is based on the number of records kept and the number of API operations performed. It can be prohibitively expensive for small and medium-sized businesses.
 
-Meilisearch also offers a cloud-hosted option. Like with other cloud providers, pricing follows a set hourly rate based on the computing resources chosen. Unlike Algolia, there are no per-record or per-search fees. You can send your cluster as much traffic or data as it can manage. See [Meilisearch Cloud pricing](https://www.meilisearch.com/pricing).
+Meilisearch is **open-source** and can be **self-hosted**, but also offers a cloud-hosted product analogous to Algolia's service: Meilisearch Cloud. Unlike Algolia, [pricing of Meilisearch Cloud](https://www.meilisearch.com/pricing) follows a set hourly rate based on the computing resources chosen, with no per-record or per-search fees. You can send your cluster as much traffic or data as it can manage.
 
 ## A quick look at the search engine landscape
 
