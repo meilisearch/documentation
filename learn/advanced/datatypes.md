@@ -139,7 +139,9 @@ Resulting in:
       "Jester Lavorre",
       "Dorian Storm"
    ],
-  "appointments.ward": ["psychiatry"]
+  "appointments.ward": [
+     "psychiatry"
+]
 }
 ```
 
