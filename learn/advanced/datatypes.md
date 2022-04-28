@@ -79,7 +79,7 @@ In the example below, the `patient_name` key contains an object:
 }
 ```
 
-During indexation, Meilisearch's tokenizer uses dot notation to eliminate nesting:
+During indexation, Meilisearch uses dot notation to eliminate nesting:
 
 ```json
 {
