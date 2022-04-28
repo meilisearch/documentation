@@ -209,9 +209,7 @@ The automatically generated attribute ranking order will be `["a", "b", "c"]`. I
 
 The attribute ranking order will be updated to `["a", "b", "c", "d"]`. In other words, when Meilisearch encounters new attributes in subsequently indexed documents, they are added to the bottom of the attribute ranking order.
 
-The attribute ranking order can also be set manually.
-
-For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
+The attribute ranking order can also be set manually. For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
 
 ### Example
 
