@@ -6,13 +6,13 @@ Adding new documents to an index is a multi-threaded and memory-intensive operat
 
 By default, our indexer uses the `sysinfo` Rust library to calculate a machine's total memory size. Meilisearch then adapts its behavior so indexation uses a maximum two thirds of available resources. Alternatively, you can use the `[--max-indexing-memory](/learn/configuration/instance_options.md#max-indexing-memory)` instance option to manually control the maximum amount of RAM Meilisearch can consume.
 
-In both cases, it is important to prevent Meilisearch from using all available memory during indexation for two reasons:
+It is important to prevent Meilisearch from using all available memory during indexation. If that happens, there are two negative consequences:
 
-1. Minimize crashes due to RAM over-consumption
+1. Meilisearch may be killed by the OS for over-consuming RAM
 
-2. Ensure search users experience no slowdown when using your application while the indexer is processing an update
+2. Users making search requests may experience slowdown while the indexer is processing an update
 
-Crashes caused by memory overconsumption can still happen in two cases:
+Memory overconsumption can still happen in two cases:
 
 1. When letting Meilisearch automatically set the maximum amount of memory used during indexation, `sysinfo` may not be able to calculate the amount of available RAM for certain OSes. Meilisearch still makes an educated estimate and adapts its behavior based on that, but crashes may still happen in this case. [Follow this link for an exhaustive list of OSes supported by `sysinfo`](https://docs.rs/sysinfo/0.20.0/sysinfo/#supported-oses)
 
