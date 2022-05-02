@@ -214,7 +214,7 @@ The `index` stores processed data and is different from the `task` database, whi
 
 Sets the maximum amount of RAM Meilisearch can use when indexing. By default, Meilisearch uses no more than two thirds of available memory.
 
-The value must be given in bytes or explicitly state a base unit otherwise:  `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+The value must either be given in bytes or explicitly state a base unit:  `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
 It is possible that Meilisearch goes over the exact RAM limit during indexation. In most contexts and machines, this should be a negligible amount with little to no impact on stability and performance.
 
