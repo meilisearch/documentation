@@ -42,7 +42,7 @@ List the settings.
 
 Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `["release_date.year"]`.
+If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g. `"displayedAttributes": ["release_date.year"]`.
 
 ::: note
 `displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).

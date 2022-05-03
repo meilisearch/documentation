@@ -49,7 +49,7 @@ Let's see another example. Given two documents:
 ]
 ```
 
-When making a query on `Bruce Willis`, `002` will be the first document returned, and `001` will be the second one. This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002`, whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full stop is a hard space.
+When making a query on `Bruce Willis`, `002` will be the first document returned, and `001` will be the second one. This will happen because the proximity distance between `Bruce` and `Willis` is equal to **2** in the document `002`, whereas the distance between `Bruce` and `Willis` is equal to **8** in the document `001` since the full-stop character `.` is a hard space.
 
 ## Numeric
 
@@ -89,7 +89,9 @@ During indexation, Meilisearch uses dot notation to eliminate nesting:
 }
 ```
 
-This behavior remains the same regardless of nesting depth. If the example above includes home and work addresses, dot notation ensures that no information is lost when flattening nested objects:
+Using dot notation, no information is lost when flattening nested objects, regardless of nesting depth.
+
+Imagine that the example document above includes an additional object, `address`, containing home and work addresses, each of which are objects themselves. After flattening, the document would look like this:
 
 ```json
 {
@@ -105,7 +107,7 @@ This behavior remains the same regardless of nesting depth. If the example above
 }
 ```
 
-Meilisearch also eliminates nesting in arrays of objects. In this case, values are grouped by key:
+Meilisearch's internal flattening process also eliminates nesting in arrays of objects. In this case, values are grouped by key. Consider the following document:
 
 ```json
 {
@@ -125,23 +127,23 @@ Meilisearch also eliminates nesting in arrays of objects. In this case, values a
 }
 ```
 
-Resulting in:
+After flattening, it would look like this:
 
 ```json
 {
   "id": 0,
   "patient_name": "Imogen Temult",
   "appointments.date": [
-     "2022-01-01",
-      "2019-01-01"
-   ],
-  "appointments.doctor":[
-      "Jester Lavorre",
-      "Dorian Storm"
-   ],
+    "2022-01-01",
+    "2019-01-01"
+  ],
+  "appointments.doctor": [
+    "Jester Lavorre",
+    "Dorian Storm"
+  ],
   "appointments.ward": [
-     "psychiatry"
-]
+    "psychiatry"
+  ]
 }
 ```
 

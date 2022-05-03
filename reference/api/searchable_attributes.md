@@ -41,9 +41,8 @@ List the settings.
 
 Update the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If your dataset contains nested structures, you can use dot notation to set a nested field as a searchable attribute.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `["release_date.year"]`.
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
 ::: warning
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
