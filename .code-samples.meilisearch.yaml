@@ -799,7 +799,7 @@ typo_tolerance_guide_2: |-
       "disableOnAttributes": [
         "title"
     ]
-    }'
+  }'
 typo_tolerance_guide_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
