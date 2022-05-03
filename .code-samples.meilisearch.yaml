@@ -790,7 +790,7 @@ typo_tolerance_guide_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "enabled": false
-      }'    
+    }'    
 typo_tolerance_guide_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
