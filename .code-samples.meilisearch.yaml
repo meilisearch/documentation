@@ -780,7 +780,7 @@ update_typo_tolerance_1: |-
       "disableOnAttributes": [
         "title"
       ]
-      }'
+    }'
 reset_typo_tolerance_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/typo-tolerance'
