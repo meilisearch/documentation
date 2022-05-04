@@ -830,4 +830,4 @@ settings_guide_typo_tolerance_1: |-
         "disableOnAttributes": [
           "title"
         ]
-        }'
+      }'
