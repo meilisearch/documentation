@@ -220,7 +220,7 @@ By doing so, when searching for `black sweater`, results for `black jumper` will
 
 ## Typo tolerance
 
-The typo tolerance settings for an index. Typo tolerance allows users to make mistakes when typing and still find results close to their query.
+The typo tolerance settings for an index. Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos.
 
 The `typoTolerance` object allows you to configure the following:
 
