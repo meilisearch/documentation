@@ -235,6 +235,6 @@ The `typoTolerance` object allows you to:
 
 ### Example
 
-By adding the following settings, you will disable typo tolerance for `title` and set the minimum words size for 2 typos to `10` characters.
+Adding the following settings disables typo tolerance for the `title` attribute and sets the minimum word size for 2 typos to `12` characters.
 
 <CodeSamples id="settings_guide_typo_tolerance_1" />
