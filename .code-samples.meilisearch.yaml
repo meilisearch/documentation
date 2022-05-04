@@ -808,7 +808,7 @@ typo_tolerance_guide_3: |-
       "disableOnWords": [
         "shrek"
     ]
-    }'
+  }'
 typo_tolerance_guide_4: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
