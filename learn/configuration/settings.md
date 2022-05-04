@@ -222,7 +222,7 @@ By doing so, when searching for `black sweater`, results for `black jumper` will
 
 The typo tolerance settings for an index. Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos.
 
-The `typoTolerance` object allows you to configure the following:
+The `typoTolerance` object allows you to:
 
 - enable or disable the typo tolerance feature with the `enabled` field
 - set the minimum word size for typos  with `minWordSizeForTypos`
