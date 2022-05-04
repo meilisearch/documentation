@@ -22,7 +22,7 @@ Memory overconsumption can still happen in two cases:
 
 In machines with multi-core processors, the indexer avoids using more than half of the available processing units. For example, if your machine has twelve cores, the indexer will try to use six of them at most. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
 
-You can override Meilisearch's default threading limit by using the `--max-indexing-threads` instance option. Allowing Meilisearch to use all processor cores for indexation might negatively impact your users' search experience.
+You can override Meilisearch's default threading limit by using the `[--max-indexing-threads](/learn/configuration/instance_options.md#max-indexing-threads)` instance option. Allowing Meilisearch to use all processor cores for indexation might negatively impact your users' search experience.
 
 Multi-threading is unfortunately not possible in machines with only one processor core.
 
