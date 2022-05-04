@@ -1,6 +1,6 @@
 # Typo tolerance
 
-Typo tolerance allows users to make mistakes when typing and still find results close to their query, e.g., typing `phnoe` instead of `phone`. Meilisearch allows you to [configure the typo tolerance feature for each index](/reference/api/typo_tolerance.md#update-typo-tolerance).
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, e.g. typing `phnoe` instead of `phone`. Meilisearch allows you to [configure the typo tolerance feature for each index](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
 ::: note
 Meilisearch considers a typo on a query's first character as two typos. This increases performance during search.
