@@ -63,9 +63,43 @@ You can also create [filters](/learn/advanced/filtering_and_faceted_search.md). 
 
 A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (i.e. `true` and `false`). Booleans can be searched as they are converted to strings.
 
+## `null`
+
+The `null` type can be pushed into Meilisearch but it **won't be taken into account for indexing**.
+
+## Array
+
+An array is an ordered list of values. These values can be of any type: numbers, strings, booleans, objects, or even other arrays.
+
+Meilisearch flattens arrays and concatenates them into strings. Non-string values are converted as described in this article's previous sections.
+
+### Example
+
+The following input:
+
+```json
+[
+  [
+    "Bruce Willis",
+    "Vin Diesel"
+  ],
+  "Kung Fu Panda"
+]
+```
+
+Will be processed as if all elements were arranged at the same level:
+
+```json
+"Bruce Willis. Vin Diesel. Kung Fu Panda."
+```
+
+Once the above array has been flattened, it will be parsed exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
+
 ### Objects
 
 When a document field contains an object, Meilisearch flattens it and brings the object's keys and values to the root level of the document itself.
+
+Keep in mind that the flattened objects represented here are an intermediary snapshot of internal processes. When searching, the returned document will keep its original structure.
 
 In the example below, the `patient_name` key contains an object:
 
@@ -147,39 +181,7 @@ After flattening, it would look like this:
 }
 ```
 
-This flattened object is an intermediary representation used during indexation. When searching, the returned document will keep its original structure.
-
-## `null`
-
-The `null` type can be pushed into Meilisearch but it **won't be taken into account for indexing**.
-
-## Array
-
-An array is an ordered list of values. These values can be of any type: numbers, strings, booleans, objects, or even other arrays.
-
-Meilisearch flattens arrays and concatenates them into strings. Non-string values are converted as described in this article's previous sections.
-
-### Example
-
-The following input:
-
-```json
-[
-  [
-    "Bruce Willis",
-    "Vin Diesel"
-  ],
-  "Kung Fu Panda"
-]
-```
-
-Will be processed as if all elements were arranged at the same level:
-
-```json
-"Bruce Willis. Vin Diesel. Kung Fu Panda."
-```
-
-Once the above array has been flattened, it will be parsed exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
+Once all objects inside a document have been flattened, Meilisearch will continue processing it as described in the previous sections. For example, arrays will be flattened, and numeric and boolean values will be turned into strings.
 
 ## Possible tokenization issues
 
