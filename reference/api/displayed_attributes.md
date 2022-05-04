@@ -32,7 +32,7 @@ List the settings.
   "title",
   "overview",
   "genres",
-  "release_date"
+  "release_date.year"
 ]
 ```
 
@@ -41,6 +41,8 @@ List the settings.
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
 Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g. `"displayedAttributes": ["release_date.year"]`.
 
 ::: note
 `displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
