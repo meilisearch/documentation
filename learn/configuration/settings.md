@@ -225,7 +225,7 @@ The typo tolerance settings for an index. Typo tolerance helps users find releva
 The `typoTolerance` object allows you to:
 
 - enable or disable the typo tolerance feature with the `enabled` field
-- set the minimum word size for typos  with `minWordSizeForTypos`
+- configure the minimum word size for typos to be handled with `minWordSizeForTypos`
 - disable typos on specific words with `disableOnWords`
 - disable typos on specific document attributes with `disableOnAttributes`
 
