@@ -32,11 +32,11 @@ This is the preferred route to perform search when an API key is required, as it
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
+| **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
 | **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
-| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `"<em>"`      |
-| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `"</em>"`     |
+| **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -119,11 +119,11 @@ This route should only be used when no API key is required. If an API key is req
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
+| **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
 | **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
-| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `"<em>"`      |
-| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `"</em>"`     |
+| **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -206,11 +206,11 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length in words                | `10`          |
+| **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
 | **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
-| **[highlightPreTag](#highlight-tags)**                | String marking the start of a highlighted term     | `"<em>"`      |
-| **[highlightPostTag](#highlight-tags)**               | String marking the end of a highlighted term       | `"</em>"`     |
+| **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -444,11 +444,9 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 **Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
-Crops the selected fields to the length indicated by the [`cropLength`](#crop-length) parameter.
+Crops the selected fields in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter. When `attributesToCrop` is set, each returned document contains an extra field called `_formatted`. This object contains the cropped version of the selected attributes.
 
 By default, crop boundaries are marked by the ellipsis character (`…`). You can change this by using the [`cropMarker`](#crop-marker) search parameter.
-
-When `attributesToCrop` is set, each returned document contains an extra field called `_formatted`. This object contains the cropped version of the selected attributes.
 
 Optionally, you can indicate a custom crop length for any attributes given to `attributesToCrop`: `attributesToCrop=["attributeNameA:5", "attributeNameB:9"]`. If configured, these values have priority over `cropLength`.
 
@@ -487,13 +485,11 @@ You will get the following response with the **cropped text in the `_formatted` 
 **Expected value**: a positive integer
 **Default value**: `10`
 
-Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop).
+Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop). If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 
 Query terms are counted as part of the cropped value length. If `cropLength` is set to `2` and you search for one term (e.g. `shifu`), the cropped field will contain two words in total (e.g. `"…Shifu informs…"`).
 
 Stop words are also counted against this number. If `cropLength` is set to `2` and you search for one term (e.g. `grinch`), the cropped result may contain a stop word (e.g. `"…the Grinch…"`).
-
-If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 
 If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom crop length for an attribute, that value has priority over `cropLength`.
 
@@ -584,6 +580,8 @@ The highlighted version of the text would then be found in the `_formatted` obje
 `highlightPreTag` and `highlightPostTag` configure, respectively, the strings to be inserted before and after a word highlighted by `attributesToHighlight`. If `attributesToHighlight` has not been configured, `highlightPreTag` and `highlightPostTag` have no effect on the returned search results.
 
 It is possible to use `highlightPreTag` and `highlightPostTag` to enclose terms between any string of text, not only HTML tags: `"<em>"`, `"<strong>"`, `"*"`, and `"__"` are all equally supported values.
+
+If `highlightPreTag` or `highlightPostTag` are set to `null` or an empty string, nothing will be inserted respectively at the beginning or the end of a highlighted term.
 
 #### Example
 
