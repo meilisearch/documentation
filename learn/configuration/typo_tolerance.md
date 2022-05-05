@@ -92,4 +92,4 @@ This means that "saturday" which is `7` characters long, uses the second rule an
 - "saturday" is accepted because it is the same word
 - "satuday" is accepted because it contains **one typo**
 - "sutuday" is not accepted because it contains **two typos**
-- "caturday" is not accepted because it contains **two typos**
+- "caturday" is not accepted because it contains **two typos** (as explained [above](#minwordsizefortypos), a typo on the first letter of a word is treated as two typos)
