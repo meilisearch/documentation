@@ -55,7 +55,7 @@ You can disable typo tolerance for a specific [document attribute](/learn/core_c
 
 <CodeSamples id="typo_tolerance_guide_2" />
 
-If you type `Dunbo` instead of `Dumbo` with the above settings, Meilisearch won't match any documents.
+With the above settings, matches in the `title` attribute will not tolerate any typos. For example, a search for `beautiful` (9 characters) will not match the movie "Biutiful" starring Javier Bardem. With the default settings, this would be a match.
 
 ## Impact of typo tolerance on the `typo` ranking rule
 
