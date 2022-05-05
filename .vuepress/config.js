@@ -124,6 +124,7 @@ module.exports = {
             '/learn/core_concepts/documents',
             '/learn/core_concepts/indexes',
             '/learn/core_concepts/relevancy',
+            '/learn/core_concepts/primary_key',
           ],
         },
         {
@@ -344,7 +345,7 @@ module.exports = {
         pattern: '**/*.md',
         strictExt: true,
         ignoreFilePattern: ['errors', 'document_structure'],
-        ignoreHashPattern: ['actions-2'],
+        ignoreHashPattern: ['actions-2', 'primary-key-2'],
         exitLevel: 'warn',
       },
     ],
@@ -368,13 +369,12 @@ module.exports = {
     [
       'meilisearch',
       {
-        hostUrl: 'https://ms-480d6ad12249-173.saas.meili.dev',
+        hostUrl: 'https://ms-5894428564fa-173.lon.meilisearch.io',
         apiKey:
-          'b587b006a5e827e320046fb036a15f219a14c3f05f21224c1fc7a9c00f4504ca',
+          '06UKvqod16fff6018934c85a4d393534b1b96cd6c3a5ee492bcd4a4e720e26fb24ef1cbb',
         indexUid: 'docs',
         placeholder: 'Search as you type…',
-        // Warning! When updating docs-searchbar to the latest version, change `true` with `auto`
-        enableDarkMode: true, // Default: false
+        enableDarkMode: 'auto', // Default: false
       },
     ],
     [

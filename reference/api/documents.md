@@ -10,7 +10,7 @@ Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents/{document_id}"/>
 
-Get one [document](/learn/core_concepts/documents.md) using its unique id.  Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/documents.md#document-id) are required.
+Get one [document](/learn/core_concepts/documents.md) using its unique id.  Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/primary_key.md#document-id) are required.
 
 ### Example
 
@@ -79,7 +79,7 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 Add a list of [documents](/learn/core_concepts/documents.md) or replace them if they already exist. If the provided index does not exist, it will be created. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If you send an already existing document (same [document id](/learn/core_concepts/documents.md#primary-key)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
+If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
 
 For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
 
@@ -87,9 +87,9 @@ For a partial update of the document see [add or update documents](/reference/ap
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the index _(optional)_ |     none      |
+| **primaryKey**  | The [primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the index _(optional)_ |     none      |
 
-If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Body
 
@@ -115,7 +115,7 @@ The body is composed of a **JSON array** of documents.
 
 ```json
 {
-    "uid":1,
+    "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentAddition",
@@ -131,19 +131,19 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If you send an already existing document (same [documentId](/learn/core_concepts/documents.md#primary-key)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
+If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
 
 To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents.md#add-or-replace-documents).
 
 If the provided index does not exist, it will be created.
 
-If you want to set the [**primary key** of your index](/learn/core_concepts/documents.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
 #### Query parameters
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/learn/core_concepts/documents.md#primary-key) of the documents _(optional)_ |     none      |
+| **primaryKey**  | The [primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the documents _(optional)_ |     none      |
 
 #### Body
 
@@ -208,7 +208,7 @@ You can use this `uid` to get more details on [the status of the task](/referenc
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/documents/{document_id}"/>
 
-Delete one document based on its unique id. Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/documents.md#document-id) are required.
+Delete one document based on its unique id. Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/primary_key.md#document-id) are required.
 
 ### Example
 

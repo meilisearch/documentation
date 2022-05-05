@@ -18,6 +18,6 @@ You can add a dataset containing many popular movies to an instance:
 
 <CodeSamples id="add_movies_json_1" />
 
-Once indexation is finished, you can access `http://127.0.0.1:7700` and confirm everything is working correcty by searching for "The Truman Show:"
+Once indexation is finished, you can access `http://127.0.0.1:7700` and confirm everything is working correctly by searching for "The Truman Show:"
 
 <MovieGif />

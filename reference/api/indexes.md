@@ -19,32 +19,32 @@ List all [indexes](/learn/core_concepts/indexes.md).
 ```json
 [
   {
-    "uid":"books",
-    "name":"books",
-    "createdAt":"2022-03-08T10:00:27.377346Z",
-    "updatedAt":"2022-03-08T10:00:27.391209Z",
-    "primaryKey":"id"
+    "uid": "books",
+    "name": "books",
+    "createdAt": "2022-03-08T10:00:27.377346Z",
+    "updatedAt": "2022-03-08T10:00:27.391209Z",
+    "primaryKey": "id"
   },
   {
-    "uid":"meteorites",
-    "name":"meteorites",
-    "createdAt":"2022-03-08T10:00:44.518768Z",
-    "updatedAt":"2022-03-08T10:00:44.582083Z",
-    "primaryKey":"id"
+    "uid": "meteorites",
+    "name": "meteorites",
+    "createdAt": "2022-03-08T10:00:44.518768Z",
+    "updatedAt": "2022-03-08T10:00:44.582083Z",
+    "primaryKey": "id"
   },
   {
-    "uid":"movies",
-    "name":"movies",
-    "createdAt":"2022-02-10T07:45:15.628261Z",
-    "updatedAt":"2022-02-21T15:28:43.496574Z",
-    "primaryKey":"id"
+    "uid": "movies",
+    "name": "movies",
+    "createdAt": "2022-02-10T07:45:15.628261Z",
+    "updatedAt": "2022-02-21T15:28:43.496574Z",
+    "primaryKey": "id"
   }
 ]  
 ```
 
 ## Get one index
 
-<RouteHighlighter method="GET" route="/indexes/{uid}"/>
+<RouteHighlighter method="GET" route="/indexes/{index_uid}"/>
 
 Get information about an [index](/learn/core_concepts/indexes.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -56,11 +56,11 @@ Get information about an [index](/learn/core_concepts/indexes.md). The index [`u
 
 ```json
 {
-  "uid":"movies",
-  "name":"movies",
-  "createdAt":"2022-02-10T07:45:15.628261Z",
-  "updatedAt":"2022-02-21T15:28:43.496574Z",
-  "primaryKey":"id"
+  "uid": "movies",
+  "name": "movies",
+  "createdAt": "2022-02-10T07:45:15.628261Z",
+  "updatedAt": "2022-02-21T15:28:43.496574Z",
+  "primaryKey": "id"
 }
 ```
 
@@ -70,7 +70,7 @@ Get information about an [index](/learn/core_concepts/indexes.md). The index [`u
 
 Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `uid` and `primaryKey`.
 
-If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from first document you add to the index.
+If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from the first document you add to the index.
 
 ::: note
 If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, Meilisearch will automatically create it for you. This is called implicit index creation.
@@ -112,11 +112,13 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/{uid}"/>
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}"/>
 
-Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/documents.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/primary_key.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If a primary key wasn't explicitly chosen during index creation, you can use this route to configure it. If you are unsure whether an index's primary key has already been configured, you can use the [get index endpoint](/reference/api/indexes.md#get-one-index) to verify it.
+You can freely update the primary key of an index as long as it contains no documents.
+
+To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key, and finally, index your dataset again.
 
 ::: note
 It is not possible to change an index's `uid`.
@@ -150,7 +152,7 @@ You can use the response's `uid` to [track the status of your request](/referenc
 
 ## Delete an index
 
-<RouteHighlighter method="DELETE" route="/indexes/{uid}"/>
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}"/>
 
 Delete an [index](/learn/core_concepts/indexes.md).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

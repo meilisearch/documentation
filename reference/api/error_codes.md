@@ -30,7 +30,7 @@ The database is in an invalid state. Deleting the database and re-indexing shoul
 
 ### `primary_key_inference_failed`
 
-The first provided document contains no fields with the substring `id`. [Manually designate the primary key](/learn/core_concepts/documents.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
+The first provided document contains no fields with the substring `id`. [Manually designate the primary key](/learn/core_concepts/primary_key.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
 
 ### `document_fields_limit_reached`
 

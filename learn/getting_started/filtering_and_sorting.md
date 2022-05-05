@@ -32,21 +32,21 @@ Let's say you only want to view meteorites that weigh less than 200g:
 {
   "hits":[
     {
-      "name":"Aachen",
-      "mass":21
+      "name": "Aachen",
+      "mass": 21
     },
     {
-      "name":"Emmaville",
-      "mass":127
+      "name": "Emmaville",
+      "mass": 127
     },
     …
   ],
-  "nbHits":114,
-  "exhaustiveNbHits":false,
-  "query":"",
-  "limit":20,
-  "offset":0,
-  "processingTimeMs":0
+  "nbHits": 114,
+  "exhaustiveNbHits": false,
+  "query": "",
+  "limit": 20,
+  "offset": 0,
+  "processingTimeMs": 0
 }
 ```
 
@@ -68,22 +68,21 @@ Let's sort the meteorites in the previous example based on mass:
 {
   "hits":[
     {
-      "name":"Silistra",
-      "mass":0.15
+      "name": "Silistra",
+      "mass": 0.15
     },
     {
-      "name":"Hachi-oji",
-      "mass":0.2
+      "name": "Hachi-oji",
+      "mass": 0.2
     },
     …
   ],
-  "nbHits":114,
-  "exhaustiveNbHits":false,
-  "query":"",
-  "limit":20,
-  "offset":0,
-  "processingTimeMs":1
-  }
+  "nbHits": 114,
+  "exhaustiveNbHits": false,
+  "query": "",
+  "limit": 20,
+  "offset": 0,
+  "processingTimeMs": 1
 ```
 
 You will see all meteorites weighing less than 200g sorted by increasing mass. To sort them in the opposite direction, you would use `mass:desc`.
@@ -106,39 +105,39 @@ Let's say you want to find out which meteorites crashed within a 210km radius of
 {
   "hits":[
   {
-    "name":"Ensisheim",
-    "id":"10039",
-    "nametype":"Valid",
-    "recclass":"LL6",
-    "mass":"127000",
-    "fall":"Fell",
-    "year":"1492-01-01T00:00:00.000",
+    "name": "Ensisheim",
+    "id": "10039",
+    "nametype": "Valid",
+    "recclass": "LL6",
+    "mass": "127000",
+    "fall": "Fell",
+    "year": "1492-01-01T00:00:00.000",
     "_geo": {
-        "lat":47.86667,
-        "lng":7.35
+        "lat": 47.86667,
+        "lng": 7.35
         }
   },
   {
-    "name":"Épinal",
-    "id":"10041",
-    "nametype":"Valid",
-    "recclass":"H5",
-    "mass":"277",
-    "fall":"Fell",
-    "year":"1822-01-01T00:00:00.000",
+    "name": "Épinal",
+    "id": "10041",
+    "nametype": "Valid",
+    "recclass": "H5",
+    "mass": "277",
+    "fall": "Fell",
+    "year": "1822-01-01T00:00:00.000",
     "_geo": {
-        "lat":48.18333,
-        "lng":6.46667
+        "lat": 48.18333,
+        "lng": 6.46667
         }
   },
   …
   ],
-  "nbHits":7,
-  "exhaustiveNbHits":false,
-  "query":"",
-  "limit":20,
-  "offset":0,
-  "processingTimeMs":3
+  "nbHits": 7,
+  "exhaustiveNbHits": false,
+  "query": "",
+  "limit": 20,
+  "offset": 0,
+  "processingTimeMs": 3
   }
   ```
 
@@ -152,41 +151,41 @@ The following command sorts meteorites by how close they were to the Taj Mahal:
 {
   "hits":[
   {
-    "name":"Nagaria",
-    "id":"16892",
-    "nametype":"Valid",
-    "recclass":"Eucrite-cm",
-    "mass":"20",
-    "fall":"Fell",
-    "year":"1875-01-01T00:00:00.000",
+    "name": "Nagaria",
+    "id": "16892",
+    "nametype": "Valid",
+    "recclass": "Eucrite-cm",
+    "mass": "20",
+    "fall": "Fell",
+    "year": "1875-01-01T00:00:00.000",
     "_geo": {
-      "lat":26.98333,
-      "lng":78.21667
+      "lat": 26.98333,
+      "lng": 78.21667
       },
-      "_geoDistance":27449
+      "_geoDistance": 27449
   },
   {
-    "name":"Kheragur",
-    "id":"12294",
-    "nametype":"Valid",
-    "recclass":"L6",
-    "mass":"450",
-    "fall":"Fell",
-    "year":"1860-01-01T00:00:00.000",
+    "name": "Kheragur",
+    "id": "12294",
+    "nametype": "Valid",
+    "recclass": "L6",
+    "mass": "450",
+    "fall": "Fell",
+    "year": "1860-01-01T00:00:00.000",
     "_geo": {
-      "lat":26.95,
-      "lng":77.88333
+      "lat": 26.95,
+      "lng": 77.88333
       },
-      "_geoDistance":29558
+      "_geoDistance": 29558
     },
   …
   ]
-  "nbHits":1000,
-  "exhaustiveNbHits":false,
-  "query":"",
-  "limit":20,
-  "offset":0,
-  "processingTimeMs":4
+  "nbHits": 1000,
+  "exhaustiveNbHits": false,
+  "query": "",
+  "limit": 20,
+  "offset": 0,
+  "processingTimeMs": 4
   }
 ```
 
