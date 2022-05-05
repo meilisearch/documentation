@@ -2,10 +2,6 @@
 
 Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, e.g. typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
-::: note
-Meilisearch considers a typo on a query's first character as two typos. This increases performance during search.
-:::
-
 ## Configuring typo tolerance
 
 Typo tolerance is enabled by default, but you can disable it if needed:
@@ -20,12 +16,6 @@ With typo tolerance disabled, Meilisearch no longer considers words that are a f
 
 By default, Meilisearch accepts one typo for query terms containing five or more characters, and up to two typos if the term is at at least nine characters long.
 
-::: note
-Concatenating two query terms will count as one typo.
-
-If you type `La tableau`, Meilisearch will concatenate it to `Letableau`. This concatenation will count as one typo. This rule applies to all [space separators](/learn/advanced/datatypes.md#string).
-:::
-
 If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than `5` characters.
 
 You can override these default settings using the `minWordSizeForTypos` object. The code sample below sets the minimum word size for one typo to `4` and the minimum word size for two typos to `10`.
@@ -38,6 +28,16 @@ When updating the `minWordSizeForTypos` object, keep in mind that:
 - the value for both `oneTypo` and `twoTypos` should be between `0` and `255`
 
 We recommend keeping the value of `oneTypo` between `2` and `8` and the value of `twoTypos` between `4` and `14`. If either value is too low, you may get a large number of false-positive results. On the other hand, if both values are set too high, many search queries may not benefit from typo tolerance.
+
+::: note Typo tolerance: special cases
+**Typo on the first character:**
+Meilisearch considers a typo on a query's first character as two typos.
+
+**Concatenation:**
+When considering possible candidates for typo tolerance, Meilisearch will concatenate multiple search terms separated by a [space separator](/learn/advanced/datatypes.md#string). This is treated as one typo. For example, a search for "any way" would match documents containing "anyway".
+
+For more about typo calculations, [see below](#understanding-typo-calculations).
+:::
 
 ### `disableOnWords`
 
