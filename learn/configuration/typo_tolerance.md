@@ -61,9 +61,15 @@ With the above settings, matches in the `title` attribute will not tolerate any 
 
 ## Impact of typo tolerance on the `typo` ranking rule
 
-The [`typo` ranking rule](/learn/core_concepts/relevancy.md#_2-typo) sorts the results by increasing number of typos on matched query words. Documents with 0 typos will rank highest. This rule does not impact the typo tolerance setting.
+The [`typo` ranking rule](/learn/core_concepts/relevancy.md#_2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos will rank highest, followed by those with 1 and then 2 typos.
 
-If you don't use the `typo` ranking rule but enable typo tolerance for an index, Meilisearch will use typo tolerance to match documents but won't sort them based on increasing number of typos.
+The presence or absence of the `typo` ranking rule has no impact on the typo tolerance setting. However, [disabling the typo tolerance setting](#configuring-typo-tolerance) effectively also disables the `typo` ranking rule. This is because all returned documents will contain `0` typos.
+
+To summarize:
+
+- Typo tolerance affects how lenient Meilisearch is when matching documents
+- The `typo` ranking rule affects how Meilisearch sorts its results
+- Disabling typo tolerance also disables `typo`
 
 ## How are typos calculated
 
