@@ -229,8 +229,6 @@ The `typoTolerance` object allows you to:
 - disable typos on specific words with `disableOnWords`
 - disable typos on specific document attributes with `disableOnAttributes`
 
-[Disabling typo tolerance will not impact the `typo` ranking rule.](/learn/configuration/typo_tolerance.md#impact-of-typo-tolerance-on-the-typo-ranking-rule)
-
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
 
 ### Example
