@@ -53,11 +53,11 @@ Customize the minimum word length for accepting 1 or 2 typos.
 
 #### `disableOnWords`
 
-An array of words on which the typo tolerance feature is disabled.
+An array of words for which the typo tolerance feature is disabled.
 
 #### `disableOnAttributes`
 
-An array of attributes on which the typo tolerance feature is disabled.
+An array of attributes for which the typo tolerance feature is disabled.
 
 ## Update typo tolerance
 
