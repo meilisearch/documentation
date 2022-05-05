@@ -63,7 +63,7 @@ With the above settings, matches in the `title` attribute will not tolerate any 
 
 The [`typo` ranking rule](/learn/core_concepts/relevancy.md#_2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos will rank highest, followed by those with 1 and then 2 typos.
 
-The presence or absence of the `typo` ranking rule has no impact on the typo tolerance setting. However, [disabling the typo tolerance setting](#configuring-typo-tolerance) effectively also disables the `typo` ranking rule. This is because all returned documents will contain `0` typos.
+The presence or absence of the `typo` ranking rule has no impact on the typo tolerance setting. However, **[disabling the typo tolerance setting](#configuring-typo-tolerance) effectively also disables the `typo` ranking rule.** This is because all returned documents will contain `0` typos.
 
 To summarize:
 
@@ -71,17 +71,17 @@ To summarize:
 - The `typo` ranking rule affects how Meilisearch sorts its results
 - Disabling typo tolerance also disables `typo`
 
-## How are typos calculated
+## Understanding typo calculations
 
-Typo tolerance is applied before sorting documents. It aggregates them and chooses which documents contain words similar to the queried words. Meilisearch then uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to check if the words match. It accepts every word that **starts with the query words or has the same length**.
+Meilisearch uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to determine if a word in a document could be a possible match for a query term.
 
-The Levenshtein distance between two words _M_ and _P_ is called "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations:
+The [number of typos referenced above](#minwordsizefortypos) is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
 
-- substitution of a character of _M_ by a character other than _P_ (e.g., **k**itten → **s**itten)
-- insertion in _M_ of a character of _P_ (e.g., siting → sit**t**ing)
-- deletion of a character from _M_ (e.g., satu**r**day → satuday)
+- substitution of a character (e.g., **k**itten → **s**itten)
+- insertion of a character (e.g., siting → sit**t**ing)
+- deletion of a character (e.g., satu**r**day → satuday)
 
-By default, Meilisearch uses the following rules for matching documents, you can configure them using the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance). These rules are **by word** and not for the whole query string.
+By default, Meilisearch uses the following rules for matching documents. Note that these rules are **by word** and not for the whole query string.
 
 - If the query word is between `1` and `4` characters, **no typo** is allowed. Only documents that contain words that **start with** or are of the **same length** with this query word are considered valid
 - If the query word is between `5` and `8` characters, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
