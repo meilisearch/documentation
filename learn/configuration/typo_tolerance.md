@@ -35,7 +35,7 @@ When updating the `minWordSizeForTypos` object, keep in mind that:
 - the value of `twoTypos` should be greater or equal to `oneTypo`
 - the value for both `oneTypo` and `twoTypos` should be between `0` and `255`
 
-We recommend keeping the value of `oneTypo` between `2` and `8` and the value of `twoTypos` between `4` and `14`. If the value is too small, you will get a lot of false-positive results. A bigger value will mean the typo tolerance feature is rarely used to match documents.
+We recommend keeping the value of `oneTypo` between `2` and `8` and the value of `twoTypos` between `4` and `14`. If either value is too low, you may get a large number of false-positive results. On the other hand, if both values are set too high, many search queries may not benefit from typo tolerance.
 
 ### `disableOnWords`
 
