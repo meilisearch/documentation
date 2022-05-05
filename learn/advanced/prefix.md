@@ -34,7 +34,7 @@ response:
 
 - `show`
 
-Meilisearch also handles typos while performing the prefix search. You can [read more about the typo rules on the dedicated page](/learn/advanced/typotolerance.md#typo-tolerance-rules).
+Meilisearch also handles typos while performing the prefix search. You can [read more about the typo rules on the dedicated page](/learn/configuration/typo_tolerance.md).
 
 ::: tip
 We also [apply splitting and concatenating on search queries](/learn/advanced/concat.md).

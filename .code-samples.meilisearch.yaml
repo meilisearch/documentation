@@ -175,6 +175,13 @@ update_settings_1: |-
         "synonyms": {
             "wolverine": ["xmen", "logan"],
             "logan": ["wolverine"]
+        },
+        "typoTolerance": {
+            "minWordSizeForTypos": {
+                "oneTypo": 8,
+                "twoTypos": 10
+            },
+            "disableOnAttributes": ["title"]
         }
     }'
 reset_settings_1: |-
@@ -777,3 +784,69 @@ tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer yourTenantToken'
+get_typo_tolerance_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/typo-tolerance'
+update_typo_tolerance_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "minWordSizeForTypos": {
+        "oneTypo": 4,
+        "twoTypos": 10
+      },
+      "disableOnAttributes": [
+        "title"
+      ]
+    }'
+reset_typo_tolerance_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/typo-tolerance'
+typo_tolerance_guide_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "enabled": false
+    }'    
+typo_tolerance_guide_2: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "disableOnAttributes": [
+        "title"
+    ]
+  }'
+typo_tolerance_guide_3: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "disableOnWords": [
+        "shrek"
+    ]
+  }'
+typo_tolerance_guide_4: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "minWordSizeForTypos": {
+        "oneTypo": 4,
+        "twoTypos": 10
+      }
+    }'
+settings_guide_typo_tolerance_1: |-
+  curl \
+      -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+      -H 'Content-Type: application/json' \
+      --data-binary '{
+        "minWordSizeForTypos": {
+          "twoTypos": 12
+        },
+        "disableOnAttributes": [
+          "title"
+        ]
+      }'

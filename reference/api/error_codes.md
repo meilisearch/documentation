@@ -163,3 +163,7 @@ The payload is missing one or more required fields.
 ### `task_not_found`
 
 The requested task does not exist. Please ensure that you are using the correct `uid`.
+
+### `invalid_typo_tolerance_min_word_size_for_typos`
+
+The `minWordSizeForTypos` object is invalid. The value for both `oneTypo` and `twoTypos` should be between `0` and `255`, and `twoTypos` should be greater or equal to `oneTypo`.
