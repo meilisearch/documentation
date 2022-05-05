@@ -83,5 +83,5 @@ This means that "saturday" which is `7` characters long, uses the second rule an
 
 - "saturday" is accepted because it is the same word
 - "satuday" is accepted because it contains **one typo**
-- "s**u**tuday" is not accepted because it contains **two typos**
-- "**c**aturday" is not accepted because it contains **two typos**
+- "sutuday" is not accepted because it contains **two typos**
+- "caturday" is not accepted because it contains **two typos**
