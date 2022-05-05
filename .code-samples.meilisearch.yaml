@@ -180,10 +180,10 @@ update_settings_1: |-
             "minWordSizeForTypos": {
                 "oneTypo": 8,
                 "twoTypos": 10
-        },
-        "disableOnAttributes": ["title"]
+            },
+            "disableOnAttributes": ["title"]
         }
-      }'
+    }'
 reset_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings'
