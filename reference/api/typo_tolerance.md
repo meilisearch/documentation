@@ -2,7 +2,7 @@
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-The `typo-tolerance` route allows you to configure the typo tolerance settings for an index.
+This route allows you to configure the typo tolerance settings for an index.
 
 Typo tolerance settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
@@ -25,15 +25,15 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 #### Response: `200 OK`
 
 ```json
- {
-        "enabled": true,
-        "minWordSizeForTypos": {
-            "oneTypo": 5,
-            "twoTypos": 9
-        },
-        "disableOnWords": [],
-        "disableOnAttributes": []
-    }
+{
+  "enabled": true,
+  "minWordSizeForTypos": {
+    "oneTypo": 5,
+    "twoTypos": 9
+  },
+  "disableOnWords": [],
+  "disableOnAttributes": []
+}
 ```
 
 ### Returned fields
@@ -44,12 +44,12 @@ Whether typo tolerance is enabled or not.
 
 #### `minWordSizeForTypos`
 
-Customize the minimum word length for accepting 1 or 2 typos.
+The minimum word length for tolerating 1 or 2 typos.
 
 | Name       | Description                                  |
 |------------|----------------------------------------------|
-| `oneTypo`  | The minimum word size for accepting 1 typo  |
-| `twoTypos` | The minimum word size for accepting 2 typos |
+| `oneTypo`  | The minimum word size for tolerating 1 typo  |
+| `twoTypos` | The minimum word size for tolerating 2 typos |
 
 #### `disableOnWords`
 
@@ -82,22 +82,22 @@ Customize the minimum word length for accepting 1 or 2 typos.
 
 | Name       | Description                                                                       | Type    | Default value |
 |------------|-----------------------------------------------------------------------------------|---------|---------------|
-| `oneTypo`  | The minimum word size for accepting 1 typo, must be between `0` and `twoTypos`    | integer | `5`           |
-| `twoTypos` | The minimum word size for accepting 2 typos, must be between `oneTypo` and `255`  | integer | `9`           |
+| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`    | integer | `5`           |
+| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255`  | integer | `9`           |
 
 #### `disableOnWords`
 
 **Type:** array
 **Default value:** `[]`
 
-An array of words on which the typo tolerance feature is disabled.
+An array of words for which the typo tolerance feature is disabled.
 
 #### `disableOnAttributes`
 
 **Type:** array
 **Default value:** `[]`
 
-An array of attributes on which the typo tolerance feature is disabled.
+An array of attributes for which the typo tolerance feature is disabled.
 
 #### Example
 
@@ -115,7 +115,7 @@ An array of attributes on which the typo tolerance feature is disabled.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset typo tolerance
 
@@ -137,4 +137,4 @@ Reset an index's typo tolerance settings to their default value. The index [`uid
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
