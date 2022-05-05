@@ -16,7 +16,7 @@ Disabling typo tolerance will mean Meilisearch no longer applies typo tolerance 
 
 ### `minWordSizeForTypos`
 
-By default, Meilisearch applies typo tolerance to a query term if its length is at least `5` characters. The query term should be at least `9` characters long to accept two typos.
+By default, Meilisearch accepts one typo for query terms containing  five or more characters, and up to two typos if the term is at at least nine characters long.
 
 ::: note
 Concatenating two query terms will count as one typo.
