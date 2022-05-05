@@ -12,7 +12,7 @@ This page describes the **index-level settings** available in Meilisearch and ho
 | **[sortableAttributes](/learn/configuration/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
 | **[stopWords](/learn/configuration/settings.md#stop-words)**                       | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                        |
 | **[synonyms](/learn/configuration/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                        |
-| **[typoTolerance](/learn/configuration/settings.md#typo-tolerance)**               | Object containing typo tolerance settings | `{}` |
+| **[typoTolerance](/learn/configuration/settings.md#typo-tolerance)**               | Object containing typo tolerance settings | Enabled. One typo allowed for words of 5+ characters; two for words of 9+ characters. |
 
 ## Displayed attributes
 
