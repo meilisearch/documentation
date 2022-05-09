@@ -53,11 +53,13 @@ These commands launch the **latest stable release** of Meilisearch.
 # Fetch the latest version of Meilisearch image from DockerHub
 docker pull getmeili/meilisearch:latest
 
-# Launch Meilisearch
+# Launch Meilisearch with a master key and deactivate analytics
 docker run -it --rm \
     -p 7700:7700 \
+    -e MEILI_MASTER_KEY='myMasterKey'\
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:latest
+    /meilisearch --no-analytics
 ```
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
