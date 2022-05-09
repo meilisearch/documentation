@@ -129,6 +129,14 @@ tenant_token_guide_search_sdk_1: |-
 tenant_token_guide_fragment_rules_1: |-
 tenant_token_guide_fragment_key_1: |-
 tenant_token_guide_fragment_expiry_1: |-
+get_typo_tolerance_1: |-
+update_typo_tolerance_1: |-
+reset_typo_tolerance_1: |-
+typo_tolerance_guide_1: |-
+typo_tolerance_guide_2: |-
+typo_tolerance_guide_3: |-
+typo_tolerance_guide_4: |-
+settings_guide_typo_tolerance_1: |-
 updating_guide_check_version: |-
 updating_guide_get_displayed_attributes: |-
 updating_guide_reset_displayed_attributes: |-

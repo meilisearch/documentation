@@ -27,7 +27,8 @@ List the settings.
 ```json
 [
   "genres",
-  "director"
+  "director",
+  "release_date.year"
 ]
 ```
 
@@ -36,6 +37,8 @@ List the settings.
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
 Update an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md). This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
 
 ### Body
 

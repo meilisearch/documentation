@@ -19,6 +19,10 @@ Other than the differences mentioned above, the two routes are strictly equivale
 
 Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
+::: note
+This endpoint has a [non-customizable limit of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
+:::
+
 This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
 #### Body
@@ -32,8 +36,11 @@ This is the preferred route to perform search when an API key is required, as it
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length                         | `200`         |
+| **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
+| **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -103,6 +110,10 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
+:::note
+This endpoint has a [non-customizable limit of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
+:::
+
 This route should only be used when no API key is required. If an API key is required, use the POST route instead.
 
 #### Query parameters
@@ -116,8 +127,11 @@ This route should only be used when no API key is required. If an API key is req
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length                         | `200`         |
+| **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
+| **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -200,8 +214,11 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
-| **[cropLength](#crop-length)**                        | Maximum field value length                         | `200`         |
+| **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
+| **[cropMarker](#crop-marker)**                        | String marking crop boundaries                     | `"…"`         |
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
+| **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
+| **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
 | **[matches](#matches)**                               | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
@@ -432,24 +449,22 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 ### Attributes to crop
 
 **Parameter**: `attributesToCrop`
-**Expected value**: an array of attribute or `["*"]`
+**Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
-Crops the selected attributes' values in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter.
+Crops the selected fields in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter. When `attributesToCrop` is set, each returned document contains an extra field called `_formatted`. This object contains the cropped version of the selected attributes.
 
-When this parameter is set, a field called `_formatted` will be added to `hits`. The cropped version of each document will be available there.
+By default, crop boundaries are marked by the ellipsis character (`…`). You can change this by using the [`cropMarker`](#crop-marker) search parameter.
 
-Optionally, you can indicate a custom crop length for any of the listed attributes: `attributesToCrop=["attributeNameA:25", "attributeNameB:150"]`. The custom crop length set in this way has priority over the `cropLength` parameter.
+Optionally, you can indicate a custom crop length for any attributes given to `attributesToCrop`: `attributesToCrop=["attributeNameA:5", "attributeNameB:9"]`. If configured, these values have priority over `cropLength`.
 
-Instead of supplying individual `attributes`, you can provide `["*"]` as a value: `attributesToCrop=["*"]`. This will crop the values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
+Instead of supplying individual attributes, you can provide `["*"]` as a wildcard: `attributesToCrop=["*"]`. This causes `_formatted` to include the cropped values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
 
-**Cropping starts at the first occurrence of the search query**. It only keeps `cropLength` characters on each side of the first match, rounded to match word boundaries.
-
-If no query word is present in the cropped field, the crop will start from the first word.
+**Meilisearch crops around the first occurrence of any one of the terms present in the search query.** If Meilisearch does not find any query terms in a field, cropping begins at the first word in that field.
 
 #### Example
 
-If you use `shifu` as a search query and set the value of the `cropLength` parameter to `10`:
+If you use `shifu` as a search query and set the value of the `cropLength` parameter to `5`:
 
 <CodeSamples id="search_parameter_guide_crop_1" />
 
@@ -466,7 +481,7 @@ You will get the following response with the **cropped text in the `_formatted` 
     "id": "50393",
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "this year Shifu informs",
+    "overview": "…this year Shifu informs Po…",
     "release_date": 1290729600
   }
 }
@@ -476,11 +491,50 @@ You will get the following response with the **cropped text in the `_formatted` 
 
 **Parameter**: `cropLength`
 **Expected value**: a positive integer
-**Default value**: `200`
+**Default value**: `10`
 
-Configures the number of characters to keep on each side of the matching query term when using the [`attributesToCrop`](#attributes-to-crop) parameter. Note that this means there can be up to `2 * cropLength` characters in the cropped field.
+Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop). If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 
-If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
+Query terms are counted as part of the cropped value length. If `cropLength` is set to `2` and you search for one term (e.g. `shifu`), the cropped field will contain two words in total (e.g. `"…Shifu informs…"`).
+
+Stop words are also counted against this number. If `cropLength` is set to `2` and you search for one term (e.g. `grinch`), the cropped result may contain a stop word (e.g. `"…the Grinch…"`).
+
+If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom crop length for an attribute, that value has priority over `cropLength`.
+
+### Crop marker
+
+**Parameter**: `cropMarker`
+**Expected value**: a string
+**Default value**: `"…"`
+
+Sets a string to mark crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be inserted on both sides of the crop. If `attributesToCrop` is not configured, `cropMarker` has no effect on the returned search results.
+
+If `cropMarker` is set to `null` or an empty string, no markers will be included in the returned results.
+
+Crop markers are only added where content has been removed. For example, if the cropped text includes the first word of the field value, the crop marker will not be added to the beginning of the cropped result.
+
+#### Example
+
+When searching for `shifu`, you can use `cropMarker` to change the default `…`:
+
+<CodeSamples id="search_parameter_guide_crop_marker_1" />
+
+```json
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "[…]villager. But this year Shifu informs Po that as Dragon[…]",
+    "release_date": 1290729600
+  }
+}
+```
 
 ### Attributes to highlight
 
@@ -488,16 +542,16 @@ If `attributesToCrop` is not configured, `cropLength` has no effect on the retur
 **Expected value**: an array of attributes or `["*"]`
 **Default value**: `null`
 
-Highlights matching query terms in the specified attributes by enclosing them in `<em>` tags. `attributesToHighlight` only works on values of the following types: string, number, array, object.
+Highlights matching query terms in the specified attributes.  `attributesToHighlight` only works on values of the following types: string, number, array, object.
 
 When this parameter is set, returned documents include a `_formatted` object containing the highlighted terms.
 
-You can provide `["*"]` as a value: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
+Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*"]`. In this case, all the attributes present in [`attributesToRetrieve`](#attributes-to-retrieve) will be assigned to `attributesToHighlight`.
 
-::: tip
-It is not possible to change the `<em>` tag or its attributes.
+By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
-If you need finer control over the formatted output, we recommend using [the `matches` search parameter](#matches).
+::: note
+`attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/synonyms.md) and [stop words](/reference/api/stop_words.md).
 :::
 
 #### Example
@@ -524,6 +578,47 @@ The highlighted version of the text would then be found in the `_formatted` obje
   }
 }
 ```
+
+### Highlight tags
+
+**Parameters**: `highlightPreTag` and `highlightPostTag`
+**Expected value**: a string
+**Default value**: `"<em>"` and `"</em>"` respectively
+
+`highlightPreTag` and `highlightPostTag` configure, respectively, the strings to be inserted before and after a word highlighted by `attributesToHighlight`. If `attributesToHighlight` has not been configured, `highlightPreTag` and `highlightPostTag` have no effect on the returned search results.
+
+It is possible to use `highlightPreTag` and `highlightPostTag` to enclose terms between any string of text, not only HTML tags: `"<em>"`, `"<strong>"`, `"*"`, and `"__"` are all equally supported values.
+
+If `highlightPreTag` or `highlightPostTag` are set to `null` or an empty string, nothing will be inserted respectively at the beginning or the end of a highlighted term.
+
+#### Example
+
+The following query encloses highlighted matches in `<span>` tags with a `class` attribute:
+
+<CodeSamples id="search_parameter_guide_highlight_tag_1" />
+
+You can find the highlighted query terms inside the `_formatted` property:
+
+```json
+{
+  "id": "50393",
+  "title": "Kung Fu Panda Holiday",
+  "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+  "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+  "release_date": 1290729600,
+  "_formatted": {
+    "id": "50393",
+    "title": "Kung Fu Panda Holiday",
+    "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
+    "overview": "The <span class=\"highlight\">Winter Feast</span> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <span class=\"highlight\">Winter Feast</span> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
+    "release_date": 1290729600
+  }
+}
+```
+
+::: danger
+Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in conjunction, be careful to ensure tags are correctly matched. In the above example, not setting `highlightPostTag` would result in malformed HTML: `<span>Winter Feast</em>`.
+:::
 
 ### Matches
 

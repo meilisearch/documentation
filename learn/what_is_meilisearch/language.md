@@ -4,6 +4,7 @@
 
 - **Any language that uses whitespace to separate words**
 - **Chinese** (through [Jieba](https://github.com/messense/jieba-rs))
+- **Japanese** (through [Lindera](https://github.com/lindera-morphology/lindera))
 
 We aim to provide global language support, and your feedback helps us [move closer to that goal](#improving-our-language-support). If you notice inconsistencies in your search results or the way your documents are processed, please open an issue on our [GitHub repository](https://github.com/meilisearch/meilisearch/issues/new/choose).
 

@@ -177,3 +177,6 @@
 
 # Create new security and permissions section
 /learn/advanced/security.html                       /learn/security/master_api_keys.html
+
+# remove typo tolerance
+/learn/advanced/typotolerance.html                  /learn/configuration/typo_tolerance.html

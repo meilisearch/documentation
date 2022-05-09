@@ -89,7 +89,7 @@ Replace `0.X.X` with the version you would like to install.
 ```bash
 docker run -it --rm \
     -p 7700:7700 \
-    -v "$(pwd)/data.ms:/data.ms" \
+    -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:v0.X.X
 ```
 

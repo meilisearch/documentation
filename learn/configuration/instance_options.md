@@ -205,6 +205,40 @@ The `index` stores processed data and is different from the `task` database, whi
 
 [Learn more about Meilisearch's database and storage engine.](/learn/advanced/storage.md)
 
+### Max indexing memory
+
+**Environment variable**: `MEILI_MAX_INDEXING_MEMORY`
+**CLI option**: `--max-indexing-memory`
+**Default value**: 2/3 of the available RAM
+**Expected value**: an integer (`104857600`) or a human readable size (`'100Mb'`)
+
+Sets the maximum amount of RAM Meilisearch can use when indexing. By default, Meilisearch uses no more than two thirds of available memory.
+
+The value must either be given in bytes or explicitly state a base unit:  `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
+
+It is possible that Meilisearch goes over the exact RAM limit during indexation. In most contexts and machines, this should be a negligible amount with little to no impact on stability and performance.
+
+::: danger
+Setting `--max-indexing-memory` to a value bigger than or equal to your machine's total memory is likely to cause your instance to crash.
+:::
+
+### Max indexing threads
+
+**Environment variable**: `MEILI_MAX_INDEXING_THREADS`
+**CLI option**: `--max-indexing-threads`
+**Default value**: half of the available threads
+**Expected value**: an integer
+
+Sets the maximum number of threads Meilisearch can use during indexation. By default, the indexer avoids using more than half of a machine's total processing units. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
+
+If `--max-indexing-threads` is higher than the real number of cores available in the machine, Meilisearch uses the maximum number of available cores.
+
+In single-core machines, Meilisearch has no choice but to use the only core available for indexation. This may lead to a degraded search experience during indexation.
+
+::: danger
+Avoid setting `--max-indexing-threads` to the total of your machine's processor cores. Though doing so might speed up indexation, it is likely to severely impact search experience.
+:::
+
 ### Max TASK_DB size
 
 **Environment variable**: `MEILI_MAX_TASK_DB_SIZE`

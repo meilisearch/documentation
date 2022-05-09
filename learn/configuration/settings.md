@@ -12,6 +12,7 @@ This page describes the **index-level settings** available in Meilisearch and ho
 | **[sortableAttributes](/learn/configuration/settings.md#sortable-attributes)**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
 | **[stopWords](/learn/configuration/settings.md#stop-words)**                       | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                        |
 | **[synonyms](/learn/configuration/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                        |
+| **[typoTolerance](/learn/configuration/settings.md#typo-tolerance)**               | Object containing typo tolerance settings | Enabled. One typo allowed for words of 5+ characters; two for words of 9+ characters. |
 
 ## Displayed attributes
 
@@ -216,3 +217,22 @@ Suppose you have an e-commerce dataset. For an index that contains information a
 <CodeSamples id="settings_guide_synonyms_1" />
 
 By doing so, when searching for `black sweater`, results for `black jumper` will also be returned.
+
+## Typo tolerance
+
+The typo tolerance settings for an index. Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos.
+
+The `typoTolerance` object allows you to:
+
+- Enable or disable the typo tolerance feature with the `enabled` field
+- Configure the minimum word size for typos to be handled with `minWordSizeForTypos`
+- Disable typos on specific words with `disableOnWords`
+- Disable typos on specific document attributes with `disableOnAttributes`
+
+[Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
+
+### Example
+
+Adding the following settings disables typo tolerance for the `title` attribute and sets the minimum word size for 2 typos to `12` characters.
+
+<CodeSamples id="settings_guide_typo_tolerance_1" />

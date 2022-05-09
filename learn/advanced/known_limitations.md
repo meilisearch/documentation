@@ -88,3 +88,9 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 **Limitation:** Meilisearch can only exactly represent integers between -2⁵³ and 2⁵³.
 
 **Explanation:** Meilisearch stores numeric values as double-precision floating-point numbers. This allows for greater precision and increases the range of magnitudes that Meilisearch can represent, but leads to inaccuracies in [values beyond certain thresholds](https://en.wikipedia.org/wiki/Double-precision_floating-point_format#Precision_limitations_on_integer_values).
+
+## Maximum number of results per search
+
+**Limitation:** Meilisearch returns up to 1000 documents per search.
+
+**Explanation:** This non-customizable limit ensures the database is protected from malicious scraping. This limit only applies to the [search route](/reference/api/search.md). If you want to get all documents in your database, you can use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
