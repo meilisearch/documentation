@@ -1,6 +1,6 @@
 # Relevancy
 
-**Relevancy** is a term referring to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa.
+**Relevancy** refers to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa.
 
 Meilisearch has a number of features for fine-tuning the relevancy of search results. The most important tool among them is **ranking rules**.
 
@@ -12,7 +12,7 @@ In order to ensure relevant results, search responses are sorted based on a set 
 
 Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings.md). This array is **fully customizable**, meaning you can **delete existing rules, add new ones, and reorder them as needed**.
 
-Whenever a search query is made, Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e. as a tiebreaker).
+Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents whenever a search query is made. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e., as a tiebreaker).
 
 **The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/api/ranking_rules.md#update-ranking-rules).
 
@@ -34,7 +34,7 @@ Results are sorted by **decreasing number of matched query terms**. Returns docu
 ::: note
 The `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
 
-For example, if someone were to search `batman dark knight`, then the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third.
+For example, if someone were to search `batman dark knight`, the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third.
 :::
 
 #### 2. Typo
@@ -53,10 +53,10 @@ Also, note the documents with attributes containing the query words at the begin
 
 #### 5. Sort
 
-Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant, but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant, but might not always follow the order defined by the user.
+Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant but might not always follow the order defined by the user.
 
 ::: note
-Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](/reference/api/search.md#sort). If a search request does not contain `sort` or if its value is invalid, this rule will be ignored.
+Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](/reference/api/search.md#sort). If a search request does not contain `sort`, or if its value is invalid, this rule will be ignored.
 :::
 
 #### 6. Exactness
@@ -128,7 +128,7 @@ Add this rule to the existing list of ranking rules using the [update ranking ru
 
 #### Example
 
-Let's say you have a movie dataset. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking` an integer that represents its ranking.
+Let's say you have a movie dataset. The documents contain the fields `release_date` with a timestamp as value, and `movie_ranking`, an integer that represents its ranking.
 
 The following example will create a rule that makes older movies more relevant than recent ones. A movie released in 1999 will appear before a movie released in 2020.
 
