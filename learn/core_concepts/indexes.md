@@ -58,7 +58,7 @@ id, title, overview, release_date
 
 A document containing matches in its `title` field will be considered more relevant than a document only containing matches in its `overview`.
 
-You can alter the order in which ranking rules take effect or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+You can alter the order in which ranking rules take effect or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 [Learn more about ranking rules](/learn/core_concepts/relevancy.md)
 
@@ -66,13 +66,13 @@ You can alter the order in which ranking rules take effect or define custom rank
 
 You can create a list of synonyms for words with the same meaning in your index. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed.
 
-Since synonyms are defined for a given index, they won't apply to any other index on the same Meilisearch instance. You can create your list of synonyms using the [update settings endpoint](reference/api/settings.md#update-settings) or the [update synonyms endpoint](/reference/api/synonyms.md#update-synonyms).
+Since synonyms are defined for a given index, they won't apply to any other index on the same Meilisearch instance. You can create your list of synonyms using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update synonyms endpoint](/reference/api/synonyms.md#update-synonyms).
 
 [Learn more about synonyms](/learn/configuration/synonyms.md)
 
 ## Filterable attributes
 
-To filter by any document attribute, you need to add it to `filterableAttributes` using the using the [update settings endpoint](reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). You can then use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
+To filter by any document attribute, you need to add it to `filterableAttributes` using the using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). You can then use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
 
 The code sample below will only show you meteorites that weigh less than 200g:
 
@@ -82,7 +82,7 @@ The code sample below will only show you meteorites that weigh less than 200g:
 
 ## Sortable attributes
 
-By default, Meilisearch orders results according to their relevancy. You can alter this sorting behavior to show certain results first by adding attributes to the `sortableAttributes` array using the [update settings endpoint](reference/api/settings.md#update-settings) or the [update sortable attributes endpoint](/reference/api/sortable_attributes.md#update-sortable-attributes). You can then use the [`sort` search parameter](/reference/api/search.md#sort) to sort your results in ascending or descending oder.
+By default, Meilisearch orders results according to their relevancy. You can alter this sorting behavior to show certain results first by adding attributes to the `sortableAttributes` array using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update sortable attributes endpoint](/reference/api/sortable_attributes.md#update-sortable-attributes). You can then use the [`sort` search parameter](/reference/api/search.md#sort) to sort your results in ascending or descending oder.
 
 The code sample below will only show you meteorites that weigh less than 200g sorted by increasing mass:
 
@@ -92,7 +92,7 @@ The code sample below will only show you meteorites that weigh less than 200g so
 
 ## Stop words
 
-Sometimes you may want to ignore certain words in documents and search queries. You can do that by defining a list of stop words for your index using the [update settings endpoint](reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/stop_words.md#update-stop-words). 
+Sometimes you may want to ignore certain words in documents and search queries. You can do that by defining a list of stop words for your index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/stop_words.md#update-stop-words).
 
 Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (for example, `the` or `of` in English). Words added to the [stop words list](/reference/api/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
 
@@ -109,13 +109,13 @@ Fields can have either or both or none of the following properties:
 - **Searchable**: Field attributes searched for matching query words. Meilisearch also uses the content of searchable fields to assess the relevancy of a document
 - **Displayed**: Field attributes returned upon search
 
-You can update these field attributes using the [update settings endpoint](reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes).
+You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes).
 
 [Learn more about displayed and searchable attributes](/learn/configuration/displayed_searchable_attributes.md)
 
 ## Typo tolerance
 
-By default, typo tolerance is enabled in Meilisearch. This allows you to find relevant results even when your search queries contain spelling mistakes or typos, e.g. typing `chickne` instead of `chicken`. You can update the typo tolerance settings for an index using the [update settings endpoint](reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
+By default, typo tolerance is enabled in Meilisearch. This allows you to find relevant results even when your search queries contain spelling mistakes or typos, e.g. typing `chickne` instead of `chicken`. You can update the typo tolerance settings for an index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
 The `typoTolerance` object allows you configure the following for an index:
 
