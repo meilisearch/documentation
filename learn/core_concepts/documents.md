@@ -1,6 +1,6 @@
 # Documents
 
-A **document** is an object composed of one or more **fields**. Each field consists of an **attribute** and its associated **value**. Documents function as **containers for organizing data**, and are the basic building blocks of a Meilisearch database. To search for a document, it must first be added to an [index](#indexes).
+A **document** is an object composed of one or more **fields**. Each field consists of an **attribute** and its associated **value**. Documents function as **containers for organizing data**, and are the basic building blocks of a Meilisearch database. To search for a document, it must first be added to an [index](/learn/core_concepts/indexes.md).
 
 ## Structure
 
@@ -13,8 +13,6 @@ A **document** is an object composed of one or more **fields**. Each field consi
 - **Attribute**: The first part of a field. Acts as a name or description for its associated value
 - **Value**: The second part of a field, consisting of data of any valid JSON type
 - **[Primary Field](#primary-field)**: A special field that is mandatory in all documents. It contains the primary key and document identifier
-- **[Primary Key](#primary-key)**: The attribute of the primary field. **All documents in the same index must possess the same primary key.** Its associated value is the document identifier
-- **[Document Identifier](#document-id)**: The value of the primary field. **Every document in a given index must have a unique identifier**
 
 ## Fields
 
@@ -66,7 +64,7 @@ Meilisearch accepts datasets in the following formats:
 
 Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting Meilisearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
 
-For example, you are creating an **[index](#indexes)** that contains information about movies. A sample document might look like this:
+For example, you are creating an [index](/learn/core_concepts/indexes.md) that contains information about movies. A sample document might look like this:
 
 ```json
 {
@@ -85,7 +83,7 @@ In the above example:
 
 - `"id"`, `"title"`, `"genres"`, `"release-year"`, and `"cast"` are **attributes**
 - Each attribute is associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`
-- The document contains a field with the **[primary key](#primary-key)** attribute and a unique **[document id](#document-id)** as its value: `"id": "1564saqw12ss"`
+- The document contains a field with the **[primary key](/learn/core_concepts/primary_key.md#primary-key-2)** attribute and a unique **[document id](/learn/core_concepts/primary_key.md#document-id)** as its value: `"id": "1564saqw12ss"`
 
 #### NDJSON
 
