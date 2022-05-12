@@ -1,9 +1,7 @@
 # Documents
 
-Documents are objects composed of fields that can store any type of data.
-Each field contains an attribute and its associated value.
+The `/documents` route allows you to create, manage, and delete your documents.
 
-Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
 [Learn more about documents](/learn/core_concepts/documents.md).
 
 ## Get one document

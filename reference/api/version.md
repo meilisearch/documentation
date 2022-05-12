@@ -1,5 +1,7 @@
 # Version
 
+The `/version` route allows you to check your current Meilisearch version.
+
 ## Get version of Meilisearch
 
 <RouteHighlighter method="GET" route="/version"/>

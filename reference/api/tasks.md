@@ -1,6 +1,6 @@
 # Tasks
 
-The `tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations.md).
+The `/tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations.md).
 
 :::note
 The task `uid` is incremented **globally.**

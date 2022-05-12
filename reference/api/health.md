@@ -1,6 +1,6 @@
 # Health
 
-The health check endpoint enables you to periodically test the health of your Meilisearch instance.
+The `/health` route enables you to periodically test the health of your Meilisearch instance.
 
 ## Get health
 
