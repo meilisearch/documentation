@@ -1,3 +1,4 @@
+
 # Relevancy
 
 **Relevancy** refers to the accuracy and effectiveness of search results. If search results are almost always appropriate, then they can be considered relevant, and vice versa.
@@ -20,12 +21,18 @@ Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algo
 
 Meilisearch contains six built-in ranking rules in the following order:
 
-1. Words
-2. Typo
-3. Proximity
-4. Attribute
-5. Sort
-6. Exactness
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness"
+]
+```
+
+Depending on your needs, you might want to change this order of importance. To do so, you can use the [update settings](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 #### 1. Words
 
@@ -95,7 +102,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 
 ### Attribute
 
-`If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium`, is found in the `title` attribute and not the `overview`.
+`If It's Tuesday, This must be Belgium` is the first document because the matched word `Belgium` is found in the `title` attribute and not the `overview`.
 
 The `attribute` rule sorts the results by [attribute importance](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
@@ -106,7 +113,7 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 
 ### Exactness
 
-`Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas there is a letter of difference between `Knights` and the search query `Knight`.
+`Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas, there is a letter of difference between `Knights` and the search query `Knight`.
 
 :::
 
@@ -114,7 +121,7 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 
 ### Custom rules
 
-For now, Meilisearch supports two custom rules that can be added to [the ranking rules array](#behavior): one for ascending sort and one for descending sort.
+For now, Meilisearch supports two custom rules: one for ascending sort and one for descending sort.
 
 To add a custom ranking rule, you have to communicate the attribute name followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
 
@@ -124,7 +131,7 @@ To add a custom ranking rule, you have to communicate the attribute name followe
 
 **The attribute must have either a numeric or a string value** in all of the documents contained in that index.
 
-Add this rule to the existing list of ranking rules using the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+You can add this rule to the existing list of ranking rules using the [update settings](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 #### Example
 
@@ -163,24 +170,7 @@ Meilisearch allows users to define [sorting order at query time](/learn/advanced
 
 In general, `sort` will be most useful when you want to allow users to define what type of results they want to see first. A good use-case for `sort` is creating a webshop interface where customers can sort products by descending or ascending product price.
 
-Custom ranking rules, instead, are always active after configured and will be useful when you want to promote certain types of results. A good use-case for custom ranking rules is ensuring discounted products in a webshop always feature among the top results.
-
-## Default order
-
-By default, the built-in rules are executed in the following order.
-
-```json
-[
-  "words",
-  "typo",
-  "proximity",
-  "attribute",
-  "sort",
-  "exactness"
-]
-```
-
-Depending on your needs, you might want to change this order of importance. To do so, you can use the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+Custom ranking rules, instead, are always active once configured and will be useful when you want to promote certain types of results. A good use-case for custom ranking rules is ensuring discounted products in a webshop always feature among the top results.
 
 ## Attribute ranking order
 
@@ -209,7 +199,7 @@ The automatically generated attribute ranking order will be `["a", "b", "c"]`. I
 
 The attribute ranking order will be updated to `["a", "b", "c", "d"]`. In other words, when Meilisearch encounters new attributes in subsequently indexed documents, they are added to the bottom of the attribute ranking order.
 
-The attribute ranking order can also be set manually. For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
+The attribute ranking order can also be set manually. For a more detailed look at this subject, see [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
 
 ### Example
 
