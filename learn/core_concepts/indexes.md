@@ -46,7 +46,11 @@ The primary key's attribute name **must** be known by the index. You can [set a 
 
 [Learn more about document primary key](/learn/core_concepts/primary_key.md#primary-key-2)
 
-## Relevancy rules
+## Customizing index settings
+
+Meilisearch allows you to customize your index settings. These settings are what differentiate between indexes even if they have the same documents. You can make these changes using the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
+
+### Relevancy rules
 
 Each index applies its own relevancy rules. All indexes are created with the same built-in ranking rules executed in default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance is based on their order of appearance in the document.
 
@@ -62,7 +66,7 @@ You can alter the order in which ranking rules take effect or define custom rank
 
 [Learn more about ranking rules](/learn/core_concepts/relevancy.md)
 
-## Synonyms
+### Synonyms
 
 You can create a list of synonyms for words with the same meaning in your index. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed.
 
@@ -70,27 +74,19 @@ Since synonyms are defined for a given index, they won't apply to any other inde
 
 [Learn more about synonyms](/learn/configuration/synonyms.md)
 
-## Filterable attributes
+### Filterable attributes
 
 To filter by any document attribute, you need to add it to `filterableAttributes` using the using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). You can then use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
 
-The code sample below will only show you meteorites that weigh less than 200g:
-
-<CodeSamples id="getting_started_filtering" />
-
 [Learn more about filtering](/learn/advanced/filtering_and_faceted_search.md)
 
-## Sortable attributes
+### Sortable attributes
 
 By default, Meilisearch orders results according to their relevancy. You can alter this sorting behavior to show certain results first by adding attributes to the `sortableAttributes` array using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update sortable attributes endpoint](/reference/api/sortable_attributes.md#update-sortable-attributes). You can then use the [`sort` search parameter](/reference/api/search.md#sort) to sort your results in ascending or descending oder.
 
-The code sample below will only show you meteorites that weigh less than 200g sorted by increasing mass:
-
-<CodeSamples id="getting_started_sorting" />
-
 [Learn more about sorting](/learn/advanced/sorting.md)
 
-## Stop words
+### Stop words
 
 Sometimes you may want to ignore certain words in documents and search queries. You can do that by defining a list of stop words for your index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/stop_words.md#update-stop-words).
 
@@ -100,7 +96,7 @@ Suppose you want to search for `the great gatsby`. You would prefer to receive d
 
 [Learn more about stop words](/reference/api/stop_words.md)
 
-## Displayed and searchable attributes
+### Displayed and searchable attributes
 
 By default, every document field is searchable and returned on search queries.
 
@@ -113,7 +109,7 @@ You can update these field attributes using the [update settings endpoint](/refe
 
 [Learn more about displayed and searchable attributes](/learn/configuration/displayed_searchable_attributes.md)
 
-## Typo tolerance
+### Typo tolerance
 
 By default, typo tolerance is enabled in Meilisearch. This allows you to find relevant results even when your search queries contain spelling mistakes or typos, e.g. typing `chickne` instead of `chicken`. You can update the typo tolerance settings for an index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
