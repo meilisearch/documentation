@@ -20,10 +20,6 @@ By default, `filterableAttributes` is empty. This means that filters do not work
 
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
-::: warning
-Meilisearch does not support filtering on nested arrays and objects [yet](https://roadmap.meilisearch.com/c/105-filter-on-nested-objects). Therefore, fields containing nested arrays and objects will be silently ignored.
-:::
-
 ### Example
 
 Suppose you have a collection of movies containing the following fields:
