@@ -1,10 +1,10 @@
 # Migrating from Algolia to Meilisearch
 
-If you are a current user of Algolia and are looking for a practical guide to migrate to Meilisearch, you are in the right place. If you would prefer to read a high-level comparison of the two search solutions, you can find that [here](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
+If you are a current user of Algolia and are looking for a practical guide to migrate to Meilisearch, you are in the right place. If you would prefer a high-level comparison of the two search companies and their products, you can find that [here](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
 
-This guide will walk you through exporting your Algolia data and indexing it in Meilisearch using a Node.js script. If you would prefer to skip directly to the finished script, [click here](#finished-script).
+This guide will walk you through exporting your Algolia data and indexing it in Meilisearch using a Node.js script. To skip directly to the finished script, [click here](#finished-script).
 
-After the script, you will find a comparison of Meilisearch and Algolia's [APIs](#apis), [index settings and parameters](#settings-and-parameters), and [front-end components](#front-end-components) to help make your transition as seamless as possible.
+This guide also includes comparisons of Meilisearch and Algolia's [APIs](#apis), [index settings, parameters](#settings-and-parameters), and [support for the `instantsearch.js` library](#front-end-components).
 
 ## Migration script
 
@@ -14,9 +14,9 @@ Migrating indexes from Algolia to Meilisearch is a straightforward process:
 2. Upload your data to Meilisearch
 3. (optional) Configure your settings to approximate the settings of your Algolia index
 
-This guide will use a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. This script is not limited to JavaScript developers and has no impact on the programming language used with Meilisearch in the future.
+This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. If you would like to write this script in another language, we provide [SDKs for most common languages](/learn/what_is_meilisearch/sdks.md) and [welcome contributions to this guide](https://github.com/meilisearch/documentation/edit/master/learn/getting_started/algolia_migration.md).
 
-Before continuing, make sure you have both Meilisearch and Node.js installed, and access to a command-line terminal.
+Before continuing, make sure you have both Meilisearch and Node.js installed, and access to a command-line terminal. If you're unsure, see our [quick start](/learn/getting_started/quick_start.md) for instructions on installing Meilisearch.
 
 ### Initialize project
 
@@ -25,10 +25,10 @@ Start by creating a directory `algolia-meilisearch-migration` and initializing i
 ```bash
 mkdir algolia-meilisearch-migration
 cd algolia-meilisearch-migration
-npm init
+npm init -y
 ```
 
-The `npm init` command should walk you through creating a `package.json` file within your project. This file contains details about the project's packages and dependencies, plus some basic metadata. You can press `^C` at any time to exit.
+This will set up the environment we need to install dependencies.
 
 Next, create a `script.js` file:
 
@@ -36,7 +36,7 @@ Next, create a `script.js` file:
 touch script.js
 ```
 
-This file will hold the migration code.
+This file will contain our migration script.
 
 ### Install required packages
 
@@ -52,7 +52,7 @@ You'll need your **Application ID** and **API Key** to start the Algolia client.
 
 Paste the below code in `script.js`:
 
-```jsx
+```js
 const AlgoliaSearch = require("algoliasearch");
 const algoliaClient = AlgoliaSearch(
   "APPLICATION_ID",
@@ -69,7 +69,7 @@ Replace `INDEX_NAME` with the name of the Algolia index you would like to migrat
 
 To fetch all Algolia index data at once, use Algolia's [`browseObjects`](https://www.algolia.com/doc/api-reference/api-methods/browse/) method.
 
-```jsx
+```js
 let records = [];
 await algoliaIndex.browseObjects({
     batch: (hits) => {
@@ -97,9 +97,9 @@ Let's say your document structure looks like this:
 }
 ```
 
-To export this data from Algolia and simultaneously flatten it, use the same `browseObjects` method as described above. However, before concatenation, modify the object to flatten `address` into `address.country`:
+To export this data from Algolia and simultaneously flatten it, use the same `browseObjects` method as described above. However, before concatenation, flatten the `address` object into `address.country`, and perform the same operation for other subfields:
 
-```jsx
+```js
 let records = [];
 await algoliaIndex.browseObjects({
  batch: (recordsArr) => {
@@ -118,7 +118,7 @@ Adapt this principle to your own dataset by replacing `address` and `address.cou
 
 Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/learn/security/master_api_keys.md#listing-api-keys).
 
-```jsx
+```js
 const { MeiliSearch } = require("meilisearch");
 const meiliClient = new MeiliSearch({
   host: "MEILI_HOST",
@@ -133,7 +133,7 @@ Replace `MEILI_HOST`,`MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisear
 
 Next, use the Meilisearch [`addDocumentsInBatches`](/learn/core_concepts/documents.md#primary-field) method to upload all your records in batches of 1000 at a time.
 
-```jsx
+```js
 const BATCH_SIZE = 1000;
 await meiliIndex.addDocumentsInBatches(records, BATCH_SIZE);
 ```
@@ -146,7 +146,7 @@ node script.js
 
 ### Finished script
 
-```jsx
+```js
 const AlgoliaSearch = require("algoliasearch");
 const { MeiliSearch } = require("meilisearch");
 const BATCH_SIZE = 1000;
@@ -240,50 +240,7 @@ This section compares Algolia and Meilisearch's respective API methods, using Ja
 
 [InstantSearch](https://github.com/algolia/instantsearch.js) is a collection of open-source tools maintained by Algolia and used to generate front-end search UI components.
 
-[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) is a plugin for connecting your Meilisearch instance with InstantSearch, giving you access to many (but not all) of the same front-end components as Algolia users. The compatibilities are detailed in the tables below.
-
-### ✅ Compatible Features
-
-- `instantsearch`
-- `highlight`
-- `snippet`
-- `menu`
-- `searchBox`
-- `middleware`
-- `geoSearch`
-- `currentRefinements`
-- `ratingMenu`
-- `configure`
-- `renderState`
-- `refinementList`
-- `rangeInput`
-- `clearRefinements`
-- `voiceSearch`
-- `hits`
-- `hierarchicalMenu`
-- `menuSelect`
-- `pagination`
-- `insights`
-- `infiniteHits`
-- `rangeSlider`
-- `toggleRefinement`
-- `hitsPerPage`
-- `breadcrumb`
-- `stats`
-- `sortBy`
-- `routing`
-
-### ❌ Incompatible Features
-
-- `index`
-- `autocomplete`
-- `answers`
-- `queryRuleCustomData`
-- `queryRuleContext`
-- `relevantSort`
-- `analytics`
-
-Check out [Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch#readme) for more detailed explanations.
+[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) is a plugin connecting your Meilisearch instance with InstantSearch, giving you access to many (but not all) of the same front-end components as Algolia users. Here is [an up-to-date list of components compatible with Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch/#-api-resources).
 
 ## Conclusion
 
