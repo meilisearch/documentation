@@ -138,11 +138,11 @@ To learn more about the Windows command prompt, follow this [introductory guide]
 To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
 - [AWS](/learn/cookbooks/aws.md)
+- [Azure](/learn/cookbooks/azure.md)
 - [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [GCP](/learn/cookbooks/gcp.md)
 - [Koyeb](/learn/cookbooks/koyeb.md)
 - [Qovery](/learn/cookbooks/qovery.md)
-- [GCP](/learn/cookbooks/gcp.md)
-- [Azure](/learn/cookbooks/azure.md)
 
 ### Running Meilisearch
 
