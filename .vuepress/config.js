@@ -103,6 +103,10 @@ module.exports = {
           path: '/learn/getting_started/quick_start/',
           collapsable: false,
           children: [
+            {
+              title: 'Algolia -> Meilisearch',
+              path: '/learn/getting_started/algolia_migration'
+            },
             '/learn/getting_started/quick_start',
             {
               title: 'Meilisearch 101',
@@ -114,7 +118,6 @@ module.exports = {
                 '/learn/getting_started/getting_ready_for_production',
               ],
             },
-            '/learn/getting_started/algolia_migration',
           ],
         },
         {
