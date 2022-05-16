@@ -105,7 +105,7 @@ module.exports = {
           children: [
             {
               title: 'Algolia -> Meilisearch',
-              path: '/learn/getting_started/algolia_migration'
+              path: '/learn/getting_started/algolia_migration',
             },
             '/learn/getting_started/quick_start',
             {
