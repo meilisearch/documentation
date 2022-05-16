@@ -61,7 +61,7 @@ const algoliaClient = AlgoliaSearch(
 const algoliaIndex = algoliaClient.initIndex("INDEX_NAME");
 ```
 
-Replace `APPLICATION_ID` and `ADMIN_API_KEY`with your Algolia application ID and admin API key respectively.
+Replace `APPLICATION_ID` and `ADMIN_API_KEY` with your Algolia application ID and admin API key respectively.
 
 Replace `INDEX_NAME` with the name of the Algolia index you would like to migrate to Meilisearch.
 
