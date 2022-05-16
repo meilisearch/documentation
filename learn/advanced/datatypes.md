@@ -95,7 +95,7 @@ Will be processed as if all elements were arranged at the same level:
 
 Once the above array has been flattened, it will be parsed exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
-### Objects
+## Nested objects
 
 When a document field contains an object, Meilisearch flattens it and brings the object's keys and values to the root level of the document itself.
 
