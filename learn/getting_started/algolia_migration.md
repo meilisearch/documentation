@@ -1,10 +1,10 @@
 # Migrating from Algolia to Meilisearch
 
-If you are a current user of Algolia and are looking for a practical guide to migrate to Meilisearch, you are in the right place. If you would prefer a high-level comparison of the two search companies and their products, you can find that [here](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
-
 This guide will walk you through exporting your Algolia data and indexing it in Meilisearch using a Node.js script. To skip directly to the finished script, [click here](#finished-script).
 
 This guide also includes comparisons of Meilisearch and Algolia's [APIs](#apis), [index settings, parameters](#settings-and-parameters), and [support for the `instantsearch.js` library](#front-end-components).
+
+This is a practical guide for current Algolia users making the transition to Meilisearch. We also provide [a high-level comparison of the two search companies and their products](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia) elsewhere.
 
 ## Migration script
 
