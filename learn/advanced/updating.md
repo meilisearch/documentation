@@ -234,7 +234,7 @@ If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, y
 
 ### Step 4: Import the dump
 
-Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
+Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
 
 ```bash
 # launch the latest version of Meilisearch and import the specified dump file
@@ -305,7 +305,7 @@ To delete the old Meilisearch version, you need to delete the `data.ms` folder. 
 
 ### Step 5: Upload your data to the latest version of Meilisearch
 
-Finally, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and upload your data as usual.
+Finally, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and upload your data as usual.
 
 If you chose to save your settings, make sure to follow this order:
 
