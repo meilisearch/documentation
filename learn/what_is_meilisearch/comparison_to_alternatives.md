@@ -118,7 +118,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
 | Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
 | Official cloud-hosted solution | [Join the beta](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=comparative-table) | ✅ | ✅ | ✅ |
-| High availability | Expected soon | ✅ | ✅ | ✅ |
+| High availability | Available with [Meilisearch Cloud]([url](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=www.meilisearch.com)) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
 | Upgrade path | Documents need to be reindexed | N/A  | Documents need to be reindexed | Documents need to be reindexed |
@@ -136,9 +136,9 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| GitHub stars of the main project | 20K | N/A | 9K | 57K |
+| GitHub stars of the main project | 27K | N/A | 10K | 60K |
 | Number of contributors on the main project | 75 | N/A | 20 | 1,700 |
-| Public Slack community size | 1K | N/A | 400 | 11K |
+| Public Slack community size | 1.5K | N/A | 400 | 11K |
 
 ### Support
 
