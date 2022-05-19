@@ -1,0 +1,12 @@
+# works for this is a  sentence.  This is another not for this is a  sentence.  this is another
+extends: existence
+message: "'%s' should have one space."
+link: https://docs.microsoft.com/en-us/style-guide/punctuation/periods
+level: error
+nonword: true
+tokens:
+  - '[a-z]\s{2,}[a-z]' # ensure only one space between words
+  - '[a-z][.?!] {2,}[A-Z]' # one space between sentences (end.  new)
+  - '[a-z][.?!][A-Z]' #(end.new)
+  - '[,.?]\s{2,}[a-z]' #only one space after ,.?
+  

@@ -1,0 +1,7 @@
+extends: existence
+message: "Don't use end punctuation in headings."
+nonword: true
+level: warning
+scope: heading
+tokens:
+  - '[a-z0-9][.?!](?:\s|$)'
