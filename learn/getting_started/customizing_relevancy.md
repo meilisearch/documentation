@@ -1,4 +1,4 @@
-# Chapter 2: Fine-tuning search results
+# Fine-tuning search results
 
 Meilisearch is designed to offer a great search experience out of the box, but sometimes you need to customize it to better fit your needs. You can alter the search behavior for each index using the `settings` object.
 

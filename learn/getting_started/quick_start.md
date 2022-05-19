@@ -6,7 +6,7 @@ All that is required is a [command line](https://www.learnenough.com/command-lin
 
 Let's get started!
 
-## Step 1: Setup and installation
+## Step 1: setup and installation
 
 We'll start with downloading and installing Meilisearch. You have the option to install Meilisearch locally or deploy it over a cloud service.
 
@@ -164,7 +164,7 @@ Server listening on: "127.0.0.1:7700"
 
 Congratulations! You're ready to move on to the next step!
 
-## Step 2: Add documents
+## Step 2: add documents
 
 For this quick start, we will be using a collection of movies as our dataset. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file into your working directory.
 
@@ -213,7 +213,7 @@ If the document addition is successful, the response should look like this:
 
 If the `status` field has the value `enqueued` or `processing`, all you have to do is wait a short time and check again. Proceed to the next step once the task `status` has changed to `succeeded`.
 
-## Step 3: Search
+## Step 3: search
 
 Now that you have Meilisearch set up, you can start searching!
 
@@ -253,7 +253,7 @@ In the above code sample, the parameter `q` represents the search query. The doc
 
 By default, Meilisearch only returns the first 20 results for a search query. This can be changed using the [`limit` parameter](/reference/api/search.md#limit).
 
-## Step 4: Search preview
+## Step 4: search preview
 
 Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
@@ -261,7 +261,7 @@ Meilisearch offers a search preview where you can preview search results. It com
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
-## Step 5: Front-end integration
+## Step 5: front-end integration
 
 The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the components needed to start searching.
 
