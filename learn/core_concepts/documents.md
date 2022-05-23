@@ -29,7 +29,8 @@ You can provide your dataset in the following formats:
 #### JSON
 
 Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting Meilisearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
-Meilisearch will expect JSON documents when it receive the `application/json` content-type header.
+
+Meilisearch will only accept JSON documents when it receives the `application/json` content-type header.
 
 As an example, let's say you are creating an **[index][indexes]** that contains information about movies. A sample document might look like this:
 
@@ -53,7 +54,8 @@ At minimum, the document must contain one field with the **[primary key][primary
 #### NDJSON
 
 NDJSON or jsonlines objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to Meilisearch documents.
-Meilisearch will expect NDJSON documents when it receive the `application/x-ndjson` content-type header.
+
+Meilisearch will only accept NDJSON documents when it receives the `application/x-ndjson` content-type header.
 
 Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.  
 
@@ -66,7 +68,8 @@ The above JSON document would look like this in NDJSON:
 #### CSV
 
 CSV files express data as a sequence of values separated by a delimiter character. Currently, Meilisearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
-Meilisearch will expect NDJSON documents when it receive the `text/csv` content-type header.
+
+Meilisearch will only accept NDJSON documents when it receives the `text/csv` content-type header.
 
 Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
 
