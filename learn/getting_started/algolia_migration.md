@@ -14,9 +14,13 @@ Migrating indexes from Algolia to Meilisearch is a straightforward process:
 2. Upload your data to Meilisearch
 3. (optional) Configure your settings to approximate the settings of your Algolia index
 
-This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. If you would like to write this script in another language, we provide [SDKs for most common languages](/learn/what_is_meilisearch/sdks.md) and [welcome contributions to this guide](https://github.com/meilisearch/documentation/edit/master/learn/getting_started/algolia_migration.md).
+This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. Before continuing, make sure you have both Meilisearch and Node.js installed, and access to a command-line terminal. If you're unsure, see our [quick start](/learn/getting_started/quick_start.md) for instructions on installing Meilisearch.
 
-Before continuing, make sure you have both Meilisearch and Node.js installed, and access to a command-line terminal. If you're unsure, see our [quick start](/learn/getting_started/quick_start.md) for instructions on installing Meilisearch.
+::: note
+
+Older Meilisearch versions (prior to v0.27.0) have limited support for nested objects. If your data set contains nested fields, we strongly recommend installing the [latest version](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
+
+:::
 
 ### Initialize project
 
@@ -79,40 +83,6 @@ await algoliaIndex.browseObjects({
 ```
 
 On each batch of hits, the `batch` callback method is invoked, and the content is concatenated in the `records` array. This variable will be used later on in the upload process.
-
-#### Nested objects
-
-Meilisearch versions prior to v0.27.0 have limited support for nested fields, meaning that **nested objects must be flattened manually**. This can be avoided entirely by using [the latest version of Meilisearch](https://github.com/meilisearch/MeiliSearch/releases). If this is impossible for some reason, try the modified data retrieval process below.
-
-Let's say your document structure looks like this:
-
-```json
-{
-    "objectID": 1,
-    "name": "John",
-    "age": 20,
-    "address": {
-        "country": "Spain"
-    }
-}
-```
-
-To export this data from Algolia and simultaneously flatten it, use the same `browseObjects` method as described above. However, before concatenation, flatten the `address` object into `address.country`, and perform the same operation for other subfields:
-
-```js
-let records = [];
-await algoliaIndex.browseObjects({
- batch: (recordsArr) => {
-        records = recordsArr.reduce((acc, record) => {
-          const { address, ...rest } = record;
-          acc.push({ "address.country": address.country, ...rest });
-          return acc;
-        }, records);
-      }
-});
-```
-
-Adapt this principle to your own dataset by replacing `address` and `address.country` with a parent object and nested field, respectively.
 
 ### Create Meilisearch client
 
