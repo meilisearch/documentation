@@ -1,3 +1,5 @@
+---
+# Use "a URL"/"an HTML" instead of "an URL"/"a HTML"
 extends: substitution
 message: "Use '%s' instead of '%s'."
 ignorecase: true

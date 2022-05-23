@@ -3,7 +3,7 @@
 extends: capitalization
 message: "'%s' should use sentence-style capitalization."
 link: 'https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings'
-level: warning
+level: error
 scope: heading
 match: $sentence
 indicators:
@@ -34,3 +34,4 @@ exceptions:
   - JSON
   - API
   - VuePress
+  - '([0-9a-z]:\s[A-Z])'  # How do get this to throw an error for `Step 1: do this`?
