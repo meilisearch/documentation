@@ -131,10 +131,10 @@ Replace `MEILI_HOST`,`MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisear
 
 ### Upload data to Meilisearch
 
-Next, use the Meilisearch [`addDocumentsInBatches`](/learn/core_concepts/documents.md#primary-field) method to upload all your records in batches of 1000 at a time.
+Next, use the Meilisearch JavaScript method [`addDocumentsInBatches`]([/learn/core_concepts/documents.md#primary-field](https://github.com/meilisearch/meilisearch-js#documents-)) to upload all your records in batches of 100,000 at a time.
 
 ```js
-const BATCH_SIZE = 1000;
+const BATCH_SIZE = 100000;
 await meiliIndex.addDocumentsInBatches(records, BATCH_SIZE);
 ```
 
