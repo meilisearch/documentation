@@ -89,7 +89,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | API Key Management | ✅ | ✅ | ✅ | ✅ |
-| Tenant tokens & multi-tenant indexes | ✅ <br> [Multitenancy support](https://docs.meilisearch.com/learn/security/tenant_tokens.html) | ✅  <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Role-based |
+| Tenant tokens & multi-tenant indexes | ✅ <br> [Multitenancy support](/learn/security/tenant_tokens.md) | ✅  <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Role-based |
 
 ##### Search
 
