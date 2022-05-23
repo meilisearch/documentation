@@ -883,22 +883,22 @@ updating_guide_get_settings: |-
   # the -o option saves the output as a local file
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json \
-    -H 'Authorization: Bearer masterKey'
+    -H 'X-Meili-API-Key: apiKey'
 updating_guide_retrieve_documents: |-
   # the -o option saves the output as a local file
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \ -o mydocuments.json \ 
-    -H 'Authorization: Bearer masterKey'
+    -H 'X-Meili-API-Key: apiKey'
 updating_guide_update_settings: |-
   # update your settings
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/settings' \
     -H 'Content-Type: application/json' -d @mysettings.json \
-    -H 'Authorization: Bearer masterKey'
+    -H 'X-Meili-API-Key: apiKey'
 updating_guide_add_documents: |-
   # then, add your documents
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/documents' \
     -H 'Content-Type: application/json' -d @mydocuments.json \
-    -H 'Authorization: Bearer masterKey'
+    -H 'X-Meili-API-Key: apiKey'
  
