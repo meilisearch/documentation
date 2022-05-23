@@ -1,7 +1,10 @@
+---
+# Our headings should not use end punctuation
 extends: existence
 message: "Don't use end punctuation in headings."
+link: https://developers.google.com/style/periods
 nonword: true
-level: warning
+level: error
 scope: heading
 tokens:
   - '[a-z0-9][.?!](?:\s|$)'

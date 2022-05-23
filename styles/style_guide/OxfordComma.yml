@@ -1,7 +1,9 @@
+---
+# Use the Oxford comma
 extends: existence
 message: "Use the Oxford comma in '%s'."
 link: 'https://developers.google.com/style/commas'
 scope: sentence
-level: warning
+level: error
 tokens:
   - '(?:[^,]+,){1,}\s\w+\s(?:and|or)'

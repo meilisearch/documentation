@@ -1,4 +1,5 @@
-# works for this is a  sentence.  This is another not for this is a  sentence.  this is another
+---
+# Use a space between words, sentences, and punctuation marks
 extends: existence
 message: "'%s' should have one space."
 link: https://docs.microsoft.com/en-us/style-guide/punctuation/periods

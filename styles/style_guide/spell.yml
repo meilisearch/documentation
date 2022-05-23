@@ -1,4 +1,5 @@
 ---
+# Lists any possible typos for Meilisearch
 extends: substitution
 message: "Use '%s' instead of '%s'."
 level: error
@@ -6,4 +7,3 @@ swap:
   MeiliSearch: Meilisearch
   MieliSearch: Meilisearch
   meiliSearch: Meilisearch
-  \.\.\.: …
