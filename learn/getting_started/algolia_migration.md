@@ -174,7 +174,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 | `synonyms` | `synonyms` |
 | Sorting(using replicas) | `sortableAttributes` (no replicas required) |
 | `removeWordsIfNoResults` | Automatically supported, but not customizable |
-| `disableTypoToleranceOnAttributes` | `typoTolerance.enabled` |
+| `disableTypoToleranceOnAttributes` | `typoTolerance.disableOnAttributes` |
 | `separatorsToIndex` | Not Supported |
 | `disablePrefixOnAttributes` | Not Supported |
 | `relevancyStrictness` | Not Supported |
@@ -213,9 +213,3 @@ This section compares Algolia and Meilisearch's respective API methods, using Ja
 [InstantSearch](https://github.com/algolia/instantsearch.js) is a collection of open-source tools maintained by Algolia and used to generate front-end search UI components.
 
 [Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) is a plugin connecting your Meilisearch instance with InstantSearch, giving you access to many (but not all) of the same front-end components as Algolia users. Here is [an up-to-date list of components compatible with Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch/#-api-resources).
-
-## Conclusion
-
-You now know how to migrate your data from Algolia to Melisearch and some of the similarities between their respective APIs.
-
-Please don't hesitate to [let us know how you think this guide can be improved](https://github.com/meilisearch/documentation/issues/new), and if you have any questions, we're always available to help [on Slack](https://meilicommunity.slack.com/join/shared_invite/zt-c4rs8tpi-ZId_q3fw~7cqeuzFG4XHaA#/shared-invite/email).
