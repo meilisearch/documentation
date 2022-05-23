@@ -8,7 +8,7 @@ This is a practical guide for current Algolia users making the transition to Mei
 
 ## Migration script
 
-Migrating indexes from Algolia to Meilisearch is a straightforward process:
+Migrating indexes from Algolia to Meilisearch can be done in three steps:
 
 1. Export your data stored in Algolia
 2. Upload your data to Meilisearch
@@ -144,41 +144,43 @@ const BATCH_SIZE = 1000;
 
 ## Settings and parameters
 
-One of the key aspects of making a seamless transition from Algolia to Meilisearch is understanding the index settings and search parameters that are available in both.
+One of the key usage differences between Algolia and Meilisearch is how they approach search customization.
 
-In Algolia, index settings and search parameters fall under one umbrella: [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/). Certain settings can be used both at indexing time to configure the default behavior and again at search time to override that behavior.
+In Algolia, [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/) are a flexible category that can be used either at indexing time—to set default behavior—or at search time—to override that behavior.
 
-In Meilisearch, [index settings](/learn/configuration/settings.md) and [search parameters](/reference/api/search.md#search-parameters) are distinct from one another. Some parameters require index settings to be configured beforehand, but an index setting cannot be given as a parameter at search time, and a parameter cannot override a setting.
+In Meilisearch, these are split into two distinct categories. [Index settings](/learn/configuration/settings.md) affect all searches on an index; [search parameters](/reference/api/search.md#search-parameters) affect only a single search. Some search parameters depend on index settings; for example, the search parameter `sort` can't be used without first configuring the index setting `sortableAttributes`. However, an index setting cannot be given as a parameter at search time, and a parameter cannot override a setting.
+
+The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**.
 
 | Algolia | Meilisearch |
 | --- | --- |
-| query | q |
-| attributesToRetrieve | attributesToRetrieve |
-| filters | filter |
-| facets | facetsDistribution |
-| attributesToHighlight | attributesToHighlight |
-| offset | offset |
-| length | limit |
-| typoTolerance | Coming in Meilisearch v0.27. It will also support Algolia’s  minWordSizefor1Typo and minWordSizefor2Typos options. |
-| snippetEllipsisText | Coming in Meilisearch v0.27 |
-| searchableAttributes | searchableAttributes |
-| attributesForFaceting | filterableAttributes |
-| unretrievableAttributes | No direct equivalent; is achieved by removing attributes from displayedAttributes. |
-| attributesToRetrieve | displayedAttributes |
-| attributeForDistinct | distinctAttribute |
-| ranking | rankingRules |
-| Custom Ranking | Custom Ranking |
-| removeStopWords | stopWords |
-| synonyms | synonyms |
-| Sorting(using replicas) | sortableAttributes(no replicas required)  |
-| removeWordsIfNoResults | Meilisearch automatically supports it. However, it isn't customizable. |
-| disableTypoToleranceOnAttributes | Coming in Meilisearch v0.27 |
-| separatorsToIndex | Not Supported |
-| disablePrefixOnAttributes | Not Supported |
-| relevancyStrictness | Not Supported |
-| maxValuesPerFacet | Not Supported |
-| sortFacetValuesBy | Not Supported |
-| restrictHighlightAndSnippetArrays | Not Supported |
+| `query` | `q` |
+| `attributesToRetrieve` | `attributesToRetrieve` |
+| `filters` | `filter` |
+| `facets` | `facetsDistribution` |
+| `attributesToHighlight` | `attributesToHighlight` |
+| `offset` | `offset` |
+| `length` | `limit` |
+| `typoTolerance` | `typoTolerance` |
+| `snippetEllipsisText` | `cropMarker` |
+| `searchableAttributes` | `searchableAttributes` |
+| `attributesForFaceting` | `filterableAttributes` |
+| `unretrievableAttributes` | No direct equivalent; achieved by removing attributes from displayedAttributes |
+| `attributesToRetrieve` | `displayedAttributes` |
+| `attributeForDistinct` | `distinctAttribute` |
+| `ranking` | `rankingRules` |
+| `customRanking` | Integrated within `rankingRules` |
+| `removeStopWords` | `stopWords` |
+| `synonyms` | `synonyms` |
+| Sorting(using replicas) | `sortableAttributes` (no replicas required) |
+| `removeWordsIfNoResults` | Automatically supported, but not customizable |
+| `disableTypoToleranceOnAttributes` | `typoTolerance.enabled` |
+| `separatorsToIndex` | Not Supported |
+| `disablePrefixOnAttributes` | Not Supported |
+| `relevancyStrictness` | Not Supported |
+| `maxValuesPerFacet` | Not Supported |
+| `sortFacetValuesBy` | Not Supported |
+| `restrictHighlightAndSnippetArrays` | Not Supported |
 
 ## APIs
 
