@@ -354,7 +354,7 @@ module.exports = {
     'img-lazy',
     // Because colors can not be set through the settings of the plugin
     // Change are done in .vuepress/styles/palette.styl
-    'vuepress-plugin-element-tabs',
+    '@bidoubiwa/vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
