@@ -24,3 +24,14 @@ tokenizer
 tokenization
 [Aa]sync
 [Ee]nqueued
+[Ff]ilepath
+[Ww]ebshop
+boolean
+Taj 
+Mahal
+[Cc]ertbot
+toolchain
+vm
+Jieba
+Lindera
+Netlify
