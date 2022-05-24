@@ -163,33 +163,32 @@ Meilisearch is a perfect choice if you need a simple and easy tool to deploy a t
 
 Meilisearch was inspired by Algolia's product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. Meilisearch is thus a new search engine based on the work of Algolia and recent research papers.
 
-Meilisearch provides similar features and reaches the same level of relevance just as quickly as its predecessor.
+Meilisearch provides similar features and reaches the same level of relevance just as quickly as its competitor.
 
 If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/getting_started/algolia_migration.md).
 
 #### Key similarities
 
-Some of the most significant similarities between Algolia and Meilisearch are listed below:
+Some of the most significant similarities between Algolia and Meilisearch are:
 
 - [Features](https://docs.meilisearch.com/learn/what_is_meilisearch/overview.html#features) such as search-as-you-type, typo tolerance, faceting, etc.
 - Fast results targeting an instant search experience (answers < 50 milliseconds)
-- Objects you index are schemaless
-- Support all JSON data types
-- Operate asynchronously
-- Provide a similar query response
+- Schemaless indexation
+- Support for all JSON data types
+- Asynchronous API
+- Similar query response
 
 #### Key differences
 
-Contrary to Algolia, Meilisearch is open-source and written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside Virtual Machines, containers, or even Lambda@Edge a seamless operation.
+Contrary to Algolia, Meilisearch is open-source and written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside virtual machines, containers, or even [Lambda@Edge](https://aws.amazon.com/lambda/edge/) a seamless operation.
 
-One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers.
-Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet, but we hope one day to offer a highly available cloud solution that is simpler to deploy and maintain than Algolia's.
+One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers. Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet, but we hope one day to offer a highly available cloud solution that is simpler to deploy and maintain than Algolia's.
 
 #### Pricing
 
 The [pricing model for Algolia](https://www.algolia.com/pricing/) is based on the number of records kept and the number of API operations performed. It can be prohibitively expensive for small and medium-sized businesses.
 
-Meilisearch is **open-source** and can be **self-hosted**, but also offers a cloud-hosted product analogous to Algolia's service: Meilisearch Cloud. Unlike Algolia, [pricing of Meilisearch Cloud](https://www.meilisearch.com/pricing) follows a set hourly rate based on the computing resources chosen, with no per-record or per-search fees. You can send your cluster as much traffic or data as it can manage.
+Meilisearch is **open-source** and can be **self-hosted**, but also offers a cloud-hosted product analogous to Algolia's service: [Meilisearch Cloud](https://cloud.meilisearch.com/login). Unlike Algolia, [pricing of Meilisearch Cloud](https://www.meilisearch.com/pricing) follows a set hourly rate based on the computing resources chosen, with no per-record or per-search fees. You can send your server as much traffic or data as it can manage.
 
 ## A quick look at the search engine landscape
 
