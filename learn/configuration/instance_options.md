@@ -50,7 +50,7 @@ Environment variables are always identical to the corresponding command-line opt
 
 **Environment variable**: `MEILI_DB_PATH`
 **CLI option**: `--db-path`
-**Default value**: `"data.ms/"`
+**Default value**: `"data.ms/"`/`"meili_data"` (For Docker)
 **Expected value**: a filepath
 
 Designates the location where database files will be created and retrieved.
@@ -125,7 +125,7 @@ Meilisearch automatically collects data from all instances that do not opt out u
 
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
-**Default value**: `dumps/`
+**Default value**: `dumps/`/`"meili_data/dumps"` (For Docker)
 **Expected value**: a filepath pointing to a valid directory
 
 Sets the directory where Meilisearch will create dump files.
