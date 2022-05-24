@@ -182,7 +182,7 @@ Some of the most significant similarities between Algolia and Meilisearch are:
 
 Contrary to Algolia, Meilisearch is open-source and written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside virtual machines, containers, or even [Lambda@Edge](https://aws.amazon.com/lambda/edge/) a seamless operation.
 
-One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers. Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet, but we hope one day to offer a highly available cloud solution that is simpler to deploy and maintain than Algolia's.
+One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers. Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, it is our goal to one day offer a highly available cloud solution that is simpler to deploy and maintain than Algolia's.
 
 #### Pricing
 

@@ -60,7 +60,7 @@ npm install -s algoliasearch meilisearch
 
 ### Create Algolia client
 
-You'll need your **Application ID** and **API Key** to start the Algolia client. Both can be found in your [Algolia account](https://www.algolia.com/api-keys).
+You'll need your **Application ID** and **Admin API Key** to start the Algolia client. Both can be found in your [Algolia account](https://www.algolia.com/api-keys).
 
 Paste the below code in `script.js`:
 
