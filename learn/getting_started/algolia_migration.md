@@ -2,25 +2,27 @@
 
 This page aims to help current users of Algolia make the transition to Meilisearch.
 
-It includes a guide to exporting Algolia data and indexing it in Meilisearch using [a Node.js script](#finished-script). It also compares Meilisearch and Algolia's [APIs](#apis), [index settings and parameters](#settings-and-parameters), and [support for the `instantsearch.js` library](#front-end-components).
+For a high-level comparison of the two search companies and their products, see [our analysis of the search market](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
 
-If you are looking for a high-level comparison of the two search companies and their products, see [our analysis of the search market](/learn/what_is_meilisearch/comparison_to_alternatives.md#meilisearch-vs-algolia).
+## Overview
 
-## Migration script
+This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. The migration process consists of three steps:
 
-Migrating indexes from Algolia to Meilisearch can be done in three steps:
+1. [Export your data stored in Algolia](#export-your-algolia-data)
+2. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
+3. [Configure your index settings (optional)](#configure-your-index-settings)
 
-1. Export your data stored in Algolia
-2. Upload your data to Meilisearch
-3. Configure your index settings (optional)
+To ease the transition, this page also includes a comparison of Meilisearch and Algolia's respective [API methods](#api-methods) and [front-end components](#front-end-components).
 
-This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure, see our [quick start](/learn/getting_started/quick_start.md) for instructions on installing Meilisearch.
+Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/learn/getting_started/quick_start.md).
 
 ::: note
 
 Older Meilisearch versions (prior to v0.27.0) have limited support for nested objects. If your data set contains nested fields, we strongly recommend installing the [latest version](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
 
 :::
+
+## Export your Algolia data
 
 ### Initialize project
 
@@ -84,6 +86,8 @@ await algoliaIndex.browseObjects({
 
 The `batch` callback method is invoked on each batch of hits and the content is concatenated in the `records` array. `records` will be used again later in the upload process.
 
+## Import your data into Meilisearch
+
 ### Create Meilisearch client
 
 Create a Meilisearch client by passing the host URL and API key of your Meilisearch instance. The easiest option is to use the automatically generated [admin API key](/learn/security/master_api_keys.md#listing-api-keys).
@@ -101,7 +105,7 @@ Replace `MEILI_HOST`,`MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisear
 
 ### Upload data to Meilisearch
 
-Next, use the Meilisearch JavaScript method [`addDocumentsInBatches`]([/learn/core_concepts/documents.md#primary-field](https://github.com/meilisearch/meilisearch-js#documents-)) to upload all your records in batches of 100,000 at a time.
+Next, use the Meilisearch JavaScript method [`addDocumentsInBatches`](https://github.com/meilisearch/meilisearch-js#documents-) to upload all your records in batches of 100,000 at a time.
 
 ```js
 const BATCH_SIZE = 100000;
@@ -142,13 +146,23 @@ const BATCH_SIZE = 1000;
 })();
 ```
 
-## Settings and parameters
+## Configure your index settings
 
-One of the key usage differences between Algolia and Meilisearch is how they approach search customization.
+Meilisearch's default settings are designed to deliver a fast and relevant search experience that works for most use-cases.
 
-In Algolia, [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/) are a flexible category that can be used either at indexing time—to set default behavior—or at search time—to override that behavior.
+To customize your index settings, we recommend following [this guide](/learn/configuration/settings.md). To learn more about the differences between settings in Algolia and Meilisearch, read on.
 
-In Meilisearch, these are split into two distinct categories. [Index settings](/learn/configuration/settings.md) affect all searches on an index; [search parameters](/reference/api/search.md#search-parameters) affect only a single search. Some search parameters depend on index settings; for example, the search parameter `sort` can't be used without first configuring the index setting `sortableAttributes`. However, an index setting cannot be given as a parameter at search time, and a parameter cannot override a setting.
+### Index settings vs. search parameters
+
+One of the key usage differences between Algolia and Meilisearch is how they approach index settings and search parameters.
+
+**In Algolia,** [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/) is a flexible category that includes both index settings and search parameters. Many API parameters can be used both at indexing time—to set default behavior—or at search time—to override that behavior.
+
+**In Meilisearch,** [index settings](/learn/configuration/settings.md) and [search parameters](/reference/api/search.md#search-parameters) are two distinct categories. Settings affect all searches on an index, while parameters affect the results of a single search.
+
+Some Meilisearch parameters require index settings to be configured beforehand; for example, to use the search parameter `sort` you must first configure the index setting `sortableAttributes`. However, unlike in Algolia, an index setting can never be used as a parameter and vice versa.
+
+### Settings and parameters comparison
 
 The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**.
 
@@ -182,7 +196,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 | `sortFacetValuesBy` | Not Supported |
 | `restrictHighlightAndSnippetArrays` | Not Supported |
 
-## APIs
+## API methods
 
 This section compares Algolia and Meilisearch's respective API methods, using JavaScript for reference.
 
