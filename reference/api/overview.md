@@ -32,7 +32,7 @@ Please read about [security keys](/learn/security/master_api_keys.md) and [how t
 
 `Authorization: Bearer $API_KEY`
 
-::: warning
+::: note
  v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header.
 :::
 

@@ -857,10 +857,14 @@ settings_guide_typo_tolerance_1: |-
           "title"
         ]
       }'
-updating_guide_check_version: |-
+updating_guide_check_version_new_authorization_header: |-
   curl \
-    -X GET 'http://127.0.0.1:7700/version' \
-    -H 'Authorization: Bearer apiKey'
+      -X GET 'http://127.0.0.1:7700/version' \
+      -H 'Authorization: Bearer apiKey'
+updating_guide_check_version_old_authorization_header: |-
+  curl \
+      -X GET 'http://127.0.0.1:7700/version' \
+      -H 'X-Meili-API-Key: apiKey'    
 updating_guide_get_displayed_attributes: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
