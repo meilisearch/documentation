@@ -12,9 +12,9 @@ Migrating indexes from Algolia to Meilisearch can be done in three steps:
 
 1. Export your data stored in Algolia
 2. Upload your data to Meilisearch
-3. (optional) Configure your settings to approximate the settings of your Algolia index
+3. Configure your index settings (optional)
 
-This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. Before continuing, make sure you have both Meilisearch and Node.js installed, and access to a command-line terminal. If you're unsure, see our [quick start](/learn/getting_started/quick_start.md) for instructions on installing Meilisearch.
+This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure, see our [quick start](/learn/getting_started/quick_start.md) for instructions on installing Meilisearch.
 
 ::: note
 
@@ -82,7 +82,7 @@ await algoliaIndex.browseObjects({
   });
 ```
 
-On each batch of hits, the `batch` callback method is invoked, and the content is concatenated in the `records` array. This variable will be used later on in the upload process.
+The `batch` callback method is invoked on each batch of hits and the content is concatenated in the `records` array. `records` will be used again later in the upload process.
 
 ### Create Meilisearch client
 
@@ -186,7 +186,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 
 This section compares Algolia and Meilisearch's respective API methods, using JavaScript for reference.
 
-| Topic | Algolia | Meilisearch |
+| Method | Algolia | Meilisearch |
 | --- | --- | --- |
 | Index Instantiation | `client.initIndex()`<br>Here, client is an Algolia instance. | `client.index()`<br>Here, client is a Meilisearch instance. |
 | Create Index | Users don’t need to create an index explicitly, the engine does it for you the first time you add an object or set settings. | The same applies for Meilisearch but users can also create an index explicitly using: `client.createIndex(string indexName)` |
@@ -212,4 +212,4 @@ This section compares Algolia and Meilisearch's respective API methods, using Ja
 
 [InstantSearch](https://github.com/algolia/instantsearch.js) is a collection of open-source tools maintained by Algolia and used to generate front-end search UI components.
 
-[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) is a plugin connecting your Meilisearch instance with InstantSearch, giving you access to many (but not all) of the same front-end components as Algolia users. Here is [an up-to-date list of components compatible with Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch/#-api-resources).
+[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) is a plugin connecting your Meilisearch instance with InstantSearch, giving you access to many (but not all) of the same front-end components as Algolia users. You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch/#-api-resources) in its GitHub repository.
