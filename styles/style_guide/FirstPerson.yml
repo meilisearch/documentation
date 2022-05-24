@@ -13,3 +13,6 @@ tokens:
   - \bme\b
   - \bmy\b
   - \bmine\b
+ignore:
+  - /learn/what_is_meilisearch/telemetry.md
+
