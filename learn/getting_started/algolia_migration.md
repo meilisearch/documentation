@@ -172,61 +172,61 @@ Some Meilisearch parameters require index settings to be configured beforehand; 
 
 The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**.
 
-| Algolia | Meilisearch |
-| --- | --- |
-| `query` | `q` |
-| `attributesToRetrieve` | `attributesToRetrieve` |
-| `filters` | `filter` |
-| `facets` | `facetsDistribution` |
-| `attributesToHighlight` | `attributesToHighlight` |
-| `offset` | `offset` |
-| `length` | `limit` |
-| `typoTolerance` | `typoTolerance` |
-| `snippetEllipsisText` | `cropMarker` |
-| `searchableAttributes` | `searchableAttributes` |
-| `attributesForFaceting` | `filterableAttributes` |
-| `unretrievableAttributes` | No direct equivalent; achieved by removing attributes from displayedAttributes |
-| `attributesToRetrieve` | `displayedAttributes` |
-| `attributeForDistinct` | `distinctAttribute` |
-| `ranking` | `rankingRules` |
-| `customRanking` | Integrated within `rankingRules` |
-| `removeStopWords` | `stopWords` |
-| `synonyms` | `synonyms` |
-| Sorting(using replicas) | `sortableAttributes` (no replicas required) |
-| `removeWordsIfNoResults` | Automatically supported, but not customizable |
-| `disableTypoToleranceOnAttributes` | `typoTolerance.disableOnAttributes` |
-| `separatorsToIndex` | Not Supported |
-| `disablePrefixOnAttributes` | Not Supported |
-| `relevancyStrictness` | Not Supported |
-| `maxValuesPerFacet` | Not Supported |
-| `sortFacetValuesBy` | Not Supported |
-| `restrictHighlightAndSnippetArrays` | Not Supported |
+| Algolia                             | Meilisearch                                                                    |
+|-------------------------------------|--------------------------------------------------------------------------------|
+| `query`                             | `q`                                                                            |
+| `attributesToRetrieve`              | `attributesToRetrieve`                                                         |
+| `filters`                           | `filter`                                                                       |
+| `facets`                            | `facetsDistribution`                                                           |
+| `attributesToHighlight`             | `attributesToHighlight`                                                        |
+| `offset`                            | `offset`                                                                       |
+| `length`                            | `limit`                                                                        |
+| `typoTolerance`                     | `typoTolerance`                                                                |
+| `snippetEllipsisText`               | `cropMarker`                                                                   |
+| `searchableAttributes`              | `searchableAttributes`                                                         |
+| `attributesForFaceting`             | `filterableAttributes`                                                         |
+| `unretrievableAttributes`           | No direct equivalent; achieved by removing attributes from displayedAttributes |
+| `attributesToRetrieve`              | `displayedAttributes`                                                          |
+| `attributeForDistinct`              | `distinctAttribute`                                                            |
+| `ranking`                           | `rankingRules`                                                                 |
+| `customRanking`                     | Integrated within `rankingRules`                                               |
+| `removeStopWords`                   | `stopWords`                                                                    |
+| `synonyms`                          | `synonyms`                                                                     |
+| Sorting(using replicas)             | `sortableAttributes` (no replicas required)                                    |
+| `removeWordsIfNoResults`            | Automatically supported, but not customizable                                  |
+| `disableTypoToleranceOnAttributes`  | `typoTolerance.disableOnAttributes`                                            |
+| `separatorsToIndex`                 | Not Supported                                                                  |
+| `disablePrefixOnAttributes`         | Not Supported                                                                  |
+| `relevancyStrictness`               | Not Supported                                                                  |
+| `maxValuesPerFacet`                 | Not Supported                                                                  |
+| `sortFacetValuesBy`                 | Not Supported                                                                  |
+| `restrictHighlightAndSnippetArrays` | Not Supported                                                                  |
 
 ## API methods
 
 This section compares Algolia and Meilisearch's respective API methods, using JavaScript for reference.
 
-| Method | Algolia | Meilisearch |
-| --- | --- | --- |
-| Index Instantiation | `client.initIndex()`<br>Here, client is an Algolia instance. | `client.index()`<br>Here, client is a Meilisearch instance. |
-| Create Index | Users don’t need to create an index explicitly, the engine does it for you the first time you add an object or set settings. | The same applies for Meilisearch but users can also create an index explicitly using: `client.createIndex(string indexName)` |
-| Get All Indexes | `client.listIndices()` | `client.getIndexes()` |
-| Get Single Index | No method available | `client.getIndex(string indexName)` |
-| Delete Index | `index.delete()` | `client.deleteIndex(string indexName)` |
-| Get Index Settings | `index.getSettings()` | `index().getSettings()` |
-| Update Index Settings | `index.setSettings(object settings)` | `index().updateSettings(object settings)` |
-| Search Method | `index.search(string query, { searchParameters, requestOptions })` | `index.search(string query, object searchParameters)` |
-| Add Object | `index.saveObjects(array objects)` | `index.addDocuments(array objects)` |
-| Partial Update Object | `index.partialUpdateObjects(array objects)` | `index.updateDocuments(array objects)` |
-| Delete All Objects | `index.deleteObjects(array objectIDs)` | `index.deleteAllDocuments()` |
-| Delete One Object | `index.deleteObject(string objectID)` | `index.deleteDocument(string id)` |
-| Get All Objects | `index.getObjects(array objectIDs)` | `index.getDocuments(object params)` |
-| Get Single Object | `index.getObject(str objectID)` | `index.getDocument(string id)` |
-| Get API Keys | `client.listApiKeys()` | `client.getKeys()` |
-| Get API Key Info | `client.getApiKey(string apiKey)` | `client.getKey(string apiKey)` |
-| Create API Key | `client.addApiKey(array acl)` | `client.createKey(object configuration)` |
-| Update API Key | `client.updateApiKey(string apiKey, object configuration)` | `client.updateKey(string apiKey, object configuration)` |
-| Delete API Key | `client.deleteApiKey(string apiKey)` | `client.deleteKey(string apiKey)` |
+| Method                | Algolia                                                                             | Meilisearch                                                                                                            |
+|-----------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| Index Instantiation   | `client.initIndex()`<br>Here, client is an Algolia instance.                        | `client.index()`<br>Here, client is a Meilisearch instance.                                                            |
+| Create Index          | Algolia automatically creates an index the first time you add a record or settings. | The same applies to Meilisearch, but users can also create an index explicitly: `client.createIndex(string indexName)` |
+| Get All Indexes       | `client.listIndices()`                                                              | `client.getIndexes()`                                                                                                  |
+| Get Single Index      | No method available                                                                 | `client.getIndex(string indexName)`                                                                                    |
+| Delete Index          | `index.delete()`                                                                    | `client.deleteIndex(string indexName)`                                                                                 |
+| Get Index Settings    | `index.getSettings()`                                                               | `index().getSettings()`                                                                                                |
+| Update Index Settings | `index.setSettings(object settings)`                                                | `index().updateSettings(object settings)`                                                                              |
+| Search Method         | `index.search(string query, { searchParameters, requestOptions })`                  | `index.search(string query, object searchParameters)`                                                                  |
+| Add Object            | `index.saveObjects(array objects)`                                                  | `index.addDocuments(array objects)`                                                                                    |
+| Partial Update Object | `index.partialUpdateObjects(array objects)`                                         | `index.updateDocuments(array objects)`                                                                                 |
+| Delete All Objects    | `index.deleteObjects(array objectIDs)`                                              | `index.deleteAllDocuments()`                                                                                           |
+| Delete One Object     | `index.deleteObject(string objectID)`                                               | `index.deleteDocument(string id)`                                                                                      |
+| Get All Objects       | `index.getObjects(array objectIDs)`                                                 | `index.getDocuments(object params)`                                                                                    |
+| Get Single Object     | `index.getObject(str objectID)`                                                     | `index.getDocument(string id)`                                                                                         |
+| Get API Keys          | `client.listApiKeys()`                                                              | `client.getKeys()`                                                                                                     |
+| Get API Key Info      | `client.getApiKey(string apiKey)`                                                   | `client.getKey(string apiKey)`                                                                                         |
+| Create API Key        | `client.addApiKey(array acl)`                                                       | `client.createKey(object configuration)`                                                                               |
+| Update API Key        | `client.updateApiKey(string apiKey, object configuration)`                          | `client.updateKey(string apiKey, object configuration)`                                                                |
+| Delete API Key        | `client.deleteApiKey(string apiKey)`                                                | `client.deleteKey(string apiKey)`                                                                                      |
 
 ## Front-end components
 
