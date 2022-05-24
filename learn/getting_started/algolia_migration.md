@@ -6,19 +6,25 @@ For a high-level comparison of the two search companies and their products, see 
 
 ## Overview
 
-This guide uses a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. The migration process consists of three steps:
+This guide will take you step-by-step through the creation of a [Node.js](https://nodejs.org/en/) script to upload Algolia index data to Meilisearch. [You can also skip directly to the finished script](#finished-script).
+
+The migration process consists of three steps:
 
 1. [Export your data stored in Algolia](#export-your-algolia-data)
 2. [Import your data into Meilisearch](#import-your-data-into-meilisearch)
-3. [Configure your index settings (optional)](#configure-your-index-settings)
+3. [Configure your Meilisearch index settings (optional)](#configure-your-index-settings)
 
-To ease the transition, this page also includes a comparison of Meilisearch and Algolia's respective [API methods](#api-methods) and [front-end components](#front-end-components).
+To help with the transition, we have also included a comparison of Meilisearch and Algolia's [API methods](#api-methods) and [front-end components](#front-end-components).
 
 Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/learn/getting_started/quick_start.md).
 
 ::: note
 
-Older Meilisearch versions (prior to v0.27.0) have limited support for nested objects. If your data set contains nested fields, we strongly recommend installing the [latest version](https://github.com/meilisearch/MeiliSearch/releases) before continuing.
+This guide was tested with the following package versions:
+
+`Node`: `16.14`
+`algoliasearch`: `4.13`
+`meilisearch`: `0.27`
 
 :::
 
@@ -26,7 +32,7 @@ Older Meilisearch versions (prior to v0.27.0) have limited support for nested ob
 
 ### Initialize project
 
-Start by creating a directory `algolia-meilisearch-migration` and initializing it as an npm package:
+Start by creating a directory `algolia-meilisearch-migration` and generating a `package.json` file with `npm`:
 
 ```bash
 mkdir algolia-meilisearch-migration
@@ -44,12 +50,12 @@ touch script.js
 
 This file will contain our migration script.
 
-### Install required packages
+### Install dependencies
 
 To get started, you'll need two different packages. The first is `algoliasearch`, the JavaScript client for the Algolia API, and the second is `meilisearch`, the JavaScript client for the Meilisearch API.
 
 ```bash
-npm install algoliasearch meilisearch
+npm install -s algoliasearch meilisearch
 ```
 
 ### Create Algolia client
@@ -59,8 +65,8 @@ You'll need your **Application ID** and **API Key** to start the Algolia client.
 Paste the below code in `script.js`:
 
 ```js
-const AlgoliaSearch = require("algoliasearch");
-const algoliaClient = AlgoliaSearch(
+const algoliaSearch = require("algoliasearch");
+const algoliaClient = algoliaSearch(
   "APPLICATION_ID",
   "ADMIN_API_KEY"
 );
@@ -79,12 +85,12 @@ To fetch all Algolia index data at once, use Algolia's [`browseObjects`](https:/
 let records = [];
 await algoliaIndex.browseObjects({
     batch: (hits) => {
-      records=records.concat(hits)
+      records = records.concat(hits);
     }
   });
 ```
 
-The `batch` callback method is invoked on each batch of hits and the content is concatenated in the `records` array. `records` will be used again later in the upload process.
+The `batch` callback method is invoked on each batch of hits and the content is concatenated in the `records` array. We will use `records` again later in the upload process.
 
 ## Import your data into Meilisearch
 
@@ -101,11 +107,11 @@ const meiliClient = new MeiliSearch({
 const meiliIndex = meiliClient.index("MEILI_INDEX_NAME");
 ```
 
-Replace `MEILI_HOST`,`MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, Meilisearch API key, and the index name where you would like documents to be added. Meilisearch will create the index if it doesn't already exist.
+Replace `MEILI_HOST`,`MEILI_API_KEY`, and `MEILI_INDEX_NAME` with your Meilisearch host URL, Meilisearch API key, and the index name where you would like to add documents. Meilisearch will create the index if it doesn't already exist.
 
 ### Upload data to Meilisearch
 
-Next, use the Meilisearch JavaScript method [`addDocumentsInBatches`](https://github.com/meilisearch/meilisearch-js#documents-) to upload all your records in batches of 100,000 at a time.
+Next, use the Meilisearch JavaScript method [`addDocumentsInBatches`](https://github.com/meilisearch/meilisearch-js#documents-) to upload all your records in batches of 100,000.
 
 ```js
 const BATCH_SIZE = 100000;
@@ -121,18 +127,18 @@ node script.js
 ### Finished script
 
 ```js
-const AlgoliaSearch = require("algoliasearch");
+const algoliaSearch = require("algoliasearch");
 const { MeiliSearch } = require("meilisearch");
 const BATCH_SIZE = 1000;
 
 (async () => {
-  const algoliaClient = AlgoliaSearch("APPLICATION_ID", "ADMIN_API_KEY");
+  const algoliaClient = algoliaSearch("APPLICATION_ID", "ADMIN_API_KEY");
   const algoliaIndex = algoliaClient.initIndex("INDEX_NAME");
 
   let records = [];
   await algoliaIndex.browseObjects({
     batch: (hits) => {
-      records = records.concat(hits)
+      records = records.concat(hits);
     }
   });
 
@@ -224,6 +230,6 @@ This section compares Algolia and Meilisearch's respective API methods, using Ja
 
 ## Front-end components
 
-[InstantSearch](https://github.com/algolia/instantsearch.js) is a collection of open-source tools maintained by Algolia and used to generate front-end search UI components.
+[InstantSearch](https://github.com/algolia/instantsearch.js) is a collection of open-source tools maintained by Algolia and used to generate front-end search UI components. To use InstantSearch with Meilisearch, you must use [Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch).
 
-[Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch) is a plugin connecting your Meilisearch instance with InstantSearch, giving you access to many (but not all) of the same front-end components as Algolia users. You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch/#-api-resources) in its GitHub repository.
+Instant Meilisearch is a plugin connecting your Meilisearch instance with InstantSearch, giving you access to many of the same front-end components as Algolia users. You can find an up-to-date list of [the components supported by Instant Meilisearch](https://github.com/meilisearch/instant-meilisearch/#-api-resources) in the GitHub project's README.
