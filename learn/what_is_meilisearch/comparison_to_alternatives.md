@@ -138,7 +138,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |---|:---:|:----:|:---:|:---:|
 | GitHub stars of the main project | 27K | N/A | 10K | 60K |
 | Number of contributors on the main project | 75 | N/A | 20 | 1,700 |
-| Public Slack community size | 1.5K | N/A | 400 | 11K |
+| Public Slack community size | 1.5K | N/A | 700 | 14K |
 
 ### Support
 
