@@ -171,7 +171,7 @@ If you are a current Algolia user considering a switch to Meilisearch, you may b
 
 Some of the most significant similarities between Algolia and Meilisearch are:
 
-- [Features](https://docs.meilisearch.com/learn/what_is_meilisearch/overview.html#features) such as search-as-you-type, typo tolerance, faceting, etc.
+- [Features](/learn/what_is_meilisearch/overview.md#features) such as search-as-you-type, typo tolerance, faceting, etc.
 - Fast results targeting an instant search experience (answers < 50 milliseconds)
 - Schemaless indexation
 - Support for all JSON data types
