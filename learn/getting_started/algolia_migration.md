@@ -24,6 +24,7 @@ This guide was tested with the following package versions:
 
 `Node`: `16.14`
 `algoliasearch`: `4.13`
+`meilisearch-js`: `0.25.1`
 `meilisearch`: `0.27`
 
 :::
