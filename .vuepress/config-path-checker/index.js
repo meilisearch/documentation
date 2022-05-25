@@ -2,7 +2,7 @@ const chalk = require('chalk')
 const path = require('path')
 const { displayReport, createReportResult } = require('./result-report')
 const { isObject } = require('./utils')
-const { checkPathValidity, findChilds } = require('./find-and-check')
+const { findChilds } = require('./find-and-check')
 
 const defaultOptions = {
   exitLevel: 'warn',
@@ -44,7 +44,6 @@ module.exports = (opt = {}) => {
           log('Checking for missing trailing html extensions in parent\'s path...')
           if (isObject(sidebar)) {
             Object.keys(sidebar).map((key) => {
-              checkPathValidity.call(result, key)
               findChilds.call(result, sidebar[key])
             })
           }

@@ -5,7 +5,7 @@ const path = require('path')
 // Check if the path validates the predicates
 function checkPathValidity(parentPath, elem) {
   // Check for a trailing html extension
-  if (parentPath.slice(-1) !== '.html') {
+  if (parentPath.slice(-5) !== '.html') {
     const origin = (elem && elem.title) ? `section ${elem.title}` : 'config.json'
     addError.call(this, {
       type: 'error',
