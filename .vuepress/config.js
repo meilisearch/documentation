@@ -360,6 +360,7 @@ module.exports = {
     // Change are done in .vuepress/styles/palette.styl
     'vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
+    [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
     [require('./code-samples')],
     [
