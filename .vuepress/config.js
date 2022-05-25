@@ -143,7 +143,6 @@ module.exports = {
             {
               title: 'Index settings',
               collapsable: false,
-              path: '/learn/configuration/settings',
               children: [
                 {
                   title: 'Overview',
