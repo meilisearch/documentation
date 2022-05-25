@@ -5,7 +5,7 @@ An index is an entity that gathers a set of documents with its own settings. It 
 An index is defined by a `uid` and contains the following information:
 
 - One primary key
-- Default settings that can be [configured](/reference/api/settings.md#update-settings) as needed: relevancy rules, filterable and sortable attributes, synonyms, stop words, displayed and searchable attributes, typo tolerance.
+- [Default settings](/learn/configuration/settings.md) that can be [configured](/reference/api/settings.md#update-settings)
 
 #### Example
 
@@ -15,13 +15,7 @@ Each index holds information about the fields found in the documents, including 
 
 ## Index creation
 
-An index is created the first time documents are added to it or manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
-
-#### Example
-
-Let's use the [add or replace documents endpoint](/reference/api/documents.md#add-or-replace-documents) to add documents to a new Meilisearch instance without an index. The code below will create the `movies` index and add a sample document to it.
-
-<CodeSamples id="add_or_replace_documents_1" />
+Meilisearch automatically creates an index for you the first time you add a document, or you can create one manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
 
 ## Index UID
 
@@ -76,7 +70,7 @@ Since synonyms are defined for a given index, they won't apply to any other inde
 
 ### Filterable attributes
 
-To filter by any document attribute, you need to add it to `filterableAttributes` using the using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). You can then use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
+To filter by any document attribute, you need to add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). You can then use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
 
 [Learn more about filtering](/learn/advanced/filtering_and_faceted_search.md)
 
@@ -111,7 +105,7 @@ You can update these field attributes using the [update settings endpoint](/refe
 
 ### Typo tolerance
 
-By default, typo tolerance is enabled in Meilisearch. This allows you to find relevant results even when your search queries contain spelling mistakes or typos, e.g. typing `chickne` instead of `chicken`. You can update the typo tolerance settings for an index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
+By default, typo tolerance is enabled in Meilisearch. This allows you to find relevant results even when your search queries contain spelling mistakes or typos, e.g., typing `chickne` instead of `chicken`. You can update the typo tolerance settings for an index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
 The `typoTolerance` object allows you configure the following for an index:
 
