@@ -114,6 +114,10 @@ module.exports = {
                 '/learn/getting_started/getting_ready_for_production',
               ],
             },
+            {
+              title: 'Migrating from Algolia',
+              path: '/learn/getting_started/algolia_migration',
+            },
           ],
         },
         {
