@@ -61,7 +61,7 @@ List the settings.
     "words",
     "proximity",
     "attribute",
-    "wordsPosition",
+    "words",
     "exactness",
     "desc(release_date)"
   ],
