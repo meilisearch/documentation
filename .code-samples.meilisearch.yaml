@@ -480,16 +480,6 @@ add_movies_json_1: |-
     -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
-documents_guide_add_movie_1: |-
-  curl \
-    -X POST `http://localhost:7700/indexes/movies/documents` \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      {
-        "movie_id": "123sq178",
-        "title": "Amelie Poulain"
-      }
-    ]'
 getting_started_add_documents_md: |-
   ```bash
   curl \

@@ -50,8 +50,6 @@ By default, Meilisearch limits the size of all payloads—and therefore document
 
 When using the [route to add new documents](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
 
-<CodeSamples id="documents_guide_add_movie_1" />
-
 ### Dataset format
 
 Meilisearch accepts datasets in the following formats:
