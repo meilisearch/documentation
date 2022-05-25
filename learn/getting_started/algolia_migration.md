@@ -56,7 +56,7 @@ This file will contain our migration script.
 To get started, you'll need two different packages. The first is `algoliasearch`, the JavaScript client for the Algolia API, and the second is `meilisearch`, the JavaScript client for the Meilisearch API.
 
 ```bash
-npm install -s algoliasearch meilisearch
+npm install -s algoliasearch@4.13 meilisearch@0.25.1
 ```
 
 ### Create Algolia client
@@ -67,6 +67,7 @@ Paste the below code in `script.js`:
 
 ```js
 const algoliaSearch = require("algoliasearch");
+
 const algoliaClient = algoliaSearch(
   "APPLICATION_ID",
   "ADMIN_API_KEY"
@@ -101,6 +102,7 @@ Create a Meilisearch client by passing the host URL and API key of your Meilisea
 
 ```js
 const { MeiliSearch } = require("meilisearch");
+
 const meiliClient = new MeiliSearch({
   host: "MEILI_HOST",
   apiKey: "MEILI_API_KEY",
@@ -130,6 +132,7 @@ node script.js
 ```js
 const algoliaSearch = require("algoliasearch");
 const { MeiliSearch } = require("meilisearch");
+
 const BATCH_SIZE = 1000;
 
 (async () => {
