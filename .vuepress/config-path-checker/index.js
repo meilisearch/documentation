@@ -2,7 +2,7 @@ const chalk = require('chalk')
 const path = require('path')
 const { displayReport, createReportResult } = require('./result-report')
 const { isObject } = require('./utils')
-const { checkPath, SearchForChilds } = require('./find-and-check')
+const { checkPathValidity, findChilds } = require('./find-and-check')
 
 const defaultOptions = {
   exitLevel: 'warn',
@@ -24,7 +24,7 @@ module.exports = (opt = {}) => {
     }),
     error: createReportResult({
       msgFn(r) {
-        return `${r.list.length} missing trailing slash`
+        return `${r.list.length} missing trailing html extension`
       },
       type: 'error',
     }),
@@ -36,16 +36,16 @@ module.exports = (opt = {}) => {
       cli
         .command(
           'check-config-paths',
-          'Checks for trailing slash in vuepress paths'
+          'Checks for trailing html extension in vuepress paths with childs'
         )
         .action(() => {
           const sidebar = config.themeConfig.sidebar
           // Output information to distinguish with check-md
-          log('Checking for missing trailing slashes...')
+          log('Checking for missing trailing html extensions in parent\'s path...')
           if (isObject(sidebar)) {
             Object.keys(sidebar).map((key) => {
-              checkPath.call(result, key)
-              SearchForChilds.call(result, sidebar[key])
+              checkPathValidity.call(result, key)
+              findChilds.call(result, sidebar[key])
             })
           }
           displayReport(result, options)
