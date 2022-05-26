@@ -12,6 +12,8 @@ tokens:
   - simply
   - easy
   - easily
-  - of course
   - clearly
   - everyone knows
+ignore:
+  - /learn/contributing/contributing_to_docs.md
+  - /resources/faq.md
