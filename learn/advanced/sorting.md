@@ -170,7 +170,7 @@ With our example dataset, the results look like this:
 ]
 ```
 
-It is common to search books based on an author's name. `sort` can help grouping results from the same author. This query would only return books matching the query term `"butler"` and group results according to their  authors:
+It is common to search books based on an author's name. `sort` can help grouping results from the same author. This query would only return books matching the query term `"butler"` and group results according to their authors:
 
 <CodeSamples id="sorting_guide_sort_parameter_2" />
 

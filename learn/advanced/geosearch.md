@@ -96,7 +96,7 @@ Trying to index a dataset with one or more documents containing badly formatted 
 
 ### Using `_geo` with CSV
 
-If your dataset is formatted as CSV, the file header must have a `_geo` column.  Each row in the dataset must then contain a column with a comma-separated string indicating latitude and longitude:
+If your dataset is formatted as CSV, the file header must have a `_geo` column. Each row in the dataset must then contain a column with a comma-separated string indicating latitude and longitude:
 
 ```csv
 "id:number", "name:string", "address:string", "type:string", "rating:number", "_geo:string"

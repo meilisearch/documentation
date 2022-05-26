@@ -3,7 +3,7 @@
 _Child route of the [settings route](/reference/api/settings.md)._
 
 The fields whose attributes are added to the displayed-attributes list are **displayed in each matching document**.
-By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings.  Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
+By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings. Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
 
 Displayed attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
