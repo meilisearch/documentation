@@ -35,3 +35,13 @@ vm
 Jieba
 Lindera
 Netlify
+unintuitive
+overconsumption
+geopositioning
+hanzi
+[Aa]utobatching
+impactful
+lowercased
+[Mm]ultitenancy
+rulesets
+prepended
