@@ -106,7 +106,7 @@ Now that you know which Meilisearch version your database is compatible with, pr
 
 ## Updating from v0.15.0 or above
 
-Because Meilisearch v0.15.0 and above include the [dumps feature](/learn/advanced/dumps.md), updating is relatively simple.
+Because Meilisearch v0.15.0 and above include the [dumps feature](/learn/advanced/dumps.md), updating is relatively simpler.
 
 In this guide, we will:
 
