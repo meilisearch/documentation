@@ -31,7 +31,7 @@ For this tutorial, we will be using a Debian 10 server, running on DigitalOcean.
 ## Prerequisites
 
 + An up-to-date server that runs Debian 10
-+ An ssh keypair to connect to that machine
++ An ssh key pair to connect to that machine
 
 ::: tip
 Learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)

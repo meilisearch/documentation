@@ -2,7 +2,7 @@
 
 You might have noticed the search bar in this documentation.
 
-![MeiliSearch docs search bar updating results for 'faq'](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
+![Meilisearch docs search bar updating results for 'faq'](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
 
 And you are probably wanting the same for your own documentation!
 

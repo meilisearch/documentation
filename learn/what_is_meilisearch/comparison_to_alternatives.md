@@ -39,7 +39,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | SDK      | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | REST API | ✅ | ✅ | ✅ | ✅ |
-| [Javascript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
+| [JavaScript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
 | [PHP client](https://github.com/meilisearch/meilisearch-php)                  |  ✅         |   ✅     |     ✅      |        ✅       |
 | [Python client](https://github.com/meilisearch/meilisearch-python)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Ruby client](https://github.com/meilisearch/meilisearch-ruby)              | ✅          | ✅      |        ✅   |       ✅        |

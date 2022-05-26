@@ -97,7 +97,7 @@ To do so, send an email to [privacy@meilisearch.com](mailto:privacy@meilisearch.
 Whenever an event is triggered that collects some piece of data, Meilisearch does not send it immediately. Instead, it bundles it with other data in a batch of up to `500kb`. Batches are sent either every hour, or after reaching `500kb`—whichever occurs first. This is done in order to improve performance and reduce network traffic.
 
 ::: tip Be advised!
-This list is liable to change with every new version of Meilisearch. It's not because we're trying to be sneaky! It's because when we add new features we need to collect additional datapoints to see how they perform.
+This list is liable to change with every new version of Meilisearch. It's not because we're trying to be sneaky! It's because when we add new features we need to collect additional data points to see how they perform.
 :::
 
 | Metric name                                        | Description                                                                                 | Example
@@ -132,7 +132,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `system.cores`                                     | Number of cores                                                                             | 24
 | `system.ram_size`                                  | Total RAM capacity. Expressed in `KB`                                                       | 16777216
 | `system.disk_size`                                 | Total capacity of the largest disk. Expressed in `Bytes`                                    | 1048576000
-| `system.server_provider`                           | Users can tell us on which provider Meilisearch is hosted by filling the `MEILI_SERVER_PROVIDER` env var. This is also filled by our cloud deploy scripts, e.g. [GCP cloud-config.yaml](https://github.com/meilisearch/cloud-scripts/blob/56a7c2630c1a508e5ad0c0ba1d8cfeb8d2fa9ae0/scripts/providers/gcp/cloud-config.yaml#L33) | gcp
+| `system.server_provider`                           | Users can tell us on which provider Meilisearch is hosted by filling the `MEILI_SERVER_PROVIDER` environment var. This is also filled by our cloud deploy scripts, e.g. [GCP cloud-config.yaml](https://github.com/meilisearch/cloud-scripts/blob/56a7c2630c1a508e5ad0c0ba1d8cfeb8d2fa9ae0/scripts/providers/gcp/cloud-config.yaml#L33) | gcp
 | `stats.database_size`                              | Database size. Expressed in `Bytes`                                                         | 2621440
 | `stats.indexes_number`                             | Number of indexes                                                                           | 2
 | `start_since_days`                                 | Number of days since instance was launched                                                  | 365
