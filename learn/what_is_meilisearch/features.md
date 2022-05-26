@@ -23,7 +23,7 @@ Read more about typo tolerance in [this dedicated guide](/learn/configuration/ty
 
 ## Synonyms
 
-![Search demo gif updating results on the Meilisearch search preview for synonyms 'batman' and 'joker'](/search-synonyms-typo.gif)
+![Search demo GIF updating results on the Meilisearch search preview for synonyms 'batman' and 'joker'](/search-synonyms-typo.gif)
 _MeiliSearch in action with `batman` and `joker` defined as synonyms_
 
 Defining synonyms lets you craft a more tailored, intuitive search experience.
