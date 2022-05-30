@@ -69,7 +69,7 @@ The above JSON document would look like this in NDJSON:
 
 CSV files express data as a sequence of values separated by a delimiter character. Currently, Meilisearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
 
-Meilisearch will only accept NDJSON documents when it receives the `text/csv` content-type header.
+Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
 Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
 
