@@ -1,6 +1,6 @@
 # Health
 
-The `/health` route enables you to periodically test the health of your Meilisearch instance.
+The `/health` route allows you to verify the status and availability of a Meilisearch instance.
 
 ## Get health
 

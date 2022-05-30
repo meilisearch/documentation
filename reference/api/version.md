@@ -1,6 +1,6 @@
 # Version
 
-The `/version` route allows you to check your current Meilisearch version.
+The `/version` route allows you to check the version of a running Meilisearch instance.
 
 ## Get version of Meilisearch
 
