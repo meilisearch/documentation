@@ -320,7 +320,7 @@ Here's what's happening:
 
 - The first four lines of the `<body>` add two container elements: `#searchbox` and `#hits`. `instant-meilisearch` creates the search bar inside `#searchbox` and lists search results in `#hits`
 - The first two`<script src="…">` tags import libraries needed to run `instant-meilisearch`
-- The third and final `<script>` tag  is where you customize `instant-meilisearch`
+- The third and final `<script>` tag is where you customize `instant-meilisearch`
 
 :::
 
@@ -440,7 +440,7 @@ Here's what's happening:
 
 ### Let's try it!
 
-1. Create an empty file  and name it `index.html`
+1. Create an empty file and name it `index.html`
 2. Open it in a text editor like Notepad, Sublime Text, or Visual Studio Code
 3. Copy-paste one of the code samples above—either vanilla JavaScript, Vue 2, or React— and save the file
 4. Open `index.html` in your browser by double-clicking it in your folder
