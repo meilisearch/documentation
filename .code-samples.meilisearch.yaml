@@ -179,8 +179,8 @@ update_settings_1: |-
         },
         "typoTolerance": {
           "minWordSizeForTypos": {
-              "oneTypo": 8,
-              "twoTypos": 10
+            "oneTypo": 8,
+            "twoTypos": 10
           },
           "disableOnAttributes": ["title"]
       }
@@ -232,14 +232,14 @@ update_ranking_rules_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "words",
-        "typo",
-        "proximity",
-        "attribute",
-        "sort",
-        "exactness",
-        "release_date:asc",
-        "rank:desc"
+      "words",
+      "typo",
+      "proximity",
+      "attribute",
+      "sort",
+      "exactness",
+      "release_date:asc",
+      "rank:desc"
     ]'
 reset_ranking_rules_1: |-
   curl \
@@ -638,10 +638,10 @@ faceted_search_update_settings_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "filterableAttributes": [
-          "director",
-          "genres"
-        ]
+      "filterableAttributes": [
+        "director",
+        "genres"
+      ]
     }'
 faceted_search_filter_1: |-
   curl \
@@ -867,7 +867,7 @@ typo_tolerance_guide_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "enabled": false }'    
+    --data-binary '{ "enabled": false }'
 typo_tolerance_guide_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
