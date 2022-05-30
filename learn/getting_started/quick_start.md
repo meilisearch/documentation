@@ -51,13 +51,13 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:latest
+docker pull getmeili/meilisearch:v0.27.1
 
 # Launch Meilisearch
 docker run -it --rm \
     -p 7700:7700 \
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:latest
+    getmeili/meilisearch:v0.27.1
 ```
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
