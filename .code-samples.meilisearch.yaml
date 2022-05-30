@@ -323,9 +323,9 @@ field_properties_guide_searchable_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "searchableAttributes": [
-          "title",
-          "overview",
-          "genres"
+        "title",
+        "overview",
+        "genres"
       ]
     }'
 field_properties_guide_displayed_1: |-
@@ -334,10 +334,10 @@ field_properties_guide_displayed_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "displayedAttributes": [
-          "title",
-          "overview",
-          "genres",
-          "release_date"
+        "title",
+        "overview",
+        "genres",
+        "release_date"
       ]
     }'
 filtering_guide_1: |-
@@ -445,10 +445,10 @@ settings_guide_synonyms_1: |-
     -X POST 'http://localhost:7700/indexes/tops/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "synonyms": {
-          "sweater": ["jumper"],
-          "jumper": ["sweater"]
-        }
+      "synonyms": {
+        "sweater": ["jumper"],
+        "jumper": ["sweater"]
+      }
     }'
 settings_guide_stop_words_1: |-
   curl \
@@ -654,7 +654,8 @@ faceted_search_filter_1: |-
           "genres = Horror",
           "genres = Mystery"
         ],
-        "director = \"Jordan Peele\""]
+        "director = \"Jordan Peele\""
+        ]
     }'
 faceted_search_facets_distribution_1: |-
   curl \
@@ -776,7 +777,12 @@ geosearch_guide_sort_usage_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
-    --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc", "rating:desc"] }'
+    --data-binary '{
+      "sort": [
+        "_geoPoint(48.8561446,2.2978204):asc",
+        "rating:desc"
+      ]
+    }'
 security_guide_search_key_1: |-
   curl -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer apiKey'
@@ -829,7 +835,7 @@ primary_field_guide_add_document_primary_key: |-
           "humor"
         ],
         "price": 5.00
-     }
+      }
     ]'
 primary_field_guide_update_document_primary_key: |
   curl \
@@ -868,7 +874,7 @@ typo_tolerance_guide_2: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "disableOnAttributes": ["title"]
-  }'
+    }'
 typo_tolerance_guide_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
@@ -876,8 +882,8 @@ typo_tolerance_guide_3: |-
     --data-binary '{
       "disableOnWords": [
         "shrek"
-    ]
-  }'
+      ]
+    }'
 typo_tolerance_guide_4: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
