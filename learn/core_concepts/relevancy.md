@@ -32,7 +32,7 @@ Meilisearch contains six built-in ranking rules in the following order:
 ]
 ```
 
-Depending on your needs, you might want to change this order of importance. To do so, you can use the [update settings](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+Depending on your needs, you might want to change this order. To do so, you can use the [update settings endpoint](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 #### 1. Words
 
@@ -113,7 +113,7 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 
 ### Exactness
 
-`Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas, there is a letter of difference between `Knights` and the search query `Knight`.
+`Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas there is a letter of difference between `Knights` and the search query `Knight`.
 
 :::
 
@@ -131,7 +131,7 @@ To add a custom ranking rule, you have to communicate the attribute name followe
 
 **The attribute must have either a numeric or a string value** in all of the documents contained in that index.
 
-You can add this rule to the existing list of ranking rules using the [update settings](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 #### Example
 
