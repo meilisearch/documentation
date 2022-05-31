@@ -168,6 +168,10 @@ Congratulations! You're ready to move on to the next step!
 
 For this quick start, we will be using a collection of movies as our dataset. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file into your working directory.
 
+::: note
+Meilisearch currently only accepts JSON, NDJSON, and CSV dataset formats, you can read more about them in our [dedicated guide](/learn/core_concepts/documents.md#dataset-format).
+:::
+
 Open a new terminal window and run the following command:
 
 <CodeSamples id="getting_started_add_documents_md" />
