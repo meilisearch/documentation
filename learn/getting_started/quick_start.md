@@ -263,7 +263,7 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 ## Securing Meilisearch
 
-Now, we will look at securing your Meilisearch instance. The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
 
 :::: tabs
 
@@ -295,7 +295,7 @@ set MEILI_MASTER_KEY="your_master_key"
 
 ::::
 
-Once you launch your Meilisearch instance with a master key, all subsequent requests, except the ['GET /health' endpoint](/reference/api/health.md), must include the [`Authorization` header](/reference/api/overview.md#authorization).
+Once you launch your Meilisearch instance with a master key, all subsequent requests, except the [get health endpoint](/reference/api/health.md), must include the [`Authorization` header](/reference/api/overview.md#authorization).
 
 When you launch your secure instance, Meilisearch will generate two API keys for you:
 
