@@ -18,7 +18,7 @@ Welcome to the Meilisearch documentation. Here you'll find everything you need t
 
 ## Version compatibility
 
-This documentation only reflects the latest version of Meilisearch. As long as we are pre-v1.0, **we do not provide multi-version documentation** and **[databases are not compatible between versions](/learn/advanced/updating.md).**
+This documentation only reflects the latest version of Meilisearch (v0.27). As long as we are pre-v1.0, **we do not provide multi-version documentation** and **[databases are not compatible between versions](/learn/advanced/updating.md).**
 
 The current version of [Meilisearch](https://github.com/meilisearch/meilisearch) can be found in the top-left of this site.
 
