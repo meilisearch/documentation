@@ -261,6 +261,47 @@ Meilisearch offers a search preview where you can preview search results. It com
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
+## Securing Meilisearch
+
+Now, we will look at securing your Meilisearch instance. The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+
+:::: tabs
+
+::: tab CLI
+
+```bash
+./meilisearch --master-key="your_master_key"
+```
+
+:::
+
+::: tab Environment variable
+
+Linux/MacOS:
+
+```bash
+export MEILI_MASTER_KEY="your_master_key"
+./meilisearch
+```
+
+Windows:
+
+```bash
+set MEILI_MASTER_KEY="your_master_key"
+./meilisearch
+```
+
+:::
+
+::::
+
+Once you launch your Meilisearch instance with a master key, all subsequent requests,m except the  ['GET /health' endpoint](/reference/api/health.md), must include the [`Authorization` header](/reference/api/overview.md#authorization).
+
+When you launch your secure instance, Meilisearch will generate two API keys for you:
+
+- Default Search API Key: For accessing the [search route](/reference/api/search.md)
+- Default Admin API Key: For accessing all API routes except [`/keys`](/reference/api/keys.md)
+
 ## Front-end integration
 
 The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the components needed to start searching.

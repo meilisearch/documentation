@@ -27,7 +27,7 @@ You can read more about [dumps](/learn/advanced/dumps.md) and [snapshots](/learn
 
 ## Protecting Meilisearch
 
-Meilisearch allows you to restrict access to API endpoints. You can protect your Meilisearch instance by supplying it with an alphanumeric string representing your `master` key:
+Meilisearch allows you to restrict access to API endpoints. You can protect your Meilisearch instance by supplying it with a `master` key composed of UTF-8 characters:
 
 :::: tabs
 
