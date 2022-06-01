@@ -60,9 +60,8 @@ docker run -it --rm \
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:v0.27.1
     meilisearch --no-analytics
-
-
 ```
+
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
 
 On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
