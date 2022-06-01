@@ -10,11 +10,12 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
-          registry-url: https://registry.npmjs.org/
+          cache: "yarn"
+          cache-dependency-path: yarn.lock
       - name: Publish
         uses: netlify/actions/build@master
         env:
@@ -27,11 +28,7 @@ jobs:
     needs: build-deploy
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-          registry-url: https://registry.npmjs.org/
+      - uses: actions/checkout@v3
       - name: Run docs-scraper
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}

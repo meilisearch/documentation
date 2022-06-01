@@ -10,7 +10,7 @@ Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents/{document_id}"/>
 
-Get one [document](/learn/core_concepts/documents.md) using its unique id.  Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/primary_key.md#document-id) are required.
+Get one [document](/learn/core_concepts/documents.md) using its unique id. Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/primary_key.md#document-id) are required.
 
 ### Example
 
