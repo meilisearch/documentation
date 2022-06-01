@@ -31,10 +31,10 @@
   "author": "tpayet",
   "license": "MIT",
   "dependencies": {
+    "@bidoubiwa/vuepress-plugin-element-tabs": "^0.2.9",
     "vuepress": "^1.8.2",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-container": "^2.1.5",
-    "vuepress-plugin-element-tabs": "^0.2.8",
     "vuepress-plugin-img-lazy": "^1.0.4",
     "vuepress-plugin-meilisearch": "0.12.1",
     "vuepress-plugin-seo": "^0.1.4",
@@ -44,7 +44,7 @@
     "vuex": "^3.6.2"
   },
   "engines": {
-    "node": ">=12 <15"
+    "node": ">=12 <=16"
   },
   "resolutions": {
     "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#add_ignore_pattern"
@@ -63,7 +63,7 @@
     "eslint-plugin-vue": "^7.9.0",
     "js-yaml": "^3.14.1",
     "markdownlint-cli": "^0.31.1",
-    "vue-eslint-parser": "^7.10.0",
+    "vue-eslint-parser": "^9.0.2",
     "vuepress-plugin-check-md": "^0.0.2"
   }
 }

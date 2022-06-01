@@ -62,7 +62,9 @@ Meilisearch accepts datasets in the following formats:
 
 Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting Meilisearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
 
-For example, you are creating an [index](/learn/core_concepts/indexes.md) that contains information about movies. A sample document might look like this:
+Meilisearch will only accept JSON documents when it receives the `application/json` content-type header.
+
+As an example, let's say you are creating an **[index][indexes]** that contains information about movies. A sample document might look like this:
 
 ```json
 {
@@ -85,28 +87,23 @@ In the above example:
 
 #### NDJSON
 
-NDJSON objects consist of individual lines where each individual line is valid JSON text, and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to Meilisearch documents.
+NDJSON or jsonlines objects consist of individual lines where each individual line is valid JSON text and each line is delimited with a newline character. Any [rules that apply to formatting NDJSON](http://ndjson.org/) also apply to Meilisearch documents.
+
+Meilisearch will only accept NDJSON documents when it receives the `application/x-ndjson` content-type header.
 
 Compared to JSON, NDJSON has better writing performance and is less CPU and memory intensive. It is easier to validate and, unlike CSV, can handle nested structures.  
 
 The above JSON document would look like this in NDJSON:
 
 ```json
-{ 
-  "id": "1564saqw12ss", 
-  "title": "Kung Fu Panda", 
-  "genres": "Children's Animation", 
-  "release-year": 2008, 
-  "cast": [
-    { "Jack Black": "Po" },
-    { "Jackie Chan": "Monkey" }
-  ]
-}
+{ "id": "1564saqw12ss", "title": "Kung Fu Panda", "genres": "Children's Animation", "release-year": 2008, "cast": [{ "Jack Black": "Po" }, { "Jackie Chan": "Monkey" }] }
 ```
 
 #### CSV
 
 CSV files express data as a sequence of values separated by a delimiter character. Currently, Meilisearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
+
+Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
 Compared to JSON, CSV has better writing performance and is less CPU and memory intensive.  
 

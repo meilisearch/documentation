@@ -88,7 +88,6 @@ getting_started_geo_radius: |-
 getting_started_geo_point: |-
 getting_started_sorting: |-
 getting_started_filtering: |-
-sortableAttributes: |-
 faceted_search_update_settings_1: |-
 faceted_search_filter_1: |-
 faceted_search_facets_distribution_1: |-
@@ -113,7 +112,6 @@ geosearch_guide_sort_usage_1: |-
 geosearch_guide_sort_usage_2: |-
 authorization_header_1: |-
 security_guide_create_key_1: |-
-security_guide_create_key_2: |-
 security_guide_list_keys_1: |-
 security_guide_update_key_1: |-
 security_guide_delete_key_1: |-
@@ -121,7 +119,6 @@ security_guide_search_key_1: |-
 primary_field_guide_create_index_primary_key: |-
 primary_field_guide_add_document_primary_key: |-
 primary_field_guide_update_document_primary_key: |-
-authentication_header_1: |-
 tenant_token_guide_search_no_sdk_1: |-
 tenant_token_guide_generate_sdk_1: |-
 tenant_token_guide_search_sdk_1: |-
@@ -137,8 +134,10 @@ typo_tolerance_guide_3: |-
 typo_tolerance_guide_4: |-
 settings_guide_typo_tolerance_1: |-
 updating_guide_check_version: |-
-updating_guide_get_displayed_attributes: |-
-updating_guide_reset_displayed_attributes: |-
+updating_guide_get_displayed_attributes_new: |-
+updating_guide_get_displayed_attributes_old: |-
+updating_guide_reset_displayed_attributes_old: |-
+updating_guide_reset_displayed_attributes_new: |-
 updating_guide_create_dump: |-
 updating_guide_get_dump_status: |-
 updating_guide_get_settings: |-

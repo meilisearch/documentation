@@ -2,40 +2,45 @@ const { isObject } = require('./utils')
 const { addError } = require('./result-report')
 const path = require('path')
 
-function checkPath(givenPath, elem) {
-  if (givenPath.slice(-1) !== '/') {
+// Check if the path validates the predicates
+function checkPathValidity(parentPath, elem) {
+  // Check for a trailing html extension
+  if (parentPath.slice(-5) !== '.html') {
     const origin = (elem && elem.title) ? `section ${elem.title}` : 'config.json'
     addError.call(this, {
       type: 'error',
-      errMsg: `In ${origin} the path is missing a trailing slash`,
+      errMsg: `In ${origin} the path is missing the trailing html extension`,
       fileUrl: path.join(process.cwd(), '/.vuepress/config.js'),
-      fullText: `path: '${givenPath}'`,
-      path: givenPath,
+      fullText: `path: '${parentPath}'`,
+      path: parentPath,
     })
   }
 }
 
-function searchForPath(element) {
+function findParentPath(element) {
+  // If the element is not an object it cannot contain a `path` key
   if (isObject(element)) {
+    // Will only check the path of the current element if it has childs.
     if (element.path && element.children) {
-      checkPath.call(this, element.path, element)
+      checkPathValidity.call(this, element.path, element)
     }
     if (element.children) {
-      SearchForChilds.call(this, element.children)
+      findChilds.call(this, element.children)
     }
   }
 }
 
-function SearchForChilds(element) {
+// Crawl inside elements to find childs
+function findChilds(element) {
   if (Array.isArray(element)) {
-    element.map((child) => searchForPath.call(this, child))
+    element.map((child) => findParentPath.call(this, child))
   } else if (isObject(element)) {
-    searchForPath.call(this, element)
+    findParentPath.call(this, element)
   }
 }
 
 module.exports = {
-  checkPath,
-  searchForPath,
-  SearchForChilds,
+  checkPathValidity,
+  findParentPath,
+  findChilds,
 }

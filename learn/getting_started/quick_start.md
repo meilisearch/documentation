@@ -6,7 +6,7 @@ All that is required is a [command line](https://www.learnenough.com/command-lin
 
 Let's get started!
 
-## Step 1: Setup and installation
+## Setup and installation
 
 We'll start with downloading and installing Meilisearch. You have the option to install Meilisearch locally or deploy it over a cloud service.
 
@@ -51,13 +51,13 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:latest
+docker pull getmeili/meilisearch:v0.27.1
 
 # Launch Meilisearch
 docker run -it --rm \
     -p 7700:7700 \
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:latest
+    getmeili/meilisearch:v0.27.1
 ```
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
@@ -138,11 +138,11 @@ To learn more about the Windows command prompt, follow this [introductory guide]
 To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
 - [AWS](/learn/cookbooks/aws.md)
+- [Azure](/learn/cookbooks/azure.md)
 - [DigitalOcean](/learn/cookbooks/digitalocean_droplet.md)
+- [GCP](/learn/cookbooks/gcp.md)
 - [Koyeb](/learn/cookbooks/koyeb.md)
 - [Qovery](/learn/cookbooks/qovery.md)
-- [GCP](/learn/cookbooks/gcp.md)
-- [Azure](/learn/cookbooks/azure.md)
 
 ### Running Meilisearch
 
@@ -164,9 +164,13 @@ Server listening on: "127.0.0.1:7700"
 
 Congratulations! You're ready to move on to the next step!
 
-## Step 2: Add documents
+## Add documents
 
 For this quick start, we will be using a collection of movies as our dataset. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file into your working directory.
+
+::: note
+Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You can read more about this in our [documents guide](/learn/core_concepts/documents.md#dataset-format).
+:::
 
 Open a new terminal window and run the following command:
 
@@ -217,13 +221,13 @@ If the document addition is successful, the response should look like this:
 
 If the `status` field has the value `enqueued` or `processing`, all you have to do is wait a short time and check again. Proceed to the next step once the task `status` has changed to `succeeded`.
 
-## Step 3: Search
+## Search
 
 Now that you have Meilisearch set up, you can start searching!
 
 <CodeSamples id="getting_started_search_md" />
 
-In the above code sample, the parameter `q` represents the search query. The documents you added in [step two](#step-2-add-documents) will be searched for text that matches `botman`.
+In the above code sample, the parameter `q` represents the search query. The documents you added in [the previous step](#add-documents) will be searched for text that matches `botman`.
 
 **Meilisearch response**:
 
@@ -257,7 +261,7 @@ In the above code sample, the parameter `q` represents the search query. The doc
 
 By default, Meilisearch only returns the first 20 results for a search query. This can be changed using the [`limit` parameter](/reference/api/search.md#limit).
 
-## Step 4: Search preview
+## Search preview
 
 Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
@@ -265,7 +269,7 @@ Meilisearch offers a search preview where you can preview search results. It com
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
-## Step 5: Front-end integration
+## Front-end integration
 
 The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the components needed to start searching.
 
@@ -324,7 +328,7 @@ Here's what's happening:
 
 - The first four lines of the `<body>` add two container elements: `#searchbox` and `#hits`. `instant-meilisearch` creates the search bar inside `#searchbox` and lists search results in `#hits`
 - The first two`<script src="…">` tags import libraries needed to run `instant-meilisearch`
-- The third and final `<script>` tag  is where you customize `instant-meilisearch`
+- The third and final `<script>` tag is where you customize `instant-meilisearch`
 
 :::
 
@@ -444,7 +448,7 @@ Here's what's happening:
 
 ### Let's try it!
 
-1. Create an empty file  and name it `index.html`
+1. Create an empty file and name it `index.html`
 2. Open it in a text editor like Notepad, Sublime Text, or Visual Studio Code
 3. Copy-paste one of the code samples above—either vanilla JavaScript, Vue 2, or React— and save the file
 4. Open `index.html` in your browser by double-clicking it in your folder

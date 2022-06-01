@@ -1,4 +1,4 @@
-# Chapter 3: Getting ready for production
+# Getting ready for production
 
 This chapter will help you get ready to use Meilisearch in production by covering topics such as instance-wide options, data backup, and security.
 

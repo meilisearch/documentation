@@ -13,7 +13,7 @@ If you have already **installed the latest version and manually indexed your dat
 Before we begin, you need to **verify the version of Meilisearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a Meilisearch instance:
 
 ```bash
-./meilisearch
+./meilisearch --master-key="your_master_key"
 ```
 
 If Meilisearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
@@ -125,13 +125,13 @@ When creating dumps, Meilisearch calls the same method as the [get documents end
 
 Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
-<CodeSamples id="updating_guide_get_displayed_attributes" />
+<CodeSamples id="updating_guide_get_displayed_attributes_new" />
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
 
 If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
-<CodeSamples id="updating_guide_reset_displayed_attributes" />
+<CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
 This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
 
@@ -234,11 +234,11 @@ If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, y
 
 ### Step 4: Import the dump
 
-Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
+Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
 
 ```bash
-# launch the latest version of Meilisearch and import the specified dump file
-./meilisearch --import-dump /dumps/your_dump_file.dump
+# launch the latest version of Meilisearch with the master key and import the specified dump file
+./meilisearch --import-dump /dumps/your_dump_file.dump --master-key="your_master_key"
 ```
 
 ::: warning
@@ -281,13 +281,13 @@ To prevent data loss, all fields must be set as [displayed](/learn/configuration
 
 By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
 
-<CodeSamples id="updating_guide_get_displayed_attributes" />
+<CodeSamples id="updating_guide_get_displayed_attributes_old" />
 
 If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
 
 If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
-<CodeSamples id="updating_guide_reset_displayed_attributes" />
+<CodeSamples id="updating_guide_reset_displayed_attributes_old" />
 
 This command should return a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) with `type` as `indexUpdate`.
 
@@ -305,7 +305,7 @@ To delete the old Meilisearch version, you need to delete the `data.ms` folder. 
 
 ### Step 5: Upload your data to the latest version of Meilisearch
 
-Finally, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and upload your data as usual.
+Finally, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and upload your data as usual.
 
 If you chose to save your settings, make sure to follow this order:
 

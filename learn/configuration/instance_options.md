@@ -119,7 +119,7 @@ Deactivates Meilisearch's built-in telemetry when provided.
 
 Meilisearch automatically collects data from all instances that do not opt out using this flag. All gathered data is used solely for the purpose of improving Meilisearch, and can be [deleted at any time](/learn/what_is_meilisearch/telemetry.md#how-to-delete-all-collected-data).
 
-[Read more about our policy on data collection](/learn/what_is_meilisearch/telemetry.md), or take a look at [the comprehensive list of all datapoints we collect](/learn/what_is_meilisearch/telemetry.md#exhaustive-list-of-all-collected-data).
+[Read more about our policy on data collection](/learn/what_is_meilisearch/telemetry.md), or take a look at [the comprehensive list of all data points we collect](/learn/what_is_meilisearch/telemetry.md#exhaustive-list-of-all-collected-data).
 
 ### Dumps destination
 
@@ -367,9 +367,9 @@ Value must be a path to PEM-formatted certificates. The first certificate should
 **Environment variable**: `MEILI_SSL_KEY_PATH`
 **CLI option**: `--ssl-key-path`
 **Default value**: `None`
-**Expected value**: a filepath pointing to a valid SSL keyfile
+**Expected value**: a filepath pointing to a valid SSL key file
 
-Sets the server's SSL keyfiles.
+Sets the server's SSL key files.
 
 Value must be a path to an RSA private key or PKCS8-encoded private key, both in PEM format.
 

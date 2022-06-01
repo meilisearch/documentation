@@ -40,7 +40,7 @@ Get the stop-words list of an index. The index [`uid`](/learn/core_concepts/inde
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/stop-words" />
 
-Update the list of stop-words of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the list of stop-words of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 

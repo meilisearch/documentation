@@ -14,7 +14,7 @@ With typo tolerance disabled, Meilisearch no longer considers words that are a f
 
 ### `minWordSizeForTypos`
 
-By default, Meilisearch accepts one typo for query terms containing five or more characters, and up to two typos if the term is at at least nine characters long.
+By default, Meilisearch accepts one typo for query terms containing five or more characters, and up to two typos if the term is at least nine characters long.
 
 If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than `5` characters.
 
