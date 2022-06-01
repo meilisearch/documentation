@@ -270,7 +270,7 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 ::: tab CLI
 
 ```bash
-./meilisearch --master-key="your_master_key"
+./meilisearch --master-key="master_key"
 ```
 
 :::
@@ -280,14 +280,14 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 Linux/MacOS:
 
 ```bash
-export MEILI_MASTER_KEY="your_master_key"
+export MEILI_MASTER_KEY="master_key"
 ./meilisearch
 ```
 
 Windows:
 
 ```bash
-set MEILI_MASTER_KEY="your_master_key"
+set MEILI_MASTER_KEY="master_key"
 ./meilisearch
 ```
 
