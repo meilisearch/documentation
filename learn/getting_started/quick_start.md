@@ -257,7 +257,7 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
-![Screenshot of Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
+![Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
@@ -297,8 +297,12 @@ set MEILI_MASTER_KEY="master_key"
 
 When you launch your Meilisearch instance with a master key, two things happen:
 
-- Your Meilisearch instance is now protected. Aside from the [get health endpoint](/reference/api/health.md), all subsequent API requests must include a valid API key for [authorization](/reference/api/overview.md#authorization).
-- Two [default API keys](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization) are automatically generated.
+- Your Meilisearch instance is now protected. Aside from the [get health endpoint](/reference/api/health.md), all subsequent API requests must include a valid API key for [authorization](/reference/api/overview.md#authorization)
+- Two [default API keys](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization) are automatically generated
+
+Here's how you would use the master key you set to access the [get all keys endpoint](/reference/api/keys.md#get-all-keys):
+
+<CodeSamples id="get_all_keys_1" />
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
