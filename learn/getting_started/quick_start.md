@@ -59,7 +59,7 @@ docker run -it --rm \
     -e MEILI_MASTER_KEY='myMasterKey'\
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:latest
-    /meilisearch --no-analytics
+    meilisearch --no-analytics
 ```
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
