@@ -186,9 +186,30 @@ Depending on your needs, you might want to change this order of importance. To d
 
 In a typical dataset, some fields are more relevant to search than others. A `title`, for example, has a value more meaningful to a movie search than its `overview` or its `release_date`.
 
-By default, the attribute ranking order is generated automatically based on the attributes' order of appearance in the indexed documents. However, it can also be set manually.
+By default, the attribute ranking order is generated automatically based on the order in which Meilisearch encounters attributes in the indexed documents. In other words, if your first indexed document looks like this:
 
-For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
+```json
+{
+  "a": "some data",
+  "b": "more data",
+  "c": "other data"
+}
+```
+
+The automatically generated attribute ranking order will be `["a", "b", "c"]`. If you then add a second document that looks like this:
+
+```json
+{
+  "c": "other data",
+  "d": "surprise data!",
+  "a": "some data",
+  "b": "more data"
+}
+```
+
+The attribute ranking order will be updated to `["a", "b", "c", "d"]`. In other words, when Meilisearch encounters new attributes in subsequently indexed documents, they are added to the bottom of the attribute ranking order.
+
+The attribute ranking order can also be set manually. For a more detailed look at this subject, see our reference page for [the searchable attributes list](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list).
 
 ### Example
 

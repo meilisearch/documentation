@@ -80,7 +80,7 @@ module.exports = {
       '/learn/': [
         {
           title: '🔎 What is Meilisearch?',
-          path: '/learn/what_is_meilisearch/overview/',
+          path: '/learn/what_is_meilisearch/overview.html',
           collapsable: false,
           sidebarDepth: 0,
           children: [
@@ -100,13 +100,13 @@ module.exports = {
         },
         {
           title: '🚀 Getting started',
-          path: '/learn/getting_started/quick_start/',
+          path: '/learn/getting_started/quick_start.html',
           collapsable: false,
           children: [
             '/learn/getting_started/quick_start',
             {
               title: 'Meilisearch 101',
-              path: '/learn/getting_started/filtering_and_sorting/',
+              path: '/learn/getting_started/filtering_and_sorting.html',
               collapsable: false,
               children: [
                 '/learn/getting_started/filtering_and_sorting',
@@ -114,11 +114,15 @@ module.exports = {
                 '/learn/getting_started/getting_ready_for_production',
               ],
             },
+            {
+              title: 'Migrating from Algolia',
+              path: '/learn/getting_started/algolia_migration',
+            },
           ],
         },
         {
           title: '💡 Core concepts',
-          path: '/learn/core_concepts/documents/',
+          path: '/learn/core_concepts/documents.html',
           collapsable: false,
           children: [
             '/learn/core_concepts/documents',
@@ -130,7 +134,7 @@ module.exports = {
         {
           title: '⚙️ Configuration',
           collapsable: false,
-          path: '/learn/configuration/instance_options/',
+          path: '/learn/configuration/instance_options.html',
           children: [
             {
               title: 'Configure Meilisearch at launch',
@@ -139,7 +143,7 @@ module.exports = {
             {
               title: 'Index settings',
               collapsable: false,
-              path: '/learn/configuration/settings/',
+              path: '/learn/configuration/settings.html',
               children: [
                 {
                   title: 'Overview',
@@ -156,7 +160,7 @@ module.exports = {
         {
           title: '🔐 Security and permissions',
           collapsable: false,
-          path: '/learn/security/master_api_keys/',
+          path: '/learn/security/master_api_keys.html',
           children: [
             '/learn/security/master_api_keys',
             '/learn/security/tenant_tokens',
@@ -164,7 +168,7 @@ module.exports = {
         },
         {
           title: '📚 Advanced topics',
-          path: '/learn/advanced/asynchronous_operations/',
+          path: '/learn/advanced/asynchronous_operations.html',
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
@@ -173,7 +177,7 @@ module.exports = {
             '/learn/advanced/sorting',
             {
               title: 'Updating Meilisearch',
-              path: '/learn/advanced/updating.md',
+              path: '/learn/advanced/updating',
             },
             {
               title: 'Data backup',
@@ -210,7 +214,7 @@ module.exports = {
         },
         {
           title: '📕 Cookbooks',
-          path: '/learn/cookbooks/running_production/',
+          path: '/learn/cookbooks/running_production.html',
           collapsable: false,
           children: [
             {
@@ -265,7 +269,7 @@ module.exports = {
         {
           title: '🧪 Experimental',
           collapsable: false,
-          path: '/learn/experimental/overview/',
+          path: '/learn/experimental/overview.html',
           children: [
             {
               title: 'Overview',
@@ -279,7 +283,7 @@ module.exports = {
         },
         {
           title: '👐 Contributing',
-          path: '/learn/contributing/overview/',
+          path: '/learn/contributing/overview.html',
           collapsable: false,
           children: [
             {
@@ -296,7 +300,7 @@ module.exports = {
       '/reference/': [
         {
           title: '📒 API reference',
-          path: '/reference/api/overview/',
+          path: '/reference/api/overview.html',
           collapsable: false,
           children: [
             {
@@ -310,7 +314,7 @@ module.exports = {
             '/reference/api/keys',
             {
               title: 'Settings',
-              path: '/reference/api/settings/',
+              path: '/reference/api/settings.html',
               collapsable: false,
               children: [
                 {
@@ -354,7 +358,7 @@ module.exports = {
     'img-lazy',
     // Because colors can not be set through the settings of the plugin
     // Change are done in .vuepress/styles/palette.styl
-    'vuepress-plugin-element-tabs',
+    '@bidoubiwa/vuepress-plugin-element-tabs',
     ['vuepress-plugin-container', { type: 'note' }],
     [require('./config-path-checker')],
     [require('./custom-markdown-rules')],
