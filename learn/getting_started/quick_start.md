@@ -295,12 +295,10 @@ set MEILI_MASTER_KEY="master_key"
 
 ::::
 
-Once you launch your Meilisearch instance with a master key, all subsequent requests, except the [get health endpoint](/reference/api/health.md), must include the [`Authorization` header](/reference/api/overview.md#authorization).
+When you launch your Meilisearch instance with a master key, two things happen:
 
-When you launch your secure instance, Meilisearch will generate two API keys for you:
-
-- Default Search API Key: For accessing the [search route](/reference/api/search.md)
-- Default Admin API Key: For accessing all API routes except [`/keys`](/reference/api/keys.md)
+- Your Meilisearch instance is now protected. Aside from the [get health endpoint](/reference/api/health.md), all subsequent API requests must include a valid API key for [authorization](/reference/api/overview.md#authorization).
+- Two [default API keys](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization) are automatically generated.
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
