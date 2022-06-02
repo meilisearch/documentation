@@ -227,14 +227,14 @@ In the above code sample, the parameter `q` represents the search query. The doc
 {
   "hits": [
     {
-      "id": "29751",
+      "id": 29751,
       "title": "Batman Unmasked: The Psychology of the Dark Knight",
       "poster": "https://image.tmdb.org/t/p/w1280/jjHu128XLARc2k4cJrblAvZe0HE.jpg",
       "overview": "Delve into the world of Batman and the vigilante justice tha",
       "release_date": "2008-07-15"
     },
     {
-      "id": "471474",
+      "id": 471474,
       "title": "Batman: Gotham by Gaslight",
       "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
       "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",

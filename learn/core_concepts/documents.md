@@ -36,7 +36,7 @@ As an example, let's say you are creating an **[index][indexes]** that contains 
 
 ```json
 {
-  "id": "1564saqw12ss",
+  "id": 1564,
   "title": "Kung Fu Panda",
   "genres": "Children's Animation",
   "release-year": 2008,
@@ -49,7 +49,7 @@ As an example, let's say you are creating an **[index][indexes]** that contains 
 
 In the above example, `"id"`, `"title"`, `"genres"`, `"release-year"`, and `"cast"` are **attributes**.
 Each attribute must be associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`.
-At minimum, the document must contain one field with the **[primary key][primary-key]** attribute and a unique **[document id][document-id]** as its value. Above, that's: `"id": "1564saqw12ss"`.
+At minimum, the document must contain one field with the **[primary key][primary-key]** attribute and a unique **[document id][document-id]** as its value. Above, that's: `"id": 1564`.
 
 #### NDJSON
 
@@ -62,7 +62,7 @@ Compared to JSON, NDJSON has better writing performance and is less CPU and memo
 The above JSON document would look like this in NDJSON:
 
 ```json
-{ "id": "1564saqw12ss", "title": "Kung Fu Panda", "genres": "Children's Animation", "release-year": 2008, "cast": [{ "Jack Black": "Po" }, { "Jackie Chan": "Monkey" }] }
+{ "id": 1564, "title": "Kung Fu Panda", "genres": "Children's Animation", "release-year": 2008, "cast": [{ "Jack Black": "Po" }, { "Jackie Chan": "Monkey" }] }
 ```
 
 #### CSV
@@ -76,8 +76,8 @@ Compared to JSON, CSV has better writing performance and is less CPU and memory 
 The above JSON document would look like this in CSV:
 
 ```csv
-  "id:string","title:string","genres:string","release-year:number"
-  "1564saqw12ss","Kung Fu Panda","Children's Animation","2008"
+  "id:number","title:string","genres:string","release-year:number"
+  "1564","Kung Fu Panda","Children's Animation","2008"
 ```
 
 Since CSV does not support arrays or nested objects, `cast` cannot be converted to CSV.
