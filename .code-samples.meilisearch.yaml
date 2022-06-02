@@ -780,7 +780,7 @@ primary_field_guide_add_document_primary_key: |-
         "genres": ["comedy","humor"],
         "price": 5.00
      }]'
-primary_field_guide_update_document_primary_key: |
+primary_field_guide_update_document_primary_key: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/books' \
     -H 'Content-Type: application/json' \
