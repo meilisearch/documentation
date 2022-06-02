@@ -15,7 +15,7 @@ Each index holds information about the fields found in the documents, including 
 
 ## Index creation
 
-Meilisearch automatically creates an index for you the first time you add a document, or you can create one manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
+Meilisearch automatically creates an index for you the first time you add a document. You can also create one manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
 
 ## Index UID
 
