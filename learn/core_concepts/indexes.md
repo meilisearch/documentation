@@ -1,6 +1,6 @@
 # Indexes
 
-An index is an entity that gathers a set of documents with its own settings. It can be comparable to a table in `SQL` or a collection in MongoDB.
+An index is an entity that gathers a set of documents with its own settings. It is comparable to a table in `SQL` or a collection in MongoDB.
 
 An index is defined by a `uid` and contains the following information:
 
