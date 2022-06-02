@@ -53,7 +53,7 @@ These commands launch the **latest stable release** of Meilisearch.
 # Fetch the latest version of Meilisearch image from DockerHub
 docker pull getmeili/meilisearch:v0.27.1
 
-# Launch Meilisearch with a master key and deactivate analytics
+# Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
     -e MEILI_MASTER_KEY='myMasterKey'\
