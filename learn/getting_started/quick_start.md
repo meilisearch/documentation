@@ -270,7 +270,7 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 ::: tab CLI
 
 ```bash
-./meilisearch --master-key="master_key"
+./meilisearch --master-key="masterKey"
 ```
 
 :::
@@ -280,14 +280,14 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 Linux/MacOS:
 
 ```bash
-export MEILI_MASTER_KEY="master_key"
+export MEILI_MASTER_KEY="masterKey"
 ./meilisearch
 ```
 
 Windows:
 
 ```bash
-set MEILI_MASTER_KEY="master_key"
+set MEILI_MASTER_KEY="masterKey"
 ./meilisearch
 ```
 
@@ -302,7 +302,7 @@ When you launch your Meilisearch instance with a master key, two things happen:
 
 Here's how you would use the master key you set to access the [get all keys endpoint](/reference/api/keys.md#get-all-keys):
 
-<CodeSamples id="get_all_keys_1" />
+<CodeSamples id="authorization_header_1" />
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
