@@ -4,14 +4,15 @@ An index is an entity that gathers a set of documents with its own settings. It 
 
 An index is defined by a `uid` and contains the following information:
 
-- One primary key
-- [Default settings](/learn/configuration/settings.md) that can be [configured](/reference/api/settings.md#update-settings)
+- One [primary key](#primary-key)
+- Customizable [settings](index-settings)
+- Some number of documents
 
 #### Example
 
 Suppose you manage a database that contains information about movies, similar to [IMDb](https://imdb.com/). You would probably want to keep multiple types of documents, such as movies, TV shows, actors, directors, and more. Each of these categories would be represented by an index in Meilisearch.
 
-Each index holds information about the fields found in the documents, including how they are handled by Meilisearch and their order of importance. In addition, each has its own set of synonyms, relevancy rules, and stop words. **The settings of one index don't impact other indexes**, meaning you can create different synonyms for a `movies` and `costumes` index on the same server.
+Each index holds information about the fields found in the documents, you would have fields like `movie_id`, `title`, `genre`, `overview`, `release_date`, etc., for a `movies` index. Some of these fields will be more important than others, e.g., `title` would be more meaningful to a movie search than `overview` or `release_date`. You might want exact matches for `movie_id` or `genre` but not for `release_date`. All of this is controlled by an index's settings. The settings of one index don't impact other indexes, meaning you can create different synonyms for a `movies` and `costumes` index on the same server.
 
 ## Index creation
 
@@ -22,8 +23,6 @@ Meilisearch automatically creates an index for you the first time you add a docu
 The `uid` is the **unique identifier** of a given index. It is set at index creation time and must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 
 **Once defined, the `uid` cannot be changed anymore**, and you cannot create another index with the same `uid`.
-
-It is used on every `indexes/{index_uid}` route as the `{index_uid}` parameter.
 
 ```json
 {
@@ -42,9 +41,21 @@ The primary key's attribute name **must** be known by the index. You can [set a 
 
 [Learn more about document primary key](/learn/core_concepts/primary_key.md#primary-key-2)
 
-## Customizing index settings
+## Index settings
 
-Meilisearch allows you to customize your index settings. These settings are what differentiate between indexes even if they have the same documents. You can make these changes using the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
+Index settings can be thought of as a JSON object containing different options for customizing search behavior.
+
+Meilisearch allows you to customize the following index settings:
+
+- Ranking rules
+- Synonyms
+- Filterable attributes
+- Sortable attributes
+- Stop words
+- Displayed and searchable attributes
+- Typo tolerance
+
+These settings are what differentiate between indexes even if they have the same documents. You can make these changes using the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
 
 ### Ranking rules
 
@@ -72,7 +83,9 @@ Since synonyms are defined for a given index, they won't apply to any other inde
 
 ### Filterable attributes
 
-To filter by any document attribute, you need to add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). You can then use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
+Filtering allows you to refine your search based on different categories, in our case, document attributes; these can include a movie genre, a price range, or location. To filter by any document attribute, you need to add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes).
+
+Adding an attribute to `filterableAttributes` will not impact search. You need it to use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
 
 [Learn more about filtering](/learn/advanced/filtering_and_faceted_search.md)
 
@@ -84,17 +97,15 @@ By default, Meilisearch orders results according to their relevancy. You can alt
 
 ### Stop words
 
-Sometimes you may want to ignore certain words in documents and search queries. You can do that by defining a list of stop words for your index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/stop_words.md#update-stop-words).
+Your dataset may contain words you want to ignore during search. These may include words that don't add semantic value or context or are too frequent (e.g., `the` or `of` in English). You can add such words to the [stop words list](/reference/api/stop_words.md) and Meilisearch will ignore them during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
 
-Unless you actually need them, some words neither add semantic value nor context. Besides, they are often too frequent (for example, `the` or `of` in English). Words added to the [stop words list](/reference/api/stop_words.md) will be ignored during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
-
-Suppose you want to search for `the great gatsby`. You would prefer to receive documents containing the terms `great gatsby`, rather than documents containing the terms `the great`, or just `the`. In this case, adding `the` to the stop word list would improve performance and make search results more relevant.
+You can create your list of stop words for your index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/stop_words.md#update-stop-words).
 
 [Learn more about stop words](/reference/api/stop_words.md)
 
 ### Displayed and searchable attributes
 
-By default, every document field is searchable and returned on search queries.
+By default, every document field is searchable and displayed in response to search queries. However, you can choose to set some fields as non-searchable, non-displayed, or both.
 
 You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes).
 
@@ -102,13 +113,13 @@ You can update these field attributes using the [update settings endpoint](/refe
 
 ### Typo tolerance
 
-By default, typo tolerance is enabled in Meilisearch. This allows you to find relevant results even when your search queries contain spelling mistakes or typos, e.g., typing `chickne` instead of `chicken`. You can update the typo tolerance settings for an index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
+Typo tolerance is a built-in feature that helps you find relevant results even when your search queries contain spelling mistakes or typos, e.g., typing `chickne` instead of `chicken`. The setting allows you to configure the following for an index:
 
-The `typoTolerance` object allows you configure the following for an index:
+- Enable or disable typo tolerance
+- Configure the minimum word size for typos
+- Disable typos on specific words
+- Disable typos on specific document attributes
 
-- Enable or disable the typo tolerance feature with the `enabled` field
-- Configure the minimum word size for typos to be handled with `minWordSizeForTypos`
-- Disable typos on specific words with `disableOnWords`
-- Disable typos on specific document attributes with `disableOnAttributes`
+You can update the typo tolerance settings for an index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
