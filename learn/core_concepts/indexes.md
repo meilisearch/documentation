@@ -19,7 +19,9 @@ Meilisearch automatically creates an index for you the first time you add a docu
 
 ## Index UID
 
-The `uid` is the **unique** identifier of a given index. It is set at [index creation time](/reference/api/indexes.md#create-an-index) and must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`. Once defined, the `uid` **cannot be changed anymore**, and you cannot create another index with the same `uid`.
+The `uid` is the **unique identifier** of a given index. It is set at index creation time and must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
+
+**Once defined, the `uid` cannot be changed anymore**, and you cannot create another index with the same `uid`.
 
 It is used on every `indexes/{index_uid}` route as the `{index_uid}` parameter.
 
