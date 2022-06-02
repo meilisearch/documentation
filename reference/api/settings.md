@@ -1,8 +1,6 @@
 # All settings
 
-[Index](/learn/core_concepts/indexes.md) settings are represented as a [JSON object literal](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), containing a field for each possible customization option.
-
-It is possible to modify all the settings at once using the [`update settings` endpoint](#update-settings), or individually using the dedicated routes.
+The `/settings` route allows you to customize search settings for the given index. It is possible to modify all of an index's settings at once using the [`update settings` endpoint](#update-settings), or modify each one individually using the dedicated routes.
 
 These are the reference pages for the dedicated routes:
 
