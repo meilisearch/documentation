@@ -1,6 +1,6 @@
 # Quick start
 
-This quick start will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, securing your instance, and adding a search bar.
+This quick start will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, adding a search bar, and securing your instance.
 
 All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
 
@@ -265,51 +265,6 @@ Meilisearch offers a search preview where you can preview search results. It com
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
-## Securing Meilisearch
-
-The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
-
-:::: tabs
-
-::: tab CLI
-
-```bash
-./meilisearch --master-key="masterKey"
-```
-
-:::
-
-::: tab Environment variable
-
-Linux/MacOS:
-
-```bash
-export MEILI_MASTER_KEY="masterKey"
-./meilisearch
-```
-
-Windows:
-
-```bash
-set MEILI_MASTER_KEY="masterKey"
-./meilisearch
-```
-
-:::
-
-::::
-
-When you launch your Meilisearch instance with a master key, two things happen:
-
-- Your Meilisearch instance is now protected. Aside from the [get health endpoint](/reference/api/health.md), all subsequent API requests must include a valid API key for [authorization](/reference/api/overview.md#authorization)
-- Two [default API keys](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization) are automatically generated
-
-Here's how to use the master key you set to [get all keys](/reference/api/keys.md#get-all-keys):
-
-<CodeSamples id="authorization_header_1" />
-
-To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
-
 ## Front-end integration
 
 The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a developer tool that generates all the components needed to start searching.
@@ -495,6 +450,51 @@ Here's what's happening:
 4. Open `index.html` in your browser by double-clicking it in your folder
 
 You should now have a working front-end search interface 🚀🔥
+
+## Securing Meilisearch
+
+The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+
+:::: tabs
+
+::: tab CLI
+
+```bash
+./meilisearch --master-key="masterKey"
+```
+
+:::
+
+::: tab Environment variable
+
+Linux/MacOS:
+
+```bash
+export MEILI_MASTER_KEY="masterKey"
+./meilisearch
+```
+
+Windows:
+
+```bash
+set MEILI_MASTER_KEY="masterKey"
+./meilisearch
+```
+
+:::
+
+::::
+
+When you launch your Meilisearch instance with a master key, two things happen:
+
+- Your Meilisearch instance is now protected. Aside from the [get health endpoint](/reference/api/health.md), all subsequent API requests must include a valid API key for [authorization](/reference/api/overview.md#authorization)
+- Two [default API keys](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization) are automatically generated
+
+Here's how to use the master key you set to [get all keys](/reference/api/keys.md#get-all-keys):
+
+<CodeSamples id="authorization_header_1" />
+
+To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
 ## What's next?
 
