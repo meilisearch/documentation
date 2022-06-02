@@ -46,7 +46,7 @@ The primary key's attribute name **must** be known by the index. You can [set a 
 
 Meilisearch allows you to customize your index settings. These settings are what differentiate between indexes even if they have the same documents. You can make these changes using the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
 
-### Relevancy rules
+### Ranking rules
 
 Each index applies its own relevancy rules. All indexes are created with the same built-in ranking rules executed in default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance is based on their order of appearance in the document.
 
@@ -64,7 +64,7 @@ You can alter the order in which ranking rules take effect or define custom rank
 
 ### Synonyms
 
-You can create a list of synonyms for words with the same meaning in your index. Even though they are different, they should be treated similarly. If either of the associated words is searched, the same results shall be displayed.
+Your dataset may contain words with similar meanings. For these, you can define a list of synonyms: words that will be treated as the same or similar for search purposes.
 
 Since synonyms are defined for a given index, they won't apply to any other index on the same Meilisearch instance. You can create your list of synonyms using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update synonyms endpoint](/reference/api/synonyms.md#update-synonyms).
 
@@ -95,11 +95,6 @@ Suppose you want to search for `the great gatsby`. You would prefer to receive d
 ### Displayed and searchable attributes
 
 By default, every document field is searchable and returned on search queries.
-
-Fields can have either or both or none of the following properties:
-
-- **Searchable**: Field attributes searched for matching query words. Meilisearch also uses the content of searchable fields to assess the relevancy of a document
-- **Displayed**: Field attributes returned upon search
 
 You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes).
 
