@@ -5,7 +5,7 @@ An index is an entity that gathers a set of documents with its own settings. It 
 An index is defined by a `uid` and contains the following information:
 
 - One [primary key](#primary-key)
-- Customizable [settings](index-settings)
+- Customizable [settings](#index-settings)
 - Some number of documents
 
 #### Example
@@ -35,9 +35,9 @@ The `uid` is the **unique identifier** of a given index. It is set at index crea
 
 ## Primary key
 
-An index is a collection of documents. All documents have a primary key, which is a mandatory field. This field is composed of a primary key attribute name and a unique value. All documents in a given index share the same primary key attribute but a different unique value.
+Every index has a primary key: a required attribute that must be present in all documents in the index. The primary key's attribute name must be known by the index. Each document in the index must have a unique value associated with the primary key. This serves to identify each document in the index, such that two documents in an index can never be completely identical. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-The primary key's attribute name **must** be known by the index. You can [set a primary key for an index or let it be inferred by Meilisearch](/learn/core_concepts/primary_key.md#setting-the-primary-key).
+You can set a primary key for an index or let it be inferred by Meilisearch, read more about it in our [dedicated guide](/learn/core_concepts/primary_key.md#setting-the-primary-key).
 
 [Learn more about document primary key](/learn/core_concepts/primary_key.md#primary-key-2)
 
@@ -47,19 +47,19 @@ Index settings can be thought of as a JSON object containing different options f
 
 Meilisearch allows you to customize the following index settings:
 
-- Ranking rules
-- Synonyms
-- Filterable attributes
-- Sortable attributes
-- Stop words
-- Displayed and searchable attributes
-- Typo tolerance
+- [Ranking rules](#ranking-rules)
+- [Synonyms](#synonyms)
+- [Filterable attributes](#filterable-attributes)
+- [Sortable attributes](#sortable-attributes)
+- [Stop words](#stop-words)
+- [Displayed and searchable attributes](#displayed-and-searchable-attributes)
+- [Typo tolerance](#typo-tolerance)
 
 These settings are what differentiate between indexes even if they have the same documents. You can make these changes using the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
 
 ### Ranking rules
 
-Each index applies its own relevancy rules. All indexes are created with the same built-in ranking rules executed in default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance is based on their order of appearance in the document.
+All indexes are created with the same built-in ranking rules executed in default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance is based on their order of appearance in the document.
 
 Suppose your first document lists attributes in the following order:
 
