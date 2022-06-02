@@ -29,7 +29,7 @@ Select your plan. Plans start at $5 (click on "See all plans" for more options).
 
 Select the region where you want to deploy your droplet. Remember, the closer you are to your users or customers, the better will be their search experience with Meilisearch.
 
-![Selecting the London datacenter region](/digitalocean/04.select-region.png)
+![Selecting the London data center region](/digitalocean/04.select-region.png)
 
 ### 5. Add your ssh key
 
@@ -49,7 +49,7 @@ Here you can select the name that will be visible everywhere in your DigitalOcea
 
 Tags are a very good method to know who created resources, and for organizing resources or projects. Tags can contain letters, numbers, colons, dashes, and underscores. Try to always add some tags to make clear what are the server purposes.
 
-![The searchbar, meilisearch, and search-team tags](/digitalocean/06.add-tags.png)
+![The search bar, meilisearch, and search-team tags](/digitalocean/06.add-tags.png)
 
 ### 7. Finally click on 'Create Droplet'
 

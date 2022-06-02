@@ -1,4 +1,4 @@
-# Chapter 1: Filtering and sorting
+# Filtering and sorting
 
 Welcome to the Meilisearch 101! This guide aims to introduce you to the main features of Meilisearch as efficiently as possible. It assumes that you have completed the [Quick start](/learn/getting_started/quick_start.md) and already have a running Meilisearch instance.
 

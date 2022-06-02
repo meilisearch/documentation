@@ -39,7 +39,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | SDK      | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | REST API | ✅ | ✅ | ✅ | ✅ |
-| [Javascript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
+| [JavaScript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
 | [PHP client](https://github.com/meilisearch/meilisearch-php)                  |  ✅         |   ✅     |     ✅      |        ✅       |
 | [Python client](https://github.com/meilisearch/meilisearch-python)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Ruby client](https://github.com/meilisearch/meilisearch-ruby)              | ✅          | ✅      |        ✅   |       ✅        |
@@ -180,9 +180,9 @@ Some of the most significant similarities between Algolia and Meilisearch are:
 
 #### Key differences
 
-Contrary to Algolia, Meilisearch is open-source and written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside virtual machines, containers, or even [Lambda@Edge](https://aws.amazon.com/lambda/edge/) a seamless operation.
+Contrary to Algolia, Meilisearch is open-source and can be forked or self-hosted.
 
-One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers. Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, it is our goal to one day offer a highly available cloud solution that is simpler to deploy and maintain than Algolia's.
+Additionally, Meilisearch is written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside virtual machines, containers, or even [Lambda@Edge](https://aws.amazon.com/lambda/edge/) a seamless operation.
 
 #### Pricing
 

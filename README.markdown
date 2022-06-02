@@ -24,7 +24,7 @@ If this happens to you and you think there has been some mistake, please let us 
 
 ### Requirements
 
-- Node version >= v10 and < v15
+- Node version >= v14 and <= v16
 
 ### Installing & Running
 
