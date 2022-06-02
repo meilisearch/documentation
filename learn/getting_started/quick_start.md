@@ -1,6 +1,6 @@
 # Quick start
 
-In this quick start we will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, and adding a search bar.
+This quick start will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, securing your instance, and adding a search bar.
 
 All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
 
@@ -261,9 +261,54 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
-![Screenshot of Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
+![Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
+
+## Securing Meilisearch
+
+The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+
+:::: tabs
+
+::: tab CLI
+
+```bash
+./meilisearch --master-key="masterKey"
+```
+
+:::
+
+::: tab Environment variable
+
+Linux/MacOS:
+
+```bash
+export MEILI_MASTER_KEY="masterKey"
+./meilisearch
+```
+
+Windows:
+
+```bash
+set MEILI_MASTER_KEY="masterKey"
+./meilisearch
+```
+
+:::
+
+::::
+
+When you launch your Meilisearch instance with a master key, two things happen:
+
+- Your Meilisearch instance is now protected. Aside from the [get health endpoint](/reference/api/health.md), all subsequent API requests must include a valid API key for [authorization](/reference/api/overview.md#authorization)
+- Two [default API keys](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization) are automatically generated
+
+Here's how to use the master key you set to [get all keys](/reference/api/keys.md#get-all-keys):
+
+<CodeSamples id="authorization_header_1" />
+
+To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
 ## Front-end integration
 
