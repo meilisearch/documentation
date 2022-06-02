@@ -4,7 +4,7 @@ The `keys` route allows you to create, manage, and delete API keys. In order to 
 
 ```bash
 curl \
-  -H 'Authorization: Bearer replaceThisWithYourMasterKey'
+  -H 'Authorization: Bearer MASTER_KEY'
   …
 ```
 
