@@ -1,6 +1,6 @@
 # Documents
 
-A **document** is an object composed of one or more **fields**. Each field consists of an **attribute** and its associated **value**. Documents function as **containers for organizing data**, and are the basic building blocks of a Meilisearch database. To search for a document, it must first be added to an [index](/learn/core_concepts/indexes.md).
+A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data, and are the basic building blocks of a Meilisearch database. To search for a document, it must first be added to an [index](/learn/core_concepts/indexes.md).
 
 ## Structure
 
@@ -9,7 +9,7 @@ A **document** is an object composed of one or more **fields**. Each field consi
 ### Important terms
 
 - **Document**: An object which contains data in the form of one or more fields
-- **[Field](#fields)**: A set of two data items that are linked together: an **attribute** and a **value**
+- **[Field](#fields)**: A set of two data items that are linked together: an attribute and a value
 - **Attribute**: The first part of a field. Acts as a name or description for its associated value
 - **Value**: The second part of a field, consisting of data of any valid JSON type
 - **[Primary Field](#primary-field)**: A special field that is mandatory in all documents. It contains the primary key and document identifier
@@ -18,9 +18,9 @@ A **document** is an object composed of one or more **fields**. Each field consi
 
 A field is a set of two data items linked together: an attribute and a value. Documents are made up of fields.
 
-An attribute functions a bit like a variable in most programming languages, i.e., it is a name that allows you to store, access, and describe some data. That data is the attribute's **value**. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute). Words exceeding the 65535 position limit will be ignored.**
+An attribute functions a bit like a variable in most programming languages, i.e., it is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
 
-Every field has a [data type](/learn/advanced/datatypes.md) dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
+Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
 If a field contains an object, Meilisearch flattens it during indexation using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is an intermediary representation and you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes.md#objects).
 
@@ -38,7 +38,7 @@ In the latter case, the field will be completely ignored during search. However,
 
 ## Primary field
 
-The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id). If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the [wrong primary key for a given index](/learn/core_concepts/indexes.md#primary-key), it will cause an error and no documents will be added.
+The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id). If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
 
 To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
 
@@ -48,7 +48,7 @@ By default, Meilisearch limits the size of all payloads—and therefore document
 
 **Meilisearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
-When using the [route to add new documents](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array **even if there is only one document**.
+When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document.
 
 ### Dataset format
 
@@ -64,7 +64,7 @@ Documents represented as JSON objects are key-value pairs enclosed by curly brac
 
 Meilisearch will only accept JSON documents when it receives the `application/json` content-type header.
 
-As an example, let's say you are creating an **[index][indexes]** that contains information about movies. A sample document might look like this:
+As an example, let's say you are creating an index that contains information about movies. A sample document might look like this:
 
 ```json
 {
@@ -81,9 +81,9 @@ As an example, let's say you are creating an **[index][indexes]** that contains 
 
 In the above example:
 
-- `"id"`, `"title"`, `"genres"`, `"release-year"`, and `"cast"` are **attributes**
-- Each attribute is associated with a **value**, e.g. `"Kung Fu Panda"` is the value of `"title"`
-- The document contains a field with the **[primary key](/learn/core_concepts/primary_key.md#primary-key-2)** attribute and a unique **[document id](/learn/core_concepts/primary_key.md#document-id)** as its value: `"id": "1564saqw12ss"`
+- `"id"`, `"title"`, `"genres"`, `"release-year"`, and `"cast"` are  attributes
+- Each attribute is associated with a value, e.g. `"Kung Fu Panda"` is the value of `"title"`
+- The document contains a field with the primary key attribute and a unique document id as its value: `"id": "1564saqw12ss"`
 
 #### NDJSON
 
