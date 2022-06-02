@@ -56,7 +56,7 @@ docker pull getmeili/meilisearch:v0.27.1
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
-    -e MEILI_MASTER_KEY='myMasterKey'\
+    -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:v0.27.1
     meilisearch --env="development"
