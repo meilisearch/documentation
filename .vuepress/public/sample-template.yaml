@@ -141,7 +141,7 @@ updating_guide_reset_displayed_attributes_old: |-
 updating_guide_reset_displayed_attributes_new: |-
 updating_guide_create_dump: |-
 updating_guide_get_dump_status: |-
-updating_guide_get_settings: |-
-updating_guide_retrieve_documents: |-
-updating_guide_update_settings: |-
-updating_guide_add_documents: |-
+updating_guide_get_settings_old: |-
+updating_guide_retrieve_documents_old: |-
+updating_guide_update_settings_old: |-
+updating_guide_add_documents_old: |-
