@@ -234,7 +234,7 @@ If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, y
 
 ### Step 4: Import the dump
 
-Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
+Now that you’ve got your dump, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
 
 ```bash
 # launch the latest version of Meilisearch with the master key and import the specified dump file
@@ -269,7 +269,7 @@ If you don’t need to preserve index settings, skip directly to [step two](#ste
 
 First, use the [get settings endpoint](/reference/api/settings.md#get-settings) to retrieve the [settings](/learn/configuration/settings.md) of any indexes you want to preserve, and save them to a file using the method you prefer.
 
-<CodeSamples id="updating_guide_get_settings" />
+<CodeSamples id="updating_guide_get_settings_old" />
 
 Repeat this process for all indexes you wish to migrate.
 
@@ -297,7 +297,7 @@ Now that all fields are displayed, proceed to the next step.
 
 Use the [get documents endpoint](/reference/api/documents.md#get-documents) to retrieve your documents and save them using the method you prefer. Make sure to set the `limit` on documents returned so that, if you have some number of documents `n`, `limit ≥ n`. Otherwise, you risk data loss.
 
-<CodeSamples id="updating_guide_retrieve_documents" />
+<CodeSamples id="updating_guide_retrieve_documents_old" />
 
 ### Step 4: Delete the database folder
 
@@ -305,13 +305,13 @@ To delete the old Meilisearch version, you need to delete the `data.ms` folder. 
 
 ### Step 5: Upload your data to the latest version of Meilisearch
 
-Finally, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation) and upload your data as usual.
+Finally, [install the latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and upload your data as usual.
 
 If you chose to save your settings, make sure to follow this order:
 
-<CodeSamples id="updating_guide_update_settings" />
+<CodeSamples id="updating_guide_update_settings_old" />
 
-<CodeSamples id="updating_guide_add_documents" />
+<CodeSamples id="updating_guide_add_documents_old" />
 
 Since updating the settings requires re-indexing all documents, this order saves time and memory.
 

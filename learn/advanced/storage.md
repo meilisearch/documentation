@@ -26,7 +26,7 @@ For the best performance, it is recommended to provide the same amount of RAM as
 
 ### Understanding LMDB
 
-The choice of LMDB comes with certain pros and cons. In order to understand this choice, its upsides and downsides, we need to have an insight on how LMDB impact size and memory usage. This is well explained in [a blogpost of LMDB](https://web.archive.org/web/20210412154001/https://symas.com/understanding-lmdb-database-file-sizes-and-memory-utilization/) and we are trying to summarize it here.
+The choice of LMDB comes with certain pros and cons. In order to understand this choice, its upsides and downsides, we need to have an insight on how LMDB impact size and memory usage. This is well explained in [a blog post of LMDB](https://web.archive.org/web/20210412154001/https://symas.com/understanding-lmdb-database-file-sizes-and-memory-utilization/) and we are trying to summarize it here.
 
 #### Database size
 

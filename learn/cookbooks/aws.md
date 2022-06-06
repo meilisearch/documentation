@@ -21,7 +21,7 @@ In the top-right corner, click on the **Launch instances** button to start the p
 
 ### 2. Select 'Meilisearch' AMI from 'Community AMIs'
 
-You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the searchbar and select the **Community AMIs** tab on the left sidebar.
+You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the search bar and select the **Community AMIs** tab on the left sidebar.
 
 ![Page titled: 'Step 1: Choose an Amazon Machine Image (AMI)'. There is only one AMI available, MeiliSearch-v0.19.0-Debian-10.3](/aws/02.select-ami.png)
 
@@ -77,7 +77,7 @@ For your Meilisearch instance to communicate with the outside world, it is very 
 
 ![Page titled 'Step 6: Configure Security group'. Warning: Rules with sources of 0.0.0.0/0 allow all IP addresses to access your instance. We recommend setting security group rules to allow access from known IP addresses only.](/aws/07.security.png)
 
-By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP adresses that are allowed to request your MeiliSearch instance, go to the **Source** column and select the **Custom** option. The **Source** is set to **Anywhere** by default.
+By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP addresses that are allowed to request your Meilisearch instance, go to the **Source** column and select the **Custom** option. The **Source** is set to **Anywhere** by default.
 
 You can also **use an existing security group**, if preferred.
 
@@ -101,7 +101,7 @@ Your instance may take a minute or two to get up and running (see the **Instance
 
 ![AWS dashboard showing an active instance](/aws/09.launch.png)
 
-Once the **Instance state** is **Running**, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS** displayed in your AWS instances dashboard. You should see the MeiliSearch [search preview](/learn/what_is_meilisearch/search_preview.md).
+Once the **Instance state** is **Running**, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS** displayed in your AWS instances dashboard. You should see the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview.md).
 
 ![Meilisearch search preview allowing users to search an example dataset](/aws/10.enjoy.png)
 

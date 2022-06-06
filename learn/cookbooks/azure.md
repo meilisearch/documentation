@@ -34,7 +34,7 @@ By default, the instance created is on a Standard plan. This will incur costs in
 
 After a few minutes, the deployment will be complete. You'll be able to access your instance URL by clicking on the **Outputs** tabs on the left.
 
-![The Azure portal showing informations about your Meilisearch deployment](/azure/02.azure-output.png)
+![The Azure portal showing information about your Meilisearch deployment](/azure/02.azure-output.png)
 
 ::: tip
 While Meilisearch is usually exposed on port `7700`, this deployment will expose your instance on port `433`. An SSL certificate will be generated and managed for you by Azure.

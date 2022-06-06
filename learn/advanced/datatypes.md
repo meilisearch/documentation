@@ -69,7 +69,7 @@ The `null` type can be pushed into Meilisearch but it **won't be taken into acco
 
 ## Array
 
-An array is an ordered list of values. These values can be of any type: numbers, strings, booleans, objects, or even other arrays.
+An array is an ordered list of values. These values can be of any type: number, string, boolean, object, or even other arrays.
 
 Meilisearch flattens arrays and concatenates them into strings. Non-string values are converted as described in this article's previous sections.
 

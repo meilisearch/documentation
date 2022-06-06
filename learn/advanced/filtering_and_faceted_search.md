@@ -286,7 +286,7 @@ Meilisearch does not differentiate between facets and filters. This means that, 
 
 Using `facetsDistribution` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
 
-In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results  available for each facet.
+In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
 
 ![IMDb facets](/faceted-search/facets-imdb.png)
 
