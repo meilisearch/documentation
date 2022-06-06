@@ -134,14 +134,14 @@ You can read more about it in our [dedicated guide](/learn/configuration/synonym
 
 ## Typo tolerance
 
-Meilisearch is typo tolerant by default. It will help you find relevant search results even if you make spelling mistakes or typos, e.g., searching for `Caribean` instead of `Caribbean`. The `typoTolerance` object allows you to:
+Meilisearch is typo tolerant by default. It will help you find relevant search results even if you make spelling mistakes or typos, e.g., searching for `swaj` instead of `swan`. The `typoTolerance` object allows you to:
 
 - Enable or disable the typo tolerance feature
 - Configure the minimum word size for typos
 - Disable typos on specific words
 - Disable typos on specific attributes
 
-Meilisearch accepts one typo for query terms containing `5` or more characters by default. If you search the movies index for `swaj` instead of `swan`, you will not get any results.
+Meilisearch accepts one typo for query terms containing `5` or more characters by default. If you search the movies index for `swaj`, you will not get any results.
 
 <CodeSamples id= "getting_started_typo_tolerance" />
 
