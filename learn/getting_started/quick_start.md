@@ -494,7 +494,7 @@ Here's how to use the master key you set to [get all keys](/reference/api/keys.m
 
 <CodeSamples id="authorization_header_1" />
 
-::: note
+::: warning
 The master key should only be used for managing your API keys, avoid using it for regular API calls.
 :::
 
