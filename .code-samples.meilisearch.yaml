@@ -910,3 +910,12 @@ updating_guide_add_documents_old: |-
     -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/documents' \
     -H 'Content-Type: application/json' -d @mydocuments.json \
     -H 'X-Meili-API-Key: apiKey'
+getting_started_typo_tolerance: |-
+  curl \
+      -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+      -H 'Content-Type: application/json' \
+      --data-binary '{
+        "minWordSizeForTypos": { "oneTypo": 4 }
+  }'
+
+
