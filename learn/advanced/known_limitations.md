@@ -32,7 +32,7 @@ If your query is `Hello, World`:
 - `World` takes the position `9` of the attribute
 
 ::: note
-`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes.md#string).
 :::
 
 If your query is `Hello - World`:
@@ -42,7 +42,7 @@ If your query is `Hello - World`:
 - `World` takes the position `2` of the attribute
 
 ::: note
-`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about datatypes](/learn/advanced/datatypes.md#string).
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes.md#string).
 :::
 
 ## Maximum number of attributes per document
@@ -61,7 +61,7 @@ If your query is `Hello - World`:
 
 **Limitation:** Individual `filterableAttributes` values are limited to 500 bytes.
 
-**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a datatype whose size is limited to approximately 500 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 500 bytes.
+**Explanation:** Meilisearch stores `filterableAttributes` values as keys in LMDB, a data type whose size is limited to approximately 500 bytes. Note that this only applies to individual values—for example, a `genres` attribute can contain any number of values such as `horror`, `comedy`, or `cyberpunk` as long as each one of them is smaller than 500 bytes.
 
 ## Maximum filter depth
 

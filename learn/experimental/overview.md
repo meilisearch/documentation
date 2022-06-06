@@ -4,7 +4,7 @@
 
 Meilisearch maintains a high standard for new features. The process of adding a new feature to our search engine typically begins with a specification, centers around copious unit testing, and ends with the feature's release, barring some minor iteration in subsequent versions.
 
-This is not necessarily the case for experimental features. **Experimental features are features that may not have been tested to our usual standards, and which may be reworked or removed entirely in future versions.** They come with an increased risk of bugs and unforseen behavior, but some users may find the extra functionality to be worth the risk.
+This is not necessarily the case for experimental features. **Experimental features are features that may not have been tested to our usual standards, and which may be reworked or removed entirely in future versions.** They come with an increased risk of bugs and unforeseen behavior, but some users may find the extra functionality to be worth the risk.
 
 ## Giving feedback
 
