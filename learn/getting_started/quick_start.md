@@ -496,6 +496,10 @@ Here's how to use the master key you set to [get all keys](/reference/api/keys.m
 
 <CodeSamples id="authorization_header_1" />
 
+::: warning
+The master key should only be used for managing your API keys. Avoid using it for regular API calls.
+:::
+
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
 ## What's next?
