@@ -1,0 +1,13 @@
+---
+# Need to update this for "1. Click this" "1.1. Click that"
+#Our headings should not use end punctuation
+extends: existence
+message: "Don't use end punctuation in headings."
+link: https://developers.google.com/style/periods
+level: warning
+scope: heading
+tokens:
+  - '[a-z0-9][.?!](?:\s|$)'
+ignore:
+ - resources/faq.md
+ - /learn/what_is_meilisearch/telemetry.md

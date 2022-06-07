@@ -1,0 +1,52 @@
+---
+# Our headings should use sentence-style capitalization. The exceptions include any headings that maybe a list, start with "Step 1: Do this", and the list of words below
+extends: capitalization
+message: "'%s' should use sentence-style capitalization."
+link: 'https://developers.google.com/style/capitalization#capitalization-in-titles-and-headings'
+level: warning
+scope: heading
+match: $sentence
+indicators:
+  - ':'
+exceptions:
+  - Azure
+  - CLI
+  - Code
+  - Docker
+  - SDK
+  - SDKs
+  - Kubernetes
+  - Linux
+  - macOS
+  - Marketplace
+  - MongoDB
+  - TypeScript
+  - URLs
+  - Visual
+  - VS
+  - Windows
+  - Meilisearch
+  - AWS
+  - Amazon Web Services
+  - DigitalOcean
+  - GCP
+  - Qovery
+  - GCP
+  - Google Cloud Platform
+  - Compute Engine
+  - GitHub
+  - JSON
+  - API
+  - VuePress
+  - OpenAPI
+  - Elasticsearch
+  - Algolia
+  - DevOps
+  - Lucene-Solr
+  - App Service Auto-Scale
+  - Certbot
+  - Bleve & Tantivy
+  - '([0-9a-z]:\s[A-Z])'  #How do get this to throw an error for `Step 1: do this`?
+ignore:
+ - /learn/what_is_meilisearch/language.md
+ - index.md
