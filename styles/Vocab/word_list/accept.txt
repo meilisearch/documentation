@@ -58,6 +58,6 @@ Docsearch
 Nutch
 [Ss]ubproject
 Doofinder
-'/\((.*?)\)'
+'/\(\B(.*?)\)'
 [Ss]harding
 [Mm]eili

@@ -4,6 +4,6 @@ extends: existence
 message: "Use the Oxford comma in '%s'."
 link: 'https://developers.google.com/style/commas'
 scope: sentence
-level: error
+level: suggestion
 tokens:
   - '(?:[^,]+,){1,}\s\w+\s(?:and|or)'
