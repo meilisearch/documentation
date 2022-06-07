@@ -78,8 +78,8 @@ Meilisearch uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/
 The [number of typos referenced above](#minwordsizefortypos) is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
 
 - substitution of a character (e.g., **`k`**`itten` → **`s`**`itten`)
-- insertion of a character (e.g., `siting` → `sit**t**ing`)
-- deletion of a character (e.g., `satu**r**day` → `satuday`)
+- insertion of a character (e.g., `siting` → `sit`**`t`**`ing`)
+- deletion of a character (e.g., `satu`**`r`**`day` → `satuday`)
 
 By default, Meilisearch uses the following rules for matching documents. Note that these rules are **by word** and not for the whole query string.
 
