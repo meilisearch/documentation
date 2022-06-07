@@ -20,7 +20,7 @@ Get the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an i
 
 #### Default value
 
-An array that contains [ranking rules](/learn/core_concepts/relevancy.md#default-order) in order of importance.
+An array that contains [ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) in order of importance.
 
 ### Example
 

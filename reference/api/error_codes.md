@@ -66,7 +66,8 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 ### `missing_authorization_header`
 
-The requested resources are protected with an API key, that was not provided in the request header. Check our guide on [security](/learn/security/master_api_keys.md) for more information.
+- The requested resources are protected with an API key that was not provided in the request header. Check our guide on [security](/learn/security/master_api_keys.md) for more information.
+- You are using the wrong authorization header for your version. **v0.24 and below** use `X-MEILI-API-KEY: apiKey`, whereas **v0.25 and above** use `Authorization: Bearer apiKey`.
 
 ### `not_found`
 

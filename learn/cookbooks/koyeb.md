@@ -25,7 +25,7 @@ python -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(32)).deco
 ```
 
 ::: warning
-Setting up a master key is optional but strongly recommended when running in production. Unsetting the master key will make your Meilisearch instance unprotected and publicly accessible.
+Using a master key is optional but strongly recommended when running in production. If you launch without a master key, your Meilisearch instance will be unprotected and publicly accessible.
 :::
 
 ### Test Meilisearch
