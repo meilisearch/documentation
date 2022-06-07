@@ -47,7 +47,6 @@ prepended
 anonymized
 serverless
 autoscaling
-Unsetting
 hostname
 Scaleway
 cron
