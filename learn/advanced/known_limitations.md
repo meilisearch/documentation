@@ -6,19 +6,19 @@ This guide covers hard limits that cannot be altered. Meilisearch also has some 
 
 ## Maximum number of query words
 
-**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search.md#query-q) is 10. **If a search query includes more than 10 words, all words after the 10th will be ignored.**
+**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search.md#query-q) is 10. If a search query includes more than 10 words, all words after the 10th will be ignored.
 
 **Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
 
 ## Maximum number of document fields
 
-**Limitation:** Documents have a **soft maximum of 1000 fields**
+**Limitation:** Documents have a soft maximum of 1000 fields.
 
-**Explanation:** This limit is enforced for relevancy reasons. The [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective beyond this limit, leading to undefined behavior.
+**Explanation:** This limit is enforced for relevancy reasons. [Ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective beyond this limit, leading to undefined behavior.
 
 ## Maximum number of words per attribute
 
-**Limitation:** Meilisearch can index a maximum of **65535 positions per attribute**. Any words exceeding the 65535 position limit will be silently ignored.
+**Limitation:** Meilisearch can index a maximum of 65535 positions per attribute. Any words exceeding the 65535 position limit will be silently ignored.
 
 **Explanation:** This limit is enforced for relevancy reasons. The more words there are in a given attribute, the less relevant the search queries will be.
 
