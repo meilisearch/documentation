@@ -11,7 +11,7 @@ All synonyms are **lowercased** and **de-unicoded** during the indexing process.
 
 #### Example
 
-Consider a situation where "Résumé" and "CV" are set as synonyms.
+Consider a situation where `Résumé` and `CV` are set as synonyms.
 
 ```json
 {
@@ -24,7 +24,7 @@ Consider a situation where "Résumé" and "CV" are set as synonyms.
 }
 ```
 
-A search for "cv" would return any documents containing "cv" or "CV", in addition to any that contain "Résumé", "resumé", "resume", etc. unaffected by case or accent marks.
+A search for `cv` would return any documents containing `cv` or `CV`, in addition to any that contain `Résumé`, `resumé`, `resume`, etc., unaffected by case or accent marks.
 
 ## One-way association
 
@@ -97,12 +97,12 @@ When a multi-word phrase is considered the synonym of another word or phrase, th
 
 ::: tip
 Multi-word synonyms are limited to a maximum of **three words**.
-For example, although you could make "League of Legends" and "LOL" into synonyms, you could not do the same for "The Lord of the Rings" and "LOTR".
+For example, although you could make `League of Legends` and `LOL` into synonyms, you could not do the same for `The Lord of the Rings` and `LOTR`.
 :::
 
 #### Example
 
-Suppose you set "San Francisco" and "SF" as synonyms with a [mutual association](#mutual-association)
+Suppose you set `San Francisco` and `SF` as synonyms with a [mutual association](#mutual-association)
 
 ```json
 {
@@ -115,4 +115,4 @@ Suppose you set "San Francisco" and "SF" as synonyms with a [mutual association]
 }
 ```
 
-If you input "SF" as a search query, then results containing "San Francisco" will also be returned. However, **they will be considered less [relevant](/learn/core_concepts/relevancy.md) than those containing "SF"**. The reverse is also true.
+If you input `SF` as a search query, then results containing `San Francisco` will also be returned. However, **they will be considered less [relevant](/learn/core_concepts/relevancy.md) than those containing `SF`**. The reverse is also true.
