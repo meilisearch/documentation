@@ -14,7 +14,7 @@ Typesense
 Symfony
 Laravel
 Strapi
-[Sc]chemaless
+[Ss]chemaless
 reindexed
 chatbox
 Lucene
