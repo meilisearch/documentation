@@ -31,7 +31,6 @@ Taj
 Mahal
 [Cc]ertbot
 toolchain
-vm
 Jieba
 Lindera
 Netlify
