@@ -8,11 +8,11 @@ A document is an object composed of one or more fields. Each field consists of a
 
 ### Important terms
 
-- **Document**: An object which contains data in the form of one or more fields
-- **[Field](#fields)**: A set of two data items that are linked together: an attribute and a value
-- **Attribute**: The first part of a field. Acts as a name or description for its associated value
-- **Value**: The second part of a field, consisting of data of any valid JSON type
-- **[Primary Field](#primary-field)**: A special field that is mandatory in all documents. It contains the primary key and document identifier
+- **Document**: an object which contains data in the form of one or more fields
+- **[Field](#fields)**: a set of two data items that are linked together: an attribute and a value
+- **Attribute**: the first part of a field. Acts as a name or description for its associated value
+- **Value**: the second part of a field, consisting of data of any valid JSON type
+- **[Primary Field](#primary-field)**: a special field that is mandatory in all documents. It contains the primary key and document identifier
 
 ## Fields
 
@@ -28,7 +28,9 @@ You can apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) t
 
 ### Displayed and searchable fields
 
-By default, all fields in a document are both displayed and searchable. You can modify this behavior using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes) so that a field is:
+By default, all fields in a document are both displayed and searchable. Displayed fields are contained in each matching document, while searchable fields are searched for matching query words.
+
+You can modify this behavior using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes) so that a field is:
 
 - Searchable but not displayed
 - Displayed but not searchable
