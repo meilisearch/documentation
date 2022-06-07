@@ -50,4 +50,4 @@ Instead of showing you examples, why not just invite you to test Meilisearch int
 
 There's no need to write a single line of front-end code. All you need to do is follow [this guide](/learn/getting_started/quick_start.md) to give the search engine a try!
 
-![Meilisearch search preview](/search_preview_no_documents.png)
+![Meilisearch search preview](/search_preview/no_documents.png)
