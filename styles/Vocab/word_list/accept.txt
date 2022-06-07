@@ -45,7 +45,6 @@ lowercased
 [Mm]ultitenancy
 rulesets
 prepended
-deallocated
 anonymized
 serverless
 autoscaling
