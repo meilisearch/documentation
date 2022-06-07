@@ -1,6 +1,6 @@
 # Documents
 
-A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data, and are the basic building blocks of a Meilisearch database. To search for a document, it must first be added to an [index](/learn/core_concepts/indexes.md).
+A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data, and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/learn/core_concepts/indexes.md).
 
 ## Structure
 
@@ -22,7 +22,7 @@ An attribute functions a bit like a variable in most programming languages, i.e.
 
 Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-If a field contains an object, Meilisearch flattens it during indexation using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is an intermediary representation and you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes.md#objects).
+If a field contains an object, Meilisearch flattens it during indexation using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes.md#objects).
 
 You can apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones. You can also configure how Meilisearch handles certain fields at an [index level](/learn/configuration/settings.md) in the settings.
 
@@ -38,7 +38,7 @@ In the latter case, the field will be completely ignored during search. However,
 
 ## Primary field
 
-The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id). If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's incorrectly formatted, missing a primary key, or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
+The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id). If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's missing a primary key or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
 
 To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
 
