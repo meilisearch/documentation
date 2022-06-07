@@ -65,7 +65,7 @@ Meilisearch has snapshot and dump features that can help improve your backup cap
 
 ### Always-on
 
-To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deallocated. When the next client hits your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range.
+To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deactivated. When the next client hits your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range.
 
 You can avoid this _cold start_ by enabling the _Always-on_ feature, either in the Azure portal or in the Infrastructure as Code.
 
