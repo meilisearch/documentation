@@ -835,7 +835,8 @@ primary_field_guide_add_document_primary_key: |-
           "humor"
         ],
         "price": 5.00
-     }]'
+      }
+    ]'
 primary_field_guide_update_document_primary_key: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/books' \
@@ -916,7 +917,7 @@ updating_guide_get_displayed_attributes_old: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
     -X GET 'http://localhost:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: apiKey'    
+    -H 'X-Meili-API-Key: apiKey'
 updating_guide_reset_displayed_attributes_new: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/{index_uid}/settings/displayed-attributes' \
