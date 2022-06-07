@@ -64,7 +64,7 @@ docker run -it --rm \
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
 
-On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
+On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the Docker virtual machine. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
 
 You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
 :::
@@ -263,7 +263,7 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
-![Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
+![Meilisearch's search preview showing the movies index](/search_preview/default.png)
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
@@ -309,6 +309,10 @@ When you launch your Meilisearch instance with a master key, two things happen:
 Here's how to use the master key you set to [get all keys](/reference/api/keys.md#get-all-keys):
 
 <CodeSamples id="authorization_header_1" />
+
+::: warning
+The master key should only be used for managing your API keys. Avoid using it for regular API calls.
+:::
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
@@ -540,6 +544,10 @@ When you launch your Meilisearch instance with a master key, two things happen:
 Here's how to use the master key you set to [get all keys](/reference/api/keys.md#get-all-keys):
 
 <CodeSamples id="authorization_header_1" />
+
+::: warning
+The master key should only be used for managing your API keys. Avoid using it for regular API calls.
+:::
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
