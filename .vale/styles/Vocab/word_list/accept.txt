@@ -2,6 +2,7 @@ Meilisearch
 [Ss]ubroute
 [Ss]ubstring
 uid
+jq
 Qovery
 Koyeb
 Vue
@@ -61,3 +62,5 @@ Doofinder
 '/\(\B(.*?)\)'
 [Ss]harding
 [Mm]eili
+jsonlines
+Biutiful
