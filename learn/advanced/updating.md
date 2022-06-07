@@ -18,7 +18,12 @@ Before we begin, you need to **verify the version of Meilisearch that's compatib
 
 If Meilisearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
 
-<CodeSamples id="updating_guide_check_version" />
+<CodeSamples id="updating_guide_check_version_new_authorization_header" />
+
+::: note
+ If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
+ <CodeSamples id="updating_guide_check_version_old_authorization_header" />
+:::
 
 The response should look something like this:
 
