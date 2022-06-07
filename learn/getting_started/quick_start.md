@@ -265,7 +265,7 @@ Meilisearch offers a search preview where you can preview search results. It com
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
-![Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/search_preview/multipl_indexes.png)
+![Meilisearch's search preview indicating the indexes dropdown in the upper right corner](/search_preview/multipl_indexes.png)
 
 ## Front-end integration
 
