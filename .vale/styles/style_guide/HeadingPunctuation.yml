@@ -8,6 +8,3 @@ level: suggestion
 scope: heading
 tokens:
   - '[a-z0-9][.?!](?:\s|$)'
-ignore:
- - resources/faq.md
- - /learn/what_is_meilisearch/telemetry.md
