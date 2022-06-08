@@ -13,7 +13,7 @@ Our solution delivers an **instant search experience** including **typo handling
 ## Demo
 
 ![Search bar updating results](/crates-io-demo.gif)
-_MeiliSearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)._
+_Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)._
 
 ## Features
 
