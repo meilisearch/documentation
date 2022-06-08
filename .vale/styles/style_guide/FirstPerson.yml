@@ -13,8 +13,3 @@ tokens:
   - \bme\b
   - \bmy\b
   - \bmine\b
-ignore:
-  - /learn/what_is_meilisearch/telemetry.md
-  - /resources/faq.md
-  - /learn/what_is_meilisearch/language.md
-
