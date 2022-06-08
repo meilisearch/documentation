@@ -47,6 +47,3 @@ exceptions:
   - Certbot
   - Bleve & Tantivy
   - '([0-9a-z]:\s[A-Z])'  #How do get this to throw an error for `Step 1: do this`?
-ignore:
- - /learn/what_is_meilisearch/language.md
- - index.md
