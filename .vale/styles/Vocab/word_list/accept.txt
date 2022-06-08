@@ -66,3 +66,4 @@ jsonlines
 Biutiful
 Gb
 docs-searchbar.js
+Meilisearch_apikey
