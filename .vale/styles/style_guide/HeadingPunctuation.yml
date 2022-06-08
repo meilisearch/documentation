@@ -4,7 +4,7 @@
 extends: existence
 message: "Don't use end punctuation in headings."
 link: https://developers.google.com/style/periods
-level: warning
+level: suggestion
 scope: heading
 tokens:
   - '[a-z0-9][.?!](?:\s|$)'
