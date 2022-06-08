@@ -87,7 +87,7 @@ By default, Meilisearch uses the following rules for matching documents. Note th
 - If the query word is between `5` and `8` characters, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
 - If the query word contains more than `8` characters, we accept a maximum of **two typos**
 
-This means that "saturday" which is `7` characters long, uses the second rule and matches every document containing **one typo**. For example:
+This means that `saturday` which is `7` characters long, uses the second rule and matches every document containing **one typo**. For example:
 
 - `saturday` is accepted because it is the same word
 - `satuday` is accepted because it contains **one typo**
