@@ -21,7 +21,7 @@ update_an_index_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/movies' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "primaryKey" : "id" }'
+    --data-binary '{ "primaryKey": "id" }'
 delete_an_index_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies'
@@ -139,50 +139,50 @@ update_settings_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "rankingRules": [
-          "words",
-          "typo",
-          "proximity",
-          "attribute",
-          "sort",
-          "exactness",
-          "release_date:desc",
-          "rank:desc"
-        ],
-        "distinctAttribute": "movie_id",
-        "searchableAttributes": [
-          "title",
-          "overview",
-          "genres"
-        ],
-        "displayedAttributes": [
-          "title",
-          "overview",
-          "genres",
-          "release_date"
-        ],
-        "stopWords": [
-          "the",
-          "a",
-          "an"
-        ],
-        "sortableAttributes": [
-          "title",
-          "release_date"
-        ],
-        "synonyms": {
-          "wolverine": [
-            "xmen",
-            "logan"
-        ],
-          "logan": ["wolverine"]
+      "rankingRules": [
+        "words",
+        "typo",
+        "proximity",
+        "attribute",
+        "sort",
+        "exactness",
+        "release_date:desc",
+        "rank:desc"
+      ],
+      "distinctAttribute": "movie_id",
+      "searchableAttributes": [
+        "title",
+        "overview",
+        "genres"
+      ],
+      "displayedAttributes": [
+        "title",
+        "overview",
+        "genres",
+        "release_date"
+      ],
+      "stopWords": [
+        "the",
+        "a",
+        "an"
+      ],
+      "sortableAttributes": [
+        "title",
+        "release_date"
+      ],
+      "synonyms": {
+        "wolverine": [
+          "xmen",
+          "logan"
+      ],
+        "logan": ["wolverine"]
+      },
+      "typoTolerance": {
+        "minWordSizeForTypos": {
+          "oneTypo": 8,
+          "twoTypos": 10
         },
-        "typoTolerance": {
-          "minWordSizeForTypos": {
-            "oneTypo": 8,
-            "twoTypos": 10
-          },
-          "disableOnAttributes": ["title"]
+        "disableOnAttributes": ["title"]
       }
     }'
 reset_settings_1: |-
@@ -467,14 +467,14 @@ settings_guide_ranking_rules_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "rankingRules": [
-          "words",
-          "typo",
-          "proximity",
-          "attribute",
-          "sort",
-          "exactness",
-          "release_date:asc",
-          "rank:desc"
+        "words",
+        "typo",
+        "proximity",
+        "attribute",
+        "sort",
+        "exactness",
+        "release_date:asc",
+        "rank:desc"
       ]
     }'
 settings_guide_distinct_1: |-
@@ -592,7 +592,7 @@ getting_started_synonyms: |-
     --data-binary '{
       "winnie": ["piglet"], 
       "piglet": ["winnie"]
-      }'
+    }'
 getting_started_filtering: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
@@ -621,17 +621,18 @@ getting_started_configure_settings: |-
     -X POST 'http://localhost:7700/indexes/meteorites/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "filterableAttributes": [
-          "mass",
-          "_geo"
-        ],
-        "sortableAttributes": [
-          "mass",
-          "_geo"
-        ]
+      "filterableAttributes": [
+        "mass",
+        "_geo"
+      ],
+      "sortableAttributes": [
+        "mass",
+        "_geo"
+      ]
     }'
 getting_started_communicating_with_a_protected_instance: |-
-  curl -X POST 'http://localhost:7700/indexes/movies/search' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Authorization: Bearer apiKey'
 faceted_search_update_settings_1: |-
   curl \
@@ -682,13 +683,16 @@ post_dump_1: |-
   curl \
     -X POST 'http://localhost:7700/dumps'
 get_dump_status_1: |-
-  curl -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
+  curl \
+    -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
 phrase_search_1: |-
-  curl -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
 authorization_header_1: |-
-  curl -X GET 'http://localhost:7700/keys' \
+  curl \
+    -X GET 'http://localhost:7700/keys' \
     -H 'Authorization: Bearer masterKey'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
@@ -784,16 +788,15 @@ geosearch_guide_sort_usage_2: |-
       ]
     }'
 security_guide_search_key_1: |-
-  curl -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
     -H 'Authorization: Bearer apiKey'
 security_guide_update_key_1: |-
   curl \
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
     -H 'Authorization: Bearer masterKey' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "indexes": ["doctors"]
-    }'
+    --data-binary '{ "indexes": ["doctors"] }'
 security_guide_create_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \
@@ -841,7 +844,7 @@ primary_field_guide_update_document_primary_key: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/books' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "primaryKey" : "title" }'
+    --data-binary '{ "primaryKey": "title" }'
 tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
@@ -872,9 +875,7 @@ typo_tolerance_guide_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "disableOnAttributes": ["title"]
-    }'
+    --data-binary '{ "disableOnAttributes": ["title"] }'
 typo_tolerance_guide_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
@@ -896,22 +897,18 @@ typo_tolerance_guide_4: |-
     }'
 settings_guide_typo_tolerance_1: |-
   curl \
-      -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
-      -H 'Content-Type: application/json' \
-      --data-binary '{
-        "minWordSizeForTypos": {
-          "twoTypos": 12
-        },
-        "disableOnAttributes": ["title"]
-      }'
-updating_guide_check_version_new_authorization_header: |-
+    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "minWordSizeForTypos": {
+        "twoTypos": 12
+      },
+      "disableOnAttributes": ["title"]
+    }'
+updating_guide_check_version: |-
   curl \
     -X GET 'http://localhost:7700/version' \
     -H 'Authorization: Bearer apiKey'
-updating_guide_check_version_old_authorization_header: |-
-  curl \
-      -X GET 'http://localhost:7700/version' \
-      -H 'X-Meili-API-Key: apiKey'    
 updating_guide_get_displayed_attributes_new: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
