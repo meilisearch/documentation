@@ -55,7 +55,7 @@ We've made some _opinionated choices_ in the one-click deployment that should wo
 
 ### Data redundancy and backup
 
-The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same Datacenter. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
+The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same data center. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
 
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
