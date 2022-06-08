@@ -790,7 +790,7 @@ primary_field_guide_update_document_primary_key: |-
 tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
-    -H 'Authorization: Bearer yourTenantToken'
+    -H 'Authorization: Bearer TENANT_TOKEN'
 get_typo_tolerance_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/books/settings/typo-tolerance'
