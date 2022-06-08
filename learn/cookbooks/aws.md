@@ -23,7 +23,7 @@ In the top-right corner, click on the **Launch instances** button to start the p
 
 You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the search bar and select the **Community AMIs** tab on the left sidebar.
 
-![Page titled: 'Step 1: Choose an Amazon Machine Image (AMI)'. There is only one AMI available, Meilisearch-v0.19.0-Debian-10.3](/aws/02.select-ami.png)
+![Page titled: 'Step 1: Choose an Amazon Machine Image (AMI)'](/aws/02.select-ami.png)
 
 Click on **Select** (right side of the screen) to confirm your choice.
 
