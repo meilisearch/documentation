@@ -4,9 +4,9 @@ This local plugin checks inside the routing of `config.js` every chosen predicat
 
 These are the current predicates:
 
-### Parent's paths must contains a trailing html extension
+### Parent's paths must contains a trailing HTML extension
 
-This predicate only applies to elements that do have childs.
+This predicate only applies to elements that have children.
 
 For example:
 

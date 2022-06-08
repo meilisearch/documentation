@@ -1,6 +1,6 @@
 # Quick start
 
-In this quick start we will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, and adding a search bar.
+This quick start will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, adding a search bar, and securing your instance.
 
 All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
 
@@ -53,16 +53,18 @@ These commands launch the **latest stable release** of Meilisearch.
 # Fetch the latest version of Meilisearch image from DockerHub
 docker pull getmeili/meilisearch:v0.27.1
 
-# Launch Meilisearch
+# Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
+    -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:v0.27.1
+    meilisearch --env="development"
 ```
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
 
-On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
+On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the Docker virtual machine. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
 
 You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
 :::
@@ -235,14 +237,14 @@ In the above code sample, the parameter `q` represents the search query. The doc
 {
   "hits": [
     {
-      "id": "29751",
+      "id": 29751,
       "title": "Batman Unmasked: The Psychology of the Dark Knight",
       "poster": "https://image.tmdb.org/t/p/w1280/jjHu128XLARc2k4cJrblAvZe0HE.jpg",
       "overview": "Delve into the world of Batman and the vigilante justice tha",
       "release_date": "2008-07-15"
     },
     {
-      "id": "471474",
+      "id": 471474,
       "title": "Batman: Gotham by Gaslight",
       "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
       "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
@@ -265,9 +267,11 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
-![Screenshot of Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
+![Meilisearch's search preview showing the movies index](/search_preview/default.png)
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
+
+![Meilisearch's search preview indicating the indexes dropdown in the upper right corner](/search_preview/multiple_indexes.png)
 
 ## Front-end integration
 
@@ -454,6 +458,55 @@ Here's what's happening:
 4. Open `index.html` in your browser by double-clicking it in your folder
 
 You should now have a working front-end search interface 🚀🔥
+
+## Securing Meilisearch
+
+The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+
+:::: tabs
+
+::: tab CLI
+
+```bash
+./meilisearch --master-key="masterKey"
+```
+
+:::
+
+::: tab Environment variable
+
+Linux/MacOS:
+
+```bash
+export MEILI_MASTER_KEY="masterKey"
+./meilisearch
+```
+
+Windows:
+
+```bash
+set MEILI_MASTER_KEY="masterKey"
+./meilisearch
+```
+
+:::
+
+::::
+
+When you launch your Meilisearch instance with a master key, two things happen:
+
+- Your Meilisearch instance is now protected. Aside from the [get health endpoint](/reference/api/health.md), all subsequent API requests must include a valid API key for [authorization](/reference/api/overview.md#authorization)
+- Two [default API keys](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization) are automatically generated
+
+Here's how to use the master key you set to [get all keys](/reference/api/keys.md#get-all-keys):
+
+<CodeSamples id="authorization_header_1" />
+
+::: warning
+The master key should only be used for managing your API keys. Avoid using it for regular API calls.
+:::
+
+To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
 ## What's next?
 

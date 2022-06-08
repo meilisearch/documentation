@@ -387,8 +387,8 @@ search_parameter_guide_highlight_tag_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ 
-      "q": "winter feast", 
+    --data-binary '{
+      "q": "winter feast",
       "attributesToHighlight": ["overview"],
       "highlightPreTag": "<span class=\"highlight\">",
       "highlightPostTag": "</span>"
@@ -770,7 +770,7 @@ primary_field_guide_add_document_primary_key: |-
         "genres": ["comedy","humor"],
         "price": 5.00
      }]'
-primary_field_guide_update_document_primary_key: |
+primary_field_guide_update_document_primary_key: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/books' \
     -H 'Content-Type: application/json' \
@@ -806,7 +806,7 @@ typo_tolerance_guide_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "enabled": false
-    }'    
+    }'
 typo_tolerance_guide_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
@@ -847,10 +847,14 @@ settings_guide_typo_tolerance_1: |-
           "title"
         ]
       }'
-updating_guide_check_version: |-
+updating_guide_check_version_new_authorization_header: |-
   curl \
-    -X GET 'http://127.0.0.1:7700/version' \
-    -H 'Authorization: Bearer apiKey'
+      -X GET 'http://127.0.0.1:7700/version' \
+      -H 'Authorization: Bearer apiKey'
+updating_guide_check_version_old_authorization_header: |-
+  curl \
+      -X GET 'http://127.0.0.1:7700/version' \
+      -H 'X-Meili-API-Key: apiKey'    
 updating_guide_get_displayed_attributes_new: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
@@ -860,7 +864,7 @@ updating_guide_get_displayed_attributes_old: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: apiKey'    
+    -H 'X-Meili-API-Key: apiKey'
 updating_guide_reset_displayed_attributes_new: |-
   curl \
     -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
@@ -868,7 +872,7 @@ updating_guide_reset_displayed_attributes_new: |-
 updating_guide_reset_displayed_attributes_old: |-
   curl \
     -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: apiKey'  
+    -H 'X-Meili-API-Key: apiKey'
 updating_guide_create_dump: |-
   curl \
     -X POST 'http://127.0.0.1:7700/dumps' \
@@ -878,26 +882,25 @@ updating_guide_get_dump_status: |-
   curl \
     -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status' \
     -H 'Authorization: Bearer apiKey'
-updating_guide_get_settings: |-
+updating_guide_get_settings_old: |-
   # the -o option saves the output as a local file
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json \
     -H 'X-Meili-API-Key: apiKey'
-updating_guide_retrieve_documents: |-
+updating_guide_retrieve_documents_old: |-
   # the -o option saves the output as a local file
   curl \
-    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \ -o mydocuments.json \ 
+    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \ -o mydocuments.json \
     -H 'X-Meili-API-Key: apiKey'
-updating_guide_update_settings: |-
+updating_guide_update_settings_old: |-
   # update your settings
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/settings' \
     -H 'Content-Type: application/json' -d @mysettings.json \
     -H 'X-Meili-API-Key: apiKey'
-updating_guide_add_documents: |-
+updating_guide_add_documents_old: |-
   # then, add your documents
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/documents' \
     -H 'Content-Type: application/json' -d @mydocuments.json \
     -H 'X-Meili-API-Key: apiKey'
- 

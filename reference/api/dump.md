@@ -1,6 +1,6 @@
 # Dumps
 
-The `dumps` route allows the creation of database dumps. Dumps are `.dump` files that can be used to launch Meilisearch. Dumps are compatible between Meilisearch versions.
+The `/dumps` route allows the creation of database dumps. Dumps are `.dump` files that can be used to restore Meilisearch data or migrate between different versions.
 
 Creating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.
 

@@ -13,7 +13,7 @@ Our solution delivers an **instant search experience** including **typo handling
 ## Demo
 
 ![Search bar updating results](/crates-io-demo.gif)
-_MeiliSearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)._
+_Meilisearch helps the Rust community find crates on [crates.meilisearch.com](https://crates.meilisearch.com)._
 
 ## Features
 
@@ -50,4 +50,4 @@ Instead of showing you examples, why not just invite you to test Meilisearch int
 
 There's no need to write a single line of front-end code. All you need to do is follow [this guide](/learn/getting_started/quick_start.md) to give the search engine a try!
 
-![Meilisearch search preview](/search_preview_no_documents.png)
+![Meilisearch search preview](/search_preview/no_documents.png)
