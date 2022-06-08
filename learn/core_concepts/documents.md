@@ -24,7 +24,7 @@ Every field has a data type dictated by its value. Every value must be a valid [
 
 If a field contains an object, Meilisearch flattens it during indexation using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes.md#objects).
 
-You can apply [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to some fields. For example, you may decide recent movies should be more relevant than older ones. You can also configure how Meilisearch handles certain fields at an [index level](/learn/configuration/settings.md) in the settings.
+With [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules), you can decide what fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also configure how Meilisearch handles certain fields at an [index level](/learn/configuration/settings.md) in the settings.
 
 ### Displayed and searchable fields
 
@@ -48,7 +48,7 @@ To learn more, refer to the [primary key explanation](/learn/core_concepts/prima
 
 By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB. You can [change the payload size limit](/learn/configuration/instance_options.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
-**Meilisearch uses a lot of RAM when indexing documents**. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
+Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
 When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document.
 
@@ -62,7 +62,7 @@ Meilisearch accepts datasets in the following formats:
 
 #### JSON
 
-Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting Meilisearch documents. For example, **an attribute must be a string**, while **a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp)**.
+Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting Meilisearch documents. For example, an attribute must be a string, while a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
 Meilisearch will only accept JSON documents when it receives the `application/json` content-type header.
 

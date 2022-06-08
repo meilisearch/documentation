@@ -14,7 +14,7 @@ This guide covers hard limits that cannot be altered. Meilisearch also has some 
 
 **Limitation:** Documents have a soft maximum of 1000 fields.
 
-**Explanation:** This limit is enforced for relevancy reasons. [Ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) may no longer be effective beyond this limit, leading to undefined behavior.
+**Explanation:** There is no limit on how many fields a document can have. However, documents with more than 1000 fields may cause the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to stop working, leading to undefined behavior.
 
 ## Maximum number of words per attribute
 
