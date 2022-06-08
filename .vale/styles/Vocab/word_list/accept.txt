@@ -64,3 +64,5 @@ Doofinder
 [Mm]eili
 jsonlines
 Biutiful
+Gb
+docs-searchbar.js
