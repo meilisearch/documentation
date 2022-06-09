@@ -47,7 +47,7 @@ Here you can specify [details of your Instance](https://docs.aws.amazon.com/efs/
 
 ![Page titled 'Step 3: Configure Instance Details'. Important: You can launch multiple instances from the same AMI, request Spot instances to take advantage of lower pricing, and assign access management role to the instance.](/aws/04.instance-details.png)
 
-Simply click on **Next: Add Storage** to keep going.
+Click **Next: Add Storage** to keep going.
 
 ### 5. Storage
 
