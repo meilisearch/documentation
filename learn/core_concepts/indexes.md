@@ -1,18 +1,18 @@
 # Indexes
 
-An index is an entity that gathers a set of documents with its own settings. It is comparable to a table in `SQL` or a collection in MongoDB.
+An index is a group of documents with its own settings. It is comparable to a table in `SQL` or a collection in MongoDB.
 
 An index is defined by a `uid` and contains the following information:
 
 - One [primary key](#primary-key)
 - Customizable [settings](#index-settings)
-- Some number of documents
+- An arbitrary number of documents
 
 #### Example
 
 Suppose you manage a database that contains information about movies, similar to [IMDb](https://imdb.com/). You would probably want to keep multiple types of documents, such as movies, TV shows, actors, directors, and more. Each of these categories would be represented by an index in Meilisearch.
 
-Each index holds information about the fields found in the documents, you would have fields like `movie_id`, `title`, `genre`, `overview`, `release_date`, etc., for a `movies` index. Some of these fields will be more important than others, e.g., `title` would be more meaningful to a movie search than `overview` or `release_date`. You might want exact matches for `movie_id` or `genre` but not for `release_date`. All of this is controlled by an index's settings. The settings of one index don't impact other indexes, meaning you can create different synonyms for a `movies` and `costumes` index on the same server.
+Each index holds information about the fields found in the documents. For example, a `movies` index would possibly contain document with fields like `movie_id`, `title`, `genre`, `overview`, and `release_date`. You might also want to treat fields differently:`title` would be more meaningful to a movie search than `overview` or `release_date`, while you might want exact matches for `movie_id` or `genre` but not for `release_date`. All of this is controlled by an index's settings. The settings of one index don't impact other indexes, meaning you can create different synonyms for a `movies` and  a `costumes` index on the same server.
 
 ## Index creation
 
@@ -22,7 +22,7 @@ Meilisearch automatically creates an index for you the first time you add a docu
 
 The `uid` is the **unique identifier** of a given index. It is set at index creation time and must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 
-**Once defined, the `uid` cannot be changed anymore**, and you cannot create another index with the same `uid`.
+**Once defined, the `uid` cannot be changed**, and you cannot create another index with the same `uid`.
 
 ```json
 {
@@ -37,7 +37,7 @@ The `uid` is the **unique identifier** of a given index. It is set at index crea
 
 Every index has a primary key: a required attribute that must be present in all documents in the index. The primary key's attribute name must be known by the index. Each document in the index must have a unique value associated with the primary key. This serves to identify each document in the index, such that two documents in an index can never be completely identical. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-You can set a primary key for an index or let it be inferred by Meilisearch, read more about it in our [dedicated guide](/learn/core_concepts/primary_key.md#setting-the-primary-key).
+You can set a primary key for an index or let it be inferred by Meilisearch. Read more about it in our [dedicated guide](/learn/core_concepts/primary_key.md#setting-the-primary-key).
 
 [Learn more about document primary key](/learn/core_concepts/primary_key.md#primary-key-2)
 
@@ -55,7 +55,7 @@ Meilisearch allows you to customize the following index settings:
 - [Displayed and searchable attributes](#displayed-and-searchable-attributes)
 - [Typo tolerance](#typo-tolerance)
 
-These settings are what differentiate between indexes even if they have the same documents. You can make these changes using the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
+These settings can make indexes behave differently even if they have the same documents. To change them, you can use the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
 
 ### Ranking rules
 
