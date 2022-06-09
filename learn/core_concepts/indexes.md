@@ -12,7 +12,7 @@ An index is defined by a `uid` and contains the following information:
 
 Suppose you manage a database that contains information about movies, similar to [IMDb](https://imdb.com/). You would probably want to keep multiple types of documents, such as movies, TV shows, actors, directors, and more. Each of these categories would be represented by an index in Meilisearch.
 
-Each index holds information about the fields found in the documents. For example, a `movies` index would possibly contain document with fields like `movie_id`, `title`, `genre`, `overview`, and `release_date`. You might also want to treat fields differently:`title` would be more meaningful to a movie search than `overview` or `release_date`, while you might want exact matches for `movie_id` or `genre` but not for `release_date`. All of this is controlled by an index's settings. The settings of one index don't impact other indexes, meaning you can create different synonyms for a `movies` and  a `costumes` index on the same server.
+Each index holds information about the fields found in the documents. For example, a `movies` index would possibly contain documents with fields like `movie_id`, `title`, `genre`, `overview`, and `release_date`. You might also want to treat fields differently:`title` would be more meaningful to a movie search than `overview` or `release_date`, while you might want exact matches for `movie_id` or `genre` but not for `release_date`. All of this is controlled by an index's settings. The settings of one index don't impact other indexes, meaning you can create different synonyms for a `movies` and a `costumes` index on the same server.
 
 ## Index creation
 
