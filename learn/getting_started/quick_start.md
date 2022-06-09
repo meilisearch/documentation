@@ -180,6 +180,10 @@ Open a new terminal window and run the following command:
 
 Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents.md). Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes.md).
 
+::: note
+Currently, Meilisearch only supports [JSON, CSV, and NDJSON formats](/learn/core_concepts/documents.md#dataset-format).
+:::
+
 The previous command added documents from `movies.json` to a new index called `movies`. After adding documents, you should receive a response like this:
 
 ```json
