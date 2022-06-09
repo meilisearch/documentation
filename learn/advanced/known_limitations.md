@@ -61,7 +61,7 @@ If your query is `Hello - World`:
 
 **Limitation:** An index can contain no more than 4,294,967,296 documents.
 
-**Explanation:** This is the largest possible value for a 32-bit unsigned integer. Since  Meilisearch's engine uses unsigned integers to identify documents internally, this is the maximum number of documents that can be stored in an index.
+**Explanation:** This is the largest possible value for a 32-bit unsigned integer. Since Meilisearch's engine uses unsigned integers to identify documents internally, this is the maximum number of documents that can be stored in an index.
 
 ## Length of individual `filterableAttributes` values
 
