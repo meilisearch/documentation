@@ -35,7 +35,7 @@ The `uid` is the **unique identifier** of a given index. It is set at index crea
 
 ## Primary key
 
-Every index has a primary key: a required attribute that must be present in all documents in the index. The primary key's attribute name must be known by the index. Each document in the index must have a unique value associated with the primary key. This serves to identify each document in the index, such that two documents in an index can never be completely identical. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
+Every index has a primary key: a required attribute that must be present in all documents in the index. The index must know the primary key's attribute name and each document must have a unique value associated with the primary key. This serves to identify each document, such that two documents in an index can never be completely identical. If you try adding documents and even a single one is missing the primary key, none of the documents will be stored.
 
 You can set a primary key for an index or let it be inferred by Meilisearch. Read more about it in our [dedicated guide](/learn/core_concepts/primary_key.md#setting-the-primary-key).
 
