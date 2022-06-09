@@ -1,0 +1,11 @@
+---
+# Error: style_guide.InternalLinkExtension.yml
+
+# All internal links must have a .md extension and not .html
+extends: existence
+message: 'Link "%s" must use the .md file extension.'
+link: https://docs.gitlab.com/ee/development/documentation/styleguide/index.html#links-to-internal-documentation
+level: error
+scope: raw
+raw:
+  - '\[.+\]\([\w\/\.-]+\.html[^)]*\)'

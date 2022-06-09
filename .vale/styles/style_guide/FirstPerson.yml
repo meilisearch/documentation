@@ -1,10 +1,12 @@
 ---
+# Suggestion: style_guide.MergeConflictMarkers
+
 # We want to avoid using singular first person pronouns
 extends: existence
 message: "Avoid first-person pronouns such as '%s'."
 link: 'https://developers.google.com/style/pronouns#personal-pronouns'
 ignorecase: true
-level: error
+level: suggestion
 nonword: true
 tokens:
   - (?:^|\s)I\s

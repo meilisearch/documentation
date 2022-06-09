@@ -1,4 +1,6 @@
 ---
+# Error: style_guide.Repetition.yml
+
 # catch any instances of repeated words. E.g., "This is is a sentence"
 extends: repetition
 message: "'%s' is repeated."

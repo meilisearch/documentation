@@ -1,5 +1,7 @@
 ---
-# Use the Oxford comma
+# Suggestion: style_guide.OxfordComma.yml
+
+# Use the Oxford comma, this may not work as intended for complex sentences with many commas
 extends: existence
 message: "Use the Oxford comma in '%s'."
 link: 'https://developers.google.com/style/commas'

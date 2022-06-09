@@ -1,4 +1,6 @@
 ---
+# Suggestion: style_guide.HeadingPunctuation.yml
+
 # Need to update this for "1. Click this" "1.1. Click that"
 #Our headings should not use end punctuation
 extends: existence

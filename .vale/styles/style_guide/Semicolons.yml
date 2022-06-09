@@ -1,4 +1,6 @@
 ---
+# Suggestion: style_guide.Semicolons.yml
+
 # If your sentence uses a semicolon, you should break it into two sentences or rewrite it to avoid super long sentences.
 extends: existence
 message: "Use semicolons judiciously."
