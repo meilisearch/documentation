@@ -39,8 +39,8 @@ Netlify
 [Gg]eopositioning
 hanzi
 [Aa]utobatching
-impactful
-lowercased
+[Ii]mpactful
+[Ll]owercased
 [Mm]ultitenancy
 [Rr]ulesets
 [Pp]repended
