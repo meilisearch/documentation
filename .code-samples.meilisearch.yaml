@@ -622,7 +622,7 @@ getting_started_configure_settings: |-
     }'
 getting_started_communicating_with_a_protected_instance: |-
   curl \ 
-    -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
@@ -897,11 +897,11 @@ settings_guide_typo_tolerance_1: |-
     }'
 updating_guide_check_version_new_authorization_header: |-
   curl \
-    -X GET 'http://127.0.0.1:7700/version' \
+    -X GET 'http://localhost:7700/version' \
     -H 'Authorization: Bearer API_KEY'
 updating_guide_check_version_old_authorization_header: |-
   curl \
-    -X GET 'http://127.0.0.1:7700/version' \
+    -X GET 'http://localhost:7700/version' \
     -H 'X-Meili-API-Key: API_KEY'  
 updating_guide_get_displayed_attributes_new: |-
   # whenever you see {index_uid}, replace it with your index's unique id
