@@ -912,10 +912,10 @@ updating_guide_add_documents_old: |-
     -H 'X-Meili-API-Key: apiKey'
 getting_started_typo_tolerance: |-
   curl \
-      -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
-      -H 'Content-Type: application/json' \
-      --data-binary '{
-        "minWordSizeForTypos": { "oneTypo": 4 }
+    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "minWordSizeForTypos": { "oneTypo": 4 }
   }'
 
 
