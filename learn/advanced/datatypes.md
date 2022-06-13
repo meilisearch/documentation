@@ -185,7 +185,7 @@ Once all objects inside a document have been flattened, Meilisearch will continu
 
 ## Possible tokenization issues
 
-Even if it behaves exactly as expected, the tokenization process may lead to unintuitive results in some cases, such as:
+Even if it behaves exactly as expected, the tokenization process may lead to counterintuitive results in some cases, such as:
 
 ```
 "S.O.S"
