@@ -1,6 +1,6 @@
 # Snapshots
 
-A snapshot is an exact copy of the database (i.e. the `data.ms` folder) at the time the snapshot was created. Besides compression, snapshots do not go through any processing. They can be thought of as "pre-compiled copies".
+A snapshot is an exact copy of the database (i.e., the `data.ms` folder) at the time the snapshot was created. Besides compression, snapshots do not go through any processing. They can be thought of as "pre-compiled copies".
 
 Using this feature, it is possible to schedule snapshot creation at custom intervals and use existing snapshots to restore Meilisearch.
 
@@ -50,7 +50,7 @@ meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 
 Take note that whenever you launch Meilisearch from a snapshot, it will **stop processing and throw an error** if it encounters either of the two following situations:
 
-1. A database already exists (i.e. you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary)
+1. A database already exists (i.e., you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary)
 2. No snapshot is found at the given path
 
 In both cases, **this behavior is [configurable](/learn/configuration/instance_options.md#ignore-missing-snapshot)**.

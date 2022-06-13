@@ -25,7 +25,7 @@ To enable auto-batching, start Meilisearch while supplying the `--enable-auto-ba
 For document addition requests to be added to the same batch, they need to:
 
 - Target the same index
-- Have the same update method (e.g. [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
+- Have the same update method (e.g., [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Be immediately consecutive
 
 By default, **auto-batching will not delay processing a request in order to batch multiple requests together.** If it can process the request immediately, it will. [This behavior can be altered using a command-line option](#customization-options).
