@@ -502,9 +502,9 @@ Here's how to use the master key you set to [get all keys](/reference/api/keys.m
 
 <CodeSamples id="authorization_header_1" />
 
-::: warning
-The master key should only be used for managing your API keys. Avoid using it for regular API calls.
-:::
+The master key should only be used for retrieving and managing API keys. For regular API calls, such as search, use an API key:
+
+<CodeSamples id="getting_started_communicating_with_a_protected_instance" />
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 

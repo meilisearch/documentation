@@ -581,6 +581,10 @@ getting_started_configure_settings: |-
             "_geo"
         ]
     }'
+getting_started_communicating_with_a_protected_instance: |-
+  curl \ 
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
