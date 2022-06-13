@@ -36,11 +36,11 @@ There are two possible modes for the `searchableAttributes` list.
 
 This default behavior is indicated by a `searchableAttributes` value of `["*"]`. To verify the current value of your `searchableAttributes` list, use the [get searchable attributes endpoint](/reference/api/searchable_attributes.md#get-searchable-attributes).
 
-If you'd like to restore your searchable attributes list to this default behavior, simply [set `searchableAttributes` to an empty array `[]`](/reference/api/searchable_attributes.md#update-searchable-attributes) or use the [reset searchable attributes endpoint](/reference/api/searchable_attributes.md#reset-searchable-attributes).
+If you'd like to restore your searchable attributes list to this default behavior, [set `searchableAttributes` to an empty array `[]`](/reference/api/searchable_attributes.md#update-searchable-attributes) or use the [reset searchable attributes endpoint](/reference/api/searchable_attributes.md#reset-searchable-attributes).
 
 #### Manual
 
-You may want to make some attributes non-searchable, or change the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order) after documents have been indexed. To do so, simply place the attributes in the desired order and send the updated list using the [update searchable attributes endpoint](/reference/api/searchable_attributes.md#update-searchable-attributes).
+You may want to make some attributes non-searchable, or change the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order) after documents have been indexed. To do so, place the attributes in the desired order and send the updated list using the [update searchable attributes endpoint](/reference/api/searchable_attributes.md#update-searchable-attributes).
 
 After manually updating the `searchableAttributes` list, **subsequent new attributes will no longer be automatically added** unless the settings are [reset](/reference/api/searchable_attributes.md#reset-searchable-attributes).
 

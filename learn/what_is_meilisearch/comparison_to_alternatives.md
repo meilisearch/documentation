@@ -20,7 +20,7 @@ Please be advised that many of the search products described below are constantl
 
 ## Comparison table
 
-### General Overview
+### General overview
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:----:|:----:|:-----:|:----:|

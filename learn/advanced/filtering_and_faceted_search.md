@@ -27,7 +27,7 @@ Suppose you have a collection of movies containing the following fields:
 ```json
 [
   {
-    "id": "458723",
+    "id": 458723,
     "title": "Us",
     "director": "Jordan Peele",
     "genres": [
@@ -167,7 +167,7 @@ Suppose that you have a dataset containing several movies in the following forma
 [
   …
   {
-    "id": "458723",
+    "id": 458723,
     "title": "Us",
     "director": "Jordan Peele",
     "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
