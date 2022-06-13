@@ -35,7 +35,6 @@ Mahal
 Jieba
 Lindera
 Netlify
-unintuitive
 [Oo]verconsumption
 [Gg]eopositioning
 hanzi
