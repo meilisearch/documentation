@@ -21,9 +21,7 @@ update_an_index_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/movies' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-        "primaryKey" : "id"
-    }'
+    --data-binary '{ "primaryKey": "id" }'
 delete_an_index_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies'
@@ -37,22 +35,26 @@ add_or_replace_documents_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents' \
     -H 'Content-Type: application/json' \
-    --data-binary '[{
+    --data-binary '[
+      {
         "id": 287947,
         "title": "Shazam",
         "poster": "https://image.tmdb.org/t/p/w1280/xnopI5Xtky18MPhK40cZAGAOVeV.jpg",
         "overview": "A boy is given the ability to become an adult superhero in times of need with a single magic word.",
         "release_date": "2019-03-23"
-    }]'
+      }
+    ]'
 add_or_update_documents_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/movies/documents' \
     -H 'Content-Type: application/json' \
-    --data-binary '[{
+    --data-binary '[
+      {
         "id": 287947,
         "title": "Shazam ⚡️",
         "genres": "comedy"
-    }]'
+      }
+    ]'
 delete_all_documents_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/documents'
@@ -64,10 +66,10 @@ delete_documents_1: |-
     -X POST 'http://localhost:7700/indexes/movies/documents/delete-batch' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        23488,
-        153738,
-        437035,
-        363869
+      23488,
+      153738,
+      437035,
+      363869
     ]'
 search_post_1: |-
   curl \
@@ -92,30 +94,26 @@ get_all_tasks_by_index_1: |-
 get_one_key_1: |-
   curl \
     -X GET 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 get_all_keys_1: |-
   curl \
     -X GET 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 create_a_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Add documents: Products API key",
-      "actions": [
-        "documents.add"
-      ],
-      "indexes": [
-      "products"
-      ],
+      "actions": ["documents.add"],
+      "indexes": ["products"],
       "expiresAt": "2042-04-02T00:42:42Z"
     }'
 update_a_key_1: |-
   curl \
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Manage documents: Products/Reviews API key",
@@ -132,7 +130,7 @@ update_a_key_1: |-
 delete_a_key_1: |-
   curl \
     -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 get_settings_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings'
@@ -141,48 +139,51 @@ update_settings_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "rankingRules": [
-            "words",
-            "typo",
-            "proximity",
-            "attribute",
-            "sort",
-            "exactness",
-            "release_date:desc",
-            "rank:desc"
-        ],
-        "distinctAttribute": "movie_id",
-        "searchableAttributes": [
-            "title",
-            "overview",
-            "genres"
-        ],
-        "displayedAttributes": [
-            "title",
-            "overview",
-            "genres",
-            "release_date"
-        ],
-        "stopWords": [
-            "the",
-            "a",
-            "an"
-        ],
-        "sortableAttributes": [
-          "title",
-          "release_date"
-        ],
-        "synonyms": {
-            "wolverine": ["xmen", "logan"],
-            "logan": ["wolverine"]
+      "rankingRules": [
+        "words",
+        "typo",
+        "proximity",
+        "attribute",
+        "sort",
+        "exactness",
+        "release_date:desc",
+        "rank:desc"
+      ],
+      "distinctAttribute": "movie_id",
+      "searchableAttributes": [
+        "title",
+        "overview",
+        "genres"
+      ],
+      "displayedAttributes": [
+        "title",
+        "overview",
+        "genres",
+        "release_date"
+      ],
+      "stopWords": [
+        "the",
+        "a",
+        "an"
+      ],
+      "sortableAttributes": [
+        "title",
+        "release_date"
+      ],
+      "synonyms": {
+        "wolverine": [
+          "xmen",
+          "logan"
+      ],
+        "logan": ["wolverine"]
+      },
+      "typoTolerance": {
+        "minWordSizeForTypos": {
+          "oneTypo": 8,
+          "twoTypos": 10
         },
-        "typoTolerance": {
-            "minWordSizeForTypos": {
-                "oneTypo": 8,
-                "twoTypos": 10
-            },
-            "disableOnAttributes": ["title"]
-        }
+        "disableOnAttributes": ["title"]
+      }
     }'
 reset_settings_1: |-
   curl \
@@ -195,8 +196,14 @@ update_synonyms_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "wolverine": ["xmen", "logan"],
-      "logan": ["wolverine", "xmen"],
+      "wolverine": [
+        "xmen",
+        "logan"
+      ],
+      "logan": [
+        "wolverine",
+        "xmen"
+      ],
       "wow": ["world of warcraft"]
     }'
 reset_synonyms_1: |-
@@ -209,7 +216,11 @@ update_stop_words_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
     -H 'Content-Type: application/json' \
-    --data-binary '["the", "of", "to"]'
+    --data-binary '[
+      "the",
+      "of",
+      "to"
+    ]'
 reset_stop_words_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/settings/stop-words'
@@ -221,14 +232,14 @@ update_ranking_rules_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "words",
-        "typo",
-        "proximity",
-        "attribute",
-        "sort",
-        "exactness",
-        "release_date:asc",
-        "rank:desc"
+      "words",
+      "typo",
+      "proximity",
+      "attribute",
+      "sort",
+      "exactness",
+      "release_date:asc",
+      "rank:desc"
     ]'
 reset_ranking_rules_1: |-
   curl \
@@ -252,8 +263,8 @@ update_filterable_attributes_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "genres",
-        "director"
+      "genres",
+      "director"
     ]'
 reset_filterable_attributes_1: |-
   curl \
@@ -266,9 +277,9 @@ update_searchable_attributes_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "title",
-        "overview",
-        "genres"
+      "title",
+      "overview",
+      "genres"
     ]'
 reset_searchable_attributes_1: |-
   curl \
@@ -281,10 +292,10 @@ update_displayed_attributes_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "title",
-        "overview",
-        "genres",
-        "release_date"
+      "title",
+      "overview",
+      "genres",
+      "release_date"
     ]'
 reset_displayed_attributes_1: |-
   curl \
@@ -311,39 +322,48 @@ field_properties_guide_searchable_1: |-
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "searchableAttributes": [
-            "title",
-            "overview",
-            "genres"
-        ]
+      "searchableAttributes": [
+        "title",
+        "overview",
+        "genres"
+      ]
     }'
 field_properties_guide_displayed_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "displayedAttributes": [
-            "title",
-            "overview",
-            "genres",
-            "release_date"
-        ]
+      "displayedAttributes": [
+        "title",
+        "overview",
+        "genres",
+        "release_date"
+      ]
     }'
 filtering_guide_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "Avengers", "filter": "release_date > 795484800" }'
+    --data-binary '{
+      "q": "Avengers",
+      "filter": "release_date > 795484800"
+    }'
 filtering_guide_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "Batman", "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" }'
+    --data-binary '{
+      "q": "Batman",
+      "filter": "release_date > 795484800 AND (director = \"Tim Burton\" OR director = \"Christopher Nolan\")" 
+    }'
 filtering_guide_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "Planet of the Apes", "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" }' \
+    --data-binary '{
+      "q": "Planet of the Apes",
+      "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" 
+    }' \
 search_parameter_guide_query_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -353,22 +373,38 @@ search_parameter_guide_offset_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "offset": 1 }'
+    --data-binary '{
+      "q": "shifu",
+      "offset": 1
+    }'
 search_parameter_guide_limit_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "limit": 2 }'
+    --data-binary '{
+      "q": "shifu",
+      "limit": 2
+    }'
 search_parameter_guide_retrieve_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "attributesToRetrieve": ["overview", "title"] }'
+    --data-binary '{
+      "q": "shifu",
+      "attributesToRetrieve": [
+        "overview",
+        "title"
+      ]
+    }'
 search_parameter_guide_crop_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "shifu", "attributesToCrop": ["overview"], "cropLength": 5 }'
+    --data-binary '{
+      "q": "shifu",
+      "attributesToCrop": ["overview"],
+      "cropLength": 5 
+    }'
 search_parameter_guide_crop_marker_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -382,7 +418,10 @@ search_parameter_guide_highlight_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "winter feast", "attributesToHighlight": ["overview"] }'
+    --data-binary '{ 
+      "q": "winter feast",
+      "attributesToHighlight": ["overview"]
+    }'
 search_parameter_guide_highlight_tag_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -397,73 +436,74 @@ search_parameter_guide_matches_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "winter feast", "matches": true }'
+    --data-binary '{
+      "q": "winter feast",
+      "matches": true
+    }'
 settings_guide_synonyms_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/tops/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "synonyms": {
-            "sweater": ["jumper"],
-            "jumper": ["sweater"]
-        }
+      "synonyms": {
+        "sweater": ["jumper"],
+        "jumper": ["sweater"]
+      }
     }'
 settings_guide_stop_words_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "stopWords": [
-            "the",
-            "a",
-            "an"
-        ]
+      "stopWords": [
+        "the",
+        "a",
+        "an"
+      ]
     }'
 settings_guide_ranking_rules_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "rankingRules": [
-            "words",
-            "typo",
-            "proximity",
-            "attribute",
-            "sort",
-            "exactness",
-            "release_date:asc",
-            "rank:desc"
-        ]
+      "rankingRules": [
+        "words",
+        "typo",
+        "proximity",
+        "attribute",
+        "sort",
+        "exactness",
+        "release_date:asc",
+        "rank:desc"
+      ]
     }'
 settings_guide_distinct_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/jackets/settings' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-        "distinctAttribute": "product_id"
-    }
+    --data-binary '{ "distinctAttribute": "product_id" }
 settings_guide_searchable_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "searchableAttributes": [
-            "title",
-            "overview",
-            "genres"
-        ]
+      "searchableAttributes": [
+        "title",
+        "overview",
+        "genres"
+      ]
     }'
 settings_guide_displayed_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "displayedAttributes": [
-            "title",
-            "overview",
-            "genres",
-            "release_date"
-        ]
+      "displayedAttributes": [
+        "title",
+        "overview",
+        "genres",
+        "release_date"
+      ]
     }'
 settings_guide_sortable_1: |-
   curl \
@@ -477,23 +517,13 @@ settings_guide_sortable_1: |-
     }'
 add_movies_json_1: |-
   curl \
-    -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
+    -X POST 'http://localhost:7700/indexes/movies/documents'\
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
-documents_guide_add_movie_1: |-
-  curl \
-    -X POST `http://localhost:7700/indexes/movies/documents` \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      {
-        "movie_id": "123sq178",
-        "title": "Amelie Poulain"
-      }
-    ]'
 getting_started_add_documents_md: |-
   ```bash
   curl \
-    -X POST 'http://127.0.0.1:7700/indexes/movies/documents' \
+    -X POST 'http://localhost:7700/indexes/movies/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
   ```
@@ -503,13 +533,13 @@ getting_started_check_task_status: |-
 getting_started_search_md: |-
   ```bash
   curl \
-    -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "q": "botman" }'
   ```
 getting_started_add_meteorites: |-
   curl \
-    -X POST 'http://127.0.0.1:7700/indexes/meteorites/documents' \
+    -X POST 'http://localhost:7700/indexes/meteorites/documents' \
     -H 'Content-Type: application/json' \
     --data-binary @meteorites.json
 getting_started_update_ranking_rules: |-
@@ -517,31 +547,29 @@ getting_started_update_ranking_rules: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "exactness",
-        "words",
-        "typo",
-        "proximity",
-        "attribute",
-        "sort",
-        "release_date:asc",
-        "rank:desc"
+      "exactness",
+      "words",
+      "typo",
+      "proximity",
+      "attribute",
+      "sort",
+      "release_date:asc",
+      "rank:desc"
     ]'
 getting_started_update_displayed_attributes: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "title",
-        "overview",
-        "poster"
+      "title",
+      "overview",
+      "poster"
     ]'
 getting_started_update_searchable_attributes: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
-    --data-binary '[
-        "title"
-    ]'
+    --data-binary '["title"]'
 getting_started_update_stop_words: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
@@ -552,13 +580,14 @@ getting_started_synonyms: |-
     -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "winnie": ["piglet"], "piglet": ["winnie"]
-      }'
+      "winnie": ["piglet"], 
+      "piglet": ["winnie"]
+    }'
 getting_started_filtering: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{"filter": "mass < 200"}'
+    --data-binary '{ "filter": "mass < 200" }'
 getting_started_geo_radius: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
@@ -573,64 +602,88 @@ getting_started_sorting: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{"filter": "mass < 200",
-      "sort": [
-        "mass:asc"
-      ]}'
+    --data-binary '{
+      "filter": "mass < 200",
+      "sort": ["mass:asc"]
+    }'
 getting_started_configure_settings: |-
   curl \
     -X POST 'http://localhost:7700/indexes/meteorites/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "filterableAttributes": [
-            "mass",
-            "_geo"
-        ],
-        "sortableAttributes": [
-            "mass",
-            "_geo"
-        ]
+      "filterableAttributes": [
+        "mass",
+        "_geo"
+      ],
+      "sortableAttributes": [
+        "mass",
+        "_geo"
+      ]
     }'
 getting_started_communicating_with_a_protected_instance: |-
-  curl -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
-    -H 'Authorization: Bearer apiKey'
+  curl \ 
+    -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
+    -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "filterableAttributes": [
-            "director",
-            "genres"
-        ]
+      "filterableAttributes": [
+        "director",
+        "genres"
+      ]
     }'
 faceted_search_filter_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
+    --data-binary '{
+      "q": "thriller",
+      "filter": [
+        [
+          "genres = Horror",
+          "genres = Mystery"
+        ],
+        "director = \"Jordan Peele\""
+        ]
+    }'
 faceted_search_facets_distribution_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "Batman", "facetsDistribution": ["genres"] }'
+    --data-binary '{
+      "q": "Batman",
+      "facetsDistribution": ["genres"]
+    }'
 faceted_search_walkthrough_filter_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "q": "thriller", "filter": [["genres = Horror", "genres = Mystery"], "director = \"Jordan Peele\""] }'
+    --data-binary '{
+      "q": "thriller",
+      "filter": [
+        [
+          "genres = Horror",
+          "genres = Mystery"],
+          "director = \"Jordan Peele\""
+        ]
+    }'
 post_dump_1: |-
   curl \
     -X POST 'http://localhost:7700/dumps'
 get_dump_status_1: |-
-  curl -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
+  curl \
+    -X GET 'http://localhost:7700/dumps/20201101-110357260/status'
 phrase_search_1: |-
-  curl -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
 authorization_header_1: |-
-  curl -X GET 'http://127.0.0.1:7700/keys' \
-    -H 'Authorization: Bearer masterKey'
+  curl \
+    -X GET 'http://localhost:7700/keys' \
+    -H 'Authorization: Bearer MASTER_KEY'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
@@ -657,9 +710,7 @@ sorting_guide_sort_parameter_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "science fiction",
-      "sort": [
-        "price:asc"
-      ]
+      "sort": ["price:asc"]
     }'
 sorting_guide_sort_parameter_2: |-
   curl \
@@ -667,9 +718,7 @@ sorting_guide_sort_parameter_2: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "butler",
-      "sort": [
-        "author:desc"
-      ]
+      "sort": ["author:desc"]
     }'
 get_sortable_attributes_1: |-
   curl \
@@ -679,8 +728,8 @@ update_sortable_attributes_1: |-
     -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-        "price",
-        "author"
+      "price",
+      "author"
     ]'
 reset_sortable_attributes_1: |-
   curl \
@@ -691,17 +740,13 @@ search_parameter_guide_sort_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "science fiction",
-      "sort": [
-        "price:asc"
-      ]
+      "sort": ["price:asc"]
     }'
 geosearch_guide_filter_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
     -H 'Content-type:application/json' \
-    --data-binary '[
-        "_geo"
-    ]'
+    --data-binary '["_geo"]'
 geosearch_guide_filter_usage_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/restaurants/search' \
@@ -716,9 +761,7 @@ geosearch_guide_sort_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \
     -H 'Content-type:application/json' \
-    --data-binary '[
-        "_geo"
-    ]'
+    --data-binary '["_geo"]'
 geosearch_guide_sort_usage_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/restaurants/search' \
@@ -728,39 +771,41 @@ geosearch_guide_sort_usage_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
-    --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc", "rating:desc"] }'
+    --data-binary '{
+      "sort": [
+        "_geoPoint(48.8561446,2.2978204):asc",
+        "rating:desc"
+      ]
+    }'
 security_guide_search_key_1: |-
-  curl -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
-    -H 'Authorization: Bearer apiKey'
+  curl \
+    -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
+    -H 'Authorization: Bearer API_KEY'
 security_guide_update_key_1: |-
   curl \
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "indexes": ["doctors"]
-    }'
+    --data-binary '{ "indexes": ["doctors"] }'
 security_guide_create_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \
     -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     --data-binary '{
       "description": "Search patient records key",
-      "actions": [
-        "search"
-      ],
+      "actions": ["search"],
       "indexes": ["patient_medical_records"],
       "expiresAt": "2023-01-01T00:00:00Z"
     }'
 security_guide_list_keys_1: |-
   curl \
     -X GET 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 security_guide_delete_key_1: |-
   curl \
     -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 primary_field_guide_create_index_primary_key: |-
   curl \
     -X POST 'http://localhost:7700/indexes' \
@@ -773,24 +818,27 @@ primary_field_guide_add_document_primary_key: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/documents?primaryKey=reference_number' \
     -H 'Content-Type: application/json' \
-    --data-binary '[{
+    --data-binary '[
+      {
         "reference_number": 287947,
         "title": "Diary of a Wimpy Kid",
         "author": "Jeff Kinney",
-        "genres": ["comedy","humor"],
+        "genres": [
+          "comedy",
+          "humor"
+        ],
         "price": 5.00
-     }]'
+      }
+    ]'
 primary_field_guide_update_document_primary_key: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/books' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-        "primaryKey" : "title"
-        }'
+    --data-binary '{ "primaryKey": "title" }'
 tenant_token_guide_search_no_sdk_1: |-
   curl \
-    -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
-    -H 'Authorization: Bearer yourTenantToken'
+    -X POST 'http://localhost:7700/indexes/patient_medical_records/search' \
+    -H 'Authorization: Bearer TENANT_TOKEN'
 get_typo_tolerance_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/books/settings/typo-tolerance'
@@ -803,9 +851,7 @@ update_typo_tolerance_1: |-
         "oneTypo": 4,
         "twoTypos": 10
       },
-      "disableOnAttributes": [
-        "title"
-      ]
+      "disableOnAttributes": ["title"]
     }'
 reset_typo_tolerance_1: |-
   curl \
@@ -814,18 +860,12 @@ typo_tolerance_guide_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "enabled": false
-    }'
+    --data-binary '{ "enabled": false }'
 typo_tolerance_guide_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "disableOnAttributes": [
-        "title"
-    ]
-  }'
+    --data-binary '{ "disableOnAttributes": ["title"] }'
 typo_tolerance_guide_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
@@ -833,8 +873,8 @@ typo_tolerance_guide_3: |-
     --data-binary '{
       "disableOnWords": [
         "shrek"
-    ]
-  }'
+      ]
+    }'
 typo_tolerance_guide_4: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
@@ -847,70 +887,67 @@ typo_tolerance_guide_4: |-
     }'
 settings_guide_typo_tolerance_1: |-
   curl \
-      -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
-      -H 'Content-Type: application/json' \
-      --data-binary '{
-        "minWordSizeForTypos": {
-          "twoTypos": 12
-        },
-        "disableOnAttributes": [
-          "title"
-        ]
-      }'
+    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "minWordSizeForTypos": {
+        "twoTypos": 12
+      },
+      "disableOnAttributes": ["title"]
+    }'
 updating_guide_check_version_new_authorization_header: |-
   curl \
-      -X GET 'http://127.0.0.1:7700/version' \
-      -H 'Authorization: Bearer apiKey'
+    -X GET 'http://127.0.0.1:7700/version' \
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_check_version_old_authorization_header: |-
   curl \
-      -X GET 'http://127.0.0.1:7700/version' \
-      -H 'X-Meili-API-Key: apiKey'    
+    -X GET 'http://127.0.0.1:7700/version' \
+    -H 'X-Meili-API-Key: API_KEY'  
 updating_guide_get_displayed_attributes_new: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
-    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'Authorization: Bearer apiKey'
+    -X GET 'http://localhost:7700/indexes/{index_uid}/settings/displayed-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_get_displayed_attributes_old: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
-    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: apiKey'
+    -X GET 'http://localhost:7700/indexes/{index_uid}/settings/displayed-attributes' \
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_reset_displayed_attributes_new: |-
   curl \
-    -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'Authorization: Bearer apiKey'
+    -X DELETE 'http://localhost:7700/indexes/{index_uid}/settings/displayed-attributes' \
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_reset_displayed_attributes_old: |-
   curl \
-    -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: apiKey'
+    -X DELETE 'http://localhost:7700/indexes/{index_uid}/settings/displayed-attributes' \
 updating_guide_create_dump: |-
   curl \
-    -X POST 'http://127.0.0.1:7700/dumps' \
-    -H 'Authorization: Bearer apiKey'
+    -X POST 'http://localhost:7700/dumps' \
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_get_dump_status: |-
   # replace {dump_uid} with the uid returned by the previous command
   curl \
-    -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status' \
-    -H 'Authorization: Bearer apiKey'
+    -X GET 'http://localhost:7700/dumps/{dump_uid}/status' \
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_get_settings_old: |-
   # the -o option saves the output as a local file
   curl \
-    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -X GET 'http://localhost:7700/indexes/{index_uid}/settings' -o mysettings.json \
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_retrieve_documents_old: |-
   # the -o option saves the output as a local file
   curl \
-    -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \ -o mydocuments.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -X GET 'http://localhost:7700/indexes/{index_uid}/documents?limit=n' \ -o mydocuments.json \ 
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_update_settings_old: |-
   # update your settings
   curl \
-    -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/settings' \
+    -X POST 'http://localhost:7700/indexes/{index_uid}/settings' \
     -H 'Content-Type: application/json' -d @mysettings.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_add_documents_old: |-
   # then, add your documents
   curl \
-    -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/documents' \
+    -X POST 'http://localhost:7700/indexes/{index_uid}/documents' \
     -H 'Content-Type: application/json' -d @mydocuments.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'

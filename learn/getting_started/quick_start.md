@@ -51,14 +51,14 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.27.1
+docker pull getmeili/meilisearch:v0.27.2
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
     -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:v0.27.1
+    getmeili/meilisearch:v0.27.1 \
     meilisearch --env="development"
 ```
 
@@ -179,6 +179,10 @@ Open a new terminal window and run the following command:
 <CodeSamples id="getting_started_add_documents_md" />
 
 Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents.md). Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes.md).
+
+::: note
+Currently, Meilisearch only supports [JSON, CSV, and NDJSON formats](/learn/core_concepts/documents.md#dataset-format).
+:::
 
 The previous command added documents from `movies.json` to a new index called `movies`. After adding documents, you should receive a response like this:
 
@@ -464,7 +468,7 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 ::: tab CLI
 
 ```bash
-./meilisearch --master-key="masterKey"
+./meilisearch --master-key="MASTER_KEY"
 ```
 
 :::
@@ -474,14 +478,14 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 Linux/MacOS:
 
 ```bash
-export MEILI_MASTER_KEY="masterKey"
+export MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 
 Windows:
 
 ```bash
-set MEILI_MASTER_KEY="masterKey"
+set MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 

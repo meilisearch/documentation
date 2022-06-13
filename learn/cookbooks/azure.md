@@ -20,11 +20,11 @@ You can deploy a Meilisearch instance via the official [Meilisearch Docker image
 
 When clicking this button, you'll be redirected to the Azure Portal and asked a few questions:
 
-- **Region**: This is the deployment region. You should select a region close to you or your users.
-- **Environment**: The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This setting has no effect on the type of resources deployed. It's just for convenience.
-- **Application Name**: The name of your application. This name should be **unique across all Azure customers**. The URL where your application is deployed will contain this value.
-- **Location**: This the resources location. For reasons out of scope of this documentation, this parameter is different from the _Region_ one. By default, it is set to `eastus`, but you can type any Azure location (like `francecentral`, `westeurope`, or `japaneast`).
-- **Meilisearch_apikey**: This will be the [master key](/learn/security/master_api_keys.md) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key.
+- "Region": This is the deployment region. You should select a region close to you or your users.
+- "Environment": The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This setting has no effect on the type of resources deployed. It's just for convenience.
+- "Application Name": The name of your application. This name should be **unique across all Azure customers**. The URL where your application is deployed will contain this value.
+- "Location": This is the resources' location. For reasons out of scope of this documentation, this parameter is different from the _Region_ one. By default, it is set to `eastus`, but you can type any Azure location (like `francecentral`, `westeurope`, or `japaneast`).
+- "`Meilisearch_apikey`": This will be the [master key](/learn/security/master_api_keys.md) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key.
 
 Once you have filled in these fields, click the **Review + create** button, and then the **Create** button.
 
@@ -55,7 +55,7 @@ We've made some _opinionated choices_ in the one-click deployment that should wo
 
 ### Data redundancy and backup
 
-The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same Datacenter. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
+The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same data center. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
 
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
