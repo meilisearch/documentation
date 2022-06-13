@@ -1,5 +1,5 @@
 ---
-# Suggestion: style_guide.MergeConflictMarkers
+# Suggestion: style_guide.FirstPerson
 
 # We want to avoid using singular first person pronouns
 extends: existence

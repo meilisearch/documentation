@@ -9,3 +9,4 @@ level: error
 scope: raw
 raw:
   - '\n<<<<<<< .+\n|\n=======\n|\n>>>>>>> .+\n'
+  
