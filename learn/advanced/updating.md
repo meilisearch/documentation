@@ -13,12 +13,17 @@ If you have already **installed the latest version and manually indexed your dat
 Before we begin, you need to **verify the version of Meilisearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a Meilisearch instance:
 
 ```bash
-./meilisearch --master-key="your_master_key"
+./meilisearch --master-key="MASTER_KEY"
 ```
 
 If Meilisearch launches successfully, use the [get version endpoint](/reference/api/version.md), note your `pkgVersion`, and [proceed to the next step](#proceed-according-to-your-database-version).
 
-<CodeSamples id="updating_guide_check_version" />
+<CodeSamples id="updating_guide_check_version_new_authorization_header" />
+
+::: note
+ If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
+ <CodeSamples id="updating_guide_check_version_old_authorization_header" />
+:::
 
 The response should look something like this:
 
@@ -238,7 +243,7 @@ Now that you’ve got your dump, [install the latest version of Meilisearch](/le
 
 ```bash
 # launch the latest version of Meilisearch with the master key and import the specified dump file
-./meilisearch --import-dump /dumps/your_dump_file.dump --master-key="your_master_key"
+./meilisearch --import-dump /dumps/your_dump_file.dump --master-key="MASTER_KEY"
 ```
 
 ::: warning

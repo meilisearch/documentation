@@ -55,7 +55,7 @@ We've made some _opinionated choices_ in the one-click deployment that should wo
 
 ### Data redundancy and backup
 
-The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same Datacenter. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
+The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same data center. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
 
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
@@ -65,7 +65,7 @@ Meilisearch has snapshot and dump features that can help improve your backup cap
 
 ### Always-on
 
-To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deallocated. When the next client hits your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range.
+To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deactivated. When the next client hits your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range.
 
 You can avoid this _cold start_ by enabling the _Always-on_ feature, either in the Azure portal or in the Infrastructure as Code.
 

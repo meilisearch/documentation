@@ -1,4 +1,4 @@
-# Data backup: snapshots vs. dumps
+# Data backup: Snapshots vs dumps
 
 Meilisearch has two ways to backup its data: `snapshots` and `dumps`.
 

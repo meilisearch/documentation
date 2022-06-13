@@ -51,18 +51,20 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.27.1
+docker pull getmeili/meilisearch:v0.27.2
 
-# Launch Meilisearch
+# Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
+    -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:v0.27.1
+    meilisearch --env="development"
 ```
 
 Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
 
-On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the docker vm. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
+On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the Docker virtual machine. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
 
 You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
 :::
@@ -178,6 +180,10 @@ Open a new terminal window and run the following command:
 
 Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents.md). Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes.md).
 
+::: note
+Currently, Meilisearch only supports [JSON, CSV, and NDJSON formats](/learn/core_concepts/documents.md#dataset-format).
+:::
+
 The previous command added documents from `movies.json` to a new index called `movies`. After adding documents, you should receive a response like this:
 
 ```json
@@ -231,14 +237,14 @@ In the above code sample, the parameter `q` represents the search query. The doc
 {
   "hits": [
     {
-      "id": "29751",
+      "id": 29751,
       "title": "Batman Unmasked: The Psychology of the Dark Knight",
       "poster": "https://image.tmdb.org/t/p/w1280/jjHu128XLARc2k4cJrblAvZe0HE.jpg",
       "overview": "Delve into the world of Batman and the vigilante justice tha",
       "release_date": "2008-07-15"
     },
     {
-      "id": "471474",
+      "id": 471474,
       "title": "Batman: Gotham by Gaslight",
       "poster": "https://image.tmdb.org/t/p/w1280/7souLi5zqQCnpZVghaXv0Wowi0y.jpg",
       "overview": "ve Victorian Age Gotham City, Batman begins his war on crime",
@@ -261,9 +267,11 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
 
-![Meilisearch's search preview indicating the indexes dropdown on the upper right corner](/getting-started/multiple_indexes.png)
+![Meilisearch's search preview showing the movies index](/search_preview/default.png)
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
+
+![Meilisearch's search preview indicating the indexes dropdown in the upper right corner](/search_preview/multiple_indexes.png)
 
 ## Front-end integration
 
@@ -460,7 +468,7 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 ::: tab CLI
 
 ```bash
-./meilisearch --master-key="masterKey"
+./meilisearch --master-key="MASTER_KEY"
 ```
 
 :::
@@ -470,14 +478,14 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 Linux/MacOS:
 
 ```bash
-export MEILI_MASTER_KEY="masterKey"
+export MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 
 Windows:
 
 ```bash
-set MEILI_MASTER_KEY="masterKey"
+set MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 
@@ -493,6 +501,10 @@ When you launch your Meilisearch instance with a master key, two things happen:
 Here's how to use the master key you set to [get all keys](/reference/api/keys.md#get-all-keys):
 
 <CodeSamples id="authorization_header_1" />
+
+::: warning
+The master key should only be used for managing your API keys. Avoid using it for regular API calls.
+:::
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 

@@ -92,15 +92,15 @@ get_all_tasks_by_index_1: |-
 get_one_key_1: |-
   curl \
     -X GET 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 get_all_keys_1: |-
   curl \
     -X GET 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 create_a_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Add documents: Products API key",
@@ -115,7 +115,7 @@ create_a_key_1: |-
 update_a_key_1: |-
   curl \
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "description": "Manage documents: Products/Reviews API key",
@@ -132,7 +132,7 @@ update_a_key_1: |-
 delete_a_key_1: |-
   curl \
     -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 get_settings_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/movies/settings'
@@ -480,16 +480,6 @@ add_movies_json_1: |-
     -X POST 'http://127.0.0.1:7700/indexes/movies/documents'\
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
-documents_guide_add_movie_1: |-
-  curl \
-    -X POST `http://localhost:7700/indexes/movies/documents` \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      {
-        "movie_id": "123sq178",
-        "title": "Amelie Poulain"
-      }
-    ]'
 getting_started_add_documents_md: |-
   ```bash
   curl \
@@ -593,7 +583,7 @@ getting_started_configure_settings: |-
     }'
 getting_started_communicating_with_a_protected_instance: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
-    -H 'Authorization: Bearer apiKey'
+    -H 'Authorization: Bearer API_KEY'
 faceted_search_update_settings_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings' \
@@ -630,7 +620,7 @@ phrase_search_1: |-
   --data-binary '{ "q": "\"african american\" horror" }'
 authorization_header_1: |-
   curl -X GET 'http://127.0.0.1:7700/keys' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
@@ -731,11 +721,11 @@ geosearch_guide_sort_usage_2: |-
     --data-binary '{ "sort": ["_geoPoint(48.8561446,2.2978204):asc", "rating:desc"] }'
 security_guide_search_key_1: |-
   curl -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
-    -H 'Authorization: Bearer apiKey'
+    -H 'Authorization: Bearer API_KEY'
 security_guide_update_key_1: |-
   curl \
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "indexes": ["doctors"]
@@ -744,7 +734,7 @@ security_guide_create_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \
     -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer masterKey' \
+    -H 'Authorization: Bearer MASTER_KEY' \
     --data-binary '{
       "description": "Search patient records key",
       "actions": [
@@ -756,11 +746,11 @@ security_guide_create_key_1: |-
 security_guide_list_keys_1: |-
   curl \
     -X GET 'http://localhost:7700/keys' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 security_guide_delete_key_1: |-
   curl \
     -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
-    -H 'Authorization: Bearer masterKey'
+    -H 'Authorization: Bearer MASTER_KEY'
 primary_field_guide_create_index_primary_key: |-
   curl \
     -X POST 'http://localhost:7700/indexes' \
@@ -790,7 +780,7 @@ primary_field_guide_update_document_primary_key: |-
 tenant_token_guide_search_no_sdk_1: |-
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/patient_medical_records/search' \
-    -H 'Authorization: Bearer yourTenantToken'
+    -H 'Authorization: Bearer TENANT_TOKEN'
 get_typo_tolerance_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/books/settings/typo-tolerance'
@@ -857,59 +847,63 @@ settings_guide_typo_tolerance_1: |-
           "title"
         ]
       }'
-updating_guide_check_version: |-
+updating_guide_check_version_new_authorization_header: |-
   curl \
-    -X GET 'http://127.0.0.1:7700/version' \
-    -H 'Authorization: Bearer apiKey'
+      -X GET 'http://127.0.0.1:7700/version' \
+      -H 'Authorization: Bearer API_KEY'
+updating_guide_check_version_old_authorization_header: |-
+  curl \
+      -X GET 'http://127.0.0.1:7700/version' \
+      -H 'X-Meili-API-Key: API_KEY'    
 updating_guide_get_displayed_attributes_new: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'Authorization: Bearer apiKey'
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_get_displayed_attributes_old: |-
   # whenever you see {index_uid}, replace it with your index's unique id
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_reset_displayed_attributes_new: |-
   curl \
     -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'Authorization: Bearer apiKey'
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_reset_displayed_attributes_old: |-
   curl \
     -X DELETE 'http://127.0.0.1:7700/indexes/{index_uid}/settings/displayed-attributes' \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_create_dump: |-
   curl \
     -X POST 'http://127.0.0.1:7700/dumps' \
-    -H 'Authorization: Bearer apiKey'
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_get_dump_status: |-
   # replace {dump_uid} with the uid returned by the previous command
   curl \
     -X GET 'http://127.0.0.1:7700/dumps/{dump_uid}/status' \
-    -H 'Authorization: Bearer apiKey'
+    -H 'Authorization: Bearer API_KEY'
 updating_guide_get_settings_old: |-
   # the -o option saves the output as a local file
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/settings' -o mysettings.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_retrieve_documents_old: |-
   # the -o option saves the output as a local file
   curl \
     -X GET 'http://127.0.0.1:7700/indexes/{index_uid}/documents?limit=n' \ -o mydocuments.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_update_settings_old: |-
   # update your settings
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/settings' \
     -H 'Content-Type: application/json' -d @mysettings.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'
 updating_guide_add_documents_old: |-
   # then, add your documents
   curl \
     -X POST 'http://127.0.0.1:7700/indexes/{index_uid}/documents' \
     -H 'Content-Type: application/json' -d @mydocuments.json \
-    -H 'X-Meili-API-Key: apiKey'
+    -H 'X-Meili-API-Key: API_KEY'
 getting_started_typo_tolerance: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
@@ -917,5 +911,3 @@ getting_started_typo_tolerance: |-
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
-
-

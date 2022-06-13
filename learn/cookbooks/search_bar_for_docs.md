@@ -20,7 +20,7 @@ You can install and run Meilisearch on your machine using `curl`.
 
 ```bash
 curl -L https://install.meilisearch.com | sh
-./meilisearch --master-key=myMasterKey
+./meilisearch --master-key=MASTER_KEY
 ```
 
 There are [other ways to install Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation).
@@ -100,7 +100,7 @@ You can run the scraper with Docker. With our local Meilisearch instance set up 
 docker run -t --rm \
   --network=host \
   -e MEILISEARCH_HOST_URL='http://localhost:7700' \
-  -e MEILISEARCH_API_KEY='myMasterKey' \
+  -e MEILISEARCH_API_KEY='MASTER_KEY' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
@@ -213,7 +213,7 @@ _[Docxtemplater](https://docxtemplater.com/) search bar demo_
 </html>
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `MASTER_KEY`.
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
 

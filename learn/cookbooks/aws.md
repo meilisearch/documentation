@@ -23,7 +23,7 @@ In the top-right corner, click on the **Launch instances** button to start the p
 
 You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the search bar and select the **Community AMIs** tab on the left sidebar.
 
-![Page titled: 'Step 1: Choose an Amazon Machine Image (AMI)'. There is only one AMI available, MeiliSearch-v0.19.0-Debian-10.3](/aws/02.select-ami.png)
+![Page titled: 'Step 1: Choose an Amazon Machine Image (AMI)'](/aws/02.select-ami.png)
 
 Click on **Select** (right side of the screen) to confirm your choice.
 
@@ -47,7 +47,7 @@ Here you can specify [details of your Instance](https://docs.aws.amazon.com/efs/
 
 ![Page titled 'Step 3: Configure Instance Details'. Important: You can launch multiple instances from the same AMI, request Spot instances to take advantage of lower pricing, and assign access management role to the instance.](/aws/04.instance-details.png)
 
-Simply click on **Next: Add Storage** to keep going.
+Click **Next: Add Storage** to keep going.
 
 ### 5. Storage
 
@@ -55,7 +55,7 @@ Choose the storage **device** and **size** for your Meilisearch instance.
 
 ![Page titled 'Step 4: Add Storage'. Text at bottom of screen: Free tier eligible users can get up to 30GB of EBS General Purpose (SSD) or Magnetic storage.](/aws/05.storage.png)
 
-The amount of storage space required can [vary drastically](/learn/advanced/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents).  We have the **Volume Type** set to **General Purpose SSD (gp2)**.
+The amount of storage space required can [vary drastically](/learn/advanced/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents). We have the **Volume Type** set to **General Purpose SSD (gp2)**.
 
 When you're ready, click on **Next: Add Tags** to continue.
 
