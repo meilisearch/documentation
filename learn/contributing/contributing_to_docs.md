@@ -19,7 +19,7 @@ On the Meilisearch documentation team, [GitHub Issues](https://github.com/meilis
 
 - A detailed bug report
 - A request for a new technical feature (e.g. dark mode, versioning, etc.)
-- A request for new content (e.g. a tutorial, guide, or explanation)
+- A request for new content (e.g., a tutorial, guide, or explanation)
 - A helpful suggestion for the future of the documentation
 
 We love issues at Meilisearch, because they help us do our jobs better. Nine times out of ten, the most useful contribution is a simple GitHub issue that points out a problem and proposes a solution.
@@ -61,7 +61,7 @@ All you need to continue is a [GitHub account](https://github.com).
 1. On the documentation page you'd like to edit, scroll to the bottom and click **"Edit this page"** on the left. This will take you to GitHub.
 2. If you're not already signed in, do so now. You may be prompted to create a [fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo)—if so, do it.
 3. Use GitHub's text editor to make the change you want.
-4. Scroll down to where it says `Propose changes`. In the first text box, write a short description (e.g. "Fix typo"). In the second text box, write a longer description of your changes if necessary.
+4. Scroll down to where it says `Propose changes`. In the first text box, write a short description (e.g., "Fix typo"). In the second text box, write a longer description of your changes if necessary.
 5. Click `Propose changes` to continue. You should see a page that says `Comparing changes`. This screen is prompting you to create a pull request.
 6. Make sure the base repository is `meilisearch/documentation` and the base is `master`. Don't worry about the other two boxes—they automatically target the changes you just made.
 7. Below, you can see the changes you made compared to the master branch (what's currently published on docs.meilisearch.com). When you're ready, click `Create pull request`.
