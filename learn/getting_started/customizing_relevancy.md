@@ -79,7 +79,7 @@ Suppose you have an e-commerce dataset with an index on jackets. There are sever
 
 If you searched for `lee leather jacket` with the default settings, you would get all three documents. But if you set `product_id` as the `distinctAttribute`, Meilisearch will only return one of those jackets.
 
-You can read more about displayed attributes in our [dedicated guide](/learn/configuration/distinct.md).
+You can read more about the distinct attribute in our [dedicated guide](/learn/configuration/distinct.md).
 
 ## Searchable attributes
 
