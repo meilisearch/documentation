@@ -149,6 +149,6 @@ Meilisearch accepts one typo for query terms containing `5` or more characters b
 
 The above code sample sets the minimum word size for one typo to `4` characters. If you search for `swaj` now, you should get some results.
 
-You can read more about it in our [dedicated guide](/learn/configuration/typo_tolerance.md).
+You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance.md).
 
 The next chapter tackles more advanced topics, including security and data backup.
