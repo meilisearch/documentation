@@ -1,6 +1,6 @@
 # Indexes
 
-An index is a group of documents with its own settings. It is comparable to a table in `SQL` or a collection in MongoDB.
+An index is a group of documents with associated settings. It is comparable to a table in `SQL` or a collection in MongoDB.
 
 An index is defined by a `uid` and contains the following information:
 
@@ -12,15 +12,17 @@ An index is defined by a `uid` and contains the following information:
 
 Suppose you manage a database that contains information about movies, similar to [IMDb](https://imdb.com/). You would probably want to keep multiple types of documents, such as movies, TV shows, actors, directors, and more. Each of these categories would be represented by an index in Meilisearch.
 
-Each index holds information about the fields found in the documents. For example, a `movies` index would possibly contain documents with fields like `movie_id`, `title`, `genre`, `overview`, and `release_date`. You might also want to treat fields differently:`title` would be more meaningful to a movie search than `overview` or `release_date`, while you might want exact matches for `movie_id` or `genre` but not for `release_date`. All of this is controlled by an index's settings. The settings of one index don't impact other indexes, meaning you can create different synonyms for a `movies` and a `costumes` index on the same server.
+Using an index's settings, you can customize search behavior for that index. For example, a `movies` index might contain documents with fields like `movie_id`, `title`, `genre`, `overview`, and `release_date`. Using settings, you could make a movie's `title` have a bigger impact on search results than its `overview`, or make the `movie_id` field non-searchable.
+
+One index's settings do not impact other indexes. For example, you could use a different list of synonyms for your `movies` index than for your `costumes` index, even if they're on the same server.
 
 ## Index creation
 
-Meilisearch automatically creates an index for you the first time you add a document. You can also create one manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
+Meilisearch automatically creates an index the first time you add a document. You can also create one manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
 
 ## Index UID
 
-The `uid` is the **unique identifier** of a given index. It is set at index creation time and must be an integer or a string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
+The `uid` is the **unique identifier** of an index. It is set when creating the index and must be an integer or string containing only alphanumeric characters `a-z A-Z 0-9`, hyphens `-` and underscores `_`.
 
 **Once defined, the `uid` cannot be changed**, and you cannot create another index with the same `uid`.
 
@@ -35,17 +37,19 @@ The `uid` is the **unique identifier** of a given index. It is set at index crea
 
 ## Primary key
 
-Every index has a primary key: a required attribute that must be present in all documents in the index. The index must know the primary key's attribute name and each document must have a unique value associated with the primary key. This serves to identify each document, such that two documents in an index can never be completely identical. If you try adding documents and even a single one is missing the primary key, none of the documents will be stored.
+Every index has a primary key: a required attribute that must be present in all documents in the index. Each document must have a unique value associated with this attribute. 
 
-You can set a primary key for an index or let it be inferred by Meilisearch. Read more about it in our [dedicated guide](/learn/core_concepts/primary_key.md#setting-the-primary-key).
+The primary key serves to identify each document, such that two documents in an index can never be completely identical. If you add two documents with the same value for the primary key, they will be treated as the same document: one will overwrite the other. If you try adding documents and even a single one is missing the primary key, none of the documents will be stored.
+
+You can set the primary key for an index or let it be inferred by Meilisearch. Read more about [setting the primary key](/learn/core_concepts/primary_key.md#setting-the-primary-key).
 
 [Learn more about document primary key](/learn/core_concepts/primary_key.md#primary-key-2)
 
 ## Index settings
 
-Index settings can be thought of as a JSON object containing different options for customizing search behavior.
+Index settings can be thought of as a JSON object containing many different options for customizing search behavior.
 
-Meilisearch allows you to customize the following index settings:
+You can customize the following index settings:
 
 - [Ranking rules](#ranking-rules)
 - [Synonyms](#synonyms)
@@ -55,7 +59,7 @@ Meilisearch allows you to customize the following index settings:
 - [Displayed and searchable attributes](#displayed-and-searchable-attributes)
 - [Typo tolerance](#typo-tolerance)
 
-These settings can make indexes behave differently even if they have the same documents. To change them, you can use the [settings route](/reference/api/settings.md) or the [dedicated settings child route](/reference/api/settings.md#all-settings).
+To change index settings, use the [update settings endpoint](/reference/api/settings.md#update-settings) or any of the [child routes](/reference/api/settings.md#all-settings).
 
 ### Ranking rules
 
@@ -83,23 +87,26 @@ Since synonyms are defined for a given index, they won't apply to any other inde
 
 ### Filterable attributes
 
-Filtering allows you to refine your search based on different categories, in our case, document attributes; these can include a movie genre, a price range, or location. To filter by any document attribute, you need to add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes).
+Filtering allows you to refine your search based on different categories. For example, you could search for all movies of a certain `genre`, e.g. `Science Fiction`, with a `rating` above `8`.
 
-Adding an attribute to `filterableAttributes` will not impact search. You need it to use the [`filter` search parameter](/reference/api/search.md#filter) to refine your results.
+Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter). 
+
 
 [Learn more about filtering](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Sortable attributes
 
-By default, Meilisearch orders results according to their relevancy. You can alter this sorting behavior to show certain results first by adding attributes to the `sortableAttributes` array using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update sortable attributes endpoint](/reference/api/sortable_attributes.md#update-sortable-attributes). You can then use the [`sort` search parameter](/reference/api/search.md#sort) to sort your results in ascending or descending oder.
+By default, Meilisearch orders results according to their relevancy. You can alter this sorting behavior to show certain results first.
+
+Add the attributes you'd like to sort by to `sortableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update sortable attributes endpoint](/reference/api/sortable_attributes.md#update-sortable-attributes). You can then use the [`sort` search parameter](/reference/api/search.md#sort) to sort your results in ascending or descending order.
 
 [Learn more about sorting](/learn/advanced/sorting.md)
 
 ### Stop words
 
-Your dataset may contain words you want to ignore during search. These may include words that don't add semantic value or context or are too frequent (e.g., `the` or `of` in English). You can add such words to the [stop words list](/reference/api/stop_words.md) and Meilisearch will ignore them during search. In addition to improving relevancy, designating common words as stop words also greatly improves performance.
+Your dataset may contain words you want to ignore during search because, for example, they don't add semantic value or occur too frequently (e.g., `the` or `of` in English). You can add these words to the [stop words list](/reference/api/stop_words.md) and Meilisearch will ignore them during search.
 
-You can create your list of stop words for your index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/stop_words.md#update-stop-words).
+Change your index's stop words list using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/stop_words.md#update-stop-words). In addition to improving relevancy, designating common words as stop words greatly improves performance.
 
 [Learn more about stop words](/reference/api/stop_words.md)
 
@@ -107,19 +114,19 @@ You can create your list of stop words for your index using the [update settings
 
 By default, every document field is searchable and displayed in response to search queries. However, you can choose to set some fields as non-searchable, non-displayed, or both.
 
-You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes).
+You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes) and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes).
 
 [Learn more about displayed and searchable attributes](/learn/configuration/displayed_searchable_attributes.md)
 
 ### Typo tolerance
 
-Typo tolerance is a built-in feature that helps you find relevant results even when your search queries contain spelling mistakes or typos, e.g., typing `chickne` instead of `chicken`. The setting allows you to configure the following for an index:
+Typo tolerance is a built-in feature that helps you find relevant results even when your search queries contain spelling mistakes or typos, e.g., typing `chickne` instead of `chicken`. This setting allows you to do the following for your index:
 
 - Enable or disable typo tolerance
 - Configure the minimum word size for typos
 - Disable typos on specific words
 - Disable typos on specific document attributes
 
-You can update the typo tolerance settings for an index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
+You can update the typo tolerance settings using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
