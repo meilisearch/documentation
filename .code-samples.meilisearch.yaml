@@ -622,7 +622,7 @@ getting_started_configure_settings: |-
     }'
 getting_started_communicating_with_a_protected_instance: |-
   curl \ 
-    -X POST 'http://127.0.0.1:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
