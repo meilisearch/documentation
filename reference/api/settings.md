@@ -1,8 +1,8 @@
 # All settings
 
-The `/settings` route allows you to customize search settings for the given index. It is possible to modify all of an index's settings at once using the [`update settings` endpoint](#update-settings), or modify each one individually using the dedicated routes.
+The `/settings` route allows you to customize search settings for the given index. It is possible to modify all of an index's settings at once using the [`update settings` endpoint](#update-settings), or modify each one individually using the child routes.
 
-These are the reference pages for the dedicated routes:
+These are the reference pages for the child routes:
 
 - [Displayed attributes](/reference/api/displayed_attributes.md)
 - [Distinct attribute](/reference/api/distinct_attribute.md)
