@@ -1,4 +1,4 @@
-# Chapter 2: Fine-tuning search results
+# Fine-tuning search results
 
 Meilisearch is designed to offer a great search experience out of the box, but sometimes you need to customize it to better fit your needs. You can alter the search behavior for each index using the `settings` object.
 
@@ -7,8 +7,6 @@ For this chapter, we will be using a collection of movies as our dataset.
 To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move it into your working directory and run the following command:
 
 <CodeSamples id="getting_started_add_documents_md" />
-
-If you have already downloaded the dataset and created the `movies` index, you can skip to [the next section](#ranking-rules).
 
 ## Ranking rules
 

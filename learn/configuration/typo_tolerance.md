@@ -1,6 +1,6 @@
 # Typo tolerance
 
-Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, e.g. typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/typo_tolerance.md#update-typo-tolerance).
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, e.g., typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
 ## Configuring typo tolerance
 
@@ -14,7 +14,7 @@ With typo tolerance disabled, Meilisearch no longer considers words that are a f
 
 ### `minWordSizeForTypos`
 
-By default, Meilisearch accepts one typo for query terms containing five or more characters, and up to two typos if the term is at at least nine characters long.
+By default, Meilisearch accepts one typo for query terms containing five or more characters, and up to two typos if the term is at least nine characters long.
 
 If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than `5` characters.
 
@@ -34,7 +34,7 @@ We recommend keeping the value of `oneTypo` between `2` and `8` and the value of
 Meilisearch considers a typo on a query's first character as two typos.
 
 **Concatenation**
-When considering possible candidates for typo tolerance, Meilisearch will concatenate multiple search terms separated by a [space separator](/learn/advanced/datatypes.md#string). This is treated as one typo. For example, a search for "any way" would match documents containing "anyway".
+When considering possible candidates for typo tolerance, Meilisearch will concatenate multiple search terms separated by a [space separator](/learn/advanced/datatypes.md#string). This is treated as one typo. For example, a search for `any way` would match documents containing `anyway`.
 
 For more about typo calculations, [see below](#understanding-typo-calculations).
 :::
@@ -77,9 +77,9 @@ Meilisearch uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/
 
 The [number of typos referenced above](#minwordsizefortypos) is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
 
-- substitution of a character (e.g., **k**itten → **s**itten)
-- insertion of a character (e.g., siting → sit**t**ing)
-- deletion of a character (e.g., satu**r**day → satuday)
+- substitution of a character (e.g., `kitten` → `sitten`)
+- insertion of a character (e.g., `siting` → `sitting`)
+- deletion of a character (e.g., `saturday` → `satuday`)
 
 By default, Meilisearch uses the following rules for matching documents. Note that these rules are **by word** and not for the whole query string.
 
@@ -87,9 +87,9 @@ By default, Meilisearch uses the following rules for matching documents. Note th
 - If the query word is between `5` and `8` characters, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
 - If the query word contains more than `8` characters, we accept a maximum of **two typos**
 
-This means that "saturday" which is `7` characters long, uses the second rule and matches every document containing **one typo**. For example:
+This means that `saturday` which is `7` characters long, uses the second rule and matches every document containing **one typo**. For example:
 
-- "saturday" is accepted because it is the same word
-- "satuday" is accepted because it contains **one typo**
-- "sutuday" is not accepted because it contains **two typos**
-- "caturday" is not accepted because it contains **two typos** (as explained [above](#minwordsizefortypos), a typo on the first letter of a word is treated as two typos)
+- `saturday` is accepted because it is the same word
+- `satuday` is accepted because it contains **one typo**
+- `sutuday` is not accepted because it contains **two typos**
+- `caturday` is not accepted because it contains **two typos** (as explained [above](#minwordsizefortypos), a typo on the first letter of a word is treated as two typos)

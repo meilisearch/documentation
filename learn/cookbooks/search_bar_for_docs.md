@@ -2,7 +2,7 @@
 
 You might have noticed the search bar in this documentation.
 
-![MeiliSearch docs search bar updating results for 'faq'](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
+![Meilisearch docs search bar updating results for 'faq'](/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
 
 And you are probably wanting the same for your own documentation!
 
@@ -20,10 +20,10 @@ You can install and run Meilisearch on your machine using `curl`.
 
 ```bash
 curl -L https://install.meilisearch.com | sh
-./meilisearch --master-key=myMasterKey
+./meilisearch --master-key=MASTER_KEY
 ```
 
-There are [other ways to install Meilisearch](/learn/getting_started/quick_start.md#step-1-setup-and-installation).
+There are [other ways to install Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation).
 
 Meilisearch is open-source and can run either on your server or on any cloud provider.
 
@@ -40,7 +40,7 @@ The Meili team provides and maintains a [scraper tool](https://github.com/meilis
 
 ### Configuration file
 
-The scraper tool needs a configuration file to know what content you want to scrape. This is done by providing selectors (e.g. the HTML tag).
+The scraper tool needs a configuration file to know what content you want to scrape. This is done by providing selectors (e.g., the HTML tag).
 
 Here is an example of a basic configuration file:
 
@@ -100,7 +100,7 @@ You can run the scraper with Docker. With our local Meilisearch instance set up 
 docker run -t --rm \
   --network=host \
   -e MEILISEARCH_HOST_URL='http://localhost:7700' \
-  -e MEILISEARCH_API_KEY='myMasterKey' \
+  -e MEILISEARCH_API_KEY='MASTER_KEY' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
@@ -188,7 +188,7 @@ Read more about [Meilisearch security](/learn/security/master_api_keys.md).
 If you don't use VuePress for your documentation, we provide a [front-end SDK](https://github.com/meilisearch/docs-searchbar.js) to integrate a powerful and relevant search bar to any documentation website.
 
 ![Docxtemplater search bar updating results for 'html'](/tuto-searchbar-for-docs/docxtemplater-searchbar-demo.gif)
-_[Docxtemplater](https://docxtemplater.com/) searchbar demo_
+_[Docxtemplater](https://docxtemplater.com/) search bar demo_
 
 ```html
 <!DOCTYPE html>
@@ -213,7 +213,7 @@ _[Docxtemplater](https://docxtemplater.com/) searchbar demo_
 </html>
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `MASTER_KEY`.
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
 

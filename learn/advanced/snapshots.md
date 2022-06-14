@@ -1,6 +1,6 @@
 # Snapshots
 
-A snapshot is an exact copy of the database (i.e. the `data.ms` folder) at the time the snapshot was created. Besides compression, snapshots do not go through any processing. They can be thought of as "pre-compiled copies".
+A snapshot is an exact copy of the database (i.e., the `data.ms` folder) at the time the snapshot was created. Besides compression, snapshots do not go through any processing. They can be thought of as "pre-compiled copies".
 
 Using this feature, it is possible to schedule snapshot creation at custom intervals and use existing snapshots to restore Meilisearch.
 
@@ -34,7 +34,7 @@ After running the above code, a snapshot is created every hour (3600 seconds).
 
 During snapshot creation, old snapshots are **automatically overwritten**. This means that only the most recent snapshot should be present in the folder at any given time.
 
-[[More about snapshots flags and env variables]](/learn/configuration/instance_options.md#schedule-snapshot-creation)
+[[More about snapshots flags and environment variables]](/learn/configuration/instance_options.md#schedule-snapshot-creation)
 
 ## Starting from a snapshot
 
@@ -50,7 +50,7 @@ meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 
 Take note that whenever you launch Meilisearch from a snapshot, it will **stop processing and throw an error** if it encounters either of the two following situations:
 
-1. A database already exists (i.e. you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary)
+1. A database already exists (i.e., you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary)
 2. No snapshot is found at the given path
 
 In both cases, **this behavior is [configurable](/learn/configuration/instance_options.md#ignore-missing-snapshot)**.
@@ -62,7 +62,7 @@ If you do not want Meilisearch to throw an error when there is no snapshot at th
 When starting from a snapshot, chances are that you already have an existing database. **For security reasons, a database is never overwritten**. To load a snapshot when an existing database is present, you will have to manually delete the existing database. By default, this is the contents of the `data.ms` folder (unless you [changed the path](/learn/configuration/instance_options.md#database-path)) which is located in the same folder as your Meilisearch binary.
 The simplest way to delete your database is with the terminal command `rm -rf data.ms`, after which you should be able to start Meilisearch with a snapshot.
 
-[[More about snapshots flags and env variables]](/learn/configuration/instance_options.md#schedule-snapshot-creation)
+[[More about snapshots flags and environment variables]](/learn/configuration/instance_options.md#schedule-snapshot-creation)
 
 ## Use cases
 

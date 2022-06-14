@@ -3,7 +3,7 @@
 _Child route of the [settings route](/reference/api/settings.md)._
 
 The fields whose attributes are added to the displayed-attributes list are **displayed in each matching document**.
-By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings.  Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
+By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings. Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
 
 Displayed attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
@@ -42,7 +42,7 @@ List the settings.
 
 Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g. `"displayedAttributes": ["release_date.year"]`.
+If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g., `"displayedAttributes": ["release_date.year"]`.
 
 ::: note
 `displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).

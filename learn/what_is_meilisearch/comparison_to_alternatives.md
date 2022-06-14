@@ -6,13 +6,11 @@ sidebarDepth: 2
 
 # Comparison to alternatives
 
-## About Meilisearch
-
 There are many search engines on the web, both open-source and otherwise. Deciding which search solution is the best fit for your project is very important, but also difficult. In this article, we'll go over the differences between Meilisearch and other search engines:
 
 - In the [comparison table](#comparison-table), we present a general overview of the differences between Meilisearch and other search engines
 
-- In the [approach comparison](#approach-comparison), instead, we focus on how Meilisearch measures against [ElasticSearch](#meilisearch-vs-elasticsearch) and [Algolia](#meilisearch-vs-algolia), currently two of the biggest solutions available in the market
+- In the [approach comparison](#approach-comparison), instead, we focus on how Meilisearch measures up against [ElasticSearch](#meilisearch-vs-elasticsearch) and [Algolia](#meilisearch-vs-algolia), currently two of the biggest solutions available in the market
 
 - Finally, we end this article with [an in-depth analysis of the broader search engine landscape](#a-quick-look-at-the-search-engine-landscape)
 
@@ -22,7 +20,7 @@ Please be advised that many of the search products described below are constantl
 
 ## Comparison table
 
-### General Overview
+### General overview
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:----:|:----:|:-----:|:----:|
@@ -41,7 +39,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | SDK      | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | REST API | ✅ | ✅ | ✅ | ✅ |
-| [Javascript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
+| [JavaScript client](https://github.com/meilisearch/meilisearch-js) |  ✅        |   ✅    |     ✅    |       ✅      |
 | [PHP client](https://github.com/meilisearch/meilisearch-php)                  |  ✅         |   ✅     |     ✅      |        ✅       |
 | [Python client](https://github.com/meilisearch/meilisearch-python)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Ruby client](https://github.com/meilisearch/meilisearch-ruby)              | ✅          | ✅      |        ✅   |       ✅        |
@@ -89,14 +87,14 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | API Key Management | ✅ | ✅ | ✅ | ✅ |
-| Tenant tokens & multi-tenant indexes | **Q1 2022** <br> Configurable end-user hard filters per index | ✅  <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Role-based |
+| Tenant tokens & multi-tenant indexes | ✅ <br> [Multitenancy support](/learn/security/tenant_tokens.md) | ✅  <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Role-based |
 
 ##### Search
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
-| Multi-index search | Early 2022 | ✅ | ✅ | ✅ |
+| Multi-index search | **Q3 2022** | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ❌ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
@@ -118,7 +116,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
 | Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
 | Official cloud-hosted solution | [Join the beta](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=comparative-table) | ✅ | ✅ | ✅ |
-| High availability | Expected 2022 | ✅ | ✅ | ✅ |
+| High availability | Available with [Meilisearch Cloud](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=www.meilisearch.com) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
 | Upgrade path | Documents need to be reindexed | N/A  | Documents need to be reindexed | Documents need to be reindexed |
@@ -136,9 +134,9 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| GitHub stars of the main project | 20K | N/A | 9K | 57K |
+| GitHub stars of the main project | 27K | N/A | 10K | 60K |
 | Number of contributors on the main project | 75 | N/A | 20 | 1,700 |
-| Public Slack community size | 1K | N/A | 400 | 11K |
+| Public Slack community size | 1.5K | N/A | 700 | 14K |
 
 ### Support
 
@@ -164,12 +162,33 @@ Meilisearch is a perfect choice if you need a simple and easy tool to deploy a t
 ### Meilisearch vs Algolia
 
 Meilisearch was inspired by Algolia's product and the algorithms behind it. We indeed studied most of the algorithms and data structures described in their blog posts in order to implement our own. Meilisearch is thus a new search engine based on the work of Algolia and recent research papers.
-It provides similar features and reaches the same level of relevance just as quickly as its predecessor.
 
-Contrary to Algolia, Meilisearch is open-source and written in Rust, a systems-level and modern programming language, that allows to rapidly build features. Rust also enables portability and flexibility, which makes the deployment of our search engines inside Virtual Machines, containers, or even Lambda@Edge, a seamless operation.
+Meilisearch provides similar features and reaches the same level of relevance just as quickly as its competitor.
 
-One of Algolia's major assets is the robust worldwide infrastructure that they offer to their customers.
-Meilisearch currently delivers a search engine and is not in a position to provide a competitive infrastructure yet. However, we aim it to be much more simple to deploy and maintain than Algolia's.
+If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/getting_started/algolia_migration.md).
+
+#### Key similarities
+
+Some of the most significant similarities between Algolia and Meilisearch are:
+
+- [Features](/learn/what_is_meilisearch/overview.md#features) such as search-as-you-type, typo tolerance, faceting, etc.
+- Fast results targeting an instant search experience (answers < 50 milliseconds)
+- Schemaless indexation
+- Support for all JSON data types
+- Asynchronous API
+- Similar query response
+
+#### Key differences
+
+Contrary to Algolia, Meilisearch is open-source and can be forked or self-hosted.
+
+Additionally, Meilisearch is written in Rust, a modern systems-level programming language. Rust provides speed, portability, and flexibility, which makes the deployment of our search engine inside virtual machines, containers, or even [Lambda@Edge](https://aws.amazon.com/lambda/edge/) a seamless operation.
+
+#### Pricing
+
+The [pricing model for Algolia](https://www.algolia.com/pricing/) is based on the number of records kept and the number of API operations performed. It can be prohibitively expensive for small and medium-sized businesses.
+
+Meilisearch is **open-source** and can be **self-hosted**, but also offers a cloud-hosted product analogous to Algolia's service: [Meilisearch Cloud](https://cloud.meilisearch.com/login). Unlike Algolia, [pricing of Meilisearch Cloud](https://www.meilisearch.com/pricing) follows a set hourly rate based on the computing resources chosen, with no per-record or per-search fees. You can send your server as much traffic or data as it can manage.
 
 ## A quick look at the search engine landscape
 

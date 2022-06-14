@@ -20,11 +20,11 @@ You can deploy a Meilisearch instance via the official [Meilisearch Docker image
 
 When clicking this button, you'll be redirected to the Azure Portal and asked a few questions:
 
-- **Region**: This is the deployment region. You should select a region close to you or your users.
-- **Environment**: The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This setting has no effect on the type of resources deployed. It's just for convenience.
-- **Application Name**: The name of your application. This name should be **unique across all Azure customers**. The URL where your application is deployed will contain this value.
-- **Location**: This the resources location. For reasons out of scope of this documentation, this parameter is different from the _Region_ one. By default, it is set to `eastus`, but you can type any Azure location (like `francecentral`, `westeurope`, or `japaneast`).
-- **Meilisearch_apikey**: This will be the [master key](/learn/security/master_api_keys.md) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key.
+- "Region": This is the deployment region. You should select a region close to you or your users.
+- "Environment": The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This setting has no effect on the type of resources deployed. It's just for convenience.
+- "Application Name": The name of your application. This name should be **unique across all Azure customers**. The URL where your application is deployed will contain this value.
+- "Location": This is the resources' location. For reasons out of scope of this documentation, this parameter is different from the _Region_ one. By default, it is set to `eastus`, but you can type any Azure location (like `francecentral`, `westeurope`, or `japaneast`).
+- "`Meilisearch_apikey`": This will be the [master key](/learn/security/master_api_keys.md) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key.
 
 Once you have filled in these fields, click the **Review + create** button, and then the **Create** button.
 
@@ -34,7 +34,7 @@ By default, the instance created is on a Standard plan. This will incur costs in
 
 After a few minutes, the deployment will be complete. You'll be able to access your instance URL by clicking on the **Outputs** tabs on the left.
 
-![The Azure portal showing informations about your Meilisearch deployment](/azure/02.azure-output.png)
+![The Azure portal showing information about your Meilisearch deployment](/azure/02.azure-output.png)
 
 ::: tip
 While Meilisearch is usually exposed on port `7700`, this deployment will expose your instance on port `433`. An SSL certificate will be generated and managed for you by Azure.
@@ -55,7 +55,7 @@ We've made some _opinionated choices_ in the one-click deployment that should wo
 
 ### Data redundancy and backup
 
-The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same Datacenter. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
+The one-click button creates a storage with the "LRS" redundancy option. That means that your data is replicated across multiple servers, but in the same data center. You can change this setting to choose a multi-zone or a multi-region redundancy option by modifying the template.
 
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
@@ -65,7 +65,7 @@ Meilisearch has snapshot and dump features that can help improve your backup cap
 
 ### Always-on
 
-To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deallocated. When the next client hits your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range.
+To enable free tier, the _Always-on_ option is disabled by default. That means that after some time without any traffic, your instance will be deactivated. When the next client hits your instance, it'll be started again automatically. However, you will have a response time in the dozen-seconds range.
 
 You can avoid this _cold start_ by enabling the _Always-on_ feature, either in the Azure portal or in the Infrastructure as Code.
 

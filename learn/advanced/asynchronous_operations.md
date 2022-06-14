@@ -156,8 +156,8 @@ Meilisearch's asynchronous tasks are atomic. This means that all operations conc
 
 What happens to an asynchronous operation when Meilisearch is terminated changes depending on the request's `status`:
 
-- `enqueued`: the task will remain enqueued and will be processed as usual once  is restarted
-- `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting,  will treat the task as `enqueued`
+- `enqueued`: the task will remain enqueued and will be processed as usual once is restarted
+- `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting, will treat the task as `enqueued`
 - `succeeded`: there will be no data loss since the request was successfully completed
 - `failed`: the task failed and nothing has been altered in the database
 

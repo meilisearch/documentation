@@ -32,9 +32,9 @@ Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g. `"distinctAttribute": "product.skuid"`.
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g., `"distinctAttribute": "product.skuid"`.
 
 #### Body
 

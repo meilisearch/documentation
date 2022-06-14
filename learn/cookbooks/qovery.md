@@ -25,7 +25,7 @@ Visit the [Qovery dashboard](https://start.qovery.com) to create an account if y
 
 ### 3. Create a new environment
 
-* Click on **Create environment** and give it a name (e.g. staging, production).
+* Click on **Create environment** and give it a name (e.g., staging, production).
 
 !["Create environment" button](https://hub.qovery.com/img/heroku/heroku-3.png)
 

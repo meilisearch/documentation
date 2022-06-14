@@ -205,7 +205,7 @@ All of the ranking rules can be modified via the [dedicated routes in the Meilis
 
 ## Do you provide a public roadmap for Meilisearch and its integration tools?
 
-Yes, as Meilisearch and its integration tools are opensource, we maintain a [public roadmap](https://roadmap.meilisearch.com/) for the general features we plan to do.
+Yes, as Meilisearch and its integration tools are open source, we maintain a [public roadmap](https://roadmap.meilisearch.com/) for the general features we plan to do.
 
 For more accurate features and issues, everything is detailed in the issues of all our [GitHub repositories](https://github.com/meilisearch/meilisearch/issues).
 
@@ -215,7 +215,7 @@ See our [contact page](/learn/what_is_meilisearch/contact.md).
 
 ## I have just updated Meilisearch, and I am getting an error: "Cannot open database, expected Meilisearch engine version..."
 
-Until our first stable release (v1.0), Meilisearch minor versions are not compatible with each other, i.e. **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating Meilisearch](/learn/advanced/updating.md) for more information.
+Until our first stable release (v1.0), Meilisearch minor versions are not compatible with each other, i.e., **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating Meilisearch](/learn/advanced/updating.md) for more information.
 
 ## What are the recommended requirements for hosting a Meilisearch instance?
 

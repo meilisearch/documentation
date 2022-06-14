@@ -14,7 +14,7 @@ Setting up a master key can be done with either command-line options or environm
 ::: tab CLI
 
 ```sh
-./meilisearch --master-key="your_master_key"
+./meilisearch --master-key="MASTER_KEY"
 ```
 
 :::
@@ -24,14 +24,14 @@ Setting up a master key can be done with either command-line options or environm
 Linux/MacOS:
 
 ```sh
-export MEILI_MASTER_KEY="your_master_key"
+export MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 
 Windows:
 
 ```sh
-set MEILI_MASTER_KEY="your_master_key"
+set MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 

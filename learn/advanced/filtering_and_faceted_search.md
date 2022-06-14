@@ -20,10 +20,6 @@ By default, `filterableAttributes` is empty. This means that filters do not work
 
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
-::: warning
-Meilisearch does not support filtering on nested arrays and objects [yet](https://roadmap.meilisearch.com/c/105-filter-on-nested-objects). Therefore, fields containing nested arrays and objects will be silently ignored.
-:::
-
 ### Example
 
 Suppose you have a collection of movies containing the following fields:
@@ -31,7 +27,7 @@ Suppose you have a collection of movies containing the following fields:
 ```json
 [
   {
-    "id": "458723",
+    "id": 458723,
     "title": "Us",
     "director": "Jordan Peele",
     "genres": [
@@ -171,7 +167,7 @@ Suppose that you have a dataset containing several movies in the following forma
 [
   …
   {
-    "id": "458723",
+    "id": 458723,
     "title": "Us",
     "director": "Jordan Peele",
     "poster": "https://image.tmdb.org/t/p/w1280/ux2dU1jQ2ACIMShzB3yP93Udpzc.jpg",
@@ -290,7 +286,7 @@ Meilisearch does not differentiate between facets and filters. This means that, 
 
 Using `facetsDistribution` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
 
-In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results  available for each facet.
+In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
 
 ![IMDb facets](/faceted-search/facets-imdb.png)
 

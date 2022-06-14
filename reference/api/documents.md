@@ -1,16 +1,14 @@
 # Documents
 
-Documents are objects composed of fields that can store any type of data.
-Each field contains an attribute and its associated value.
+The `/documents` route allows you to create, manage, and delete documents.
 
-Documents are stored inside [indexes](/learn/core_concepts/indexes.md).
 [Learn more about documents](/learn/core_concepts/documents.md).
 
 ## Get one document
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents/{document_id}"/>
 
-Get one [document](/learn/core_concepts/documents.md) using its unique id.  Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/primary_key.md#document-id) are required.
+Get one [document](/learn/core_concepts/documents.md) using its unique id. Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/primary_key.md#document-id) are required.
 
 ### Example
 

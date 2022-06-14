@@ -31,10 +31,10 @@ For this tutorial, we will be using a Debian 10 server, running on DigitalOcean.
 ## Prerequisites
 
 + An up-to-date server that runs Debian 10
-+ An ssh keypair to connect to that machine
++ An ssh key pair to connect to that machine
 
 ::: tip
-Learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
+Learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or Windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
 :::
 
 ## Step 1: Install Meilisearch
@@ -52,7 +52,7 @@ apt install curl -y
 curl -L https://install.meilisearch.com | sh
 ```
 
-The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/quick_start.md#step-1-setup-and-installation).
+The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/quick_start.md#setup-and-installation).
 
 **There are many different ways to get Meilisearch running on your machine.** As an open-source project, you can always compile the latest stable release of Meilisearch from its source code to ensure the binary uses your architecture in the best possible way.
 
@@ -123,7 +123,7 @@ EOF
 ```
 
 ::: tip
-For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys.md). You can check our [quick start](/learn/getting_started/quick_start.md#step-1-setup-and-installation) guide for more information on how to get Meilisearch up and running.
+For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys.md). You can check our [quick start](/learn/getting_started/quick_start.md#setup-and-installation) guide for more information on how to get Meilisearch up and running.
 :::
 
 As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.
@@ -227,7 +227,7 @@ Once your domain name has been set up, you are ready to configure SSL/TLS and us
 
 #### 3.2. Option A: Certbot
 
-Using certbot in your Linux server is very easy and straightforward. This tool will generate a free SSL/TLS certificate for your domain name, and automatically handle its installation on your server. The certbot documentation contains detailed instructions for many operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/lets-encrypt/debianbuster-nginx).
+Using certbot in your Linux server is very straightforward. This tool will generate a free SSL/TLS certificate for your domain name, and automatically handle its installation on your server. The certbot documentation contains detailed instructions for many operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/lets-encrypt/debianbuster-nginx).
 
 First of all, install the packages on your system:
 

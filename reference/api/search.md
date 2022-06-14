@@ -80,14 +80,14 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 {
   "hits": [
     {
-      "id": "2770",
+      "id": 2770,
       "title": "American Pie 2",
       "poster": "https://image.tmdb.org/t/p/w1280/q4LNgUnRfltxzp3gf1MAGiK5LhV.jpg",
       "overview": "The whole gang are back and as close as ever. They decide to get even closer by spending the summer together at a beach house. They decide to hold the biggest…",
       "release_date": 997405200
     },
     {
-      "id": "190859",
+      "id": 190859,
       "title": "American Sniper",
       "poster": "https://image.tmdb.org/t/p/w1280/svPHnYE7N5NAGO49dBmRhq0vDQ3.jpg",
       "overview": "U.S. Navy SEAL Chris Kyle takes his sole mission—protect his comrades—to heart and becomes one of the most lethal snipers in American history. His pinpoint accuracy not only saves countless lives but also makes him a prime…",
@@ -169,14 +169,14 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 {
   "hits": [
     {
-      "id": "2770",
+      "id": 2770,
       "title": "American Pie 2",
       "poster": "https://image.tmdb.org/t/p/w1280/q4LNgUnRfltxzp3gf1MAGiK5LhV.jpg",
       "overview": "The whole gang are back and as close as ever. They decide to get even closer by spending the summer together at a beach house. They decide to hold the biggest…",
       "release_date": 997405200
     },
     {
-      "id": "190859",
+      "id": 190859,
       "title": "American Sniper",
       "poster": "https://image.tmdb.org/t/p/w1280/svPHnYE7N5NAGO49dBmRhq0vDQ3.jpg",
       "overview": "U.S. Navy SEAL Chris Kyle takes his sole mission—protect his comrades—to heart and becomes one of the most lethal snipers in American history. His pinpoint accuracy not only saves countless lives but also makes him a prime…",
@@ -260,7 +260,7 @@ This will give you a list of documents that contain your query terms in at least
 {
   "hits": [
     {
-      "id": "50393",
+      "id": 50393,
       "title": "Kung Fu Panda Holiday",
       "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
       "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
@@ -472,13 +472,13 @@ You will get the following response with the **cropped text in the `_formatted` 
 
 ```json
 {
-  "id": "50393",
+  "id": 50393,
   "title": "Kung Fu Panda Holiday",
   "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
   "release_date": 1290729600,
   "_formatted": {
-    "id": "50393",
+    "id": 50393,
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
     "overview": "…this year Shifu informs Po…",
@@ -495,9 +495,9 @@ You will get the following response with the **cropped text in the `_formatted` 
 
 Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop). If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 
-Query terms are counted as part of the cropped value length. If `cropLength` is set to `2` and you search for one term (e.g. `shifu`), the cropped field will contain two words in total (e.g. `"…Shifu informs…"`).
+Query terms are counted as part of the cropped value length. If `cropLength` is set to `2` and you search for one term (e.g., `shifu`), the cropped field will contain two words in total (e.g., `"…Shifu informs…"`).
 
-Stop words are also counted against this number. If `cropLength` is set to `2` and you search for one term (e.g. `grinch`), the cropped result may contain a stop word (e.g. `"…the Grinch…"`).
+Stop words are also counted against this number. If `cropLength` is set to `2` and you search for one term (e.g., `grinch`), the cropped result may contain a stop word (e.g., `"…the Grinch…"`).
 
 If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom crop length for an attribute, that value has priority over `cropLength`.
 
@@ -521,13 +521,13 @@ When searching for `shifu`, you can use `cropMarker` to change the default `…`
 
 ```json
 {
-  "id": "50393",
+  "id": 50393,
   "title": "Kung Fu Panda Holiday",
   "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
   "release_date": 1290729600,
   "_formatted": {
-    "id": "50393",
+    "id": 50393,
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
     "overview": "[…]villager. But this year Shifu informs Po that as Dragon[…]",
@@ -564,13 +564,13 @@ The highlighted version of the text would then be found in the `_formatted` obje
 
 ```json
 {
-  "id": "50393",
+  "id": 50393,
   "title": "Kung Fu Panda Holiday",
   "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
   "release_date": 1290729600,
   "_formatted": {
-    "id": "50393",
+    "id": 50393,
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
     "overview": "The <em>Winter Feast</em> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <em>Winter Feast</em> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
@@ -601,13 +601,13 @@ You can find the highlighted query terms inside the `_formatted` property:
 
 ```json
 {
-  "id": "50393",
+  "id": 50393,
   "title": "Kung Fu Panda Holiday",
   "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
   "release_date": 1290729600,
   "_formatted": {
-    "id": "50393",
+    "id": 50393,
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
     "overview": "The <span class=\"highlight\">Winter Feast</span> is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal <span class=\"highlight\">Winter Feast</span> at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
@@ -644,7 +644,7 @@ You would get the following response with **information about the matches in the
 
 ```json
 {
-  "id": "50393",
+  "id": 50393,
   "title": "Kung Fu Panda Holiday",
   "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",

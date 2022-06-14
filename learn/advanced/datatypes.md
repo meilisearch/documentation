@@ -61,7 +61,7 @@ You can also create [filters](/learn/advanced/filtering_and_faceted_search.md). 
 
 ## Boolean
 
-A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (i.e. `true` and `false`). Booleans can be searched as they are converted to strings.
+A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (i.e., `true` and `false`). Booleans can be searched as they are converted to strings.
 
 ## `null`
 
@@ -69,7 +69,7 @@ The `null` type can be pushed into Meilisearch but it **won't be taken into acco
 
 ## Array
 
-An array is an ordered list of values. These values can be of any type: numbers, strings, booleans, objects, or even other arrays.
+An array is an ordered list of values. These values can be of any type: number, string, boolean, object, or even other arrays.
 
 Meilisearch flattens arrays and concatenates them into strings. Non-string values are converted as described in this article's previous sections.
 
@@ -95,7 +95,7 @@ Will be processed as if all elements were arranged at the same level:
 
 Once the above array has been flattened, it will be parsed exactly as explained in the [string example](/learn/advanced/datatypes.md#examples).
 
-### Objects
+## Objects
 
 When a document field contains an object, Meilisearch flattens it and brings the object's keys and values to the root level of the document itself.
 
@@ -113,7 +113,7 @@ In the example below, the `patient_name` key contains an object:
 }
 ```
 
-During indexation, Meilisearch uses dot notation to eliminate nesting:
+During indexation, Meilisearch uses dot notation to eliminate nested fields:
 
 ```json
 {
@@ -185,7 +185,7 @@ Once all objects inside a document have been flattened, Meilisearch will continu
 
 ## Possible tokenization issues
 
-Even if it behaves exactly as expected, the tokenization process may lead to unintuitive results in some cases, such as:
+Even if it behaves exactly as expected, the tokenization process may lead to counterintuitive results in some cases, such as:
 
 ```
 "S.O.S"
