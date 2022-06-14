@@ -2,7 +2,7 @@
 
 This quick start will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, adding a search bar, and securing your instance.
 
-All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g. [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
+All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g., [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
 
 Let's get started!
 
@@ -502,9 +502,9 @@ Here's how to use the master key you set to [get all keys](/reference/api/keys.m
 
 <CodeSamples id="authorization_header_1" />
 
-::: warning
-The master key should only be used for managing your API keys. Avoid using it for regular API calls.
-:::
+The master key should only be used for retrieving and managing API keys. For regular API calls, such as search, use an API key:
+
+<CodeSamples id="getting_started_communicating_with_a_protected_instance" />
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 

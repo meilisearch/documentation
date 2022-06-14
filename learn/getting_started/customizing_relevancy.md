@@ -8,8 +8,6 @@ To follow along, first click this link to download the file: <a id="downloadMovi
 
 <CodeSamples id="getting_started_add_documents_md" />
 
-If you have already downloaded the dataset and created the `movies` index, you can skip to [the next section](#ranking-rules).
-
 ## Ranking rules
 
 Meilisearch sorts search responses based on an array of rules called `rankingRules`, which is part of the `settings` object.
@@ -23,7 +21,7 @@ The order of the `rankingRules` array matters: the first rule has the most impac
   "proximity",
   "attribute",
   "sort",
-  "exactness",
+  "exactness"
 ]
 ```
 
@@ -81,7 +79,7 @@ Suppose you have an e-commerce dataset with an index on jackets. There are sever
 
 If you searched for `lee leather jacket` with the default settings, you would get all three documents. But if you set `product_id` as the `distinctAttribute`, Meilisearch will only return one of those jackets.
 
-You can read more about displayed attributes in our [dedicated guide](/learn/configuration/distinct.md).
+You can read more about the distinct attribute in our [dedicated guide](/learn/configuration/distinct.md).
 
 ## Searchable attributes
 
@@ -91,7 +89,7 @@ For example, if you search the `movies` index for `2012`, Meilisearch searches f
 
 <CodeSamples id= "getting_started_update_searchable_attributes" />
 
-Meilisearch will now only consider `title` during search and you will see fewer results.
+Meilisearch will now only consider `title` during search, and you will see fewer results.
 
 ::: note
 
@@ -132,4 +130,23 @@ This will set `winnie` and `piglet` as synonyms; searching for either word will 
 
 You can read more about it in our [dedicated guide](/learn/configuration/synonyms.md).
 
-The next chapter tackles more advanced topics including security and data backup.
+## Typo tolerance
+
+Meilisearch is typo tolerant by default. It will help you find relevant search results even if you make spelling mistakes or typos, e.g., searching for `swaj` instead of `swan`.
+
+The `typoTolerance` object allows you to:
+
+- Enable or disable the typo tolerance feature
+- Configure the minimum word size for typos
+- Disable typos on specific words
+- Disable typos on specific attributes
+
+Meilisearch accepts one typo for query terms containing `5` or more characters by default. If you search the movies index for `swaj`, you will not get any results.
+
+<CodeSamples id= "getting_started_typo_tolerance" />
+
+The above code sample sets the minimum word size for one typo to `4` characters. If you search for `swaj` now, you should get some results.
+
+You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance.md).
+
+The next chapter tackles more advanced topics, including security and data backup.

@@ -84,7 +84,7 @@ As an example, let's say you are creating an index that contains information abo
 In the above example:
 
 - `"id"`, `"title"`, `"genres"`, `"release-year"`, and `"cast"` are attributes
-- Each attribute is associated with a value, e.g. `"Kung Fu Panda"` is the value of `"title"`
+- Each attribute is associated with a value, e.g., `"Kung Fu Panda"` is the value of `"title"`
 - The document contains a field with the primary key attribute and a unique document id as its value: `"id": "1564saqw12ss"`
 
 #### NDJSON

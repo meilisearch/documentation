@@ -10,7 +10,7 @@ If you have already **installed the latest version and manually indexed your dat
 
 ## Verify your database version
 
-Before we begin, you need to **verify the version of Meilisearch that's compatible with your database**, i.e. the version that indexed the data. You can do so by launching a Meilisearch instance:
+Before we begin, you need to **verify the version of Meilisearch that's compatible with your database**, i.e., the version that indexed the data. You can do so by launching a Meilisearch instance:
 
 ```bash
 ./meilisearch --master-key="MASTER_KEY"
@@ -37,7 +37,7 @@ The response should look something like this:
 
 If you get the error `Cannot open database, expected Meilisearch engine version: 0.X.X, current engine version 0.Y.Y`, your database is not compatible with the currently installed Meilisearch version.
 
-In this case, you need to **download the compatible version now** (i.e. `0.X.X` in the above error message) so that you can access and export your database.
+In this case, you need to **download the compatible version now** (i.e., `0.X.X` in the above error message) so that you can access and export your database.
 
 :::: tabs
 
