@@ -134,7 +134,9 @@ You can read more about it in our [dedicated guide](/learn/configuration/synonym
 
 ## Typo tolerance
 
-Meilisearch is typo tolerant by default. It will help you find relevant search results even if you make spelling mistakes or typos, e.g., searching for `swaj` instead of `swan`. The `typoTolerance` object allows you to:
+Meilisearch is typo tolerant by default. It will help you find relevant search results even if you make spelling mistakes or typos, e.g., searching for `swaj` instead of `swan`.
+
+The `typoTolerance` object allows you to:
 
 - Enable or disable the typo tolerance feature
 - Configure the minimum word size for typos
