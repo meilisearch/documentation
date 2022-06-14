@@ -23,7 +23,7 @@ The order of the `rankingRules` array matters: the first rule has the most impac
   "proximity",
   "attribute",
   "sort",
-  "exactness",
+  "exactness"
 ]
 ```
 

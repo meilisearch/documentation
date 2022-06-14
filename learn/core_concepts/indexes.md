@@ -37,13 +37,13 @@ The `uid` is the **unique identifier** of an index. It is set when creating the 
 
 ## Primary key
 
-Every index has a primary key: a required attribute that must be present in all documents in the index. Each document must have a unique value associated with this attribute. 
+Every index has a primary key: a required attribute that must be present in all documents in the index. Each document must have a unique value associated with this attribute.
 
-The primary key serves to identify each document, such that two documents in an index can never be completely identical. If you add two documents with the same value for the primary key, they will be treated as the same document: one will overwrite the other. If you try adding documents and even a single one is missing the primary key, none of the documents will be stored.
+The primary key serves to identify each document, such that two documents in an index can never be completely identical. If you add two documents with the same value for the primary key, they will be treated as the same document: one will overwrite the other. If you try adding documents, and even a single one is missing the primary key, none of the documents will be stored.
 
 You can set the primary key for an index or let it be inferred by Meilisearch. Read more about [setting the primary key](/learn/core_concepts/primary_key.md#setting-the-primary-key).
 
-[Learn more about document primary key](/learn/core_concepts/primary_key.md#primary-key-2)
+[Learn more about the primary field](/learn/core_concepts/primary_key.md)
 
 ## Index settings
 
@@ -52,6 +52,7 @@ Index settings can be thought of as a JSON object containing many different opti
 You can customize the following index settings:
 
 - [Ranking rules](#ranking-rules)
+- [Distinct attribute](#distinct-attribute)
 - [Synonyms](#synonyms)
 - [Filterable attributes](#filterable-attributes)
 - [Sortable attributes](#sortable-attributes)
@@ -63,19 +64,30 @@ To change index settings, use the [update settings endpoint](/reference/api/sett
 
 ### Ranking rules
 
-All indexes are created with the same built-in ranking rules executed in default order. Once your first document has been added, the index will record how the attributes must be sorted. Their order of importance is based on their order of appearance in the document.
-
-Suppose your first document lists attributes in the following order:
+All indexes are created with the same built-in ranking rules executed in default order:
 
 ```
-id, title, overview, release_date
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness"
+]
 ```
 
-A document containing matches in its `title` field will be considered more relevant than a document only containing matches in its `overview`.
-
-You can alter the order in which ranking rules take effect or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+The order of these rules matters: the first rule has the most impact, and the last rule has the least. You can alter this order or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 [Learn more about ranking rules](/learn/core_concepts/relevancy.md)
+
+### Distinct attribute
+
+If your dataset contains multiple similar documents, you may want to return only one on search. Suppose you have numerous black jackets in different sizes in your `costumes` index; setting `costume_id` as the distinct attribute will mean Meiliserch will not return more than one black jacket with the same `costume_id`.
+
+You can only set one field as the distinct attribute per index using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update distinct attribute endpoint](/reference/api/distinct_attribute.md#update-distinct-attribute)
+
+[Learn more about distinct attribute](/learn/configuration/distinct.md)
 
 ### Synonyms
 
@@ -89,8 +101,7 @@ Since synonyms are defined for a given index, they won't apply to any other inde
 
 Filtering allows you to refine your search based on different categories. For example, you could search for all movies of a certain `genre`, e.g. `Science Fiction`, with a `rating` above `8`.
 
-Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter). 
-
+Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/filterable_attributes.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
 [Learn more about filtering](/learn/advanced/filtering_and_faceted_search.md)
 
