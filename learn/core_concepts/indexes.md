@@ -64,20 +64,9 @@ To change index settings, use the [update settings endpoint](/reference/api/sett
 
 ### Ranking rules
 
-All indexes are created with the same built-in ranking rules executed in default order:
+Meilisearch uses ranking rules to sort matching documents so that the most relevant documents appear at the top. All indexes are created with the same built-in ranking rules executed in default order. The order of these rules matters: the first rule has the most impact, and the last rule has the least.
 
-```
-[
-  "words",
-  "typo",
-  "proximity",
-  "attribute",
-  "sort",
-  "exactness"
-]
-```
-
-The order of these rules matters: the first rule has the most impact, and the last rule has the least. You can alter this order or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+You can alter this order or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
 
 [Learn more about ranking rules](/learn/core_concepts/relevancy.md)
 
