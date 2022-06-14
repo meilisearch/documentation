@@ -8,8 +8,6 @@ To follow along, first click this link to download the file: <a id="downloadMovi
 
 <CodeSamples id="getting_started_add_documents_md" />
 
-If you have already downloaded the dataset and created the `movies` index, you can skip to [the next section](#ranking-rules).
-
 ## Ranking rules
 
 Meilisearch sorts search responses based on an array of rules called `rankingRules`, which is part of the `settings` object.
