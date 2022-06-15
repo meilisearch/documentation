@@ -3,9 +3,9 @@
 Meilisearch is multilingual, featuring optimized support for:
 
 - **Any language that uses whitespace to separate words**
-- **Chinese** (through [Jieba](https://github.com/messense/jieba-rs))
-- **Japanese** (through [Lindera](https://github.com/lindera-morphology/lindera))
-- **Hebrew** (with normalization through [Niqqud](https://docs.rs/niqqud/latest/niqqud/))
+- **Chinese**
+- **Japanese**
+- **Hebrew**
 
 We aim to provide global language support, and your feedback helps us move closer to that goal. If you notice inconsistencies in your search results or the way your documents are processed, please [open an issue in our tokenizer repo](https://github.com/meilisearch/charabia/issues/new).
 
@@ -15,8 +15,9 @@ We aim to provide global language support, and your feedback helps us move close
 
 While we have employees from all over the world at Meilisearch, we don't speak every language. We rely almost entirely on feedback from external contributors to understand how our engine is performing across different languages.
 
-- If you'd like to request dedicated support for a language but aren't able to work on a tokenization pipeline yourself, please [open a discussion in our product repo](https://github.com/meilisearch/product/discussions).
-- If you are interested in contributing to the Meilisearch tokenizer directly, please have a look at the [contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md) before doing so.
+If you'd like to request optimized support for a language that we don't currently support, please [open a discussion in our product repository](https://github.com/meilisearch/product/discussions).
+
+If you'd like to help by developing a tokenizer pipeline yourself: first of all, thank you! We recommend that you take a look at the [tokenizer contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md) before making a PR.
 
 ## FAQ
 

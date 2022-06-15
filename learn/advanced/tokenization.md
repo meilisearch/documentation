@@ -17,9 +17,11 @@ We can break down the tokenization process like so:
 1. Crawl the document(s) and determine the primary language for each field
 2. Go back over the documents field-by-field, running the corresponding tokenization pipeline, if it exists
 
-Pipelines include many language-specific operations. Currently, we have two pipelines:
+Pipelines include many language-specific operations. Currently, we have four pipelines:
 
-1. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
-2. A default Meilisearch pipeline that separates words based on categories. Works with a variety of languages
+1. A default Meilisearch pipeline for languages that use whitespace to separate words. Uses [unicode segmenter](https://github.com/unicode-rs/unicode-segmentation)
+2. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
+3. A specialized Japanese pipeline using [Lindera](https://github.com/lindera-morphology/lindera)
+4. A specialized Hebrew pipeline based off the default Meilisearch pipeline. Uses [Niqqud](https://docs.rs/niqqud/latest/niqqud/) for normalization
 
 For more details, check out the [feature specification](https://github.com/meilisearch/specifications/blob/master/text/0001-script-based-tokenizer.md).
