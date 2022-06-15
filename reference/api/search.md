@@ -460,7 +460,17 @@ Optionally, you can indicate a custom crop length for any attributes given to `a
 
 Instead of supplying individual attributes, you can provide `["*"]` as a wildcard: `attributesToCrop=["*"]`. This causes `_formatted` to include the cropped values of all attributes present in [`attributesToRetrieve`](#attributes-to-retrieve).
 
-**Meilisearch crops around the first occurrence of any one of the terms present in the search query.** If Meilisearch does not find any query terms in a field, cropping begins at the first word in that field.
+#### Cropping rules
+
+Suppose you have a field containing the following string: `Donatello is a skilled and smart turtle. Leonardo is the most skilled turtle. Raphael is the strongest turtle.`
+
+Meilisearch takes sentence context in consideration when cropping. For example, if your search term is `Leonardo` and your `cropLength` is 6, Meilisearch will prioritize keeping the sentence together and return: `Leonardo is the most skilled turtle.`
+
+If a query contains only a single search term, Meilisearch crops around the first occurrence of that term. If you search for `turtle` and your `cropLength` is 7, Meilisearch will return the first instance of that word: `Donatello is a skilled and smart turtle.`
+
+If a query contains multiple search terms, Meilisearch centers the crop around the largest number of unique matches, giving priority to terms that are closer to each other and follow the original query order. If you search for `skilled turtle` with a `cropLength` of 6, Meilisearch will return `Leonardo is the most skilled turtle`.
+
+If Meilisearch does not find any query terms in a field, cropping begins at the first word in that field. If you search for `Michelangelo` with a `cropLength` of 4, Meilisearch will return `Donatello is a skilled …`.
 
 #### Example
 
@@ -530,7 +540,7 @@ When searching for `shifu`, you can use `cropMarker` to change the default `…`
     "id": 50393,
     "title": "Kung Fu Panda Holiday",
     "poster": "https://image.tmdb.org/t/p/w1280/gp18R42TbSUlw9VnXFqyecm52lq.jpg",
-    "overview": "[…]villager. But this year Shifu informs Po that as Dragon[…]",
+    "overview": "[…]But this year Shifu informs Po that as Dragon Warrior,[…]",
     "release_date": 1290729600
   }
 }
