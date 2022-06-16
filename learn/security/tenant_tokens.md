@@ -66,18 +66,18 @@ const tokenPayload = {
       'filter': `user_id = ${currentUserID}`
      }
   },
-  apiKeyPrefix: apiKey.substring(0, 8),
+  apiKeyUid: apiKey.substring(0, 8),
   exp: parseInt(Date.now() / 1000) + 20 * 60 // 20 minutes
 };
 
 const token = jwt.sign(tokenPayload, apiKey, {algorithm: 'HS256'});
 ```
 
-`tokenPayload` contains the token payload. It must contain three fields: `searchRules`, `apiKeyPrefix`, and `exp`.
+`tokenPayload` contains the token payload. It must contain three fields: `searchRules`, `apiKeyUid`, and `exp`.
 
 `searchRules` must be a JSON object containing a set of search rules. These rules specify restrictions applied to every query using this web token.
 
-`apiKeyPrefix` must be the first 8 characters of a valid Meilisearch API key.
+`apiKeyUid` must be the `uid` of a valid Meilisearch API key.
 
 `exp` is the only optional parameter of a tenant token. It must be a UNIX timestamp specifying the expiration date of the token.
 
@@ -117,7 +117,7 @@ The token payload contains most of the relevant token data. It must be an object
 ```json
 {
   "exp": 1646756934,
-  "apiKeyPrefix": "12345678",
+  "apiKeyUid": "12345678",
   "searchRules": {
     "patient_medical_records": {
       "filter": "user_id = 1"
@@ -188,7 +188,7 @@ The previous rules can be combined in one tenant token:
 
 ```json
 {
-  "apiKeyPrefix": "rkDxFUHd",
+  "apiKeyUid": "rkDxFUHd",
   "exp": 1641835850,
   "searchRules": {
     "*": {

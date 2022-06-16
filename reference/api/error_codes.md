@@ -168,3 +168,19 @@ The requested task does not exist. Please ensure that you are using the correct 
 ### `invalid_typo_tolerance_min_word_size_for_typos`
 
 The `minWordSizeForTypos` object is invalid. The value for both `oneTypo` and `twoTypos` should be between `0` and `255`, and `twoTypos` should be greater or equal to `oneTypo`.
+
+### `immutable_field`
+
+The field you are trying to modify is immutable.
+
+### `api_key_already_exists`
+
+A key with this `uid` already exists.
+
+### `invalid_api_key_uid`
+
+The given `uid` is invalid. The `uid` must follow the [uuid v4](https://www.sohamkamani.com/uuid-versions-explained) format.
+
+### `invalid_api_key_name`
+
+The give `name` is invalid. It should either be a string or `null`.
