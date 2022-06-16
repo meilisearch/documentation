@@ -116,16 +116,8 @@ update_a_key_1: |-
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "description": "Manage documents: Products/Reviews API key",
-      "actions": [
-        "documents.add",
-        "documents.delete"
-      ],
-      "indexes": [
-        "products",
-        "reviews"
-      ],
-      "expiresAt": "2042-04-02T00:42:42Z"
+      "name": "Products/Reviews API key",
+      "description": "Manage documents: Products/Reviews API key"
     }'
 delete_a_key_1: |-
   curl \
@@ -786,7 +778,7 @@ security_guide_update_key_1: |-
     -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "indexes": ["doctors"] }'
+    --data-binary '{ "name": "Default Search API Key" }'
 security_guide_create_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \

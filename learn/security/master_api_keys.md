@@ -82,15 +82,19 @@ Exposing your master key can give malicious users complete control over your Mei
 
 Meilisearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
-The master key is the only key with access to the [`/keys` route](/reference/api/keys.md). This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
+You can access to the [`/keys` route](/reference/api/keys.md) with the master key or an API key with containing `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions. This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
+
+::: note
+If you change your master key, the `key` field is re-generated.
+:::
 
 Though the default API keys are usually enough to manage the security needs of most applications, this might not be the case when dealing with privacy-sensitive data. In these situations, the fine-grained control offered by the `/keys` endpoint allows you to clearly decide who can access what information and for how long.
 
 ### Updating an API key
 
-You can freely update an API key at any time, even after it expires. This includes editing the indexes, endpoints, and routes it can access, as well as its description and expiry date.
+You can freely update the `name` and `description` of an API key at any time, even after it expires.
 
-We can update the `Default Search API Key` so regular users cannot perform search operations in our `patient_medical_records` index:
+We can update the `Default Search API Key` to add a description:
 
 <CodeSamples id="security_guide_update_key_1" />
 
@@ -110,13 +114,13 @@ We can update the `Default Search API Key` so regular users cannot perform searc
 }
 ```
 
-To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key) which can only be accessed with the master key.
+To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key), which can only be accessed with the master key or an API key containing the `keys.update` action.
 
-Meilisearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `indexes`.
+Meilisearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `description`.
 
 ### Creating an API key
 
-You can create API keys by using the [create key endpoint](/reference/api/keys.md#create-a-key). This endpoint is always protected and can only be accessed with the master key.
+You can create API keys by using the [create key endpoint](/reference/api/keys.md#create-a-key). This endpoint is always protected and can only be accessed with the master key or an API key with the `keys.create` action.
 
 Since we have altered the permissions in our default search key, we need to create a new API key so authorized users can search through out `patient_medical_records` index:
 
@@ -146,7 +150,7 @@ It is good practice to always set an expiry date when creating a new API key. If
 
 You can use the [list keys endpoint](/reference/api/keys.md) to obtain information on any active key in your Meilisearch instance. This is useful when you need an overview of existing keys and their permissions.
 
-[`GET /keys`](/reference/api/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you need the master key to access this endpoint.
+[`GET /keys`](/reference/api/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you either need the master key or an API key with the `keys.get` action to access this endpoint.
 
 [`GET /keys/{key}`](/reference/api/keys.md#get-one-key) returns information on a single key. `{key}` should be replaced with the full `key` value obtained during key creation.
 
