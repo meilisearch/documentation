@@ -62,7 +62,7 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 ### `internal`
 
- Meilisearch experienced an internal error. Check the error message, and open an issue if necessary.
+ Meilisearch experienced an internal error. Check the error message, and [open an issue](https://github.com/meilisearch/meilisearch/issues/new?assignees=&labels=&template=bug_report.md&title=) if necessary.
 
 ### `missing_authorization_header`
 
