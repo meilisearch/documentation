@@ -10,7 +10,16 @@ The task `uid` is incremented **globally.**
 
 <RouteHighlighter method="GET" route="/tasks"/>
 
-List all tasks globally, regardless of index. The `task` objects are contained in the `results` array.
+List all tasks globally, regardless of index. The `task` objects are contained in the `results` array. Tasks are always returned in descending order of `uid`.
+
+Task results are paginated and can be filtered.
+
+#### Query parameters
+
+| Query Parameter          | Description                 | Default Value |
+| ------------------------ | --------------------------- | :-----------: |
+| **limit**               | number of tasks to return | 20 |
+| **from**                | the `uid` of the first task returned | the `uid` of the last created task |
 
 ### Example
 
