@@ -41,8 +41,7 @@ Let's say you only want to view meteorites that weigh less than 200g:
     },
     …
   ],
-  "nbHits": 114,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 114,
   "query": "",
   "limit": 20,
   "offset": 0,
@@ -77,8 +76,7 @@ Let's sort the meteorites in the previous example based on mass:
     },
     …
   ],
-  "nbHits": 114,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 114,
   "query": "",
   "limit": 20,
   "offset": 0,
@@ -132,8 +130,7 @@ Let's say you want to find out which meteorites crashed within a 210km radius of
   },
   …
   ],
-  "nbHits": 7,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 7,
   "query": "",
   "limit": 20,
   "offset": 0,
@@ -180,8 +177,7 @@ The following command sorts meteorites by how close they were to the Taj Mahal:
     },
   …
   ]
-  "nbHits": 1000,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 1000,
   "query": "",
   "limit": 20,
   "offset": 0,

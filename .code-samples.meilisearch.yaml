@@ -432,13 +432,13 @@ search_parameter_guide_highlight_tag_1: |-
       "highlightPreTag": "<span class=\"highlight\">",
       "highlightPostTag": "</span>"
     }'
-search_parameter_guide_matches_1: |-
+search_parameter_guide_show_matches_position_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "winter feast",
-      "matches": true
+      "showMatchesPosition": true
     }'
 settings_guide_synonyms_1: |-
   curl \
@@ -648,13 +648,13 @@ faceted_search_filter_1: |-
         "director = \"Jordan Peele\""
         ]
     }'
-faceted_search_facets_distribution_1: |-
+faceted_search_facets_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Batman",
-      "facetsDistribution": ["genres"]
+      "facets": ["genres"]
     }'
 faceted_search_walkthrough_filter_1: |-
   curl \
