@@ -62,9 +62,16 @@ List all existing API keys. **Expired keys are included in the response**, but d
       "createdAt": "2021-08-11T10:00:00Z",
       "updatedAt": "2021-08-11T10:00:00Z"
     }
-  ]
+  ],
+  "offset":0,
+  "limit":20,
+  "total":7
 }
 ```
+
+::: note
+API keys are displayed in descending order based on their `createdAt` date. This means that the most recently created keys appear first.
+:::
 
 ### Returned fields
 
@@ -108,11 +115,23 @@ Date and time when the key was created, represented in RFC 3339 format.
 
 Date and time when the key was last updated, represented in RFC 3339 format.
 
+### `offset`
+
+Sets the starting point in the results, effectively skipping over a given number of API keys.
+
+### `limit`
+
+Sets the maximum number of documents to be returned by the current request.
+
+### `total`
+
+Gives the total number of API keys that can be browsed.
+
 ## Get one key
 
-<RouteHighlighter method="GET" route="/keys/{key}"/>
+<RouteHighlighter method="GET" route="/keys/{key}or{uid}"/>
 
-Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found). A valid API [key](/reference/api/keys.md#key) is required.
+Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found). A valid API [key](/reference/api/keys.md#key) or [uid](/reference/api/keys.md#uid) is required.
 
 ### Example
 

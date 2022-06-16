@@ -82,7 +82,7 @@ Exposing your master key can give malicious users complete control over your Mei
 
 Meilisearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
-You can access to the [`/keys` route](/reference/api/keys.md) with the master key or an API key with containing `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions. This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
+You can access the [`/keys` route](/reference/api/keys.md) using the master key or an API key containing `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions. This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
 
 ::: note
 If you change your master key, the `key` field is re-generated.
@@ -92,7 +92,7 @@ Though the default API keys are usually enough to manage the security needs of m
 
 ### Updating an API key
 
-You can freely update the `name` and `description` of an API key at any time, even after it expires.
+You can update the `name` and `description` of an API key at any time, even after it expires.
 
 We can update the `Default Search API Key` to add a description:
 
