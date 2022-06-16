@@ -6,7 +6,7 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 The task `uid` is incremented **globally.**
 :::
 
-## Get all tasks
+## Get tasks
 
 <RouteHighlighter method="GET" route="/tasks"/>
 
