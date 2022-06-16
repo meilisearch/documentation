@@ -20,21 +20,18 @@ List all [indexes](/learn/core_concepts/indexes.md).
 [
   {
     "uid": "books",
-    "name": "books",
     "createdAt": "2022-03-08T10:00:27.377346Z",
     "updatedAt": "2022-03-08T10:00:27.391209Z",
     "primaryKey": "id"
   },
   {
     "uid": "meteorites",
-    "name": "meteorites",
     "createdAt": "2022-03-08T10:00:44.518768Z",
     "updatedAt": "2022-03-08T10:00:44.582083Z",
     "primaryKey": "id"
   },
   {
     "uid": "movies",
-    "name": "movies",
     "createdAt": "2022-02-10T07:45:15.628261Z",
     "updatedAt": "2022-02-21T15:28:43.496574Z",
     "primaryKey": "id"
@@ -57,7 +54,6 @@ Get information about an [index](/learn/core_concepts/indexes.md). The index [`u
 ```json
 {
   "uid": "movies",
-  "name": "movies",
   "createdAt": "2022-02-10T07:45:15.628261Z",
   "updatedAt": "2022-02-21T15:28:43.496574Z",
   "primaryKey": "id"
