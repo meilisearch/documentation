@@ -51,7 +51,7 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.27.2
+docker pull getmeili/meilisearch:v0.28
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
@@ -433,7 +433,7 @@ The following code sample uses [React](https://reactjs.org/), a JavaScript libra
         hit: props.hit
       })
     );
-    
+
     const domContainer = document.querySelector('#app');
     ReactDOM.render(React.createElement(App), domContainer);
   </script>
