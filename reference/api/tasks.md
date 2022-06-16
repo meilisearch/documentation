@@ -53,7 +53,7 @@ List all tasks globally, regardless of index. The `task` objects are contained i
 Tasks are displayed in descending order by `uid`. This means that **the most recently created `task` objects appear first**.
 :::
 
-## Get task
+## Get one task
 
 <RouteHighlighter method="GET" route="/tasks/{task_uid}"/>
 
