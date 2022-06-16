@@ -33,7 +33,7 @@ List the settings.
 
 ## Update sortable attributes
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/sortable-attributes" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
 Update an index's sortable attributes list. This will re-index all documents in the index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

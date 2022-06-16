@@ -103,7 +103,7 @@ List the settings.
 
 ## Update settings
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings" />
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings" />
 
 Update the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

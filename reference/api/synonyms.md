@@ -42,7 +42,7 @@ Get the list of [synonyms](/learn/configuration/synonyms.md) of an index. The in
 
 ## Update synonyms
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/synonyms"/>
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
 
 Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

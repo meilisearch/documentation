@@ -37,7 +37,7 @@ List the settings.
 
 ## Update searchable attributes
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/searchable-attributes" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Update the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

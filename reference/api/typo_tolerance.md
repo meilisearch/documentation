@@ -61,7 +61,7 @@ An array of attributes for which the typo tolerance feature is disabled.
 
 ## Update typo tolerance
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/typo-tolerance"/>
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
 Partially update the typo tolerance settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

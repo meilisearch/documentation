@@ -136,7 +136,7 @@ get_settings_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings'
 update_settings_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "rankingRules": [
@@ -193,7 +193,7 @@ get_synonyms_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/synonyms'
 update_synonyms_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "wolverine": [
@@ -214,7 +214,7 @@ get_stop_words_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/stop-words'
 update_stop_words_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/stop-words' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "the",
@@ -229,7 +229,7 @@ get_ranking_rules_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/ranking-rules'
 update_ranking_rules_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "words",
@@ -249,7 +249,7 @@ get_distinct_attribute_1: |-
     -X GET 'http://localhost:7700/indexes/shoes/settings/distinct-attribute'
 update_distinct_attribute_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/shoes/settings/distinct-attribute' \
+    -X PUT 'http://localhost:7700/indexes/shoes/settings/distinct-attribute' \
     -H 'Content-Type: application/json' \
     --data-binary '"skuid"'
 reset_distinct_attribute_1: |-
@@ -260,7 +260,7 @@ get_filterable_attributes_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/filterable-attributes'
 update_filterable_attributes_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/filterable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "genres",
@@ -274,7 +274,7 @@ get_searchable_attributes_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/searchable-attributes'
 update_searchable_attributes_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -289,7 +289,7 @@ get_displayed_attributes_1: |-
     -X GET 'http://localhost:7700/indexes/movies/settings/displayed-attributes'
 update_displayed_attributes_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -314,12 +314,12 @@ get_version_1: |-
     -X GET 'http://localhost:7700/version'
 distinct_attribute_guide_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/jackets/settings' \
+    -X PUT 'http://localhost:7700/indexes/jackets/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "distinctAttribute": "product_id" }'
 field_properties_guide_searchable_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "searchableAttributes": [
@@ -330,7 +330,7 @@ field_properties_guide_searchable_1: |-
     }'
 field_properties_guide_displayed_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "displayedAttributes": [
@@ -442,7 +442,7 @@ search_parameter_guide_matches_1: |-
     }'
 settings_guide_synonyms_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/tops/settings' \
+    -X PUT 'http://localhost:7700/indexes/tops/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "synonyms": {
@@ -452,7 +452,7 @@ settings_guide_synonyms_1: |-
     }'
 settings_guide_stop_words_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "stopWords": [
@@ -463,7 +463,7 @@ settings_guide_stop_words_1: |-
     }'
 settings_guide_ranking_rules_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "rankingRules": [
@@ -479,12 +479,12 @@ settings_guide_ranking_rules_1: |-
     }'
 settings_guide_distinct_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/jackets/settings' \
+    -X PUT 'http://localhost:7700/indexes/jackets/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "distinctAttribute": "product_id" }
 settings_guide_searchable_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "searchableAttributes": [
@@ -495,7 +495,7 @@ settings_guide_searchable_1: |-
     }'
 settings_guide_displayed_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "displayedAttributes": [
@@ -507,7 +507,7 @@ settings_guide_displayed_1: |-
     }'
 settings_guide_sortable_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/settings' \
+    -X PUT 'http://localhost:7700/indexes/books/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "sortableAttributes": [
@@ -544,7 +544,7 @@ getting_started_add_meteorites: |-
     --data-binary @meteorites.json
 getting_started_update_ranking_rules: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "exactness",
@@ -558,7 +558,7 @@ getting_started_update_ranking_rules: |-
     ]'
 getting_started_update_displayed_attributes: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "title",
@@ -567,17 +567,17 @@ getting_started_update_displayed_attributes: |-
     ]'
 getting_started_update_searchable_attributes: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '["title"]'
 getting_started_update_stop_words: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/stop-words' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/stop-words' \
     -H 'Content-Type: application/json' \
     --data-binary '["the"]'
 getting_started_synonyms: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "winnie": ["piglet"], 
@@ -608,7 +608,7 @@ getting_started_sorting: |-
     }'
 getting_started_configure_settings: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/meteorites/settings' \
+    -X PUT 'http://localhost:7700/indexes/meteorites/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filterableAttributes": [
@@ -626,7 +626,7 @@ getting_started_communicating_with_a_protected_instance: |-
     -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filterableAttributes": [
@@ -686,7 +686,7 @@ authorization_header_1: |-
     -H 'Authorization: Bearer MASTER_KEY'
 sorting_guide_update_sortable_attributes_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "author",
@@ -694,7 +694,7 @@ sorting_guide_update_sortable_attributes_1: |-
     ]'
 sorting_guide_update_ranking_rules_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/settings/ranking-rules' \
+    -X PUT 'http://localhost:7700/indexes/books/settings/ranking-rules' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "words",
@@ -725,7 +725,7 @@ get_sortable_attributes_1: |-
     -X GET 'http://localhost:7700/indexes/books/settings/sortable-attributes'
 update_sortable_attributes_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/books/settings/sortable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "price",
@@ -759,7 +759,7 @@ geosearch_guide_filter_usage_2: |-
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }'
 geosearch_guide_sort_settings_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
 geosearch_guide_sort_usage_1: |-
@@ -844,7 +844,7 @@ get_typo_tolerance_1: |-
     -X GET 'http://localhost:7700/indexes/books/settings/typo-tolerance'
 update_typo_tolerance_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/settings/typo-tolerance' \
+    -X PATCH 'http://localhost:7700/indexes/books/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": {
@@ -858,17 +858,17 @@ reset_typo_tolerance_1: |-
     -X DELETE 'http://localhost:7700/indexes/books/settings/typo-tolerance'
 typo_tolerance_guide_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "enabled": false }'
 typo_tolerance_guide_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "disableOnAttributes": ["title"] }'
 typo_tolerance_guide_3: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "disableOnWords": [
@@ -877,7 +877,7 @@ typo_tolerance_guide_3: |-
     }'
 typo_tolerance_guide_4: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": {
@@ -887,7 +887,7 @@ typo_tolerance_guide_4: |-
     }'
 settings_guide_typo_tolerance_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": {
@@ -953,7 +953,7 @@ updating_guide_add_documents_old: |-
     -H 'X-Meili-API-Key: API_KEY'
 getting_started_typo_tolerance: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
