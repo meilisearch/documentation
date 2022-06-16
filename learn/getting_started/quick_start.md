@@ -51,14 +51,14 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.28
+docker pull getmeili/meilisearch:v0.28.0
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
     -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:v0.28 \
+    getmeili/meilisearch:v0.28.0 \
     meilisearch --env="development"
 ```
 
@@ -104,7 +104,7 @@ Choose the release you want to use. You can find the full list [here](https://gi
 In the cloned repository, run the following command replacing `vX.Y.Z` with the tag you selected:
 
 ```bash
-git checkout v0.28
+git checkout v0.28.0
 ```
 
 Finally, update the rust toolchain, compile the project, and execute the binary.
