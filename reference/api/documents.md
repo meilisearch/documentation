@@ -40,11 +40,11 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 #### Query parameters
 
-| Query Parameter          | Description                 | Default Value |
-| ------------------------ | --------------------------- | :-----------: |
-| **offset**               | number of documents to skip |       0       |
-| **limit**                | number of documents to take |      20       |
-| **attributesToRetrieve** | document attributes to show |      \*       |
+| Query Parameter          | Description                    | Default Value |
+| ------------------------ | ------------------------------ | :-----------: |
+| **offset**               | number of documents to skip    |       0       |
+| **limit**                | number of documents to display |      20       |
+| **fields**               | document attributes to show    |      \*       |
 
 ### Example
 
@@ -72,7 +72,7 @@ Documents are ordered by Meilisearch depending on the hash of their id.
   ],
   "offset": 0,
   "limit": 2,
-  "total": 2054
+  "total": 50134
 }
 ```
 

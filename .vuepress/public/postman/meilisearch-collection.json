@@ -55,7 +55,7 @@
 									"disabled": true
 								},
 								{
-									"key": "attributesToRetrieve",
+									"key": "fields",
 									"value": "*",
 									"disabled": true
 								}
