@@ -11,7 +11,6 @@ Meilisearch has configuration options for many critical actions, such as:
 - Changing the database path
 - Starting Meilisearch in a development or production environment
 - Setting a master key to protect API endpoints
-- Disabling telemetry (enabled by default)
 
 You can read about all of them in our [configuration guide](/learn/configuration/instance_options.md).
 
