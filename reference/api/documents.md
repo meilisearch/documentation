@@ -43,7 +43,7 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 | Query Parameter          | Description                    | Default Value |
 | ------------------------ | ------------------------------ | :-----------: |
 | **offset**               | number of documents to skip    |       0       |
-| **limit**                | number of documents to display |      20       |
+| **limit**                | number of documents to return  |      20       |
 | **fields**               | document attributes to show    |      \*       |
 
 ### Example
