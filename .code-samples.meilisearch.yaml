@@ -8,7 +8,7 @@ get_one_index_1: |-
     -X GET 'http://localhost:7700/indexes/movies'
 list_all_indexes_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes'
+    -X GET 'http://localhost:7700/indexes?limit=3'
 create_an_index_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes' \

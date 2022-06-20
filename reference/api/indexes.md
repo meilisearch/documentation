@@ -8,7 +8,14 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 
 <RouteHighlighter method="GET" route="/indexes"/>
 
-List all [indexes](/learn/core_concepts/indexes.md).
+List all [indexes](/learn/core_concepts/indexes.md). Results can be paginated by using the `offset` and `limit` query parameters.
+
+#### Query parameters
+
+| Query parameter          | Description                 | Default value |
+| ------------------------ | --------------------------- | :-----------: |
+| **offset**               | Number of indexes to skip   |       0       |
+| **limit**                | Number of indexes to return |      20       |
 
 ### Example
 
@@ -17,26 +24,31 @@ List all [indexes](/learn/core_concepts/indexes.md).
 #### Response: `200 Ok`
 
 ```json
-[
-  {
-    "uid": "books",
-    "createdAt": "2022-03-08T10:00:27.377346Z",
-    "updatedAt": "2022-03-08T10:00:27.391209Z",
-    "primaryKey": "id"
-  },
-  {
-    "uid": "meteorites",
-    "createdAt": "2022-03-08T10:00:44.518768Z",
-    "updatedAt": "2022-03-08T10:00:44.582083Z",
-    "primaryKey": "id"
-  },
-  {
-    "uid": "movies",
-    "createdAt": "2022-02-10T07:45:15.628261Z",
-    "updatedAt": "2022-02-21T15:28:43.496574Z",
-    "primaryKey": "id"
-  }
-]  
+{
+  "results": [
+    {
+      "uid": "books",
+      "createdAt": "2022-03-08T10:00:27.377346Z",
+      "updatedAt": "2022-03-08T10:00:27.391209Z",
+      "primaryKey": "id"
+    },
+    {
+      "uid": "meteorites",
+      "createdAt": "2022-03-08T10:00:44.518768Z",
+      "updatedAt": "2022-03-08T10:00:44.582083Z",
+      "primaryKey": "id"
+    },
+    {
+      "uid": "movies",
+      "createdAt": "2022-02-10T07:45:15.628261Z",
+      "updatedAt": "2022-02-21T15:28:43.496574Z",
+      "primaryKey": "id"
+    }
+  ],
+  "offset": 0,
+  "limit": 3,
+  "total": 5
+}  
 ```
 
 ## Get one index
