@@ -63,7 +63,7 @@ All asynchronous operations return a summarized version of the [`task` object](/
 }
 ```
 
-This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
 

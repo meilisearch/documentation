@@ -108,7 +108,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 }
 ```
 
-You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).
 
 ## Update an index
 
@@ -148,7 +148,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).
 
 ## Delete an index
 
@@ -174,4 +174,4 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).

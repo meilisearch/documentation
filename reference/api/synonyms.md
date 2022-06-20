@@ -68,7 +68,7 @@ An object that contains all synonyms and their associated words.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset synonyms
 
@@ -96,4 +96,4 @@ Empty object : `{}`
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

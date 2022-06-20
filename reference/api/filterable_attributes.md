@@ -62,7 +62,7 @@ An array of strings containing the attributes that can be used as filters at que
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset filterable attributes
 
@@ -90,4 +90,4 @@ An empty array (`[]`).
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

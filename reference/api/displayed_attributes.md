@@ -70,7 +70,7 @@ An array of strings that contains attributes of an index to display.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset displayed attributes
 
@@ -98,4 +98,4 @@ All attributes found in the documents added to the index.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

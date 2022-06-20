@@ -145,7 +145,7 @@ If the provided index does not exist, it will be created.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset settings
 
@@ -184,4 +184,4 @@ All settings will be reset to their default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

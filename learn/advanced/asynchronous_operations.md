@@ -57,7 +57,7 @@ All asynchronous operations return a summarized version of the [`task` object](#
 | `type`       | string  | Type of task                                                                          |
 | `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued` |
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ### Task `status`
 
@@ -140,7 +140,7 @@ Had the task failed, the response would have included an `error` object:
 1. When you make a task request, Meilisearch puts it in the task queue, sets the task's `status` to `enqueued` and returns a [`task` object](/learn/advanced/asynchronous_operations.md#response)
 2. When your task reaches the front of the queue, Meilisearch begins working on it and changes the request `status` to `processing`
 3. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
-4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-all-tasks)
+4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks)
 
 ### Dumps
 

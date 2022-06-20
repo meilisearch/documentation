@@ -62,7 +62,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset distinct attribute
 
@@ -88,4 +88,4 @@ Reset the [distinct attribute](/learn/configuration/settings.md#distinct-attribu
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

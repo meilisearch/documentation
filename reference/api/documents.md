@@ -121,7 +121,7 @@ The body is composed of a **JSON array** of documents.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Add or update documents
 
@@ -176,7 +176,7 @@ The documents are matched because they have the same [primary key](/learn/core_c
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Delete all documents
 
@@ -200,7 +200,7 @@ Delete all documents in the specified index. The index [`uid`](/learn/core_conce
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Delete one document
 
@@ -224,7 +224,7 @@ Delete one document based on its unique id. Both the index [`uid`](/learn/core_c
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Delete documents by batch
 
@@ -256,4 +256,4 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
