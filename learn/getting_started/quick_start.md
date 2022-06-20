@@ -58,7 +58,7 @@ docker run -it --rm \
     -p 7700:7700 \
     -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:v0.28.0 \
+    getmeili/meilisearch:v0.28 \
     meilisearch --env="development"
 ```
 
@@ -101,7 +101,7 @@ cd meilisearch
 
 Choose the release you want to use. You can find the full list [here](https://github.com/meilisearch/meilisearch/releases).
 
-In the cloned repository, run the following command replacing `vX.Y.Z` with the tag you selected:
+In the cloned repository, run the following command to access the most recent version of Meilisearch:
 
 ```bash
 git checkout v0.28.0
