@@ -116,7 +116,7 @@ The body is composed of a **JSON array** of documents.
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -171,7 +171,7 @@ The documents are matched because they have the same [primary key](/learn/core_c
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```

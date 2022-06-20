@@ -19,7 +19,7 @@ Task results are paginated and can be filtered.
 | Query Parameter | Description                          |           Default Value            |
 |-----------------|--------------------------------------|:----------------------------------:|
 | **limit**       | number of tasks to return            |                 20                 |
-| **from**        | the `uid` of the first task returned | the `uid` of the last created task |
+| **from**        | `uid` of the first task returned     | `uid` of the last created task     |
 
 ### Filtering tasks
 
@@ -29,16 +29,16 @@ You can filter the task list by the value of the `status`, `type`, or `indexUid`
 curl -X GET 'http://localhost:7700/tasks?status=enqueued'
 ```
 
-Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. For example, the following command would return all `finished` tasks that also belong to the `movies` index:
+Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. For example, the following command would return all `succeeded` tasks that also belong to the `movies` index:
 
 ```bash
-curl -X GET 'http://localhost:7700/tasks?status=finished&indexUid=movies'
+curl -X GET 'http://localhost:7700/tasks?status=succeeded&indexUid=movies'
 ```
 
-Use the comma character `,` to add multiple filter values for a single field. For example, to get all tasks whose `type` is either `indexUpdate` or `documentAdditionOrUpdate`, you would run the following command:
+Use the comma character `,` to add multiple filter values for a single field. For example, to get all tasks whose `type` is either `settingsUpdate` or `documentAdditionOrUpdate`, you would run the following command:
 
 ```bash
-curl -X GET 'http://localhost:7700/tasks?type=indexUpdate,documentAdditionOrUpdate'
+curl -X GET 'http://localhost:7700/tasks?type=settingsUpdate,documentAdditionOrUpdate'
 ```
 
 [Read more about the possible values of these fields in our asynchronous operations guide.](/learn/advanced/asynchronous_operations.md)
@@ -99,7 +99,7 @@ To view the next page of results, you would repeat the same query, replacing the
 curl -X GET 'http://localhost:7700/tasks?limit=2&from=8
 ```
 
-You have reached the final page when the returned value of `next` is `null`.
+When the returned value of `next` is `null`, you have reached the final page of results.
 
 ### Example
 
@@ -114,7 +114,7 @@ You have reached the final page when the returned value of `next` is `null`.
             "uid": 1,
             "indexUid": "movies_reviews",
             "status": "enqueued",
-            "type": "documentAddition",
+            "type": "documentAdditionOrUpdate",
             "duration": null,
             "enqueuedAt": "2021-08-12T10:00:00.000000Z",
             "startedAt": null,
@@ -124,7 +124,7 @@ You have reached the final page when the returned value of `next` is `null`.
             "uid": 0,
             "indexUid": "movies",
             "status": "succeeded",
-            "type": "documentAddition",
+            "type": "documentAdditionOrUpdate",
             "details": { 
                     "receivedDocuments": 100,
                     "indexedDocuments": 100

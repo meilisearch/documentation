@@ -58,7 +58,7 @@ All asynchronous operations return a summarized version of the [`task` object](/
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -160,7 +160,7 @@ Here is an example of a failed task:
     "uid": 1,
     "indexUid": "movies",
     "status": "failed",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details": { 
             "receivedDocuments": 67493,
             "indexedDocuments": 0

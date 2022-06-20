@@ -30,18 +30,18 @@ Most of Meilisearch's asynchronous operations belong to a category called "tasks
 
 The response from the [task API](/reference/api/tasks.md) will always include the following fields in the stated order:
 
-| Field        | Type    | Description                                                                                                      |
-|--------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `uid`        | integer | The unique sequential identifier of the task                                                                     |
-| `indexUid`   | string  | The unique index identifier                                                                                      |
-| `status`     | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
-| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAddition`, `documentPartial`, `documentDeletion`, `settingsUpdate`, `clearAll`                                                                       |
-| `details`    | object  | Detailed information on the task payload                                                               |
-| `error`      | object  | Error details and context. Only present when a task has the `failed` status                                                |
-| `duration`   | string  | The total elapsed time the task spent in the `processing` state, in ISO 8601 format     |
-| `enqueuedAt` | string  | The date and time when the task was first `enqueued`, in RFC 3339 format                           |
-| `startedAt`  | string  | The date and time when the task began `processing`, in RFC 3339 format                                                                                                                       |
-| `finishedAt` | string  | The date and time when the task finished processing, whether `failed` or `succeeded`, in RFC 3339 format.                                                                                                                          |
+| Field        | Type    | Description                                                                                  |
+|--------------|---------|----------------------------------------------------------------------------------------------|
+| `uid`        | integer | The unique sequential identifier of the task |
+| `indexUid`   | string  | The unique index identifier |
+| `status`     | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`  |
+| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate` |
+| `details`    | object  | Detailed information on the task payload |
+| `error`      | object  | Error details and context. Only present when a task has the `failed` status |
+| `duration`   | string  | The total elapsed time the task spent in the `processing` state, in ISO 8601 format |
+| `enqueuedAt` | string  | The date and time when the task was first `enqueued`, in RFC 3339 format |
+| `startedAt`  | string  | The date and time when the task began `processing`, in RFC 3339 format |
+| `finishedAt` | string  | The date and time when the task finished processing, whether `failed` or `succeeded`, in RFC 3339 format. |
 
 If a task fails due to an error, all error fields will be appended to the task response in an `error` object.
 
@@ -49,13 +49,13 @@ If a task fails due to an error, all error fields will be appended to the task r
 
 All asynchronous operations return a summarized version of the [`task` object](#response). It contains the following fields in the stated order:
 
-| Field      | Type    | Description                              |
-|------------|---------|---------------------------------         |
-| `uid`        | integer | Unique sequential identifier             |
-| `indexUid`   | string  | Unique index identifier                  |
-| `status`     | string  | Status of the task. Value is `enqueued`  |
-| `type`       | string  | Type of task                             |
-| `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued`                                                        |
+| Field        | Type    | Description                                                                           |
+|--------------|---------|---------------------------------------------------------------------------------------|
+| `uid`        | integer | Unique sequential identifier                                                          |
+| `indexUid`   | string  | Unique index identifier                                                               |
+| `status`     | string  | Status of the task. Value is `enqueued`                                               |
+| `type`       | string  | Type of task                                                                          |
+| `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued` |
 
 You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
@@ -79,7 +79,7 @@ When you query the task endpoint using this `uid`, you see that it has been enqu
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details": { 
         "receivedDocuments": 67493,
         "indexedDocuments": null
@@ -98,7 +98,7 @@ Later, you check the request's status one more time. It was successfully process
     "uid": 1,
     "indexUid": "movies",
     "status": "succeeded",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details": { 
             "receivedDocuments": 67493,
             "indexedDocuments": 67493
@@ -117,7 +117,7 @@ Had the task failed, the response would have included an `error` object:
     "uid": 1,
     "indexUid": "movies",
     "status": "failed",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details": { 
             "receivedDocuments": 67493,
             "indexedDocuments": 0

@@ -191,7 +191,7 @@ The previous command added documents from `movies.json` to a new index called `m
     "uid": 0,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
@@ -209,7 +209,7 @@ If the document addition is successful, the response should look like this:
    "uid": 0,
    "indexUid": "movies",
    "status": "succeeded",
-   "type": "documentAddition",
+   "type": "documentAdditionOrUpdate",
    "details":{
       "receivedDocuments": 19547,
       "indexedDocuments": 19547
