@@ -262,20 +262,11 @@ Since these versions predate the [dumps feature](/learn/advanced/dumps.md), the 
 
 In this guide, we will:
 
-- [Update to the latest Meilisearch version](#update-to-the-latest-meilisearch-version)
-  - [Verify your database version](#verify-your-database-version)
-    - [Proceed according to your database version](#proceed-according-to-your-database-version)
-  - [Updating from v0.15.0 or above](#updating-from-v0150-or-above)
-    - [Step 1: Set all fields as displayed attributes](#step-1-set-all-fields-as-displayed-attributes)
-    - [Step 2: Create the dump](#step-2-create-the-dump)
-    - [Step 3: Delete the database folder](#step-3-delete-the-database-folder)
-    - [Step 4: Import the dump](#step-4-import-the-dump)
-  - [Updating from v0.14.0 or below](#updating-from-v0140-or-below)
-    - [Step 1: Save your settings](#step-1-save-your-settings)
-    - [Step 2: Set all fields as displayed attributes](#step-2-set-all-fields-as-displayed-attributes)
-    - [Step 3: Save your documents](#step-3-save-your-documents)
-    - [Step 4: Delete the database folder](#step-4-delete-the-database-folder)
-    - [Step 5: Upload your data to the latest version of Meilisearch](#step-5-upload-your-data-to-the-latest-version-of-meilisearch)
+1. [Save your settings](#step-1-save-your-settings)
+2. [Set all fields as displayed attributes](#step-2-set-all-fields-as-displayed-attributes)
+3. [Save your documents](#step-3-save-your-documents)
+4. [Delete the database folder](#step-4-delete-the-database-folder)
+5. [Upload your data to the latest version of Meilisearch](#step-5-upload-your-data-to-the-latest-version-of-meilisearch)
 
 If you don’t need to preserve index settings, skip directly to [step two](#step-2-set-all-fields-as-displayed-attributes).
 
