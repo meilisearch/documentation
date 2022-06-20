@@ -16,10 +16,34 @@ Task results are paginated and can be filtered.
 
 #### Query parameters
 
-| Query Parameter          | Description                 | Default Value |
-| ------------------------ | --------------------------- | :-----------: |
-| **limit**               | number of tasks to return | 20 |
-| **from**                | the `uid` of the first task returned | the `uid` of the last created task |
+| Query Parameter | Description                          |           Default Value            |
+|-----------------|--------------------------------------|:----------------------------------:|
+| **limit**       | number of tasks to return            |                 20                 |
+| **from**        | the `uid` of the first task returned | the `uid` of the last created task |
+
+### Filtering tasks
+
+You can filter the task list by the value of the `status`, `type`, or `indexUid` fields. For example, this command would return only `enqueued` tasks:
+
+```
+curl -X GET 'https://localhost:7700/tasks?status=enqueued'
+```
+
+Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. For example, the following command would return all `finished` tasks that also belong to the `movies` index:
+
+```
+curl -X GET 'https://localhost:7700/tasks?status=finished&indexUid=movies'
+```
+
+Use the comma character `,` to add multiple filter values for a single field. For example, to get all tasks whose `type` is either `indexUpdate` or `documentAdditionOrUpdate`, you would run the following command:
+
+```
+curl -X GET 'https://localhost:7700/tasks?type=indexUpdate,documentAdditionOrUpdate'
+```
+
+[Read more about the possible values of these fields in our asynchronous operations guide.](/learn/advanced/asynchronous_operations.md)
+
+### Paginating tasks
 
 ### Example
 
