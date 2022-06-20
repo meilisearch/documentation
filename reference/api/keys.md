@@ -1,6 +1,6 @@
 # Keys
 
-The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must either [set the master key](/learn/configuration/instance_options.md#master-key) and supply it in the header of the request, or your API key must have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
+The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must either [set the master key](/learn/configuration/instance_options.md#master-key) and supply it in the header of the request, or use API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
 
 [Learn more about managing keys and their rights](/learn/security/master_api_keys.md).
 
@@ -229,7 +229,6 @@ A list of API actions permitted for the key. `["*"]` for all actions.
 | settings.update  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes on authorized indexes. |
 | stats.get        | Provides access to the [get stats of an index](/reference/api/stats.md#get-stats-of-an-index) endpoint and the [get stats of all indexes](/reference/api/stats.md#get-stats-of-all-indexes) endpoint. For the latter, **non-authorized `indexes` are omitted from the response**. |
 | dumps.create     | Provides access to the [create dump](/reference/api/dump.md#create-a-dump) endpoint. **Not restricted by `indexes`.** |
-| dumps.get        | Provides access to the [get dump status](/reference/api/dump.md#get-dump-status) endpoint. **Not restricted by `indexes`.** |
 | version          | Provides access to the [get Meilisearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint. |
 | keys.get         | Provides access to the [get all keys](#get-all-keys) endpoint.|
 | keys.create      | Provides access to the [create key](#create-a-key) endpoint.|
@@ -263,10 +262,10 @@ Date and time when the key will expire, represented in RFC 3339 format. `null` i
     "description": "Add documents: Products API key",
     "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
     "actions": [
-        "documents.add"
+      "documents.add"
     ],
     "indexes": [
-        "products"
+      "products"
     ],
     "expiresAt": "2021-11-13T00:00:00Z",
     "createdAt": "2021-11-12T10:00:00Z",

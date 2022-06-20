@@ -180,12 +180,12 @@ We can query our instance to confirm which active keys can search our `patient_m
       "name": "Default Admin API Key",
       "description": "Default Admin API Key (Use it for all other operations. Caution! Do not share it on the client side)",
       "key": "380689dd379232519a54d15935750cc7625620a2ea2fc06907cb40ba5b421b6f",
-       "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
+      "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
       "actions": [
-          "*"
+        "*"
       ],
       "indexes": [
-          "*"
+        "*"
       ],
       "expiresAt": null,
       "createdAt": "2021-08-11T10:00:00Z",
