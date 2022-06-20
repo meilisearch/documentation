@@ -290,7 +290,7 @@ In the example below, [IMDb](https://www.imdb.com) displays the facet count in p
 
 ![IMDb facets](/faceted-search/facets-imdb.png)
 
-#### Using facet distribution
+#### Using `facets`
 
 [`facets` is a search parameter](/reference/api/search.md#facets) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
