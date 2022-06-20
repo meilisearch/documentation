@@ -58,7 +58,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -66,7 +66,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset stop-words
 
@@ -86,7 +86,7 @@ Empty array: `[]`
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -94,4 +94,4 @@ Empty array: `[]`
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).

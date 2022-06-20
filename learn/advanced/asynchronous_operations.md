@@ -24,7 +24,7 @@ Currently, these are Meilisearch's asynchronous operations:
 
 ## Understanding tasks
 
-Most of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need your task's `uid`.
+Most of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need the task's unique identifier.
 
 ### Response
 
@@ -51,13 +51,13 @@ All asynchronous operations return a summarized version of the [`task` object](#
 
 | Field        | Type    | Description                                                                           |
 |--------------|---------|---------------------------------------------------------------------------------------|
-| `uid`        | integer | Unique sequential identifier                                                          |
+| `taskUid`        | integer | Unique sequential identifier                                                          |
 | `indexUid`   | string  | Unique index identifier                                                               |
 | `status`     | string  | Status of the task. Value is `enqueued`                                               |
 | `type`       | string  | Type of task                                                                          |
 | `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued` |
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ### Task `status`
 
@@ -70,9 +70,9 @@ Task responses always contain a field indicating the request's current `status`.
 
 ### Examples
 
-Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `uid` in response.
+Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `taskUid` in response.
 
-When you query the task endpoint using this `uid`, you see that it has been enqueued:
+When you query the [get task endpoint](/reference/api/tasks.md#get-one-task) using this value, you see that it has been enqueued:
 
 ```json
 {

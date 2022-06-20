@@ -100,7 +100,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 
 ```json
 {
-  "uid": 0,
+  "taskUid": 0,
   "indexUid": "movies",
   "status": "enqueued",
   "type": "indexCreation",
@@ -108,7 +108,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-task).
 
 ## Update an index
 
@@ -140,7 +140,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 ```json
 {
-  "uid": 1,
+  "taskUid": 1,
   "indexUid": "movies",
   "status": "enqueued",
   "type": "indexUpdate",
@@ -148,7 +148,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-task).
 
 ## Delete an index
 
@@ -166,7 +166,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 ```json
 {
-  "uid": 1,
+  "taskUid": 1,
   "indexUid": "movies",
   "status": "enqueued",
   "type": "indexDeletion",
@@ -174,4 +174,4 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-task).

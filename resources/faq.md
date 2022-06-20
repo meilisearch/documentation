@@ -55,7 +55,7 @@ All asynchronous operations return a summarized version of the [`task` object](/
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentAdditionOrUpdate",
@@ -63,7 +63,7 @@ All asynchronous operations return a summarized version of the [`task` object](/
 }
 ```
 
-This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
 
@@ -151,7 +151,7 @@ See more [information about the primary key](/learn/core_concepts/primary_key.md
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
-Your document upload probably failed. To understand why, please check the status of the document addition task using the `uid`. If the task failed, the response should contain an `error` object.
+Your document upload probably failed. To understand why, please check the status of the document addition task using the returned `taskUid`. If the task failed, the response should contain an `error` object.
 
 Here is an example of a failed task:
 
