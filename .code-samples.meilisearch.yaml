@@ -112,7 +112,7 @@ create_a_key_1: |-
     }'
 update_a_key_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -X PATCH 'http://localhost:7700/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
     --data-binary '{
@@ -121,7 +121,7 @@ update_a_key_1: |-
     }'
 delete_a_key_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -X DELETE 'http://localhost:7700/keys/6062abda-a5aa-4414-ac91-ecd7944c0f8d' \
     -H 'Authorization: Bearer MASTER_KEY'
 get_settings_1: |-
   curl \

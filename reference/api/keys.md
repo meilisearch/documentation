@@ -29,8 +29,10 @@ List all existing API keys. **Expired keys are included in the response**, but d
 {
   "results": [
     {
+      "name": null,
       "description": "Manage documents: Products/Reviews API key",
       "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+      "uid": "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
       "actions": [
         "documents.add",
         "documents.delete"
@@ -44,8 +46,10 @@ List all existing API keys. **Expired keys are included in the response**, but d
       "updatedAt": "2021-10-13T15:00:00Z"
     },
     {
+      "name": "Default Search API Key",
       "description": "Default Search API Key (Use it to search from the frontend code)",
       "key": "0a6e572506c52ab0bd6195921575d23092b7f0c284ab4ac86d12346c33057f99",
+      "uid": "74c9c733-3368-4738-bbe5-1d18a5fecb37",
       "actions": [
         "search"
       ],
@@ -57,8 +61,10 @@ List all existing API keys. **Expired keys are included in the response**, but d
       "updatedAt": "2021-08-11T10:00:00Z"
     },
     {
+      "name": "Default Admin API Key",
       "description": "Default Admin API Key (Use it for all other operations. Caution! Do not share it on the client side)",
       "key": "380689dd379232519a54d15935750cc7625620a2ea2fc06907cb40ba5b421b6f",
+      "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
       "actions": [
         "*"
       ],
@@ -286,17 +292,21 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 ```json
 {
+    "name": "Products/Reviews API key",
     "description": "Manage documents: Products/Reviews API key",
     "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+    "uid": "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
     "actions": [
-        "documents.add"
+      "documents.add",
+      "documents.delete"
     ],
     "indexes": [
-        "products"
+      "products",
+      "reviews"
     ],
     "expiresAt": "2021-12-31T23:59:59Z",
-    "createdAt": "2021-11-12T10:00:00Z",
-    "updatedAt": "2021-10-12T15:00:00Z"
+    "createdAt": "2021-10-12T00:00:00Z",
+    "updatedAt": "2021-10-13T15:00:00Z"
 }
 ```
 
