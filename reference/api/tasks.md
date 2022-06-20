@@ -23,22 +23,16 @@ Task results are paginated and can be filtered.
 
 ### Filtering tasks
 
-You can filter the task list by the value of the `status`, `type`, or `indexUid` fields. For example, this command would return only `enqueued` tasks:
+You can filter the task list by the value of the `status`, `type`, or `indexUid` fields. For example, the following command returns all tasks belonging to the index `movies`:
+
+<CodeSamples id="get_all_tasks_by_index_1" />
+
+Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. Use the comma character `,` to add multiple filter values for a single field.
+
+For example, the following command would return all `documentAdditionOrUpdate` tasks that either `succeeded` or `failed`:
 
 ```bash
-curl -X GET 'http://localhost:7700/tasks?status=enqueued'
-```
-
-Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. For example, the following command would return all `succeeded` tasks that also belong to the `movies` index:
-
-```bash
-curl -X GET 'http://localhost:7700/tasks?status=succeeded&indexUid=movies'
-```
-
-Use the comma character `,` to add multiple filter values for a single field. For example, to get all tasks whose `type` is either `settingsUpdate` or `documentAdditionOrUpdate`, you would run the following command:
-
-```bash
-curl -X GET 'http://localhost:7700/tasks?type=settingsUpdate,documentAdditionOrUpdate'
+curl -X GET 'http://localhost:7700/tasks?status=succeeded,failed&type=documentAdditionOrUpdate'
 ```
 
 [Read more about the possible values of these fields in our asynchronous operations guide.](/learn/advanced/asynchronous_operations.md)
