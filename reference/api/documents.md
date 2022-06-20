@@ -195,7 +195,7 @@ Delete all documents in the specified index. The index [`uid`](/learn/core_conce
     "uid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "clearAll",
+    "type": "documentDeletion",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
