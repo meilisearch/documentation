@@ -25,25 +25,81 @@ Task results are paginated and can be filtered.
 
 You can filter the task list by the value of the `status`, `type`, or `indexUid` fields. For example, this command would return only `enqueued` tasks:
 
-```
-curl -X GET 'https://localhost:7700/tasks?status=enqueued'
+```bash
+curl -X GET 'http://localhost:7700/tasks?status=enqueued'
 ```
 
 Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. For example, the following command would return all `finished` tasks that also belong to the `movies` index:
 
-```
-curl -X GET 'https://localhost:7700/tasks?status=finished&indexUid=movies'
+```bash
+curl -X GET 'http://localhost:7700/tasks?status=finished&indexUid=movies'
 ```
 
 Use the comma character `,` to add multiple filter values for a single field. For example, to get all tasks whose `type` is either `indexUpdate` or `documentAdditionOrUpdate`, you would run the following command:
 
-```
-curl -X GET 'https://localhost:7700/tasks?type=indexUpdate,documentAdditionOrUpdate'
+```bash
+curl -X GET 'http://localhost:7700/tasks?type=indexUpdate,documentAdditionOrUpdate'
 ```
 
 [Read more about the possible values of these fields in our asynchronous operations guide.](/learn/advanced/asynchronous_operations.md)
 
 ### Paginating tasks
+
+The task list is paginated, by default returning 20 tasks at a time. You can adjust the number of documents returned using the `limit` parameter, and control where the list begins using the `from` parameter.
+
+For each call to this endpoint, the response will include the `next` field: this value should be passed to `from` to view the next "page" of results. When the value of `next` is `null`, there are no more tasks to view.
+
+This command returns tasks two at a time starting from task `uid` `10`.
+
+```bash
+curl -X GET 'http://localhost:7700/tasks?limit=2&from=10
+```
+
+**Response:**
+
+```json
+{
+  "results": [
+    {
+      "uid": 10,
+      "indexUid": "elements",
+      "status": "succeeded",
+      "type": "indexCreation",
+      "details": {
+        "primaryKey": null
+      },
+      "duration": "PT0.006034S",
+      "enqueuedAt": "2022-06-20T13:41:42.446908Z",
+      "startedAt": "2022-06-20T13:41:42.447477Z",
+      "finishedAt": "2022-06-20T13:41:42.453511Z"
+    },
+    {
+      "uid": 9,
+      "indexUid": "particles",
+      "status": "succeeded",
+      "type": "indexCreation",
+      "details": {
+        "primaryKey": null
+      },
+      "duration": "PT0.007317S",
+      "enqueuedAt": "2022-06-20T13:41:31.841575Z",
+      "startedAt": "2022-06-20T13:41:31.842116Z",
+      "finishedAt": "2022-06-20T13:41:31.849433Z"
+    }
+  ],
+  "limit": 2,
+  "from": 10,
+  "next": 8
+}
+```
+
+To view the next page of results, you would repeat the same query, replacing the value of `from` with the value of `next`:
+
+```bash
+curl -X GET 'http://localhost:7700/tasks?limit=2&from=8
+```
+
+You have reached the final page when the returned value of `next` is `null`.
 
 ### Example
 
