@@ -97,7 +97,7 @@ get_one_key_1: |-
     -H 'Authorization: Bearer MASTER_KEY'
 get_all_keys_1: |-
   curl \
-    -X GET 'http://localhost:7700/keys' \
+    -X GET 'http://localhost:7700/keys?limit=3' \
     -H 'Authorization: Bearer MASTER_KEY'
 create_a_key_1: |-
   curl \
@@ -775,10 +775,10 @@ security_guide_search_key_1: |-
     -H 'Authorization: Bearer API_KEY'
 security_guide_update_key_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -X PATCH 'http://localhost:7700/keys/74c9c733-3368-4738-bbe5-1d18a5fecb37 \
     -H 'Authorization: Bearer MASTER_KEY' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "name": "Default Search API Key" }'
+    --data-binary '{ "description": "Default Search API Key" }'
 security_guide_create_key_1: |-
   curl \
     -X POST 'http://localhost:7700/keys' \
@@ -796,7 +796,7 @@ security_guide_list_keys_1: |-
     -H 'Authorization: Bearer MASTER_KEY'
 security_guide_delete_key_1: |-
   curl \
-    -X DELETE 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \
+    -X DELETE 'http://localhost:7700/keys/ac5cd97d-5a4b-4226-a868-2d0eb6d197ab' \
     -H 'Authorization: Bearer MASTER_KEY'
 primary_field_guide_create_index_primary_key: |-
   curl \

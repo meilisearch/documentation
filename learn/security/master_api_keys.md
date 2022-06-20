@@ -82,31 +82,29 @@ Exposing your master key can give malicious users complete control over your Mei
 
 Meilisearch gives you fine-grained control over which users can access which indexes, endpoints, and routes. When protecting your instance with a master key, you can ensure only authorized users can carry out sensitive tasks such as adding documents or altering index settings.
 
-You can access the [`/keys` route](/reference/api/keys.md) using the master key or an API key containing `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions. This route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
-
-::: note
-If you change your master key, the `key` field is re-generated.
-:::
+You can access the [`/keys` route](/reference/api/keys.md) using the master key or an API key with access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions. This `/keys` route allows you to [create](#creating-an-api-key), [update](#updating-an-api-key), [list](#listing-api-keys), and [delete](#deleting-an-api-key) API keys.
 
 Though the default API keys are usually enough to manage the security needs of most applications, this might not be the case when dealing with privacy-sensitive data. In these situations, the fine-grained control offered by the `/keys` endpoint allows you to clearly decide who can access what information and for how long.
 
 ### Updating an API key
 
-You can update the `name` and `description` of an API key at any time, even after it expires.
+You can only update the `name` and `description` of an API key, even after it expires.
 
-We can update the `Default Search API Key` to add a description:
+We can update the `Default Search API Key` to change the description:
 
 <CodeSamples id="security_guide_update_key_1" />
 
 ```json
 {
+  "name": "Default Search API Key",
   "description": "Default Search API Key",
   "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "uid":"74c9c733-3368-4738-bbe5-1d18a5fecb37",
   "actions": [
     "search"
   ],
   "indexes": [
-    "doctors"
+    "*"
   ],
   "expiresAt": null,
   "createdAt": "2022-01-01T10:00:00Z",
@@ -114,7 +112,7 @@ We can update the `Default Search API Key` to add a description:
 }
 ```
 
-To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key), which can only be accessed with the master key or an API key containing the `keys.update` action.
+To update an API key, you must use the [update API key endpoint](/reference/api/keys.md#update-a-key), which can only be accessed with the master key or an API key with the `keys.update` action.
 
 Meilisearch supports partial updates with the `PATCH` route. This means your payload only needs to contain the data you want to update—in this case, `description`.
 
@@ -122,7 +120,7 @@ Meilisearch supports partial updates with the `PATCH` route. This means your pay
 
 You can create API keys by using the [create key endpoint](/reference/api/keys.md#create-a-key). This endpoint is always protected and can only be accessed with the master key or an API key with the `keys.create` action.
 
-Since we have altered the permissions in our default search key, we need to create a new API key so authorized users can search through out `patient_medical_records` index:
+Let's create a new API key so authorized users can search through out `patient_medical_records` index:
 
 <CodeSamples id="security_guide_create_key_1" />
 
@@ -130,8 +128,10 @@ All [`/keys` endpoints](/reference/api/keys.md) are synchronous, so your key wil
 
 ```json
 {
+  "name": null,
   "description": "Search patient records key",
   "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "uid": "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab",
   "actions": [
     "search"
   ],
@@ -152,7 +152,7 @@ You can use the [list keys endpoint](/reference/api/keys.md) to obtain informati
 
 [`GET /keys`](/reference/api/keys.md#get-all-keys) returns a full list of all existing keys. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you either need the master key or an API key with the `keys.get` action to access this endpoint.
 
-[`GET /keys/{key}`](/reference/api/keys.md#get-one-key) returns information on a single key. `{key}` should be replaced with the full `key` value obtained during key creation.
+[`GET /keys/{key_or_uid}`](/reference/api/keys.md#get-one-key) returns information on a single key. `{key_or_uid}` should be replaced with the full `key` or `uid` value obtained during key creation.
 
 We can query our instance to confirm which active keys can search our `patient_medical_records` index:
 
@@ -162,21 +162,25 @@ We can query our instance to confirm which active keys can search our `patient_m
 {
   "results": [
     {
-      "description": "Default Search API Key (Use it to search from the frontend code)",
-      "key": "0a6e572506c52ab0bd6195921575d23092b7f0c284ab4ac86d12346c33057f99",
+      "name": "Default Search API Key",
+      "description": "Default Search API Key",
+      "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+      "uid":"74c9c733-3368-4738-bbe5-1d18a5fecb37",
       "actions": [
-          "search"
+        "search"
       ],
       "indexes": [
-          "doctors"
+        "*"
       ],
       "expiresAt": null,
-      "createdAt": "2021-08-11T10:00:00Z",
-      "updatedAt": "2021-08-11T10:00:00Z"
+      "createdAt": "2022-01-01T10:00:00Z",
+      "updatedAt": "2022-01-01T10:00:00Z"
     },
     {
+      "name": "Default Admin API Key",
       "description": "Default Admin API Key (Use it for all other operations. Caution! Do not share it on the client side)",
       "key": "380689dd379232519a54d15935750cc7625620a2ea2fc06907cb40ba5b421b6f",
+       "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
       "actions": [
           "*"
       ],
@@ -188,8 +192,10 @@ We can query our instance to confirm which active keys can search our `patient_m
       "updatedAt": "2021-08-11T10:00:00Z"
     },
     {
+      "name": null,
       "description": "Search patient records key",
       "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+      "uid": "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab",
       "actions": [
         "search"
       ],
@@ -200,7 +206,10 @@ We can query our instance to confirm which active keys can search our `patient_m
       "createdAt": "2022-01-01T10:00:00Z",
       "updatedAt": "2022-01-01T10:00:00Z"
     }
-  ]
+  ],
+  "offset":0,
+  "limit":20,
+  "total":3
 }
 ```
 
@@ -215,8 +224,6 @@ If we accidentally exposed our `Search patient records key`, we can delete it to
 ### Expired keys
 
 Once a key is past its `expiresAt` date, using it for API authorization will return an error. Expired keys will still be returned by the [list keys endpoint](/reference/api/keys.md#get-all-keys).
-
-If you must continue using an expired key, you may use the [update key endpoint](/reference/api/keys.md#update-a-key) to set a new `expiresAt` date and effectively reactivate it.
 
 ## Changing the master key
 
