@@ -20,7 +20,7 @@ Currently, these are Meilisearch's asynchronous operations:
 - Adding documents to an index
 - Updating documents in an index
 - Deleting documents from an index
-- [Creating a dump](#dumps)
+- Creating a dump
 
 ## Understanding tasks
 
@@ -35,7 +35,7 @@ The response from the [task API](/reference/api/tasks.md) will always include th
 | `uid`        | integer | The unique sequential identifier of the task                                                                     |
 | `indexUid`   | string  | The unique index identifier                                                                                      |
 | `status`     | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
-| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAddition`, `documentPartial`, `documentDeletion`, `settingsUpdate`, `clearAll`                                                                       |
+| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAddition`, `documentPartial`, `documentDeletion`, `settingsUpdate`, `clearAll`, `dumpCreation`                                                                       |
 | `details`    | object  | Detailed information on the task payload                                                               |
 | `error`      | object  | Error details and context. Only present when a task has the `failed` status                                                |
 | `duration`   | string  | The total elapsed time the task spent in the `processing` state, in ISO 8601 format     |
@@ -142,11 +142,7 @@ Had the task failed, the response would have included an `error` object:
 3. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
 4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-all-tasks)
 
-### Dumps
-
-While dumps and tasks are both asynchronous operations, they use separate queues and behave differently. For instance, creating a new dump will freeze the task queue until the dump has been generated.
-
-[You can read more about dumps in our dedicated guide.](/learn/advanced/dumps.md)
+Tasks are processed in the order they were enqueued, with one exception: `dumpCreation`. Dumps are prioritized over all other tasks in the queue. Their `uid` still represents when they were enqueued relative to other tasks.
 
 ## Terminate Meilisearch while a task is being processed
 
