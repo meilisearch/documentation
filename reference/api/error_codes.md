@@ -97,10 +97,6 @@ The Content-Type header does not match the request body payload format or the fo
 
 The Content-Type header was specified, but no request body was sent to the server or the request body is empty.  
 
-### `dump_already_processing`
-
-Dump creation is already in progress. A new dump creation process can be triggered after the current one has been completed.
-
 ### `dump_not_found`
 
 The requested dump could not be found.  
