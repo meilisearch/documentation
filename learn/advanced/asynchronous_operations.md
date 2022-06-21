@@ -10,9 +10,6 @@ For example, updating the `filterableAttributes` index setting will require as m
 
 Currently, these are Meilisearch's asynchronous operations:
 
-- Updating index settings
-- Adding documents to an index
-- Updating documents in an index
 - Creating an index
 - Updating an index
 - Deleting an index
@@ -24,9 +21,9 @@ Currently, these are Meilisearch's asynchronous operations:
 
 ## Understanding tasks
 
-Most of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need the task's unique identifier.
+At this time, all of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need the task's unique identifier.
 
-### Response
+### Task API response
 
 The response from the [task API](/reference/api/tasks.md) will always include the following fields in the stated order:
 
@@ -137,7 +134,7 @@ Had the task failed, the response would have included an `error` object:
 
 ## Task workflow
 
-1. When you make a task request, Meilisearch puts it in the task queue, sets the task's `status` to `enqueued` and returns a [`task` object](/learn/advanced/asynchronous_operations.md#response)
+1. When you make an [asynchronous request](#which-operations-are-async), Meilisearch puts it in the task queue, sets the task's `status` to `enqueued` and returns a [summarized `task` object](/learn/advanced/asynchronous_operations.md#summarized-task-objects)
 2. When your task reaches the front of the queue, Meilisearch begins working on it and changes the request `status` to `processing`
 3. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
 4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks)
@@ -156,8 +153,8 @@ Meilisearch's asynchronous tasks are atomic. This means that all operations conc
 
 What happens to an asynchronous operation when Meilisearch is terminated changes depending on the request's `status`:
 
-- `enqueued`: the task will remain enqueued and will be processed as usual once is restarted
-- `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting, will treat the task as `enqueued`
+- `enqueued`: the task will remain enqueued and will be processed as usual once Meilisearch has been restarted
+- `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting, the task will be treated as `enqueued`
 - `succeeded`: there will be no data loss since the request was successfully completed
 - `failed`: the task failed and nothing has been altered in the database
 
