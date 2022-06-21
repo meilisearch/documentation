@@ -10,20 +10,62 @@ The task `uid` is incremented **globally.**
 
 <RouteHighlighter method="GET" route="/tasks"/>
 
-List all tasks globally, regardless of index. The `task` objects are contained in the `results` array. Tasks are always returned in descending order of `uid`.
+List all tasks globally, regardless of index. The `task` objects are contained in the `results` array.
 
-Task results are paginated and can be filtered.
+Tasks are always returned in descending order of `uid`. This means that by default, **the most recently created `task` objects appear first**.
+
+Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering-tasks).
 
 #### Query parameters
 
-| Query Parameter | Description                          |           Default Value            |
-|-----------------|--------------------------------------|:----------------------------------:|
-| **limit**       | number of tasks to return            |                 20                 |
-| **from**        | `uid` of the first task returned     | `uid` of the last created task     |
+| Query Parameter | Description                                                          |         Default Value          |
+|-----------------|----------------------------------------------------------------------|:------------------------------:|
+| **limit**       | number of tasks to return                                            |               20               |
+| **from**        | `uid` of the first task returned                                     | `uid` of the last created task |
+| **status**      | [filter tasks](#filtering-tasks) by their `status`                   |          all statuses          |
+| **type**        | [filter tasks](#filtering-tasks) by their `type`                     |           all types            |
+| **indexUid**    | [filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive |          all indexes           |
+
+### Example
+
+<CodeSamples id="get_all_tasks_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+    "results": [
+        {
+            "uid": 1,
+            "indexUid": "movies_reviews",
+            "status": "enqueued",
+            "type": "documentAdditionOrUpdate",
+            "duration": null,
+            "enqueuedAt": "2021-08-12T10:00:00.000000Z",
+            "startedAt": null,
+            "finishedAt": null
+        },
+        {
+            "uid": 0,
+            "indexUid": "movies",
+            "status": "succeeded",
+            "type": "documentAdditionOrUpdate",
+            "details": { 
+                    "receivedDocuments": 100,
+                    "indexedDocuments": 100
+            },
+            "duration": "PT16S",
+            "enqueuedAt": "2021-08-11T09:25:53.000000Z",
+            "startedAt": "2021-08-11T10:03:00.000000Z",
+            "finishedAt": "2021-08-11T10:03:16.000000Z"
+        }
+    ]
+}
+```
 
 ### Filtering tasks
 
-You can filter the task list by the value of the `status`, `type`, or `indexUid` fields. For example, the following command returns all tasks belonging to the index `movies`:
+You can filter the task list by the value of the `status`, `type`, or `indexUid` fields. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
 
 <CodeSamples id="get_all_tasks_by_index_1" />
 
@@ -34,6 +76,8 @@ For example, the following command would return all `documentAdditionOrUpdate` t
 ```bash
 curl -X GET 'http://localhost:7700/tasks?status=succeeded,failed&type=documentAdditionOrUpdate'
 ```
+
+At this time, `OR` operations between different filters are not supported. For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
 
 [Read more about the possible values of these fields in our asynchronous operations guide.](/learn/advanced/asynchronous_operations.md)
 
@@ -94,47 +138,6 @@ curl -X GET 'http://localhost:7700/tasks?limit=2&from=8
 ```
 
 When the returned value of `next` is `null`, you have reached the final page of results.
-
-### Example
-
-<CodeSamples id="get_all_tasks_1" />
-
-#### Response: `200 Ok`
-
-```json
-{
-    "results": [
-        {
-            "uid": 1,
-            "indexUid": "movies_reviews",
-            "status": "enqueued",
-            "type": "documentAdditionOrUpdate",
-            "duration": null,
-            "enqueuedAt": "2021-08-12T10:00:00.000000Z",
-            "startedAt": null,
-            "finishedAt": null
-        },
-        {
-            "uid": 0,
-            "indexUid": "movies",
-            "status": "succeeded",
-            "type": "documentAdditionOrUpdate",
-            "details": { 
-                    "receivedDocuments": 100,
-                    "indexedDocuments": 100
-            },
-            "duration": "PT16S",
-            "enqueuedAt": "2021-08-11T09:25:53.000000Z",
-            "startedAt": "2021-08-11T10:03:00.000000Z",
-            "finishedAt": "2021-08-11T10:03:16.000000Z"
-        }
-    ]
-}
-```
-
-:::note
-Tasks are displayed in descending order by `uid`. This means that **the most recently created `task` objects appear first**.
-:::
 
 ## Get one task
 
