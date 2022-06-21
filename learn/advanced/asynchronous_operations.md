@@ -44,7 +44,7 @@ If a task fails due to an error, all error fields will be appended to the task r
 
 ### Summarized task objects
 
-All asynchronous operations return a summarized version of the [`task` object](#response). It contains the following fields in the stated order:
+All asynchronous operations return a summarized version of [the full `task` object](#task-api-response). It contains the following fields in the stated order:
 
 | Field        | Type    | Description                                                                           |
 |--------------|---------|---------------------------------------------------------------------------------------|

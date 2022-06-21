@@ -51,7 +51,7 @@ More datasets and setting configurations are available [in this repository](http
 
 ## I did a call to an API route and got an object as a response. What does it mean?
 
-All asynchronous operations return a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
+All asynchronous operations return a [summarized version of the `task` object](/learn/advanced/asynchronous_operations.md#summarized-task-objects).
 
 ```json
 {

@@ -168,3 +168,11 @@ The requested task does not exist. Please ensure that you are using the correct 
 ### `invalid_typo_tolerance_min_word_size_for_typos`
 
 The `minWordSizeForTypos` object is invalid. The value for both `oneTypo` and `twoTypos` should be between `0` and `255`, and `twoTypos` should be greater or equal to `oneTypo`.
+
+### `invalid_task_status`
+
+The requested task status is invalid. Please use one of [these four possible values](/learn/advanced/asynchronous_operations.md#task-status).
+
+### `invalid_task_type`
+
+The requested task type is invalid. Please use one of the values defined in our [asynchronous operations guide](/learn/advanced/asynchronous_operations.md#task-api-response).
