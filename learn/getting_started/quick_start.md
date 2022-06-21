@@ -104,7 +104,7 @@ Choose the release you want to use. You can find the full list [here](https://gi
 In the cloned repository, run the following command to access the most recent version of Meilisearch:
 
 ```bash
-git checkout v0.28.0
+git checkout stable
 ```
 
 Finally, update the rust toolchain, compile the project, and execute the binary.
