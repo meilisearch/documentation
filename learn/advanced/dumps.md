@@ -22,7 +22,7 @@ The above code triggers a dump creation process. It also returns a [summarized t
 }
 ```
 
-In the below code sample, replace `1` with the `taskUid` returned by the previous command.
+In the below command, replace `1` with the `taskUid` returned by the previous command.
 
 <CodeSamples id="get_task_1" />
 
