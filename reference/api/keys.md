@@ -8,7 +8,7 @@ The `/keys` route allows you to create, manage, and delete API keys. To use thes
 
 <RouteHighlighter method="GET" route="/keys"/>
 
-List all existing API keys. **Expired keys are included in the response**, but deleted keys are not.
+List all existing API keys. **Expired keys are included in the response**, but deleted keys are not. Results can be paginated by using the `offset` and `limit` query parameters.
 
 [See below for an explanation of returned fields.](#description)
 
