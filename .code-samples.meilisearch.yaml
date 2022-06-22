@@ -921,11 +921,6 @@ updating_guide_create_dump: |-
   curl \
     -X POST 'http://localhost:7700/dumps' \
     -H 'Authorization: Bearer API_KEY'
-updating_guide_get_dump_status: |-
-  # replace {dump_uid} with the uid returned by the previous command
-  curl \
-    -X GET 'http://localhost:7700/dumps/{dump_uid}/status' \
-    -H 'Authorization: Bearer API_KEY'
 updating_guide_get_settings_old: |-
   # the -o option saves the output as a local file
   curl \
