@@ -1,6 +1,8 @@
 # Dumps
 
-A dump is a compressed file containing an export of your Meilisearch instance. It contains all your indexes, documents, and settings, but in a raw unprocessed form. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to create an identical dataset. A dump can be imported when launching Meilisearch, but be advised that it may take some time to index all the documents within.
+A dump is a compressed file containing an export of your Meilisearch instance. It contains all your indexes, documents, and settings, but in a raw unprocessed form. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to create an identical dataset.
+
+A dump can be imported when launching Meilisearch, but be advised that it may take some time to index.
 
 ## Creating a dump
 
@@ -8,57 +10,52 @@ To create a dump of your dataset, you need to use the appropriate HTTP route: [`
 
 <CodeSamples id="post_dump_1" />
 
-The above code triggers a dump creation process. It also returns an object containing information about the dump:
+The above code triggers a dump creation process. It also returns a [summarized task object](/learn/advanced/asynchronous_operations.md#summarized-task-objects) that you can use to check the status of your dump.
 
-```
+```json
 {
-  "uid": "20200929-114144097",
-  "status": "in_progress",
-  "startedAt": "2020-09-29T11:41:44.392327Z"
+  "taskUid": 1,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "dumpCreation",
+  "enqueuedAt": "2022-06-21T16:10:29.217688Z"
 }
 ```
 
-You can use the returned `uid` (unique identifier indicating when the dump was triggered) to track its progress with the [get dump status route](/reference/api/dump.md#get-dump-status). The returned status could be:
+In the below code sample, replace `1` with the `taskUid` returned by the previous command.
 
-- `in_progress`: Dump creation is in progress
-- `failed`: An error occurred during dump process, and the task was aborted
-- `done`: Dump creation is finished and was successful
+<CodeSamples id="get_task_1" />
 
-<CodeSamples id="get_dump_status_1" />
+This command should return an object with detailed information about the dump operation:
 
-The above code sample returns an object with the following details about the dump:
-
-```
+```json
 {
-  "uid": "20200929-114144097",
-  "status": "done",
-  "startedAt": "2020-09-29T11:41:44.392327Z",
-  "finishedAt": "2020-09-29T11:41:50.792147Z"
+  "uid": 1,
+  "indexUid": null,
+  "status": "succeeded",
+  "type": "dumpCreation",
+  "details": {
+    "dumpUid": "20220621-161029217"
+  },
+  "duration": "PT0.025872S",
+  "enqueuedAt": "2022-06-21T16:10:29.217688Z",
+  "startedAt": "2022-06-21T16:10:29.218297Z",
+  "finishedAt": "2022-06-21T16:10:29.244169Z"
 }
 ```
 
-After dump creation is finished, the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary. You can customize [this using the `--dumps-dir` configuration option](/learn/configuration/instance_options.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
+After dump creation is finished—when `status` is `succeeded`—the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary. You can customize [this using the `--dumps-dir` configuration option](/learn/configuration/instance_options.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
 
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
-
-::: note
-Unlike [tasks](/learn/advanced/asynchronous_operations.md), dumps have no queue. **Meilisearch only processes one dump at a time.** If you attempt to create a dump while another dump is still processing, Meilisearch will throw an [error](/reference/api/error_codes.md#dump-already-processing).
-
-Meilisearch does not process tasks during dump creation, but you can still add new requests to the task queue. This is also true for [snapshots](/learn/advanced/snapshots.md#snapshots).
-:::
-
-::: warning
-If you restart Meilisearch after creating a dump, you will not be able to use the dumps endpoint to find out that dump's `status`. This has no effect on the dump file itself.
-:::
 
 ## Importing a dump
 
 When a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed until the importing process is complete.
 
-Dumps in v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/api/version.md#example) and proceed accordingly.
+Dumps from v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/api/version.md#example) and proceed accordingly.
 
 ::: note
-We do not recommend using dumps from a new Meilisearch version to import an older version.
+We do not recommend using dumps to migrate from a new Meilisearch version to an older one.
 
 For example, you can import a dump from Meilisearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
 :::
@@ -79,4 +76,4 @@ If you are using Meilisearch v0.20 or below, migration should be done in two ste
 
 ## Use cases
 
-Dumps are used to restore your database after [updating Meilisearch](/learn/advanced/updating.md) or to copy your database to other Meilisearch instances without having to worry about their respective versions.
+Dumps are used to restore your database after [updating Meilisearch](/learn/advanced/updating.md) or to copy your database to other Meilisearch instances without having to worry about their respective versions. For more on this subject, see a [comparison of snapshots and dumps](/learn/advanced/snapshots_vs_dumps.md).
