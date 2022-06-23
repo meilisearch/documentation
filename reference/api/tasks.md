@@ -67,15 +67,13 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
 
 You can filter the task list by the value of the `status`, `type`, or `indexUid` fields. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
 
-<CodeSamples id="get_all_tasks_by_index_1" />
+<CodeSamples id="get_all_tasks_filtering_1" />
 
 Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. Use the comma character `,` to add multiple filter values for a single field.
 
 For example, the following command would return all `documentAdditionOrUpdate` tasks that either `succeeded` or `failed`:
 
-```bash
-curl -X GET 'http://localhost:7700/tasks?status=succeeded,failed&type=documentAdditionOrUpdate'
-```
+<CodeSamples id="get_all_tasks_filtering_2" />
 
 At this time, `OR` operations between different filters are not supported. For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
 
@@ -89,9 +87,7 @@ For each call to this endpoint, the response will include the `next` field: this
 
 This command returns tasks two at a time starting from task `uid` `10`.
 
-```bash
-curl -X GET 'http://localhost:7700/tasks?limit=2&from=10
-```
+<CodeSamples id="get_all_tasks_paginating_1" />
 
 **Response:**
 
@@ -133,9 +129,7 @@ curl -X GET 'http://localhost:7700/tasks?limit=2&from=10
 
 To view the next page of results, you would repeat the same query, replacing the value of `from` with the value of `next`:
 
-```bash
-curl -X GET 'http://localhost:7700/tasks?limit=2&from=8
-```
+<CodeSamples id="get_all_tasks_paginating_2" />
 
 When the returned value of `next` is `null`, you have reached the final page of results.
 

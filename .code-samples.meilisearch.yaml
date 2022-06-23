@@ -85,9 +85,18 @@ get_all_tasks_1: |-
 get_task_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks/1'
-get_all_tasks_by_index_1: |-
+get_all_tasks_filtering_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?indexUid=movies'
+get_all_tasks_filtering_2: |-
+  curl \
+    -X GET 'http://localhost:7700/tasks?status=succeeded,failed&type=documentAdditionOrUpdate'
+get_all_tasks_paginating_1: |-
+  curl \
+    -X GET 'http://localhost:7700/tasks?limit=2&from=10
+get_all_tasks_paginating_2: |-
+  curl \
+    -X GET 'http://localhost:7700/tasks?limit=2&from=8
 get_one_key_1: |-
   curl \
     -X GET 'http://localhost:7700/keys/d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4' \

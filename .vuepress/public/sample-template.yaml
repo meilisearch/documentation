@@ -18,7 +18,10 @@ delete_documents_1: |-
 search_post_1: |-
 get_all_tasks_1: |-
 get_task_1: |-
-get_all_tasks_by_index_1: |-
+get_all_tasks_filtering_1: |-
+get_all_tasks_filtering_2: |-
+get_all_tasks_paginating_1: |-
+get_all_tasks_paginating_2: |-
 get_one_key_1: |-
 get_all_keys_1: |-
 create_a_key_1: |-
