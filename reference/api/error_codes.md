@@ -183,4 +183,4 @@ The given `uid` is invalid. The `uid` must follow the [uuid v4](https://www.soha
 
 ### `invalid_api_key_name`
 
-The give `name` is invalid. It should either be a string or `null`.
+The given `name` is invalid. It should either be a string or `null`.
