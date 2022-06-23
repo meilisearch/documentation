@@ -8,8 +8,6 @@ This allows Meilisearch to function in several different languages with zero set
 
 ## Deep dive: The Meilisearch tokenizer
 
-![Chart illustrating the architecture of Meilisearch's tokenizer](https://user-images.githubusercontent.com/6482087/102896344-8560d200-4466-11eb-8cfe-b4ae8741093b.jpg)
-
 When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called an **analyzer**. The analyzer is responsible for determining the primary language of each field based on the scripts (e.g., Latin alphabet, Chinese hanzi, etc.) that are present there. Then, it applies the corresponding **pipeline** to each field.
 
 We can break down the tokenization process like so:
@@ -24,4 +22,4 @@ Pipelines include many language-specific operations. Currently, we have four pip
 3. A specialized Japanese pipeline using [Lindera](https://github.com/lindera-morphology/lindera)
 4. A specialized Hebrew pipeline based off the default Meilisearch pipeline. Uses [Niqqud](https://docs.rs/niqqud/latest/niqqud/) for normalization
 
-For more details, check out the [feature specification](https://github.com/meilisearch/specifications/blob/master/text/0001-script-based-tokenizer.md).
+For more details, check out the [tokenizer contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md).
