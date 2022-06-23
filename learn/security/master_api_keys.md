@@ -90,7 +90,7 @@ Though the default API keys are usually enough to manage the security needs of m
 
 You can only update the `name` and `description` of an API key, even after it expires.
 
-We can update the `Default Search API Key` to change the description:
+For example, we can update the `Default Search API Key` and change its description:
 
 <CodeSamples id="security_guide_update_key_1" />
 
@@ -163,7 +163,7 @@ We can query our instance to confirm which active keys can search our `patient_m
   "results": [
     {
       "name": "Default Search API Key",
-      "description": "Default Search API Key",
+      "description": "Use it to search from the frontend",
       "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
       "uid":"74c9c733-3368-4738-bbe5-1d18a5fecb37",
       "actions": [
@@ -178,7 +178,7 @@ We can query our instance to confirm which active keys can search our `patient_m
     },
     {
       "name": "Default Admin API Key",
-      "description": "Default Admin API Key (Use it for all other operations. Caution! Do not share it on the client side)",
+      "description": "Use it for all other than search operations. Caution! Do not expose it on a public frontend", 
       "key": "380689dd379232519a54d15935750cc7625620a2ea2fc06907cb40ba5b421b6f",
       "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
       "actions": [
