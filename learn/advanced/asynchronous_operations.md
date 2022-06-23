@@ -33,7 +33,7 @@ The response from the [task API](/reference/api/tasks.md) will always include th
 | Field        | Type    | Description                                                                                                      |
 |--------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | `uid`        | integer | The unique sequential identifier of the task                                                                     |
-| `indexUid`   | string  | The unique index identifier                                                                                      |
+| `indexUid`   | string  | The unique index identifier (always `null` for dumps)                                                                                      |
 | `status`     | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
 | `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAddition`, `documentPartial`, `documentDeletion`, `settingsUpdate`, `clearAll`, `dumpCreation`                                                                       |
 | `details`    | object  | Detailed information on the task payload                                                               |
@@ -52,7 +52,7 @@ All asynchronous operations return a summarized version of the [`task` object](#
 | Field      | Type    | Description                              |
 |------------|---------|---------------------------------         |
 | `uid`        | integer | Unique sequential identifier             |
-| `indexUid`   | string  | Unique index identifier                  |
+| `indexUid`   | string  | Unique index identifier (always `null` for dumps)                  |
 | `status`     | string  | Status of the task. Value is `enqueued`  |
 | `type`       | string  | Type of task                             |
 | `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued`                                                        |
@@ -142,7 +142,7 @@ Had the task failed, the response would have included an `error` object:
 3. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
 4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-all-tasks)
 
-Tasks are processed in the order they were enqueued, with one exception: `dumpCreation`. Dumps are prioritized over all other tasks in the queue. Their `uid` still represents when they were enqueued relative to other tasks.
+Tasks are processed in the order they were enqueued, with one exception: `dumpCreation`. Dumps are prioritized over all other tasks in the queue. Their `uid` still represents when they were enqueued relative to other tasks, and their `indexUid` is `null`.
 
 ## Terminate Meilisearch while a task is being processed
 
