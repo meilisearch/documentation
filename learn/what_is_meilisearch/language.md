@@ -25,10 +25,10 @@ If you'd like to help by developing a tokenizer pipeline yourself: first of all,
 
 Under the hood, Meilisearch relies on tokenizers that identify the most important parts of each document in a given dataset. We currently use four tokenization pipelines:
 
-- A default one designed for languages that separate words with spaces
-- One specifically tailored for Chinese
-- One specifically tailored for Japanese
-- One specifically tailored for Hebrew
+- A default pipeline designed for languages that separate words with spaces
+- A pipeline specifically tailored for Chinese
+- A pipeline specifically tailored for Japanese
+- A pipeline specifically tailored for Hebrew
 
 ### My language does not use whitespace to separate words. Can I still use Meilisearch?
 
