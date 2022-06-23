@@ -1,6 +1,6 @@
 # Keys
 
-The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must either [set the master key](/learn/configuration/instance_options.md#master-key) and supply it in the header of the request, or use API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
+The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must first [set the master key](/learn/configuration/instance_options.md#master-key).Once a master key is set, you caan access these endpoints by and supplying it in the header of the request, or use API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
 
 [Learn more about managing keys and their rights](/learn/security/master_api_keys.md).
 
