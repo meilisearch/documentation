@@ -19,7 +19,7 @@ create_an_index_1: |-
     }'
 update_an_index_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies' \
+    -X PATCH 'http://localhost:7700/indexes/movies' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "primaryKey": "id" }'
 delete_an_index_1: |-
@@ -832,7 +832,7 @@ primary_field_guide_add_document_primary_key: |-
     ]'
 primary_field_guide_update_document_primary_key: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books' \
+    -X PATCH 'http://localhost:7700/indexes/books' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "primaryKey": "title" }'
 tenant_token_guide_search_no_sdk_1: |-
