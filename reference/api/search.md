@@ -33,7 +33,7 @@ This is the preferred route to perform search when an API key is required, as it
 | **[offset](#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filter](#filter)**                                 | Filter queries by an attribute's value             | `null`        |
-| **[facets](#facets)**        | Display the count of matches per facet             | `null`        |
+| **[facets](#facets)**                                 | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
@@ -58,15 +58,15 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| field                | Description                    |    type    |
-| -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `array of objects` |
-| **offset**           | Number of documents skipped    |  `number`  |
-| **limit**            | Number of documents to take    |  `number`  |
-| **estimatedTotalHits**           | Total number of matches        |  `number`  |
-| **facets** | **[Distribution of the given facets](#facets)** | `object`
-| **processingTimeMs** | Processing time of the query   |  `number`  |
-| **query**            | Query originating the response |  `string`  |
+| field                   | Description                                     |    type            |
+| ------------------------| ----------------------------------------------- | :----------------: |
+| **hits**                | Results of the query                            | `array of objects` |
+| **offset**              | Number of documents skipped                     |  `number`          |
+| **limit**               | Number of documents to take                     |  `number`          |
+| **estimatedTotalHits**  | Total number of matches                         |  `number`          |
+| **facets**              | **[Distribution of the given facets](#facets)** | `object`           |
+| **processingTimeMs**    | Processing time of the query                    |  `number`          |
+| **query**               | Query originating the response                  |  `string`          |
 
 ### Example
 
@@ -144,15 +144,15 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| field                | Description                    |    type    |
-| -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `array of objects` |
-| **offset**           | Number of documents skipped    |  `number`  |
-| **limit**            | Number of documents to take    |  `number`  |
-| **estimatedTotalHits**           | Total number of matches        |  `number`  |
-| **facets**           | **[Distribution of the given facets](#facets)** | `object`
-| **processingTimeMs** | Processing time of the query   |  `number`  |
-| **query**            | Query originating the response |  `string`  |
+| field                   | Description                                     |    type            |
+| ----------------------- | ----------------------------------------------- | :----------------: |
+| **hits**                | Results of the query                            | `array of objects` |
+| **offset**              | Number of documents skipped                     |  `number`          |
+| **limit**               | Number of documents to take                     |  `number`          |
+| **estimatedTotalHits**  | Total number of matches                         |  `number`          |
+| **facets**              | **[Distribution of the given facets](#facets)** | `object`           |
+| **processingTimeMs**    | Processing time of the query                    |  `number`          |
+| **query**               | Query originating the response                  |  `string`          |
 
 ### Example
 
