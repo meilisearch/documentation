@@ -28,7 +28,7 @@ Dump tasks take priority over all other tasks in the queue. This means that a ne
 
 ```json
 {
-  "taskUid": 0,
+  "taskUid": 1,
   "indexUid": null,
   "status": "enqueued",
   "type": "dumpCreation",
