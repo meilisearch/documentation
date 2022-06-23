@@ -2,10 +2,10 @@
 
 Meilisearch is multilingual, featuring optimized support for:
 
-- **Any language that uses whitespace to separate words**
-- **Chinese**
-- **Japanese**
-- **Hebrew**
+- Any language that uses whitespace to separate words
+- Chinese
+- Japanese
+- Hebrew
 
 We aim to provide global language support, and your feedback helps us move closer to that goal. If you notice inconsistencies in your search results or the way your documents are processed, please [open an issue in our tokenizer repo](https://github.com/meilisearch/charabia/issues/new).
 
