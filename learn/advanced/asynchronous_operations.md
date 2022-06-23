@@ -21,7 +21,7 @@ Currently, these are Meilisearch's asynchronous operations:
 
 ## Understanding tasks
 
-At this time, all of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need the task's unique identifier.
+All of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need the task's unique identifier.
 
 ### Task API response
 
