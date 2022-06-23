@@ -142,7 +142,7 @@ Had the task failed, the response would have included an `error` object:
 3. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
 4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-all-tasks)
 
-Tasks are processed in the order they were enqueued, with one exception: `dumpCreation`. Dumps are prioritized over all other tasks in the queue. Their `uid` still represents when they were enqueued relative to other tasks, and their `indexUid` is `null`.
+Tasks are processed in the order they were enqueued, with one exception: `dumpCreation`. Dumps are prioritized over all other tasks in the queue. Their task `uid` still reflects when they were enqueued relative to other tasks.
 
 ## Terminate Meilisearch while a task is being processed
 
