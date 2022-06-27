@@ -958,3 +958,16 @@ getting_started_typo_tolerance: |-
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
+get_pagination_settings_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/pagination'
+update_pagination_settings_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/settings/pagination' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxTotalHits": 100
+    }'
+reset_typo_tolerance_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/pagination'
