@@ -968,6 +968,6 @@ update_pagination_settings_1: |-
     --data-binary '{
       "maxTotalHits": 100
     }'
-reset_typo_tolerance_1: |-
+reset_pagination_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/pagination'
