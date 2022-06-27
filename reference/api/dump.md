@@ -18,7 +18,9 @@ Dump imports must be performed when launching a Meilisearch instance [using the 
 
 Triggers a dump creation task. Once the process is complete, a dump is created in the [dumps directory](/learn/configuration/instance_options.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
 
-Dump tasks take priority over all other tasks in the queue. This means that a newly created dump task will be processed as soon as the current task is finished. [Learn more about asynchronous operations](/learn/advanced/asynchronous_operations.md).
+Dump tasks take priority over all other tasks in the queue. This means that a newly created dump task will be processed as soon as the current task is finished.
+
+[Learn more about asynchronous operations](/learn/advanced/asynchronous_operations.md).
 
 ### Example
 
