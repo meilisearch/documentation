@@ -6,7 +6,6 @@ This route allows you to configure the pagination settings for an index.
 
 Pagination settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-
 To learn more about paginating search results with Meilisearch, refer to our [dedicated guide](/learn/advanced/pagination.md).
 
 ::: warning
@@ -47,9 +46,12 @@ Partially update the pagination settings for an index. The index [`uid`](/learn/
 
 #### `maxTotalHits`
 
-An integer indicating the maximum number of search results Meilisearch can return.
+**Type:** integer
+**Default value:** `1000`
 
-`maxTotalHits` takes priority over search parameters such as `limit` and `offset`. For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
+An integer indicating the maximum number of search results Meilisearch can return. `maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
+
+For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
 #### Example
 
