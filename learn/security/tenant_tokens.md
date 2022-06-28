@@ -58,6 +58,7 @@ Using a third-party library for tenant token generation is fairly similar to cre
 const jwt = require('jsonwebtoken');
 
 const apiKey = 'my_api_key';
+const apiKeyUid = 'ac5cd97d-5a4b-4226-a868-2d0eb6d197ab';
 const currentUserID = 'a_user_id';
 
 const tokenPayload = {
@@ -66,7 +67,7 @@ const tokenPayload = {
       'filter': `user_id = ${currentUserID}`
      }
   },
-  apiKeyUid: apiKey.substring(0, 8),
+  apiKeyUid: apiKeyUid,
   exp: parseInt(Date.now() / 1000) + 20 * 60 // 20 minutes
 };
 
