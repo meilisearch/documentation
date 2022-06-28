@@ -106,7 +106,7 @@ We recommend caution when setting high values for `limit` as it can negatively i
 
 #### Accept the unreliable number
 
-You use `estimatedTotalHits` to calculate the number of search result pages. This means your page count is likely to change until Meilisearch retrives the last search result.
+In this pagination method, use `estimatedTotalHits` to calculate the number of search result pages. This means your number of results and page count are likely to change until Meilisearch retrieves the last search result.
 
 For example, a query's `estimatedTotalHits` might be `100` when you fetch the first page of search results. If you are showing 20 results per page, this means your interface will display a page selector with 5 pages. When you fetch the fifth and last page according to Meilisearch's current estimate, however, `estimatedTotalHits` might change to `300`. Your page list, previously displaying 5 pages, must now show 10 total pages.
 
