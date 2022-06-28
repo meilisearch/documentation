@@ -117,7 +117,7 @@ The token payload contains most of the relevant token data. It must be an object
 ```json
 {
   "exp": 1646756934,
-  "apiKeyUid": "12345678",
+  "apiKeyUid": "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab",
   "searchRules": {
     "patient_medical_records": {
       "filter": "user_id = 1"
@@ -188,7 +188,7 @@ The previous rules can be combined in one tenant token:
 
 ```json
 {
-  "apiKeyUid": "rkDxFUHd",
+  "apiKeyUid": "ac5cd97d-5a4b-4226-a868-2d0eb6d197ab",
   "exp": 1641835850,
   "searchRules": {
     "*": {

@@ -8,7 +8,7 @@ The `/keys` route allows you to create, manage, and delete API keys. To use thes
 
 <RouteHighlighter method="GET" route="/keys"/>
 
-List all existing API keys. **Expired keys are included in the response**, but deleted keys are not. Results can be paginated by using the `offset` and `limit` query parameters.
+List the most recently created 20 keys. **Expired keys are included in the response**, but deleted keys are not. Results can be paginated by using the `offset` and `limit` query parameters.
 
 [See below for an explanation of returned fields.](#description)
 
@@ -16,8 +16,8 @@ List all existing API keys. **Expired keys are included in the response**, but d
 
 | Query Parameter          | Description               | Default Value |
 | ------------------------ | --------------------------| ------------- |
-| **offset**               | number of keys to skip    |       0       |
-| **limit**                | number of keys to return  |      20       |
+| **offset**               | Number of keys to skip    |       0       |
+| **limit**                | Number of keys to return  |      20       |
 
 ### Example
 
@@ -275,9 +275,9 @@ Date and time when the key will expire, represented in RFC 3339 format. `null` i
 
 ## Update a key
 
-<RouteHighlighter method="PATCH" route="/keys/{uid}"/>
+<RouteHighlighter method="PATCH" route="/keys/{key_or_uid}"/>
 
-Update the name and description of an API key. A valid API [uid](/reference/api/keys.md#key) is required.
+Update the name and description of an API key. A valid API [key](/reference/api/keys.md#key) or [uid](/reference/api/keys.md#uid) is required.
 
 To learn more about the variables sent in the body of the request, see the [create key](#body) endpoint.
 
@@ -311,9 +311,9 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 ## Delete a key
 
-<RouteHighlighter method="DELETE" route="/keys/{uid}"/>
+<RouteHighlighter method="DELETE" route="/keys/{key_or_uid}"/>
 
-Delete the specified API key. A valid API [uid](/reference/api/keys.md#uid) is required.
+Delete the specified API key. A valid API [key](/reference/api/keys.md#key) or [uid](/reference/api/keys.md#uid) is required.
 
 ### Example
 
