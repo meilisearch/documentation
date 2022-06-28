@@ -966,7 +966,7 @@ get_pagination_settings_1: |-
     -X GET 'http://localhost:7700/indexes/books/settings/pagination'
 update_pagination_settings_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/settings/pagination' \
+    -X PATCH 'http://localhost:7700/indexes/books/settings/pagination' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxTotalHits": 100
