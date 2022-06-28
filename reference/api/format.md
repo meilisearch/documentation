@@ -1,7 +1,3 @@
----
-sidebarDepth: 2
----
-
 # Random API
 
 Explain what  the random API does.
@@ -24,14 +20,14 @@ Explain what  the random API does.
 
 ## The random object (complex)
 
-#### `Complex1`
+### `Complex1`
 
 **Type**: String
 **Description**:
 
 ***
 
-#### `Complex2`
+### `Complex2`
 
 **Type**: Object
 **Description**:
@@ -44,14 +40,14 @@ Explain what  the random API does.
 
 ***
 
-#### `Complex3`
+### `Complex3`
 
 **Type**: Integer
 **Description**:
 
 ***
 
-#### `Complex4`
+### `Complex4`
 
 **Type**: Object
 **Description**:
@@ -124,7 +120,7 @@ curl \
 
 Returns a [random object](#the-random-object-simple).
 
-#### Example
+### Example
 
 ```bash
 curl \
@@ -366,11 +362,11 @@ Returns a [random object](#the-random-object-complex).
 
 Deletes all [random objects](#the-random-object-simple).
 
-#### Example
+### Example
 
 Code sample
 
-##### Response: `204 No Content`
+#### Response: `204 No Content`
 
 ## Delete one
 
@@ -385,4 +381,4 @@ curl \
   -X DELETE 'http://localhost:7700/random/123'
 ```
 
-### Response: `204 No Content`
+#### Response: `204 No Content`
