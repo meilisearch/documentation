@@ -1,3 +1,7 @@
+---
+sidebarDepth: 2
+---
+
 # Random API
 
 Explain what  the random API does.
@@ -20,14 +24,14 @@ Explain what  the random API does.
 
 ## The random object (complex)
 
-### `Complex1`
+#### `Complex1`
 
 **Type**: String
 **Description**:
 
 ***
 
-### `Complex2`
+#### `Complex2`
 
 **Type**: Object
 **Description**:
@@ -40,14 +44,14 @@ Explain what  the random API does.
 
 ***
 
-### `Complex3`
+#### `Complex3`
 
 **Type**: Integer
 **Description**:
 
 ***
 
-### `Complex4`
+#### `Complex4`
 
 **Type**: Object
 **Description**:
@@ -83,7 +87,14 @@ Explain what  the random API does.
 
 Returns a list of [random objects](#the-random-object-simple).
 
-### Response: `200 Ok`
+#### Example
+
+```bash
+curl \
+  -X GET 'http://localhost:7700/random'
+```
+
+#### Response: `200 Ok`
 
 ```json
 {
@@ -103,13 +114,25 @@ Returns a list of [random objects](#the-random-object-simple).
 }
 ```
 
+### Filtering random
+
+### Paginating random
+
 ## List one
 
 <RouteHighlighter method="GET" route="/random/:random"/>
 
 Returns a [random object](#the-random-object-simple).
 
-### Response: `200 Ok`
+#### Example
+
+```bash
+curl \
+  -X GET 'http://localhost:7700/random/123'
+
+```
+
+#### Response: `200 Ok`
 
 ```json
 {
@@ -125,20 +148,31 @@ Returns a [random object](#the-random-object-simple).
 
 Description.
 
+#### Example
+
+```bash
+  curl \
+  -X POST 'http://localhost:7700/random' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "varB": 12
+  }'
+```
+
 ### Request body (simple)
 
-|Name|Type|Description|Default value|
-|---|-----|-----------|-------------|
-|`varA` |string | |`null`|
-|`varB` *|integer||None|
+|Name|Type|Description|
+|---|-----|-----------|
+|`varA` |string | |
+|`varB` *|integer||
 
-### Example
+#### Example
 
 Code sample
 
 Returns a [random object](#the-random-object-simple).
 
-#### Response: `201 Created`
+##### Response: `201 Created`
 
 ```json
 {
@@ -232,9 +266,16 @@ Description.
 |`varA` |string | |`null`|
 |`varB` *|integer||None|
 
-### Example
+#### Example
 
-Code sample
+```bash
+  curl \
+  -X POST 'http://localhost:7700/random' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "varB": 12
+  }'
+```
 
 Returns a [random object](#the-random-object-simple).
 
@@ -294,7 +335,7 @@ Returns a [random object](#the-random-object-simple).
 
 ***
 
-### Example
+#### Example
 
 Code sample
 
@@ -325,11 +366,11 @@ Returns a [random object](#the-random-object-complex).
 
 Deletes all [random objects](#the-random-object-simple).
 
-### Example
+#### Example
 
 Code sample
 
-#### Response: `204 No Content`
+##### Response: `204 No Content`
 
 ## Delete one
 
@@ -339,6 +380,9 @@ Deletes the specified [random object](#the-random-object-simple).
 
 ### Example
 
-Code sample
+```bash
+curl \
+  -X DELETE 'http://localhost:7700/random/123'
+```
 
-#### Response: `204 No Content`
+### Response: `204 No Content`
