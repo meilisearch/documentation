@@ -47,7 +47,7 @@ List all existing API keys. **Expired keys are included in the response**, but d
     },
     {
       "name": "Default Search API Key",
-      "description": "Default Search API Key (Use it to search from the frontend code)",
+      "description": "Use it to search from the frontend code",
       "key": "0a6e572506c52ab0bd6195921575d23092b7f0c284ab4ac86d12346c33057f99",
       "uid": "74c9c733-3368-4738-bbe5-1d18a5fecb37",
       "actions": [
@@ -62,7 +62,7 @@ List all existing API keys. **Expired keys are included in the response**, but d
     },
     {
       "name": "Default Admin API Key",
-      "description": "Default Admin API Key (Use it for all other operations. Caution! Do not share it on the client side)",
+      "description": "Use it for anything that is not a search operation. Caution! Do not expose it on a public frontend",
       "key": "380689dd379232519a54d15935750cc7625620a2ea2fc06907cb40ba5b421b6f",
       "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
       "actions": [
