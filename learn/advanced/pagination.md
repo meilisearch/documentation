@@ -28,7 +28,7 @@ Though this approach offers less precision than a full-blown page selector, it d
 
 Previous and next buttons can be implemented using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters.
 
-Paginating requires providing an `offset` that is equal to your `limit` times the page number times: `offset = limit * page number`. We recommend starting page count from 0 instead of 1 when calculating offset values.
+Paginating requires providing an `offset` that is equal to your `limit` times the page number: `offset = limit * page number`. We recommend starting page count from 0 instead of 1 when calculating offset values.
 
 For example, if you set `limit` to `20` and want the first page of search results, your `offset` must be 0: `offset = 0 * 20`.
 
