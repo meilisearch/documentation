@@ -4,7 +4,7 @@ _Child route of the [settings route](/reference/api/settings.md)._
 
 This route allows you to configure the faceting settings for an index.
 
-faceting settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
+Faceting settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
 To learn more about filtering and faceting, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
@@ -51,7 +51,7 @@ Partially update the faceting settings for an index. The index [`uid`](/learn/co
 
 Configure the maximum number of facet values returned for each facet. Values are alphabetically sorted.
 
-For example, if a query's search results contain a total of three values for a `colors` facet—`blue`, `green`, and `red`—setting `maxValuesPerFacet` to `2` causes Meilisearch to return only the `blue` and `green` in the response body's `facetDistribution` object.
+For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
 #### Example
 
