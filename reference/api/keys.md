@@ -160,8 +160,10 @@ Get information on the specified key. Attempting to use this endpoint with a non
 
 ```json
 {
+  "name": null,
   "description": "Add documents: Products API key",
   "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "uid": "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
   "actions": [
     "documents.add"
   ],
@@ -259,17 +261,19 @@ Date and time when the key will expire, represented in RFC 3339 format. `null` i
 
 ```json
 {
-    "description": "Add documents: Products API key",
-    "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
-    "actions": [
-      "documents.add"
-    ],
-    "indexes": [
-      "products"
-    ],
-    "expiresAt": "2021-11-13T00:00:00Z",
-    "createdAt": "2021-11-12T10:00:00Z",
-    "updatedAt": "2021-11-12T10:00:00Z"
+  "name": null,
+  "description": "Manage documents: Products/Reviews API key",
+  "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "uid": "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
+  "actions": [
+    "documents.add"
+  ],
+  "indexes": [
+    "products"
+  ],
+  "expiresAt": "2021-11-13T00:00:00Z",
+  "createdAt": "2021-11-12T10:00:00Z",
+  "updatedAt": "2021-11-12T10:00:00Z"
 }
 ```
 
@@ -291,21 +295,21 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 ```json
 {
-    "name": "Products/Reviews API key",
-    "description": "Manage documents: Products/Reviews API key",
-    "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
-    "uid": "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
-    "actions": [
-      "documents.add",
-      "documents.delete"
-    ],
-    "indexes": [
-      "products",
-      "reviews"
-    ],
-    "expiresAt": "2021-12-31T23:59:59Z",
-    "createdAt": "2021-10-12T00:00:00Z",
-    "updatedAt": "2021-10-13T15:00:00Z"
+  "name": "Products/Reviews API key",
+  "description": "Manage documents: Products/Reviews API key",
+  "key": "d0552b41536279a0ad88bd595327b96f01176a60c2243e906c52ac02375f9bc4",
+  "uid": "6062abda-a5aa-4414-ac91-ecd7944c0f8d",
+  "actions": [
+    "documents.add",
+    "documents.delete"
+  ],
+  "indexes": [
+    "products",
+    "reviews"
+  ],
+  "expiresAt": "2021-12-31T23:59:59Z",
+  "createdAt": "2021-10-12T00:00:00Z",
+  "updatedAt": "2021-10-13T15:00:00Z"
 }
 ```
 
