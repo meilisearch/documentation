@@ -96,7 +96,6 @@ faceted_search_facets_distribution_1: |-
 faceted_search_walkthrough_filter_1: |-
 add_movies_json_1: |-
 post_dump_1: |-
-get_dump_status_1: |-
 phrase_search_1: |-
 sorting_guide_update_sortable_attributes_1: |-
 sorting_guide_update_ranking_rules_1: |-
@@ -142,7 +141,6 @@ updating_guide_get_displayed_attributes_old: |-
 updating_guide_reset_displayed_attributes_old: |-
 updating_guide_reset_displayed_attributes_new: |-
 updating_guide_create_dump: |-
-updating_guide_get_dump_status: |-
 updating_guide_get_settings_old: |-
 updating_guide_retrieve_documents_old: |-
 updating_guide_update_settings_old: |-
