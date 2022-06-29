@@ -152,8 +152,8 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `formatting.highlight_post_tag`                    | `true` if `highlightPostTag` is specified, otherwise `false`                                | false
 | `formatting.crop_length`                           | `true` if `cropLength` is specified, otherwise `false`                                      | false
 | `formatting.crop_marker`                           | `true` if `cropMarker` is specified, otherwise `false`                                      | false
-| `formatting.show_matches_position`                 | `true` if `showMatchesPosition` is used in this batch, otherwise `false`                   | false
-| `facets`                                           | `true` if `facets` is used in this batch, otherwise `false`                                | false
+| `formatting.show_matches_position`                 | `true` if `showMatchesPosition` is used in this batch, otherwise `false`                    | false
+| `facets`                                           | `true` if `facets` is used in this batch, otherwise `false`                                 | false
 | `primary_key`                                      | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
 | `payload_type`                                     | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                                   | `true` if a document addition or update request triggered index creation, otherwise `false` | true
