@@ -83,7 +83,7 @@ Reset an index's faceting settings to their default value. The index [`uid`](/le
 
 ```json
 {
-  "uid": 1,
+  "taskUid": 1,
   "indexUid": "books",
   "status": "enqueued",
   "type": "settingsUpdate",

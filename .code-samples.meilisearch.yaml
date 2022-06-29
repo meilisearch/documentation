@@ -966,7 +966,7 @@ get_faceting_settings_1: |-
     -X GET 'http://localhost:7700/indexes/books/settings/faceting'
 update_faceting_settings_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/books/settings/faceting' \
+    -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "maxValuesPerFacet": 2
