@@ -188,17 +188,17 @@ The previous command added documents from `movies.json` to a new index called `m
 
 ```json
 {
-    "uid": 0,
+    "taskUid": 0,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
 Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
 
-Use the returned `uid` to [check the status](/reference/api/tasks.md) of your documents:
+Use the returned `taskUid` to [check the status](/reference/api/tasks.md) of your documents:
 
 <CodeSamples id="getting_started_check_task_status" />
 
@@ -209,7 +209,7 @@ If the document addition is successful, the response should look like this:
    "uid": 0,
    "indexUid": "movies",
    "status": "succeeded",
-   "type": "documentAddition",
+   "type": "documentAdditionOrUpdate",
    "details":{
       "receivedDocuments": 19547,
       "indexedDocuments": 19547

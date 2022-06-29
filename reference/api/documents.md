@@ -113,15 +113,15 @@ The body is composed of a **JSON array** of documents.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Add or update documents
 
@@ -168,15 +168,15 @@ The documents are matched because they have the same [primary key](/learn/core_c
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Delete all documents
 
@@ -192,15 +192,15 @@ Delete all documents in the specified index. The index [`uid`](/learn/core_conce
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "clearAll",
+    "type": "documentDeletion",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Delete one document
 
@@ -216,7 +216,7 @@ Delete one document based on its unique id. Both the index [`uid`](/learn/core_c
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentDeletion",
@@ -224,7 +224,7 @@ Delete one document based on its unique id. Both the index [`uid`](/learn/core_c
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Delete documents by batch
 
@@ -248,7 +248,7 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentDeletion",
@@ -256,4 +256,4 @@ The body must be a **JSON Array** with the unique id's of the documents to delet
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
