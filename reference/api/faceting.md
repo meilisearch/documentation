@@ -61,7 +61,7 @@ For example, suppose a query's search results contain a total of three values fo
 
 ```json
 {
-  "uid": 1,
+  "taskUid": 1,
   "indexUid": "books",
   "status": "enqueued",
   "type": "settingsUpdate",
