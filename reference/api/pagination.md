@@ -54,7 +54,7 @@ An integer indicating the maximum number of search results Meilisearch can retur
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
 ::: note
-Setting `maxTotalHits` to a high value might negatively impact performance.
+Setting `maxTotalHits` to a high value might negatively impact performance and expose instance data to malicious scraping.
 :::
 
 #### Example
