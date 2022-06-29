@@ -53,6 +53,10 @@ Configure the maximum number of facet values returned for each facet. Values are
 
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
+::: note
+Settings `maxValuesPerFacet` to a high value might negatively impact performance.
+:::
+
 #### Example
 
 <CodeSamples id="update_faceting_settings_1" />
