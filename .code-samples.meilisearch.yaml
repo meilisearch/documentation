@@ -744,7 +744,7 @@ search_parameter_guide_sort_1: |-
     }'
 geosearch_guide_filter_settings_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/restaurants/settings/filterable-attributes' \
     -H 'Content-type:application/json' \
     --data-binary '["_geo"]'
 geosearch_guide_filter_usage_1: |-
