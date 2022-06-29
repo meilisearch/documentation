@@ -53,6 +53,10 @@ An integer indicating the maximum number of search results Meilisearch can retur
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
+::: note
+Setting `maxTotalHits` to a high value might negatively impact performance.
+:::
+
 #### Example
 
 <CodeSamples id="update_pagination_settings_1" />
@@ -61,7 +65,7 @@ For example, if you set `maxTotalHits` to 100, you will not be able to access se
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "books",
     "status": "enqueued",
     "type": "settingsUpdate",
