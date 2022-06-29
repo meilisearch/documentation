@@ -175,7 +175,6 @@ A list of API actions permitted for the key. `["*"]` for all actions.
 | settings.update  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes on authorized indexes. |
 | stats.get        | Provides access to the [get stats of an index](/reference/api/stats.md#get-stats-of-an-index) endpoint and the [get stats of all indexes](/reference/api/stats.md#get-stats-of-all-indexes) endpoint. For the latter, **non-authorized `indexes` are omitted from the response**. |
 | dumps.create     | Provides access to the [create dump](/reference/api/dump.md#create-a-dump) endpoint. **Not restricted by `indexes`.** |
-| dumps.get        | Provides access to the [get dump status](/reference/api/dump.md#get-dump-status) endpoint. **Not restricted by `indexes`.** |
 | version          | Provides access to the [get Meilisearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint. |
 
 #### `indexes`
