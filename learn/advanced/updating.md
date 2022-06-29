@@ -138,7 +138,7 @@ If it's something else, then you need to use the [reset displayed attributes end
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
-This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
+This command returns a `taskUid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-one-task). Once the status is `succeeded`, you're good to go.
 
 Now that all fields are displayed, proceed to the next step.
 

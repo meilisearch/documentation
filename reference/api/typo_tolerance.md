@@ -107,7 +107,7 @@ An array of attributes for which the typo tolerance feature is disabled.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "books",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -115,7 +115,7 @@ An array of attributes for which the typo tolerance feature is disabled.
 }
 ```
 
-You can use the returned `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset typo tolerance
 
@@ -129,7 +129,7 @@ Reset an index's typo tolerance settings to their default value. The index [`uid
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "books",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -137,4 +137,4 @@ Reset an index's typo tolerance settings to their default value. The index [`uid
 }
 ```
 
-You can use the returned `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

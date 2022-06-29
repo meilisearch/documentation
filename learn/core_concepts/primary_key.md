@@ -120,7 +120,7 @@ The code below adds a document to the `books` index and sets `reference_number` 
     "uid": 1,
     "indexUid": "books",
     "status": "succeeded",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details":{
         "receivedDocuments":1,
         "indexedDocuments":1
@@ -177,7 +177,7 @@ This error occurs when you add documents for the first time and Meilisearch [fai
     "uid":1,
     "indexUid": "books",
     "status": "failed",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details":{
         "receivedDocuments":5,
         "indexedDocuments":null
@@ -204,7 +204,7 @@ This error occurs when your index already has a primary key, but one of the docu
     "uid":1,
     "indexUid": "books",
     "status": "failed",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details":{
         "receivedDocuments":1,
         "indexedDocuments":null
@@ -231,7 +231,7 @@ This happens when your document id does not have the correct [format](#formattin
     "uid":1,
     "indexUid": "books",
     "status": "failed",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details":{
         "receivedDocuments":5,
         "indexedDocuments":null
