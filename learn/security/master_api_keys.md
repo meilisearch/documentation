@@ -150,7 +150,7 @@ It is good practice to always set an expiry date when creating a new API key. If
 
 You can use the [list keys endpoint](/reference/api/keys.md) to obtain information on any active key in your Meilisearch instance. This is useful when you need an overview of existing keys and their permissions.
 
-By default, [`GET /keys`](/reference/api/keys.md#get-all-keys) returns the most recently created 20 keys. You can change this using the [`limit`](/reference/api/keys.md#get-all-keys) query parameter. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you either need the master key or an API key with the `keys.get` action to access this endpoint.
+By default, [`GET /keys`](/reference/api/keys.md#get-all-keys) returns the 20 most recently created keys. You can change this using the [`limit`](/reference/api/keys.md#get-all-keys) query parameter. **Expired keys will appear in the response, but deleted keys will not**. As with creating, deleting, and updating API keys, you either need the master key or an API key with the `keys.get` action to access this endpoint.
 
 [`GET /keys/{key_or_uid}`](/reference/api/keys.md#get-one-key) returns information on a single key. `{key_or_uid}` should be replaced with the full `key` or `uid` value obtained during key creation.
 
