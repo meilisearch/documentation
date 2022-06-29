@@ -83,7 +83,7 @@ Reset an index's pagination settings to their default value. The index [`uid`](/
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "books",
     "status": "enqueued",
     "type": "settingsUpdate",
