@@ -6,6 +6,7 @@ These are the reference pages for the child routes:
 
 - [Displayed attributes](/reference/api/displayed_attributes.md)
 - [Distinct attribute](/reference/api/distinct_attribute.md)
+- [Faceting](/reference/api/faceting.md)
 - [Filterable attributes](/reference/api/filterable_attributes.md)
 - [Ranking rules](/reference/api/ranking_rules.md)
 - [Searchable attributes](/reference/api/searchable_attributes.md)
