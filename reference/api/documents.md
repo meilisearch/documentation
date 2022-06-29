@@ -79,7 +79,7 @@ Documents are ordered by Meilisearch depending on the hash of their id.
   ],
   "offset": 0,
   "limit": 2,
-  "total": 50134
+  "total": 500134
 }
 ```
 
