@@ -59,6 +59,7 @@ You can customize the following index settings:
 - [Stop words](#stop-words)
 - [Displayed and searchable attributes](#displayed-and-searchable-attributes)
 - [Typo tolerance](#typo-tolerance)
+- [Pagination](#pagination)
 
 To change index settings, use the [update settings endpoint](/reference/api/settings.md#update-settings) or any of the [child routes](/reference/api/settings.md#all-settings).
 
@@ -130,3 +131,11 @@ Typo tolerance is a built-in feature that helps you find relevant results even w
 You can update the typo tolerance settings using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/typo_tolerance.md#update-typo-tolerance).
 
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
+
+### Pagination
+
+To protect your database from malicious scraping, Meilisearch returns upto 1000 results for a search query. You can update this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update pagination settings endpoint](/reference/api/pagination.md#update-pagination-settings).
+
+We recommend using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters to implement previous and next buttons for a pagination UI.
+
+[Learn more about pagination](/learn/advanced/pagination.md)
