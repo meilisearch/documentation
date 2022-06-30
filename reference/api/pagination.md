@@ -95,4 +95,4 @@ Reset an index's pagination settings to their default value. The index [`uid`](/
 }
 ```
 
-You can use the returned `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
