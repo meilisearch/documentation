@@ -136,6 +136,6 @@ You can update the typo tolerance settings using the [update settings endpoint](
 
 Facets are a specific use-case of filters in Meilisearch, whether something is a facet or filter depends on your UI and UX design. Like filters, you need to add your facets to [`filterableAttributes`](/reference/api/filterable_attributes.md#update-filterable-attributes) then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
-By default, Meilisearch returns 100 facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update faceting settings endpoint](/reference/api/faceting.md#update-faceting-settings).
+By default, Meilisearch returns `100` facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update faceting settings endpoint](/reference/api/faceting.md#update-faceting-settings).
 
 [Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)
