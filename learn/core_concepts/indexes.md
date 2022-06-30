@@ -136,6 +136,4 @@ You can update the typo tolerance settings using the [update settings endpoint](
 
 To protect your database from malicious scraping, Meilisearch only returns up to 1000 results for a search query. You can change this limit using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update pagination settings endpoint](/reference/api/pagination.md#update-pagination-settings).
 
-We recommend using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters to implement previous and next buttons for a pagination UI.
-
 [Learn more about pagination](/learn/advanced/pagination.md)
