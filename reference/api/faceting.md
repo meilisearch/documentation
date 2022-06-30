@@ -54,7 +54,7 @@ Configure the maximum number of facet values returned for each facet. Values are
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
 ::: note
-Settings `maxValuesPerFacet` to a high value might negatively impact performance.
+Setting `maxValuesPerFacet` to a high value might negatively impact performance.
 :::
 
 #### Example
@@ -73,7 +73,7 @@ Settings `maxValuesPerFacet` to a high value might negatively impact performance
 }
 ```
 
-You can use the returned `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
 
 ## Reset faceting settings
 
@@ -95,4 +95,4 @@ Reset an index's faceting settings to their default value. The index [`uid`](/le
 }
 ```
 
-You can use the returned `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
