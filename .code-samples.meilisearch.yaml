@@ -963,5 +963,5 @@ settings_guide_pagination_1: |-
     -X PATCH 'http://localhost:7700/indexes/movies/settings/pagination' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "maxTotalHits": 100
+      "maxTotalHits": 50
   }'
