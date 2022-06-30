@@ -316,6 +316,10 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
 `exhaustiveFacetsCount` is not currently implemented in and will always return `false`.
 :::
 
+::: note
+By default, `facetDistribution` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/faceting.md).
+:::
+
 ##### Example
 
 You can write a search query that gives you the distribution of `batman` movies per genre:
