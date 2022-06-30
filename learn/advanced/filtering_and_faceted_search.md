@@ -317,7 +317,7 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
 :::
 
 ::: note
-By default, `facetDistribution` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/faceting.md).
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/faceting.md).
 :::
 
 ##### Example
