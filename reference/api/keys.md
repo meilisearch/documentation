@@ -170,12 +170,11 @@ A list of API actions permitted for the key. `["*"]` for all actions.
 | indexes.get      | Provides access to the [get one index](/reference/api/indexes.md#get-one-index) and [list all indexes](/reference/api/indexes.md#list-all-indexes) endpoints. **Non-authorized `indexes` will be omitted from the response**. |
 | indexes.update   | Provides access to the [update index](/reference/api/indexes.md#update-an-index) endpoint. |
 | indexes.delete   | Provides access to the [delete index](/reference/api/indexes.md#delete-an-index) endpoint. |
-| tasks.get        | Provides access to the [get one task](/reference/api/tasks.md#get-task) and [get all tasks](/reference/api/tasks.md#get-all-tasks) endpoints. **Tasks from non-authorized `indexes` will be omitted from the response**. Also provides access to the [get one task by index](/reference/api/tasks.md#get-task-by-index) and [get all tasks by index](/reference/api/tasks.md#get-all-tasks-by-index) endpoints on authorized indexes. |
+| tasks.get        | Provides access to the [get one task](/reference/api/tasks.md#get-one-task) and [get tasks](/reference/api/tasks.md#get-tasks) endpoints. **Tasks from non-authorized `indexes` will be omitted from the response**. |
 | settings.get     | Provides access to the [get settings](/reference/api/settings.md#get-settings) endpoint and equivalents for all subroutes on authorized indexes. |
 | settings.update  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes on authorized indexes. |
 | stats.get        | Provides access to the [get stats of an index](/reference/api/stats.md#get-stats-of-an-index) endpoint and the [get stats of all indexes](/reference/api/stats.md#get-stats-of-all-indexes) endpoint. For the latter, **non-authorized `indexes` are omitted from the response**. |
 | dumps.create     | Provides access to the [create dump](/reference/api/dump.md#create-a-dump) endpoint. **Not restricted by `indexes`.** |
-| dumps.get        | Provides access to the [get dump status](/reference/api/dump.md#get-dump-status) endpoint. **Not restricted by `indexes`.** |
 | version          | Provides access to the [get Meilisearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint. |
 
 #### `indexes`

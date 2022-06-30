@@ -108,7 +108,7 @@ List the settings.
 
 ## Update settings
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings" />
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings" />
 
 Update the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -143,7 +143,7 @@ If the provided index does not exist, it will be created.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -151,7 +151,7 @@ If the provided index does not exist, it will be created.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset settings
 
@@ -183,7 +183,7 @@ All settings will be reset to their default value.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -191,4 +191,4 @@ All settings will be reset to their default value.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

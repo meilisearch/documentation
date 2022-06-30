@@ -97,10 +97,6 @@ The Content-Type header does not match the request body payload format or the fo
 
 The Content-Type header was specified, but no request body was sent to the server or the request body is empty.  
 
-### `dump_already_processing`
-
-Dump creation is already in progress. A new dump creation process can be triggered after the current one has been completed.
-
 ### `dump_not_found`
 
 The requested dump could not be found.  
@@ -168,3 +164,11 @@ The requested task does not exist. Please ensure that you are using the correct 
 ### `invalid_typo_tolerance_min_word_size_for_typos`
 
 The `minWordSizeForTypos` object is invalid. The value for both `oneTypo` and `twoTypos` should be between `0` and `255`, and `twoTypos` should be greater or equal to `oneTypo`.
+
+### `invalid_task_status`
+
+The requested task status is invalid. Please use one of [these four possible values](/learn/advanced/asynchronous_operations.md#task-status).
+
+### `invalid_task_type`
+
+The requested task type is invalid. Please use one of the values defined in our [asynchronous operations guide](/learn/advanced/asynchronous_operations.md#task-api-response).

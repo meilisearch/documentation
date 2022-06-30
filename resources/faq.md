@@ -51,19 +51,19 @@ More datasets and setting configurations are available [in this repository](http
 
 ## I did a call to an API route and got an object as a response. What does it mean?
 
-All asynchronous operations return a summarized version of the [`task` object](/learn/advanced/asynchronous_operations.md#response).
+All asynchronous operations return a [summarized version of the `task` object](/learn/advanced/asynchronous_operations.md#summarized-task-objects).
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
-This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
 
@@ -151,7 +151,7 @@ See more [information about the primary key](/learn/core_concepts/primary_key.md
 
 ## I have uploaded my documents, but I get no result when I search in my index.
 
-Your document upload probably failed. To understand why, please check the status of the document addition task using the `uid`. If the task failed, the response should contain an `error` object.
+Your document upload probably failed. To understand why, please check the status of the document addition task using the returned `taskUid`. If the task failed, the response should contain an `error` object.
 
 Here is an example of a failed task:
 
@@ -160,7 +160,7 @@ Here is an example of a failed task:
     "uid": 1,
     "indexUid": "movies",
     "status": "failed",
-    "type": "documentAddition",
+    "type": "documentAdditionOrUpdate",
     "details": { 
             "receivedDocuments": 67493,
             "indexedDocuments": 0

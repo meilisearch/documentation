@@ -8,7 +8,14 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 
 <RouteHighlighter method="GET" route="/indexes"/>
 
-List all [indexes](/learn/core_concepts/indexes.md).
+List all [indexes](/learn/core_concepts/indexes.md). Results can be paginated by using the `offset` and `limit` query parameters.
+
+#### Query parameters
+
+| Query parameter          | Description                 | Default value |
+| ------------------------ | --------------------------- | :-----------: |
+| **offset**               | Number of indexes to skip   |       0       |
+| **limit**                | Number of indexes to return |      20       |
 
 ### Example
 
@@ -17,29 +24,31 @@ List all [indexes](/learn/core_concepts/indexes.md).
 #### Response: `200 Ok`
 
 ```json
-[
-  {
-    "uid": "books",
-    "name": "books",
-    "createdAt": "2022-03-08T10:00:27.377346Z",
-    "updatedAt": "2022-03-08T10:00:27.391209Z",
-    "primaryKey": "id"
-  },
-  {
-    "uid": "meteorites",
-    "name": "meteorites",
-    "createdAt": "2022-03-08T10:00:44.518768Z",
-    "updatedAt": "2022-03-08T10:00:44.582083Z",
-    "primaryKey": "id"
-  },
-  {
-    "uid": "movies",
-    "name": "movies",
-    "createdAt": "2022-02-10T07:45:15.628261Z",
-    "updatedAt": "2022-02-21T15:28:43.496574Z",
-    "primaryKey": "id"
-  }
-]  
+{
+  "results": [
+    {
+      "uid": "books",
+      "createdAt": "2022-03-08T10:00:27.377346Z",
+      "updatedAt": "2022-03-08T10:00:27.391209Z",
+      "primaryKey": "id"
+    },
+    {
+      "uid": "meteorites",
+      "createdAt": "2022-03-08T10:00:44.518768Z",
+      "updatedAt": "2022-03-08T10:00:44.582083Z",
+      "primaryKey": "id"
+    },
+    {
+      "uid": "movies",
+      "createdAt": "2022-02-10T07:45:15.628261Z",
+      "updatedAt": "2022-02-21T15:28:43.496574Z",
+      "primaryKey": "id"
+    }
+  ],
+  "offset": 0,
+  "limit": 3,
+  "total": 5
+}  
 ```
 
 ## Get one index
@@ -57,7 +66,6 @@ Get information about an [index](/learn/core_concepts/indexes.md). The index [`u
 ```json
 {
   "uid": "movies",
-  "name": "movies",
   "createdAt": "2022-02-10T07:45:15.628261Z",
   "updatedAt": "2022-02-21T15:28:43.496574Z",
   "primaryKey": "id"
@@ -100,7 +108,7 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 
 ```json
 {
-  "uid": 0,
+  "taskUid": 0,
   "indexUid": "movies",
   "status": "enqueued",
   "type": "indexCreation",
@@ -108,11 +116,11 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}"/>
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}"/>
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/primary_key.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -140,7 +148,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 ```json
 {
-  "uid": 1,
+  "taskUid": 1,
   "indexUid": "movies",
   "status": "enqueued",
   "type": "indexUpdate",
@@ -148,7 +156,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).
 
 ## Delete an index
 
@@ -166,7 +174,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 ```json
 {
-  "uid": 1,
+  "taskUid": 1,
   "indexUid": "movies",
   "status": "enqueued",
   "type": "indexDeletion",
@@ -174,4 +182,4 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 }
 ```
 
-You can use the response's `uid` to [track the status of your request](/reference/api/tasks.md#get-task).
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).

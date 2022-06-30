@@ -278,30 +278,29 @@ You can then use this filter to search for `thriller`:
 
 ### Facets distribution
 
-When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facetsDistribution` search parameter](/reference/api/search.md#facets-distribution) in combination with `filter` when searching.
+When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facets` search parameter](/reference/api/search.md#facets) in combination with `filter` when searching.
 
 ::: note
-Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facetsDistribution` can be used with any attributes added to `filterableAttributes`.
+Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facets` can be used with any attributes added to `filterableAttributes`.
 :::
 
-Using `facetsDistribution` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
+Using `facets` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
 
 In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
 
 ![IMDb facets](/faceted-search/facets-imdb.png)
 
-#### Using facet distribution
+#### Using `facets`
 
-[`facetsDistribution` is a search parameter](/reference/api/search.md#facets-distribution) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
+[`facets` is a search parameter](/reference/api/search.md#facets) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
-Using the `facetsDistribution` search parameter adds two new keys to the returned object: `facetsDistribution` and `exhaustiveFacetsCount`.
+Using the `facets` search parameter adds `facetDistribution` to the returned object.
 
-`facetsDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
+`facetDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
 
 ```json
 {
-  "exhaustiveFacetsCount": false,
-  "facetsDistribution" : {
+  "facetDistribution" : {
     "genres" : {
       "horror": 50,
       "comedy": 34
@@ -309,12 +308,6 @@ Using the `facetsDistribution` search parameter adds two new keys to the returne
   }
 }
 ```
-
-`exhaustiveFacetsCount` is a boolean value that informs the user whether the facet count is exact or just an approximation. For performance reasons, Meilisearch chooses to use approximate facet count values when there are too many documents across several different fields.
-
-::: warning
-`exhaustiveFacetsCount` is not currently implemented in and will always return `false`.
-:::
 
 ::: note
 By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/faceting.md).
@@ -324,9 +317,9 @@ By default, `facets` returns a maximum of 100 facet values for each faceted fiel
 
 You can write a search query that gives you the distribution of `batman` movies per genre:
 
-<CodeSamples id="faceted_search_facets_distribution_1"/>
+<CodeSamples id="faceted_search_facets_1"/>
 
-This query would return not only the matching movies, but also the `facetsDistribution` key containing all relevant data:
+This query would return not only the matching movies, but also the `facetDistribution` key containing all relevant data:
 
 ```json
 {
@@ -334,7 +327,7 @@ This query would return not only the matching movies, but also the `facetsDistri
     …
   ],
   …
-  "facetsDistribution": {
+  "facetDistribution": {
     "genres": {
       "action": 273,
       "animation": 118,
