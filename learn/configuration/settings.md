@@ -98,7 +98,7 @@ To be able to filter search results on `director` and `genres` in a movie databa
 
 ## Faceting
 
-The faceting settings of an index. Facets are specific uses-cases of filters, depending on your UI and UX design.
+The faceting settings of an index. Facets are specific use-cases of filters that can be used to refine search results.
 
 ::: tip
 Like filters, you need to add your facets to `filterableAttributes` in order to use the [`filter`](/reference/api/search.md#filter) search parameter.
