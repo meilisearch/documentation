@@ -65,8 +65,7 @@ After setting the distinct attribute as shown above, querying for `lee leather j
   ],
   "offset": 0,
   "limit": 20,
-  "nbHits": 1,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 1,
   "processingTimeMs": 0,
   "query": "lee leather jacket"
 }

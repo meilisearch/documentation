@@ -16,10 +16,12 @@ delete_all_documents_1: |-
 delete_one_document_1: |-
 delete_documents_1: |-
 search_post_1: |-
-get_task_by_index_1: |-
 get_all_tasks_1: |-
 get_task_1: |-
-get_all_tasks_by_index_1: |-
+get_all_tasks_filtering_1: |-
+get_all_tasks_filtering_2: |-
+get_all_tasks_paginating_1: |-
+get_all_tasks_paginating_2: |-
 get_one_key_1: |-
 get_all_keys_1: |-
 create_a_key_1: |-
@@ -65,7 +67,7 @@ search_parameter_guide_limit_1: |-
 search_parameter_guide_retrieve_1: |-
 search_parameter_guide_crop_1: |-
 search_parameter_guide_highlight_1: |-
-search_parameter_guide_matches_1: |-
+search_parameter_guide_show_matches_position_1: |-
 settings_guide_synonyms_1: |-
 settings_guide_stop_words_1: |-
 settings_guide_ranking_rules_1: |-
@@ -90,11 +92,10 @@ getting_started_sorting: |-
 getting_started_filtering: |-
 faceted_search_update_settings_1: |-
 faceted_search_filter_1: |-
-faceted_search_facets_distribution_1: |-
+faceted_search_facets_1: |-
 faceted_search_walkthrough_filter_1: |-
 add_movies_json_1: |-
 post_dump_1: |-
-get_dump_status_1: |-
 phrase_search_1: |-
 sorting_guide_update_sortable_attributes_1: |-
 sorting_guide_update_ranking_rules_1: |-
@@ -140,7 +141,6 @@ updating_guide_get_displayed_attributes_old: |-
 updating_guide_reset_displayed_attributes_old: |-
 updating_guide_reset_displayed_attributes_new: |-
 updating_guide_create_dump: |-
-updating_guide_get_dump_status: |-
 updating_guide_get_settings_old: |-
 updating_guide_retrieve_documents_old: |-
 updating_guide_update_settings_old: |-

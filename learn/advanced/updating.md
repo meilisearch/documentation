@@ -142,7 +142,7 @@ If it's something else, then you need to use the [reset displayed attributes end
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
-This command returns a `uid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-task). Once the status is `succeeded`, you're good to go.
+This command returns a `taskUid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-one-task). Once the status is `succeeded`, you're good to go.
 
 Now that all fields are displayed, proceed to the next step.
 
@@ -210,24 +210,31 @@ The server should return a response that looks like this:
 
 ```json
 {
-  "uid": "20210212-151153878",
-  "status": "in_progress",
-  "startedAt": "2021-02-12T15:11:53.402327Z"
+  "taskUid": 1,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "dumpCreation",
+  "enqueuedAt": "2022-06-21T16:10:29.217688Z"
 }
 ```
 
-This process can take some time. Since dump creation is an [asynchronous operation](/learn/advanced/asynchronous_operations.md), you can use the returned `uid` to [track its status](/reference/api/dump.md#get-dump-status).
+This command returns a `taskUid`. You can use this to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
-<CodeSamples id="updating_guide_get_dump_status" />
-
-Once the response to the previous command looks like this (`"status": "done"`), move on.
+Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 
 ```json
 {
-  "uid": "20200929-114144097",
-  "status": "done",
-  "startedAt": "2020-09-29T11:41:44.392327Z",
-  "finishedAt": "2020-09-29T11:41:50.792147Z"
+  "uid": 1,
+  "indexUid": null,
+  "status": "succeeded",
+  "type": "dumpCreation",
+  "details": {
+    "dumpUid": "20220621-161029217"
+  },
+  "duration": "PT0.025872S",
+  "enqueuedAt": "2022-06-21T16:10:29.217688Z",
+  "startedAt": "2022-06-21T16:10:29.218297Z",
+  "finishedAt": "2022-06-21T16:10:29.244169Z"
 }
 ```
 

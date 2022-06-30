@@ -97,10 +97,6 @@ The Content-Type header does not match the request body payload format or the fo
 
 The Content-Type header was specified, but no request body was sent to the server or the request body is empty.  
 
-### `dump_already_processing`
-
-Dump creation is already in progress. A new dump creation process can be triggered after the current one has been completed.
-
 ### `dump_not_found`
 
 The requested dump could not be found.  
@@ -184,3 +180,11 @@ The given `uid` is invalid. The `uid` must follow the [uuid v4](https://www.soha
 ### `invalid_api_key_name`
 
 The given `name` is invalid. It should either be a string or `null`.
+
+### `invalid_task_status`
+
+The requested task status is invalid. Please use one of [these four possible values](/learn/advanced/asynchronous_operations.md#task-status).
+
+### `invalid_task_type`
+
+The requested task type is invalid. Please use one of the values defined in our [asynchronous operations guide](/learn/advanced/asynchronous_operations.md#task-api-response).
