@@ -958,7 +958,7 @@ getting_started_typo_tolerance: |-
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
-.
+settings_guide_pagination_1: |-
   curl \
     -X PATCH 'http://localhost:7700/indexes/movies/settings/pagination' \
     -H 'Content-Type: application/json' \
