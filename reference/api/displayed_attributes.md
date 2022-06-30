@@ -38,7 +38,7 @@ List the settings.
 
 ## Update displayed attributes
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/displayed-attributes" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
 Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

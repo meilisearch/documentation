@@ -34,7 +34,7 @@ List the settings.
 
 ## Update filterable attributes
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/filterable-attributes" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
 Update an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md). This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

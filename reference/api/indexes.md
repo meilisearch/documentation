@@ -120,7 +120,7 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Update an index
 
-<RouteHighlighter method="PUT" route="/indexes/{index_uid}"/>
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}"/>
 
 Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/primary_key.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

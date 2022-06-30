@@ -44,7 +44,7 @@ List the settings.
 
 ## Update ranking rules
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/ranking-rules" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/ranking-rules" />
 
 Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

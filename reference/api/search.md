@@ -33,7 +33,7 @@ This is the preferred route to perform search when an API key is required, as it
 | **[offset](#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filter](#filter)**                                 | Filter queries by an attribute's value             | `null`        |
-| **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
+| **[facets](#facets)**                                 | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
@@ -41,7 +41,7 @@ This is the preferred route to perform search when an API key is required, as it
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
 | **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
-| **[matches](#matches)**                               | Return matching terms location                     | `false`       |
+| **[showMatchesPosition](#show-matches-position)**     | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
 [Learn more about how to use each search parameter](#search-parameters).
@@ -58,17 +58,15 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| field                | Description                    |    type    |
-| -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `array of objects` |
-| **offset**           | Number of documents skipped    |  `number`  |
-| **limit**            | Number of documents to take    |  `number`  |
-| **nbHits**           | Total number of matches        |  `number`  |
-| **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetsDistribution** | **[Distribution of the given facets](#facets-distribution)** | `object`
-| **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
-| **processingTimeMs** | Processing time of the query   |  `number`  |
-| **query**            | Query originating the response |  `string`  |
+| field                   | Description                                     |    type            |
+| ------------------------| ----------------------------------------------- | :----------------: |
+| **hits**                | Results of the query                            | `array of objects` |
+| **offset**              | Number of documents skipped                     |  `number`          |
+| **limit**               | Number of documents to take                     |  `number`          |
+| **estimatedTotalHits**  | Total number of matches                         |  `number`          |
+| **facets**              | **[Distribution of the given facets](#facets)** | `object`           |
+| **processingTimeMs**    | Processing time of the query                    |  `number`          |
+| **query**               | Query originating the response                  |  `string`          |
 
 ### Example
 
@@ -97,8 +95,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
   ],
   "offset": 0,
   "limit": 20,
-  "nbHits": 976,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 976,
   "processingTimeMs": 35,
   "query": "american "
 }
@@ -124,7 +121,7 @@ This route should only be used when no API key is required. If an API key is req
 | **[offset](#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filter](#filter)**                                 | Filter queries by an attribute's value             | `null`        |
-| **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
+| **[facets](#facets)**                                 | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
@@ -132,7 +129,7 @@ This route should only be used when no API key is required. If an API key is req
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
 | **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
-| **[matches](#matches)**                               | Return matching terms location                     | `false`       |
+| **[showMatchesPosition](#show-matches-position)**     | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
 [Learn more about how to use each search parameter](#search-parameters).
@@ -147,17 +144,15 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| field                | Description                    |    type    |
-| -------------------- | ------------------------------ | :--------: |
-| **hits**             | Results of the query           | `array of objects` |
-| **offset**           | Number of documents skipped    |  `number`  |
-| **limit**            | Number of documents to take    |  `number`  |
-| **nbHits**           | Total number of matches        |  `number`  |
-| **exhaustiveNbHits** | Whether `nbHits` is exhaustive | `boolean`  |
-| **facetsDistribution** | **[Distribution of the given facets](#facets-distribution)** | `object`
-| **exhaustiveFacetsCount** | Whether `facetsDistribution` is exhaustive | `boolean`
-| **processingTimeMs** | Processing time of the query   |  `number`  |
-| **query**            | Query originating the response |  `string`  |
+| field                   | Description                                     |    type            |
+| ----------------------- | ----------------------------------------------- | :----------------: |
+| **hits**                | Results of the query                            | `array of objects` |
+| **offset**              | Number of documents skipped                     |  `number`          |
+| **limit**               | Number of documents to take                     |  `number`          |
+| **estimatedTotalHits**  | Total number of matches                         |  `number`          |
+| **facets**              | **[Distribution of the given facets](#facets)** | `object`           |
+| **processingTimeMs**    | Processing time of the query                    |  `number`          |
+| **query**               | Query originating the response                  |  `string`          |
 
 ### Example
 
@@ -186,8 +181,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
   ],
   "offset": 0,
   "limit": 20,
-  "nbHits": 976,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 976,
   "processingTimeMs": 35,
   "query": "american "
 }
@@ -211,7 +205,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[offset](#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filter](#filter)**                                 | Filter queries by an attribute's value             | `null`        |
-| **[facetsDistribution](#facets-distribution)**        | Display the count of matches per facet             | `null`        |
+| **[facets](#facets)**                                 | Display the count of matches per facet             | `null`        |
 | **[attributesToRetrieve](#attributes-to-retrieve)**   | Attributes to display in the returned documents    | `["*"]`       |
 | **[attributesToCrop](#attributes-to-crop)**           | Attributes whose values have to be cropped         | `null`        |
 | **[cropLength](#crop-length)**                        | Maximum length of cropped value in words           | `10`          |
@@ -219,7 +213,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[attributesToHighlight](#attributes-to-highlight)** | Highlight matching terms contained in an attribute | `null`        |
 | **[highlightPreTag](#highlight-tags)**                | String inserted at the start of a highlighted term | `"<em>"`      |
 | **[highlightPostTag](#highlight-tags)**               | String inserted at the end of a highlighted term   | `"</em>"`     |
-| **[matches](#matches)**                               | Return matching terms location                     | `false`       |
+| **[showMatchesPosition](#show-matches-position)**     | Return matching terms location                     | `false`       |
 | **[sort](#sort)**                                     | Sort search results by an attribute's value        | `null`        |
 
 ### Query (q)
@@ -366,53 +360,39 @@ _geoRadius(lat, lng, distance_in_meters)
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-### Facets distribution
+### Facets
 
-**Parameter**: `facetsDistribution`
+**Parameter**: `facets`
 **Expected value**: an array of `attribute`s or `["*"]`
 **Default value**: `null`
 
-Returns the number of documents matching the current search query for each given facet.
+Returns the number of documents matching the current search query for each given facet. When `facets` is set, the search results object contains the `facetDistribution` field that shows the number of remaining candidates for each specified facet.
 
 This parameter can take two values:
 
-- An array of attributes: `facetsDistribution=["attributeA", "attributeB", …]`
+- An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
 
 ::: note
-If an attribute used on `facetsDistribution` has not been added to the `filterableAttributes` list, it will be ignored.
+If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
 :::
 
-#### Returned fields
-
-When `facetsDistribution` is set, the search results object contains **two additional fields**:
-
-- `facetsDistribution`: The number of remaining candidates for each specified facet
-- `exhaustiveFacetsCount`: A `true` or `false` value indicating whether the count is exact (`true`) or approximate (`false`)
-
-`exhaustiveFacetsCount` is `false` when the search matches contain too many different values for the given `facetName`s. In this case, Meilisearch stops the distribution count to prevent slowing down the request.
-
-::: warning
-`exhaustiveFacetsCount` is not currently implemented and will always return `false`.
-:::
-
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#facets-distribution)
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#using-facets)
 
 #### Example
 
 Given a movie database, suppose that you want to know the number of `Batman` movies per genre:
 
-<CodeSamples id="faceted_search_facets_distribution_1" />
+<CodeSamples id="faceted_search_facets_1" />
 
 You would get the following response:
 
 ```json
 {
   …
-  "nbHits": 1684,
+  "estimatedTotalHits": 1684,
   "query": "Batman",
-  "exhaustiveFacetsCount": false,
-  "facetsDistribution": {
+  "facetDistribution": {
     "genres": {
       "action": 273,
       "animation": 118,
@@ -620,13 +600,13 @@ You can find the highlighted query terms inside the `_formatted` property:
 Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in conjunction, be careful to ensure tags are correctly matched. In the above example, not setting `highlightPostTag` would result in malformed HTML: `<span>Winter Feast</em>`.
 :::
 
-### Matches
+### Show matches position
 
-**Parameter**: `matches`
+**Parameter**: `showMatchesPosition`
 **Expected value**: `true` or `false`
 **Default value**: `false`
 
-Adds a `_matchesInfo` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `matches` only works for strings, numbers, and arrays of strings and numbers.
+Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
@@ -636,11 +616,11 @@ The beginning of a matching term within a field is indicated by `start`, and its
 
 #### Example
 
-If you set `matches` to `true` and search for `winter feast`:
+If you set `showMatchesPosition` to `true` and search for `winter feast`:
 
-<CodeSamples id="search_parameter_guide_matches_1" />
+<CodeSamples id="search_parameter_guide_show_matches_position_1" />
 
-You would get the following response with **information about the matches in the `_matchesInfo` object**. Note how Meilisearch searches for `winter` and `feast` separately because of the whitespace:
+You would get the following response with **information about the matches in the `_matchesPosition` object**. Note how Meilisearch searches for `winter` and `feast` separately because of the whitespace:
 
 ```json
 {
@@ -649,7 +629,7 @@ You would get the following response with **information about the matches in the
   "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
   "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace. Po is caught between his obligations as the Dragon Warrior and his family traditions: between Shifu and Mr. Ping.",
   "release_date": 1290729600,
-  "_matchesInfo": {
+  "_matchesPosition": {
     "overview": [
       {
         "start": 4,

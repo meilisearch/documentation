@@ -252,8 +252,7 @@ In the above code sample, the parameter `q` represents the search query. The doc
     },
     …
   ],
-  "nbHits": 66,
-  "exhaustiveNbHits": false,
+  "estimatedTotalHits": 66,
   "query": "botman",
   "limit": 20,
   "offset": 0,

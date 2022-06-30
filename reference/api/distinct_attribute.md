@@ -30,7 +30,7 @@ Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute
 
 ## Update distinct attribute
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/distinct-attribute" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
 Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 

@@ -10,6 +10,14 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 Get one [document](/learn/core_concepts/documents.md) using its unique id. Both the index [`uid`](/learn/core_concepts/indexes.md#index-uid) and [document id](/learn/core_concepts/primary_key.md#document-id) are required.
 
+You can use the optional `fields` query parameter to specify which document fields Meilisearch should include in the response body. `fields` accepts a case-sensitive list of document fields separated by a comma.
+
+#### Query parameters
+
+| Query Parameter          | Description                    | Default Value |
+| ------------------------ | ------------------------------ | :-----------: |
+| **fields**               | Document attributes to show    |       \*      |
+
 ### Example
 
 <CodeSamples id="get_one_document_1" />
@@ -21,7 +29,6 @@ Get one [document](/learn/core_concepts/documents.md) using its unique id. Both 
   "id": 25684,
   "title": "American Ninja 5",
   "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
-  "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja.",
   "release_date": "1993-01-01"
 }
 ```
@@ -40,11 +47,11 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 #### Query parameters
 
-| Query Parameter          | Description                 | Default Value |
-| ------------------------ | --------------------------- | :-----------: |
-| **offset**               | number of documents to skip |       0       |
-| **limit**                | number of documents to take |      20       |
-| **attributesToRetrieve** | document attributes to show |      \*       |
+| Query Parameter          | Description                    | Default Value |
+| ------------------------ | ------------------------------ | :-----------: |
+| **offset**               | Number of documents to skip    |       0       |
+| **limit**                | Number of documents to return  |      20       |
+| **fields**               | Document attributes to show    |      \*       |
 
 ### Example
 
@@ -53,23 +60,32 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 #### Response: `200 Ok`
 
 ```json
-[
-  {
-    "id": 25684,
-    "release_date": "1993-01-01",
-    "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
-    "title": "American Ninja 5",
-    "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja."
-  },
-  {
-    "id": 468219,
-    "title": "Dead in a Week (Or Your Money Back)",
-    "release_date": "2018-09-12",
-    "poster": "https://image.tmdb.org/t/p/w1280/f4ANVEuEaGy2oP5M0Y2P1dwxUNn.jpg",
-    "overview": "William has failed to kill himself so many times that he outsources his suicide to aging assassin Leslie. But with the contract signed and death assured within a week (or his money back), William suddenly discovers reasons to live... However Leslie is under pressure from his boss to make sure the contract is completed."
-  }
-]
+{
+  "results": [
+    {
+      "id": 25684,
+      "release_date": "1993-01-01",
+      "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
+      "title": "American Ninja 5",
+      "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja."
+    },
+    {
+      "id": 468219,
+      "title": "Dead in a Week (Or Your Money Back)",
+      "release_date": "2018-09-12",
+      "poster": "https://image.tmdb.org/t/p/w1280/f4ANVEuEaGy2oP5M0Y2P1dwxUNn.jpg",
+      "overview": "William has failed to kill himself so many times that he outsources his suicide to aging assassin Leslie. But with the contract signed and death assured within a week (or his money back), William suddenly discovers reasons to live... However Leslie is under pressure from his boss to make sure the contract is completed."
+    }
+  ],
+  "offset": 0,
+  "limit": 2,
+  "total": 500134
+}
 ```
+
+::: note
+The response's `total` value response indicates the total number of documents in the queried index.
+:::
 
 ## Add or replace documents
 
