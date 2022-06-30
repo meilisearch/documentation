@@ -974,3 +974,10 @@ update_faceting_settings_1: |-
 reset_faceting_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/faceting'
+settings_guide_faceting_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxValuesPerFacet": 5
+    }'

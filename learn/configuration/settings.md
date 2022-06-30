@@ -7,6 +7,7 @@ This page describes the **index-level settings** available in Meilisearch and ho
 | **[displayedAttributes](/learn/configuration/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                       |
 | **[distinctAttribute](/learn/configuration/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                      |
 | **[filterableAttributes](/learn/configuration/settings.md#filterable-attributes)** | List of attributes that can be used for filtering                                | `null`                                                                                      |
+| **[faceting](/learn/advanced/filtering_and_faceted_search.md)**                    | Faceting settings                                                                | `{}`
 | **[rankingRules](/learn/configuration/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
 | **[searchableAttributes](/learn/configuration/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                       |                                                     |
 | **[sortableAttributes](/learn/configuration/settings.md#sortable-attributes)**     |  List of attributes to use when sorting search results                           | `[]`                                                                         |
@@ -94,6 +95,22 @@ Configuring `filterableAttributes` is necessary in order to use the [`filter` se
 To be able to filter search results on `director` and `genres` in a movie database, you must first add these attributes to the `filterableAttributes` list:
 
 <CodeSamples id="faceted_search_update_settings_1" />
+
+## Faceting
+
+The faceting settings of an index. Facets are specific uses-cases of filters, depending on your UI and UX design.
+
+::: tip
+Like filters, you need to add your facets to `filterableAttributes` in order to use the [`filter`](/reference/api/search.md#filter) search parameter.
+:::
+
+[Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)
+
+#### Example
+
+The following code sample will return a maximum of 5 facet values for each facet in the `movies` index:
+
+<CodeSamples id="settings_guide_faceting_1" />
 
 ## Ranking rules
 
