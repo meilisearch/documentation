@@ -32,7 +32,7 @@ The response from the [task API](/reference/api/tasks.md) will always include th
 | `uid`        | integer | The unique sequential identifier of the task                                                                     |
 | `indexUid`   | string  | The unique index identifier (always `null` for dumps)                                                                                      |
 | `status`     | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
-| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentPartial`, `documentDeletion`, `settingsUpdate`, `clearAll`, `dumpCreation`                                                                       |
+| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentPartial`, `documentDeletion`, `settingsUpdate`, `dumpCreation`                                                                       |
 | `details`    | object  | Detailed information on the task payload                                                               |
 | `error`      | object  | Error details and context. Only present when a task has the `failed` status                                                |
 | `duration`   | string  | The total elapsed time the task spent in the `processing` state, in ISO 8601 format     |
