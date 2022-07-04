@@ -16,7 +16,7 @@ We recommend creating pagination interfaces centered around [previous and next b
 
 ## Recommended: Previous and next buttons
 
-Using previous and next buttons for pagination means that users can easily page through results, but don't have the ability to jump to an arbitrary results page.
+Using previous and next buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page.
 
 ![Placeholder image for prev/next interface]()
 
