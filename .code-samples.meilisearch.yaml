@@ -183,6 +183,9 @@ update_settings_1: |-
           "twoTypos": 10
         },
         "disableOnAttributes": ["title"]
+      },
+      "pagination": {
+        "maxTotalHits": 5000
       }
     }'
 reset_settings_1: |-
@@ -958,3 +961,23 @@ getting_started_typo_tolerance: |-
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
+settings_guide_pagination_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/pagination' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxTotalHits": 50
+    }'
+get_pagination_settings_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/pagination'
+update_pagination_settings_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/books/settings/pagination' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxTotalHits": 100
+    }'
+reset_pagination_settings_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/pagination'
