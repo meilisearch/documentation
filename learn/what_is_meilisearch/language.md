@@ -40,4 +40,4 @@ Yes—our users work with many different alphabets and writing systems, such as 
 
 ### Does Meilisearch plan to support additional languages in the future?
 
-Yes, we definitely do. The more feedback we get from native speakers, the easier it is for us to understand how to improve performance for those languages. Similarly, the more requests we get to improve support for a specific language, the more likely we are to devote resources to that project.
+Yes, we definitely do. The more [feedback](https://github.com/meilisearch/product/discussions?discussions_q=label%3Aproduct%3Acore%3Atokenizer) we get from native speakers, the easier it is for us to understand how to improve performance for those languages. Similarly, the more requests we get to improve support for a specific language, the more likely we are to devote resources to that project.

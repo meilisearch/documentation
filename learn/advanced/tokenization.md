@@ -8,12 +8,12 @@ This allows Meilisearch to function in several different languages with zero set
 
 ## Deep dive: The Meilisearch tokenizer
 
-When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called an **analyzer**. The analyzer is responsible for determining the primary language of each field based on the scripts (e.g., Latin alphabet, Chinese hanzi, etc.) that are present there. Then, it applies the corresponding **pipeline** to each field.
+When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called the tokenizer. The tokenizer is responsible for splitting each field by script (e.g., Latin alphabet, Chinese hanzi, etc.). It then applies the corresponding pipeline to each part of each field.
 
 We can break down the tokenization process like so:
 
-1. Crawl the document(s) and determine the primary language for each field
-2. Go back over the documents field-by-field, running the corresponding tokenization pipeline, if it exists
+1. Crawl the document(s), splitting each field by script
+2. Go back over the documents part-by-part, running the corresponding tokenization pipeline, if it exists
 
 Pipelines include many language-specific operations. Currently, we have four pipelines:
 
