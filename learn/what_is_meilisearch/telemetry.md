@@ -152,7 +152,8 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `formatting.highlight_post_tag`                    | `true` if `highlightPostTag` is specified, otherwise `false`                                | false
 | `formatting.crop_length`                           | `true` if `cropLength` is specified, otherwise `false`                                      | false
 | `formatting.crop_marker`                           | `true` if `cropMarker` is specified, otherwise `false`                                      | false
-| `formatting.matches`                               | `true` if `matches` is specified, otherwise `false`                                         | false
+| `formatting.show_matches_position`                 | `true` if `showMatchesPosition` is used in this batch, otherwise `false`                    | false
+| `facets`                                           | `true` if `facets` is used in this batch, otherwise `false`                                 | false
 | `primary_key`                                      | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
 | `payload_type`                                     | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                                   | `true` if a document addition or update request triggered index creation, otherwise `false` | true
@@ -163,8 +164,13 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `filterable_attributes.has_geo`                    | `true` if `_geo` is set as a filterable attribute, otherwise `false`                        | false
 | `searchable_attributes.total`                      | Number of searchable attributes                                                             | 4
 | `per_task_uid`                                     | `true` if a `uid` is used to fetch a particular task resource, otherwise `false`            | true
+| `filtered_by_index_uid`                            | `true` if the `GET /tasks` endpoint is filered by `indexUid`, otherwise `false`             | false
+| `filtered_by_type`                                 | `true` if the `GET /tasks` endpoint is filered by `type`, otherwise `false`                 | false
+| `filtered_by_status`                               | `true` if the `GET /tasks` endpoint is filered by `status`, otherwise `false`               | false
 | `typo_tolerance.enabled`                           | `true` if typo tolerance is enabled, otherwise `false`                                      | true
 | `typo_tolerance.disable_on_attributes`             | `true` if at least one value is defined for `disableOnAttributes`, otherwise `false`        | false
 | `typo_tolerance.disable_on_words`                  | `true` if at least one value is defined for `disableOnWords`, otherwise `false`             | false
 | `typo_tolerance.min_word_size_for_typos.one_typo`  | The defined value for the `minWordSizeForTypos.oneTypo` parameter                           | 5
 | `typo_tolerance.min_word_size_for_typos.two_typos` | The defined value for the `minWordSizeForTypos.twoTypos` parameter                          | 9
+| `pagination.max_total_hits`                        | The defined value for the `pagination.maxTotalHits` property                                | 1000
+| `faceting.max_values_per_facet`                    | The defined value for the `faceting.maxValuesPerFacet` property                             | 100
