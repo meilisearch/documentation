@@ -14,11 +14,9 @@ Because of this, we do not recommend creating interfaces with page selectors. If
 
 Many other pagination UIs are fully compatible with Meilisearch, such as infinite scrolling and buttons that manually load more results on click. For an experience similar to page selection, we recommend creating pagination interfaces centered around [previous and next buttons](#recommended-previous-and-next-buttons).
 
-## Recommended: Previous and next buttons
+## Recommended: "Previous" and "Next" buttons
 
 Using previous and next buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page.
-
-![Placeholder image for prev/next interface]()
 
 Though this approach offers less precision than a full-blown page selector, it does not require knowing the precise number of search results. This makes it a good fit for Meilisearch's current capabilities.
 
@@ -52,7 +50,7 @@ Likewise, if you set `limit` to `20` and `offset` to `40`, you skip the first 40
 const results = await index.search("tarkovsky", { limit: 20, offset: 40 });
 ```
 
-Use this formula to quickly calculate a page's offset value: `offset = limit * (target page number - 1)`.
+You can use this formula to calculate a page's offset value: `offset = limit * (target page number - 1)`. In the previous example, the calculation would look like this: `offset = 20 * (3 - 1)`. This gives us `40` as the result: `offset = 20 * 2 = 40`.
 
 Once a query returns fewer `hits` than your configured `limit`, you have reached the last results page.
 
@@ -135,13 +133,11 @@ document.querySelector('#next_button').onclick = function () { updatePageNumber(
 
 This type of pagination consists of a numbered list of pages accompanied by next and previous buttons.
 
-![placeholder page selection UI](https://vuejsexamples.com/content/images/2018/11/vue-pagination.gif)
-
 This is a common UI pattern that offers users a significant amount of precision when navigating results. However, due to Meilisearch's [limitations](#choosing-the-right-pagination-ui), it is not a good fit for pagination with Meilisearch.
 
 ### Implementation
 
-The general implementation of a page selection interface is similar to our [recommended solution](#recommended-previous-and-next-buttons), but also includes a numbered page list.
+The general implementation of a page selection interface is similar to our [recommended solution](#recommended-previous-and-next-buttons), with one signficant addition: it includes a numbered page list.
 
 To create a numbered page list, however, you must know the exact number of total results. For example, if you have 100 results and your search result pages contain 10 results each, your selector must show a list of numbers going from 1 to 10.
 
@@ -218,10 +214,10 @@ By default, Meilisearch returns a maximum of 1000 search results. Consult our [i
 
 Though we advise against it, you can use `estimatedTotalHits` to calculate the number of search result pages. This means your number of results and page count are likely to change until Meilisearch retrieves the last search result.
 
-For example, a query's `estimatedTotalHits` might be `100` when you fetch the first page of search results. If you are showing 20 results per page, this means your interface will display a page selector with 5 pages. When you fetch the fifth and last page according to Meilisearch's current estimate, however, `estimatedTotalHits` might change to `300`. Your page list, previously displaying 5 pages, must now show 10 total pages.
+For example, a query's `estimatedTotalHits` might be `100` when you fetch the first page of search results. If you are showing 20 results per page, this means your interface will display a page selector with 5 pages. When you fetch the fifth and last page according to Meilisearch's current estimate, however, `estimatedTotalHits` might change to `300`. Your page list, previously displaying 5 pages, must now show 15 total pages.
 
 This method gives users access to all search results. However, it also results in an interface that might feel unreliable due to constant and unpredictable changes.
 
 ## Unsatisfied? Let us know
 
-Is the current state of pagination in Meilisearch negatively impacting you? Please share your thoughts with us in this [GitHub discussion](https://github.com/meilisearch/product/discussions/483). We are actively working on improving this aspect of Meilisearch, and your input is greatly appreciated.
+Is the current state of pagination in Meilisearch creating problems for you? Please share your thoughts with us in this [GitHub discussion](https://github.com/meilisearch/product/discussions/483). We are actively working on improving this aspect of Meilisearch and your input is greatly appreciated.
