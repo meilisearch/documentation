@@ -8,7 +8,7 @@ In this guide, we will discuss some of Meilisearch's current limitations, how th
 
 There are quite a few pagination interfaces you might want to implement in your application. Many common UI patterns have a page selector allowing users to jump to any search results page. To create a page selector, you must know the exact number of total results so you can calculate the precise number of result pages.
 
-For performance reasons, however, Meilisearch cannot provide the exact number of results for a query. Instead, When using the search endpoint, responses contain an `estimatedTotalHits` field. As its name indicates, `estimatedTotalHits` is only an estimate of how many documents match your user's query.
+For performance reasons, however, Meilisearch cannot provide the exact number of results for a query. Instead, when using the [search endpoint](/reference/api/search.md), responses contain an `estimatedTotalHits` field. As its name indicates, `estimatedTotalHits` is only an estimate of how many documents match your user's query.
 
 Because of this, we do not recommend creating interfaces with page selectors. If page selection is crucial to the software you are developing, see the [last section of this page](#not-recommended-page-selection) for tips that might help you work around Meilisearch's current limitations.
 
@@ -28,7 +28,7 @@ Though this approach offers less precision than a full-blown page selector, it d
 
 Previous and next buttons can be implemented using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters.
 
-`limit` sets the size of a page. If you set `limit` to 10, Meilisearch's response will contain a maximum of 10 search results. `offset` skips a number of search results. If you set `offset` to 20, Meilisearch's response will skip the first 20 search results.
+`limit` sets the size of a page. If you set `limit` to `10`, Meilisearch's response will contain a maximum of 10 search results. `offset` skips a number of search results. If you set `offset` to `20`, Meilisearch's response will skip the first 20 search results.
 
 For example, you can use Meilisearch's JavaScript SDK to get the first ten films in a movies database:
 
@@ -37,15 +37,16 @@ const results = await index.search("tarkovsky", { limit: 10, offset: 0 });
 ```
 
 You can use both parameters together to effectively create search pages.
+
 #### Search pages and calculating `offset`
 
-If you set `limit` to 20 and `offset` to 0, you get the first twenty search results. We can call this our first page.
+If you set `limit` to `20` and `offset` to `0`, you get the first twenty search results. We can call this our first page.
 
 ```js
 const results = await index.search("tarkovsky", { limit: 20, offset: 0 });
 ```
 
-Likewise, if you set `limit` to 20 and `offset` to 40, you skip the first 40 search results and get documents ranked from 41 through 60. We can call this the third results page.
+Likewise, if you set `limit` to `20` and `offset` to `40`, you skip the first 40 search results and get documents ranked from 40 through 59. We can call this the third results page.
 
 ```js
 const results = await index.search("tarkovsky", { limit: 20, offset: 40 });
@@ -89,9 +90,9 @@ document.querySelector('#next_button').onclick = function () { updatePageNumber(
 
 It is often helpful to disable navigation buttons when the user cannot move to the "next" or "previous" page.
 
-The "previous" button should be disabled whenever your `offset` is 0, as this indicates your user is on the first results page.
+The "Previous" button should be disabled whenever your `offset` is `0`, as this indicates your user is on the first results page.
 
-To know when to disable the "next" button, we recommend setting your query's `limit` to the number of results you wish to display per page plus one. That extra `hit` should not be shown to the user. Its purpose is to indicate that there is at least one more document to display on the next page.
+To know when to disable the "Next" button, we recommend setting your query's `limit` to the number of results you wish to display per page plus one. That extra `hit` should not be shown to the user. Its purpose is to indicate that there is at least one more document to display on the next page.
 
 The following JavaScript snippet runs checks whether we should disable a button every time the user navigates to another search results page:
 
@@ -152,9 +153,9 @@ We recommend two different workarounds to create this kind of pagination interfa
 
 By default, a search request returns 20 search results. You can change this value to a much higher number and treat it as the effective maximum of search results you will show a user. Doing so means the size of your `hits` array is the exact number of search results you have to paginate.
 
-For example, if you set `limit` to 300, every search request made to Meilisearch returns at most 300 documents. If a query returns a `hits` array with 200 items and you want each page to display 20 results, you can create a page selector with 10 pages.
+For example, if you set `limit` to `300`, every search request made to Meilisearch returns at most 300 documents. If a query returns a `hits` array with 200 items and you want each page to display 20 results, you can create a page selector with 10 pages.
 
-In the following JavaScript snippet, each time a user searches, we make a new query with `limit` set to 300. Once we receive the search results, we store them in a variable and create a list of numbered pages. When users click on any number in the page list, we display a new page:
+In the following JavaScript snippet, each time a user searches, we make a new query with `limit` set to `300`. Once we receive the search results, we store them in a variable and create a list of numbered pages. When users click on any number in the page list, we display a new page:
 
 ```js
 // Retrieve search results and create the page selector
