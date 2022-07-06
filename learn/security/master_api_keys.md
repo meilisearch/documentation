@@ -94,6 +94,8 @@ echo -n $HYPHENATED_UUID | openssl dgst -sha256 -hmac $MASTER_KEY
 
 As a result, `key` values are deterministic between instances sharing the same configuration. Since the `key` field depends on the master key, it is not propagated to dumps and snapshots. If a malicious user ever gets access to your dumps or snapshots, they will not have access to your instance's API keys.
 
+This is also useful in continuous deployment processes as you know the value of the `key` field in advance.
+
 ### Updating an API key
 
 You can only update the `name` and `description` of an API key, even after it expires.
