@@ -49,7 +49,7 @@ Partially update the faceting settings for an index. The index [`uid`](/learn/co
 **Type:** integer
 **Default value:** `100`
 
-Configure the maximum number of facet values returned for each facet. Values are alphabetically sorted.
+Configure the maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order.
 
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
