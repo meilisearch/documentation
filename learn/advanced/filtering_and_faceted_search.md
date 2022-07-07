@@ -309,6 +309,10 @@ Using the `facets` search parameter adds `facetDistribution` to the returned obj
 }
 ```
 
+::: note
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/faceting.md).
+:::
+
 ##### Example
 
 You can write a search query that gives you the distribution of `batman` movies per genre:

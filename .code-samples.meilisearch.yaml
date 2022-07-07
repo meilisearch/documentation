@@ -181,6 +181,9 @@ update_settings_1: |-
           "twoTypos": 10
         },
         "disableOnAttributes": ["title"]
+      },
+      "faceting": {
+        "maxValuesPerFacet": 200
       }
     }'
 reset_settings_1: |-
@@ -948,3 +951,23 @@ getting_started_typo_tolerance: |-
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
+get_faceting_settings_1: |-
+  curl \
+    -X GET 'http://localhost:7700/indexes/books/settings/faceting'
+update_faceting_settings_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/books/settings/faceting' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxValuesPerFacet": 2
+    }'
+reset_faceting_settings_1: |-
+  curl \
+    -X DELETE 'http://localhost:7700/indexes/books/settings/faceting'
+settings_guide_faceting_1: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxValuesPerFacet": 5
+    }'

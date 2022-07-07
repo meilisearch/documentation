@@ -323,6 +323,7 @@ module.exports = {
                 },
                 '/reference/api/displayed_attributes',
                 '/reference/api/distinct_attribute',
+                '/reference/api/faceting',
                 '/reference/api/filterable_attributes',
                 '/reference/api/ranking_rules',
                 '/reference/api/searchable_attributes',
