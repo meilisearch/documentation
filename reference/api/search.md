@@ -29,7 +29,7 @@ This is the preferred route to perform search when an API key is required, as it
 
 | Query Parameter                                       | Description                                        | Default Value |
 |-------------------------------------------------------|----------------------------------------------------|---------------|
-| **[q](#query-q)**                                     | Query string (mandatory)                           | `""`          |
+| **[q](#query-q)**                                     | Query string                                       | `""`          |
 | **[offset](#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filter](#filter)**                                 | Filter queries by an attribute's value             | `null`        |
@@ -117,7 +117,7 @@ This route should only be used when no API key is required. If an API key is req
 
 | Query Parameter                                       | Description                                        | Default Value |
 |-------------------------------------------------------|----------------------------------------------------|---------------|
-| **[q](#query-q)**                                     | Query string (mandatory)                           | `""`          |
+| **[q](#query-q)**                                     | Query string                                       | `""`          |
 | **[offset](#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filter](#filter)**                                 | Filter queries by an attribute's value             | `null`        |
@@ -201,7 +201,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 
 | Query Parameter                                       | Description                                        | Default Value |
 |-------------------------------------------------------|----------------------------------------------------|---------------|
-| **[q](#query-q)**                                     | Query string (mandatory)                           | `""`          |
+| **[q](#query-q)**                                     | Query string                                       | `""`          |
 | **[offset](#offset)**                                 | Number of documents to skip                        | `0`           |
 | **[limit](#limit)**                                   | Maximum number of documents returned               | `20`          |
 | **[filter](#filter)**                                 | Filter queries by an attribute's value             | `null`        |
