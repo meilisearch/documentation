@@ -37,7 +37,7 @@ List the settings.
 
 ## Update searchable attributes
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/searchable-attributes" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
 Update the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -65,7 +65,7 @@ A match in title will make a document more relevant than another document with a
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -73,7 +73,7 @@ A match in title will make a document more relevant than another document with a
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset searchable attributes
 
@@ -93,7 +93,7 @@ All attributes found in the documents added to the index.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -101,4 +101,4 @@ All attributes found in the documents added to the index.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

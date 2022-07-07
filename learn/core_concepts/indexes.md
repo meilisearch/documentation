@@ -29,7 +29,6 @@ The `uid` is the **unique identifier** of an index. It is set when creating the 
 ```json
 {
   "uid": "movies",
-  "name": "movies",
   "createdAt": "2019-11-20T09:40:33.711324Z",
   "updatedAt": "2019-11-20T10:16:42.761858Z"
 }
@@ -60,6 +59,7 @@ You can customize the following index settings:
 - [Displayed and searchable attributes](#displayed-and-searchable-attributes)
 - [Typo tolerance](#typo-tolerance)
 - [Pagination](#pagination)
+- [Faceting](#faceting)
 
 To change index settings, use the [update settings endpoint](/reference/api/settings.md#update-settings) or any of the [child routes](/reference/api/settings.md#all-settings).
 
@@ -137,3 +137,11 @@ You can update the typo tolerance settings using the [update settings endpoint](
 To protect your database from malicious scraping, Meilisearch only returns up to `1000` results for a search query. You can change this limit using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update pagination settings endpoint](/reference/api/pagination.md#update-pagination-settings).
 
 [Learn more about pagination](/learn/advanced/pagination.md)
+
+### Faceting
+
+Facets are a specific use-case of filters in Meilisearch: whether something is a facet or filter depends on your UI and UX design. Like filters, you need to add your facets to [`filterableAttributes`](/reference/api/filterable_attributes.md#update-filterable-attributes), then make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
+
+By default, Meilisearch returns `100` facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update faceting settings endpoint](/reference/api/faceting.md#update-faceting-settings).
+
+[Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)

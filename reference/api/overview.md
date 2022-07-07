@@ -81,7 +81,7 @@ Meilisearch is an **asynchronous API**. This means that in response to most writ
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "indexUpdate",
@@ -89,6 +89,6 @@ Meilisearch is an **asynchronous API**. This means that in response to most writ
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 See more information about [asynchronous operations](/learn/advanced/asynchronous_operations.md).

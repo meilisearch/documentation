@@ -6,6 +6,7 @@ These are the reference pages for the child routes:
 
 - [Displayed attributes](/reference/api/displayed_attributes.md)
 - [Distinct attribute](/reference/api/distinct_attribute.md)
+- [Faceting](/reference/api/faceting.md)
 - [Filterable attributes](/reference/api/filterable_attributes.md)
 - [Pagination](/reference/api/pagination.md)
 - [Ranking rules](/reference/api/ranking_rules.md)
@@ -35,6 +36,7 @@ Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#
 | ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
 | **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
 | **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
 | **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
 | **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
@@ -102,13 +104,16 @@ List the settings.
   },
   "pagination": {
     "maxTotalHits": 1000
+  },
+  "faceting": {
+    "maxValuesPerFacet": 100
   }
 }
 ```
 
 ## Update settings
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings" />
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings" />
 
 Update the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -126,6 +131,7 @@ If the provided index does not exist, it will be created.
 | ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
 | **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
 | **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
 | **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
 | **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
@@ -143,7 +149,7 @@ If the provided index does not exist, it will be created.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -151,7 +157,7 @@ If the provided index does not exist, it will be created.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset settings
 
@@ -165,6 +171,7 @@ All settings will be reset to their default value.
 | ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
 | **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
 | **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
 | **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
 | **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
 | **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
@@ -183,7 +190,7 @@ All settings will be reset to their default value.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -191,4 +198,4 @@ All settings will be reset to their default value.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

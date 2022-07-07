@@ -44,7 +44,7 @@ List the settings.
 
 ## Update ranking rules
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/ranking-rules" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/ranking-rules" />
 
 Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -68,7 +68,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -76,7 +76,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset ranking rules
 
@@ -112,7 +112,7 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -120,4 +120,4 @@ An array that contains the [built-in ranking rules](/learn/core_concepts/relevan
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

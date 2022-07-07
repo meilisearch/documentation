@@ -8,14 +8,14 @@ In order to start filtering and sorting documents based on their geographic loca
 
 `_geo` is a reserved field. If you include it in your documents, Meilisearch expects its value to conform to a specific format.
 
-When using JSON and NDJSON, `_geo` must contain an object with two keys: `lat` and `lng`. Both must contain a floating point number indicating, respectively, latitude and longitude:
+When using JSON and NDJSON, `_geo` must contain an object with two keys: `lat` and `lng`. Both fields must contain either a floating point number or a string indicating, respectively, latitude and longitude:
 
 ```json
 {
   …
   "_geo": {
     "lat": 0.0,
-    "lng": 0.0
+    "lng": "0.0"
   }
 }
 ```
