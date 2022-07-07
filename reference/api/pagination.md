@@ -73,7 +73,7 @@ Setting `maxTotalHits` to a high value might negatively impact performance and e
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset pagination settings
 
@@ -95,4 +95,4 @@ Reset an index's pagination settings to their default value. The index [`uid`](/
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

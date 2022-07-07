@@ -73,7 +73,7 @@ Setting `maxValuesPerFacet` to a high value might negatively impact performance.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset faceting settings
 
@@ -95,4 +95,4 @@ Reset an index's faceting settings to their default value. The index [`uid`](/le
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

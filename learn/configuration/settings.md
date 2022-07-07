@@ -129,7 +129,6 @@ The following code sample will return a maximum of `5` facet values for each fac
 
 <CodeSamples id="settings_guide_faceting_1" />
 
-
 ## Ranking rules
 
 Built-in ranking rules that **ensure relevancy in search results**. Ranking rules are applied in a default order which can be changed in the settings. You can add or remove rules and change their order of importance.
