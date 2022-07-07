@@ -8,18 +8,18 @@ This allows Meilisearch to function in several different languages with zero set
 
 ## Deep dive: The Meilisearch tokenizer
 
-![Chart illustrating the architecture of Meilisearch's tokenizer](https://user-images.githubusercontent.com/6482087/102896344-8560d200-4466-11eb-8cfe-b4ae8741093b.jpg)
-
-When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called an **analyzer**. The analyzer is responsible for determining the primary language of each field based on the scripts (e.g., Latin alphabet, Chinese hanzi, etc.) that are present there. Then, it applies the corresponding **pipeline** to each field.
+When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called the tokenizer. The tokenizer is responsible for splitting each field by writing system (e.g. Latin alphabet, Chinese hanzi). It then applies the corresponding pipeline to each part of each document field.
 
 We can break down the tokenization process like so:
 
-1. Crawl the document(s) and determine the primary language for each field
-2. Go back over the documents field-by-field, running the corresponding tokenization pipeline, if it exists
+1. Crawl the document(s), splitting each field by script
+2. Go back over the documents part-by-part, running the corresponding tokenization pipeline, if it exists
 
-Pipelines include many language-specific operations. Currently, we have two pipelines:
+Pipelines include many language-specific operations. Currently, we have four pipelines:
 
-1. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
-2. A default Meilisearch pipeline that separates words based on categories. Works with a variety of languages
+1. A default Meilisearch pipeline for languages that use whitespace to separate words. Uses [unicode segmenter](https://github.com/unicode-rs/unicode-segmentation)
+2. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
+3. A specialized Japanese pipeline using [Lindera](https://github.com/lindera-morphology/lindera)
+4. A specialized Hebrew pipeline based off the default Meilisearch pipeline. Uses [Niqqud](https://docs.rs/niqqud/latest/niqqud/) for normalization
 
-For more details, check out the [feature specification](https://github.com/meilisearch/specifications/blob/master/text/0001-script-based-tokenizer.md).
+For more details, check out the [tokenizer contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md).
