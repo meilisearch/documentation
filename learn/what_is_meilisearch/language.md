@@ -7,7 +7,7 @@ Meilisearch is multilingual, featuring optimized support for:
 - Japanese
 - Hebrew
 
-We aim to provide global language support, and your feedback helps us move closer to that goal. If you notice inconsistencies in your search results or the way your documents are processed, please [open an issue in our tokenizer repo](https://github.com/meilisearch/charabia/issues/new).
+We aim to provide global language support, and your feedback helps us move closer to that goal. If you notice inconsistencies in your search results or the way your documents are processed, please [open an issue in the Meilisearch repository](https://github.com/meilisearch/meilisearch/issues/new/choose).
 
 [Read more about our tokenizer](/learn/advanced/tokenization.md)
 
@@ -15,7 +15,7 @@ We aim to provide global language support, and your feedback helps us move close
 
 While we have employees from all over the world at Meilisearch, we don't speak every language. We rely almost entirely on feedback from external contributors to understand how our engine is performing across different languages.
 
-If you'd like to request optimized support for a language that we don't currently support, please upvote the related [discussion in our product repository](https://github.com/meilisearch/product/discussions?discussions_q=label%3Aproduct%3Acore%3Atokenizer) or [open a new one](https://github.com/meilisearch/product/discussions/new?category=feedback-feature-proposal) if it doesn't exist.
+If you'd like to request optimized support for a language, please upvote the related [discussion in our product repository](https://github.com/meilisearch/product/discussions?discussions_q=label%3Aproduct%3Acore%3Atokenizer) or [open a new one](https://github.com/meilisearch/product/discussions/new?category=feedback-feature-proposal) if it doesn't exist.
 
 If you'd like to help by developing a tokenizer pipeline yourself: first of all, thank you! We recommend that you take a look at the [tokenizer contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md) before making a PR.
 
