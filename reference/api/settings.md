@@ -8,6 +8,7 @@ These are the reference pages for the child routes:
 - [Distinct attribute](/reference/api/distinct_attribute.md)
 - [Faceting](/reference/api/faceting.md)
 - [Filterable attributes](/reference/api/filterable_attributes.md)
+- [Pagination](/reference/api/pagination.md)
 - [Ranking rules](/reference/api/ranking_rules.md)
 - [Searchable attributes](/reference/api/searchable_attributes.md)
 - [Sortable attributes](/reference/api/sortable_attributes.md)
@@ -37,6 +38,7 @@ Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#
 | **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
 | **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
 | **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
 | **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
 | **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
@@ -94,11 +96,14 @@ List the settings.
   "typoTolerance": {
     "enabled": true, 
     "minWordSizeForTypos": {
-      "oneTypo": 5,
-      "twoTypos": 10
-    },
+        "oneTypo": 5,
+        "twoTypos": 10
+      },
     "disableOnWords": [],
     "disableOnAttributes": []
+  },
+  "pagination": {
+    "maxTotalHits": 1000
   },
   "faceting": {
     "maxValuesPerFacet": 100
@@ -128,6 +133,7 @@ If the provided index does not exist, it will be created.
 | **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
 | **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
 | **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
 | **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
 | **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
@@ -167,6 +173,7 @@ All settings will be reset to their default value.
 | **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
 | **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
 | **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
 | **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
 | **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
 | **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |

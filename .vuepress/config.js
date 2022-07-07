@@ -174,6 +174,7 @@ module.exports = {
             '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering_and_faceted_search',
             '/learn/advanced/geosearch',
+            '/learn/advanced/pagination',
             '/learn/advanced/sorting',
             {
               title: 'Updating Meilisearch',
@@ -325,6 +326,7 @@ module.exports = {
                 '/reference/api/distinct_attribute',
                 '/reference/api/faceting',
                 '/reference/api/filterable_attributes',
+                '/reference/api/pagination',
                 '/reference/api/ranking_rules',
                 '/reference/api/searchable_attributes',
                 '/reference/api/sortable_attributes',
