@@ -102,6 +102,10 @@ docker run -it --rm \
 
 ::::
 
+:::note
+If you are updating to v0.28, keys imported from the old version will have their `key` and `uid` fields regenerated.
+:::
+
 ### Proceed according to your database version
 
 Now that you know which Meilisearch version your database is compatible with, proceed accordingly:
