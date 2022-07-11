@@ -382,6 +382,16 @@
 									"key": "indexUid",
 									"value": "books",
 									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "10",
+									"disabled": true
 								}
 							]
 						}
