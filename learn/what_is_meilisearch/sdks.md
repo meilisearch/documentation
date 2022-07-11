@@ -18,7 +18,6 @@ You can use Meilisearch API wrappers in your favorite language. These libraries 
 - [Ruby](https://github.com/meilisearch/meilisearch-ruby)
 - [Rust](https://github.com/meilisearch/meilisearch-rust)
 - [Swift](https://github.com/meilisearch/meilisearch-swift)
-- [Firebase](https://github.com/meilisearch/firestore-meilisearch)
 
 ### Framework integrations
 
@@ -49,6 +48,7 @@ You can use Meilisearch API wrappers in your favorite language. These libraries 
 - [VuePress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch)
 - [Strapi plugin](https://github.com/meilisearch/strapi-plugin-meilisearch/)
 - [Gatsby plugin](https://github.com/meilisearch/gatsby-plugin-meilisearch/)
+- [Firebase](https://github.com/meilisearch/firestore-meilisearch)
 
 ### Other tools
 
