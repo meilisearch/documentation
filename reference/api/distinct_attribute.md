@@ -30,7 +30,7 @@ Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute
 
 ## Update distinct attribute
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/distinct-attribute" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
 Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -54,7 +54,7 @@ If the field does not exist, no error will be thrown.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -62,7 +62,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset distinct attribute
 
@@ -80,7 +80,7 @@ Reset the [distinct attribute](/learn/configuration/settings.md#distinct-attribu
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -88,4 +88,4 @@ Reset the [distinct attribute](/learn/configuration/settings.md#distinct-attribu
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

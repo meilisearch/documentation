@@ -181,7 +181,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 | `query`                             | `q`                                                                            |
 | `attributesToRetrieve`              | `attributesToRetrieve`                                                         |
 | `filters`                           | `filter`                                                                       |
-| `facets`                            | `facetsDistribution`                                                           |
+| `facets`                            | `facetDistribution`                                                           |
 | `attributesToHighlight`             | `attributesToHighlight`                                                        |
 | `offset`                            | `offset`                                                                       |
 | `length`                            | `limit`                                                                        |

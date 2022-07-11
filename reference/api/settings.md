@@ -6,7 +6,9 @@ These are the reference pages for the child routes:
 
 - [Displayed attributes](/reference/api/displayed_attributes.md)
 - [Distinct attribute](/reference/api/distinct_attribute.md)
+- [Faceting](/reference/api/faceting.md)
 - [Filterable attributes](/reference/api/filterable_attributes.md)
+- [Pagination](/reference/api/pagination.md)
 - [Ranking rules](/reference/api/ranking_rules.md)
 - [Searchable attributes](/reference/api/searchable_attributes.md)
 - [Sortable attributes](/reference/api/sortable_attributes.md)
@@ -30,17 +32,19 @@ Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#
 
 ### Response body
 
-| Variable                  | Type      | Description                                                                      | Default value                                                                                     |
-| ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
-| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md)         | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
-| **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
-| **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
-| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **typoTolerance**         | Object    | Typo tolerance settings                                                          | `{}`                                                                                              |
+| Variable                 | Type      | Description                                                                                | Default value                                                                                |
+| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
+| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
+| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
+| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
+| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
+| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
+| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
+| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
 
 [Learn more about the settings in this guide.](/learn/configuration/settings.md)
 
@@ -92,18 +96,24 @@ List the settings.
   "typoTolerance": {
     "enabled": true, 
     "minWordSizeForTypos": {
-      "oneTypo": 5,
-      "twoTypos": 10
+        "oneTypo": 5,
+        "twoTypos": 10
       },
-      "disableOnWords": [],
-      "disableOnAttributes": []
-      }
+    "disableOnWords": [],
+    "disableOnAttributes": []
+  },
+  "pagination": {
+    "maxTotalHits": 1000
+  },
+  "faceting": {
+    "maxValuesPerFacet": 100
+  }
 }
 ```
 
 ## Update settings
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings" />
+<RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings" />
 
 Update the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -117,17 +127,19 @@ If the provided index does not exist, it will be created.
 
 ### Body
 
-| Variable                  | Type      | Description                                                                      | Default value                                                                                     |
-| ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
-| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md)         | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
-| **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
-| **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
-| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **typoTolerance**         | Object    | Typo tolerance settings                                                          | `{}`                                                                                              |
+| Variable                 | Type      | Description                                                                                | Default value                                                                                |
+| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
+| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
+| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
+| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
+| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
+| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
+| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
+| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
 
 ### Example
 
@@ -137,7 +149,7 @@ If the provided index does not exist, it will be created.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -145,7 +157,7 @@ If the provided index does not exist, it will be created.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset settings
 
@@ -155,17 +167,19 @@ Reset the settings of an index. The index [`uid`](/learn/core_concepts/indexes.m
 
 All settings will be reset to their default value.
 
-| Variable                  | Type      | Description                                                                      | Default value                                                                                     |
-| ------------------------  | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **displayedAttributes**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                                                                                                                |
-| **distinctAttribute**     | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                                                            |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md)         | `[]`                                                                                              |
-| **rankingRules**          | [Strings] | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **searchableAttributes**  | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                                                                          |
-| **sortableAttributes**    | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results  | `[]`                                                                         |
-| **stopWords**             | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                              |
-| **synonyms**              | Object    | List of associated words treated similarly                                       | `{}`                                                                                              |
-| **typoTolerance**         | Object    | Typo tolerance settings                                                          | `{}`                                                                                              |
+| Variable                 | Type      | Description                                                                                | Default value                                                                                |
+| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
+| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
+| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
+| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
+| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
+| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
+| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
+| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
 [Learn more about the settings](/learn/configuration/settings.md).
 
 #### Example
@@ -176,7 +190,7 @@ All settings will be reset to their default value.
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -184,4 +198,4 @@ All settings will be reset to their default value.
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).

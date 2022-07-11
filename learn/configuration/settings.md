@@ -7,6 +7,8 @@ This page describes the **index-level settings** available in Meilisearch and ho
 | **[displayedAttributes](/learn/configuration/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                       |
 | **[distinctAttribute](/learn/configuration/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                      |
 | **[filterableAttributes](/learn/configuration/settings.md#filterable-attributes)** | List of attributes that can be used for filtering                                | `null`                                                                                      |
+| **[pagination](/learn/advanced/pagination.md)**                                    | Pagination settings                                                              | `{}`
+| **[faceting](/learn/advanced/filtering_and_faceted_search.md)**                    | Faceting settings                                                                | `{}`
 | **[rankingRules](/learn/configuration/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
 | **[searchableAttributes](/learn/configuration/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                       |                                                     |
 | **[sortableAttributes](/learn/configuration/settings.md#sortable-attributes)**     |  List of attributes to use when sorting search results                           | `[]`                                                                         |
@@ -94,6 +96,38 @@ Configuring `filterableAttributes` is necessary in order to use the [`filter` se
 To be able to filter search results on `director` and `genres` in a movie database, you must first add these attributes to the `filterableAttributes` list:
 
 <CodeSamples id="faceted_search_update_settings_1" />
+
+## Pagination
+
+The maximum number of results Meilisearch can return. By default, this value is `1000` which means you cannot access results beyond `1000`.
+
+[Learn more about pagination in our dedicated guide.](/learn/advanced/pagination.md)
+
+### Example
+
+The code sample below updates `maxTotalHits` to `50`:
+
+<CodeSamples id="settings_guide_pagination_1" />
+
+::: note
+`maxTotalHits` takes priority over search parameters such as [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset).
+:::
+
+## Faceting
+
+The faceting settings of an index. Facets are specific use-cases of filters that can be used to refine search results.
+
+::: tip
+Like filters, you need to add your facets to [`filterableAttributes`](/reference/api/filterable_attributes.md#update-filterable-attributes) in order to use the [`filter`](/reference/api/search.md#filter) search parameter.
+:::
+
+[Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)
+
+#### Example
+
+The following code sample will return a maximum of `5` facet values for each facet in the `movies` index:
+
+<CodeSamples id="settings_guide_faceting_1" />
 
 ## Ranking rules
 

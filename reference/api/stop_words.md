@@ -38,7 +38,7 @@ Get the stop-words list of an index. The index [`uid`](/learn/core_concepts/inde
 
 ## Update stop-words
 
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/settings/stop-words" />
+<RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/stop-words" />
 
 Update the list of stop-words of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
@@ -58,7 +58,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -66,7 +66,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Reset stop-words
 
@@ -86,7 +86,7 @@ Empty array: `[]`
 
 ```json
 {
-    "uid": 1,
+    "taskUid": 1,
     "indexUid": "movies",
     "status": "enqueued",
     "type": "settingsUpdate",
@@ -94,4 +94,4 @@ Empty array: `[]`
 }
 ```
 
-You can use this `uid` to get more details on [the status of the task](/reference/api/tasks.md#get-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
