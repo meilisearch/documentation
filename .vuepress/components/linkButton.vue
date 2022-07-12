@@ -15,6 +15,14 @@ export default {
       default: '',
     },
   },
+  updated: () => {
+    const el = document.querySelector('div.route')
+    if (el) {
+      el.parentElement.style.display = 'block'
+      el.parentElement.style.width = 'fit-content'
+      el.parentElement.style.margin = 'auto'
+    }
+  },
 }
 </script>
 
