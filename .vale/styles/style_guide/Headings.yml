@@ -10,6 +10,7 @@ scope: heading
 match: $sentence
 indicators:
   - ':'
+  - '.'
 exceptions:
   - Azure
   - CLI
@@ -48,4 +49,8 @@ exceptions:
   - App Service Auto-Scale
   - Certbot
   - Bleve & Tantivy
-  - '([0-9a-z]:\s[A-Z])'  #How do get this to throw an error for `Step 1: do this`?
+  - Google Cloud Console
+  - AMIs
+  - '\b\s[0-9]:\s[A-Z]' # Step 1: Do this
+  - '[0-9]\.\s[A-Z]'  # 1. Do this
+  #- '"(.*?)"' #Ignore text in ""
