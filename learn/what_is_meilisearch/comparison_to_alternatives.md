@@ -208,7 +208,8 @@ Since Lucene is the technology behind many open source or closed source search e
 
 #### Sonic
 
-Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution and, compared to Meilisearch, it does not ensure relevancy ranking. Indeed, it does not store any documents but is comprised of an inverted index with a Levenshtein automaton, which means any application querying Sonic has to retrieve the search results from an external database using the IDs that are returned and then apply some relevancy ranking.
+Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution, and compared to Meilisearch, it does not ensure relevancy ranking. Instead of storing documents, it comprises an inverted index with a Levenshtein automaton. This means any application querying Sonic has to retrieve the search results from an external database using the returned IDs and then apply some relevancy ranking.
+
 Its ability to run on a few MBs of RAM makes it a minimalist and resource-efficient alternative to database tools that can be too heavyweight to scale.
 
 #### Typesense
