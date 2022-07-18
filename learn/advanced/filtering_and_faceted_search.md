@@ -244,9 +244,9 @@ When using a dataset of restaurants containing geopositioning data, we can filte
 
 Meilisearch filters can be used to build **faceted search** interfaces. This type of interface allows users to refine search results based on broad categories or **facets**. For example, a clothing webshop can use faceted search to allow users to easily explore items of a certain size or belonging to a specific brand.
 
-Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**. Facets are used in the UI as filters which users can apply to refine the results in real-time.
+Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**. Facets are used in the UI as filters that users can apply to refine the results in real-time.
 
-This is common in ecommerce sites like Amazon: when users perform a search, they are presented not only with a list of results, but also with a list of facets which you can see on the sidebar in the image below:
+This is common in ecommerce sites like Amazon. When users perform a search, they are presented not only with a list of results but also with a list of facets which you can see on the sidebar in the image below:
 
 ![Screenshot of an Amazon product search page displaying faceting UI](/faceted-search/facets-amazon.png)
 
