@@ -157,7 +157,7 @@ Elasticsearch can handle search through massive amounts of data and perform text
 Meilisearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing very large datasets is not possible.
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to Meilisearch.
-Meilisearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides a prefix searching capability, makes search intuitive for users, and returns them their results instantly with near-perfect relevance.
+Meilisearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides prefix searching capability, makes search intuitive for users, and returns results instantly with near-perfect relevance.
 
 ### Meilisearch vs Algolia
 

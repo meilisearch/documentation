@@ -3,10 +3,10 @@
 
 # Counts words in a sentence and alerts if a sentence exceeds 42 words.
 extends: occurrence
-message: 'Shorter sentences improve readability (max 42 words).'
+message: 'Shorter sentences improve readability (max 40 words).'
 scope: sentence
 link: https://docs.gitlab.com/ee/development/documentation/styleguide/index.html#language
 level: warning
-max: 42
+max: 40
 token: \b(\w+)\b
 
