@@ -121,7 +121,7 @@ Note that Meilisearch will rebuild your index whenever you update `filterableAtt
 
 ### Usage
 
-Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `filterableAttributes` list, you can use the [`filter` search parameter](/reference/api/search.md#filter) along with `_geoRadius`, a special filter rule, to ensure Meilisearch only returns results located within a specific geographic area.
+You first need to ensure your documents contain valid geolocation data and that you have added the `_geo` attribute to the `filterableAttributes` list. Then, you can use the [`filter` search parameter](/reference/api/search.md#filter) along with `_geoRadius`, a special filter rule, to ensure Meilisearch only returns results located within a specific geographic area.
 
 `_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
@@ -210,7 +210,7 @@ Note that Meilisearch will rebuild your index whenever you update `sortableAttri
 
 ### Usage
 
-Once you are sure that all your documents contain valid geolocation data and that you have added the `_geo` attribute to the `sortableAttributes` list, you can use the [`sort` search parameter](/reference/api/search.md#sort) along with `_geoPoint`, a special sorting function, to order results based on their distance from a geographic location.
+You first need to ensure your documents contain valid geolocation data and that you have added the `_geo` attribute to the `sortableAttributes` list. Then, you can use the [`sort` search parameter](/reference/api/search.md#sort) along with `_geoPoint`, a special sorting function, to order results based on their distance from a geographic location.
 
 ```
 _geoPoint(0.0, 0.0):asc
