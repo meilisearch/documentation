@@ -1,4 +1,8 @@
-# Random API
+---
+sidebarDepth: 2
+---
+
+# Random API (List all)
 
 Explain what the random API does.
 
@@ -20,7 +24,7 @@ Explain what the random API does.
 
 ## The random object (complex)
 
-### `Complex1`
+#### `Complex1`
 
 **Type**: String
 **Description**:
@@ -150,13 +154,6 @@ curl \
 
 Description.
 
-### Request body (simple)
-
-|Name|Type|Description|
-|---|-----|-----------|
-|`varA` |string | |
-|`varB` *|integer||
-
 #### Example
 
 ```bash
@@ -167,6 +164,17 @@ Description.
     "varB": 12
   }'
 ```
+
+### Request body (simple)
+
+|Name|Type|Description|
+|---|-----|-----------|
+|`varA` |string | |
+|`varB` *|integer||
+
+#### Example
+
+Code sample
 
 Returns a [random object](#the-random-object-simple).
 
@@ -226,16 +234,9 @@ Returns a [random object](#the-random-object-simple).
 
 ***
 
-#### Example
+### Example
 
-```bash
-  curl \
-  -X POST 'http://localhost:7700/random' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "varZ": 12
-  }'
-```
+Code sample
 
 Returns a [random object](#the-random-object-complex).
 
@@ -342,14 +343,7 @@ Returns a [random object](#the-random-object-simple).
 
 #### Example
 
-```bash
-  curl \
-  -X POST 'http://localhost:7700/random' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "varB": 12
-  }'
-```
+Code sample
 
 Returns a [random object](#the-random-object-complex).
 

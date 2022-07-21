@@ -296,6 +296,7 @@ module.exports = {
               path: '/reference/api/overview',
             },
             '/reference/api/format',
+            '/reference/format2_listall',
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
