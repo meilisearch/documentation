@@ -630,7 +630,7 @@ getting_started_communicating_with_a_protected_instance: |-
     -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filterableAttributes": [
