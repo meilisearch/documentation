@@ -184,7 +184,7 @@ update_settings_1: |-
       },
       "pagination": {
         "maxTotalHits": 5000
-
+      },
       "faceting": {
         "maxValuesPerFacet": 200
       }
@@ -446,7 +446,7 @@ search_parameter_guide_show_matches_position_1: |-
     }'
 settings_guide_synonyms_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/tops/settings' \
+    -X PATCH 'http://localhost:7700/indexes/tops/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "synonyms": {
@@ -456,7 +456,7 @@ settings_guide_synonyms_1: |-
     }'
 settings_guide_stop_words_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "stopWords": [
@@ -467,7 +467,7 @@ settings_guide_stop_words_1: |-
     }'
 settings_guide_ranking_rules_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "rankingRules": [
@@ -483,12 +483,12 @@ settings_guide_ranking_rules_1: |-
     }'
 settings_guide_distinct_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/jackets/settings' \
+    -X PATCH 'http://localhost:7700/indexes/jackets/settings' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "distinctAttribute": "product_id" }
+    --data-binary '{ "distinctAttribute": "product_id" }'
 settings_guide_searchable_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "searchableAttributes": [
@@ -499,7 +499,7 @@ settings_guide_searchable_1: |-
     }'
 settings_guide_displayed_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "displayedAttributes": [
@@ -511,7 +511,7 @@ settings_guide_displayed_1: |-
     }'
 settings_guide_sortable_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings' \
+    -X PATCH 'http://localhost:7700/indexes/books/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "sortableAttributes": [
@@ -630,7 +630,7 @@ getting_started_communicating_with_a_protected_instance: |-
     -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filterableAttributes": [
