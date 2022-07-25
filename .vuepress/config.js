@@ -319,9 +319,10 @@ module.exports = {
               collapsable: false,
               children: [
                 {
-                  title: 'All Settings',
-                  path: '/reference/api/settings',
+                  title: 'Settings object',
+                  path: '/reference/api/settings_object.html',
                 },
+                '/reference/api/settings',
                 '/reference/api/displayed_attributes',
                 '/reference/api/distinct_attribute',
                 '/reference/api/faceting',
