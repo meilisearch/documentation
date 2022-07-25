@@ -1,3 +1,8 @@
+---
+
+sidebarDepth: 2
+
+---
 # Asynchronous operations
 
 All index writes are processed **asynchronously**. This means that task requests are not handled as soon as they are received—instead, Meilisearch places these operations in a queue and processes them in the order they were received.
@@ -65,7 +70,7 @@ Task responses always contain a field indicating the request's current `status`.
 - `succeeded`: the task has been successfully processed
 - `failed`: a failure occurred when processing the task. No changes were made to the database
 
-### Examples
+#### Examples
 
 Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `taskUid` in response.
 
@@ -145,8 +150,6 @@ For example, the following command would return all `documentAdditionOrUpdate` t
 <CodeSamples id="get_all_tasks_filtering_2" />
 
 At this time, `OR` operations between different filters are not supported. For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
-
-[Read more about the possible values of these fields in our asynchronous operations guide.](/learn/advanced/asynchronous_operations.md)
 
 ### Paginating tasks
 

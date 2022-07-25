@@ -14,17 +14,17 @@ List all tasks globally, regardless of index. The `task` objects are contained i
 
 Tasks are always returned in descending order of `uid`. This means that by default, **the most recently created `task` objects appear first**.
 
-Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering-tasks).
+Task results are paginated and can be filtered. To learn more, refer to our [asynchronous operations](/learn/advanced/asynchronous_operations.md#filtering-tasks) guide.
 
 #### Query parameters
 
-| Query Parameter | Description                                                          |         Default Value          |
-|-----------------|----------------------------------------------------------------------|:------------------------------:|
-| **limit**       | number of tasks to return                                            |               20               |
-| **from**        | `uid` of the first task returned                                     | `uid` of the last created task |
-| **status**      | [filter tasks](#filtering-tasks) by their `status`                   |          all statuses          |
-| **type**        | [filter tasks](#filtering-tasks) by their `type`                     |           all types            |
-| **indexUid**    | [filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive |          all indexes           |
+| Query Parameter | Description                                                                                                    |         Default Value          |
+|-----------------|----------------------------------------------------------------------------------------------------------------|:------------------------------:|
+| **limit**       | number of tasks to return                                                                                      |               20               |
+| **from**        | `uid` of the first task returned                                                                               | `uid` of the last created task |
+| **status**      | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |          all statuses          |
+| **type**        | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |           all types            |
+| **indexUid**    | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |          all indexes           |
 
 ### Example
 
@@ -62,8 +62,6 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
     ]
 }
 ```
-
-You can filter and paginate tasks
 
 ## Get one task
 
