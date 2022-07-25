@@ -16,8 +16,8 @@ List the 20 most recently created keys. **Expired keys are included in the respo
 
 | Query Parameter          | Description               | Default Value |
 | ------------------------ | --------------------------| ------------- |
-| **offset**               | Number of keys to skip    |       0       |
-| **limit**                | Number of keys to return  |      20       |
+| **`offset`**               | Number of keys to skip    |       0       |
+| **`limit`**                | Number of keys to return  |      20       |
 
 ### Example
 

@@ -14,8 +14,8 @@ List all [indexes](/learn/core_concepts/indexes.md). Results can be paginated by
 
 | Query parameter          | Description                 | Default value |
 | ------------------------ | --------------------------- | :-----------: |
-| **offset**               | Number of indexes to skip   |       0       |
-| **limit**                | Number of indexes to return |      20       |
+| **`offset`**               | Number of indexes to skip   |       0       |
+| **`limit`**                | Number of indexes to return |      20       |
 
 ### Example
 
@@ -90,8 +90,8 @@ Creating an index is an asynchronous task. [You can read more about asynchronous
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **uid**  | The index unique identifier (_mandatory_)                  |
-| **primaryKey** | The primary key of the documents |
+| **`uid`**  | The index unique identifier (_mandatory_)                  |
+| **`primaryKey`** | The primary key of the documents |
 
 ```json
 {
@@ -138,7 +138,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 | Variable       | Description                                                |
 | -------------- | ---------------------------------------------------------- |
-| **primaryKey** | The primary key of the documents |
+| **`primaryKey`** | The primary key of the documents |
 
 ### Example
 

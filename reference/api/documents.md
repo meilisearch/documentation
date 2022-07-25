@@ -16,7 +16,7 @@ You can use the optional `fields` query parameter to specify which document fiel
 
 | Query Parameter          | Description                    | Default Value |
 | ------------------------ | ------------------------------ | :-----------: |
-| **fields**               | Document attributes to show    |       \*      |
+| **`fields`**               | Document attributes to show    |       \*      |
 
 ### Example
 
@@ -49,9 +49,9 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 | Query Parameter          | Description                    | Default Value |
 | ------------------------ | ------------------------------ | :-----------: |
-| **offset**               | Number of documents to skip    |       0       |
-| **limit**                | Number of documents to return  |      20       |
-| **fields**               | Document attributes to show    |      \*       |
+| **`offset`**               | Number of documents to skip    |       0       |
+| **`limit`**                | Number of documents to return  |      20       |
+| **`fields`**               | Document attributes to show    |      \*       |
 
 ### Example
 
@@ -101,7 +101,7 @@ For a partial update of the document see [add or update documents](/reference/ap
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the index _(optional)_ |     none      |
+| **`primaryKey`**  | The [primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the index _(optional)_ |     none      |
 
 If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
@@ -157,7 +157,7 @@ If you want to set the [**primary key** of your index](/learn/core_concepts/prim
 
 | Query Parameter | Description                                                                                     | Default Value |
 | --------------- | ----------------------------------------------------------------------------------------------- | :-----------: |
-| **primaryKey**  | The [primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the documents _(optional)_ |     none      |
+| **`primaryKey`**  | The [primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the documents _(optional)_ |     none      |
 
 #### Body
 
