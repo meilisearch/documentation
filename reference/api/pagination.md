@@ -16,9 +16,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/pagination"/>
 
-Get the pagination settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the [pagination settings](/reference/api/settings_object.md#pagination) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_pagination_settings_1" />
 
@@ -30,26 +30,19 @@ Get the pagination settings of an index. The index [`uid`](/learn/core_concepts/
 }
 ```
 
-### Returned fields
-
-#### `maxTotalHits`
-
-The maximum number of results Meilisearch can return.
-
 ## Update pagination settings
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/pagination"/>
 
-Partially update the pagination settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the [pagination settings](/reference/api/settings_object.md#pagination) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Body
 
-#### `maxTotalHits`
+| Name           | Type       | Description                                          | Default value |
+|----------------|------------|------------------------------------------------------|---------------|
+| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
 
-**Type:** integer
-**Default value:** `1000`
-
-An integer indicating the maximum number of search results Meilisearch can return. `maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
+`maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
@@ -77,7 +70,15 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Reset pagination settings
 
-Reset an index's pagination settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [pagination settings](/reference/api/settings_object.md#pagination) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+### Default value
+
+```json
+{
+  "maxTotalHits": 1000
+}
+```
 
 #### Example
 

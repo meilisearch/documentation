@@ -18,7 +18,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_distinct_attribute_1" />
 
@@ -36,9 +36,9 @@ Update the [distinct attribute](/learn/configuration/settings.md#distinct-attrib
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g., `"distinctAttribute": "product.skuid"`.
 
-#### Body
+### Body
 
-A String: the field name.
+A string: the field name.
 
 [More information about the body](/learn/configuration/settings.md#distinct-attribute).
 
@@ -46,7 +46,7 @@ A String: the field name.
 If the field does not exist, no error will be thrown.
 :::
 
-### Example
+#### Example
 
 <CodeSamples id="update_distinct_attribute_1" />
 

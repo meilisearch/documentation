@@ -16,9 +16,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/faceting"/>
 
-Get the faceting settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the [faceting settings](/reference/api/settings_object.md#faceting) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_faceting_settings_1" />
 
@@ -30,26 +30,17 @@ Get the faceting settings of an index. The index [`uid`](/learn/core_concepts/in
 }
 ```
 
-### Returned fields
-
-#### `maxValuesPerFacet`
-
-Maximum number of facet values returned for each facet.
-
 ## Update faceting settings
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/faceting"/>
 
-Partially update the faceting settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the [faceting settings](/reference/api/settings_object.md#faceting) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Body
 
-#### `maxValuesPerFacet`
-
-**Type:** integer
-**Default value:** `100`
-
-Configure the maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order.
+| Name                | Type    | Description                                                                                                  | Default value |
+|---------------------|---------|--------------------------------------------------------------------------------------------------------------|---------------|
+| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order | `100`         |
 
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
@@ -77,7 +68,15 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Reset faceting settings
 
-Reset an index's faceting settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [faceting settings](/reference/api/settings_object.md#faceting) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+### Default value
+
+```json
+{
+  "maxValuesPerFacet": 100
+}
+```
 
 #### Example
 

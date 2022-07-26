@@ -18,7 +18,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_searchable_attributes_1" />
 
@@ -47,7 +47,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
 :::
 
-#### Body
+### Body
 
 An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
 
@@ -55,7 +55,7 @@ This means that a document with a match in an attribute at the start of the arra
 
 [More information about the body](/learn/configuration/settings.md#searchable-attributes).
 
-### Example
+#### Example
 
 <CodeSamples id="update_searchable_attributes_1" />
 
@@ -81,7 +81,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Reset the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of the index to the default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Default value
+### Default value
 
 All attributes found in the documents added to the index.
 

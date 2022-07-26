@@ -22,7 +22,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get the stop-words list of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_stop_words_1" />
 
@@ -42,15 +42,15 @@ Get the stop-words list of an index. The index [`uid`](/learn/core_concepts/inde
 
 Update the list of stop-words of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Body
+### Body
 
 An array of strings that contains the stop-words.
 
-If a list of stop-words already exists it will be overwritten (_replaced_).
+If a list of stop-words already exists, it will be overwritten (_replaced_).
 
 [More information about the body](/learn/configuration/settings.md#stop-words).
 
-### Example
+#### Example
 
 <CodeSamples id="update_stop_words_1" />
 
@@ -74,11 +74,11 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Reset the list of stop-words of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Default value
+### Default value
 
 Empty array: `[]`
 
-### Example
+#### Example
 
 <CodeSamples id="reset_stop_words_1" />
 

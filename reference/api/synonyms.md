@@ -46,7 +46,7 @@ Get the list of [synonyms](/learn/configuration/synonyms.md) of an index. The in
 
 Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Body
+### Body
 
 An object that contains all synonyms and their associated words.
 
@@ -76,9 +76,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Reset the list of [synonyms](/learn/configuration/synonyms.md) of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Default value
+### Default value
 
-Empty object : `{}`
+Empty object: `{}`
 
 #### Example
 

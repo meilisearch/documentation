@@ -315,7 +315,7 @@ module.exports = {
             '/reference/api/keys',
             {
               title: 'Settings',
-              path: '/reference/api/settings.html',
+              path: '/reference/api/settings_object.html',
               collapsable: false,
               children: [
                 {

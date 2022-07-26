@@ -16,9 +16,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Get the typo tolerance settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the [typo tolerance settings](/reference/api/settings_object.md#typotolerance) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_typo_tolerance_1" />
 
@@ -36,47 +36,24 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 }
 ```
 
-### Returned fields
-
-#### `enabled`
-
-Whether typo tolerance is enabled or not.
-
-#### `minWordSizeForTypos`
-
-The minimum word length for tolerating 1 or 2 typos.
-
-| Name       | Description                                  |
-|------------|----------------------------------------------|
-| `oneTypo`  | The minimum word size for tolerating 1 typo  |
-| `twoTypos` | The minimum word size for tolerating 2 typos |
-
-#### `disableOnWords`
-
-An array of words for which the typo tolerance feature is disabled.
-
-#### `disableOnAttributes`
-
-An array of attributes for which the typo tolerance feature is disabled.
-
 ## Update typo tolerance
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Partially update the typo tolerance settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the [typo tolerance settings](/reference/api/settings_object.md#typotolerance) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Body
 
 #### `enabled`
 
-**Type:** boolean
+**Type:** Boolean
 **Default value:** `true`
 
 Whether typo tolerance is enabled or not.
 
 #### `minWordSizeForTypos`
 
-**Type:** object
+**Type:** Object
 
 Customize the minimum word length for accepting 1 or 2 typos.
 
@@ -87,14 +64,14 @@ Customize the minimum word length for accepting 1 or 2 typos.
 
 #### `disableOnWords`
 
-**Type:** array
+**Type:** Array
 **Default value:** `[]`
 
 An array of words for which the typo tolerance feature is disabled.
 
 #### `disableOnAttributes`
 
-**Type:** array
+**Type:** Array
 **Default value:** `[]`
 
 An array of attributes for which the typo tolerance feature is disabled.
@@ -119,7 +96,21 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Reset typo tolerance
 
-Reset an index's typo tolerance settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [typo tolerance settings](/reference/api/settings_object.md#typotolerance) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+### Default value
+
+```json
+{
+    "enabled":true,
+    "minWordSizeForTypos":{
+        "oneTypo":5,
+        "twoTypos":9
+        },
+    "disableOnWords":[],
+    "disableOnAttributes":[]
+}
+```
 
 #### Example
 

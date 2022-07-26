@@ -26,35 +26,13 @@ When you update a setting, you overwrite its default value. Use the `DELETE` rou
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings" />
 
-Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the [settings](/reference/api/settings_object.md) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-[Learn more about the settings.](/learn/configuration/settings.md)
-
-### Response body
-
-| Variable                 | Type      | Description                                                                                | Default value                                                                                |
-| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
-| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
-| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
-
-[Learn more about the settings in this guide.](/learn/configuration/settings.md)
-
-### Example
+#### Example
 
 <CodeSamples id="get_settings_1" />
 
 #### Response: `200 Ok`
-
-List the settings.
 
 ```json
 {
@@ -82,7 +60,7 @@ List the settings.
     "genres",
     "release_date"
   ],
-  "stopWords": null,
+  "stopWords": [],
   "synonyms": {
     "wolverine": [
       "xmen",
@@ -115,7 +93,7 @@ List the settings.
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings" />
 
-Update the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the [settings](/reference/api/settings_object.md) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 Passing `null` to an index setting will reset it to its default value.
 
@@ -123,25 +101,23 @@ Updates in the settings route are **partial**. This means that any parameters no
 
 If the provided index does not exist, it will be created.
 
-[Learn more about the settings in this guide.](/learn/configuration/settings.md)
-
 ### Body
 
-| Variable                 | Type      | Description                                                                                | Default value                                                                                |
-| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
-| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
-| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
+| Variable                 | Type        | Description                                                                                | Default value                                                                                |
+| ------------------------ | ----------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **`displayedAttributes`**  | [Strings] | Fields displayed in the returned documents                                                 | All attributes                                                                     |
+| **`distinctAttribute`**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **`faceting`**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
+| **`filterableAttributes`** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **`pagination`**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
+| **`rankingRules`**         | [Strings] | List of ranking rules sorted by order of importance                                        | `["words", "typo", "proximity", "attribute", "sort", "exactness"]` |
+| **`searchableAttributes`** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | All attributes                                                                     |
+| **`sortableAttributes`**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
+| **`stopWords`**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
+| **`synonyms`**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
+| **`typoTolerance`**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
 
-### Example
+#### Example
 
 <CodeSamples id="update_settings_1" />
 
@@ -163,24 +139,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings"/>
 
-Reset the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the [settings](/reference/api/settings_object.md) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 All settings will be reset to their default value.
-
-| Variable                 | Type      | Description                                                                                | Default value                                                                                |
-| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
-| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
-| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
-[Learn more about the settings](/learn/configuration/settings.md).
 
 #### Example
 

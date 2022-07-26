@@ -16,7 +16,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get an index's [`sortableAttributes`](/learn/advanced/sorting.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_sortable_attributes_1" />
 
@@ -35,7 +35,7 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Update an index's sortable attributes list. This will re-index all documents in the index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an index's [sortable attributes list](/learn/advanced/sorting.md). This will re-index all documents in the index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
@@ -47,7 +47,7 @@ An array of strings containing the attributes that can be used to sort search re
 
 [You can read more about this setting at the feature reference page.](/learn/configuration/settings.md#sortable-attributes)
 
-### Example
+#### Example
 
 <CodeSamples id="update_sortable_attributes_1" />
 
@@ -69,13 +69,13 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/sortable-attributes"/>
 
-Reset an index's sortable attributes list back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [sortable attributes list](/learn/advanced/sorting.md) back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ### Default value
 
 An empty array (`[]`).
 
-### Example
+#### Example
 
 <CodeSamples id="reset_sortable_attributes_1" />
 

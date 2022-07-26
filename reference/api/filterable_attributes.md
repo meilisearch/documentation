@@ -16,7 +16,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get an index's [`filterableAttributes`](/learn/advanced/filtering_and_faceted_search.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_filterable_attributes_1" />
 
@@ -46,7 +46,7 @@ An array of strings containing the attributes that can be used as filters at que
 
 [You can read more about this setting at the feature reference page.](/learn/configuration/settings.md#filterable-attributes)
 
-### Example
+#### Example
 
 <CodeSamples id="update_filterable_attributes_1" />
 
@@ -74,7 +74,7 @@ Reset an index's [filterable attributes list](/learn/advanced/filtering_and_face
 
 An empty array (`[]`).
 
-### Example
+#### Example
 
 <CodeSamples id="reset_filterable_attributes_1" />
 

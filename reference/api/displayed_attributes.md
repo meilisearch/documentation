@@ -25,8 +25,6 @@ Get the [displayed attributes](/learn/configuration/settings.md#displayed-attrib
 
 #### Response: `200 Ok`
 
-List the settings.
-
 ```json
 [
   "title",
@@ -48,7 +46,7 @@ If an attribute contains an object, you can use dot notation to specify one or m
 `displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
 :::
 
-#### Body
+### Body
 
 An array of strings that contains attributes of an index to display.
 
@@ -78,7 +76,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Reset the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of the index to the default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Default value
+### Default value
 
 All attributes found in the documents added to the index.
 

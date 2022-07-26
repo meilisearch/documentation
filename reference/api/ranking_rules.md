@@ -48,7 +48,7 @@ List the settings.
 
 Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Body
+### Body
 
 An array that contain ranking rules sorted by order of importance.
 
@@ -60,7 +60,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 [More information about the body](/learn/configuration/settings.md#ranking-rules).
 
-### Example
+#### Example
 
 <CodeSamples id="update_ranking_rules_1" />
 
@@ -89,7 +89,7 @@ Note that resetting the ranking rules is not the same as removing them.
 To remove a ranking rule, use the [add or replace ranking rules route](/reference/api/ranking_rules.md#update-ranking-rules).
 :::
 
-#### Default value
+### Default value
 
 An array that contains the [built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) in the following order:
 
