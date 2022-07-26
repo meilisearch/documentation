@@ -160,6 +160,7 @@ The settings object allows you to customize index level settings for your Meilis
 **Description**: Typo tolerance settings
 
 **Default value**:
+
 ```json
 {
     "enabled":true,
