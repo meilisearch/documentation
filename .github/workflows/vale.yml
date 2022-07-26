@@ -2,7 +2,9 @@ name: reviewdog
 on:
   pull_request:
   push:
-
+  # trying and staging branches are for BORS config
+	  branches:
+	    - main
 jobs:
   vale:
     name: runner / vale
