@@ -6,6 +6,182 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 The task `uid` is incremented **globally.**
 :::
 
+## Task object
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "succeeded",
+    "type": "settingsUpdate",
+    "details": {
+        "rankingRules": [
+            "typo",
+            "ranking:desc",
+            "words",
+            "proximity",
+            "attribute",
+            "exactness"
+        ]
+    },
+    "duration": "PT1S",
+    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+    "startedAt": "2021-08-10T14:29:18.000000Z",
+    "finishedAt": "2021-08-10T14:29:19.000000Z"
+}
+```
+
+### `uid`
+
+**Type**: Integer
+
+**Description**: The unique sequential identifier of the task
+
+**Default value**: `null`
+
+### `indexUid`
+
+**Type**: String
+
+**Description**: The unique index identifier (always `null` for dumps)
+
+**Default value**: `null`
+
+### `batchUid`
+
+**Type**: Integer
+
+**Description**: A human-readable name for the key
+
+**Default value**: `null`
+
+### `status`
+
+**Type**: String
+
+**Description**: The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`
+
+**Default value**: `null`
+
+### `type`
+
+**Type**: String
+
+**Description**: The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`
+
+**Default value**: `null`
+
+### `details`
+
+**Type**: Object
+
+**Description**: Detailed information on the task payload. 
+
+**Default value**: `null`
+
+#### `documentAdditionOrUpdate`
+
+| name              | description                          |
+|-------------------|--------------------------------------|
+| `receivedDocuments` | Number of documents received.        |
+| `indexedDocuments`  | Number of documents finally indexed. |
+
+#### `documentDeletion`
+
+| name                | description                          |
+|---------------------|--------------------------------------|
+| `receivedDocumentIds` | Number of document ids received.     |
+| `deletedDocuments`    | Number of documents finally deleted. |
+
+#### `indexCreation`
+
+| name       | description                                                                                                                                   |
+|------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+| `primaryKey` | Value for the `primaryKey` field into the POST index payload. `null` if no `primaryKey` has been specified at the time of the index creation. |
+
+#### `indexUpdate`
+
+| name       | description                                                                                                                                |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `primaryKey` | Value for the `primaryKey` field into the PUT index payload. `null` if no `primaryKey` has been specified at the time of the index update. |
+
+#### `indexDeletion`
+
+| name             | description                                                                          |
+|------------------|--------------------------------------------------------------------------------------|
+| `deletedDocuments` | Number of deleted documents. Should be all documents contained in the deleted index. |
+
+#### `settingsUpdate`
+
+| name                 | description                          |
+|----------------------|--------------------------------------|
+| `rankingRules`         | `rankingRules` payload array         |
+| `searchableAttributes` | `searchableAttributes` payload array |
+| `filterableAttributes` | `filterableAttributes` payload array |
+| `sortableAttributes`   | `sortableAttributes` payload array   |
+| `stopWords`            | `stopWords` payload array            |
+| `synonyms`             | `synonyms` payload object            |
+| `distinctAttribute`    | `distrinctAttribute` payload string  |
+| `displayedAttributes`  | `displayedAttributes` payload array  |
+
+#### `dumpCreation`
+
+| name    | description  |
+| -----   | ------------ |
+| `dumpUid` | The generated `uid` of the dump |
+
+---
+
+| Name        | Values      | Description                          |
+| -----   | ------------ |----|
+| `indexCreation`   |`primaryKey` |Value for the primaryKey field into the POST index payload. null if no primaryKey has been specified at the time of the index creation|
+| `indexUpdate`   | `primaryKey` |Value for the primaryKey field into the PUT index payload. null if no primaryKey has been specified at the time of the index update|
+| `indexDeletion`   | `deletedDocuments` |Number of deleted documents. Should be all documents contained in the deleted index|
+| `documentAdditionOrUpdate`   |`receivedDocuments` <br> <br> `indexedDocuments` | Number of documents received <br><br> Number of documents finally indexed|
+| `documentDeletion`   | `receivedDocumentIds` <br><br> `deletedDocuments`|Number of document ids received<br><br>Number of documents finally deleted|
+| `settingsUpdate`   | `rankingRules`<br><br><br>`searchableAttributes`<br><br><br>`filterableAttributes` <br><br><br>`sortableAttributes` <br><br><br>`stopWords` <br><br><br>`synonyms` <br><br><br>`distinctAttribute` <br><br><br>`displayedAttributes`|`rankingRules` payload array <br><br>`searchableAttributes` payload array <br><br>`filterableAttributes` payload array <br><br>`sortableAttributes` payload array <br><br>`stopWords` payload array <br><br>`synonyms` payload object <br><br>`distrinctAttribute` payload string <br><br>`displayedAttributes` payload array|
+| `dumpCreation`   |`dumpUid`  |The generated uid of the dump|
+
+### `error`
+
+**Type**: Object
+
+**Description**: Error details and context. Only present when a task has the failed status
+
+**Default value**: `null`
+
+### `duration`
+
+**Type**: String
+
+**Description**: The total elapsed time the task spent in the processing state, in ISO 8601 format
+
+**Default value**: `null`
+
+### `enqueuedAt`
+
+**Type**: String
+
+**Description**: The date and time when the task was first `enqueued`, in RFC 3339 format
+
+**Default value**: `null`
+
+### `startedAt`
+
+**Type**: String
+
+**Description**: The date and time when the task began processing, in RFC 3339 format
+
+**Default value**: `null`
+
+### `finishedAt`
+
+**Type**: String
+
+**Description**: The date and time when the task finished processing, whether failed or succeeded, in RFC 3339 format
+
+**Default value**: `null`
+
 ## Get tasks
 
 <RouteHighlighter method="GET" route="/tasks"/>
