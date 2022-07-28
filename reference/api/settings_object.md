@@ -42,7 +42,7 @@ The settings object allows you to customize index level settings for your Meilis
 }
 ```
 
-## [`displayedAttributes`](/reference/api/displayed_attributes.md)
+## `displayedAttributes`
 
 **Type**: Array of strings
 
@@ -50,7 +50,11 @@ The settings object allows you to customize index level settings for your Meilis
 
 **Default value**: All attributes
 
-## [`distinctAttribute`](/reference/api/distinct_attribute.md)
+**Dedicated API route**: [`/settings/displayed-attributes`](/reference/api/displayed_attributes.md)
+
+**Dedicated guide**:
+
+## `distinctAttribute`
 
 **Type**: String
 
@@ -58,13 +62,19 @@ The settings object allows you to customize index level settings for your Meilis
 
 **Default value**: `null`
 
-## [`faceting`](/reference/api/faceting.md)
+**Dedicated API route**: [`/settings/distinct-attribute`](/reference/api/distinct_attribute.md)
+
+**Dedicated guide**:
+
+## `faceting`
 
 **Type**: Object
 
 **Description**: Faceting settings
 
-**Default value**:
+| Name                | Type    | Description                                            | Default value |
+|---------------------|---------|--------------------------------------------------------|---------------|
+| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet | `100`         |
 
 ```json
 {
@@ -72,11 +82,11 @@ The settings object allows you to customize index level settings for your Meilis
 }
 ```
 
-| Name                | Type    | Description                                            | Default value |
-|---------------------|---------|--------------------------------------------------------|---------------|
-| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet | `100`         |
+**Dedicated guide**:
 
-## [`filterableAttributes`](/reference/api/filterable_attributes.md)
+**Dedicated API route**: [`/settings/faceting`](/reference/api/faceting.md)
+
+## `filterableAttributes`
 
 **Type**: Array of strings
 
@@ -84,13 +94,19 @@ The settings object allows you to customize index level settings for your Meilis
 
 **Default value**: Empty
 
-## [`pagination`](/reference/api/pagination.md)
+**Dedicated API route**: [`/settings/filterable-attributes`](/reference/api/filterable_attributes.md)
+
+**Dedicated guide**:
+
+## `pagination`
 
 **Type**: Object
 
 **Description**: Pagination settings
 
-**Default value**:
+| Name           | Type       | Description                                          | Default value |
+|----------------|------------|------------------------------------------------------|---------------|
+| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
 
 ```json
 {
@@ -98,11 +114,11 @@ The settings object allows you to customize index level settings for your Meilis
 }
 ```
 
-| Name           | Type       | Description                                          | Default value |
-|----------------|------------|------------------------------------------------------|---------------|
-| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
+**Dedicated API route**: [`/settings/pagination`](/reference/api/pagination.md)
 
-## [`rankingRules`](/reference/api/ranking_rules.md)
+**Dedicated guide**:
+
+## `rankingRules`
 
 **Type**: Array
 
@@ -121,7 +137,11 @@ The settings object allows you to customize index level settings for your Meilis
 ]
 ```
 
-## [`searchableAttributes`](/reference/api/searchable_attributes.md)
+**Dedicated API route**: [`/settings/ranking-rules`](/reference/api/ranking_rules.md)
+
+**Dedicated guide**:
+
+## `searchableAttributes`
 
 **Type**: Array of strings
 
@@ -129,7 +149,11 @@ The settings object allows you to customize index level settings for your Meilis
 
 **Default value**: All attributes
 
-## [`sortableAttributes`](/reference/api/sortable_attributes.md)
+**Dedicated API route**: [`/settings/searchable-attributes`](/reference/api/searchable_attributes.md)
+
+**Dedicated guide**:
+
+## `sortableAttributes`
 
 **Type**: Array of strings
 
@@ -137,7 +161,11 @@ The settings object allows you to customize index level settings for your Meilis
 
 **Default value**: Empty
 
-## [`stopWords`](/reference/api/stop_words.md)
+**Dedicated API route**: [`/settings/sortable-attributes`](/reference/api/sortable_attributes.md)
+
+**Dedicated guide**:
+
+## `stopWords`
 
 **Type**: Array of strings
 
@@ -145,7 +173,11 @@ The settings object allows you to customize index level settings for your Meilis
 
 **Default value**: Empty
 
-## [`synonyms`](/reference/api/synonyms.md)
+**Dedicated API route**: [`/settings/stop-words`](/reference/api/stop_words.md)
+
+**Dedicated guide**:
+
+## `synonyms`
 
 **Type**: Object
 
@@ -153,25 +185,15 @@ The settings object allows you to customize index level settings for your Meilis
 
 **Default value**: Empty
 
-## [`typoTolerance`](/reference/api/typo_tolerance.md)
+**Dedicated API route**: [`/settings/synonyms`](/reference/api/synonyms.md)
+
+**Dedicated guide**:
+
+## `typoTolerance`
 
 **Type**: Object
 
 **Description**: Typo tolerance settings
-
-**Default value**:
-
-```json
-{
-    "enabled":true,
-    "minWordSizeForTypos":{
-        "oneTypo":5,
-        "twoTypos":9
-        },
-    "disableOnWords":[],
-    "disableOnAttributes":[]
-}
-```
 
 ### `enabled`
 
@@ -207,3 +229,17 @@ The settings object allows you to customize index level settings for your Meilis
 **Description**: An array of attributes for which the typo tolerance feature is disabled
 
 **Default value**: Empty
+
+```json
+{
+    "enabled":true,
+    "minWordSizeForTypos":{
+        "oneTypo":5,
+        "twoTypos":9
+        },
+    "disableOnWords":[],
+    "disableOnAttributes":[]
+}
+```
+
+**Dedicated API route**: [`/settings/typo-tolerance`](/reference/api/typo_tolerance.md)
