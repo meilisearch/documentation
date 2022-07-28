@@ -6,6 +6,130 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 The task `uid` is incremented **globally.**
 :::
 
+## Task object
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "succeeded",
+    "type": "settingsUpdate",
+    "details": {
+        "rankingRules": [
+            "typo",
+            "ranking:desc",
+            "words",
+            "proximity",
+            "attribute",
+            "exactness"
+        ]
+    },
+    "duration": "PT1S",
+    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+    "startedAt": "2021-08-10T14:29:18.000000Z",
+    "finishedAt": "2021-08-10T14:29:19.000000Z"
+}
+```
+
+### `uid`
+
+**Type**: Integer
+
+**Description**: The unique sequential identifier of the task
+
+### `indexUid`
+
+**Type**: String
+
+**Description**: The unique index identifier (always `null` for dumps)
+
+### `status`
+
+**Type**: String
+
+**Description**: The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`
+
+### `type`
+
+**Type**: String
+
+**Description**: The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`
+
+### `details`
+
+**Type**: Object
+
+**Description**: Detailed information on the task payload
+
+```json
+{
+  "rankingRules": [
+    "typo",
+    "ranking:desc",
+    "words",
+    "proximity",
+    "attribute",
+    "exactness"
+  ]
+}
+```
+
+| Name                       | Value                                             | Description                                                                |
+| -------------------------- | ------------------------------------------------- |----------------------------------------------------------------------------|
+| `indexCreation`            |`primaryKey`                                       | Value for the `primaryKey` field. `null` if no `primaryKey` is specified at index creation |
+| `indexUpdate`              | `primaryKey`                                      | Value for the `primaryKey` field. `null` if no `primaryKey` has been specified at the time of the index update |
+| `indexDeletion`            | `deletedDocuments`                                | Number of deleted documents. Should be all documents contained in the deleted index  |
+| `documentAdditionOrUpdate` | `receivedDocuments` <br><br> `indexedDocuments`   | Number of documents received <br><br> Number of documents finally indexed  |
+| `documentDeletion`         | `receivedDocumentIds` <br><br> `deletedDocuments` | Number of document ids received<br><br>Number of documents finally deleted |
+| `settingsUpdate`           | `rankingRules` <br><br> `searchableAttributes` <br><br> `filterableAttributes` <br><br> `sortableAttributes` <br><br> `stopWords` <br><br> `synonyms` <br><br> `distinctAttribute` <br><br> `displayedAttributes`  | List of ranking rules <br><br>List of searchable attributes <br><br>List of filterable attributes <br><br>List of sortable attributes<br><br>List of stop words<br><br>List of synonyms<br><br>The distrinct attribute <br><br>List of displayed attributes |
+| `dumpCreation`             |`dumpUid`                                          | The generated `uid` of the dump |
+
+### `error`
+
+**Type**: Object
+
+**Description**: Error details and context. Only present when a task has the `failed` status
+
+```json
+{
+  "message": "invalid criterion wordsPosition",
+  "code": "internal",
+  "type": "internal_error",
+  "link": "https://docs.meilisearch.com/errors#internal",
+}
+```
+
+| Name    | Description                                         |
+|---------|-----------------------------------------------------|
+|`message`| A human-readable description of the error           |
+|`code`   | An error code                                       |
+|`type`   | The error type                                      |
+|`link`   | A link to the relevant section of the documentation |
+
+### `duration`
+
+**Type**: String
+
+**Description**: The total elapsed time the task spent in the processing state, in ISO 8601 format
+
+### `enqueuedAt`
+
+**Type**: String
+
+**Description**: The date and time when the task was first `enqueued`, in RFC 3339 format
+
+### `startedAt`
+
+**Type**: String
+
+**Description**: The date and time when the task began processing, in RFC 3339 format
+
+### `finishedAt`
+
+**Type**: String
+
+**Description**: The date and time when the task finished processing, whether failed or succeeded, in RFC 3339 format
+
 ## Get tasks
 
 <RouteHighlighter method="GET" route="/tasks"/>
