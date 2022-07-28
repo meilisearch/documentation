@@ -65,7 +65,7 @@ Instance creation in progress...
 
 ![meilisearch-droplet-name instance created successfully](/digitalocean/08.created-ip.png)
 
-### 9. Test Meilisearch.
+### 9. Test Meilisearch
 
 Copy the public IP address:
 
