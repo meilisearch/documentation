@@ -1,3 +1,8 @@
+---
+
+sidebarDepth: 2
+
+---
 # Asynchronous operations
 
 All index writes are processed **asynchronously**. This means that task requests are not handled as soon as they are received—instead, Meilisearch places these operations in a queue and processes them in the order they were received.
@@ -65,7 +70,7 @@ Task responses always contain a field indicating the request's current `status`.
 - `succeeded`: the task has been successfully processed
 - `failed`: a failure occurred when processing the task. No changes were made to the database
 
-### Examples
+#### Examples
 
 Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `taskUid` in response.
 
@@ -131,6 +136,74 @@ Had the task failed, the response would have included an `error` object:
     "finishedAt": "2021-08-10T14:29:19.000000Z"
 }
 ```
+
+### Filtering tasks
+
+You can filter tasks based on `status`, `type`, or `indexUid`. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
+
+<CodeSamples id="get_all_tasks_filtering_1" />
+
+Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. Use the comma character `,` to add multiple filter values for a single field.
+
+For example, the following command would return all `documentAdditionOrUpdate` tasks that either `succeeded` or `failed`:
+
+<CodeSamples id="get_all_tasks_filtering_2" />
+
+At this time, `OR` operations between different filters are not supported. For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
+
+### Paginating tasks
+
+The task list is paginated, by default returning 20 tasks at a time. You can adjust the number of documents returned using the `limit` parameter, and control where the list begins using the `from` parameter.
+
+For each call to this endpoint, the response will include the `next` field: this value should be passed to `from` to view the next "page" of results. When the value of `next` is `null`, there are no more tasks to view.
+
+This command returns tasks two at a time, starting from task `uid` `10`.
+
+<CodeSamples id="get_all_tasks_paginating_1" />
+
+**Response:**
+
+```json
+{
+  "results": [
+    {
+      "uid": 10,
+      "indexUid": "elements",
+      "status": "succeeded",
+      "type": "indexCreation",
+      "details": {
+        "primaryKey": null
+      },
+      "duration": "PT0.006034S",
+      "enqueuedAt": "2022-06-20T13:41:42.446908Z",
+      "startedAt": "2022-06-20T13:41:42.447477Z",
+      "finishedAt": "2022-06-20T13:41:42.453511Z"
+    },
+    {
+      "uid": 9,
+      "indexUid": "particles",
+      "status": "succeeded",
+      "type": "indexCreation",
+      "details": {
+        "primaryKey": null
+      },
+      "duration": "PT0.007317S",
+      "enqueuedAt": "2022-06-20T13:41:31.841575Z",
+      "startedAt": "2022-06-20T13:41:31.842116Z",
+      "finishedAt": "2022-06-20T13:41:31.849433Z"
+    }
+  ],
+  "limit": 2,
+  "from": 10,
+  "next": 8
+}
+```
+
+To view the next page of results, you would repeat the same query, replacing the value of `from` with the value of `next`:
+
+<CodeSamples id="get_all_tasks_paginating_2" />
+
+When the returned value of `next` is `null`, you have reached the final page of results.
 
 ## Task workflow
 
