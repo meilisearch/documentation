@@ -37,23 +37,11 @@ The task `uid` is incremented **globally.**
 
 **Description**: The unique sequential identifier of the task
 
-**Default value**: `null`
-
 ### `indexUid`
 
 **Type**: String
 
 **Description**: The unique index identifier (always `null` for dumps)
-
-**Default value**: `null`
-
-### `batchUid`
-
-**Type**: Integer
-
-**Description**: A human-readable name for the key
-
-**Default value**: `null`
 
 ### `status`
 
@@ -61,94 +49,62 @@ The task `uid` is incremented **globally.**
 
 **Description**: The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`
 
-**Default value**: `null`
-
 ### `type`
 
 **Type**: String
 
 **Description**: The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`
 
-**Default value**: `null`
-
 ### `details`
 
 **Type**: Object
 
-**Description**: Detailed information on the task payload. 
+**Description**: Detailed information on the task payload
 
-**Default value**: `null`
+```json
+{
+  "rankingRules": [
+    "typo",
+    "ranking:desc",
+    "words",
+    "proximity",
+    "attribute",
+    "exactness"
+  ]
+}
+```
 
-#### `documentAdditionOrUpdate`
-
-| name              | description                          |
-|-------------------|--------------------------------------|
-| `receivedDocuments` | Number of documents received.        |
-| `indexedDocuments`  | Number of documents finally indexed. |
-
-#### `documentDeletion`
-
-| name                | description                          |
-|---------------------|--------------------------------------|
-| `receivedDocumentIds` | Number of document ids received.     |
-| `deletedDocuments`    | Number of documents finally deleted. |
-
-#### `indexCreation`
-
-| name       | description                                                                                                                                   |
-|------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| `primaryKey` | Value for the `primaryKey` field into the POST index payload. `null` if no `primaryKey` has been specified at the time of the index creation. |
-
-#### `indexUpdate`
-
-| name       | description                                                                                                                                |
-|------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `primaryKey` | Value for the `primaryKey` field into the PUT index payload. `null` if no `primaryKey` has been specified at the time of the index update. |
-
-#### `indexDeletion`
-
-| name             | description                                                                          |
-|------------------|--------------------------------------------------------------------------------------|
-| `deletedDocuments` | Number of deleted documents. Should be all documents contained in the deleted index. |
-
-#### `settingsUpdate`
-
-| name                 | description                          |
-|----------------------|--------------------------------------|
-| `rankingRules`         | `rankingRules` payload array         |
-| `searchableAttributes` | `searchableAttributes` payload array |
-| `filterableAttributes` | `filterableAttributes` payload array |
-| `sortableAttributes`   | `sortableAttributes` payload array   |
-| `stopWords`            | `stopWords` payload array            |
-| `synonyms`             | `synonyms` payload object            |
-| `distinctAttribute`    | `distrinctAttribute` payload string  |
-| `displayedAttributes`  | `displayedAttributes` payload array  |
-
-#### `dumpCreation`
-
-| name    | description  |
-| -----   | ------------ |
-| `dumpUid` | The generated `uid` of the dump |
-
----
-
-| Name        | Values      | Description                          |
-| -----   | ------------ |----|
-| `indexCreation`   |`primaryKey` |Value for the primaryKey field into the POST index payload. null if no primaryKey has been specified at the time of the index creation|
-| `indexUpdate`   | `primaryKey` |Value for the primaryKey field into the PUT index payload. null if no primaryKey has been specified at the time of the index update|
-| `indexDeletion`   | `deletedDocuments` |Number of deleted documents. Should be all documents contained in the deleted index|
-| `documentAdditionOrUpdate`   |`receivedDocuments` <br> <br> `indexedDocuments` | Number of documents received <br><br> Number of documents finally indexed|
-| `documentDeletion`   | `receivedDocumentIds` <br><br> `deletedDocuments`|Number of document ids received<br><br>Number of documents finally deleted|
-| `settingsUpdate`   | `rankingRules`<br><br><br>`searchableAttributes`<br><br><br>`filterableAttributes` <br><br><br>`sortableAttributes` <br><br><br>`stopWords` <br><br><br>`synonyms` <br><br><br>`distinctAttribute` <br><br><br>`displayedAttributes`|`rankingRules` payload array <br><br>`searchableAttributes` payload array <br><br>`filterableAttributes` payload array <br><br>`sortableAttributes` payload array <br><br>`stopWords` payload array <br><br>`synonyms` payload object <br><br>`distrinctAttribute` payload string <br><br>`displayedAttributes` payload array|
-| `dumpCreation`   |`dumpUid`  |The generated uid of the dump|
+| Name                       | Value                                             | Description                                                                |
+| -------------------------- | ------------------------------------------------- |----------------------------------------------------------------------------|
+| `indexCreation`            |`primaryKey`                                       | Value for the `primaryKey` field. `null` if no `primaryKey` is specified at index creation |
+| `indexUpdate`              | `primaryKey`                                      | Value for the `primaryKey` field. `null` if no `primaryKey` has been specified at the time of the index update |
+| `indexDeletion`            | `deletedDocuments`                                | Number of deleted documents. Should be all documents contained in the deleted index  |
+| `documentAdditionOrUpdate` | `receivedDocuments` <br><br> `indexedDocuments`   | Number of documents received <br><br> Number of documents finally indexed  |
+| `documentDeletion`         | `receivedDocumentIds` <br><br> `deletedDocuments` | Number of document ids received<br><br>Number of documents finally deleted |
+| `settingsUpdate`           | `rankingRules` <br><br> `searchableAttributes` <br><br> `filterableAttributes` <br><br> `sortableAttributes` <br><br> `stopWords` <br><br> `synonyms` <br><br> `distinctAttribute` <br><br> `displayedAttributes`  | List of ranking rules <br><br>List of searchable attributes <br><br>List of filterable attributes <br><br>List of sortable attributes<br><br>List of stop words<br><br>List of synonyms<br><br>The distrinct attribute <br><br>List of displayed attributes |
+| `dumpCreation`             |`dumpUid`                                          | The generated `uid` of the dump |
 
 ### `error`
 
 **Type**: Object
 
-**Description**: Error details and context. Only present when a task has the failed status
+**Description**: Error details and context. Only present when a task has the `failed` status
 
-**Default value**: `null`
+```json
+{
+  "message": "invalid criterion wordsPosition",
+  "code": "internal",
+  "type": "internal_error",
+  "link": "https://docs.meilisearch.com/errors#internal",
+}
+```
+
+| Name    | Description                                         |
+|---------|-----------------------------------------------------|
+|`message`| A human-readable description of the error           |
+|`code`   | An error code                                       |
+|`type`   | The error type                                      |
+|`link`   | A link to the relevant section of the documentation |
 
 ### `duration`
 
@@ -156,15 +112,11 @@ The task `uid` is incremented **globally.**
 
 **Description**: The total elapsed time the task spent in the processing state, in ISO 8601 format
 
-**Default value**: `null`
-
 ### `enqueuedAt`
 
 **Type**: String
 
 **Description**: The date and time when the task was first `enqueued`, in RFC 3339 format
-
-**Default value**: `null`
 
 ### `startedAt`
 
@@ -172,15 +124,11 @@ The task `uid` is incremented **globally.**
 
 **Description**: The date and time when the task began processing, in RFC 3339 format
 
-**Default value**: `null`
-
 ### `finishedAt`
 
 **Type**: String
 
 **Description**: The date and time when the task finished processing, whether failed or succeeded, in RFC 3339 format
-
-**Default value**: `null`
 
 ## Get tasks
 

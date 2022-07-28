@@ -129,7 +129,7 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 <RouteHighlighter method="GET" route="/keys"/>
 
-Returns a `results` array which lists the 20 most recently created keys. **Expired keys are included in the response**, but deleted keys are not.
+Returns a `results` array that lists the 20 most recently created keys. **Expired keys are included in the response**, but deleted keys are not.
 
 | Name          | Description                                          |
 | ------------- | -----------------------------------------------------|
