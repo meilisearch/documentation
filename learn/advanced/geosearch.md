@@ -139,7 +139,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 ### Examples
 
-`_geoRadius` works like any other filter rule. Using our <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json">example dataset</a>, we can search for places to eat near the centre of Milan:
+`_geoRadius` works like any other filter rule. Using our <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json">example dataset</a>, we can search for places to eat near the center of Milan:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
