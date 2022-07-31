@@ -256,6 +256,10 @@ module.exports = {
                   path: '/learn/cookbooks/digitalocean_droplet',
                 },
                 {
+                  title: 'Deploy on Railway',
+                  path: '/learn/cookbooks/railway',
+                },
+                {
                   title: 'Deploy on Koyeb',
                   path: '/learn/cookbooks/koyeb',
                 },
