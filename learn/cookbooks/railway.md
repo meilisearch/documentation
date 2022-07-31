@@ -27,7 +27,7 @@ Click the button below to quickly deploy a meilisearch instance to Railway.
 
 Do not forget to replace the `MEILI_MASTER_KEY` environment variable value with a strong key to secure your Meilisearch instance.
 
-If you want to quickly generate a secure random key, you can use the following command from your terminal:
+If you want to quickly generate a secure random key, you can run the following command from your terminal:
 
 ```bash
 openssl rand -base64 48
