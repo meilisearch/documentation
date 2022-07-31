@@ -46,7 +46,7 @@ openssl rand -base64 48 | head -c32
 which in this case will generate a 32-character long string.
 
 ::: warning
-Setting a _Master Key_ is optional, but without it your server will accept unidentified requests, which can affect your usage quota on a server. If you need some protection in your production, it is **strongly recommended** having one.
+Setting a _Master Key_ is optional, but without it your server will accept unidentified requests, which can affect your usage quota on a server. If you need some protection in your production, it is **strongly recommended** to set a _master key_.
 :::
 
 ### Test Meilisearch
