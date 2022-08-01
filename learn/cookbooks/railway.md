@@ -21,7 +21,7 @@ To follow along, you need a [Railway account](https://railway.app). If you don't
 
 ## Deploy Meilisearch
 
-Click the button below to quickly deploy a meilisearch instance to Railway.
+Click the button below to deploy a Meilisearch instance to Railway quickly.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/TXxa09?referralCode=YltNo3)
 
