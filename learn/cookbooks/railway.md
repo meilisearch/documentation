@@ -25,7 +25,7 @@ Click the button below to deploy a Meilisearch instance to Railway quickly.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/TXxa09?referralCode=YltNo3)
 
-Do not forget to replace the `MEILI_MASTER_KEY` environment variable value with a strong key to secure your Meilisearch instance.
+Do not forget to replace the `MEILI_MASTER_KEY` environment variable with a strong key to secure your Meilisearch instance.
 
 If you want to quickly generate a secure random key, you can run the following command from your terminal:
 
