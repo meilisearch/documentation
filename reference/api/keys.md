@@ -138,7 +138,7 @@ Returns a `results` array that lists the 20 most recently created keys. **Expire
 | **`limit`**   | Maximum number of keys to be returned by the request |
 | **`total`**   | Total number of API keys that can be browsed         |
 
-#### Query parameters
+### Query parameters
 
 Results can be paginated by using the `offset` and `limit` query parameters.
 
@@ -147,7 +147,7 @@ Results can be paginated by using the `offset` and `limit` query parameters.
 | **offset**               | Number of keys to skip    |       0       |
 | **limit**                | Number of keys to return  |      20       |
 
-### Example
+#### Example
 
 <CodeSamples id="get_all_keys_1" />
 
