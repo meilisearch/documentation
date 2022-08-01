@@ -7,5 +7,6 @@
   "MD040": false, // fenced-code-language Fenced code blocks should have a language specified
   "MD033": false, // no-inline-html Inline HTML
   "MD049": { "style": "underscore" }, // enforce use of underscore for em/italics
-  "MD050": { "style": "asterisk" } // enforce use of asterisk for strong/bold
+  "MD050": { "style": "asterisk" }, // enforce use of asterisk for strong/bold
+  "MD051": false
 }
