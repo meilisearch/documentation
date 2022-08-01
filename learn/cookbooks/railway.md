@@ -8,12 +8,6 @@ This guide explains how to deploy a ready-to-use Meilisearch instance on Railway
 
 Railway aims to be the simplest way to develop, deploy, and diagnose issues with your application. Railway offers additional features that are worth exploring.
 
-- Railway lets you create parallel, identical environments for PRs/testing.
-- Railway lets you run as much (or as little) compute as you'd like with its usage based pricing and a metrics dashboard included in every project.
-- Adding team members to your projects is as easy as sending them an invite link.
-- Railway supports projects of any size, you can deploy additional services to the same project or deploy subdirectories of a monorepo.
-
-As your Project scales, Railway scales with you by supporting with multiple members per Project, Teams, and Autoscaling- leaving you to focus on what matters: your code.
 
 ## Requirements
 
