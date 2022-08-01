@@ -6,7 +6,7 @@ This guide explains how to deploy a ready-to-use Meilisearch instance on Railway
 
 [Railway](https://railway.app) is a deployment platform where you can provision infrastructure, develop with that infrastructure locally, and then deploy to the cloud.
 
-Railway aims to be the simplest way to develop, deploy, and diagnose issues with your application. Railway offers additional features that are worth exploring.
+Railway aims to be the simplest way to develop, deploy, and diagnose issues with your application.
 
 
 ## Requirements
