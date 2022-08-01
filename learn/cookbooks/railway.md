@@ -55,7 +55,7 @@ Copy the public URL (e.g., `meilisearch-production-up.railway.app`) of your proj
 
 ![Railway dashboard](/railway/public-url.png)
 
-You should land on the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview.md), where you are asked to enter your master key.
+You should land on the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview.md), where you will be asked to enter your master key.
 
 You are now ready to [create your first index](/learn/getting_started/quick_start.md)!
 
