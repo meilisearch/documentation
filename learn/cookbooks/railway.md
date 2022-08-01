@@ -51,7 +51,7 @@ Setting a master key is optional, but without it, your server will accept uniden
 
 ### Test Meilisearch
 
-Click onto the public URL (e.g., `meilisearch-production-up.railway.app`) of your project from your [Railway account dashboard](https://railway.app/dashboard) and paste it in your browser.
+Copy the public URL (e.g., `meilisearch-production-up.railway.app`) of your project from your [Railway account dashboard](https://railway.app/dashboard) and paste it into your browser.
 
 ![Railway dashboard](/railway/public-url.png)
 
