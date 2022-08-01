@@ -26,7 +26,7 @@ If you want to quickly generate a secure random key, you can run the following c
 openssl rand -base64 48
 ```
 
-To define the desired length of your password, you can either add `| cat -c-${DESIRED_LENGTH}` or `| head -c${DESIRED_LENGTH}` to the command as such:
+To define the desired length of your password, you can either add `| cut -c-${DESIRED_LENGTH}` or `| head -c${DESIRED_LENGTH}` to the command as such:
 
 ```bash
 openssl rand -base64 48 | cut -c1-32
