@@ -17,7 +17,7 @@ As your Project scales, Railway scales with you by supporting with multiple memb
 
 ## Requirements
 
-To successfully follow and complete this guide, you need a [Railway account](https://railway.app). If you don't have one, you can visit the link above and click on `Login` on top right corner to login either with your **GitHub account** or **Email**.
+To follow along, you need a [Railway account](https://railway.app). If you don't have one, you can visit the link above and click on "Login" in the top right corner to log in either with your GitHub account or email.
 
 ## Deploy Meilisearch
 
