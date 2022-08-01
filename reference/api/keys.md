@@ -133,7 +133,7 @@ Returns a `results` array that lists the 20 most recently created keys. **Expire
 
 | Name          | Description                                          |
 | ------------- | -----------------------------------------------------|
-| Key object    | A list of [key objects](#keys-object)                |
+| **`results`** | An array with a list of [key objects](#keys-object)  |
 | **`offset`**  | Number of keys skipped over                          |
 | **`limit`**   | Maximum number of keys to be returned by the request |
 | **`total`**   | Total number of API keys that can be browsed         |
