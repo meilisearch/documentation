@@ -4,7 +4,7 @@ sidebarDepth: 2
 
 # Settings
 
-## Global settings
+## All settings
 
 The `/settings` route allows you to customize search settings for the given index. It is possible to modify all of an index's settings at once using the [`update settings` endpoint](#update-settings), or modify each one individually using the child routes.
 
