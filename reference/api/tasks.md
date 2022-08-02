@@ -291,7 +291,7 @@ Get a single task. The task `uid` is required.
 
 #### Response: `200 Ok`
 
-Here is an example response representing [a processed task](/learn/advanced/asynchronous_operations.md#understanding-tasks).
+Here is an example response representing a processed task.
 
 ```json
 {
