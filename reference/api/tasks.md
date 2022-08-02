@@ -121,12 +121,12 @@ The task `uid` is incremented **globally.**
 
 **Description**: Error details and context. Only present when a task has the `failed` status
 
-| Name    | Description                                                      |
-|---------|------------------------------------------------------------------|
-|`message`| A human-readable description of the error                        |
-|`code`   | The [error code](/reference/api/error_codes.md)                  |
-|`type`   | The [error type](/faq.md#what-do-the-different-error-types-mean) |
-|`link`   | A link to the relevant section of the documentation              |
+| Name    | Description                                                                |
+|---------|----------------------------------------------------------------------------|
+|`message`| A human-readable description of the error                                  |
+|`code`   | The [error code](/reference/api/error_codes.md)                            |
+|`type`   | The [error type](/resources/faq.md#what-do-the-different-error-types-mean) |
+|`link`   | A link to the relevant section of the documentation                        |
 
 ### `duration`
 
