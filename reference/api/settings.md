@@ -94,18 +94,18 @@ If the provided index does not exist, it will be created.
 #### Body
 
 | Variable                 | Type      | Description                                                                                | Default value                                                                                |
-| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
-| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
-| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
+| -------------------------- | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **`displayedAttributes`**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
+| **`distinctAttribute`**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **`faceting`**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
+| **`filterableAttributes`** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **`pagination`**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
+| **`rankingRules`**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
+| **`searchableAttributes`** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
+| **`sortableAttributes`**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
+| **`stopWords`**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
+| **`synonyms`**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
+| **`typoTolerance`**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
 
 #### Example
 
@@ -129,9 +129,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings"/>
 
-Reset the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
-
-All settings will be reset to their default value.
+Reset the settings of an index to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
@@ -184,7 +182,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
-Get the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the displayed attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -205,7 +203,7 @@ Get the [displayed attributes](/learn/configuration/settings.md#displayed-attrib
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
-Update the [displayed attributes](/learn/configuration/settings.md#displayed-attributes) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the displayed attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g., `"displayedAttributes": ["release_date.year"]`.
 
@@ -279,7 +277,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the distinct attribute field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -295,7 +293,7 @@ Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Update the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the distinct attribute field of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g., `"distinctAttribute": "product.skuid"`.
 
@@ -367,7 +365,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/faceting"/>
 
-Get the [faceting settings](/reference/api/settings_object.md#faceting) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the faceting settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -385,7 +383,7 @@ Get the [faceting settings](/reference/api/settings_object.md#faceting) of an in
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/faceting"/>
 
-Partially update the [faceting settings](/reference/api/settings_object.md#faceting) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the faceting settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -461,7 +459,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
-Get an index's [`filterableAttributes`](/learn/advanced/filtering_and_faceted_search.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the filterable attributes for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -483,7 +481,7 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
-Update an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md). This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an index's filterable attributes list. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
 
@@ -513,7 +511,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/filterable-attributes"/>
 
-Reset an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md) back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's filterable attributes list back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
@@ -553,7 +551,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/pagination"/>
 
-Get the [pagination settings](/reference/api/settings_object.md#pagination) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the pagination settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -571,7 +569,7 @@ Get the [pagination settings](/reference/api/settings_object.md#pagination) of a
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/pagination"/>
 
-Partially update the [pagination settings](/reference/api/settings_object.md#pagination) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the pagination settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -607,7 +605,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset pagination settings
 
-Reset an index's [pagination settings](/reference/api/settings_object.md#pagination) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's pagination settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
@@ -765,7 +763,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
-Get the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the searchable attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -788,7 +786,7 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
-Update the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the searchable attributes of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
@@ -826,7 +824,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/searchable-attributes"/>
 
-Reset the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of the index to the default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the searchable attributes of the index to the default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
@@ -864,7 +862,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Get an index's [`sortableAttributes`](/learn/advanced/sorting.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the sortable attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -885,7 +883,7 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Update an index's [sortable attributes list](/learn/advanced/sorting.md). This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an index's sortable attributes list. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
@@ -1051,7 +1049,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Get the list of [synonyms](/learn/configuration/synonyms.md) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the list of synonyms of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -1079,7 +1077,7 @@ Get the list of [synonyms](/learn/configuration/synonyms.md) of an index. The in
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -1107,7 +1105,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Reset the list of [synonyms](/learn/configuration/synonyms.md) of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the list of synonyms of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
@@ -1147,7 +1145,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Get the [typo tolerance settings](/reference/api/settings_object.md#typotolerance) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the typo tolerance settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -1171,7 +1169,7 @@ Get the [typo tolerance settings](/reference/api/settings_object.md#typotoleranc
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Partially update the [typo tolerance settings](/reference/api/settings_object.md#typotolerance) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the typo tolerance settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -1227,7 +1225,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset typo tolerance
 
-Reset an index's [typo tolerance settings](/reference/api/settings_object.md#typotolerance) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's typo tolerance settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
