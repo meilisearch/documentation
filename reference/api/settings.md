@@ -1,272 +1,16 @@
-# All settings
+---
+sidebarDepth: 2
+---
+
+# Settings
+
+## Global settings
 
 The `/settings` route allows you to customize search settings for the given index. It is possible to modify all of an index's settings at once using the [`update settings` endpoint](#update-settings), or modify each one individually using the child routes.
-
-These are the reference pages for the child routes:
-
-- [Displayed attributes](/reference/api/displayed_attributes.md)
-- [Distinct attribute](/reference/api/distinct_attribute.md)
-- [Faceting](/reference/api/faceting.md)
-- [Filterable attributes](/reference/api/filterable_attributes.md)
-- [Pagination](/reference/api/pagination.md)
-- [Ranking rules](/reference/api/ranking_rules.md)
-- [Searchable attributes](/reference/api/searchable_attributes.md)
-- [Sortable attributes](/reference/api/sortable_attributes.md)
-- [Stop-words](/reference/api/stop_words.md)
-- [Synonyms](/reference/api/synonyms.md)
-- [Typo tolerance](/reference/api/typo_tolerance.md)
-
-To learn more about settings, refer to our [dedicated guide.](/learn/configuration/settings.md)
 
 ::: warning
 When you update a setting, you overwrite its default value. Use the `DELETE` route to reset any setting to its original value.
 :::
-
-## Settings object
-
-The settings object allows you to customize index level settings for your Meilisearch instance.
-
-```json
-{
-    "displayedAttributes":[
-        "*"
-    ],
-    "searchableAttributes":[
-        "*"
-    ],
-    "filterableAttributes":[],
-    "sortableAttributes":[],
-    "rankingRules":
-    [
-        "words",
-        "typo",
-        "proximity",
-        "attribute",
-        "sort",
-        "exactness"
-    ],
-    "stopWords":[],
-    "synonyms":{},
-    "distinctAttribute":null,
-    "typoTolerance":{
-        "enabled":true,
-        "minWordSizeForTypos":{
-            "oneTypo":5,
-            "twoTypos":9
-            },
-        "disableOnWords":[],
-        "disableOnAttributes":[]
-        },
-    "faceting":{
-        "maxValuesPerFacet":100
-        },
-    "pagination":{
-        "maxTotalHits":1000
-        }
-}
-```
-
-### `displayedAttributes`
-
-**Type**: Array of strings
-
-**Description**: Fields displayed in the returned documents
-
-**Default value**: All attributes
-
-**Dedicated API route**: [`/settings/displayed-attributes`](/reference/api/displayed_attributes.md)
-
-**Dedicated guide**:
-
-### `distinctAttribute`
-
-**Type**: String
-
-**Description**: Search returns documents with distinct (different) values of the given field
-
-**Default value**: `null`
-
-**Dedicated API route**: [`/settings/distinct-attribute`](/reference/api/distinct_attribute.md)
-
-**Dedicated guide**:
-
-### `faceting`
-
-**Type**: Object
-
-**Description**: Faceting settings
-
-| Name                | Type    | Description                                            | Default value |
-|---------------------|---------|--------------------------------------------------------|---------------|
-| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet | `100`         |
-
-```json
-{
-  "maxValuesPerFacet": 100
-}
-```
-
-**Dedicated guide**:
-
-**Dedicated API route**: [`/settings/faceting`](/reference/api/faceting.md)
-
-### `filterableAttributes`
-
-**Type**: Array of strings
-
-**Description**: Attributes to use as filters and facets
-
-**Default value**: Empty
-
-**Dedicated API route**: [`/settings/filterable-attributes`](/reference/api/filterable_attributes.md)
-
-**Dedicated guide**:
-
-### `pagination`
-
-**Type**: Object
-
-**Description**: Pagination settings
-
-| Name           | Type       | Description                                          | Default value |
-|----------------|------------|------------------------------------------------------|---------------|
-| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
-
-```json
-{
-  "maxTotalHits": 1000
-}
-```
-
-**Dedicated API route**: [`/settings/pagination`](/reference/api/pagination.md)
-
-**Dedicated guide**:
-
-### `rankingRules`
-
-**Type**: Array
-
-**Description**: An array that contains ranking rules in order of importance
-
-**Default value**:
-
-```json
-[
-  "words",
-  "typo",
-  "proximity",
-  "attribute",
-  "sort",
-  "exactness"
-]
-```
-
-**Dedicated API route**: [`/settings/ranking-rules`](/reference/api/ranking_rules.md)
-
-**Dedicated guide**:
-
-### `searchableAttributes`
-
-**Type**: Array of strings
-
-**Description**: Fields in which to search for matching query words sorted by order of importance
-
-**Default value**: All attributes
-
-**Dedicated API route**: [`/settings/searchable-attributes`](/reference/api/searchable_attributes.md)
-
-**Dedicated guide**:
-
-### `sortableAttributes`
-
-**Type**: Array of strings
-
-**Description**: Attributes to use when sorting search results
-
-**Default value**: Empty
-
-**Dedicated API route**: [`/settings/sortable-attributes`](/reference/api/sortable_attributes.md)
-
-**Dedicated guide**:
-
-### `stopWords`
-
-**Type**: Array of strings
-
-**Description**: List of words ignored by Meilisearch when present in search queries
-
-**Default value**: Empty
-
-**Dedicated API route**: [`/settings/stop-words`](/reference/api/stop_words.md)
-
-**Dedicated guide**:
-
-### `synonyms`
-
-**Type**: Object
-
-**Description**: List of associated words treated similarly
-
-**Default value**: Empty
-
-**Dedicated API route**: [`/settings/synonyms`](/reference/api/synonyms.md)
-
-**Dedicated guide**:
-
-### `typoTolerance`
-
-**Type**: Object
-
-**Description**: Typo tolerance settings
-
-#### `enabled`
-
-**Type**: Boolean
-
-**Description**: Whether typo tolerance is enabled or not
-
-**Default value**: `true`
-
-#### `minWordSizeForTypos`
-
-**Type**: Object
-
-**Description**: The minimum word length for tolerating 1 or 2 typos
-
-| Name       | Description                                                                       | Type    | Default value |
-|------------|-----------------------------------------------------------------------------------|---------|---------------|
-| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`    | integer | `5`           |
-| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255`  | integer | `9`           |
-
-### `disableOnWords`
-
-**Type**: Array of strings
-
-**Description**: An array of words for which the typo tolerance feature is disabled
-
-**Default value**: Empty
-
-### `disableOnAttributes`
-
-**Type**: Array of strings
-
-**Description**: An array of attributes for which the typo tolerance feature is disabled
-
-**Default value**: Empty
-
-```json
-{
-    "enabled":true,
-    "minWordSizeForTypos":{
-        "oneTypo":5,
-        "twoTypos":9
-        },
-    "disableOnWords":[],
-    "disableOnAttributes":[]
-}
-```
-
-**Dedicated API route**: [`/settings/typo-tolerance`](/reference/api/typo_tolerance.md)
 
 ### Get settings
 
@@ -274,33 +18,11 @@ The settings object allows you to customize index level settings for your Meilis
 
 Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-[Learn more about the settings.](/learn/configuration/settings.md)
-
-### Response body
-
-| Variable                   | Type      | Description                                                                                | Default value                                                                                |
-| -------------------------- | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **`displayedAttributes`**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **`distinctAttribute`**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **`faceting`**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **`filterableAttributes`** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
-| **`pagination`**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **`rankingRules`**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **`searchableAttributes`** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **`sortableAttributes`**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
-| **`stopWords`**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **`synonyms`**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **`typoTolerance`**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
-
-[Learn more about the settings in this guide.](/learn/configuration/settings.md)
-
-### Example
+#### Example
 
 <CodeSamples id="get_settings_1" />
 
 #### Response: `200 Ok`
-
-List the settings.
 
 ```json
 {
@@ -369,25 +91,23 @@ Updates in the settings route are **partial**. This means that any parameters no
 
 If the provided index does not exist, it will be created.
 
-[Learn more about the settings in this guide.](/learn/configuration/settings.md)
+#### Body
 
-### Body
+| Variable                 | Type      | Description                                                                                | Default value                                                                                |
+| ------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **displayedAttributes**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
+| **distinctAttribute**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **faceting**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
+| **filterableAttributes** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
+| **pagination**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
+| **rankingRules**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
+| **searchableAttributes** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
+| **sortableAttributes**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
+| **stopWords**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
+| **synonyms**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
+| **typoTolerance**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
 
-| Variable                   | Type      | Description                                                                                | Default value                                                                                |
-| -------------------------- | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **`displayedAttributes`**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **`distinctAttribute`**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **`faceting`**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **`filterableAttributes`** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
-| **`pagination`**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **`rankingRules`**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **`searchableAttributes`** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **`sortableAttributes`**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
-| **`stopWords`**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **`synonyms`**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **`typoTolerance`**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
-
-### Example
+#### Example
 
 <CodeSamples id="update_settings_1" />
 
@@ -413,20 +133,21 @@ Reset the settings of an index. The index [`uid`](/learn/core_concepts/indexes.m
 
 All settings will be reset to their default value.
 
-| Variable                   | Type      | Description                                                                                | Default value                                                                                |
-| -------------------------- | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **`displayedAttributes`**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **`distinctAttribute`**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **`faceting`**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **`filterableAttributes`** | [Strings] | Attributes to use as [filters and facets](/learn/advanced/filtering_and_faceted_search.md) | `[]`                                                                                         |
-| **`pagination`**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **`rankingRules`**         | [Strings] | List of ranking rules sorted by order of importance                                        | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **`searchableAttributes`** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **`sortableAttributes`**   | [Strings] | Attributes to use when [sorting](/learn/advanced/sorting.md) search results                | `[]`                                                                                         |
-| **`stopWords`**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **`synonyms`**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **`typoTolerance`**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
-[Learn more about the settings](/learn/configuration/settings.md).
+#### Default value
+
+| Variable                   | Default value                                                                                |
+| -------------------------- |-------------------------------------------------------------------------------------------- |
+| **`displayedAttributes`**  | `["*"]` (all attributes)                                                                     |
+| **`distinctAttribute`**    | `null`                                                                                       |
+| **`faceting`**             | `{}`                                                                                         |
+| **`filterableAttributes`** | `[]`                                                                                         |
+| **`pagination`**           | `{}`                                                                                         |
+| **`rankingRules`**         | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]`                          |
+| **`searchableAttributes`** | `["*"]` (all attributes)                                                                     |
+| **`sortableAttributes`**   | `[]`                                                                                         |
+| **`stopWords`**            | `[]`                                                                                         |
+| **`synonyms`**             | `{}`                                                                                         |
+| **`typoTolerance`**        | `{}`                                                                                         |
 
 #### Example
 
@@ -447,8 +168,6 @@ All settings will be reset to their default value.
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Displayed attributes
-
-_Child route of the [settings route](/reference/api/settings.md)._
 
 The fields whose attributes are added to the displayed-attributes list are **displayed in each matching document**.
 By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings. Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
@@ -472,8 +191,6 @@ Get the [displayed attributes](/learn/configuration/settings.md#displayed-attrib
 <CodeSamples id="get_displayed_attributes_1"/>
 
 #### Response: `200 Ok`
-
-List the settings.
 
 ```json
 [
@@ -499,8 +216,6 @@ If an attribute contains an object, you can use dot notation to specify one or m
 #### Body
 
 An array of strings that contains attributes of an index to display.
-
-[More information about the body](/learn/configuration/settings.md#displayed-attributes).
 
 #### Example
 
@@ -550,13 +265,11 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Distinct attribute
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 [Distinct attribute](/learn/configuration/distinct.md) is a field whose value will always be **unique** in the returned documents.
 
 Distinct attribute can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
-To learn more about distinct attributes, refer to our [dedicated guide](/learn/configuration/settings.md#distinct-attribute).
+To learn more about distinct attributes, refer to our [dedicated guide](/learn/configuration/distinct.md).
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
@@ -568,7 +281,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get the [distinct attribute](/learn/configuration/settings.md#distinct-attribute) field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_distinct_attribute_1" />
 
@@ -588,15 +301,13 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Body
 
-A String: the field name.
-
-[More information about the body](/learn/configuration/settings.md#distinct-attribute).
+A string: the field name.
 
 ::: warning
 If the field does not exist, no error will be thrown.
 :::
 
-### Example
+#### Example
 
 <CodeSamples id="update_distinct_attribute_1" />
 
@@ -642,8 +353,6 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Faceting
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 This route allows you to configure the faceting settings for an index.
 
 Faceting settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
@@ -658,9 +367,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/faceting"/>
 
-Get the faceting settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the [faceting settings](/reference/api/settings_object.md#faceting) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_faceting_settings_1" />
 
@@ -672,26 +381,17 @@ Get the faceting settings of an index. The index [`uid`](/learn/core_concepts/in
 }
 ```
 
-### Returned fields
-
-#### `maxValuesPerFacet`
-
-Maximum number of facet values returned for each facet.
-
 ### Update faceting settings
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/faceting"/>
 
-Partially update the faceting settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the [faceting settings](/reference/api/settings_object.md#faceting) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Body
+#### Body
 
-#### `maxValuesPerFacet`
-
-**Type:** integer
-**Default value:** `100`
-
-Configure the maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order.
+| Name                | Type    | Description                                                                                                  | Default value |
+|---------------------|---------|--------------------------------------------------------------------------------------------------------------|---------------|
+| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order | `100`         |
 
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
@@ -719,7 +419,15 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset faceting settings
 
-Reset an index's faceting settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [faceting settings](/reference/api/settings_object.md#faceting) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+#### Default value
+
+```json
+{
+  "maxValuesPerFacet": 100
+}
+```
 
 #### Example
 
@@ -741,8 +449,6 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Filterable attributes
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 Filterable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
 
 Attributes that can be used as filters for filtering and faceted search. To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
@@ -757,7 +463,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get an index's [`filterableAttributes`](/learn/advanced/filtering_and_faceted_search.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_filterable_attributes_1" />
 
@@ -781,13 +487,11 @@ Update an index's [filterable attributes list](/learn/advanced/filtering_and_fac
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
 
-### Body
+#### Body
 
 An array of strings containing the attributes that can be used as filters at query time.
 
-[You can read more about this setting at the feature reference page.](/learn/configuration/settings.md#filterable-attributes)
-
-### Example
+#### Example
 
 <CodeSamples id="update_filterable_attributes_1" />
 
@@ -811,11 +515,11 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Reset an index's [filterable attributes list](/learn/advanced/filtering_and_faceted_search.md) back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Default value
+#### Default value
 
 An empty array (`[]`).
 
-### Example
+#### Example
 
 <CodeSamples id="reset_filterable_attributes_1" />
 
@@ -835,8 +539,6 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Pagination
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 This route allows you to configure the pagination settings for an index.
 
 Pagination settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
@@ -851,9 +553,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/pagination"/>
 
-Get the pagination settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the [pagination settings](/reference/api/settings_object.md#pagination) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_pagination_settings_1" />
 
@@ -865,26 +567,19 @@ Get the pagination settings of an index. The index [`uid`](/learn/core_concepts/
 }
 ```
 
-### Returned fields
-
-#### `maxTotalHits`
-
-The maximum number of results Meilisearch can return.
-
 ### Update pagination settings
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/pagination"/>
 
-Partially update the pagination settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the [pagination settings](/reference/api/settings_object.md#pagination) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Body
+#### Body
 
-#### `maxTotalHits`
+| Name           | Type       | Description                                          | Default value |
+|----------------|------------|------------------------------------------------------|---------------|
+| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
 
-**Type:** integer
-**Default value:** `1000`
-
-An integer indicating the maximum number of search results Meilisearch can return. `maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
+`maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
@@ -912,7 +607,15 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset pagination settings
 
-Reset an index's pagination settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [pagination settings](/reference/api/settings_object.md#pagination) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+#### Default value
+
+```json
+{
+  "maxTotalHits": 1000
+}
+```
 
 #### Example
 
@@ -934,8 +637,6 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Ranking rules
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 Ranking rules are built-in rules that allow you to **customize the relevancy of your search results**. They are stored in an array and applied in order of appearance.
 
 Ranking rules can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
@@ -952,11 +653,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-#### Default value
-
-An array that contains [ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) in order of importance.
-
-### Example
+#### Example
 
 <CodeSamples id="get_ranking_rules_1" />
 
@@ -980,7 +677,7 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Update the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the ranking rules of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
@@ -992,9 +689,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 - To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
-[More information about the body](/learn/configuration/settings.md#ranking-rules).
-
-### Example
+#### Example
 
 <CodeSamples id="update_ranking_rules_1" />
 
@@ -1016,7 +711,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Reset the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an index to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the ranking rules of an index to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ::: tip
 Note that resetting the ranking rules is not the same as removing them.
@@ -1024,8 +719,6 @@ To remove a ranking rule, use the [add or replace ranking rules route](/referenc
 :::
 
 #### Default value
-
-An array that contains the [built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) in the following order:
 
 ```json
 [
@@ -1058,8 +751,6 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Searchable attributes
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 The values associated with attributes in the `searchableAttributes` list are **searched for matching query words**. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
 Searchable attributes can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
@@ -1076,7 +767,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get the [searchable attributes](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_searchable_attributes_1" />
 
@@ -1111,9 +802,7 @@ An array of strings that contains searchable attributes sorted by order of impor
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
-[More information about the body](/learn/configuration/settings.md#searchable-attributes).
-
-### Example
+#### Example
 
 <CodeSamples id="update_searchable_attributes_1" />
 
@@ -1163,8 +852,6 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Sortable attributes
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 Sortable attributes can also be updated through the [global settings route](/reference/api/settings.md#update-settings).
 
 Attributes that can be used together with the [`sort` search parameter](/reference/api/search.md#sort). To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md)
@@ -1179,7 +866,7 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 Get an index's [`sortableAttributes`](/learn/advanced/sorting.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_sortable_attributes_1" />
 
@@ -1198,19 +885,17 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Update an index's sortable attributes list. This will re-index all documents in the index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an index's [sortable attributes list](/learn/advanced/sorting.md). This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
 [You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting.md)
 
-### Body
+#### Body
 
 An array of strings containing the attributes that can be used to sort search results at query time.
 
-[You can read more about this setting at the feature reference page.](/learn/configuration/settings.md#sortable-attributes)
-
-### Example
+#### Example
 
 <CodeSamples id="update_sortable_attributes_1" />
 
@@ -1232,13 +917,13 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/sortable-attributes"/>
 
-Reset an index's sortable attributes list back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [sortable attributes list](/learn/advanced/sorting.md) back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Default value
+#### Default value
 
 An empty array (`[]`).
 
-### Example
+#### Example
 
 <CodeSamples id="reset_sortable_attributes_1" />
 
@@ -1256,31 +941,29 @@ An empty array (`[]`).
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
-## Stop-words
+## Stop words
 
 _Child route of the [settings route](/reference/api/settings.md)._
 
-The stop-words route allows you to add a list of words ignored in your search queries. During a search, the stop words contained in your search query will be ignored by the sorting algorithm.
-
-When you add a common English word such as `the` to the stop-words list, Meilisearch will not take it into consideration when calculating how relevant a result is.
+When you add a common English word such as `the` to the stop words list, Meilisearch will not take it into consideration when calculating how relevant a result is.
 
 ::: note
-Stop-words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
+stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
 :::
 
-Stop-words can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
+stop words can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
 
 ::: warning
 Updating the settings means overwriting the default settings of Meilisearch. You can reset to default values using the `DELETE` routes.
 :::
 
-### Get stop-words
+### Get stop words
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/stop-words" />
 
-Get the stop-words list of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the stop words list of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_stop_words_1" />
 
@@ -1294,21 +977,19 @@ Get the stop-words list of an index. The index [`uid`](/learn/core_concepts/inde
 ]
 ```
 
-### Update stop-words
+### Update stop words
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/stop-words" />
 
-Update the list of stop-words of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the list of stop words of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Body
 
-An array of strings that contains the stop-words.
+An array of strings that contains the stop words.
 
 If a list of stop-words already exists it will be overwritten (_replaced_).
 
-[More information about the body](/learn/configuration/settings.md#stop-words).
-
-### Example
+#### Example
 
 <CodeSamples id="update_stop_words_1" />
 
@@ -1326,17 +1007,17 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
-### Reset stop-words
+### Reset stop words
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/stop-words" />
 
-Reset the list of stop-words of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the list of stop words of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Default value
 
 Empty array: `[]`
 
-### Example
+#### Example
 
 <CodeSamples id="reset_stop_words_1" />
 
@@ -1355,8 +1036,6 @@ Empty array: `[]`
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ## Synonyms
-
-_Child route of the [settings route](/reference/api/settings.md)._
 
 `Synonyms` is an object containing words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query.
 
@@ -1406,8 +1085,6 @@ Update the list of [synonyms](/learn/configuration/synonyms.md) of an index. Syn
 
 An object that contains all synonyms and their associated words.
 
-[More information about the body](/learn/configuration/settings.md#synonyms).
-
 #### Example
 
 <CodeSamples id="update_synonyms_1" />
@@ -1434,7 +1111,7 @@ Reset the list of [synonyms](/learn/configuration/synonyms.md) of an index to it
 
 #### Default value
 
-Empty object : `{}`
+Empty object: `{}`
 
 #### Example
 
@@ -1456,8 +1133,6 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Typo tolerance
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
 This route allows you to configure the typo tolerance settings for an index.
 
 Typo tolerance settings can also be updated directly through the [global settings route](/reference/api/settings.md#update-settings) along with the other settings.
@@ -1472,9 +1147,9 @@ Updating the settings means overwriting the default settings of Meilisearch. You
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Get the typo tolerance settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the [typo tolerance settings](/reference/api/settings_object.md#typotolerance) of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_typo_tolerance_1" />
 
@@ -1492,47 +1167,24 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 }
 ```
 
-### Returned fields
-
-#### `enabled`
-
-Whether typo tolerance is enabled or not.
-
-#### `minWordSizeForTypos`
-
-The minimum word length for tolerating 1 or 2 typos.
-
-| Name       | Description                                  |
-|------------|----------------------------------------------|
-| `oneTypo`  | The minimum word size for tolerating 1 typo  |
-| `twoTypos` | The minimum word size for tolerating 2 typos |
-
-#### `disableOnWords`
-
-An array of words for which the typo tolerance feature is disabled.
-
-#### `disableOnAttributes`
-
-An array of attributes for which the typo tolerance feature is disabled.
-
 ### Update typo tolerance
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Partially update the typo tolerance settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the [typo tolerance settings](/reference/api/settings_object.md#typotolerance) for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
-### Body
+#### Body
 
 #### `enabled`
 
-**Type:** boolean
+**Type:** Boolean
 **Default value:** `true`
 
 Whether typo tolerance is enabled or not.
 
 #### `minWordSizeForTypos`
 
-**Type:** object
+**Type:** Object
 
 Customize the minimum word length for accepting 1 or 2 typos.
 
@@ -1543,14 +1195,14 @@ Customize the minimum word length for accepting 1 or 2 typos.
 
 #### `disableOnWords`
 
-**Type:** array
+**Type:** Array
 **Default value:** `[]`
 
 An array of words for which the typo tolerance feature is disabled.
 
 #### `disableOnAttributes`
 
-**Type:** array
+**Type:** Array
 **Default value:** `[]`
 
 An array of attributes for which the typo tolerance feature is disabled.
@@ -1575,7 +1227,21 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset typo tolerance
 
-Reset an index's typo tolerance settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's [typo tolerance settings](/reference/api/settings_object.md#typotolerance) to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+
+#### Default value
+
+```json
+{
+    "enabled":true,
+    "minWordSizeForTypos":{
+        "oneTypo":5,
+        "twoTypos":9
+        },
+    "disableOnWords":[],
+    "disableOnAttributes":[]
+}
+```
 
 #### Example
 
