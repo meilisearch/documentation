@@ -30,7 +30,7 @@ All of Meilisearch's asynchronous operations belong to a category called "tasks"
 
 ### Summarized task objects
 
-All asynchronous operations return a summarized version of [the full `task` object](#task-api-response). It contains the following fields in the stated order:
+All asynchronous operations return a summarized version of [the full `task` object](/reference/api/tasks.md#task-object). It contains the following fields in the stated order:
 
 | Field      | Type    | Description                              |
 |------------|---------|---------------------------------         |
