@@ -61,28 +61,59 @@ The task `uid` is incremented **globally.**
 
 **Description**: Detailed information on the task payload
 
-```json
-{
-  "rankingRules": [
-    "typo",
-    "ranking:desc",
-    "words",
-    "proximity",
-    "attribute",
-    "exactness"
-  ]
-}
-```
+#### `documentAdditionOrUpdate`
 
-| Name                       | Value                                             | Description                                                                |
-| -------------------------- | ------------------------------------------------- |----------------------------------------------------------------------------|
-| `indexCreation`            |`primaryKey`                                       | Value for the `primaryKey` field. `null` if no `primaryKey` is specified at index creation |
-| `indexUpdate`              | `primaryKey`                                      | Value for the `primaryKey` field. `null` if no `primaryKey` has been specified at the time of the index update |
-| `indexDeletion`            | `deletedDocuments`                                | Number of deleted documents. Should be all documents contained in the deleted index  |
-| `documentAdditionOrUpdate` | `receivedDocuments` <br><br> `indexedDocuments`   | Number of documents received <br><br> Number of documents finally indexed  |
-| `documentDeletion`         | `receivedDocumentIds` <br><br> `deletedDocuments` | Number of document ids received<br><br>Number of documents finally deleted |
-| `settingsUpdate`           | `rankingRules` <br><br> `searchableAttributes` <br><br> `filterableAttributes` <br><br> `sortableAttributes` <br><br> `stopWords` <br><br> `synonyms` <br><br> `distinctAttribute` <br><br> `displayedAttributes`  | List of ranking rules <br><br>List of searchable attributes <br><br>List of filterable attributes <br><br>List of sortable attributes<br><br>List of stop words<br><br>List of synonyms<br><br>The distrinct attribute <br><br>List of displayed attributes |
-| `dumpCreation`             |`dumpUid`                                          | The generated `uid` of the dump |
+| Name                | Description                  |
+|---------------------|------------------------------|
+| `receivedDocuments` | Number of documents received |
+| `indexedDocuments`  | Number of documents indexed  |
+
+#### `documentDeletion`
+
+| Name                  | Description                     |
+|-----------------------|---------------------------------|
+| `receivedDocumentIds` | Number of document ids received |
+| `deletedDocuments`    | Number of documents deleted     |
+
+#### `indexCreation`
+
+| Name       | Description                                                                                  |
+|------------|----------------------------------------------------------------------------------------------|
+| `primaryKey` | Value for the `primaryKey` field. `null` if no `primaryKey` is specified at index creation |
+
+#### `indexUpdate`
+
+| Name         | Description                                                                                                |
+|--------------|------------------------------------------------------------------------------------------------------------|
+| `primaryKey` | Value of the `primaryKey` field . `null` if no `primaryKey` is specified at the time of the index update   |
+
+#### `indexDeletion`
+
+| Name               | Description                                                                           |
+|--------------------|---------------------------------------------------------------------------------------|
+| `deletedDocuments` | Number of deleted documents. This should equal all the documents in the deleted index |
+
+#### `settingsUpdate`
+
+| Name                   | Description                   |
+|------------------------|-------------------------------|
+| `rankingRules`         | List of ranking rules         |
+| `filterableAttributes` | List of filterable attributes |
+| `distinctAttribute`    | The distinct attribute        |
+| `searchableAttributes` | List of searchable attributes |
+| `displayedAttributes`  | List of displayed attributes  |
+| `sortableAttributes`   | List of sortable attributes   |
+| `stopWords`            | List of  stop words           |
+| `synonyms`             | List of synonyms              |
+| `typoTolerance`        | The `typoTolerance` object    |
+| `pagination`           | The `pagination` object       |
+| `faceting`             | The `faceting` object         |
+
+#### `dumpCreation`
+
+| Name      | Description                     |
+| -------   | ------------------------------- |
+| `dumpUid` | The generated `uid` of the dump |
 
 ### `error`
 
@@ -90,21 +121,12 @@ The task `uid` is incremented **globally.**
 
 **Description**: Error details and context. Only present when a task has the `failed` status
 
-```json
-{
-  "message": "invalid criterion wordsPosition",
-  "code": "internal",
-  "type": "internal_error",
-  "link": "https://docs.meilisearch.com/errors#internal",
-}
-```
-
-| Name    | Description                                         |
-|---------|-----------------------------------------------------|
-|`message`| A human-readable description of the error           |
-|`code`   | An error code                                       |
-|`type`   | The error type                                      |
-|`link`   | A link to the relevant section of the documentation |
+| Name    | Description                                                      |
+|---------|------------------------------------------------------------------|
+|`message`| A human-readable description of the error                        |
+|`code`   | The [error code](/reference/api/error_codes.md)                  |
+|`type`   | The [error type](/faq.md#what-do-the-different-error-types-mean) |
+|`link`   | A link to the relevant section of the documentation              |
 
 ### `duration`
 
@@ -140,7 +162,7 @@ Tasks are always returned in descending order of `uid`. This means that by defau
 
 Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering-tasks).
 
-#### Query parameters
+### Query parameters
 
 | Query Parameter | Description                                                          |         Default Value          |
 |-----------------|----------------------------------------------------------------------|:------------------------------:|
@@ -150,7 +172,7 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
 | **type**        | [filter tasks](#filtering-tasks) by their `type`                     |           all types            |
 | **indexUid**    | [filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive |          all indexes           |
 
-### Example
+#### Example
 
 <CodeSamples id="get_all_tasks_1" />
 
@@ -261,9 +283,9 @@ When the returned value of `next` is `null`, you have reached the final page of 
 
 <RouteHighlighter method="GET" route="/tasks/{task_uid}"/>
 
-Get a single [task](/learn/advanced/asynchronous_operations.md). The task `uid` is required.
+Get a single task. The task `uid` is required.
 
-### Example
+#### Example
 
 <CodeSamples id="get_task_1" />
 
