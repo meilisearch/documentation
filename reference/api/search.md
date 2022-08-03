@@ -291,7 +291,11 @@ You can combine phrase search and normal queries in a single search request. In 
 Sets the starting point in the search results, effectively skipping over a given number of documents.
 
 ::: tip
-This parameter can be used together with `limit` in order to paginate results.
+You can paginate search results by making queries combining both `offset` and `limit`.
+:::
+
+::: warning
+Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/pagination.md) returns an empty array.
 :::
 
 #### Example
@@ -309,7 +313,7 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 Sets the maximum number of documents returned by a single query.
 
 ::: tip
-This parameter is often used together with `offset` in order to paginate results.
+You can paginate search results by making queries combining both `offset` and `limit`.
 :::
 
 #### Example
