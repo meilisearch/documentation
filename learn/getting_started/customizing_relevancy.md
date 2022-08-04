@@ -118,7 +118,7 @@ Meilisearch allows you to ignore certain words in your search queries by adding 
 
 If you search for `the cat` after running the above command, Meilisearch will consider your search query to be `cat`, improving the speed and relevancy of your search.
 
-You can read more about stop words in the [API reference](/reference/api/stop_words.md).
+You can read more about stop words in the [API reference](/reference/api/settings.md#stop-words).
 
 ## Synonyms
 

@@ -1,6 +1,6 @@
 # Synonyms
 
-If multiple words have an equivalent meaning in your dataset, you can [create a list of synonyms](/reference/api/synonyms.md#update-synonyms). This will make your search results more relevant.
+If multiple words have an equivalent meaning in your dataset, you can [create a list of synonyms](/reference/api/settings.md#update-synonyms). This will make your search results more relevant.
 
 In general, **a search on a word will return the same results as a search on any of its synonyms**.
 There is one exception to this rule, [detailed below](#multi-word-phrases).
@@ -40,7 +40,7 @@ However, if you search for `iphone`, documents containing `phone` will be ranked
 
 #### Example
 
-To create a one-way synonym list, this is the JSON syntax that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
+To create a one-way synonym list, this is the JSON syntax that should be [added to the settings](/reference/api/settings.md#update-synonyms).
 
 ```json
 {
@@ -62,7 +62,7 @@ When a search is done with one of these words, all synonyms will be considered a
 
 #### Example
 
-To create a mutual association between four words, this is the JSON syntax that should be [added to the settings](/reference/api/synonyms.md#update-synonyms).
+To create a mutual association between four words, this is the JSON syntax that should be [added to the settings](/reference/api/settings.md#update-synonyms).
 
 ```json
 {
