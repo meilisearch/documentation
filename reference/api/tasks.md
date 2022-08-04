@@ -105,13 +105,13 @@ The `details` object will only show values for the updated field. For example, i
 
 | Name       | Description                                                                                  |
 |------------|----------------------------------------------------------------------------------------------|
-| `primaryKey` | Value for the `primaryKey` field. `null` if no `primaryKey` is specified at index creation |
+| `primaryKey` | Value of the `primaryKey` field supplied during index creation. `null` if it was not specified |
 
 #### `indexUpdate`
 
 | Name         | Description                                                                                                |
 |--------------|------------------------------------------------------------------------------------------------------------|
-| `primaryKey` | Value of the `primaryKey` field . `null` if no `primaryKey` is specified at the time of the index update   |
+| `primaryKey` | Value of the `primaryKey` field supplied during index update. `null` if it was not specified |
 
 #### `indexDeletion`
 
