@@ -91,7 +91,7 @@ The `details` object will only show values for the updated field. For example, i
 
 <style>
 table th:first-of-type {
-    width: 25%;
+    width: 10%;
 }
 </style>
 
