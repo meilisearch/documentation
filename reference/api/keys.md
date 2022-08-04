@@ -36,7 +36,7 @@ The `/keys` route allows you to create, manage, and delete API keys. To use thes
 
 **Type**: String
 
-**Description**: A description for the key
+**Description**: A description for the key. You can add any important information about the key here
 
 **Default value**: `null`
 
