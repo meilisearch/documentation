@@ -68,21 +68,21 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Type**: Array
 
-**Description**: An array of API actions permitted for the key. `["*"]` for all actions.
+**Description**: An array of API actions permitted for the key, represented as strings. API actions are only possible on authorized [`indexes`](#indexes). `["*"]` for all actions.
 
 | Name               | Description |
 |--------------------|-------------|
-| `search`           | Provides access to both [`POST`](/reference/api/search.md#search-in-an-index-with-post-route) and [`GET`](/reference/api/search.md#search-in-an-index-with-get-route) search endpoints on authorized indexes |
-| `documents.add`    | Provides access to the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints on authorized indexes |
-| `documents.get`    | Provides access to the [get one document](/reference/api/documents.md#get-one-document) and [get documents](/reference/api/documents.md#get-documents) endpoints on authorized indexes |
-| `documents.delete` | Provides access to the [delete one document](/reference/api/documents.md#delete-one-document), [delete all documents](/reference/api/documents.md#delete-all-documents), and [batch delete](/reference/api/documents.md#delete-documents-by-batch) endpoints on authorized indexes |
+| `search`           | Provides access to both [`POST`](/reference/api/search.md#search-in-an-index-with-post-route) and [`GET`](/reference/api/search.md#search-in-an-index-with-get-route) search endpoints |
+| `documents.add`    | Provides access to the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints |
+| `documents.get`    | Provides access to the [get one document](/reference/api/documents.md#get-one-document) and [get documents](/reference/api/documents.md#get-documents) endpoints |
+| `documents.delete` | Provides access to the [delete one document](/reference/api/documents.md#delete-one-document), [delete all documents](/reference/api/documents.md#delete-all-documents), and [batch delete](/reference/api/documents.md#delete-documents-by-batch) endpoints |
 | `indexes.create`   | Provides access to the [create index](/reference/api/indexes.md#create-an-index) endpoint |
 | `indexes.get`      | Provides access to the [get one index](/reference/api/indexes.md#get-one-index) and [list all indexes](/reference/api/indexes.md#list-all-indexes) endpoints. **Non-authorized `indexes` will be omitted from the response** |
 | `indexes.update`   | Provides access to the [update index](/reference/api/indexes.md#update-an-index) endpoint |
 | `indexes.delete`   | Provides access to the [delete index](/reference/api/indexes.md#delete-an-index) endpoint |
 | `tasks.get`       | Provides access to the [get one task](/reference/api/tasks.md#get-one-task) and [get tasks](/reference/api/tasks.md#get-tasks) endpoints. **Tasks from non-authorized `indexes` will be omitted from the response** |
-| `settings.get`     | Provides access to the [get settings](/reference/api/settings.md#get-settings) endpoint and equivalents for all subroutes on authorized indexes |
-| `settings.update`  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes on authorized indexes |
+| `settings.get`     | Provides access to the [get settings](/reference/api/settings.md#get-settings) endpoint and equivalents for all subroutes |
+| `settings.update`  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes |
 | `stats.get`        | Provides access to the [get stats of an index](/reference/api/stats.md#get-stats-of-an-index) endpoint and the [get stats of all indexes](/reference/api/stats.md#get-stats-of-all-indexes) endpoint. For the latter, **non-authorized `indexes` are omitted from the response** |
 | `dumps.create`     | Provides access to the [create dump](/reference/api/dump.md#create-a-dump) endpoint. **Not restricted by `indexes`** |
 | `version`          | Provides access to the [get Meilisearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint |

@@ -137,9 +137,9 @@ The `details` object will only show values for the updated field. For example, i
 
 #### `dumpCreation`
 
-| Name      | Description                     |
-| -------   | ------------------------------- |
-| `dumpUid` | The generated `uid` of the dump |
+| Name      | Description                                                                       |
+| -------   | --------------------------------------------------------------------------------- |
+| `dumpUid` | The generated `uid` of the dump. This is also the name of the generated dump file |
 
 ### `error`
 
