@@ -207,7 +207,7 @@ searchBar.onChange(function () { getSearchResults('tarkovsky') })
 This method provides control and reliability. It also prevents users from paginating too far, which might result in performance gains. However, it limits the number of results your users can see. Additionally, we recommend caution when setting high values for `limit` as it can negatively impact performance.
 
 ::: note
-By default, Meilisearch returns a maximum of 1000 search results. Consult our [index setting reference](/reference/api/pagination.md) if you need to change this.
+By default, Meilisearch returns a maximum of 1000 search results. Consult our [index setting reference](/reference/api/settings.md#pagination) if you need to change this.
 :::
 
 #### Use `estimatedTotalHits`

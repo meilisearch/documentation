@@ -28,7 +28,7 @@ This can lead to unexpected behavior when sorting, so we strongly recommend you 
 
 ### Adding attributes to `sortableAttributes`
 
-After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/sortable_attributes.md).
+After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings.md#sortable-attributes).
 
 `sortableAttributes` accepts an array of strings, each corresponding to one attribute. Note that the attribute order in `sortableAttributes` has no impact on sorting.
 

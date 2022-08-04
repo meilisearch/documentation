@@ -30,7 +30,7 @@ With [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules), you can d
 
 By default, all fields in a document are both displayed and searchable. Displayed fields are contained in each matching document, while searchable fields are searched for matching query words.
 
-You can modify this behavior using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/displayed_attributes.md#update-displayed-attributes), and [searchable attributes](/reference/api/searchable_attributes.md#update-searchable-attributes) so that a field is:
+You can modify this behavior using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/settings.md#update-displayed-attributes), and [searchable attributes](/reference/api/settings.md#update-searchable-attributes) so that a field is:
 
 - Searchable but not displayed
 - Displayed but not searchable

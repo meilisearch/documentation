@@ -132,13 +132,13 @@ If your dump was created in Meilisearch v0.21 or above, continue to step 2.
 
 When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 
-Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that **all attributes are displayed**.
+Start by using the [get displayed attributes endpoint](/reference/api/settings.md#get-displayed-attributes) to verify that **all attributes are displayed**.
 
 <CodeSamples id="updating_guide_get_displayed_attributes_new" />
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-2-create-the-dump).
 
-If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
+If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/api/settings.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
@@ -263,7 +263,7 @@ If you are using Meilisearch v0.20 or below, migration should be done in two ste
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
-Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
+Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
 
 Congratulations! You have successfully migrated your Meilisearch database to the latest version! 🎉
 
@@ -295,13 +295,13 @@ Repeat this process for all indexes you wish to migrate.
 
 To prevent data loss, all fields must be set as [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
-By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes):
+By default, all fields are added to the displayed attributes list. Still, it's a good idea to verify this before proceeding to the next step. You can do so by using the [get displayed attributes endpoint](/reference/api/settings.md#get-displayed-attributes):
 
 <CodeSamples id="updating_guide_get_displayed_attributes_old" />
 
 If the response is `'["*"]'`, you can move on to the [next step](#step-3-save-your-documents).
 
-If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
+If it's something else, then you need to use the [reset displayed-attributes endpoint](/reference/api/settings.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_old" />
 
