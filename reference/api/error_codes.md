@@ -183,8 +183,8 @@ The given `name` is invalid. It should either be a string or `null`.
 
 ### `invalid_task_status`
 
-The requested task status is invalid. Please use one of [these four possible values](/reference/api/tasks.md#status).
+The requested task status is invalid. Please use one of the [possible values](/reference/api/tasks.md#status).
 
 ### `invalid_task_type`
 
-The requested task type is invalid. Please use one of the values defined in our [asynchronous operations guide](/reference/api/tasks.md#type).
+The requested task type is invalid. Please use one of the [possible values](/reference/api/tasks.md#type).

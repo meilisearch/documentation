@@ -113,7 +113,7 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Type**: String
 
-**Description**: Date and time when the key was created, represented in RFC 3339 format.
+**Description**: Date and time when the key was created, represented in RFC 3339 format
 
 **Default value**: `null`
 
@@ -129,11 +129,11 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 <RouteHighlighter method="GET" route="/keys"/>
 
-Returns a `results` array that lists the 20 most recently created keys. **Expired keys are included in the response**, but deleted keys are not. `total` shows the number of API keys that can be browsed.
+Returns the 20 most recently created keys in a `results` array. **Expired keys are included in the response**, but deleted keys are not. The field `total` attached to the response indicates the total number of API keys in existence.
 
 ### Query parameters
 
-Results can be paginated by using the `offset` and `limit` query parameters.
+Results can be paginated using the `offset` and `limit` query parameters.
 
 | Query Parameter          | Description               | Default Value |
 | ------------------------ | --------------------------| ------------- |

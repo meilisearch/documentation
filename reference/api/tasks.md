@@ -35,31 +35,35 @@ The task `uid` is incremented **globally.**
 
 **Type**: Integer
 
-**Description**: The unique sequential identifier of the task
+**Description**: Unique sequential identifier of the task
 
 ### `indexUid`
 
 **Type**: String
 
-**Description**: The unique index identifier (always `null` for dumps)
+**Description**: Unique identifier of the index modified by the task
+
+::: note
+This value is always `null` for `dumpCreation` tasks.
+:::
 
 ### `status`
 
 **Type**: String
 
-**Description**: The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`
+**Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`
 
 ### `type`
 
 **Type**: String
 
-**Description**: The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`
+**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`
 
 ### `details`
 
 **Type**: Object
 
-**Description**: Detailed information on the task payload
+**Description**: Detailed information on the task payload. This object's contents depend on the task's `type`
 
 #### `documentAdditionOrUpdate`
 
@@ -91,7 +95,7 @@ The task `uid` is incremented **globally.**
 
 | Name               | Description                                                                           |
 |--------------------|---------------------------------------------------------------------------------------|
-| `deletedDocuments` | Number of deleted documents. This should equal all the documents in the deleted index |
+| `deletedDocuments` | Number of deleted documents. This should equal the total number of documents in the deleted index |
 
 #### `settingsUpdate`
 
@@ -119,7 +123,7 @@ The task `uid` is incremented **globally.**
 
 **Type**: Object
 
-**Description**: Error details and context. Only present when a task has the `failed` status
+**Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
 | Name    | Description                                                                |
 |---------|----------------------------------------------------------------------------|
@@ -144,13 +148,13 @@ The task `uid` is incremented **globally.**
 
 **Type**: String
 
-**Description**: The date and time when the task began processing, in RFC 3339 format
+**Description**: The date and time when the task began `processing`, in RFC 3339 format
 
 ### `finishedAt`
 
 **Type**: String
 
-**Description**: The date and time when the task finished processing, whether failed or succeeded, in RFC 3339 format
+**Description**: The date and time when the task finished processing, whether `failed` or `succeeded`, in RFC 3339 format
 
 ## Get tasks
 
