@@ -40,7 +40,7 @@ The task `uid` is incremented **globally.**
 
 **Type**: String
 
-**Description**: Unique identifier of the index modified by the task
+**Description**:  Unique identifier of the targeted index
 
 ::: note
 This value is always `null` for `dumpCreation` tasks.
@@ -164,7 +164,7 @@ table th:first-of-type {
 
 **Type**: String
 
-**Description**: The total elapsed time the task spent in the processing state, in ISO 8601 format
+**Description**: The total elapsed time the task spent in the `processing` state, in [ISO 8601](https://www.ionos.com/digitalguide/websites/web-development/iso-8601/) format
 
 ### `enqueuedAt`
 
@@ -182,7 +182,7 @@ table th:first-of-type {
 
 **Type**: String
 
-**Description**: The date and time when the task finished processing, whether `failed` or `succeeded`, in RFC 3339 format
+**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in RFC 3339 format
 
 ## Get tasks
 
