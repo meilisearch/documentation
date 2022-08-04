@@ -2,32 +2,27 @@
 
 The `/tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations.md).
 
-:::note
-The task `uid` is incremented **globally.**
-:::
-
 ## Task object
 
 ```json
 {
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "succeeded",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "exactness"
-        ]
+  "uid": 4,
+  "indexUid" :"movie",
+  "status": "failed",
+  "type": "indexDeletion",
+  "details": {
+    "deletedDocuments": 0
+  },
+    "error": {
+      "message": "Index `movie` not found.",
+      "code": "index_not_found",
+      "type": "invalid_request",
+      "link": "https://docs.meilisearch.com/errors#index_not_found"
     },
-    "duration": "PT1S",
-    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
-    "startedAt": "2021-08-10T14:29:18.000000Z",
-    "finishedAt": "2021-08-10T14:29:19.000000Z"
+      "duration": "PT0.001192S",
+      "enqueuedAt": "2022-08-04T12:28:15.159167Z",
+      "startedAt": "2022-08-04T12:28:15.161996Z",
+      "finishedAt": "2022-08-04T12:28:15.163188Z"
 }
 ```
 
@@ -36,6 +31,10 @@ The task `uid` is incremented **globally.**
 **Type**: Integer
 
 **Description**: Unique sequential identifier of the task
+
+:::note
+The task `uid` is incremented **globally.**
+:::
 
 ### `indexUid`
 
@@ -64,6 +63,29 @@ This value is always `null` for `dumpCreation` tasks.
 **Type**: Object
 
 **Description**: Detailed information on the task payload. This object's contents depend on the task's `type`
+
+::: note
+The `details` object will only show values for the updated field. For example, if you update the faceting settings, the `details` object will only contain the updated faceting value:
+
+```json
+{
+   "uid": 3,
+   "indexUid": "movies",
+   "status": "succeeded",
+   "type": "settingsUpdate",
+   "details": {
+      "faceting": {
+         "maxValuesPerFacet": 2
+      }
+   },
+   "duration": "PT0.000682S",
+   "enqueuedAt": "2022-08-02T15:41:57.955977Z",
+   "startedAt": "2022-08-02T15:41:57.957002Z",
+   "finishedAt": "2022-08-02T15:41:57.957684Z"
+}
+```
+
+:::
 
 #### `documentAdditionOrUpdate`
 
