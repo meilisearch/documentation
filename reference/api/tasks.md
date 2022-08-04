@@ -59,7 +59,10 @@ Task results are paginated and can be filtered. To learn more, refer to our [asy
             "startedAt": "2021-08-11T10:03:00.000000Z",
             "finishedAt": "2021-08-11T10:03:16.000000Z"
         }
-    ]
+    ],
+    "limit": 2,
+    "from": 0,
+    "next": null
 }
 ```
 
