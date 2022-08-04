@@ -97,7 +97,7 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Type**: Array
 
-**Description**: An array of indexes the key is authorized to act on. `["*"]` for all indexes. Only the key's [permitted actions](#actions-2) can be used on these indexes
+**Description**: An array of indexes the key is authorized to act on. `["*"]` for all indexes. Only the key's [permitted actions](#actions) can be used on these indexes
 
 **Default value**: None
 
