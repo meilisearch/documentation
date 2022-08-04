@@ -368,6 +368,12 @@ This route allows you to configure the faceting settings for an index.
 
 To learn more about filtering and faceting, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
+### Faceting object
+
+| Name                | Type    | Description                                                                                                  | Default value |
+|---------------------|---------|--------------------------------------------------------------------------------------------------------------|---------------|
+| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order | `100`         |
+
 ### Get faceting settings
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/faceting"/>
@@ -424,7 +430,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset faceting settings
 
-Reset an index's faceting settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's faceting settings to their [default value](#faceting-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -446,7 +452,9 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Filterable attributes
 
-Attributes that can be used as filters for filtering and faceted search. To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
+Attributes in the `filterableAttributes` list can be used as filters for filtering and faceted search.
+
+To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
 ### Get filterable attributes
 
@@ -530,6 +538,12 @@ This route allows you to configure the pagination settings for an index.
 
 To learn more about paginating search results with Meilisearch, refer to our [dedicated guide](/learn/advanced/pagination.md).
 
+### Pagination object
+
+| Name           | Type       | Description                                          | Default value |
+|----------------|------------|------------------------------------------------------|---------------|
+| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
+
 ### Get pagination settings
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/pagination"/>
@@ -588,7 +602,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset pagination settings
 
-Reset an index's pagination settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's pagination settings to their [default value](#pagination-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
@@ -613,6 +627,30 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 Ranking rules are built-in rules that allow you to customize the relevancy of your search results. They are stored in an array and applied in order of appearance.
 
 To learn more about ranking rules, refer to our [dedicated guide](/learn/core_concepts/relevancy.md).
+
+### Ranking rules array
+
+|Name           | Description                                                                     |
+|---------------|---------------------------------------------------------------------------------|
+| `"words"`     | Sorts results by decreasing number of matched query terms                       |
+| `"typo"`      | Sorts results by increasing number of typos                                     |
+| `"proximity"` | Sorts results by increasing distance between matched query terms                |
+| `"attribute"` | Sorts results based on the attribute ranking order                              |
+| `"sort"`      | Sorts results based on parameters decided at query time                         |
+| `"exactness"` | Sorts results based on the similarity of the matched words with the query words |
+
+#### Default order
+
+```json
+[
+  "words",
+  "typo",
+  "proximity",
+  "attribute",
+  "sort",
+  "exactness"
+]
+```
 
 ### Get ranking rules
 
@@ -678,7 +716,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Reset the ranking rules of an index to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the ranking rules of an index to their [default value](#default-order). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 ::: tip
 Note that resetting the ranking rules is not the same as removing them.
@@ -885,8 +923,6 @@ This route allows you to add a list of words ignored in your search queries. Dur
 stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
 :::
 
-This route allows you to manage stop words for an index.
-
 ### Get stop words
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/stop-words" />
@@ -1053,6 +1089,43 @@ Typo tolerance helps users find relevant results even when their search queries 
 
 To learn more about typo tolerance, refer to our [dedicated guide](/learn/configuration/typo_tolerance.md).
 
+### Typo tolerance object
+
+#### `enabled`
+
+**Type:** Boolean
+
+**Default value:** `true`
+
+**Description:** Whether typo tolerance is enabled or not
+
+#### `minWordSizeForTypos`
+
+**Type:** Object
+
+**Description:** Customize the minimum word length for accepting 1 or 2 typos
+
+| Name       | Description                                                                       | Type    | Default value |
+|------------|-----------------------------------------------------------------------------------|---------|---------------|
+| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`    | integer | `5`           |
+| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255`  | integer | `9`           |
+
+#### `disableOnWords`
+
+**Type:** Array
+
+**Default value:** `[]`
+
+**Description:** An array of words for which the typo tolerance feature is disabled
+
+#### `disableOnAttributes`
+
+**Type:** Array
+
+**Default value:** `[]`
+
+**Description:** An array of attributes for which the typo tolerance feature is disabled
+
 ### Get typo tolerance
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/typo-tolerance"/>
@@ -1091,13 +1164,13 @@ Partially update the typo tolerance settings for an index. The index [`uid`](/le
 
 **Default value:** `true`
 
-Whether typo tolerance is enabled or not.
+**Description:** Whether typo tolerance is enabled or not
 
 #### `minWordSizeForTypos`
 
 **Type:** Object
 
-Customize the minimum word length for accepting 1 or 2 typos.
+**Description:** Customize the minimum word length for accepting 1 or 2 typos
 
 | Name       | Description                                                                       | Type    | Default value |
 |------------|-----------------------------------------------------------------------------------|---------|---------------|
@@ -1110,7 +1183,7 @@ Customize the minimum word length for accepting 1 or 2 typos.
 
 **Default value:** `[]`
 
-An array of words for which the typo tolerance feature is disabled.
+**Description:** An array of words for which the typo tolerance feature is disabled
 
 #### `disableOnAttributes`
 
@@ -1118,7 +1191,7 @@ An array of words for which the typo tolerance feature is disabled.
 
 **Default value:** `[]`
 
-An array of attributes for which the typo tolerance feature is disabled.
+**Description:** An array of attributes for which the typo tolerance feature is disabled
 
 #### Example
 
@@ -1140,7 +1213,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset typo tolerance
 
-Reset an index's typo tolerance settings to their default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
