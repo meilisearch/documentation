@@ -139,19 +139,19 @@ If the provided index does not exist, it will be created.
 
 #### Body
 
-| Variable                   | Type      | Description                                                                                | Default value                                                                                |
-| -------------------------- | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **`displayedAttributes`**  | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **`distinctAttribute`**    | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **`faceting`**             | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **`filterableAttributes`** | [Strings] | Attributes to use as filters and facets                                                    | `[]`                                                                                         |
-| **`pagination`**           | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **`rankingRules`**         | [Strings] | List of ranking rules sorted by order of importance                                        | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]` |
-| **`searchableAttributes`** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **`sortableAttributes`**   | [Strings] | Attributes to use when sorting search results                                              | `[]`                                                                                         |
-| **`stopWords`**            | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **`synonyms`**             | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **`typoTolerance`**        | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
+| Variable                                               | Type      | Description                                                                                | Default value                                                                                |
+| ------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| **[`displayedAttributes`](#displayed-attributes)**   | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
+| **[`distinctAttribute`](#distinct-attribute)**       | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
+| **[`faceting`](#faceting)**                          | Object    | Faceting settings                                                                          | `{}`                                                                                         |
+| **[`filterableAttributes`](#filterable-attributes)** | [Strings] | Attributes to use as filters and facets                                                    | `[]`                                                                                         |
+| **[`pagination`](#pagination)**                      | Object    | Pagination settings                                                                        | `{}`                                                                                         |
+| **[`rankingRules`](#ranking-rules)**                 | [Strings] | List of ranking rules sorted by order of importance                                        | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]` |
+| **[`searchableAttributes`](#searchable-attributes)** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
+| **[`sortableAttributes`](#sortable-attributes)**     | [Strings] | Attributes to use when sorting search results                                              | `[]`                                                                                         |
+| **[`stopWords`](#stop-words)**                       | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
+| **[`synonyms`](#synonyms)**                          | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
+| **[`typoTolerance`](#typo-tolerance)**               | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
 
 #### Example
 
@@ -836,7 +836,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Attributes used when sorting search results. `sortableAttributes` can be used together with the [`sort` search parameter](/reference/api/search.md#sort).
 
-To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md)
+To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md).
 
 ### Get sortable attributes
 
