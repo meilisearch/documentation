@@ -60,8 +60,8 @@ Task results are paginated and can be filtered. To learn more, refer to our [asy
             "finishedAt": "2021-08-11T10:03:16.000000Z"
         }
     ],
-    "limit": 2,
-    "from": 0,
+    "limit": 20,
+    "from": 1,
     "next": null
 }
 ```
