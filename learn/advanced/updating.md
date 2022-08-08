@@ -2,7 +2,7 @@
 
 :::warning
 
-1. This guide does not work for versions below v0.15. For more information, contact support.
+1. This guide does not work for versions below v0.15. For more information, contact [support](https://slack.meilisearch.com/).
 2. If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
 
  <CodeSamples id="updating_guide_check_version_old_authorization_header" />
