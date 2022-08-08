@@ -118,7 +118,7 @@ If your dump was created in Meilisearch v0.21 or above, continue to [step 3](#st
 
 When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 
-Start by using the [get displayed attributes endpoint](/reference/api/displayed_attributes.md#get-displayed-attributes) to verify that all attributes are displayed.
+Start by using the get displayed attributes endpoint to verify that all attributes are displayed:
 
 <CodeSamples id="updating_guide_get_displayed_attributes_new" />
 
@@ -188,7 +188,7 @@ It should return something like this:
 
 ::::
 
-To create a dump, use the [create dump endpoint](/reference/api/dump.md#create-a-dump).
+To create a dump, use the create dump endpoint:
 
 <CodeSamples id="updating_guide_create_dump" />
 
@@ -234,7 +234,7 @@ If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, y
 
 ## Step 5: Import the dump
 
-Now that you’ve got your dump, install the [latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the [CLI option](/learn/configuration/instance_options.md#import-dump).
+Now that you’ve got your dump, install the [latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the CLI option:
 
 ```bash
 # launch the latest version of Meilisearch with the master key and import the specified dump file
