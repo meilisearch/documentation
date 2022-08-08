@@ -50,7 +50,36 @@ By default, Meilisearch limits the size of all payloads—and therefore document
 
 Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
-When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document.
+When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document. Ensure there are no extraneous comma at the end of a line.
+
+Wrong:
+
+```json
+{
+  "id": 123,
+  "title": "Pride and Prejudice"
+}
+```
+
+Good:
+
+```json
+[
+  {
+    "id": 123,
+    "title": "Pride and Prejudice"
+  }
+]
+```
+
+:::tip
+The [jq](https://github.com/stedolan/jq) command line tool can greatly help you check the format of your data.
+
+```bash
+cat your_file.json | jq
+```
+
+:::
 
 ### Dataset format
 
