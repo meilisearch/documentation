@@ -1,7 +1,11 @@
 # Update to the latest Meilisearch version
 
 :::warning
-This guide does not work for versions under v0.15. For more information, contact support.
+
+1. This guide does not work for versions below v0.15. For more information, contact support.
+2. If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
+
+ <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 :::
 
 Currently, Meilisearch databases can only be opened by the Meilisearch version you used to create them. The following guide will walk you through all the steps to migrate an existing database from an older version of Meilisearch to the most recent one.
@@ -23,11 +27,6 @@ Before we begin, you need to verify the version of Meilisearch that's compatible
 If Meilisearch launches successfully, use the get version endpoint, note your `pkgVersion`, and [proceed to the next step](#step-2-set-all-fields-as-displayed-attributes).
 
 <CodeSamples id="updating_guide_check_version_new_authorization_header" />
-
-::: note
- If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
- <CodeSamples id="updating_guide_check_version_old_authorization_header" />
-:::
 
 The response should look something like this:
 
@@ -124,7 +123,7 @@ Start by using the get displayed attributes endpoint to verify that all attribut
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-3-create-the-dump).
 
-If it's something else, then you need to use the [reset displayed attributes endpoint](/reference/api/displayed_attributes.md#reset-displayed-attributes). Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
+If it's something else, then you need to use the reset displayed attributes endpoint. Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
@@ -228,7 +227,7 @@ Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move
 
 To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
-::: tip
+::: note
 If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 :::
 
