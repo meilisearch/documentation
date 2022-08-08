@@ -1,6 +1,7 @@
 status = [
   'check-links',
-  'check-style'
+  'check-style',
+  'vale'
 ]
 # 1 hour timeout
 timeout-sec = 3600
