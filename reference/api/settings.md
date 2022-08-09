@@ -42,13 +42,13 @@ By default, the settings object looks like this. All fields are modifiable.
     },
     "disableOnWords":[],
     "disableOnAttributes":[]
-    },
+  },
   "faceting":{
-      "maxValuesPerFacet":100
-      },
+    "maxValuesPerFacet":100
+  },
   "pagination":{
-      "maxTotalHits":1000
-      }
+    "maxTotalHits":1000
+  }
 }
 ```
 
@@ -100,13 +100,13 @@ Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#
     },
     "disableOnWords":[],
     "disableOnAttributes":[]
-    },
+  },
   "faceting":{
-      "maxValuesPerFacet":100
-      },
+    "maxValuesPerFacet":100
+  },
   "pagination":{
-      "maxTotalHits":1000
-      }
+    "maxTotalHits":1000
+  }
 }
 ```
 
@@ -160,7 +160,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings"/>
 
-Reset the settings of an index to their [default value](#settings-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset all the settings of an index to their [default value](#settings-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
 
 #### Example
 
