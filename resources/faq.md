@@ -19,13 +19,54 @@ Meilisearch is really **easy to use** and thus accessible to all kinds of develo
 
 We also provide a lot of tools, including [SDKs](/learn/what_is_meilisearch/sdks.md), to help you integrate easily Meilisearch in your project. We're adding new tools every day!
 
-Plus, you can [contact us](#how-can-i-contact-the-meilisearch-team) if you need any help. We will answer for sure!
+Plus, you can [contact us](/learn/what_is_meilisearch/contact.md) if you need any help. We will answer for sure!
 
 ## How to know if Meilisearch perfectly fits my use cases?
 
 Since Meilisearch is an open-source and easy-to-use tool, you can give it a try using your data. Follow this [guide](/learn/getting_started/quick_start.md) to get a quick start!
 
 Besides, we published a [comparison between Meilisearch and other search engines](/learn/what_is_meilisearch/comparison_to_alternatives.md) with the goal of providing an overview of Meilisearch alternatives.
+
+## I am trying to add my documents but I keep receiving a `400 - Bad Request` response
+
+Meilisearch API accepts JSON, CSV, and NDJSON formats.
+In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
+
+The `400 - Bad request` response probably means that your data is not in an expected format.
+
+Most common errors:
+
+- Extraneous comma at the end of a line.
+- Data is not an array of objects: for the [document addition route](/reference/api/documents.md#add-or-replace-documents), Meilisearch only accepts an array in the body even if there is only one document.
+
+Wrong:
+
+```json
+{
+  "id": 123,
+  "title": "Pride and Prejudice"
+}
+```
+
+Good:
+
+```json
+[
+  {
+    "id": 123,
+    "title": "Pride and Prejudice"
+  }
+]
+```
+
+:::tip
+The [jq](https://github.com/stedolan/jq) command line tool can greatly help you check the format of your data.
+
+```bash
+cat your_file.json | jq
+```
+
+:::
 
 ## What do the different error types mean?
 
@@ -39,7 +80,7 @@ Meilisearch has the following types of errors:
 
 ## I have uploaded my documents, but I get no result when I search in my index
 
-Your document upload probably failed. To understand why, please check the status of the document addition task using the returned `taskUid`. If the task failed, the response should contain an `error` object.
+Your document upload probably failed. To understand why, please check the status of the document addition task using the returned [`taskUid`](/reference/api/tasks.md#get-one-task). If the task failed, the response should contain an `error` object.
 
 Here is an example of a failed task:
 
