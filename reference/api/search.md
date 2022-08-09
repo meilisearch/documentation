@@ -295,7 +295,7 @@ You can paginate search results by making queries combining both `offset` and `l
 :::
 
 ::: warning
-Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/pagination.md) returns an empty array.
+Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/pagination.md#update-pagination-settings) returns an empty array.
 :::
 
 #### Example
@@ -314,6 +314,10 @@ Sets the maximum number of documents returned by a single query.
 
 ::: tip
 You can paginate search results by making queries combining both `offset` and `limit`.
+:::
+
+::: warning
+A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/pagination.md#update-pagination-settings), even if the value of `limit` is greater than the value of `maxTotalHits`.
 :::
 
 #### Example

@@ -110,7 +110,7 @@ The code sample below updates `maxTotalHits` to `50`:
 <CodeSamples id="settings_guide_pagination_1" />
 
 ::: note
-Search results beyond the value configured for `maxTotalHits` are completely unreachable by the search endpoint. `maxTotalHits` is a hard limit that takes precedence over search parameters such as [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset). This means that queries with an `offset` equal to or greater than `maxTotalHits will return an empty array.
+`maxTotalHits` is a hard limit that takes precedence over search parameters such as [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset). This means that queries with an `offset` equal to or greater than `maxTotalHits` will return an empty array.
 :::
 
 ## Faceting
