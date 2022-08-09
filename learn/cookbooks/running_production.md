@@ -99,7 +99,7 @@ If you are new to services and `systemd`, you can learn more about the basics of
 
 In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that Meilisearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart Meilisearch.
 
-### 2.1 Create a service file
+### 2.1. Create a service file
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
 

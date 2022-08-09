@@ -65,7 +65,7 @@ All asynchronous operations return a [summarized version of the `task` object](/
 
 This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
-## I am trying to add my documents but I keep receiving a `400 - Bad Request` response.
+## I am trying to add my documents but I keep receiving a `400 - Bad Request` response
 
 Meilisearch API accepts JSON, CSV, and NDJSON formats.
 In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
@@ -116,7 +116,7 @@ Meilisearch has the following types of errors:
 | internal        | This is due to machine or configuration constraints. The most common cause is reaching or exceeding hard limits, such as the size of the disk, the size limit of an index, etc. It is accompanied by the HTTP code `5xx`.  |
 | auth            | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx`. |
 
-## My document upload failed with the `document id is missing` error.
+## My document upload failed with the `document id is missing` error
 
 ::: note TLDR;
 Most common reasons:
@@ -149,7 +149,7 @@ Good:
 
 See more [information about the primary key](/learn/core_concepts/primary_key.md#primary-key-2).
 
-## I have uploaded my documents, but I get no result when I search in my index.
+## I have uploaded my documents, but I get no result when I search in my index
 
 Your document upload probably failed. To understand why, please check the status of the document addition task using the returned `taskUid`. If the task failed, the response should contain an `error` object.
 
@@ -195,7 +195,7 @@ Since the production environment requires an API key for searching, the search p
 
 Here is more information about [Meilisearch's search preview](/learn/what_is_meilisearch/search_preview.md).
 
-## I do not understand the relevancy of my search results.
+## I do not understand the relevancy of my search results
 
 The search responses are sorted according to a set of consecutive rules called ranking rules.
 Here is more information about the [relevancy of Meilisearch](/learn/core_concepts/relevancy.md).

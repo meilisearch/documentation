@@ -145,6 +145,7 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 - [GCP](/learn/cookbooks/gcp.md)
 - [Koyeb](/learn/cookbooks/koyeb.md)
 - [Qovery](/learn/cookbooks/qovery.md)
+- [Railway](/learn/cookbooks/railway.md)
 
 ### Running Meilisearch
 

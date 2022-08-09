@@ -157,7 +157,7 @@ Elasticsearch can handle search through massive amounts of data and perform text
 Meilisearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing very large datasets is not possible.
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to Meilisearch.
-Meilisearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides a prefix searching capability, makes search intuitive for users, and returns them their results instantly with near-perfect relevance.
+Meilisearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides prefix searching capability, makes search intuitive for users, and returns results instantly with near-perfect relevance.
 
 ### Meilisearch vs Algolia
 
@@ -208,7 +208,8 @@ Since Lucene is the technology behind many open source or closed source search e
 
 #### Sonic
 
-Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution and, compared to Meilisearch, it does not ensure relevancy ranking. Indeed, it does not store any documents but is comprised of an inverted index with a Levenshtein automaton, which means any application querying Sonic has to retrieve the search results from an external database using the IDs that are returned and then apply some relevancy ranking.
+Sonic is a lightweight and schema-less search index server written in Rust. Sonic cannot be considered as an out-of-the-box solution, and compared to Meilisearch, it does not ensure relevancy ranking. Instead of storing documents, it comprises an inverted index with a Levenshtein automaton. This means any application querying Sonic has to retrieve the search results from an external database using the returned IDs and then apply some relevancy ranking.
+
 Its ability to run on a few MBs of RAM makes it a minimalist and resource-efficient alternative to database tools that can be too heavyweight to scale.
 
 #### Typesense
