@@ -8,51 +8,47 @@ The `/settings` route allows you to customize search settings for the given inde
 
 For a conceptual overview of index settings, refer to our [indexes guide](/learn/core_concepts/indexes.md#index-settings).
 
-::: warning
-When you update a setting, you overwrite its default value. Use the `DELETE` route to reset any setting to its original value.
-:::
-
 ## Settings object
 
 By default, the settings object looks like this. All fields are modifiable.
 
 ```json
 {
-    "displayedAttributes":[
-        "*"
-    ],
-    "searchableAttributes":[
-        "*"
-    ],
-    "filterableAttributes":[],
-    "sortableAttributes":[],
-    "rankingRules":
-    [
-        "words",
-        "typo",
-        "proximity",
-        "attribute",
-        "sort",
-        "exactness"
-    ],
-    "stopWords":[],
-    "synonyms":{},
-    "distinctAttribute":null,
-    "typoTolerance":{
-        "enabled":true,
-        "minWordSizeForTypos":{
-            "oneTypo":5,
-            "twoTypos":9
-            },
-        "disableOnWords":[],
-        "disableOnAttributes":[]
-        },
-    "faceting":{
-        "maxValuesPerFacet":100
-        },
-    "pagination":{
-        "maxTotalHits":1000
-        }
+  "displayedAttributes":[
+    "*"
+  ],
+  "searchableAttributes":[
+    "*"
+  ],
+  "filterableAttributes":[],
+  "sortableAttributes":[],
+  "rankingRules":
+  [
+    "words",
+    "typo",
+    "proximity",
+    "attribute",
+    "sort",
+    "exactness"
+  ],
+  "stopWords":[],
+  "synonyms":{},
+  "distinctAttribute":null,
+  "typoTolerance":{
+    "enabled":true,
+    "minWordSizeForTypos":{
+      "oneTypo":5,
+      "twoTypos":9
+    },
+    "disableOnWords":[],
+    "disableOnAttributes":[]
+    },
+  "faceting":{
+      "maxValuesPerFacet":100
+      },
+  "pagination":{
+      "maxTotalHits":1000
+      }
 }
 ```
 
@@ -76,56 +72,41 @@ Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#
 
 ```json
 {
-  "rankingRules": [
-    "typo",
+  "displayedAttributes":[
+    "*"
+  ],
+  "searchableAttributes":[
+    "*"
+  ],
+  "filterableAttributes":[],
+  "sortableAttributes":[],
+  "rankingRules":
+  [
     "words",
+    "typo",
     "proximity",
     "attribute",
-    "words",
-    "exactness",
-    "desc(release_date)"
+    "sort",
+    "exactness"
   ],
-  "filterableAttributes": [
-    "genres"
-  ],
-  "distinctAttribute": null,
-  "searchableAttributes": [
-    "title",
-    "overview",
-    "genres"
-  ],
-  "displayedAttributes": [
-    "title",
-    "overview",
-    "genres",
-    "release_date"
-  ],
-  "stopWords": null,
-  "synonyms": {
-    "wolverine": [
-      "xmen",
-      "logan"
-    ],
-    "logan": [
-      "wolverine",
-      "xmen"
-    ]
-  },
-  "typoTolerance": {
-    "enabled": true, 
-    "minWordSizeForTypos": {
-        "oneTypo": 5,
-        "twoTypos": 10
+  "stopWords":[],
+  "synonyms":{},
+  "distinctAttribute":null,
+  "typoTolerance":{
+    "enabled":true,
+    "minWordSizeForTypos":{
+      "oneTypo":5,
+      "twoTypos":9
+    },
+    "disableOnWords":[],
+    "disableOnAttributes":[]
+    },
+  "faceting":{
+      "maxValuesPerFacet":100
       },
-    "disableOnWords": [],
-    "disableOnAttributes": []
-  },
-  "pagination": {
-    "maxTotalHits": 1000
-  },
-  "faceting": {
-    "maxValuesPerFacet": 100
-  }
+  "pagination":{
+      "maxTotalHits":1000
+      }
 }
 ```
 
