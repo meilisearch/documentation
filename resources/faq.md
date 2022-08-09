@@ -110,11 +110,11 @@ cat your_file.json | jq
 
 Meilisearch has the following types of errors:
 
-| Type              | Description                                                                                                 |
-|-------------------|-------------------------------------------------------------------------------------------------------------|
-| `invalid_request` | This is due to an error in the user input. It is accompanied by the HTTP code `4xx`                         |
-| `internal`        | This is due to machine or configuration constraints. The most common cause is reaching or exceeding hard limits, such as the size of the disk, the size limit of an index, etc. It is accompanied by the HTTP code `5xx`  |
-| `auth`            | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx` |
+| Type            | Description                                                                                       |
+|-----------------|---------------------------------------------------------------------------------------------------|
+| invalid_request | This is due to an error in the user input. It is accompanied by the HTTP code `4xx`. |
+| internal        | This is due to machine or configuration constraints. The most common cause is reaching or exceeding hard limits, such as the size of the disk, the size limit of an index, etc. It is accompanied by the HTTP code `5xx`.  |
+| auth            | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx`. |
 
 ## My document upload failed with the `document id is missing` error
 
