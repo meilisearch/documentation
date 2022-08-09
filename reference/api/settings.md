@@ -6,13 +6,15 @@ sidebarDepth: 2
 
 The `/settings` route allows you to customize search settings for the given index. You can either modify all of an index's settings at once using the [update settings endpoint](#update-settings), or modify each one individually using the child routes.
 
+For a conceptual overview of index settings, refer to our [indexes guide](/learn/core_concepts/indexes.md#index-settings).
+
 ::: warning
 When you update a setting, you overwrite its default value. Use the `DELETE` route to reset any setting to its original value.
 :::
 
 ## Settings object
 
-The default settings object:
+By default, the settings object looks like this. All fields are modifiable.
 
 ```json
 {
@@ -54,9 +56,11 @@ The default settings object:
 }
 ```
 
+To learn more about any one of these fields, click on its name in the sidebar.
+
 ## All settings
 
-This route lets you configure all the settings at once for an index.
+This route allows you to retrieve, configure, or reset all of an index's settings at once.
 
 ### Get settings
 
