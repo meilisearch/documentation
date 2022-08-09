@@ -571,7 +571,7 @@ Setting `maxTotalHits` to a high value might negatively impact performance and e
 
 <CodeSamples id="update_pagination_settings_1" />
 
-#### Response: `200 OK`
+#### Response: `202 Accepted`
 
 ```json
 {
@@ -593,7 +593,7 @@ Reset an index's pagination settings to their [default value](#pagination-object
 
 <CodeSamples id="reset_pagination_settings_1" />
 
-#### Response: `200 OK`
+#### Response: `202 Accepted`
 
 ```json
 {
@@ -1182,7 +1182,7 @@ Partially update the typo tolerance settings for an index. The index [`uid`](/le
 
 <CodeSamples id="update_typo_tolerance_1" />
 
-#### Response: `200 OK`
+#### Response: `202 Accepted`
 
 ```json
 {
@@ -1204,7 +1204,7 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 <CodeSamples id="reset_typo_tolerance_1" />
 
-#### Response: `200 OK`
+#### Response: `202 Accepted`
 
 ```json
 {
