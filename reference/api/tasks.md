@@ -89,12 +89,6 @@ The `details` object will only show values for the updated field. For example, i
 
 #### `documentAdditionOrUpdate`
 
-<style>
-table th:first-of-type {
-    width: 10%;
-}
-</style>
-
 | Name                | Description                  |
 |---------------------|------------------------------|
 | `receivedDocuments` | Number of documents received |
