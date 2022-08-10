@@ -24,7 +24,7 @@ This guide was tested with the following package versions:
 
 [`node.js`](https://nodejs.org/en/): `16.16`
 [`algoliasearch`](https://www.npmjs.com/package/algoliasearch): `4.13`
-[`meilisearch-js`](https://www.npmjs.com/package/meilisearch): `0.25.1`
+[`meilisearch-js`](https://www.npmjs.com/package/meilisearch): `0.27.0`
 [`meilisearch`](https://github.com/meilisearch/meilisearch): `0.28`
 
 :::
