@@ -67,7 +67,7 @@ This response indicates that the operation has been taken into account and will 
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response
 
-The `400 - Bad request` response probably means that your data is not in an expected format. You might have extraneous commas, mismatched brackets, missing quotes,etc.. Meilisearch API accepts JSON, CSV, and NDJSON formats.
+The `400 - Bad request` response probably means that your data is not in an expected format. You might have extraneous commas, mismatched brackets, missing quotes, etc. Meilisearch API accepts JSON, CSV, and NDJSON formats.
 
 In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
 
