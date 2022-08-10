@@ -27,7 +27,7 @@ This is the preferred route to perform search when an API key is required, as it
 
 #### Body
 
-| Query Parameter                                         | Description                                        | Default Value |
+| Search Parameter                                        | Description                                        | Default Value |
 |---------------------------------------------------------|----------------------------------------------------|---------------|
 | **[`q`](#query-q)**                                     | Query string                                       | `""`          |
 | **[`offset`](#offset)**                                 | Number of documents to skip                        | `0`           |
@@ -115,7 +115,7 @@ This route should only be used when no API key is required. If an API key is req
 
 #### Query parameters
 
-| Query Parameter                                         | Description                                        | Default Value |
+| Search Parameter                                        | Description                                        | Default Value |
 |---------------------------------------------------------|----------------------------------------------------|---------------|
 | **[`q`](#query-q)**                                     | Query string                                       | `""`          |
 | **[`offset`](#offset)**                                 | Number of documents to skip                        | `0`           |
@@ -199,7 +199,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 
 ### Overview
 
-| Query Parameter                                         | Description                                        | Default Value |
+| Search Parameter                                        | Description                                        | Default Value |
 |---------------------------------------------------------|----------------------------------------------------|---------------|
 | **[`q`](#query-q)**                                     | Query string                                       | `""`          |
 | **[`offset`](#offset)**                                 | Number of documents to skip                        | `0`           |
