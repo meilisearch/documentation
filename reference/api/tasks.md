@@ -18,13 +18,13 @@ Task results are paginated and can be filtered. To learn more, refer to our [asy
 
 #### Query parameters
 
-| Query Parameter | Description                                                                                                    |         Default Value          |
-|-----------------|----------------------------------------------------------------------------------------------------------------|:------------------------------:|
-| **limit**       | number of tasks to return                                                                                      |               20               |
-| **from**        | `uid` of the first task returned                                                                               | `uid` of the last created task |
-| **status**      | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |          all statuses          |
-| **type**        | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |           all types            |
-| **indexUid**    | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |          all indexes           |
+| Query Parameter   | Description                                                                                                    |         Default Value          |
+|-------------------|----------------------------------------------------------------------------------------------------------------|:------------------------------:|
+| **`limit`**       | number of tasks to return                                                                                      |               20               |
+| **`from`**        | `uid` of the first task returned                                                                               | `uid` of the last created task |
+| **`status`**      | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |          all statuses          |
+| **`type`**        | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |           all types            |
+| **`indexUid`**    | [filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |          all indexes           |
 
 ### Example
 
