@@ -65,6 +65,12 @@ All asynchronous operations return a [summarized version of the `task` object](/
 
 This response indicates that the operation has been taken into account and will be processed once it reaches the front of the queue. You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
+## I am trying to add my documents but I keep receiving a `400 - Bad Request` response
+
+The `400 - Bad request` response probably means that your data is not in an expected format. You might have extraneous commas, mismatched brackets, missing quotes,etc.. Meilisearch API accepts JSON, CSV, and NDJSON formats.
+
+In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
+
 ## What do the different error types mean?
 
 Meilisearch has the following types of errors:

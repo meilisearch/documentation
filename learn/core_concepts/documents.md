@@ -52,37 +52,8 @@ Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM ava
 
 When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), ensure:
 
-- There are no extraneous commas at the end of a line
+- The payload format is correct. There are no extraneous commas, mismatched brackets, missing quotes, etc.
 - All documents are sent in an array, even if there is only one document
-
-Wrong:
-
-```json
-{
-  "id": 123,
-  "title": "Pride and Prejudice"
-}
-```
-
-Good:
-
-```json
-[
-  {
-    "id": 123,
-    "title": "Pride and Prejudice"
-  }
-]
-```
-
-:::tip
-The [jq](https://github.com/stedolan/jq) command line tool can greatly help you check the format of your data.
-
-```bash
-cat your_file.json | jq
-```
-
-:::
 
 ### Dataset format
 
