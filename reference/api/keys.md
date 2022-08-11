@@ -68,6 +68,8 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Type**: Array
 
+**Default value**: N/A
+
 **Description**: An array of API actions permitted for the key, represented as strings. API actions are only possible on authorized [`indexes`](#indexes). `["*"]` for all actions.
 
 | Name               | Description                                                                                                                                                                                                                                                                      |
@@ -90,8 +92,6 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 | `keys.create`      | Provides access to the [create key](#create-a-key) endpoint                                                                                                                                                                                                                      |
 | `keys.update`      | Provides access to the [update key](#update-a-key) endpoint                                                                                                                                                                                                                      |
 | `keys.delete`      | Provides access to the [delete key](#delete-a-key) endpoint                                                                                                                                                                                                                      |
-
-**Default value**: N/A
 
 ### `indexes`
 
