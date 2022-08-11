@@ -62,13 +62,19 @@ This route allows you to retrieve, configure, or reset all of an index's setting
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings" />
 
-Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the settings of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_settings_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 ```json
 {
@@ -114,7 +120,7 @@ Get the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings" />
 
-Update the settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the settings of an index.
 
 Passing `null` to an index setting will reset it to its default value.
 
@@ -122,27 +128,33 @@ Updates in the settings route are **partial**. This means that any parameters no
 
 If the provided index does not exist, it will be created.
 
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
+
 #### Body
 
-| Variable                                               | Type      | Description                                                                                | Default value                                                                                |
-| ------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **[`displayedAttributes`](#displayed-attributes)**   | [Strings] | Fields displayed in the returned documents                                                 | `["*"]` (all attributes)                                                                     |
-| **[`distinctAttribute`](#distinct-attribute)**       | String    | Search returns documents with distinct (different) values of the given field               | `null`                                                                                       |
-| **[`faceting`](#faceting)**                          | Object    | Faceting settings                                                                          | `{}`                                                                                         |
-| **[`filterableAttributes`](#filterable-attributes)** | [Strings] | Attributes to use as filters and facets                                                    | `[]`                                                                                         |
-| **[`pagination`](#pagination)**                      | Object    | Pagination settings                                                                        | `{}`                                                                                         |
-| **[`rankingRules`](#ranking-rules)**                 | [Strings] | List of ranking rules sorted by order of importance                                        | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]` |
-| **[`searchableAttributes`](#searchable-attributes)** | [Strings] | Fields in which to search for matching query words sorted by order of importance           | `["*"]` (all attributes)                                                                     |
-| **[`sortableAttributes`](#sortable-attributes)**     | [Strings] | Attributes to use when sorting search results                                              | `[]`                                                                                         |
-| **[`stopWords`](#stop-words)**                       | [Strings] | List of words ignored by Meilisearch when present in search queries                        | `[]`                                                                                         |
-| **[`synonyms`](#synonyms)**                          | Object    | List of associated words treated similarly                                                 | `{}`                                                                                         |
-| **[`typoTolerance`](#typo-tolerance)**               | Object    | Typo tolerance settings                                                                    | `{}`                                                                                         |
+| Variable                                             | Type      | Description                                                                      | Default value                                                       |
+| ---------------------------------------------------- | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| **[`displayedAttributes`](#displayed-attributes)**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                            |
+| **[`distinctAttribute`](#distinct-attribute)**       | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                              |
+| **[`faceting`](#faceting)**                          | Object    | Faceting settings                                                                | `{}`                                                                |
+| **[`filterableAttributes`](#filterable-attributes)** | [Strings] | Attributes to use as filters and facets                                          | `[]`                                                                |
+| **[`pagination`](#pagination)**                      | Object    | Pagination settings                                                              | `{}`                                                                |
+| **[`rankingRules`](#ranking-rules)**                 | [Strings] | List of ranking rules sorted by order of importance                              | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]` |
+| **[`searchableAttributes`](#searchable-attributes)** | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                            |
+| **[`sortableAttributes`](#sortable-attributes)**     | [Strings] | Attributes to use when sorting search results                                    | `[]`                                                                |
+| **[`stopWords`](#stop-words)**                       | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                |
+| **[`synonyms`](#synonyms)**                          | Object    | List of associated words treated similarly                                       | `{}`                                                                |
+| **[`typoTolerance`](#typo-tolerance)**               | Object    | Typo tolerance settings                                                          | `{}`                                                                |
 
 #### Example
 
 <CodeSamples id="update_settings_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -160,13 +172,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings"/>
 
-Reset all the settings of an index to their [default value](#settings-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset all the settings of an index to their [default value](#settings-object).
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_settings_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -192,13 +210,19 @@ To learn more about displayed attributes, refer to our [dedicated guide](/learn/
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
-Get the displayed attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the displayed attributes of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_displayed_attributes_1"/>
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 ```json
 [
@@ -213,13 +237,19 @@ Get the displayed attributes of an index. The index [`uid`](/learn/core_concepts
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/displayed-attributes" />
 
-Update the displayed attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the displayed attributes of an index.
 
 If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g., `"displayedAttributes": ["release_date.year"]`.
 
 ::: note
 `displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
 :::
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -229,7 +259,7 @@ An array of strings that contains attributes of an index to display.
 
 <CodeSamples id="update_displayed_attributes_1"/>
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -247,13 +277,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/displayed-attributes"/>
 
-Reset the displayed attributes of the index to the default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the displayed attributes of the index to the default value.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_displayed_attributes_1"/>
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -277,13 +313,19 @@ To learn more about distinct attributes, refer to our [dedicated guide](/learn/c
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Get the distinct attribute field of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the distinct attribute field of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_distinct_attribute_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 ```json
 "skuid"
@@ -293,9 +335,15 @@ Get the distinct attribute field of an index. The index [`uid`](/learn/core_conc
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Update the distinct attribute field of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the distinct attribute field of an index. This will re-index all documents in the index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g., `"distinctAttribute": "product.skuid"`.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -309,7 +357,7 @@ If the field does not exist, no error will be thrown.
 
 <CodeSamples id="update_distinct_attribute_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -327,13 +375,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/distinct-attribute"/>
 
-Reset the distinct attribute field of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the distinct attribute field of an index to its default value.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_distinct_attribute_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -356,20 +410,26 @@ To learn more about filtering and faceting, refer to our [dedicated guide](/lear
 ### Faceting object
 
 | Name                | Type    | Description                                                                                                  | Default value |
-|---------------------|---------|--------------------------------------------------------------------------------------------------------------|---------------|
+| ------------------- | ------- | ------------------------------------------------------------------------------------------------------------ | ------------- |
 | `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order | `100`         |
 
 ### Get faceting settings
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/faceting"/>
 
-Get the faceting settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the faceting settings of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_faceting_settings_1" />
 
-#### Response: `200 OK`
+##### Response: `200 OK`
 
 ```json
 {
@@ -381,12 +441,18 @@ Get the faceting settings of an index. The index [`uid`](/learn/core_concepts/in
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/faceting"/>
 
-Partially update the faceting settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the faceting settings for an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
 | Name                | Type    | Description                                                                                                  | Default value |
-|---------------------|---------|--------------------------------------------------------------------------------------------------------------|---------------|
+| ------------------- | ------- | ------------------------------------------------------------------------------------------------------------ | ------------- |
 | `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order | `100`         |
 
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
@@ -399,7 +465,7 @@ Setting `maxValuesPerFacet` to a high value might negatively impact performance.
 
 <CodeSamples id="update_faceting_settings_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -415,13 +481,19 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset faceting settings
 
-Reset an index's faceting settings to their [default value](#faceting-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's faceting settings to their [default value](#faceting-object).
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_faceting_settings_1" />
 
-#### Response: `200 OK`
+##### Response: `200 OK`
 
 ```json
 {
@@ -445,13 +517,19 @@ To learn more about filterable attributes, refer to our [dedicated guide](/learn
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
-Get the filterable attributes for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the filterable attributes for an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_filterable_attributes_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 List the settings.
 
@@ -467,9 +545,15 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
-Update an index's filterable attributes list. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an index's filterable attributes list. This will re-index all documents in the index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -479,7 +563,7 @@ An array of strings containing the attributes that can be used as filters at que
 
 <CodeSamples id="update_filterable_attributes_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -497,13 +581,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/filterable-attributes"/>
 
-Reset an index's filterable attributes list back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's filterable attributes list back to its default value.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_filterable_attributes_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -525,21 +615,27 @@ To learn more about paginating search results with Meilisearch, refer to our [de
 
 ### Pagination object
 
-| Name           | Type       | Description                                          | Default value |
-|----------------|------------|------------------------------------------------------|---------------|
-| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
+| Name           | Type    | Description                                          | Default value |
+| -------------- | ------- | ---------------------------------------------------- | ------------- |
+| `maxTotalHits` | Integer | The maximum number of results Meilisearch can return | `1000`        |
 
 ### Get pagination settings
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/pagination"/>
 
-Get the pagination settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the pagination settings of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_pagination_settings_1" />
 
-#### Response: `200 OK`
+##### Response: `200 OK`
 
 ```json
 {
@@ -551,13 +647,19 @@ Get the pagination settings of an index. The index [`uid`](/learn/core_concepts/
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/pagination"/>
 
-Partially update the pagination settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the pagination settings for an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
-| Name           | Type       | Description                                          | Default value |
-|----------------|------------|------------------------------------------------------|---------------|
-| `maxTotalHits` | Integer    | The maximum number of results Meilisearch can return | `1000`        |
+| Name           | Type    | Description                                          | Default value |
+| -------------- | ------- | ---------------------------------------------------- | ------------- |
+| `maxTotalHits` | Integer | The maximum number of results Meilisearch can return | `1000`        |
 
 `maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
 
@@ -571,7 +673,7 @@ Setting `maxTotalHits` to a high value might negatively impact performance and e
 
 <CodeSamples id="update_pagination_settings_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -587,13 +689,19 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset pagination settings
 
-Reset an index's pagination settings to their [default value](#pagination-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's pagination settings to their [default value](#pagination-object).
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_pagination_settings_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -615,8 +723,8 @@ To learn more about ranking rules, refer to our [dedicated guide](/learn/core_co
 
 ### Ranking rules array
 
-|Name           | Description                                                                     |
-|---------------|---------------------------------------------------------------------------------|
+| Name          | Description                                                                     |
+| ------------- | ------------------------------------------------------------------------------- |
 | `"words"`     | Sorts results by decreasing number of matched query terms                       |
 | `"typo"`      | Sorts results by increasing number of typos                                     |
 | `"proximity"` | Sorts results by increasing distance between matched query terms                |
@@ -647,7 +755,7 @@ Get the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) of an i
 
 <CodeSamples id="get_ranking_rules_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 List the settings.
 
@@ -667,7 +775,13 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Update the ranking rules of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the ranking rules of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -683,7 +797,7 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 <CodeSamples id="update_ranking_rules_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -701,18 +815,24 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/ranking-rules" />
 
-Reset the ranking rules of an index to their [default value](#default-order). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the ranking rules of an index to their [default value](#default-order).
 
 ::: tip
 Note that resetting the ranking rules is not the same as removing them.
 To remove a ranking rule, use the [add or replace ranking rules route](#update-ranking-rules).
 :::
 
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
+
 #### Example
 
 <CodeSamples id="reset_ranking_rules_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -736,13 +856,19 @@ To learn more about searchable attributes, refer to our [dedicated guide](/learn
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
-Get the searchable attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the searchable attributes of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_searchable_attributes_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 List the settings.
 
@@ -759,13 +885,19 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
-Update the searchable attributes of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the searchable attributes of an index. This will re-index all documents in the index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
 ::: warning
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
 :::
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -779,7 +911,7 @@ This means that a document with a match in an attribute at the start of the arra
 
 A match in title will make a document more relevant than another document with a match in overview.
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -797,13 +929,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/searchable-attributes"/>
 
-Reset the searchable attributes of the index to the default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the searchable attributes of the index to the default value.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_searchable_attributes_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -827,13 +965,19 @@ To learn more about sortable attributes, refer to our [dedicated guide](/learn/a
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Get the sortable attributes of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the sortable attributes of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_sortable_attributes_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 List the settings.
 
@@ -848,11 +992,17 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Update an index's sortable attributes list. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an index's sortable attributes list. This will re-index all documents in the index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
 [You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting.md)
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -862,7 +1012,7 @@ An array of strings containing the attributes that can be used to sort search re
 
 <CodeSamples id="update_sortable_attributes_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -880,13 +1030,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/sortable-attributes"/>
 
-Reset an index's sortable attributes list back to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's sortable attributes list back to its default value.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_sortable_attributes_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -907,20 +1063,26 @@ _Child route of the [settings route](/reference/api/settings.md)._
 When you add a common English word such as `the` to the stop words list, Meilisearch will not take it into consideration when calculating how relevant a result is.
 
 ::: note
-stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
+Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
 :::
 
 ### Get stop words
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/stop-words" />
 
-Get the stop words list of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the stop words list of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_stop_words_1" />
 
-#### Response: `200 Ok`
+##### Response: `200 Ok`
 
 ```json
 [
@@ -934,7 +1096,13 @@ Get the stop words list of an index. The index [`uid`](/learn/core_concepts/inde
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/stop-words" />
 
-Update the list of stop words of an index. This will re-index all documents in the index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the list of stop words of an index. This will re-index all documents in the index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -946,7 +1114,7 @@ If a list of stop-words already exists it will be overwritten (_replaced_).
 
 <CodeSamples id="update_stop_words_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -964,13 +1132,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/stop-words" />
 
-Reset the list of stop words of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the list of stop words of an index to its default value.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_stop_words_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -994,13 +1168,19 @@ To learn more about synonyms, refer to our [dedicated guide](/learn/configuratio
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Get the list of synonyms of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the list of synonyms of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_synonyms_1" />
 
-#### Response: `200 OK`
+##### Response: `200 OK`
 
 ```json
 {
@@ -1022,7 +1202,13 @@ Get the list of synonyms of an index. The index [`uid`](/learn/core_concepts/ind
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization).
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -1032,7 +1218,7 @@ An object that contains all synonyms and their associated words.
 
 <CodeSamples id="update_synonyms_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -1050,13 +1236,19 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Reset the list of synonyms of an index to its default value. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset the list of synonyms of an index to its default value.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_synonyms_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -1092,10 +1284,10 @@ To learn more about typo tolerance, refer to our [dedicated guide](/learn/config
 
 **Description:** Customize the minimum word length for accepting 1 or 2 typos
 
-| Name       | Description                                                                       | Type    | Default value |
-|------------|-----------------------------------------------------------------------------------|---------|---------------|
-| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`    | integer | `5`           |
-| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255`  | integer | `9`           |
+| Name       | Description                                                                      | Type    | Default value |
+| ---------- | -------------------------------------------------------------------------------- | ------- | ------------- |
+| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   | integer | `5`           |
+| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` | integer | `9`           |
 
 #### `disableOnWords`
 
@@ -1117,13 +1309,19 @@ To learn more about typo tolerance, refer to our [dedicated guide](/learn/config
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Get the typo tolerance settings of an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get the typo tolerance settings of an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="get_typo_tolerance_1" />
 
-#### Response: `200 OK`
+##### Response: `200 OK`
 
 ```json
 {
@@ -1141,7 +1339,13 @@ Get the typo tolerance settings of an index. The index [`uid`](/learn/core_conce
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
-Partially update the typo tolerance settings for an index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Partially update the typo tolerance settings for an index.
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Body
 
@@ -1159,10 +1363,10 @@ Partially update the typo tolerance settings for an index. The index [`uid`](/le
 
 **Description:** Customize the minimum word length for accepting 1 or 2 typos
 
-| Name       | Description                                                                       | Type    | Default value |
-|------------|-----------------------------------------------------------------------------------|---------|---------------|
-| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`    | integer | `5`           |
-| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255`  | integer | `9`           |
+| Name       | Description                                                                      | Type    | Default value |
+| ---------- | -------------------------------------------------------------------------------- | ------- | ------------- |
+| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   | integer | `5`           |
+| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` | integer | `9`           |
 
 #### `disableOnWords`
 
@@ -1184,7 +1388,7 @@ Partially update the typo tolerance settings for an index. The index [`uid`](/le
 
 <CodeSamples id="update_typo_tolerance_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
@@ -1200,13 +1404,19 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ### Reset typo tolerance
 
-Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object).
+
+#### Path parameters
+
+| Name        | Type   | Description                          |
+| :---------- | :----- | :----------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested index |
 
 #### Example
 
 <CodeSamples id="reset_typo_tolerance_1" />
 
-#### Response: `202 Accepted`
+##### Response: `202 Accepted`
 
 ```json
 {
