@@ -90,39 +90,39 @@ The `details` object will only show values for the updated field. For example, i
 #### `documentAdditionOrUpdate`
 
 | Name                | Description                  |
-|---------------------|------------------------------|
+| :------------------ | :--------------------------- |
 | `receivedDocuments` | Number of documents received |
 | `indexedDocuments`  | Number of documents indexed  |
 
 #### `documentDeletion`
 
 | Name                  | Description                     |
-|-----------------------|---------------------------------|
+| :-------------------- | :------------------------------ |
 | `receivedDocumentIds` | Number of document ids received |
 | `deletedDocuments`    | Number of documents deleted     |
 
 #### `indexCreation`
 
-| Name       | Description                                                                                  |
-|------------|----------------------------------------------------------------------------------------------|
+| Name         | Description                                                                                    |
+| :----------- | :--------------------------------------------------------------------------------------------- |
 | `primaryKey` | Value of the `primaryKey` field supplied during index creation. `null` if it was not specified |
 
 #### `indexUpdate`
 
-| Name         | Description                                                                                                |
-|--------------|------------------------------------------------------------------------------------------------------------|
+| Name         | Description                                                                                  |
+| :----------- | :------------------------------------------------------------------------------------------- |
 | `primaryKey` | Value of the `primaryKey` field supplied during index update. `null` if it was not specified |
 
 #### `indexDeletion`
 
-| Name               | Description                                                                           |
-|--------------------|---------------------------------------------------------------------------------------|
+| Name               | Description                                                                                       |
+| :----------------- | :------------------------------------------------------------------------------------------------ |
 | `deletedDocuments` | Number of deleted documents. This should equal the total number of documents in the deleted index |
 
 #### `settingsUpdate`
 
 | Name                   | Description                   |
-|------------------------|-------------------------------|
+| :--------------------- | :---------------------------- |
 | `rankingRules`         | List of ranking rules         |
 | `filterableAttributes` | List of filterable attributes |
 | `distinctAttribute`    | The distinct attribute        |
@@ -138,7 +138,7 @@ The `details` object will only show values for the updated field. For example, i
 #### `dumpCreation`
 
 | Name      | Description                                                                       |
-| -------   | --------------------------------------------------------------------------------- |
+| :-------- | :-------------------------------------------------------------------------------- |
 | `dumpUid` | The generated `uid` of the dump. This is also the name of the generated dump file |
 
 ### `error`
@@ -147,12 +147,12 @@ The `details` object will only show values for the updated field. For example, i
 
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
-| Name    | Description                                                                |
-|---------|----------------------------------------------------------------------------|
-|`message`| A human-readable description of the error                                  |
-|`code`   | The [error code](/reference/api/error_codes.md)                            |
-|`type`   | The [error type](/resources/faq.md#what-do-the-different-error-types-mean) |
-|`link`   | A link to the relevant section of the documentation                        |
+| Name      | Description                                                                |
+| :-------- | :------------------------------------------------------------------------- |
+| `message` | A human-readable description of the error                                  |
+| `code`    | The [error code](/reference/api/error_codes.md)                            |
+| `type`    | The [error type](/resources/faq.md#what-do-the-different-error-types-mean) |
+| `link`    | A link to the relevant section of the documentation                        |
 
 ### `duration`
 
@@ -190,13 +190,13 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
 
 ### Query parameters
 
-| Query Parameter | Description                                                          |         Default Value          |
-|-----------------|----------------------------------------------------------------------|:------------------------------:|
-| **limit**       | number of tasks to return                                            |               20               |
+| Query Parameter | Description                                                          | Default Value                  |
+| :-------------- | :------------------------------------------------------------------- | :----------------------------- |
+| **limit**       | number of tasks to return                                            | 20                             |
 | **from**        | `uid` of the first task returned                                     | `uid` of the last created task |
-| **status**      | [filter tasks](#filtering-tasks) by their `status`                   |          all statuses          |
-| **type**        | [filter tasks](#filtering-tasks) by their `type`                     |           all types            |
-| **indexUid**    | [filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive |          all indexes           |
+| **status**      | [filter tasks](#filtering-tasks) by their `status`                   | all statuses                   |
+| **type**        | [filter tasks](#filtering-tasks) by their `type`                     | all types                      |
+| **indexUid**    | [filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive | all indexes                    |
 
 #### Example
 
