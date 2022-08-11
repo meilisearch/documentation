@@ -321,7 +321,13 @@ When the returned value of `next` is `null`, you have reached the final page of 
 
 <RouteHighlighter method="GET" route="/tasks/{task_uid}"/>
 
-Get a single task. The task `uid` is required.
+Get a single task.
+
+### Path parameters
+
+| Name        | Type   | Description                         |
+| :---------- | :----- | :---------------------------------- |
+| **`uid`** * | String | [`uid`](#uid) of the requested task |
 
 ### Example
 

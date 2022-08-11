@@ -142,7 +142,7 @@ Results can be paginated using the `offset` and `limit` query parameters.
 
 ### Response
 
-| Field         | Type    | Description                            |
+| Name          | Type    | Description                            |
 | :------------ | :------ | :------------------------------------- |
 | **`results`** | Array   | An array of [key objects](#key-object) |
 | **`offset`**  | Integer | Number of keys skipped                 |
@@ -220,7 +220,16 @@ API keys are displayed in descending order based on their `createdAt` date. This
 
 <RouteHighlighter method="GET" route="/keys/{key_or_uid}"/>
 
-Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found). A valid API [`key`](/reference/api/keys.md#key) or [`uid`](/reference/api/keys.md#uid) is required.
+Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found).
+
+### Path parameters
+
+ A valid API `key` or `uid` is required.
+
+| Name        | Type   | Description                                  |
+| :---------- | :----- | :------------------------------------------- |
+| **`key`** * | String | [`key`](#key) value of the requested API key |
+| **`uid`** * | String | [`uid`](#uid) of the requested API key       |
 
 ### Example
 
@@ -293,9 +302,16 @@ Create an API key with the provided description, permissions, and expiration dat
 
 <RouteHighlighter method="PATCH" route="/keys/{key_or_uid}"/>
 
-Update the `name` and `description` of an API key. A valid API [`key`](/reference/api/keys.md#key) or [`uid`](/reference/api/keys.md#uid) is required.
+Update the [`name`](#name) and [`description`](#description) of an API key.
 
-To learn more about the variables sent in the body of the request, see the [create key](#body) endpoint.
+### Path parameters
+
+ A valid API `key` or `uid` is required.
+
+| Name        | Type   | Description                                  |
+| :---------- | :----- | :------------------------------------------- |
+| **`key`** * | String | [`key`](#key) value of the requested API key |
+| **`uid`** * | String | [`uid`](#uid) of the requested API key       |
 
 Updates to keys are **partial**. This means you should provide only the fields you intend to update, as any fields not present in the payload will remain unchanged.
 
@@ -329,7 +345,16 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 <RouteHighlighter method="DELETE" route="/keys/{key_or_uid}"/>
 
-Delete the specified API key. A valid API [`key`](/reference/api/keys.md#key) or [`uid`](/reference/api/keys.md#uid) is required.
+Delete the specified API key.
+
+### Path parameters
+
+ A valid API `key` or `uid` is required.
+
+| Name        | Type   | Description                                  |
+| :---------- | :----- | :------------------------------------------- |
+| **`key`** * | String | [`key`](#key) value of the requested API key |
+| **`uid`** * | String | [`uid`](#uid) of the requested API key       |
 
 ### Example
 
