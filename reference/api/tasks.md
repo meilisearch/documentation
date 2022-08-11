@@ -190,13 +190,22 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
 
 ### Query parameters
 
-| Query Parameter | Description                                                          | Default Value                  |
-| :-------------- | :------------------------------------------------------------------- | :----------------------------- |
-| **limit**       | number of tasks to return                                            | 20                             |
-| **from**        | `uid` of the first task returned                                     | `uid` of the last created task |
-| **status**      | [filter tasks](#filtering-tasks) by their `status`                   | all statuses                   |
-| **type**        | [filter tasks](#filtering-tasks) by their `type`                     | all types                      |
-| **indexUid**    | [filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive | all indexes                    |
+| Query Parameter | Default Value                  | Description                                                          |
+| :-------------- | :----------------------------- | :------------------------------------------------------------------- |
+| **`limit`**     | `20`                           | Number of tasks to return                                            |
+| **`from`**      | `uid` of the last created task | `uid` of the first task returned                                     |
+| **`status`**    | All statuses                   | [Filter tasks](#filtering-tasks) by their `status`                   |
+| **`type`**      | All types                      | [Filter tasks](#filtering-tasks) by their `type`                     |
+| **`indexUid`**  | All indexes                    | [Filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive |
+
+### Response
+
+| Field         | Type    | Description                                                                                                                    |
+| :------------ | :------ | :----------------------------------------------------------------------------------------------------------------------------- |
+| **`results`** | Array   | An array of [task objects](#task-object)                                                                                       |
+| **`limit`**   | Integer | Number of tasks returned                                                                                                       |
+| **`from`**    | Integer | `uid` of the first task returned                                                                                               |
+| **`next`**    | Integer | Value passed to `from` to view the next "page" of results. When the value of `next` is `null`, there are no more tasks to view |
 
 ### Example
 
@@ -231,7 +240,10 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
       "startedAt":"2021-08-11T10:03:00.000000Z",
       "finishedAt":"2021-08-11T10:03:16.000000Z"
     }
-  ]
+  ],
+  "limit": 20,
+  "from": 1,
+  "next":null
 }
 ```
 
