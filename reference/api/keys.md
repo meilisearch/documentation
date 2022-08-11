@@ -72,26 +72,26 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Description**: An array of API actions permitted for the key, represented as strings. API actions are only possible on authorized [`indexes`](#indexes). `["*"]` for all actions.
 
-| Name               | Description                                                                                                                                                                                                                                                                      |
-| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `search`           | Provides access to both [`POST`](/reference/api/search.md#search-in-an-index-with-post-route) and [`GET`](/reference/api/search.md#search-in-an-index-with-get-route) search endpoints                                                                                           |
-| `documents.add`    | Provides access to the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints                                                                                               |
-| `documents.get`    | Provides access to the [get one document](/reference/api/documents.md#get-one-document) and [get documents](/reference/api/documents.md#get-documents) endpoints                                                                                                                 |
-| `documents.delete` | Provides access to the [delete one document](/reference/api/documents.md#delete-one-document), [delete all documents](/reference/api/documents.md#delete-all-documents), and [batch delete](/reference/api/documents.md#delete-documents-by-batch) endpoints                     |
-| `indexes.create`   | Provides access to the [create index](/reference/api/indexes.md#create-an-index) endpoint                                                                                                                                                                                        |
-| `indexes.get`      | Provides access to the [get one index](/reference/api/indexes.md#get-one-index) and [list all indexes](/reference/api/indexes.md#list-all-indexes) endpoints. **Non-authorized `indexes` will be omitted from the response**                                                     |
-| `indexes.update`   | Provides access to the [update index](/reference/api/indexes.md#update-an-index) endpoint                                                                                                                                                                                        |
-| `indexes.delete`   | Provides access to the [delete index](/reference/api/indexes.md#delete-an-index) endpoint                                                                                                                                                                                        |
-| `tasks.get`        | Provides access to the [get one task](/reference/api/tasks.md#get-one-task) and [get tasks](/reference/api/tasks.md#get-tasks) endpoints. **Tasks from non-authorized `indexes` will be omitted from the response**                                                              |
-| `settings.get`     | Provides access to the [get settings](/reference/api/settings.md#get-settings) endpoint and equivalents for all subroutes                                                                                                                                                        |
-| `settings.update`  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes                                                                                 |
-| `stats.get`        | Provides access to the [get stats of an index](/reference/api/stats.md#get-stats-of-an-index) endpoint and the [get stats of all indexes](/reference/api/stats.md#get-stats-of-all-indexes) endpoint. For the latter, **non-authorized `indexes` are omitted from the response** |
-| `dumps.create`     | Provides access to the [create dump](/reference/api/dump.md#create-a-dump) endpoint. **Not restricted by `indexes`**                                                                                                                                                             |
-| `version`          | Provides access to the [get Meilisearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint                                                                                                                                                                  |
-| `keys.get`         | Provides access to the [get all keys](#get-all-keys) endpoint                                                                                                                                                                                                                    |
-| `keys.create`      | Provides access to the [create key](#create-a-key) endpoint                                                                                                                                                                                                                      |
-| `keys.update`      | Provides access to the [update key](#update-a-key) endpoint                                                                                                                                                                                                                      |
-| `keys.delete`      | Provides access to the [delete key](#delete-a-key) endpoint                                                                                                                                                                                                                      |
+| Name                   | Description                                                                                                                                                                                                                                                                      |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`search`**           | Provides access to both [`POST`](/reference/api/search.md#search-in-an-index-with-post-route) and [`GET`](/reference/api/search.md#search-in-an-index-with-get-route) search endpoints                                                                                           |
+| **`documents.add`**    | Provides access to the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints                                                                                               |
+| **`documents.get`**    | Provides access to the [get one document](/reference/api/documents.md#get-one-document) and [get documents](/reference/api/documents.md#get-documents) endpoints                                                                                                                 |
+| **`documents.delete`** | Provides access to the [delete one document](/reference/api/documents.md#delete-one-document), [delete all documents](/reference/api/documents.md#delete-all-documents), and [batch delete](/reference/api/documents.md#delete-documents-by-batch) endpoints                     |
+| **`indexes.create`**   | Provides access to the [create index](/reference/api/indexes.md#create-an-index) endpoint                                                                                                                                                                                        |
+| **`indexes.get`**      | Provides access to the [get one index](/reference/api/indexes.md#get-one-index) and [list all indexes](/reference/api/indexes.md#list-all-indexes) endpoints. **Non-authorized `indexes` will be omitted from the response**                                                     |
+| **`indexes.update`**   | Provides access to the [update index](/reference/api/indexes.md#update-an-index) endpoint                                                                                                                                                                                        |
+| **`indexes.delete`**   | Provides access to the [delete index](/reference/api/indexes.md#delete-an-index) endpoint                                                                                                                                                                                        |
+| **`tasks.get`**        | Provides access to the [get one task](/reference/api/tasks.md#get-one-task) and [get tasks](/reference/api/tasks.md#get-tasks) endpoints. **Tasks from non-authorized `indexes` will be omitted from the response**                                                              |
+| **`settings.get`**     | Provides access to the [get settings](/reference/api/settings.md#get-settings) endpoint and equivalents for all subroutes                                                                                                                                                        |
+| **`settings.update`**  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes                                                                                 |
+| **`stats.get`**        | Provides access to the [get stats of an index](/reference/api/stats.md#get-stats-of-an-index) endpoint and the [get stats of all indexes](/reference/api/stats.md#get-stats-of-all-indexes) endpoint. For the latter, **non-authorized `indexes` are omitted from the response** |
+| **`dumps.create`**     | Provides access to the [create dump](/reference/api/dump.md#create-a-dump) endpoint. **Not restricted by `indexes`**                                                                                                                                                             |
+| **`version`**          | Provides access to the [get Meilisearch version](/reference/api/version.md#get-version-of-meilisearch) endpoint                                                                                                                                                                  |
+| **`keys.get`**         | Provides access to the [get all keys](#get-all-keys) endpoint                                                                                                                                                                                                                    |
+| **`keys.create`**      | Provides access to the [create key](#create-a-key) endpoint                                                                                                                                                                                                                      |
+| **`keys.update`**      | Provides access to the [update key](#update-a-key) endpoint                                                                                                                                                                                                                      |
+| **`keys.delete`**      | Provides access to the [delete key](#delete-a-key) endpoint                                                                                                                                                                                                                      |
 
 ### `indexes`
 
@@ -265,14 +265,14 @@ Create an API key with the provided description, permissions, and expiration dat
 
 ### Body
 
-| Name                          | Type   | Default value | Description                                                                                                                                     |
-| :---------------------------- | :----- | :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`actions`](#actions) *       | Array  | N/A           | A list of API actions permitted for the key. `["*"]` for all actions                                                                            |
-| [`indexes`](#indexes) *       | Array  | N/A           | An array of indexes the key is authorized to act on. `["*"]` for all indexes                                                                    |
-| [`expiresAt`](#expiresat) *   | String | N/A           | Date and time when the key will expire, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. `null` if the key never expires |
-| [`name`](#name)               | String | `null`        | A human-readable name for the key                                                                                                               |
-| [`uid`](#uid)                 | String | N/A           | A [uuid v4](https://www.sohamkamani.com/uuid-versions-explained) to identify the API key. If not specified, it is generated by Meilisearch      |
-| [`description`](#description) | String | `null`        | An optional description for the key                                                                                                             |
+| Name                              | Type   | Default value | Description                                                                                                                                     |
+| :-------------------------------- | :----- | :------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **[`actions`](#actions)** *       | Array  | N/A           | A list of API actions permitted for the key. `["*"]` for all actions                                                                            |
+| **[`indexes`](#indexes)** *       | Array  | N/A           | An array of indexes the key is authorized to act on. `["*"]` for all indexes                                                                    |
+| **[`expiresAt`](#expiresat)** *   | String | N/A           | Date and time when the key will expire, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. `null` if the key never expires |
+| **[`name`](#name)**               | String | `null`        | A human-readable name for the key                                                                                                               |
+| **[`uid`](#uid)**                 | String | N/A           | A [uuid v4](https://www.sohamkamani.com/uuid-versions-explained) to identify the API key. If not specified, it is generated by Meilisearch      |
+| **[`description`](#description)** | String | `null`        | An optional description for the key                                                                                                             |
 
 ### Example
 
@@ -304,6 +304,8 @@ Create an API key with the provided description, permissions, and expiration dat
 
 Update the [`name`](#name) and [`description`](#description) of an API key.
 
+Updates to keys are **partial**. This means you should provide only the fields you intend to update, as any fields not present in the payload will remain unchanged.
+
 ### Path parameters
 
  A valid API `key` or `uid` is required.
@@ -312,8 +314,6 @@ Update the [`name`](#name) and [`description`](#description) of an API key.
 | :---------- | :----- | :------------------------------------------- |
 | **`key`** * | String | [`key`](#key) value of the requested API key |
 | **`uid`** * | String | [`uid`](#uid) of the requested API key       |
-
-Updates to keys are **partial**. This means you should provide only the fields you intend to update, as any fields not present in the payload will remain unchanged.
 
 ### Example
 

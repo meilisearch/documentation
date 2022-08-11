@@ -89,57 +89,57 @@ The `details` object will only show values for the updated field. For example, i
 
 #### `documentAdditionOrUpdate`
 
-| Name                | Description                  |
-| :------------------ | :--------------------------- |
-| `receivedDocuments` | Number of documents received |
-| `indexedDocuments`  | Number of documents indexed  |
+| Name                    | Description                  |
+| :---------------------- | :--------------------------- |
+| **`receivedDocuments`** | Number of documents received |
+| **`indexedDocuments`**  | Number of documents indexed  |
 
 #### `documentDeletion`
 
-| Name                  | Description                     |
-| :-------------------- | :------------------------------ |
-| `receivedDocumentIds` | Number of document ids received |
-| `deletedDocuments`    | Number of documents deleted     |
+| Name                      | Description                     |
+| :------------------------ | :------------------------------ |
+| **`receivedDocumentIds`** | Number of document ids received |
+| **`deletedDocuments`**    | Number of documents deleted     |
 
 #### `indexCreation`
 
-| Name         | Description                                                                                    |
-| :----------- | :--------------------------------------------------------------------------------------------- |
-| `primaryKey` | Value of the `primaryKey` field supplied during index creation. `null` if it was not specified |
+| Name             | Description                                                                                    |
+| :--------------- | :--------------------------------------------------------------------------------------------- |
+| **`primaryKey`** | Value of the `primaryKey` field supplied during index creation. `null` if it was not specified |
 
 #### `indexUpdate`
 
-| Name         | Description                                                                                  |
-| :----------- | :------------------------------------------------------------------------------------------- |
-| `primaryKey` | Value of the `primaryKey` field supplied during index update. `null` if it was not specified |
+| Name             | Description                                                                                  |
+| :--------------- | :------------------------------------------------------------------------------------------- |
+| **`primaryKey`** | Value of the `primaryKey` field supplied during index update. `null` if it was not specified |
 
 #### `indexDeletion`
 
-| Name               | Description                                                                                       |
-| :----------------- | :------------------------------------------------------------------------------------------------ |
-| `deletedDocuments` | Number of deleted documents. This should equal the total number of documents in the deleted index |
+| Name                   | Description                                                                                       |
+| :--------------------- | :------------------------------------------------------------------------------------------------ |
+| **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index |
 
 #### `settingsUpdate`
 
-| Name                   | Description                   |
-| :--------------------- | :---------------------------- |
-| `rankingRules`         | List of ranking rules         |
-| `filterableAttributes` | List of filterable attributes |
-| `distinctAttribute`    | The distinct attribute        |
-| `searchableAttributes` | List of searchable attributes |
-| `displayedAttributes`  | List of displayed attributes  |
-| `sortableAttributes`   | List of sortable attributes   |
-| `stopWords`            | List of  stop words           |
-| `synonyms`             | List of synonyms              |
-| `typoTolerance`        | The `typoTolerance` object    |
-| `pagination`           | The `pagination` object       |
-| `faceting`             | The `faceting` object         |
+| Name                       | Description                   |
+| :------------------------- | :---------------------------- |
+| **`rankingRules`**         | List of ranking rules         |
+| **`filterableAttributes`** | List of filterable attributes |
+| **`distinctAttribute`**    | The distinct attribute        |
+| **`searchableAttributes`** | List of searchable attributes |
+| **`displayedAttributes`**  | List of displayed attributes  |
+| **`sortableAttributes`**   | List of sortable attributes   |
+| **`stopWords`**            | List of  stop words           |
+| **`synonyms`**             | List of synonyms              |
+| **`typoTolerance`**        | The `typoTolerance` object    |
+| **`pagination`**           | The `pagination` object       |
+| **`faceting`**             | The `faceting` object         |
 
 #### `dumpCreation`
 
-| Name      | Description                                                                       |
-| :-------- | :-------------------------------------------------------------------------------- |
-| `dumpUid` | The generated `uid` of the dump. This is also the name of the generated dump file |
+| Name          | Description                                                                       |
+| :------------ | :-------------------------------------------------------------------------------- |
+| **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file |
 
 ### `error`
 
@@ -147,12 +147,12 @@ The `details` object will only show values for the updated field. For example, i
 
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
-| Name      | Description                                                                |
-| :-------- | :------------------------------------------------------------------------- |
-| `message` | A human-readable description of the error                                  |
-| `code`    | The [error code](/reference/api/error_codes.md)                            |
-| `type`    | The [error type](/resources/faq.md#what-do-the-different-error-types-mean) |
-| `link`    | A link to the relevant section of the documentation                        |
+| Name          | Description                                                                |
+| :------------ | :------------------------------------------------------------------------- |
+| **`message`** | A human-readable description of the error                                  |
+| **`code`**    | The [error code](/reference/api/error_codes.md)                            |
+| **`type`**    | The [error type](/resources/faq.md#what-do-the-different-error-types-mean) |
+| **`link`**    | A link to the relevant section of the documentation                        |
 
 ### `duration`
 
@@ -200,7 +200,7 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
 
 ### Response
 
-| Field         | Type    | Description                                                                                                                    |
+| Name          | Type    | Description                                                                                                                    |
 | :------------ | :------ | :----------------------------------------------------------------------------------------------------------------------------- |
 | **`results`** | Array   | An array of [task objects](#task-object)                                                                                       |
 | **`limit`**   | Integer | Number of tasks returned                                                                                                       |
