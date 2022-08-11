@@ -66,9 +66,9 @@ Get the settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -130,25 +130,25 @@ If the provided index does not exist, it will be created.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
-| Variable                                             | Type      | Description                                                                      | Default value                                                       |
-| ---------------------------------------------------- | --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| **[`displayedAttributes`](#displayed-attributes)**   | [Strings] | Fields displayed in the returned documents                                       | `["*"]` (all attributes)                                            |
-| **[`distinctAttribute`](#distinct-attribute)**       | String    | Search returns documents with distinct (different) values of the given field     | `null`                                                              |
-| **[`faceting`](#faceting)**                          | Object    | Faceting settings                                                                | `{}`                                                                |
-| **[`filterableAttributes`](#filterable-attributes)** | [Strings] | Attributes to use as filters and facets                                          | `[]`                                                                |
-| **[`pagination`](#pagination)**                      | Object    | Pagination settings                                                              | `{}`                                                                |
-| **[`rankingRules`](#ranking-rules)**                 | [Strings] | List of ranking rules sorted by order of importance                              | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]` |
-| **[`searchableAttributes`](#searchable-attributes)** | [Strings] | Fields in which to search for matching query words sorted by order of importance | `["*"]` (all attributes)                                            |
-| **[`sortableAttributes`](#sortable-attributes)**     | [Strings] | Attributes to use when sorting search results                                    | `[]`                                                                |
-| **[`stopWords`](#stop-words)**                       | [Strings] | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                |
-| **[`synonyms`](#synonyms)**                          | Object    | List of associated words treated similarly                                       | `{}`                                                                |
-| **[`typoTolerance`](#typo-tolerance)**               | Object    | Typo tolerance settings                                                          | `{}`                                                                |
+| Name                                                 | Type   | Default value                                                                                                                 | Description                                                                      |
+| :--------------------------------------------------- | :----- | :---------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| **[`displayedAttributes`](#displayed-attributes)**   | Array  | All attributes                                                                                                                | Fields displayed in the returned documents                                       |
+| **[`distinctAttribute`](#distinct-attribute)**       | String | `null`                                                                                                                        | Search returns documents with distinct (different) values of the given field     |
+| **[`faceting`](#faceting)**                          | Object | Empty                                                                                                                         | Faceting settings                                                                |
+| **[`filterableAttributes`](#filterable-attributes)** | Array  | Empty                                                                                                                         | Attributes to use as filters and facets                                          |
+| **[`pagination`](#pagination)**                      | Object | Empty                                                                                                                         | Pagination settings                                                              |
+| **[`rankingRules`](#ranking-rules)**                 | Array  | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]`                                                           | List of ranking rules sorted by order of importance                              |
+| **[`searchableAttributes`](#searchable-attributes)** | Array  | All attributes                                                                                                                | Fields in which to search for matching query words sorted by order of importance |
+| **[`sortableAttributes`](#sortable-attributes)**     | Array  | Empty                                                                                                                         | Attributes to use when sorting search results                                    |
+| **[`stopWords`](#stop-words)**                       | Array  | Empty                                                                                                                         | List of words ignored by Meilisearch when present in search queries              |
+| **[`synonyms`](#synonyms)**                          | Object | Empty                                                                                                                         | List of associated words treated similarly                                       |
+| **[`typoTolerance`](#typo-tolerance)**               | Object | `{ "enabled": true, "minWordSizeForTypos": { "oneTypo": 5, "twoTypos": 9 }, "disableOnWords": [], "disableOnAttributes": []}` | Typo tolerance settings                                                          |
 
 #### Example
 
@@ -176,9 +176,9 @@ Reset all the settings of an index to their [default value](#settings-object).
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -214,9 +214,9 @@ Get the displayed attributes of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -247,9 +247,9 @@ If an attribute contains an object, you can use dot notation to specify one or m
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -281,9 +281,9 @@ Reset the displayed attributes of the index to the default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -317,9 +317,9 @@ Get the distinct attribute field of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -341,9 +341,9 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -379,9 +379,9 @@ Reset the distinct attribute field of an index to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -409,9 +409,9 @@ To learn more about filtering and faceting, refer to our [dedicated guide](/lear
 
 ### Faceting object
 
-| Name                | Type    | Description                                                                                                  | Default value |
-| ------------------- | ------- | ------------------------------------------------------------------------------------------------------------ | ------------- |
-| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order | `100`         |
+| Name                    | Type    | Default value | Description                                                                                                  |
+| :---------------------- | :------ | :------------ | :----------------------------------------------------------------------------------------------------------- |
+| **`maxValuesPerFacet`** | Integer | `100`         | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
 
 ### Get faceting settings
 
@@ -421,9 +421,9 @@ Get the faceting settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -445,15 +445,15 @@ Partially update the faceting settings for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
-| Name                | Type    | Description                                                                                                  | Default value |
-| ------------------- | ------- | ------------------------------------------------------------------------------------------------------------ | ------------- |
-| `maxValuesPerFacet` | Integer | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order | `100`         |
+| Name                    | Type    | Default value | Description                                                                                                  |
+| :---------------------- | :------ | :------------ | :----------------------------------------------------------------------------------------------------------- |
+| **`maxValuesPerFacet`** | Integer | `100`         | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
 
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
@@ -485,9 +485,9 @@ Reset an index's faceting settings to their [default value](#faceting-object).
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -521,9 +521,9 @@ Get the filterable attributes for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -551,9 +551,9 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -585,9 +585,9 @@ Reset an index's filterable attributes list back to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -615,9 +615,9 @@ To learn more about paginating search results with Meilisearch, refer to our [de
 
 ### Pagination object
 
-| Name           | Type    | Description                                          | Default value |
-| -------------- | ------- | ---------------------------------------------------- | ------------- |
-| `maxTotalHits` | Integer | The maximum number of results Meilisearch can return | `1000`        |
+| Name               | Type    | Default value | Description                                          |
+| :----------------- | :------ | :------------ | :--------------------------------------------------- |
+| **`maxTotalHits`** | Integer | `1000`        | The maximum number of results Meilisearch can return |
 
 ### Get pagination settings
 
@@ -627,9 +627,9 @@ Get the pagination settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -651,15 +651,15 @@ Partially update the pagination settings for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
-| Name           | Type    | Description                                          | Default value |
-| -------------- | ------- | ---------------------------------------------------- | ------------- |
-| `maxTotalHits` | Integer | The maximum number of results Meilisearch can return | `1000`        |
+| Name               | Type    | Default value | Description                                          |
+| :----------------- | :------ | :------------ | :--------------------------------------------------- |
+| **`maxTotalHits`** | Integer | `1000`        | The maximum number of results Meilisearch can return |
 
 `maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
 
@@ -693,9 +693,9 @@ Reset an index's pagination settings to their [default value](#pagination-object
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -723,14 +723,14 @@ To learn more about ranking rules, refer to our [dedicated guide](/learn/core_co
 
 ### Ranking rules array
 
-| Name          | Description                                                                     |
-| ------------- | ------------------------------------------------------------------------------- |
-| `"words"`     | Sorts results by decreasing number of matched query terms                       |
-| `"typo"`      | Sorts results by increasing number of typos                                     |
-| `"proximity"` | Sorts results by increasing distance between matched query terms                |
-| `"attribute"` | Sorts results based on the attribute ranking order                              |
-| `"sort"`      | Sorts results based on parameters decided at query time                         |
-| `"exactness"` | Sorts results based on the similarity of the matched words with the query words |
+| Name              | Description                                                                     |
+| :---------------- | :------------------------------------------------------------------------------ |
+| **`"words"`**     | Sorts results by decreasing number of matched query terms                       |
+| **`"typo"`**      | Sorts results by increasing number of typos                                     |
+| **`"proximity"`** | Sorts results by increasing distance between matched query terms                |
+| **`"attribute"`** | Sorts results based on the attribute ranking order                              |
+| **`"sort"`**      | Sorts results based on parameters decided at query time                         |
+| **`"exactness"`** | Sorts results based on the similarity of the matched words with the query words |
 
 #### Default order
 
@@ -779,9 +779,9 @@ Update the ranking rules of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -824,9 +824,9 @@ To remove a ranking rule, use the [add or replace ranking rules route](#update-r
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -860,9 +860,9 @@ Get the searchable attributes of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -895,9 +895,9 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -933,9 +933,9 @@ Reset the searchable attributes of the index to the default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -969,9 +969,9 @@ Get the sortable attributes of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -1000,9 +1000,9 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -1034,9 +1034,9 @@ Reset an index's sortable attributes list back to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -1074,9 +1074,9 @@ Get the stop words list of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -1100,9 +1100,9 @@ Update the list of stop words of an index. This will re-index all documents in t
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -1136,9 +1136,9 @@ Reset the list of stop words of an index to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -1172,9 +1172,9 @@ Get the list of synonyms of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -1206,9 +1206,9 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
@@ -1240,9 +1240,9 @@ Reset the list of synonyms of an index to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -1270,40 +1270,13 @@ To learn more about typo tolerance, refer to our [dedicated guide](/learn/config
 
 ### Typo tolerance object
 
-#### `enabled`
-
-**Type:** Boolean
-
-**Default value:** `true`
-
-**Description:** Whether typo tolerance is enabled or not
-
-#### `minWordSizeForTypos`
-
-**Type:** Object
-
-**Description:** Customize the minimum word length for accepting 1 or 2 typos
-
-| Name       | Description                                                                      | Type    | Default value |
-| ---------- | -------------------------------------------------------------------------------- | ------- | ------------- |
-| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   | integer | `5`           |
-| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` | integer | `9`           |
-
-#### `disableOnWords`
-
-**Type:** Array
-
-**Default value:** `[]`
-
-**Description:** An array of words for which the typo tolerance feature is disabled
-
-#### `disableOnAttributes`
-
-**Type:** Array
-
-**Default value:** `[]`
-
-**Description:** An array of attributes for which the typo tolerance feature is disabled
+| Name                               | Type    | Default Value | Description                                                                      |
+| :--------------------------------- | :------ | :------------ | :------------------------------------------------------------------------------- |
+| **`enabled`**                      | Boolean | `true`        | Whether typo tolerance is enabled or not                                         |
+| **`minWordSizeForTypos.oneTypo`**  | Integer | `5`           | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   |
+| **`minWordSizeForTypos.twoTypos`** | Integer | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
+| **`disableOnWords`**               | Array   | `[]`          | An array of words for which the typo tolerance feature is disabled               |
+| **`disableOnAttributes`**          | Array   | `[]`          | An array of attributes for which the typo tolerance feature is disabled          |
 
 ### Get typo tolerance
 
@@ -1313,9 +1286,9 @@ Get the typo tolerance settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
@@ -1343,46 +1316,19 @@ Partially update the typo tolerance settings for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Body
 
-#### `enabled`
-
-**Type:** Boolean
-
-**Default value:** `true`
-
-**Description:** Whether typo tolerance is enabled or not
-
-#### `minWordSizeForTypos`
-
-**Type:** Object
-
-**Description:** Customize the minimum word length for accepting 1 or 2 typos
-
-| Name       | Description                                                                      | Type    | Default value |
-| ---------- | -------------------------------------------------------------------------------- | ------- | ------------- |
-| `oneTypo`  | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   | integer | `5`           |
-| `twoTypos` | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` | integer | `9`           |
-
-#### `disableOnWords`
-
-**Type:** Array
-
-**Default value:** `[]`
-
-**Description:** An array of words for which the typo tolerance feature is disabled
-
-#### `disableOnAttributes`
-
-**Type:** Array
-
-**Default value:** `[]`
-
-**Description:** An array of attributes for which the typo tolerance feature is disabled
+| Name                               | Type    | Default Value | Description                                                                      |
+| :--------------------------------- | :------ | :------------ | :------------------------------------------------------------------------------- |
+| **`enabled`**                      | Boolean | `true`        | Whether typo tolerance is enabled or not                                         |
+| **`minWordSizeForTypos.oneTypo`**  | Integer | `5`           | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   |
+| **`minWordSizeForTypos.twoTypos`** | Integer | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
+| **`disableOnWords`**               | Array   | Empty         | An array of words for which the typo tolerance feature is disabled               |
+| **`disableOnAttributes`**          | Array   | Empty         | An array of attributes for which the typo tolerance feature is disabled          |
 
 #### Example
 
@@ -1408,9 +1354,9 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 #### Path parameters
 
-| Name        | Type   | Description                          |
-| :---------- | :----- | :----------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested index |
+| Name        | Type   | Description                                                             |
+| :---------- | :----- | :---------------------------------------------------------------------- |
+| **`uid`** * | String | [`uid`]/learn/core_concepts/indexes.md#index-uid of the requested index |
 
 #### Example
 
