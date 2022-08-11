@@ -198,7 +198,7 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
 | **type**        | [filter tasks](#filtering-tasks) by their `type`                     | all types                      |
 | **indexUid**    | [filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive | all indexes                    |
 
-#### Example
+### Example
 
 <CodeSamples id="get_all_tasks_1" />
 
@@ -206,32 +206,32 @@ Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering
 
 ```json
 {
-    "results": [
-        {
-            "uid": 1,
-            "indexUid": "movies_reviews",
-            "status": "enqueued",
-            "type": "documentAdditionOrUpdate",
-            "duration": null,
-            "enqueuedAt": "2021-08-12T10:00:00.000000Z",
-            "startedAt": null,
-            "finishedAt": null
-        },
-        {
-            "uid": 0,
-            "indexUid": "movies",
-            "status": "succeeded",
-            "type": "documentAdditionOrUpdate",
-            "details": { 
-                    "receivedDocuments": 100,
-                    "indexedDocuments": 100
-            },
-            "duration": "PT16S",
-            "enqueuedAt": "2021-08-11T09:25:53.000000Z",
-            "startedAt": "2021-08-11T10:03:00.000000Z",
-            "finishedAt": "2021-08-11T10:03:16.000000Z"
-        }
-    ]
+  "results":[
+    {
+      "uid":1,
+      "indexUid":"movies_reviews",
+      "status":"enqueued",
+      "type":"documentAdditionOrUpdate",
+      "duration":null,
+      "enqueuedAt":"2021-08-12T10:00:00.000000Z",
+      "startedAt":null,
+      "finishedAt":null
+    },
+    {
+      "uid":0,
+      "indexUid":"movies",
+      "status":"succeeded",
+      "type":"documentAdditionOrUpdate",
+      "details":{
+        "receivedDocuments":100,
+        "indexedDocuments":100
+      },
+      "duration":"PT16S",
+      "enqueuedAt":"2021-08-11T09:25:53.000000Z",
+      "startedAt":"2021-08-11T10:03:00.000000Z",
+      "finishedAt":"2021-08-11T10:03:16.000000Z"
+    }
+  ]
 }
 ```
 
@@ -311,7 +311,7 @@ When the returned value of `next` is `null`, you have reached the final page of 
 
 Get a single task. The task `uid` is required.
 
-#### Example
+### Example
 
 <CodeSamples id="get_task_1" />
 
@@ -321,23 +321,23 @@ Here is an example response representing a processed task.
 
 ```json
 {
-    "uid": 1,
-    "indexUid": "movies",
-    "status": "succeeded",
-    "type": "settingsUpdate",
-    "details": {
-        "rankingRules": [
-            "typo",
-            "ranking:desc",
-            "words",
-            "proximity",
-            "attribute",
-            "exactness"
-        ]
-    },
-    "duration": "PT1S",
-    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
-    "startedAt": "2021-08-10T14:29:18.000000Z",
-    "finishedAt": "2021-08-10T14:29:19.000000Z"
+  "uid":1,
+  "indexUid":"movies",
+  "status":"succeeded",
+  "type":"settingsUpdate",
+  "details":{
+    "rankingRules":[
+      "typo",
+      "ranking:desc",
+      "words",
+      "proximity",
+      "attribute",
+      "exactness"
+    ]
+  },
+  "duration":"PT1S",
+  "enqueuedAt":"2021-08-10T14:29:17.000000Z",
+  "startedAt":"2021-08-10T14:29:18.000000Z",
+  "finishedAt":"2021-08-10T14:29:19.000000Z"
 }
 ```

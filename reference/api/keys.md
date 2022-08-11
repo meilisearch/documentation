@@ -140,7 +140,7 @@ Results can be paginated using the `offset` and `limit` query parameters.
 | **offset**      | Number of keys to skip   | 0             |
 | **limit**       | Number of keys to return | 20            |
 
-#### Example
+### Example
 
 <CodeSamples id="get_all_keys_1" />
 
@@ -213,7 +213,7 @@ API keys are displayed in descending order based on their `createdAt` date. This
 
 Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found). A valid API [`key`](/reference/api/keys.md#key) or [`uid`](/reference/api/keys.md#uid) is required.
 
-#### Example
+### Example
 
 <CodeSamples id="get_one_key_1" />
 
@@ -290,7 +290,7 @@ To learn more about the variables sent in the body of the request, see the [crea
 
 Updates to keys are **partial**. This means you should provide only the fields you intend to update, as any fields not present in the payload will remain unchanged.
 
-#### Example
+### Example
 
 <CodeSamples id="update_a_key_1" />
 
@@ -322,7 +322,7 @@ Updates to keys are **partial**. This means you should provide only the fields y
 
 Delete the specified API key. A valid API [`key`](/reference/api/keys.md#key) or [`uid`](/reference/api/keys.md#uid) is required.
 
-#### Example
+### Example
 
 <CodeSamples id="delete_a_key_1" />
 
