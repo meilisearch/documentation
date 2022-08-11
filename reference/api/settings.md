@@ -253,6 +253,8 @@ If an attribute contains an object, you can use dot notation to specify one or m
 
 An array of strings that contains attributes of an index to display.
 
+[To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#displayed-fields)
+
 #### Example
 
 <CodeSamples id="update_displayed_attributes_1"/>
@@ -350,6 +352,8 @@ A string: the field name.
 ::: warning
 If the field does not exist, no error will be thrown.
 :::
+
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
 
 #### Example
 
@@ -556,6 +560,8 @@ If an attribute contains an object, you can use dot notation to set one or more 
 #### Body
 
 An array of strings containing the attributes that can be used as filters at query time.
+
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
 #### Example
 
@@ -797,6 +803,8 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 - To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
+[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy.md#ranking-rules)
+
 #### Example
 
 <CodeSamples id="update_ranking_rules_1" />
@@ -909,6 +917,8 @@ An array of strings that contains searchable attributes sorted by order of impor
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
+
 #### Example
 
 <CodeSamples id="update_searchable_attributes_1" />
@@ -1011,6 +1021,8 @@ If an attribute contains an object, you can use dot notation to set one or more 
 #### Body
 
 An array of strings containing the attributes that can be used to sort search results at query time.
+
+[To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
 
 #### Example
 
@@ -1215,6 +1227,8 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 #### Body
 
 An object that contains all synonyms and their associated words.
+
+[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms.md)
 
 #### Example
 
