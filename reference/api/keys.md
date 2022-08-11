@@ -91,7 +91,7 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 | `keys.update`      | Provides access to the [update key](#update-a-key) endpoint                                                                                                                                                                                                                      |
 | `keys.delete`      | Provides access to the [delete key](#delete-a-key) endpoint                                                                                                                                                                                                                      |
 
-**Default value**: None
+**Default value**: N/A
 
 ### `indexes`
 
@@ -99,7 +99,7 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Description**: An array of indexes the key is authorized to act on. `["*"]` for all indexes. Only the key's [permitted actions](#actions) can be used on these indexes
 
-**Default value**: None
+**Default value**: N/A
 
 ### `expiresAt`
 
@@ -107,7 +107,7 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Description**: Date and time when the key will expire, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. `null` if the key never expires
 
-**Default value**: None
+**Default value**: N/A
 
 ### `createdAt`
 
