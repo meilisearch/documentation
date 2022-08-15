@@ -27,7 +27,7 @@ This is the preferred route to perform search when an API key is required, as it
 
 ### Body
 
-| Search Parameter                                        | Default Value | Description                                        |
+| Search Parameter                                        | Default value | Description                                        |
 | :------------------------------------------------------ | :------------ | :------------------------------------------------- |
 | **[`q`](#query-q)**                                     | `""`          | Query string                                       |
 | **[`offset`](#offset)**                                 | `0`           | Number of documents to skip                        |
@@ -115,7 +115,7 @@ This route should only be used when no API key is required. If an API key is req
 
 ### Query parameters
 
-| Search Parameter                                        | Default Value | Description                                        |
+| Search Parameter                                        | Default value | Description                                        |
 | :------------------------------------------------------ | :------------ | :------------------------------------------------- |
 | **[`q`](#query-q)**                                     | `""`          | Query string                                       |
 | **[`offset`](#offset)**                                 | `0`           | Number of documents to skip                        |
@@ -199,7 +199,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 
 ### Overview
 
-| Search Parameter                                        | Default Value | Description                                        |
+| Search Parameter                                        | Default value | Description                                        |
 | :------------------------------------------------------ | :------------ | :------------------------------------------------- |
 | **[`q`](#query-q)**                                     | `""`          | Query string                                       |
 | **[`offset`](#offset)**                                 | `0`           | Number of documents to skip                        |
@@ -219,7 +219,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 ### Query (q)
 
 **Parameter**: `q`
-**Expected value**: any string
+**Expected value**: Any string
 **Default value**: `null`
 
 Sets the search terms.
@@ -285,7 +285,7 @@ You can combine phrase search and normal queries in a single search request. In 
 ### Offset
 
 **Parameter**: `offset`
-**Expected value**: any positive integer
+**Expected value**: Any positive integer
 **Default value**: `0`
 
 Sets the starting point in the search results, effectively skipping over a given number of documents.
@@ -303,7 +303,7 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 ### Limit
 
 **Parameter**: `limit`
-**Expected value**: any positive integer
+**Expected value**: Any positive integer
 **Default value**: `20`
 
 Sets the maximum number of documents returned by a single query.
@@ -321,7 +321,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 ### Filter
 
 **Parameter**: `filter`
-**Expected value**: a filter expression written as a string or an array of strings
+**Expected value**: A filter expression written as a string or an array of strings
 **Default value**: `[]`
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
@@ -363,7 +363,7 @@ _geoRadius(lat, lng, distance_in_meters)
 ### Facets
 
 **Parameter**: `facets`
-**Expected value**: an array of `attribute`s or `["*"]`
+**Expected value**: An array of `attribute`s or `["*"]`
 **Default value**: `null`
 
 Returns the number of documents matching the current search query for each given facet. When `facets` is set, the search results object contains the `facetDistribution` field that shows the number of remaining candidates for each specified facet.
@@ -409,7 +409,7 @@ You would get the following response:
 ### Attributes to retrieve
 
 **Parameter**: `attributesToRetrieve`
-**Expected value**: an array of `attribute`s or `["*"]`
+**Expected value**: An array of `attribute`s or `["*"]`
 **Default value**: `["*"]`
 
 Configures which attributes will be retrieved in the returned documents.
@@ -429,7 +429,7 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 ### Attributes to crop
 
 **Parameter**: `attributesToCrop`
-**Expected value**: an array of attributes or `["*"]`
+**Expected value**: An array of attributes or `["*"]`
 **Default value**: `null`
 
 Crops the selected fields in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter. When `attributesToCrop` is set, each returned document contains an extra field called `_formatted`. This object contains the cropped version of the selected attributes.
@@ -480,7 +480,7 @@ You will get the following response with the **cropped text in the `_formatted` 
 ### Crop length
 
 **Parameter**: `cropLength`
-**Expected value**: a positive integer
+**Expected value**: A positive integer
 **Default value**: `10`
 
 Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop). If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
@@ -494,7 +494,7 @@ If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom
 ### Crop marker
 
 **Parameter**: `cropMarker`
-**Expected value**: a string
+**Expected value**: A string
 **Default value**: `"…"`
 
 Sets a string to mark crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be inserted on both sides of the crop. If `attributesToCrop` is not configured, `cropMarker` has no effect on the returned search results.
@@ -529,7 +529,7 @@ When searching for `shifu`, you can use `cropMarker` to change the default `…`
 ### Attributes to highlight
 
 **Parameter**: `attributesToHighlight`
-**Expected value**: an array of attributes or `["*"]`
+**Expected value**: An array of attributes or `["*"]`
 **Default value**: `null`
 
 Highlights matching query terms in the specified attributes.  `attributesToHighlight` only works on values of the following types: string, number, array, object.
@@ -572,7 +572,7 @@ The highlighted version of the text would then be found in the `_formatted` obje
 ### Highlight tags
 
 **Parameters**: `highlightPreTag` and `highlightPostTag`
-**Expected value**: a string
+**Expected value**: A string
 **Default value**: `"<em>"` and `"</em>"` respectively
 
 `highlightPreTag` and `highlightPostTag` configure, respectively, the strings to be inserted before and after a word highlighted by `attributesToHighlight`. If `attributesToHighlight` has not been configured, `highlightPreTag` and `highlightPostTag` have no effect on the returned search results.
@@ -665,7 +665,7 @@ You would get the following response with **information about the matches in the
 ### Sort
 
 **Parameter**: `sort`
-**Expected value**: a list of attributes written as an array or as a comma-separated string
+**Expected value**: A list of attributes written as an array or as a comma-separated string
 **Default value**: `null`
 
 Sorts search results at query time according to the specified attributes and indicated order.
