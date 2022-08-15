@@ -8,16 +8,22 @@ sidebarDepth: 2
 
 Meilisearch exposes 2 routes to perform searches:
 
-- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances.
+- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances
 - A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example).
 
-Other than the differences mentioned above, the two routes are strictly equivalent. You may find exhaustive descriptions of the parameters accepted by the two routes [at the end of this article](#search-parameters).
+Other than the differences mentioned above, the two routes are strictly equivalent. You may find exhaustive descriptions of the parameters accepted by the two routes [at the end of this article](#search-parameters)
 
 ## Search in an index with POST route
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/search"/>
 
-Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Search for documents matching a specific query in the given index.
+
+### Path parameters
+
+| Name        | Type   | Description                                                               |
+| :---------- | :----- | :------------------------------------------------------------------------ |
+| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ::: note
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
@@ -105,13 +111,19 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/search"/>
 
-Search for documents matching a specific query in the given index. The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Search for documents matching a specific query in the given index.
+
+### Path parameters
+
+| Name        | Type   | Description                                                               |
+| :---------- | :----- | :------------------------------------------------------------------------ |
+| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 :::note
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
 :::
 
-This route should only be used when no API key is required. If an API key is required, use the POST route instead.
+This route should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
 
 ### Query parameters
 
