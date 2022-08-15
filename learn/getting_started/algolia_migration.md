@@ -22,10 +22,10 @@ Before continuing, make sure you have both Meilisearch and Node.js installed and
 
 This guide was tested with the following package versions:
 
-[`node.js`](https://nodejs.org/en/): `16.14`
+[`node.js`](https://nodejs.org/en/): `16.16`
 [`algoliasearch`](https://www.npmjs.com/package/algoliasearch): `4.13`
-[`meilisearch-js`](https://www.npmjs.com/package/meilisearch): `0.25.1`
-[`meilisearch`](https://github.com/meilisearch/meilisearch): `0.27`
+[`meilisearch-js`](https://www.npmjs.com/package/meilisearch): `0.27.0`
+[`meilisearch`](https://github.com/meilisearch/meilisearch): `0.28`
 
 :::
 
