@@ -1,5 +1,5 @@
 ---
-sidebarDepth: 2
+sidebarDepth:  2
 ---
 
 # Settings
@@ -14,14 +14,14 @@ By default, the settings object looks like this. All fields are modifiable.
 
 ```json
 {
-  "displayedAttributes":[
+  "displayedAttributes": [
     "*"
   ],
-  "searchableAttributes":[
+  "searchableAttributes": [
     "*"
   ],
-  "filterableAttributes":[],
-  "sortableAttributes":[],
+  "filterableAttributes": [],
+  "sortableAttributes": [],
   "rankingRules":
   [
     "words",
@@ -31,23 +31,23 @@ By default, the settings object looks like this. All fields are modifiable.
     "sort",
     "exactness"
   ],
-  "stopWords":[],
-  "synonyms":{},
-  "distinctAttribute":null,
-  "typoTolerance":{
-    "enabled":true,
-    "minWordSizeForTypos":{
-      "oneTypo":5,
-      "twoTypos":9
+  "stopWords": [],
+  "synonyms": {},
+  "distinctAttribute": null,
+  "typoTolerance": {
+    "enabled": true,
+    "minWordSizeForTypos": {
+      "oneTypo": 5,
+      "twoTypos": 9
     },
-    "disableOnWords":[],
-    "disableOnAttributes":[]
+    "disableOnWords": [],
+    "disableOnAttributes": []
   },
-  "faceting":{
-    "maxValuesPerFacet":100
+  "faceting": {
+    "maxValuesPerFacet": 100
   },
-  "pagination":{
-    "maxTotalHits":1000
+  "pagination": {
+    "maxTotalHits": 1000
   }
 }
 ```
@@ -76,14 +76,14 @@ Get the settings of an index.
 
 ```json
 {
-  "displayedAttributes":[
+  "displayedAttributes": [
     "*"
   ],
-  "searchableAttributes":[
+  "searchableAttributes": [
     "*"
   ],
-  "filterableAttributes":[],
-  "sortableAttributes":[],
+  "filterableAttributes": [],
+  "sortableAttributes": [],
   "rankingRules":
   [
     "words",
@@ -93,23 +93,23 @@ Get the settings of an index.
     "sort",
     "exactness"
   ],
-  "stopWords":[],
-  "synonyms":{},
-  "distinctAttribute":null,
-  "typoTolerance":{
-    "enabled":true,
-    "minWordSizeForTypos":{
-      "oneTypo":5,
-      "twoTypos":9
+  "stopWords": [],
+  "synonyms": {},
+  "distinctAttribute": null,
+  "typoTolerance": {
+    "enabled": true,
+    "minWordSizeForTypos": {
+      "oneTypo": 5,
+      "twoTypos": 9
     },
-    "disableOnWords":[],
-    "disableOnAttributes":[]
+    "disableOnWords": [],
+    "disableOnAttributes": []
   },
-  "faceting":{
-    "maxValuesPerFacet":100
+  "faceting": {
+    "maxValuesPerFacet": 100
   },
-  "pagination":{
-    "maxTotalHits":1000
+  "pagination": {
+    "maxTotalHits": 1000
   }
 }
 ```
