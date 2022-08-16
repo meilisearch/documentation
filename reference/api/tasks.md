@@ -124,7 +124,7 @@ The `details` object will only show values for the updated field. For example, i
 | **`searchableAttributes`** | List of searchable attributes |
 | **`displayedAttributes`**  | List of displayed attributes  |
 | **`sortableAttributes`**   | List of sortable attributes   |
-| **`stopWords`**            | List of  stop words           |
+| **`stopWords`**            | List of stop words            |
 | **`synonyms`**             | List of synonyms              |
 | **`typoTolerance`**        | The `typoTolerance` object    |
 | **`pagination`**           | The `pagination` object       |
