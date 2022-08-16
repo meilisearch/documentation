@@ -29,7 +29,6 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 ### `uid`
 
 **Type**: Integer
-
 **Description**: Unique sequential identifier of the task
 
 :::note
@@ -39,7 +38,6 @@ The task `uid` is incremented **globally.**
 ### `indexUid`
 
 **Type**: String
-
 **Description**:  Unique identifier of the targeted index
 
 ::: note
@@ -49,19 +47,16 @@ This value is always `null` for `dumpCreation` tasks.
 ### `status`
 
 **Type**: String
-
 **Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`
 
 ### `type`
 
 **Type**: String
-
 **Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`
 
 ### `details`
 
 **Type**: Object
-
 **Description**: Detailed information on the task payload. This object's contents depend on the task's `type`
 
 ::: note
@@ -144,7 +139,6 @@ The `details` object will only show values for the updated field. For example, i
 ### `error`
 
 **Type**: Object
-
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
 | Name          | Description                                                                |
@@ -157,25 +151,21 @@ The `details` object will only show values for the updated field. For example, i
 ### `duration`
 
 **Type**: String
-
 **Description**: The total elapsed time the task spent in the `processing` state, in [ISO 8601](https://www.ionos.com/digitalguide/websites/web-development/iso-8601/) format
 
 ### `enqueuedAt`
 
 **Type**: String
-
 **Description**: The date and time when the task was first `enqueued`, in RFC 3339 format
 
 ### `startedAt`
 
 **Type**: String
-
 **Description**: The date and time when the task began `processing`, in RFC 3339 format
 
 ### `finishedAt`
 
 **Type**: String
-
 **Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in RFC 3339 format
 
 ## Get tasks
