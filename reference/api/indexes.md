@@ -182,7 +182,7 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 ### Body
 
-| Variable           | Type            | Default value | Description                                                                              |
+| Name               | Type            | Default value | Description                                                                              |
 | :----------------- | :-------------- | :------------ | :--------------------------------------------------------------------------------------- |
 | **`primaryKey`** * | String / `null` | N/A           | [`primaryKey`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
 
