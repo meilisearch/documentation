@@ -669,9 +669,10 @@ faceted_search_walkthrough_filter_1: |-
       "filter": [
         [
           "genres = Horror",
-          "genres = Mystery"],
-          "director = \"Jordan Peele\""
-        ]
+          "genres = Mystery"
+        ],
+        "director = \"Jordan Peele\""
+      ]
     }'
 post_dump_1: |-
   curl \
