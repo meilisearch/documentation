@@ -141,12 +141,12 @@ The `details` object will only show values for the updated field. For example, i
 **Type**: Object
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
-| Name          | Description                                                                |
-| :------------ | :------------------------------------------------------------------------- |
-| **`message`** | A human-readable description of the error                                  |
-| **`code`**    | The [error code](/reference/api/error_codes.md)                            |
-| **`type`**    | The [error type](/resources/faq.md#what-do-the-different-error-types-mean) |
-| **`link`**    | A link to the relevant section of the documentation                        |
+| Name          | Description                                         |
+| :------------ | :-------------------------------------------------- |
+| **`message`** | A human-readable description of the error           |
+| **`code`**    | The [error code](/reference/api/error_codes.md)     |
+| **`type`**    | The [error type](/reference/api/overview.md#errors) |
+| **`link`**    | A link to the relevant section of the documentation |
 
 ### `duration`
 
@@ -176,17 +176,17 @@ List all tasks globally, regardless of index. The `task` objects are contained i
 
 Tasks are always returned in descending order of `uid`. This means that by default, **the most recently created `task` objects appear first**.
 
-Task results are [paginated](#paginating-tasks) and can be [filtered](#filtering-tasks).
+Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginating-tasks) and can be [filtered](/learn/advanced/asynchronous_operations.md#filtering-tasks).
 
 ### Query parameters
 
-| Query Parameter | Default Value                  | Description                                                          |
-| :-------------- | :----------------------------- | :------------------------------------------------------------------- |
-| **`limit`**     | `20`                           | Number of tasks to return                                            |
-| **`from`**      | `uid` of the last created task | `uid` of the first task returned                                     |
-| **`status`**    | All statuses                   | [Filter tasks](#filtering-tasks) by their `status`                   |
-| **`type`**      | All types                      | [Filter tasks](#filtering-tasks) by their `type`                     |
-| **`indexUid`**  | All indexes                    | [Filter tasks](#filtering-tasks) by their `indexUid`. Case-sensitive |
+| Query Parameter | Default Value                  | Description                                                                                                    |
+| :-------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------- |
+| **`limit`**     | `20`                           | Number of tasks to return                                                                                      |
+| **`from`**      | `uid` of the last created task | `uid` of the first task returned                                                                               |
+| **`status`**    | All statuses                   | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |
+| **`type`**      | All types                      | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |
+| **`indexUid`**  | All indexes                    | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |
 
 ### Response
 
