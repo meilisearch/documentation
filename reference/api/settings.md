@@ -239,10 +239,6 @@ Update the displayed attributes of an index.
 
 If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g., `"displayedAttributes": ["release_date.year"]`.
 
-::: note
-`displayedAttributes` only impacts search results. It has no effect on other methods of retrieving or copying documents, such as the [GET documents endpoint](/reference/api/documents.md#get-documents), [dumps](/learn/advanced/dumps.md), or [snapshots](/learn/advanced/snapshots.md).
-:::
-
 #### Path parameters
 
 | Name              | Type   | Description                                                               |
@@ -861,6 +857,8 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 ## Searchable attributes
 
 The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
+
+By default, all fields are part of the `searchableAttributes` array. This behavior is represented by the `*` in the settings. Setting `searchableAttributes` to an empty array `[]` will reset the setting to its default value.
 
 To learn more about searchable attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
 
