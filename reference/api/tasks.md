@@ -245,9 +245,9 @@ Get a single task.
 
 ### Path parameters
 
-| Name        | Type   | Description                         |
-| :---------- | :----- | :---------------------------------- |
-| **`uid`** * | String | [`uid`](#uid) of the requested task |
+| Name             | Type   | Description                         |
+| :--------------- | :----- | :---------------------------------- |
+| **`task_uid`** * | String | [`uid`](#uid) of the requested task |
 
 ### Example
 
