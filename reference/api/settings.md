@@ -64,8 +64,8 @@ Get the settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
@@ -128,21 +128,21 @@ If the provided index does not exist, it will be created.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
 | Name                                                 | Type             | Default value                                                                                                                 | Description                                                                      |
 | :--------------------------------------------------- | :--------------- | :---------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
-| **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                                                                | Fields displayed in the returned documents                                       |
+| **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                                                       | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                                                        | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | Empty                                                                                                                         | Faceting settings                                                                |
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                                                         | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | Empty                                                                                                                         | Pagination settings                                                              |
-| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]`                                                           | List of ranking rules in order of importance                              |
-| **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                                                                | Fields in which to search for matching query words sorted by order of importance |
+| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]`                                                           | List of ranking rules in order of importance                                     |
+| **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                                                       | Fields in which to search for matching query words sorted by order of importance |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                                                         | Attributes to use when sorting search results                                    |
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                                                         | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                                                         | List of associated words treated similarly                                       |
@@ -156,11 +156,11 @@ If the provided index does not exist, it will be created.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -174,9 +174,9 @@ Reset all the settings of an index to their [default value](#settings-object).
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -186,11 +186,11 @@ Reset all the settings of an index to their [default value](#settings-object).
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -212,9 +212,9 @@ Get the displayed attributes of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -245,9 +245,9 @@ If an attribute contains an object, you can use dot notation to specify one or m
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -263,11 +263,11 @@ An array of strings that contains attributes of an index to display.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -281,9 +281,9 @@ Reset the displayed attributes of the index to the default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -293,11 +293,11 @@ Reset the displayed attributes of the index to the default value.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -317,9 +317,9 @@ Get the distinct attribute field of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -341,9 +341,9 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -363,11 +363,11 @@ If the field does not exist, no error will be thrown.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -381,9 +381,9 @@ Reset the distinct attribute field of an index to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -393,11 +393,11 @@ Reset the distinct attribute field of an index to its default value.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -423,9 +423,9 @@ Get the faceting settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -447,9 +447,9 @@ Partially update the faceting settings for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -487,9 +487,9 @@ Reset an index's faceting settings to their [default value](#faceting-object).
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -523,9 +523,9 @@ Get the filterable attributes for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -553,9 +553,9 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -571,11 +571,11 @@ An array of strings containing the attributes that can be used as filters at que
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -589,9 +589,9 @@ Reset an index's filterable attributes list back to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -601,11 +601,11 @@ Reset an index's filterable attributes list back to its default value.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -631,9 +631,9 @@ Get the pagination settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -655,9 +655,9 @@ Partially update the pagination settings for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -681,11 +681,11 @@ Setting `maxTotalHits` to a high value might negatively impact performance and e
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "books",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
 }
 ```
 
@@ -697,9 +697,9 @@ Reset an index's pagination settings to their [default value](#pagination-object
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -709,11 +709,11 @@ Reset an index's pagination settings to their [default value](#pagination-object
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "books",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
 }
 ```
 
@@ -757,9 +757,9 @@ Get the ranking rules of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -789,9 +789,9 @@ Update the ranking rules of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -813,11 +813,11 @@ To add your own ranking rule, you have to communicate an attribute followed by a
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -836,9 +836,9 @@ To remove a ranking rule, use the [add or replace ranking rules route](#update-r
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -848,11 +848,11 @@ To remove a ranking rule, use the [add or replace ranking rules route](#update-r
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -872,9 +872,9 @@ Get the searchable attributes of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -907,9 +907,9 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -929,11 +929,11 @@ A match in title will make a document more relevant than another document with a
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -947,9 +947,9 @@ Reset the searchable attributes of the index to the default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -959,11 +959,11 @@ Reset the searchable attributes of the index to the default value.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -983,9 +983,9 @@ Get the sortable attributes of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1014,9 +1014,9 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -1032,11 +1032,11 @@ An array of strings containing the attributes that can be used to sort search re
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -1050,9 +1050,9 @@ Reset an index's sortable attributes list back to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1062,11 +1062,11 @@ Reset an index's sortable attributes list back to its default value.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -1088,9 +1088,9 @@ Get the stop words list of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1114,9 +1114,9 @@ Update the list of stop words of an index. This will re-index all documents in t
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -1132,11 +1132,11 @@ If a list of stop words already exists, it will be overwritten (_replaced_).
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -1150,9 +1150,9 @@ Reset the list of stop words of an index to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1162,11 +1162,11 @@ Reset the list of stop words of an index to its default value.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -1186,9 +1186,9 @@ Get the list of synonyms of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1220,9 +1220,9 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -1238,11 +1238,11 @@ An object that contains all synonyms and their associated words.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -1256,9 +1256,9 @@ Reset the list of synonyms of an index to its default value.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1268,11 +1268,11 @@ Reset the list of synonyms of an index to its default value.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+  "taskUid": 1,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
 }
 ```
 
@@ -1302,9 +1302,9 @@ Get the typo tolerance settings of an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1332,9 +1332,9 @@ Partially update the typo tolerance settings for an index.
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
 
@@ -1354,11 +1354,11 @@ Partially update the typo tolerance settings for an index.
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "books",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2022-04-14T20:56:44.991039Z"
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:56:44.991039Z"
 }
 ```
 
@@ -1370,9 +1370,9 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 #### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -1382,11 +1382,11 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 ```json
 {
-    "taskUid": 1,
-    "indexUid": "books",
-    "status": "enqueued",
-    "type": "settingsUpdate",
-    "enqueuedAt": "2022-04-14T20:53:32.863107Z"
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "settingsUpdate",
+  "enqueuedAt": "2022-04-14T20:53:32.863107Z"
 }
 ```
 
