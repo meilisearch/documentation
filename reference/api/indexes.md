@@ -86,9 +86,9 @@ Get information about an index.
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Example
 
@@ -109,14 +109,7 @@ Get information about an index.
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an index.
-
-### Path parameters
-
-| Name             | Type            | Description                                                                              |
-| :--------------- | :-------------- | :--------------------------------------------------------------------------------------- |
-| **`uid`** *      | String          | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
-| **`primaryKey`** | String / `null` | [`primaryKey`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
+Create an index.This endpoint accepts two arguments: `uid` and `primaryKey`.
 
 If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from the first document you add to the index.
 
@@ -170,9 +163,9 @@ To change the primary key of an index that already contains documents, you must 
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ::: note
 It is not possible to change an index's `uid`.
@@ -212,9 +205,9 @@ Delete an index.
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
 

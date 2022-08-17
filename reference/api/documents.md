@@ -12,9 +12,9 @@ Get documents by batch.
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
@@ -85,7 +85,7 @@ You can use the optional `fields` query parameter to specify which document fiel
 
 | Name              | Type    | Description                                                                           |
 | :---------------- | :------ | :------------------------------------------------------------------------------------ |
-| **`uid`** *       | String  | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index             |
+| **`index_uid`** * | String  | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index             |
 | **Document id** * | Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested index |
 
 ### Query parameters
@@ -127,9 +127,9 @@ This endpoint accepts the following content-types:
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -195,9 +195,9 @@ This endpoint accepts the following content-types:
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -248,9 +248,9 @@ Delete all documents in the specified index.
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Example
 
@@ -280,7 +280,7 @@ Delete one document based on its unique id.
 
 | Name              | Type    | Description                                                                              |
 | :---------------- | :------ | :--------------------------------------------------------------------------------------- |
-| **`uid`** *       | String  | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
+| **`index_uid`** * | String  | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
 | **Document id** * | Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
 
 ### Example
@@ -309,9 +309,9 @@ Delete a selection of documents based on array of document id's.
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Body
 
