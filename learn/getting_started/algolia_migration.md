@@ -176,35 +176,35 @@ Some Meilisearch parameters require index settings to be configured beforehand; 
 
 The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**.
 
-| Algolia                             | Meilisearch                                                                    |
-|-------------------------------------|--------------------------------------------------------------------------------|
-| `query`                             | `q`                                                                            |
-| `attributesToRetrieve`              | `attributesToRetrieve`                                                         |
-| `filters`                           | `filter`                                                                       |
-| `facets`                            | `facetDistribution`                                                           |
-| `attributesToHighlight`             | `attributesToHighlight`                                                        |
-| `offset`                            | `offset`                                                                       |
-| `length`                            | `limit`                                                                        |
-| `typoTolerance`                     | `typoTolerance`                                                                |
-| `snippetEllipsisText`               | `cropMarker`                                                                   |
-| `searchableAttributes`              | `searchableAttributes`                                                         |
-| `attributesForFaceting`             | `filterableAttributes`                                                         |
-| `unretrievableAttributes`           | No direct equivalent; achieved by removing attributes from displayedAttributes |
-| `attributesToRetrieve`              | `displayedAttributes`                                                          |
-| `attributeForDistinct`              | `distinctAttribute`                                                            |
-| `ranking`                           | `rankingRules`                                                                 |
-| `customRanking`                     | Integrated within `rankingRules`                                               |
-| `removeStopWords`                   | `stopWords`                                                                    |
-| `synonyms`                          | `synonyms`                                                                     |
-| Sorting(using replicas)             | `sortableAttributes` (no replicas required)                                    |
-| `removeWordsIfNoResults`            | Automatically supported, but not customizable                                  |
-| `disableTypoToleranceOnAttributes`  | `typoTolerance.disableOnAttributes`                                            |
-| `separatorsToIndex`                 | Not Supported                                                                  |
-| `disablePrefixOnAttributes`         | Not Supported                                                                  |
-| `relevancyStrictness`               | Not Supported                                                                  |
-| `maxValuesPerFacet`                 | Not Supported                                                                  |
-| `sortFacetValuesBy`                 | Not Supported                                                                  |
-| `restrictHighlightAndSnippetArrays` | Not Supported                                                                  |
+| Algolia                             | Meilisearch                                                                      |
+|-------------------------------------|----------------------------------------------------------------------------------|
+| `query`                             | `q`                                                                              |
+| `attributesToRetrieve`              | `attributesToRetrieve`                                                           |
+| `filters`                           | `filter`                                                                         |
+| `facets`                            | `facetDistribution`                                                              |
+| `attributesToHighlight`             | `attributesToHighlight`                                                          |
+| `offset`                            | `offset`                                                                         |
+| `length`                            | `limit`                                                                          |
+| `typoTolerance`                     | `typoTolerance`                                                                  |
+| `snippetEllipsisText`               | `cropMarker`                                                                     |
+| `searchableAttributes`              | `searchableAttributes`                                                           |
+| `attributesForFaceting`             | `filterableAttributes`                                                           |
+| `unretrievableAttributes`           | No direct equivalent; achieved by removing attributes from `displayedAttributes` |
+| `attributesToRetrieve`              | `displayedAttributes`                                                            |
+| `attributeForDistinct`              | `distinctAttribute`                                                              |
+| `ranking`                           | `rankingRules`                                                                   |
+| `customRanking`                     | Integrated within `rankingRules`                                                 |
+| `removeStopWords`                   | `stopWords`                                                                      |
+| `synonyms`                          | `synonyms`                                                                       |
+| Sorting(using replicas)             | `sortableAttributes` (no replicas required)                                      |
+| `removeWordsIfNoResults`            | Automatically supported, but not customizable                                    |
+| `disableTypoToleranceOnAttributes`  | `typoTolerance.disableOnAttributes`                                              |
+| `separatorsToIndex`                 | Not Supported                                                                    |
+| `disablePrefixOnAttributes`         | Not Supported                                                                    |
+| `relevancyStrictness`               | Not Supported                                                                    |
+| `maxValuesPerFacet`                 | Not Supported                                                                    |
+| `sortFacetValuesBy`                 | Not Supported                                                                    |
+| `restrictHighlightAndSnippetArrays` | Not Supported                                                                    |
 
 ## API methods
 

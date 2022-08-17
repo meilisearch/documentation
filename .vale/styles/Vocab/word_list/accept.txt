@@ -65,3 +65,13 @@ jsonlines
 Biutiful
 Gb
 docs-searchbar.js
+SDKs
+SSDs
+HDDs
+[Ss]egmenter
+Niqqud
+IMDb
+UIs
+JWTs
+APIs
+AMIs
