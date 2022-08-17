@@ -296,7 +296,7 @@ The following code sample uses plain [JavaScript](https://developer.mozilla.org/
       <div id="hits"></div>
     </div>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch@0.3.2/dist/instant-meilisearch.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@meilisearch/instant-meilisearch/dist/instant-meilisearch.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
   <script>
     const search = instantsearch({
