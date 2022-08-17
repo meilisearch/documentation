@@ -67,44 +67,9 @@ This response indicates that the operation has been taken into account and will 
 
 ## I am trying to add my documents but I keep receiving a `400 - Bad Request` response
 
-Meilisearch API accepts JSON, CSV, and NDJSON formats.
-In case of a [document addition](/reference/api/documents.md#add-or-replace-documents), only an array of objects is expected.
+The `400 - Bad request` response often means that your data is not in an expected format. You might have extraneous commas, mismatched brackets, missing quotes, etc. Meilisearch API accepts JSON, CSV, and NDJSON formats.
 
-The `400 - Bad request` response probably means that your data is not in an expected format.
-
-Most common errors:
-
-- Extraneous comma at the end of a line.
-- Data is not an array of objects: for the [document addition route](/reference/api/documents.md#add-or-replace-documents), Meilisearch only accepts an array in the body even if there is only one document.
-
-Wrong:
-
-```json
-{
-  "id": 123,
-  "title": "Pride and Prejudice"
-}
-```
-
-Good:
-
-```json
-[
-  {
-    "id": 123,
-    "title": "Pride and Prejudice"
-  }
-]
-```
-
-:::tip
-The [jq](https://github.com/stedolan/jq) command line tool can greatly help you check the format of your data.
-
-```bash
-cat your_file.json | jq
-```
-
-:::
+When [adding or replacing documents](/reference/api/documents.md#add-or-replace-documents), you must enclose them in an array even if there is only one new document.
 
 ## My document upload failed with the `document id is missing` error
 
