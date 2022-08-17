@@ -134,19 +134,19 @@ If the provided index does not exist, it will be created.
 
 #### Body
 
-| Name                                                 | Type             | Default value                                                                                                                 | Description                                                                      |
-| :--------------------------------------------------- | :--------------- | :---------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
-| **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                                                       | Fields displayed in the returned documents                                       |
-| **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                                                        | Search returns documents with distinct (different) values of the given field     |
-| **[`faceting`](#faceting)**                          | Object           | Empty                                                                                                                         | Faceting settings                                                                |
-| **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                                                         | Attributes to use as filters and facets                                          |
-| **[`pagination`](#pagination)**                      | Object           | Empty                                                                                                                         | Pagination settings                                                              |
-| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]`                                                           | List of ranking rules in order of importance                                     |
-| **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                                                       | Fields in which to search for matching query words sorted by order of importance |
-| **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                                                         | Attributes to use when sorting search results                                    |
-| **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                                                         | List of words ignored by Meilisearch when present in search queries              |
-| **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                                                         | List of associated words treated similarly                                       |
-| **[`typoTolerance`](#typo-tolerance)**               | Object           | `{ "enabled": true, "minWordSizeForTypos": { "oneTypo": 5, "twoTypos": 9 }, "disableOnWords": [], "disableOnAttributes": []}` | Typo tolerance settings                                                          |
+| Name                                                 | Type             | Default value                                                                                                                                            | Description                                                                      |
+| :--------------------------------------------------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                                                                                  | Fields displayed in the returned documents                                       |
+| **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                                                                                   | Search returns documents with distinct (different) values of the given field     |
+| **[`faceting`](#faceting)**                          | Object           | Empty                                                                                                                                                    | Faceting settings                                                                |
+| **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                                                                                    | Attributes to use as filters and facets                                          |
+| **[`pagination`](#pagination)**                      | Object           | Empty                                                                                                                                                    | Pagination settings                                                              |
+| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`</br>`"typo",`</br>`"proximity",`</br>`"attribute",`</br>`"sort",`</br>`"exactness"]`                                                         | List of ranking rules in order of importance                                     |
+| **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                                                                                  | Fields in which to search for matching query words sorted by order of importance |
+| **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                                                                                    | Attributes to use when sorting search results                                    |
+| **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                                                                                    | List of words ignored by Meilisearch when present in search queries              |
+| **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                                                                                    | List of associated words treated similarly                                       |
+| **[`typoTolerance`](#typo-tolerance)**               | Object           | `{"enabled": true,`</br>`"minWordSizeForTypos":`</br>`{"oneTypo": 5,`</br>`"twoTypos": 9},`</br>`"disableOnWords": [],`</br>`"disableOnAttributes": []}` | Typo tolerance settings                                                          |
 
 #### Example
 
@@ -405,7 +405,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Faceting
 
-This route allows you to configure the faceting settings for an index.
+In Meilisearch, facets are a specific use-case of filters. This route allows you to define the maximum value returned for all facets.
 
 To learn more about filtering and faceting, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
@@ -613,7 +613,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Pagination
 
-This route allows you to configure the pagination settings for an index.
+To protect your database from malicious scraping, Meilisearch only returns 1000 results per search. This route allows you to configure the maximum number of results Meilisearch can return for an index.
 
 To learn more about paginating search results with Meilisearch, refer to our [dedicated guide](/learn/advanced/pagination.md).
 
@@ -1280,7 +1280,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Typo tolerance
 
-Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. This route allows you to configure the typo tolerance settings for an index.
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. It also allows you to set the minimum word size for typos and disable it for specific words or attributes.
 
 To learn more about typo tolerance, refer to our [dedicated guide](/learn/configuration/typo_tolerance.md).
 
