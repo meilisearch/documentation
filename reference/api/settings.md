@@ -66,7 +66,7 @@ Get the settings of an index.
 
 | Name        | Type   | Description                                                               |
 | :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Example
 
@@ -136,13 +136,13 @@ If the provided index does not exist, it will be created.
 
 | Name                                                 | Type             | Default value                                                                                                                 | Description                                                                      |
 | :--------------------------------------------------- | :--------------- | :---------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
-| **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes                                                                                                                | Fields displayed in the returned documents                                       |
+| **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                                                                | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                                                        | Search returns documents with distinct (different) values of the given field     |
 | **[`faceting`](#faceting)**                          | Object           | Empty                                                                                                                         | Faceting settings                                                                |
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                                                         | Attributes to use as filters and facets                                          |
 | **[`pagination`](#pagination)**                      | Object           | Empty                                                                                                                         | Pagination settings                                                              |
-| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]`                                                           | List of ranking rules sorted by order of importance                              |
-| **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes                                                                                                                | Fields in which to search for matching query words sorted by order of importance |
+| **[`rankingRules`](#ranking-rules)**                 | Array of strings | `[ "words", "typo", "proximity", "attribute", "sort", "exactness"]`                                                           | List of ranking rules in order of importance                              |
+| **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                                                                | Fields in which to search for matching query words sorted by order of importance |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                                                         | Attributes to use when sorting search results                                    |
 | **[`stopWords`](#stop-words)**                       | Array of strings | Empty                                                                                                                         | List of words ignored by Meilisearch when present in search queries              |
 | **[`synonyms`](#synonyms)**                          | Object           | Empty                                                                                                                         | List of associated words treated similarly                                       |
@@ -198,7 +198,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Displayed attributes
 
-The fields whose attributes are added to the displayed attributes list are displayed in each matching document.
+The attributes added to the `displayedAttributes` list are displayed in search results. `displayedAttributes` only affects the search endpoints; it has no impact on the [GET documents endpoint](/reference/api/documents.md#get-documents).
 
 By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings. Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
 
@@ -1074,9 +1074,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Stop words
 
-_Child route of the [settings route](/reference/api/settings.md)._
-
-When you add a common English word such as `the` to the stop words list, Meilisearch will not take it into consideration when calculating how relevant a result is.
+Adding words to the stop words list causes them to be ignored in future search queries. Small words that appear in almost all of a dataset's documents are prime candidates for this list.
 
 ::: note
 Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
@@ -1176,7 +1174,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Synonyms
 
-The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word in a search query. This route allows you to manage synonyms for an index.
+The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word for the purposes of calculating search results.
 
 To learn more about synonyms, refer to our [dedicated guide](/learn/configuration/synonyms.md).
 
