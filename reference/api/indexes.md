@@ -109,7 +109,7 @@ Get information about an index.
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an index.This endpoint accepts two arguments: `uid` and `primaryKey`.
+Create an index. This endpoint accepts two arguments: `uid` and `primaryKey`.
 
 If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from the first document you add to the index.
 
