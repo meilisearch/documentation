@@ -21,9 +21,9 @@ Search for documents matching a specific query in the given index.
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ::: note
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
@@ -115,9 +115,9 @@ Search for documents matching a specific query in the given index.
 
 ### Path parameters
 
-| Name        | Type   | Description                                                               |
-| :---------- | :----- | :------------------------------------------------------------------------ |
-| **`uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 :::note
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
