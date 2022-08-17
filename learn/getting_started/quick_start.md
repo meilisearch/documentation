@@ -62,11 +62,7 @@ docker run -it --rm \
     meilisearch --env="development"
 ```
 
-Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
-
-On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the Docker virtual machine. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
-
-You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
+You can learn more about [using Meilisearch with Docker in our dedicated guide](https://docs.docker.com/get-docker/).
 :::
 
 ::: tab APT
