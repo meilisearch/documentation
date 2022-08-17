@@ -612,7 +612,7 @@ getting_started_sorting: |-
     }'
 getting_started_configure_settings: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/meteorites/settings' \
+    -X PATCH 'http://localhost:7700/indexes/meteorites/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filterableAttributes": [
