@@ -6,6 +6,10 @@ sidebarDepth:  2
 
 The `/settings` route allows you to customize search settings for the given index. You can either modify all of an index's settings at once using the [update settings endpoint](#update-settings), or modify each one individually using the child routes.
 
+::: warning
+Updating any setting will cause all documents in that index to be re-indexed, which can take some time.
+:::
+
 For a conceptual overview of index settings, refer to our [indexes guide](/learn/core_concepts/indexes.md#index-settings).
 
 ## Settings object
@@ -138,9 +142,9 @@ If the provided index does not exist, it will be created.
 | :--------------------------------------------------- | :--------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
 | **[`displayedAttributes`](#displayed-attributes)**   | Array of strings | All attributes: `["*"]`                                                                                                                                  | Fields displayed in the returned documents                                       |
 | **[`distinctAttribute`](#distinct-attribute)**       | String           | `null`                                                                                                                                                   | Search returns documents with distinct (different) values of the given field     |
-| **[`faceting`](#faceting)**                          | Object           | Empty                                                                                                                                                    | Faceting settings                                                                |
+| **[`faceting`](#faceting)**                          | Object           | `{"maxValuesPerFacet": 100}`                                                                                                                             | Faceting settings                                                                |
 | **[`filterableAttributes`](#filterable-attributes)** | Array of strings | Empty                                                                                                                                                    | Attributes to use as filters and facets                                          |
-| **[`pagination`](#pagination)**                      | Object           | Empty                                                                                                                                                    | Pagination settings                                                              |
+| **[`pagination`](#pagination)**                      | Object           | `{"maxTotalHits": 1000}`                                                                                                                                 | Pagination settings                                                              |
 | **[`rankingRules`](#ranking-rules)**                 | Array of strings | `["words",`</br>`"typo",`</br>`"proximity",`</br>`"attribute",`</br>`"sort",`</br>`"exactness"]`                                                         | List of ranking rules in order of importance                                     |
 | **[`searchableAttributes`](#searchable-attributes)** | Array of strings | All attributes: `["*"]`                                                                                                                                  | Fields in which to search for matching query words sorted by order of importance |
 | **[`sortableAttributes`](#sortable-attributes)**     | Array of strings | Empty                                                                                                                                                    | Attributes to use when sorting search results                                    |
@@ -237,8 +241,6 @@ Get the displayed attributes of an index.
 
 Update the displayed attributes of an index.
 
-If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g., `"displayedAttributes": ["release_date.year"]`.
-
 #### Path parameters
 
 | Name              | Type   | Description                                                               |
@@ -249,7 +251,11 @@ If an attribute contains an object, you can use dot notation to specify one or m
 
 An array of strings. Each string should be an attribute that exists in the selected index.
 
-[To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#displayed-fields)
+If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g., `"displayedAttributes": ["release_date.year"]`.
+
+::: warning
+If the field does not exist, no error will be thrown.
+:::
 
 #### Example
 
@@ -333,8 +339,6 @@ Get the distinct attribute of an index.
 
 Update the distinct attribute field of an index. This will re-index all documents in the index.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g., `"distinctAttribute": "product.skuid"`.
-
 #### Path parameters
 
 | Name              | Type   | Description                                                               |
@@ -344,6 +348,8 @@ If an attribute contains an object, you can use dot notation to set one or more 
 #### Body
 
 A string. The string should be an attribute that exists in the selected index.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g., `"distinctAttribute": "product.skuid"`.
 
 ::: warning
 If the field does not exist, no error will be thrown.
@@ -439,7 +445,7 @@ Get the faceting settings of an index.
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/faceting"/>
 
-Partially update the faceting settings for an index.
+Partially update the faceting settings for an index. Any parameters not provided in the body will be left unchanged.
 
 #### Path parameters
 
@@ -543,8 +549,6 @@ Get the filterable attributes for an index.
 
 Update an index's filterable attributes list. This will re-index all documents in the index.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
-
 #### Path parameters
 
 | Name              | Type   | Description                                                               |
@@ -554,6 +558,12 @@ If an attribute contains an object, you can use dot notation to set one or more 
 #### Body
 
 An array of strings containing the attributes that can be used as filters at query time.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
+
+::: warning
+If the field does not exist, no error will be thrown.
+:::
 
 [To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
@@ -609,12 +619,16 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 To protect your database from malicious scraping, Meilisearch has a default limit of 1000 results per search. This setting allows you to configure the maximum number of results returned per search.
 
+`maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
+
+For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
+
 To learn more about paginating search results with Meilisearch, refer to our [dedicated guide](/learn/advanced/pagination.md).
 
 ### Pagination object
 
-| Name               | Type    | Default value | Description                                          |
-| :----------------- | :------ | :------------ | :--------------------------------------------------- |
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
 ### Get pagination settings
@@ -655,13 +669,9 @@ Partially update the pagination settings for an index.
 
 #### Body
 
-| Name               | Type    | Default value | Description                                          |
-| :----------------- | :------ | :------------ | :--------------------------------------------------- |
+| Name               | Type    | Default value | Description                                                 |
+| :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
-
-`maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
-
-For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
 ::: note
 Setting `maxTotalHits` to a high value might negatively impact performance and expose index data to malicious scraping.
@@ -898,6 +908,10 @@ Update the searchable attributes of an index. This will re-index all documents i
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
 ::: warning
+If the field does not exist, no error will be thrown.
+:::
+
+::: warning
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
 :::
 
@@ -1005,6 +1019,10 @@ List the settings.
 Update an index's sortable attributes list. This will re-index all documents in the index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
+
+::: warning
+If the field does not exist, no error will be thrown.
+:::
 
 [You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting.md)
 
