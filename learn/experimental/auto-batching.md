@@ -10,7 +10,7 @@ You have been warned.
 
 Auto-batching is an experimental feature designed to improve indexing speed.
 
-When auto-batching is enabled, consecutive document addition requests may be automatically combined into a batch and processed together, significantly speeding up the indexation process.
+When auto-batching is enabled, consecutive document addition requests may be automatically combined into a batch and processed together, significantly speeding up the indexing process.
 
 We would appreciate your feedback on this feature. [Join the discussion](https://github.com/meilisearch/meilisearch/discussions/2070).
 
@@ -42,13 +42,13 @@ If even a single task in a batch fails, the entire batch will fail.
 
 There are three command-line options allowing you to customize auto-batching behavior:
 
-- `--debounce-duration-sec`: the number of seconds to wait between receiving a document addition task and beginning the batching and indexation process. **Default: `0`**
+- `--debounce-duration-sec`: the number of seconds to wait between receiving a document addition task and beginning batching and indexing. **Default: `0`**
 - `--max-batch-size`: the maximum number of tasks per batch. **Default: unlimited**
 - `--max-documents-per-batch`: the maximum number of documents in a batch. **Default: unlimited**
 
 ::: tip
 
-- Giving a smaller number for `max-documents-per-batch` will reduce memory use, but slow down indexation
-- Giving a larger number for `max-documents-per-batch` will increase memory use, but speed up indexation
+- Giving a smaller number for `max-documents-per-batch` will reduce memory use, but slow down indexing
+- Giving a larger number for `max-documents-per-batch` will increase memory use, but speed up indexing
 
 :::

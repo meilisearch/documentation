@@ -216,7 +216,7 @@ Sets the maximum amount of RAM Meilisearch can use when indexing. By default, Me
 
 The value must either be given in bytes or explicitly state a base unit:  `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-It is possible that Meilisearch goes over the exact RAM limit during indexation. In most contexts and machines, this should be a negligible amount with little to no impact on stability and performance.
+It is possible that Meilisearch goes over the exact RAM limit during indexing. In most contexts and machines, this should be a negligible amount with little to no impact on stability and performance.
 
 ::: danger
 Setting `--max-indexing-memory` to a value bigger than or equal to your machine's total memory is likely to cause your instance to crash.
@@ -229,14 +229,14 @@ Setting `--max-indexing-memory` to a value bigger than or equal to your machine'
 **Default value**: half of the available threads
 **Expected value**: an integer
 
-Sets the maximum number of threads Meilisearch can use during indexation. By default, the indexer avoids using more than half of a machine's total processing units. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
+Sets the maximum number of threads Meilisearch can use during indexing. By default, the indexer avoids using more than half of a machine's total processing units. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
 
 If `--max-indexing-threads` is higher than the real number of cores available in the machine, Meilisearch uses the maximum number of available cores.
 
-In single-core machines, Meilisearch has no choice but to use the only core available for indexation. This may lead to a degraded search experience during indexation.
+In single-core machines, Meilisearch has no choice but to use the only core available for indexing. This may lead to a degraded search experience during indexing.
 
 ::: danger
-Avoid setting `--max-indexing-threads` to the total of your machine's processor cores. Though doing so might speed up indexation, it is likely to severely impact search experience.
+Avoid setting `--max-indexing-threads` to the total of your machine's processor cores. Though doing so might speed up indexing, it is likely to severely impact search experience.
 :::
 
 ### Max TASK_DB size

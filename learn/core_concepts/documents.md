@@ -22,7 +22,7 @@ An attribute functions a bit like a variable in most programming languages, i.e.
 
 Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-If a field contains an object, Meilisearch flattens it during indexation using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes.md#objects).
+If a field contains an object, Meilisearch flattens it during indexing using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes.md#objects).
 
 With [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules), you can decide what fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also configure how Meilisearch handles certain fields at an [index level](/learn/configuration/settings.md) in the settings.
 
