@@ -11,7 +11,7 @@ Meilisearch exposes 2 routes to perform searches:
 - A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances
 - A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)
 
-Other than the differences mentioned above, the two routes are strictly equivalent. You may find exhaustive descriptions of the parameters accepted by the two routes [at the end of this article](#search-parameters)
+Other than the differences mentioned above, the two routes are strictly equivalent. You may find exhaustive descriptions of the parameters accepted by the two routes [at the end of this article](#search-parameters).
 
 ## Search in an index with POST route
 
