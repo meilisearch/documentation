@@ -53,7 +53,7 @@ All asynchronous operations return a summarized version of [the full `task` obje
 
 | Field      | Type    | Description                              |
 |------------|---------|---------------------------------         |
-| `uid`        | integer | Unique sequential identifier             |
+| `taskUid`        | integer | Unique sequential identifier             |
 | `indexUid`   | string  | Unique index identifier (always `null` for dumps)                  |
 | `status`     | string  | Status of the task. Value is `enqueued`  |
 | `type`       | string  | Type of task                             |
