@@ -866,7 +866,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
-By default, all fields are part of the `searchableAttributes` array. This behavior is represented by the `*` in the settings. Setting `searchableAttributes` to an empty array `[]` will reset the setting to its default value.
+By default, all fields are part of the `searchableAttributes` array. This behavior is represented by the `["*"]` in the settings.
 
 To learn more about searchable attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
 
