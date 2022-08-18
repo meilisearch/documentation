@@ -128,7 +128,7 @@ Typo tolerance is a built-in feature that helps you find relevant results even w
 - Disable typos on specific words
 - Disable typos on specific document attributes
 
-You can update the typo tolerance settings using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/settings.md#update-typo-tolerance).
+You can update the typo tolerance settings using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/settings.md#update-typo-tolerance-settings).
 
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
 
