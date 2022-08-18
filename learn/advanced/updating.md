@@ -115,13 +115,13 @@ If your dump was created in Meilisearch v0.21 or above, continue to [step 3](#st
 
 When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 
-Start by using the get displayed attributes endpoint to verify that all attributes are displayed:
+Start by verifying that all attributes are included in the displayed attributes list:
 
 <CodeSamples id="updating_guide_get_displayed_attributes_new" />
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-3-create-the-dump).
 
-If it's something else, then you need to use the reset displayed attributes endpoint. Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
+If it's something else, then you need to reset the list of displayed attributes. Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
@@ -185,7 +185,7 @@ It should return something like this:
 
 ::::
 
-To create a dump, use the create dump endpoint:
+You can then create a dump of your database:
 
 <CodeSamples id="updating_guide_create_dump" />
 
