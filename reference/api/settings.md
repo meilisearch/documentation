@@ -204,7 +204,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The attributes added to the `displayedAttributes` list are displayed in search results. `displayedAttributes` only affects the search endpoints; it has no impact on the [GET documents endpoint](/reference/api/documents.md#get-documents).
 
-By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `*` in the settings. Setting `displayedAttributes` to an empty array `[]` will reset the setting to its default value.
+By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `["*"]` in the settings.
 
 To learn more about displayed attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
