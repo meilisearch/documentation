@@ -204,7 +204,7 @@ module.exports = {
               children: [
                 '/learn/advanced/concat',
                 '/learn/advanced/datatypes',
-                '/learn/advanced/indexation',
+                '/learn/advanced/indexing',
                 '/learn/advanced/known_limitations',
                 '/learn/advanced/prefix',
                 '/learn/advanced/storage',
