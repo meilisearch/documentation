@@ -1,19 +1,11 @@
 # Update to the latest Meilisearch version
 
-:::warning
-
-1. This guide does not work for versions below v0.15. For more information, contact [support](https://slack.meilisearch.com/).
-2. If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
-
- <CodeSamples id="updating_guide_check_version_old_authorization_header" />
-:::
-
 Currently, Meilisearch databases can only be opened by the Meilisearch version you used to create them. The following guide will walk you through all the steps to migrate an existing database from an older version of Meilisearch to the most recent one.
 
 If you already have a Meilisearch database with some data you don’t want to lose, you are in the right place!
 
-:::note
-If you have already installed the latest version and manually indexed your data and settings, you can ignore this guide.
+::: danger
+This guide does not work for versions below v0.15. For more information, contact support.
 :::
 
 ## Step 1: Verify your database version
@@ -27,6 +19,12 @@ Before we begin, you need to verify the version of Meilisearch that's compatible
 If Meilisearch launches successfully, use the get version endpoint, note your `pkgVersion`, and [proceed to the next step](#step-2-set-all-fields-as-displayed-attributes).
 
 <CodeSamples id="updating_guide_check_version_new_authorization_header" />
+
+::: note
+If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
+
+ <CodeSamples id="updating_guide_check_version_old_authorization_header" />
+:::
 
 The response should look something like this:
 
