@@ -337,7 +337,7 @@ Get the distinct attribute of an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Update the distinct attribute field of an index. This will re-index all documents in the index.
+Update the distinct attribute field of an index.
 
 #### Path parameters
 
@@ -547,7 +547,7 @@ Get the filterable attributes for an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/filterable-attributes" />
 
-Update an index's filterable attributes list. This will re-index all documents in the index.
+Update an index's filterable attributes list.
 
 #### Path parameters
 
@@ -903,7 +903,7 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/searchable-attributes" />
 
-Update the searchable attributes of an index. This will re-index all documents in the index.
+Update the searchable attributes of an index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
@@ -1016,7 +1016,7 @@ List the settings.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/sortable-attributes" />
 
-Update an index's sortable attributes list. This will re-index all documents in the index.
+Update an index's sortable attributes list.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
@@ -1124,7 +1124,7 @@ Get the stop words list of an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/stop-words" />
 
-Update the list of stop words of an index. This will re-index all documents in the index.
+Update the list of stop words of an index.
 
 #### Path parameters
 
