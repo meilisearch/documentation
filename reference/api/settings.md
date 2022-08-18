@@ -247,7 +247,7 @@ If an attribute contains an object, you can use dot notation to specify one or m
 
 #### Body
 
-An array of strings that contains attributes of an index to display.
+An array of strings. Each string should be an attribute that exists in the selected index.
 
 [To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#displayed-fields)
 
@@ -301,15 +301,15 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Distinct attribute
 
-Distinct attribute is a field whose value will always be unique in the returned documents.
+The distinct attribute is a field whose value will always be unique in the returned documents.
 
-To learn more about distinct attributes, refer to our [dedicated guide](/learn/configuration/distinct.md).
+To learn more about the distinct attribute, refer to our [dedicated guide](/learn/configuration/distinct.md).
 
 ### Get distinct attribute
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/distinct-attribute" />
 
-Get the distinct attribute field of an index.
+Get the distinct attribute of an index.
 
 #### Path parameters
 
@@ -343,7 +343,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 
 #### Body
 
-A string: the field name.
+A string. The string should be an attribute that exists in the selected index.
 
 ::: warning
 If the field does not exist, no error will be thrown.
@@ -373,7 +373,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/distinct-attribute"/>
 
-Reset the distinct attribute field of an index to its default value.
+Reset the distinct attribute of an index to its default value.
 
 #### Path parameters
 
@@ -401,7 +401,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Faceting
 
-In Meilisearch, facets are a specific use-case of filters. This route allows you to define the maximum value returned for all facets.
+With Meilisearch, you can create [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
 
 To learn more about filtering and faceting, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
@@ -507,7 +507,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Filterable attributes
 
-Attributes in the `filterableAttributes` list can be used as filters for filtering and faceted search.
+Attributes in the `filterableAttributes` list can be used as filters or facets.
 
 To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
 
@@ -528,8 +528,6 @@ Get the filterable attributes for an index.
 <CodeSamples id="get_filterable_attributes_1" />
 
 ##### Response: `200 Ok`
-
-List the settings.
 
 ```json
 [
@@ -609,7 +607,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Pagination
 
-To protect your database from malicious scraping, Meilisearch only returns 1000 results per search. This route allows you to configure the maximum number of results Meilisearch can return for an index.
+To protect your database from malicious scraping, Meilisearch has a default limit of 1000 results per search. This setting allows you to configure the maximum number of results returned per search.
 
 To learn more about paginating search results with Meilisearch, refer to our [dedicated guide](/learn/advanced/pagination.md).
 
@@ -617,7 +615,7 @@ To learn more about paginating search results with Meilisearch, refer to our [de
 
 | Name               | Type    | Default value | Description                                          |
 | :----------------- | :------ | :------------ | :--------------------------------------------------- |
-| **`maxTotalHits`** | Integer | `1000`        | The maximum number of results Meilisearch can return |
+| **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
 ### Get pagination settings
 
@@ -659,14 +657,14 @@ Partially update the pagination settings for an index.
 
 | Name               | Type    | Default value | Description                                          |
 | :----------------- | :------ | :------------ | :--------------------------------------------------- |
-| **`maxTotalHits`** | Integer | `1000`        | The maximum number of results Meilisearch can return |
+| **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
 `maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
 ::: note
-Setting `maxTotalHits` to a high value might negatively impact performance and expose instance data to malicious scraping.
+Setting `maxTotalHits` to a high value might negatively impact performance and expose index data to malicious scraping.
 :::
 
 #### Example
@@ -717,7 +715,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 ## Ranking rules
 
-Ranking rules are built-in rules that allow you to customize the relevancy of your search results. They are stored in an array and applied in order of appearance.
+Ranking rules are built-in rules that rank search results according to certain criteria. They are applied in the same order in which they appear in the `rankingRules` array.
 
 To learn more about ranking rules, refer to our [dedicated guide](/learn/core_concepts/relevancy.md).
 
@@ -1278,7 +1276,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Typo tolerance
 
-Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. It also allows you to set the minimum word size for typos and disable it for specific words or attributes.
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. This setting allows you to configure the minimum word size for typos and disable typo tolerance for specific words or attributes.
 
 To learn more about typo tolerance, refer to our [dedicated guide](/learn/configuration/typo_tolerance.md).
 
@@ -1292,7 +1290,7 @@ To learn more about typo tolerance, refer to our [dedicated guide](/learn/config
 | **`disableOnWords`**               | Array of strings | `[]`          | An array of words for which the typo tolerance feature is disabled               |
 | **`disableOnAttributes`**          | Array of strings | `[]`          | An array of attributes for which the typo tolerance feature is disabled          |
 
-### Get typo tolerance
+### Get typo tolerance settings
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
@@ -1322,7 +1320,7 @@ Get the typo tolerance settings of an index.
 }
 ```
 
-### Update typo tolerance
+### Update typo tolerance settings
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
@@ -1362,7 +1360,7 @@ Partially update the typo tolerance settings for an index.
 
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
-### Reset typo tolerance
+### Reset typo tolerance settings
 
 Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object).
 
