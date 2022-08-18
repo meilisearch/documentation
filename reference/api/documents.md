@@ -83,10 +83,10 @@ You can use the optional `fields` query parameter to specify which document fiel
 
 ### Path parameters
 
-| Name              | Type    | Description                                                                           |
-| :---------------- | :------ | :------------------------------------------------------------------------------------ |
-| **`index_uid`** * | String  | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index             |
-| **Document id** * | Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested index |
+| Name              | Type           | Description                                                                           |
+| :---------------- | :------------- | :------------------------------------------------------------------------------------ |
+| **`index_uid`** * | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index             |
+| **Document id** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested index |
 
 ### Query parameters
 
@@ -278,10 +278,10 @@ Delete one document based on its unique id.
 
 ### Path parameters
 
-| Name              | Type    | Description                                                                              |
-| :---------------- | :------ | :--------------------------------------------------------------------------------------- |
-| **`index_uid`** * | String  | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
-| **Document id** * | Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
+| Name              | Type           | Description                                                                              |
+| :---------------- | :------------- | :--------------------------------------------------------------------------------------- |
+| **`index_uid`** * | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
+| **Document id** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
 
 ### Example
 
