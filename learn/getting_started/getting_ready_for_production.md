@@ -1,6 +1,6 @@
 # Getting ready for production
 
-This chapter will help you get ready to use Meilisearch in production by covering topics such as instance-wide options and data backup.
+This chapter will help you get ready to use Meilisearch in production by covering topics such as instance-wide options, data backup, and multitenancy.
 
 ## Instance options
 
@@ -24,9 +24,17 @@ Snapshots, on the other hand, are an exact copy of your database. The documents 
 
 You can read more about [dumps](/learn/advanced/dumps.md) and [snapshots](/learn/advanced/snapshots.md) in their dedicated guides.
 
+## Multitenancy and tenant tokens
+
+Multi-tenant indexes store data belonging to different users in one index. In such situations, users should only be able to search through their own documents. Meilisearch allows you to do this with tenant tokens.
+
+Tenant tokens are small, short-lived packages of encrypted data that prove a user has access to a certain index. They contain security credentials and instructions on which documents the user is allowed to see within that index. You can generate tenant tokens using one of our [SDKs](/learn/security/tenant_tokens.md#generating-tenant-tokens-with-an-sdk) or [from scratch](/learn/security/tenant_tokens.md#generating-tenant-tokens-with-an-sdk).
+
+You can read more about tenant tokens and how to generate them in our [dedicated guide](/learn/security/tenant_tokens.md).
+
 ## What's next
 
-Hopefully these chapters have given you a basic introduction to Meilisearch and some of the things it can do. Once you get a hang of the basics, the possibilities are endless. To continue exploring Meilisearch, check out:
+Hopefully, these chapters have given you a basic introduction to Meilisearch and some of the things it can do. Once you get the hang of the basics, the possibilities are endless. To continue exploring Meilisearch, check out:
 
 - [Advanced topics](/learn/advanced/asynchronous_operations.md)
 - [API references](/reference/api/overview.md)
