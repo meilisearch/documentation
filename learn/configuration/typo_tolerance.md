@@ -1,6 +1,6 @@
 # Typo tolerance
 
-Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, e.g., typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/settings.md#update-typo-tolerance).
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, e.g., typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/settings.md#update-typo-tolerance-settings).
 
 ## Configuring typo tolerance
 
