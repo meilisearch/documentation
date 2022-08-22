@@ -149,4 +149,28 @@ The above code sample sets the minimum word size for one typo to `4` characters.
 
 You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance.md).
 
+## Faceting
+
+Meilisearch allows you to create faceted search interfaces, refining search results based on broad categories called facets. Like filters, you need to add the attributes you want to use as facets to `filterableAttributes`.
+
+You can configure the maximum number of facet values returned for each facet.
+
+Suppose a query's search results for the `genres` facet contains: `Action`, `Adventure`,`Science Fiction`, and `Comedy`. The following code sample will only return `Action` and `Adventure` in the response body's `facetDistribution` object.
+
+<CodeSamples id= "getting_started_faceting" />
+
+You can read more about faceting in our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
+
+## Pagination
+
+By default, Meilisearch returns 1000 results per search. This limit protects your database from malicious scraping.
+
+The code sample below sets this limit to 500:
+
+<CodeSamples id= "getting_started_pagination" />
+
+Now, you won't be able to access search results beyond 500.
+
+You can read more about pagination in our [dedicated guide](/learn/advanced/pagination.md).
+
 The next chapter tackles more advanced topics, including security and data backup.
