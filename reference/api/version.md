@@ -2,6 +2,14 @@
 
 The `/version` route allows you to check the version of a running Meilisearch instance.
 
+## Version object
+
+| Name         | Description                                            |
+| :----------- | :----------------------------------------------------- |
+| `commitSha`  | Commit identifier that tagged the `pkgVersion` release |
+| `commitDate` | Date when the `commitSha` was created                  |
+| `pkgVersion` | Meilisearch version                                    |
+
 ## Get version of Meilisearch
 
 <RouteHighlighter method="GET" route="/version"/>
