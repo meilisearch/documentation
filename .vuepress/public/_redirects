@@ -180,3 +180,16 @@
 
 # remove typo tolerance
 /learn/advanced/typotolerance.html                  /learn/configuration/typo_tolerance.html
+
+# Move all settings to one page
+/reference/api/displayed_attributes.html            /reference/api/settings.html
+/reference/api/distinct_attribute.html              /reference/api/settings.html
+/reference/api/faceting.html                        /reference/api/settings.html
+/reference/api/filterable_attributes.html           /reference/api/settings.html
+/reference/api/pagination.html                      /reference/api/settings.html
+/reference/api/ranking_rules.html                   /reference/api/settings.html
+/reference/api/searchable_attributes.html           /reference/api/settings.html
+/reference/api/sortable_attributes.html             /reference/api/settings.html
+/reference/api/stop_words.html                      /reference/api/settings.html
+/reference/api/synonyms.html                        /reference/api/settings.html
+/reference/api/typo_tolerance.html                  /reference/api/settings.html
