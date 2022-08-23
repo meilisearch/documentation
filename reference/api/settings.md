@@ -202,9 +202,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Displayed attributes
 
-The attributes added to the `displayedAttributes` list are displayed in search results. `displayedAttributes` only affects the search endpoints; it has no impact on the [GET documents endpoint](/reference/api/documents.md#get-documents).
+The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints; it has no impact on the [GET documents endpoint](/reference/api/documents.md#get-documents).
 
-By default, all fields are considered to be `displayedAttributes`. This behavior is represented by the `["*"]` in the settings.
+By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
 To learn more about displayed attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
 
@@ -771,8 +771,6 @@ Get the ranking rules of an index.
 
 ##### Response: `200 Ok`
 
-List the settings.
-
 ```json
 [
   "words",
@@ -799,12 +797,11 @@ Update the ranking rules of an index.
 
 #### Body
 
-An array that contain ranking rules sorted by order of importance.
+An array that contains ranking rules in order of importance.
 
-To add your own ranking rule, you have to communicate an attribute followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
+To create a custom ranking rule, give an attribute followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
 
 - To apply an **ascending sort** (results sorted by increasing value): `attribute_name:asc`
-
 - To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
 [To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy.md#ranking-rules)
@@ -834,8 +831,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 Reset the ranking rules of an index to their [default value](#default-order).
 
 ::: tip
-Note that resetting the ranking rules is not the same as removing them.
-To remove a ranking rule, use the [add or replace ranking rules route](#update-ranking-rules).
+Resetting ranking rules is not the same as removing them. To remove a ranking rule, use the [update ranking rules endpoint](#update-ranking-rules).
 :::
 
 #### Path parameters
@@ -866,7 +862,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
-By default, all fields are part of the `searchableAttributes` array. This behavior is represented by the `["*"]` in the settings.
+By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
 To learn more about searchable attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
 
@@ -887,8 +883,6 @@ Get the searchable attributes of an index.
 <CodeSamples id="get_searchable_attributes_1" />
 
 ##### Response: `200 Ok`
-
-List the settings.
 
 ```json
 [
@@ -923,7 +917,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 #### Body
 
-An array of strings that contains searchable attributes sorted by order of importance (arranged from the most important attribute to the least important attribute).
+An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/core_concepts/relevancy.md#attribute-ranking-order): from the most important attribute to the least important attribute.
 
 This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
 
@@ -933,7 +927,7 @@ This means that a document with a match in an attribute at the start of the arra
 
 <CodeSamples id="update_searchable_attributes_1" />
 
-A match in title will make a document more relevant than another document with a match in overview.
+In this example, a document with a match in `title` will be more relevant than another document with a match in `overview`.
 
 ##### Response: `202 Accepted`
 
@@ -981,7 +975,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Sortable attributes
 
-Attributes used when sorting search results. `sortableAttributes` can be used together with the [`sort` search parameter](/reference/api/search.md#sort).
+Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search.md#sort).
 
 To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md).
 
@@ -1002,8 +996,6 @@ Get the sortable attributes of an index.
 <CodeSamples id="get_sortable_attributes_1" />
 
 ##### Response: `200 Ok`
-
-List the settings.
 
 ```json
 [
@@ -1034,7 +1026,7 @@ If the field does not exist, no error will be thrown.
 
 #### Body
 
-An array of strings containing the attributes that can be used to sort search results at query time.
+An array of strings. Each string should be an attribute that exists in the selected index.
 
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
 
@@ -1088,7 +1080,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Stop words
 
-Adding words to the stop words list causes them to be ignored in future search queries. Small words that appear in almost all of a dataset's documents are prime candidates for this list.
+Words added to the `stopWords` list are ignored in future search queries.
 
 ::: note
 Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
@@ -1134,7 +1126,7 @@ Update the list of stop words of an index.
 
 #### Body
 
-An array of strings that contains the stop words.
+An array of strings. Each string should be a single word.
 
 If a list of stop-words already exists it will be overwritten (_replaced_).
 
