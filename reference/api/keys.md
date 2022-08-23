@@ -1,6 +1,6 @@
 # Keys
 
-The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must first [set the master key](/learn/configuration/instance_options.md#master-key). Once a master key is set, you can access these endpoints by supplying it in the header of the request, or using API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
+The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must first [set the master key](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance). Once a master key is set, you can access these endpoints by supplying it in the header of the request, or using API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
 
 [Learn more about managing keys and their rights](/learn/security/master_api_keys.md).
 
@@ -14,10 +14,10 @@ List the 20 most recently created keys. **Expired keys are included in the respo
 
 #### Query parameters
 
-| Query Parameter          | Description               | Default Value |
-| ------------------------ | --------------------------| ------------- |
-| **offset**               | Number of keys to skip    |       0       |
-| **limit**                | Number of keys to return  |      20       |
+| Query Parameter            | Description               | Default Value |
+| -------------------------- | --------------------------| ------------- |
+| **`offset`**               | Number of keys to skip    |       0       |
+| **`limit`**                | Number of keys to return  |      20       |
 
 ### Example
 

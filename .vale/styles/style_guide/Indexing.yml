@@ -1,0 +1,10 @@
+---
+# Error: style_guide.indexing.yml
+
+# Most dictionaries still list "indexation" as a term with a very specific meaning in economy so we should use “indexing”
+extends: substitution
+message: "Use '%s' instead of '%s'."
+level: warning
+swap:
+  indexation: indexing
+  

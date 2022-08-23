@@ -137,7 +137,7 @@ This is a common UI pattern that offers users a significant amount of precision 
 
 ### Implementation
 
-The general implementation of a page selection interface is similar to our [recommended solution](#recommended-previous-and-next-buttons), with one signficant addition: it includes a numbered page list.
+The general implementation of a page selection interface is similar to our [recommended solution](#recommended-previous-and-next-buttons), with one significant addition: it includes a numbered page list.
 
 To create a numbered page list, however, you must know the exact number of total results. For example, if you have 100 results and your search result pages contain 10 results each, your selector must show a list of numbers going from 1 to 10.
 

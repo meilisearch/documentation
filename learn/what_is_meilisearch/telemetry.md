@@ -164,9 +164,9 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `filterable_attributes.has_geo`                    | `true` if `_geo` is set as a filterable attribute, otherwise `false`                        | false
 | `searchable_attributes.total`                      | Number of searchable attributes                                                             | 4
 | `per_task_uid`                                     | `true` if a `uid` is used to fetch a particular task resource, otherwise `false`            | true
-| `filtered_by_index_uid`                            | `true` if the `GET /tasks` endpoint is filered by `indexUid`, otherwise `false`             | false
-| `filtered_by_type`                                 | `true` if the `GET /tasks` endpoint is filered by `type`, otherwise `false`                 | false
-| `filtered_by_status`                               | `true` if the `GET /tasks` endpoint is filered by `status`, otherwise `false`               | false
+| `filtered_by_index_uid`                            | `true` if the `GET /tasks` endpoint is filtered by `indexUid`, otherwise `false`            | false
+| `filtered_by_type`                                 | `true` if the `GET /tasks` endpoint is filtered by `type`, otherwise `false`                | false
+| `filtered_by_status`                               | `true` if the `GET /tasks` endpoint is filtered by `status`, otherwise `false`              | false
 | `typo_tolerance.enabled`                           | `true` if typo tolerance is enabled, otherwise `false`                                      | true
 | `typo_tolerance.disable_on_attributes`             | `true` if at least one value is defined for `disableOnAttributes`, otherwise `false`        | false
 | `typo_tolerance.disable_on_words`                  | `true` if at least one value is defined for `disableOnWords`, otherwise `false`             | false

@@ -50,7 +50,10 @@ By default, Meilisearch limits the size of all payloads—and therefore document
 
 Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
-When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), all documents must be sent in an array even if there is only one document.
+When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), ensure:
+
+- The payload format is correct. There are no extraneous commas, mismatched brackets, missing quotes, etc.
+- All documents are sent in an array, even if there is only one document
 
 ### Dataset format
 

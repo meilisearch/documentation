@@ -2,19 +2,19 @@
 
 This page describes the **index-level settings** available in Meilisearch and how to customize them.
 
-| Variable                                                                          | Description                                                                      | Default value                                                                               |
-|-----------------------------------------------------------------------------------|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| **[displayedAttributes](/learn/configuration/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                       |
-| **[distinctAttribute](/learn/configuration/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                      |
-| **[filterableAttributes](/learn/configuration/settings.md#filterable-attributes)** | List of attributes that can be used for filtering                                | `null`                                                                                      |
-| **[pagination](/learn/advanced/pagination.md)**                                    | Pagination settings                                                              | `{}`
-| **[faceting](/learn/advanced/filtering_and_faceted_search.md)**                    | Faceting settings                                                                | `{}`
-| **[rankingRules](/learn/configuration/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
-| **[searchableAttributes](/learn/configuration/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                       |                                                     |
-| **[sortableAttributes](/learn/configuration/settings.md#sortable-attributes)**     |  List of attributes to use when sorting search results                           | `[]`                                                                         |
-| **[stopWords](/learn/configuration/settings.md#stop-words)**                       | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                        |
-| **[synonyms](/learn/configuration/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                        |
-| **[typoTolerance](/learn/configuration/settings.md#typo-tolerance)**               | Object containing typo tolerance settings | Enabled. One typo allowed for words of 5+ characters; two for words of 9+ characters. |
+| Variable                                                                             | Description                                                                      | Default value                                                                                |
+| :----------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------- |
+| **[`displayedAttributes`](/learn/configuration/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                        |
+| **[`distinctAttribute`](/learn/configuration/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                       |
+| **[`filterableAttributes`](/learn/configuration/settings.md#filterable-attributes)** | List of attributes that can be used for filtering                                | `null`                                                                                       |
+| **[`pagination`](/learn/advanced/pagination.md)**                                    | Pagination settings                                                              | `{"maxTotalHits": 1000}`                                                                     |
+| **[`faceting`](/learn/advanced/filtering_and_faceted_search.md)**                    | Faceting settings                                                                | `{"maxValuesPerFacet": 100}`                                                                 |
+| **[`rankingRules`](/learn/configuration/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
+| **[`searchableAttributes`](/learn/configuration/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                        |
+| **[`sortableAttributes`](/learn/configuration/settings.md#sortable-attributes)**     | List of attributes to use when sorting search results                            | `[]`                                                                                         |
+| **[`stopWords`](/learn/configuration/settings.md#stop-words)**                       | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                         |
+| **[`synonyms`](/learn/configuration/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                         |
+| **[`typoTolerance`](/learn/configuration/settings.md#typo-tolerance)**               | Object containing typo tolerance settings                                        | Enabled. One typo allowed for words of 5+ characters; two for words of 9+ characters.        |
 
 ## Displayed attributes
 
@@ -110,7 +110,7 @@ The code sample below updates `maxTotalHits` to `50`:
 <CodeSamples id="settings_guide_pagination_1" />
 
 ::: note
-`maxTotalHits` takes priority over search parameters such as [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset).
+`maxTotalHits` is a hard limit that takes precedence over search parameters such as [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset). This means that queries with an `offset` equal to or greater than `maxTotalHits` will return an empty array.
 :::
 
 ## Faceting
