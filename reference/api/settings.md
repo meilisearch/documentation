@@ -206,7 +206,7 @@ The attributes added to the `displayedAttributes` list appear in search results.
 
 By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
-To learn more about displayed attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
+[To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#displayed-fields)
 
 ### Get displayed attributes
 
@@ -309,7 +309,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The distinct attribute is a field whose value will always be unique in the returned documents.
 
-To learn more about the distinct attribute, refer to our [dedicated guide](/learn/configuration/distinct.md).
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
 
 ### Get distinct attribute
 
@@ -409,7 +409,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 With Meilisearch, you can create [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
 
-To learn more about filtering and faceting, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
+[To learn more about filtering and faceting, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Faceting object
 
@@ -515,7 +515,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 Attributes in the `filterableAttributes` list can be used as filters or facets.
 
-To learn more about filterable attributes, refer to our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Get filterable attributes
 
@@ -623,7 +623,7 @@ To protect your database from malicious scraping, Meilisearch has a default limi
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
-To learn more about paginating search results with Meilisearch, refer to our [dedicated guide](/learn/advanced/pagination.md).
+[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/learn/advanced/pagination.md)
 
 ### Pagination object
 
@@ -727,7 +727,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 Ranking rules are built-in rules that rank search results according to certain criteria. They are applied in the same order in which they appear in the `rankingRules` array.
 
-To learn more about ranking rules, refer to our [dedicated guide](/learn/core_concepts/relevancy.md).
+[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy.md)
 
 ### Ranking rules array
 
@@ -864,7 +864,7 @@ The values associated with attributes in the `searchableAttributes` list are sea
 
 By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
-To learn more about searchable attributes, refer to our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
 
 ### Get searchable attributes
 
@@ -899,12 +899,6 @@ Get the searchable attributes of an index.
 
 Update the searchable attributes of an index.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
-
-::: warning
-If the field does not exist, no error will be thrown.
-:::
-
 ::: warning
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
 :::
@@ -919,7 +913,11 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/core_concepts/relevancy.md#attribute-ranking-order): from the most important attribute to the least important attribute.
 
-This means that a document with a match in an attribute at the start of the array will be considered more relevant than a document with a match in an attribute at the end of the array.
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
+
+::: warning
+If the field does not exist, no error will be thrown.
+:::
 
 [To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
 
@@ -977,7 +975,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search.md#sort).
 
-To learn more about sortable attributes, refer to our [dedicated guide](/learn/advanced/sorting.md).
+[To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
 
 ### Get sortable attributes
 
@@ -1010,12 +1008,6 @@ Get the sortable attributes of an index.
 
 Update an index's sortable attributes list.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
-
-::: warning
-If the field does not exist, no error will be thrown.
-:::
-
 [You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting.md)
 
 #### Path parameters
@@ -1027,6 +1019,12 @@ If the field does not exist, no error will be thrown.
 #### Body
 
 An array of strings. Each string should be an attribute that exists in the selected index.
+
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
+
+::: warning
+If the field does not exist, no error will be thrown.
+:::
 
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
 
@@ -1182,7 +1180,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word for the purposes of calculating search results.
 
-To learn more about synonyms, refer to our [dedicated guide](/learn/configuration/synonyms.md).
+[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms.md)
 
 ### Get synonyms
 
@@ -1232,7 +1230,7 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 
 #### Body
 
-An object that contains all synonyms and their associated words.
+An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
 
 [To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms.md)
 
@@ -1288,7 +1286,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. This setting allows you to configure the minimum word size for typos and disable typo tolerance for specific words or attributes.
 
-To learn more about typo tolerance, refer to our [dedicated guide](/learn/configuration/typo_tolerance.md).
+[To learn more about typo tolerance, refer to our dedicated guide.](/learn/configuration/typo_tolerance.md)
 
 ### Typo tolerance object
 
