@@ -153,9 +153,11 @@ You can read more about typo tolerance in our [dedicated guide](/learn/configura
 
 Meilisearch allows you to create faceted search interfaces, refining search results based on broad categories called facets. Like filters, you need to add the attributes you want to use as facets to `filterableAttributes`.
 
-You can configure the maximum number of facet values returned for each facet.
+When creating a faceted search interface, it is helpful to display how results are distributed between the different categories. For example, a user might want to know how many of their results have a `"genre"` of `"comedy"` and how many have a `"genre"` of `"horror"`. Meilisearch supports this with [the `facets` search parameter](/reference/api/search.md#facets).
 
-Suppose a query's search results for the `genres` facet contains: `Action`, `Adventure`,`Science Fiction`, and `Comedy`. The following code sample will only return `Action` and `Adventure` in the response body's `facetDistribution` object.
+Using the faceting settings, you can configure the maximum number of facet values returned for each facet.
+
+Suppose your results contain the following values for the `genres` facet: `Action`, `Adventure`, `Science Fiction`, and `Comedy`. After running the below code sample, you would only see how results are distributed between the `Action` and `Adventure` genres.
 
 <CodeSamples id= "getting_started_faceting" />
 
@@ -169,7 +171,7 @@ The code sample below sets this limit to 500:
 
 <CodeSamples id= "getting_started_pagination" />
 
-Now, you won't be able to access search results beyond 500.
+Now, users won't be able to access search results beyond 500.
 
 You can read more about pagination in our [dedicated guide](/learn/advanced/pagination.md).
 
