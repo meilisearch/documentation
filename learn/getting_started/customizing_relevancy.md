@@ -153,7 +153,7 @@ You can read more about typo tolerance in our [dedicated guide](/learn/configura
 
 Meilisearch allows you to create faceted search interfaces, refining search results based on broad categories called facets. Like filters, you need to add the attributes you want to use as facets to `filterableAttributes`.
 
-When creating a faceted search interface, it is helpful to display how results are distributed between the different categories. For example, a user might want to know how many of their results have a `"genre"` of `"comedy"` and how many have a `"genre"` of `"horror"`. Meilisearch supports this with [the `facets` search parameter](/reference/api/search.md#facets).
+When creating a faceted search interface, it is helpful to display how results are distributed between the different categories. For example, a user might want to know how many of their results have a `genre` of `comedy` and how many have a `genre` of `horror`. Meilisearch supports this with [the `facets` search parameter](/reference/api/search.md#facets).
 
 Using the faceting settings, you can configure the maximum number of facet values returned for each facet.
 
