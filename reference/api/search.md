@@ -295,7 +295,7 @@ You can [paginate search results](/learn/advanced/pagination.md) by making queri
 :::
 
 ::: warning
-Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/pagination.md#update-pagination-settings) returns an empty array.
+Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings.md#update-pagination-settings) returns an empty array.
 :::
 
 #### Example
@@ -317,7 +317,7 @@ You can [paginate search results](/learn/advanced/pagination.md) by making queri
 :::
 
 ::: warning
-A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/pagination.md#update-pagination-settings), even if the value of `limit` is greater than the value of `maxTotalHits`.
+A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings.md#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
 :::
 
 #### Example
