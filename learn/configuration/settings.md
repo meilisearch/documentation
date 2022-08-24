@@ -234,7 +234,7 @@ Suppose you would like to search `the mask` in a movie database. Since `the` is 
 
 ## Synonyms
 
-A set of words defined for an index. Synonyms are **different words that have the same meaning**, and thus are treated similarly. If either of the associated words is searched, the same results will be displayed.
+A set of words defined for an index. Synonyms are **different words that have the same meaning**, and thus are treated similarly.
 
 `synonyms=<Object>`
 
