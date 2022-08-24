@@ -118,7 +118,7 @@ The code sample below updates `maxTotalHits` to `50`:
 The faceting settings of an index. Facets are specific use-cases of filters that can be used to refine search results.
 
 ::: tip
-Like filters, you need to add your facets to [`filterableAttributes`](/reference/api/filterable_attributes.md#update-filterable-attributes) in order to use the [`filter`](/reference/api/search.md#filter) search parameter.
+Like filters, you need to add your facets to [`filterableAttributes`](/reference/api/settings.md#update-filterable-attributes) in order to use the [`filter`](/reference/api/search.md#filter) search parameter.
 :::
 
 [Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)
@@ -176,7 +176,7 @@ With the settings in the example above, documents will be sorted by decreasing n
 
 ## Searchable attributes
 
-The content of the fields whose attributes are added to the [searchable-attributes list](/reference/api/searchable_attributes.md) are **searched for matching query words**.
+The content of the fields whose attributes are added to the [searchable-attributes list](/reference/api/settings.md#searchable-attributes) are **searched for matching query words**.
 
 `searchableAttributes=[<String>, <String>, ...]`
 
@@ -220,7 +220,7 @@ A set of words defined for an index. Because some words neither add semantic val
 
   An array of strings that contains the stop words.
 
-[Learn more about stop words](/reference/api/stop_words.md)
+[Learn more about stop words](/reference/api/settings.md#stop-words)
 
 #### Example
 

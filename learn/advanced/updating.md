@@ -244,6 +244,6 @@ If you are using Meilisearch v0.20 or below, migration should be done in two ste
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
-Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
+Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
 
 Congratulations! You have successfully migrated your Meilisearch database to the latest version! 🎉

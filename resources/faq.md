@@ -108,7 +108,7 @@ The following factors have a great impact on the size of your database (in no pa
 - The number of different words present in the dataset
 
 :::tip
-Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/searchable_attributes.md#update-searchable-attributes) unless they are useful as search criteria.
+Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/settings.md#update-searchable-attributes) unless they are useful as search criteria.
 :::
 
 ### Search speed
@@ -139,7 +139,7 @@ In general, we recommend the former. However, if you need to reduce the size of 
   - The proximity [ranking rule](/learn/core_concepts/relevancy.md#ranking-rules) alone can be responsible for almost 80% of database size
 - Adding many attributes to [`filterableAttributes`](/learn/configuration/settings.md#filterable-attributes) also consumes a large amount of disk space
 - Multi-lingual datasets are costly, so split your dataset—one language per index
-- [Stop words](/reference/api/stop_words.md) are essential to reducing database size
+- [Stop words](/reference/api/settings.md#stop-words) are essential to reducing database size
 - Not all attributes need to be [searchable](/learn/configuration/displayed_searchable_attributes.md#searchable-fields). Avoid indexing unique IDs.
 
 ## Why does Meilisearch send data to Segment? Does Meilisearch track its users?

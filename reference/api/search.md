@@ -295,7 +295,7 @@ You can [paginate search results](/learn/advanced/pagination.md) by making queri
 :::
 
 ::: warning
-Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/pagination.md#update-pagination-settings) returns an empty array.
+Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings.md#update-pagination-settings) returns an empty array.
 :::
 
 #### Example
@@ -317,7 +317,7 @@ You can [paginate search results](/learn/advanced/pagination.md) by making queri
 :::
 
 ::: warning
-A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/pagination.md#update-pagination-settings), even if the value of `limit` is greater than the value of `maxTotalHits`.
+A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings.md#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
 :::
 
 #### Example
@@ -332,7 +332,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 **Expected value**: a filter expression written as a string or an array of strings
 **Default value**: `[]`
 
-Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/filterable_attributes.md).
+Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
 
 [Read our guide on filtering, faceted search and filter expressions.](/learn/advanced/filtering_and_faceted_search.md)
 
@@ -549,7 +549,7 @@ Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*
 By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
 ::: note
-`attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/synonyms.md) and [stop words](/reference/api/stop_words.md).
+`attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings.md#synonyms) and [stop words](/reference/api/settings.md#stop-words).
 :::
 
 #### Example

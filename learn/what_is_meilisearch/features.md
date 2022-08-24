@@ -14,7 +14,7 @@ Also called "instant search". Results are delivered while you're still inputting
 
 ## Ultra relevant
 
-Meilisearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are designed to deliver an intuitive search experience with zero setup. They can be [customized](/reference/api/ranking_rules.md) to ensure perfect results for your dataset.
+Meilisearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are designed to deliver an intuitive search experience with zero setup. They can be [customized](/reference/api/settings.md#ranking-rules) to ensure perfect results for your dataset.
 
 ## Typo tolerant
 

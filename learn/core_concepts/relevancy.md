@@ -15,7 +15,7 @@ Each index possesses a list of ranking rules stored as an array in the [settings
 
 Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents whenever a search query is made. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (i.e., as a tiebreaker).
 
-**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/api/ranking_rules.md#update-ranking-rules).
+**The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs but [you can change it](/reference/api/settings.md#update-ranking-rules).
 
 ### Built-in rules
 
@@ -32,7 +32,7 @@ Meilisearch contains six built-in ranking rules in the following order:
 ]
 ```
 
-Depending on your needs, you might want to change this order. To do so, you can use the [update settings endpoint](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+Depending on your needs, you might want to change this order. To do so, you can use the [update settings endpoint](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/settings.md#update-ranking-rules).
 
 #### 1. Words
 
@@ -131,7 +131,7 @@ To add a custom ranking rule, you have to communicate the attribute name followe
 
 **The attribute must have either a numeric or a string value** in all of the documents contained in that index.
 
-You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/ranking_rules.md#update-ranking-rules).
+You can add this rule to the existing list of ranking rules using the [update settings endpoint](/reference/api/settings.md#update-settings) or [update ranking rules endpoint](/reference/api/settings.md#update-ranking-rules).
 
 #### Example
 
@@ -149,7 +149,7 @@ The following example will create a rule that makes movies with a good rank more
 movie_ranking:desc
 ```
 
-To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/reference/api/ranking_rules.md#update-ranking-rules),
+To add a rule to the existing ranking rule, you have to add the rule to the existing ordered rules array using the [settings route](/reference/api/settings.md#update-ranking-rules),
 
 ```json
 [
