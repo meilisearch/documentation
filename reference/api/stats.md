@@ -39,13 +39,13 @@ The `/stats` route gives extended information and metrics about indexes and the 
 | :---------------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`databaseSize`**      | Integer | Size of the database in bytes                                                                                                                                                          |
 | **`lastUpdate`**        | String  | When the last update was made to the database in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format                                                                           |
-| **`indexes`**           | Object  | Object representing the statistics for each index found in the database                                                                                                                |
+| **`indexes`**           | Object  | Object containing the statistics for each index found in the database                                                                                                                |
 | **`numberOfDocuments`** | Integer | Total number of documents in an index                                                                                                                                                  |
 | **`isIndexing`**        | Boolean | If `true`, the index is still processing documents and attempts to search will result in undefined behavior. If `false`, the index has finished processing and you can start searching |
-| **`fieldDistribution`** | Object  | Shows every field in the individual index or the entire database along with the total number of documents in the index that contain that field.                                        |
+| **`fieldDistribution`** | Object  | Shows every field in the index along with the total number of documents containing that field in said index                                        |
 
 ::: note
-`fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Meaning, if one of the fields is not displayed or searchable, it will still be displayed in the `fieldDistribution` object.  
+`fieldDistribution` is not impacted by `searchableAttributes` or `displayedAttributes`. Even if a field is not displayed or searchable, it will still appear in the `fieldDistribution` object.  
 :::
 
 ## Get stats of all indexes
