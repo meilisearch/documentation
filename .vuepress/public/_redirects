@@ -193,3 +193,6 @@
 /reference/api/stop_words.html                      /reference/api/settings.html
 /reference/api/synonyms.html                        /reference/api/settings.html
 /reference/api/typo_tolerance.html                  /reference/api/settings.html
+
+# Rename indexation to indexing
+/learn/advanced/indexation.html                     /learn/advanced/indexing.html
