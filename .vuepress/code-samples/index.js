@@ -5,15 +5,12 @@ const { fetchRemoteSamples, fetchLocalSample } = require('./fetch')
 module.exports = (options, context) => {
   return {
     async ready() {
-      if (context.isProd) {
-        await fetchRemoteSamples()
+      // To try the code-sample generation in local mode, please comment out the if condition but leave its content.
       }
     },
     name: 'fetch-sample-files',
     define() {
-      if (!context.isProd) {
-        fetchLocalSample()
-      }
+      // To try the code-sample generation in local mode, please comment out the whole if condition.
       const samples = require('./generated-samples.json')
       return {
         CODE_SAMPLES: renderSamples(samples),

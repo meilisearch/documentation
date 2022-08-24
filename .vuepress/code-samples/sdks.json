@@ -53,5 +53,21 @@
     "language": "dart",
     "label": "Dart",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dart/main/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "javascript",
+    "label": "JavaScript",
+    "comment_not_used_field": "This scope is `instant-meilisearch` and not meilisearch-js. We cannot name if `instant-meilisearch` because we neet to stay consistent with `Vue` and `React` naming",
+    "url": "https://raw.githubusercontent.com/meilisearch/instant-meilisearch/main/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "javascript",
+    "label": "React",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-react/main/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "javascript",
+    "label": "Vue.js",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-vue/main/.code-samples.meilisearch.yaml"
   }
 ]
