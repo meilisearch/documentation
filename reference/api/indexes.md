@@ -111,12 +111,10 @@ Get information about an index.
 
 Create an index.
 
-Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
-
 ### Body
 
 | Name             | Type            | Default value | Description                                                                               |
-| :--------------- | :-------------- | ------------- | :---------------------------------------------------------------------------------------- |
+| :--------------- | :-------------- | :------------ | :---------------------------------------------------------------------------------------- |
 | **`uid`** *      | String          | N/A           | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                 |
 | **`primaryKey`** | String / `null` | `null`        | [`Primary key`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
 
@@ -153,17 +151,15 @@ Update an index's [primary key](/learn/core_concepts/primary_key.md#primary-key)
 
 To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key and index your dataset again.
 
+::: note
+It is not possible to change an index's `uid`.
+:::
+
 ### Path parameters
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
-
-::: note
-It is not possible to change an index's `uid`.
-:::
-
-This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
 
 ### Body
 

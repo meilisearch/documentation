@@ -2,7 +2,7 @@
 
 The `/documents` route allows you to create, manage, and delete documents.
 
-[Learn more about documents](/learn/core_concepts/documents.md).
+[Learn more about documents.](/learn/core_concepts/documents.md)
 
 ## Get documents
 
@@ -10,34 +10,34 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 Get documents by batch.
 
-### Path parameters
-
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
-
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
 ::: note
 Documents are ordered by Meilisearch depending on the hash of their id.
 :::
 
+### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+
 ### Query parameters
 
-| Query Parameter | Default Value | Description                   |
-| :-------------- | :------------ | :---------------------------- |
-| **`offset`**    | `0`           | Number of documents to skip   |
-| **`limit`**     | `20`          | Number of documents to return |
-| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)  |
+| Query Parameter | Default Value | Description                                                   |
+| :-------------- | :------------ | :------------------------------------------------------------ |
+| **`offset`**    | `0`           | Number of documents to skip                                   |
+| **`limit`**     | `20`          | Number of documents to return                                 |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated) |
 
 ### Response
 
-| Name          | Type    | Description                  |
-| :------------ | :------ | :--------------------------- |
-| **`results`** | Array   | An array of documents        |
-| **`offset`**  | Integer | Number of documents skipped  |
-| **`limit`**   | Integer | Number of documents returned |
-| **`total`**   | Integer | Total number of documents in the index    |
+| Name          | Type    | Description                            |
+| :------------ | :------ | :------------------------------------- |
+| **`results`** | Array   | An array of documents                  |
+| **`offset`**  | Integer | Number of documents skipped            |
+| **`limit`**   | Integer | Number of documents returned           |
+| **`total`**   | Integer | Total number of documents in the index |
 
 ### Example
 
@@ -77,15 +77,15 @@ Get one document using its unique id.
 
 ### Path parameters
 
-| Name              | Type           | Description                                                                           |
-| :---------------- | :------------- | :------------------------------------------------------------------------------------ |
-| **`index_uid`** * | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index             |
+| Name                | Type           | Description                                                                              |
+| :------------------ | :------------- | :--------------------------------------------------------------------------------------- |
+| **`index_uid`** *   | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
 | **`document_id`** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
 
 ### Query parameters
 
-| Query Parameter | Default Value | Description                 |
-| :-------------- | :------------ | :-------------------------- |
+| Query Parameter | Default Value | Description                                                   |
+| :-------------- | :------------ | :------------------------------------------------------------ |
 | **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated) |
 
 ### Example
@@ -268,9 +268,9 @@ Delete one document based on its unique id.
 
 ### Path parameters
 
-| Name              | Type           | Description                                                                              |
-| :---------------- | :------------- | :--------------------------------------------------------------------------------------- |
-| **`index_uid`** * | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
+| Name                | Type           | Description                                                                              |
+| :------------------ | :------------- | :--------------------------------------------------------------------------------------- |
+| **`index_uid`** *   | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
 | **`document_id`** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
 
 ### Example
