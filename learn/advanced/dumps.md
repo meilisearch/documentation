@@ -52,11 +52,11 @@ If a dump file is visible in the file system, the dump process was successfully 
 
 ## Importing a dump
 
+Dump imports must be performed when launching a Meilisearch instance [using the `import-dump` command-line option](/learn/configuration/instance_options.md#import-dump).
+
 During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same `uid` as an index in the dump file will be overwritten.
 
-When a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed until the importing process is complete.
-
-Dump imports must be performed when launching a Meilisearch instance [using the `import-dump` command-line option](/learn/configuration/instance_options.md#import-dump).
+While a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed until the importing process is complete.
 
 Dumps from v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/api/version.md#example) and proceed accordingly.
 
