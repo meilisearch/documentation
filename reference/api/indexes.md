@@ -4,18 +4,45 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 
 [Learn more about indexes](/learn/core_concepts/indexes.md).
 
+## Index object
+
+```json
+{
+  "uid": "movies",
+  "createdAt": "2022-02-10T07:45:15.628261Z",
+  "updatedAt": "2022-02-21T15:28:43.496574Z",
+  "primaryKey": "id"
+}
+```
+
+| Name             | Type            | Default value | Description                                                                                                                                                                                                                                                    |
+| :--------------- | :-------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`uid`**        | String          | N/A           | [Unique identifier](/learn/core_concepts/indexes.md#index-uid) of the index. Once created, it cannot be changed                                                                                                                                                |
+| **`createdAt`**  | String          | N/A           | Creation date of the index, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation                                                                                                                           |
+| **`updatedAt`**  | String          | N/A           | Latest date of index update, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation or update                                                                                                                |
+| **`primaryKey`** | String / `null` | `null`        | [Primary key](/learn/core_concepts/primary_key.md#primary-field) of the index. If not specified, Meilisearch [guesses your primary key](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) from the first document you add to the index |
+
 ## List all indexes
 
 <RouteHighlighter method="GET" route="/indexes"/>
 
-List all [indexes](/learn/core_concepts/indexes.md). Results can be paginated by using the `offset` and `limit` query parameters.
+List all indexes. Results can be paginated by using the `offset` and `limit` query parameters.
 
-#### Query parameters
+### Query parameters
 
-| Query parameter            | Description                 | Default value |
-| -------------------------- | --------------------------- | :-----------: |
-| **`offset`**               | Number of indexes to skip   |       0       |
-| **`limit`**                | Number of indexes to return |      20       |
+| Query parameter | Description                 | Default value |
+| :-------------- | :-------------------------- | :------------ |
+| **`offset`**    | Number of indexes to skip   | `0`           |
+| **`limit`**     | Number of indexes to return | `20`          |
+
+### Response
+
+| Name          | Type    | Description                          |
+| :------------ | :------ | :----------------------------------- |
+| **`results`** | Array   | An array of [indexes](#index-object) |
+| **`offset`**  | Integer | Number of indexes skipped            |
+| **`limit`**   | Integer | Number of indexes returned           |
+| **`total`**   | Integer | Total number of indexes              |
 
 ### Example
 
@@ -55,7 +82,13 @@ List all [indexes](/learn/core_concepts/indexes.md). Results can be paginated by
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}"/>
 
-Get information about an [index](/learn/core_concepts/indexes.md). The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Get information about an index.
+
+### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Example
 
@@ -76,22 +109,14 @@ Get information about an [index](/learn/core_concepts/indexes.md). The index [`u
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an [index](/learn/core_concepts/indexes.md). This endpoint accepts two arguments: `uid` and `primaryKey`.
-
-If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from the first document you add to the index.
-
-::: note
-If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, Meilisearch will automatically create it for you. This is called implicit index creation.
-:::
-
-Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
+Create an index.
 
 ### Body
 
-| Variable         | Description                                                |
-| ---------------- | ---------------------------------------------------------- |
-| **`uid`**        | The index unique identifier (_mandatory_)                  |
-| **`primaryKey`** | The primary key of the documents |
+| Name             | Type            | Default value | Description                                                                               |
+| :--------------- | :-------------- | :------------ | :---------------------------------------------------------------------------------------- |
+| **`uid`** *      | String          | N/A           | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                 |
+| **`primaryKey`** | String / `null` | `null`        | [`Primary key`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
 
 ```json
 {
@@ -122,23 +147,25 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 <RouteHighlighter method="PATCH" route="/indexes/{index_uid}"/>
 
-Update an [index's](/learn/core_concepts/indexes.md) [primary key](/learn/core_concepts/primary_key.md#primary-key).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Update an index's [primary key](/learn/core_concepts/primary_key.md#primary-key). You can freely update the primary key of an index as long as it contains no documents.
 
-You can freely update the primary key of an index as long as it contains no documents.
-
-To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key, and finally, index your dataset again.
+To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key and index your dataset again.
 
 ::: note
 It is not possible to change an index's `uid`.
 :::
 
-This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
+### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Body
 
-| Variable         | Description                                                |
-| ---------------- | ---------------------------------------------------------- |
-| **`primaryKey`** | The primary key of the documents |
+| Name               | Type            | Default value | Description                                                                               |
+| :----------------- | :-------------- | :------------ | :---------------------------------------------------------------------------------------- |
+| **`primaryKey`** * | String / `null` | N/A           | [`Primary key`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
 
 ### Example
 
@@ -162,9 +189,13 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 <RouteHighlighter method="DELETE" route="/indexes/{index_uid}"/>
 
-Delete an [index](/learn/core_concepts/indexes.md).  The index [`uid`](/learn/core_concepts/indexes.md#index-uid) is required.
+Delete an index.
 
-This is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
+### Path parameters
+
+| Name              | Type   | Description                                                               |
+| :---------------- | :----- | :------------------------------------------------------------------------ |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 ### Example
 
