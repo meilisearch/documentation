@@ -2,14 +2,6 @@
 
 The `/dumps` route allows the creation of database dumps. Dumps are `.dump` files that can be used to restore Meilisearch data or migrate between different versions.
 
-Creating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.
-
-During a [dump export](/reference/api/dump.md#create-a-dump), all indexes of the current instance are exported—together with their documents and settings—and saved as a single `.dump` file.
-
-During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same `uid` as an index in the dump file will be overwritten.
-
-Dump imports must be performed when launching a Meilisearch instance [using the `import-dump` command-line option](/learn/configuration/instance_options.md#import-dump).
-
 [Learn more about dumps](/learn/advanced/dumps.md).
 
 ## Create a dump
