@@ -22,13 +22,13 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 Documents are ordered by Meilisearch depending on the hash of their id.
 :::
 
-#### Query parameters
+### Query parameters
 
 | Query Parameter | Default Value | Description                   |
 | :-------------- | :------------ | :---------------------------- |
 | **`offset`**    | `0`           | Number of documents to skip   |
 | **`limit`**     | `20`          | Number of documents to return |
-| **`fields`**    | `*`           | Document attributes to show   |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)  |
 
 ### Response
 
@@ -37,7 +37,7 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 | **`results`** | Array   | An array of documents        |
 | **`offset`**  | Integer | Number of documents skipped  |
 | **`limit`**   | Integer | Number of documents returned |
-| **`total`**   | Integer | Total number of documents    |
+| **`total`**   | Integer | Total number of documents in the index    |
 
 ### Example
 
@@ -79,20 +79,19 @@ The response's `total` value response indicates the total number of documents in
 
 Get one document using its unique id.
 
-You can use the optional `fields` query parameter to specify which document fields Meilisearch should include in the response body. `fields` accepts a case-sensitive list of document fields separated by a comma.
 
 ### Path parameters
 
 | Name              | Type           | Description                                                                           |
 | :---------------- | :------------- | :------------------------------------------------------------------------------------ |
 | **`index_uid`** * | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index             |
-| **Document id** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested index |
+| **`document_id`** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
 
 ### Query parameters
 
 | Query Parameter | Default Value | Description                 |
 | :-------------- | :------------ | :-------------------------- |
-| **`fields`**    | `*`           | Document attributes to show |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated) |
 
 ### Example
 
@@ -113,13 +112,11 @@ You can use the optional `fields` query parameter to specify which document fiel
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents"/>
 
-Add a list of documents or replace them if they already exist. If the provided index does not exist, it will be created.
+Add an array of documents or replace them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed.
+If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed. For a partial update of the document see the [add or update documents](/reference/api/documents.md#add-or-update-documents) endpoint.
 
-For a partial update of the document see [add or update documents](/reference/api/documents.md#add-or-update-documents).
-
-This endpoint accepts the following content-types:
+This endpoint accepts the following content types:
 
 - `application/json`
 - `application/x-ndjson`
@@ -137,11 +134,11 @@ This endpoint accepts the following content-types:
 | :--------------- | :------------ | :---------------------------------------------------------------------------- |
 | **`primaryKey`** | `null`        | [Primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the index |
 
-If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to [set the primary key of your index on document addition](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition), it can only be done **the first time you add documents** to the index. After this, the `primaryKey` parameter will be ignored if given.
 
 ### Body
 
-The body is composed of a **JSON array** of documents.
+An array of documents. Each document is represented as a JSON object.
 
 ```json
 [
@@ -187,7 +184,7 @@ If the provided index does not exist, it will be created.
 
 If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
 
-This endpoint accepts the following content-types:
+This endpoint accepts the following content types:
 
 - `application/json`
 - `application/x-ndjson`
@@ -281,7 +278,7 @@ Delete one document based on its unique id.
 | Name              | Type           | Description                                                                              |
 | :---------------- | :------------- | :--------------------------------------------------------------------------------------- |
 | **`index_uid`** * | String         | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
-| **Document id** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
+| **`document_id`** * | String/Integer | [Document id](/learn/core_concepts/primary_key.md#document-id) of the requested document |
 
 ### Example
 
@@ -305,7 +302,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 
-Delete a selection of documents based on array of document id's.
+Delete a selection of documents based on an array of document id's.
 
 ### Path parameters
 
@@ -315,7 +312,7 @@ Delete a selection of documents based on array of document id's.
 
 ### Body
 
-The body must be a **JSON array** with the unique id's of the documents to delete.
+An array of numbers containing the unique id's of the documents to be deleted.
 
 ```json
 [23488, 153738, 437035, 363869]
