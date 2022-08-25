@@ -59,29 +59,6 @@ This value is always `null` for `dumpCreation` tasks.
 **Type**: Object
 **Description**: Detailed information on the task payload. This object's contents depend on the task's `type`
 
-::: note
-The `details` object will only show values for the updated field. For example, if you update the faceting settings, the `details` object will only contain the updated faceting value:
-
-```json
-{
-   "uid": 3,
-   "indexUid": "movies",
-   "status": "succeeded",
-   "type": "settingsUpdate",
-   "details": {
-      "faceting": {
-         "maxValuesPerFacet": 2
-      }
-   },
-   "duration": "PT0.000682S",
-   "enqueuedAt": "2022-08-02T15:41:57.955977Z",
-   "startedAt": "2022-08-02T15:41:57.957002Z",
-   "finishedAt": "2022-08-02T15:41:57.957684Z"
-}
-```
-
-:::
-
 #### `documentAdditionOrUpdate`
 
 | Name                    | Description                  |
@@ -184,9 +161,9 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 | :-------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------- |
 | **`limit`**     | `20`                           | Number of tasks to return                                                                                      |
 | **`from`**      | `uid` of the last created task | `uid` of the first task returned                                                                               |
-| **`status`**    | All statuses                   | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |
-| **`type`**      | All types                      | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |
-| **`indexUid`**  | All indexes                    | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |
+| **`status`**    | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |
+| **`type`**      | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |
+| **`indexUid`**  | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |
 
 ### Response
 
@@ -255,7 +232,6 @@ Get a single task.
 
 #### Response: `200 Ok`
 
-Here is an example response representing a processed task.
 
 ```json
 {
