@@ -69,16 +69,11 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 }
 ```
 
-::: note
-The response's `total` value response indicates the total number of documents in the queried index.
-:::
-
 ## Get one document
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents/{document_id}"/>
 
 Get one document using its unique id.
-
 
 ### Path parameters
 
@@ -176,13 +171,11 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Add a list of documents or update them if they already exist. If the provided index does not exist, it will be created.
 
-If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remained unchanged.
+If you send an already existing document (same [document id](/learn/core_concepts/primary_key.md#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remain unchanged.
 
 To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents.md#add-or-replace-documents).
 
-If the provided index does not exist, it will be created.
-
-If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which it will be ignored if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which, it will be ignored if given.
 
 This endpoint accepts the following content types:
 
@@ -204,7 +197,7 @@ This endpoint accepts the following content types:
 
 ### Body
 
-The body is composed of a **JSON array** of documents.
+An array of documents. Each document is represented as a JSON object.
 
 ```json
 [

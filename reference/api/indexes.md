@@ -15,12 +15,12 @@ The `/indexes` route allows you to create, manage, and delete your indexes.
 }
 ```
 
-| Name             | Type            | Default value | Description                                                                                                                                                                                                                                                     |
-| :--------------- | :-------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`uid`**        | String          | N/A           | [Unique identifier](/learn/core_concepts/indexes.md#index-uid) of the index. Once created, it cannot be changed                                                                                                                                                 |
-| **`createdAt`**  | String          | N/A           | Creation date of the index, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation                                                                                                                            |
-| **`updatedAt`**  | String          | N/A           | Latest date of index update, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation or update                                                                                                                 |
-| **`primaryKey`** | String / `null` | `null`           | [primary key](/learn/core_concepts/primary_key.md#primary-field) of the index. If not specified, Meilisearch [guesses your primary key](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) from the first document you add to the index |
+| Name             | Type            | Default value | Description                                                                                                                                                                                                                                                    |
+| :--------------- | :-------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`uid`**        | String          | N/A           | [Unique identifier](/learn/core_concepts/indexes.md#index-uid) of the index. Once created, it cannot be changed                                                                                                                                                |
+| **`createdAt`**  | String          | N/A           | Creation date of the index, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation                                                                                                                           |
+| **`updatedAt`**  | String          | N/A           | Latest date of index update, represented in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Auto-generated on index creation or update                                                                                                                |
+| **`primaryKey`** | String / `null` | `null`        | [Primary key](/learn/core_concepts/primary_key.md#primary-field) of the index. If not specified, Meilisearch [guesses your primary key](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) from the first document you add to the index |
 
 ## List all indexes
 
@@ -109,22 +109,16 @@ Get information about an index.
 
 <RouteHighlighter method="POST" route="/indexes"/>
 
-Create an index. This endpoint accepts two arguments: `uid` and `primaryKey`.
-
-If you do not supply a value for `primaryKey`, Meilisearch will try to infer your dataset's unique identifier from the first document you add to the index.
-
-::: note
-If you try to add [documents](/reference/api/documents.md) or [settings](/reference/api/settings.md) to an index that does not exist, Meilisearch will automatically create it for you. This is called implicit index creation.
-:::
+Create an index.
 
 Creating an index is an asynchronous task. [You can read more about asynchronous operations in our dedicated guide.](/learn/advanced/asynchronous_operations.md)
 
 ### Body
 
-| Name             | Type            | Default value | Description                                                                              |
-| :--------------- | :-------------- | ------------- | :--------------------------------------------------------------------------------------- |
-| **`uid`** *      | String          | N/A           | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                |
-| **`primaryKey`** | String / `null` | `null`           | [`primaryKey`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
+| Name             | Type            | Default value | Description                                                                               |
+| :--------------- | :-------------- | ------------- | :---------------------------------------------------------------------------------------- |
+| **`uid`** *      | String          | N/A           | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index                 |
+| **`primaryKey`** | String / `null` | `null`        | [`Primary key`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
 
 ```json
 {
@@ -173,9 +167,9 @@ This is an asynchronous task. [You can read more about asynchronous operations i
 
 ### Body
 
-| Name               | Type            | Default value | Description                                                                              |
-| :----------------- | :-------------- | :------------ | :--------------------------------------------------------------------------------------- |
-| **`primaryKey`** * | String / `null` | N/A           | [`primaryKey`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
+| Name               | Type            | Default value | Description                                                                               |
+| :----------------- | :-------------- | :------------ | :---------------------------------------------------------------------------------------- |
+| **`primaryKey`** * | String / `null` | N/A           | [`Primary key`](/learn/core_concepts/primary_key.md#primary-field) of the requested index |
 
 ### Example
 
@@ -206,7 +200,6 @@ Delete an index.
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
-
 
 ### Example
 
