@@ -19,6 +19,8 @@ You may find exhaustive descriptions of the parameters accepted by the two route
 
 Search for documents matching a specific query in the given index.
 
+This is the preferred endpoint to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
+
 ### Path parameters
 
 | Name              | Type   | Description                                                               |
@@ -29,26 +31,24 @@ Search for documents matching a specific query in the given index.
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
 :::
 
-This is the preferred route to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
-
 ### Body
 
-| Search Parameter                                        | Default value | Description                                        |
-| :------------------------------------------------------ | :------------ | :------------------------------------------------- |
-| **[`q`](#query-q)**                                     | `""`          | Query string                                       |
-| **[`offset`](#offset)**                                 | `0`           | Number of documents to skip                        |
-| **[`limit`](#limit)**                                   | `20`          | Maximum number of documents returned               |
-| **[`filter`](#filter)**                                 | `null`        | Filter queries by an attribute's value             |
-| **[`facets`](#facets)**                                 | `null`        | Display the count of matches per facet             |
-| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | `["*"]`       | Attributes to display in the returned documents    |
-| **[`attributesToCrop`](#attributes-to-crop)**           | `null`        | Attributes whose values have to be cropped         |
-| **[`cropLength`](#crop-length)**                        | `10`          | Maximum length of cropped value in words           |
-| **[`cropMarker`](#crop-marker)**                        | `"…"`         | String marking crop boundaries                     |
-| **[`attributesToHighlight`](#attributes-to-highlight)** | `null`        | Highlight matching terms contained in an attribute |
-| **[`highlightPreTag`](#highlight-tags)**                | `"<em>"`      | String inserted at the start of a highlighted term |
-| **[`highlightPostTag`](#highlight-tags)**               | `"</em>"`     | String inserted at the end of a highlighted term   |
-| **[`showMatchesPosition`](#show-matches-position)**     | `false`       | Return matching terms location                     |
-| **[`sort`](#sort)**                                     | `null`        | Sort search results by an attribute's value        |
+| Search Parameter                                        | Type             | Default value | Description                                        |
+| :------------------------------------------------------ | :--------------- | :------------ | :------------------------------------------------- |
+| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                       |
+| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                        |
+| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned               |
+| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value             |
+| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet             |
+| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents    |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped         |
+| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words           |
+| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                     |
+| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute |
+| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term |
+| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term   |
+| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                     |
+| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value        |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -70,7 +70,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`offset`**             | Number           | Number of documents skipped                     |
 | **`limit`**              | Number           | Number of documents to take                     |
 | **`estimatedTotalHits`** | Number           | Total number of matches                         |
-| **`facets`**             | Object           | **[Distribution of the given facets](#facets)** |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facets)** |
 | **`processingTimeMs`**   | Number           | Processing time of the query                    |
 | **`query`**              | String           | Query originating the response                  |
 
@@ -113,6 +113,8 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 Search for documents matching a specific query in the given index.
 
+This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
+
 ### Path parameters
 
 | Name              | Type   | Description                                                               |
@@ -123,26 +125,24 @@ Search for documents matching a specific query in the given index.
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
 :::
 
-This route should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
-
 ### Query parameters
 
-| Search Parameter                                        | Default value | Description                                        |
-| :------------------------------------------------------ | :------------ | :------------------------------------------------- |
-| **[`q`](#query-q)**                                     | `""`          | Query string                                       |
-| **[`offset`](#offset)**                                 | `0`           | Number of documents to skip                        |
-| **[`limit`](#limit)**                                   | `20`          | Maximum number of documents returned               |
-| **[`filter`](#filter)**                                 | `null`        | Filter queries by an attribute's value             |
-| **[`facets`](#facets)**                                 | `null`        | Display the count of matches per facet             |
-| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | `["*"]`       | Attributes to display in the returned documents    |
-| **[`attributesToCrop`](#attributes-to-crop)**           | `null`        | Attributes whose values have to be cropped         |
-| **[`cropLength`](#crop-length)**                        | `10`          | Maximum length of cropped value in words           |
-| **[`cropMarker`](#crop-marker)**                        | `"…"`         | String marking crop boundaries                     |
-| **[`attributesToHighlight`](#attributes-to-highlight)** | `null`        | Highlight matching terms contained in an attribute |
-| **[`highlightPreTag`](#highlight-tags)**                | `"<em>"`      | String inserted at the start of a highlighted term |
-| **[`highlightPostTag`](#highlight-tags)**               | `"</em>"`     | String inserted at the end of a highlighted term   |
-| **[`showMatchesPosition`](#show-matches-position)**     | `false`       | Return matching terms location                     |
-| **[`sort`](#sort)**                                     | `null`        | Sort search results by an attribute's value        |
+| Search Parameter                                        | Type             | Default value | Description                                        |
+| :------------------------------------------------------ | :--------------- | :------------ | :------------------------------------------------- |
+| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                       |
+| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                        |
+| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned               |
+| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value             |
+| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet             |
+| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents    |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped         |
+| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words           |
+| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                     |
+| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute |
+| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term |
+| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term   |
+| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                     |
+| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value        |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
