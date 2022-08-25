@@ -232,7 +232,6 @@ Get a single task.
 
 #### Response: `200 Ok`
 
-
 ```json
 {
   "uid":1,

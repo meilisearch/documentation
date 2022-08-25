@@ -284,7 +284,7 @@ Create an API key with the provided description, permissions, and expiration dat
 
 <RouteHighlighter method="PATCH" route="/keys/{key_or_uid}"/>
 
-Update the [`name`](#name) and [`description`](#description) of an API key.
+Update the `name` and `description` of an API key.
 
 Updates to keys are **partial**. This means you should provide only the fields you intend to update, as any fields not present in the payload will remain unchanged.
 
@@ -296,6 +296,13 @@ Updates to keys are **partial**. This means you should provide only the fields y
 | :---------- | :----- | :------------------------------------------- |
 | **`key`** * | String | [`key`](#key) value of the requested API key |
 | **`uid`** * | String | [`uid`](#uid) of the requested API key       |
+
+### Body
+
+| Name                              | Type   | Default value | Description                         |
+| :-------------------------------- | :----- | :------------ | :---------------------------------- |
+| **[`name`](#name)**               | String | `null`        | A human-readable name for the key   |
+| **[`description`](#description)** | String | `null`        | An optional description for the key |
 
 ### Example
 
