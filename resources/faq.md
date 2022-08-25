@@ -147,7 +147,3 @@ In general, we recommend the former. However, if you need to reduce the size of 
 **Meilisearch will never track or identify individual users**. That being said, we do use Segment to collect anonymous data about user trends, feature usage, and bugs.
 
 You can read more about what metrics we collect, why we collect them, and how to disable it on our [telemetry page](/learn/what_is_meilisearch/telemetry.md). Issues of transparency and privacy are very important to us, so if you feel we are lacking in this area please [open an issue](https://github.com/meilisearch/documentation/issues/new/choose) or send an email to our dedicated email address: [privacy@meilisearch.com](mailto:privacy@meilisearch.com).
-
-## Why does Meilisearch crash when I try to add documents?
-
-Crashes that occur when trying to add documents are connected to Meilisearch's indexer. For more information and possible solutions, read [our dedicated article on indexation](/learn/advanced/indexation.md#memory-crashes).

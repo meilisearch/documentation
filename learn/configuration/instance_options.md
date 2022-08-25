@@ -216,7 +216,7 @@ Sets the maximum amount of RAM Meilisearch can use when indexing. By default, Me
 
 The value must either be given in bytes or explicitly state a base unit:  `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
-It is possible that Meilisearch goes over the exact RAM limit during indexation. In most contexts and machines, this should be a negligible amount with little to no impact on stability and performance.
+It is possible that Meilisearch goes over the exact RAM limit during indexing. In most contexts and machines, this should be a negligible amount with little to no impact on stability and performance.
 
 ::: danger
 Setting `--max-indexing-memory` to a value bigger than or equal to your machine's total memory is likely to cause your instance to crash.

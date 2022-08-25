@@ -113,7 +113,7 @@ In the example below, the `patient_name` key contains an object:
 }
 ```
 
-During indexation, Meilisearch uses dot notation to eliminate nested fields:
+During indexing, Meilisearch uses dot notation to eliminate nested fields:
 
 ```json
 {
