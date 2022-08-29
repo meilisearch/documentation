@@ -4,28 +4,22 @@ A common way of installing Meilisearch is using Docker. In this guide you will l
 
 ## Docker
 
-Docker is a tool that packages an application's code and dependencies into something called a container. Using Docker allows developers to ensure their software runs reliably across a wide range of machines and environments.
+Docker is a tool that packages an application into a container portable across a wide range of environments.
 
-Docker containers are distributed in images. Docker images are packages storing not only the container, but also instructions on how Docker should instantiate that container.
+We recommend following [the official instructions to install Docker Desktop](https://docs.docker.com/get-docker/), available for MacOS, Windows, and Linux.
 
-## Install Docker
+## Download Meilisearch with Docker
 
-The first step to start using Docker is installing it in your target machine. We recommend following [Docker's official instructions to install Docker Desktop](https://docs.docker.com/get-docker/), available for MacOS, Windows, and Linux.
-
-Docker for Desktop includes an interface for managing your containers, command-line applications and several tools required for using Docker.
-
-## Install Meilisearch
-
-Once you installed Docker you can use the `docker pull` command to download a Meilisearch image:
+Docker containers are distributed in images. To use Meilisearch, use the `docker pull` command to download a Meilisearch image:
 
 ```sh
 docker pull getmeili/meilisearch:v0.28
 ```
 
-Meilisearch deploys a new Docker image for every new release. All images are tagged with the release version. You can see [the full list of available Meilisearch Docker images](https://hub.docker.com/r/getmeili/meilisearch/tags#!) on Docker Hub.
+Meilisearch deploys a new Docker image for every new release. All images are tagged with the release version—in the example above, the tag is everything that comes after `:`. You can see [the full list of available Meilisearch Docker images](https://hub.docker.com/r/getmeili/meilisearch/tags#!) on Docker Hub.
 
 ::: warning
-Meilisearch advises against using the `latest` tag. As its name indicates, `latest` will always get the most recent Meilisearch release, which might result in different machines running different images if significant time passes between setting up each of them.
+Meilisearch advises against using the `latest` tag. As its name indicates, `latest` will always download the most recent Meilisearch release, which might result in different machines running different images if significant time passes between setting up each of them.
 :::
 
 ## Run Meilisearch
