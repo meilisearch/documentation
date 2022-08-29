@@ -30,7 +30,7 @@ Meilisearch advises against using the `latest` tag. As its name indicates, `late
 
 ## Run Meilisearch
 
-After running `docker pull` and installing Meilisearch, you can use `docker run` to launch it:
+After running `docker pull` and downloading Meilisearch image, you can use `docker run` to launch it:
 
 ```sh
 docker run -it --rm \
