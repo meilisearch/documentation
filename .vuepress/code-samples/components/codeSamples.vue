@@ -33,6 +33,10 @@ export default {
     return {
       samples: undefined,
       defaultTab: undefined,
+      // Because the store only keeps track of one tab, some tabs that are not relevant to store (for example: React)
+      // are tagged as `cachableTab: false` in `sdks.json`.
+      // Otherwise, when a user clicks. for example, on the `React` tab it would change the active tab of
+      // all the other code-samples to the default `cURL`.
       ignoredTabs: [],
     }
   },
