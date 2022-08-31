@@ -3,31 +3,31 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const DEFAULT_TAB = 'bash'
-const STORAGE_KEY = 'tabsLanguage'
+const DEFAULT_LABEL = 'cURL'
+const STORAGE_KEY = 'preferedTab'
 
-const initialLanguage = () => {
+const initialTab = () => {
   if (typeof window !== 'undefined') {
-    return localStorage.getItem(STORAGE_KEY) || DEFAULT_TAB
+    return localStorage.getItem(STORAGE_KEY) || DEFAULT_LABEL
   } else {
-    return DEFAULT_TAB
+    return DEFAULT_LABEL
   }
 }
 export default new Vuex.Store({
   state: {
-    // Uses the stored language in the local storage
-    // if it does not exists, default to `bash`
-    tabsLanguage: initialLanguage(),
+    // Uses the stored tab in the local storage
+    // if it does not exists, default to `cURL`
+    preferedTab: initialTab(),
   },
   mutations: {
-    changeTabsLanguage(state, language) {
-      // Adds the prefered tab language to the local storage
+    changePreferedTab(state, tab) {
+      // Adds the prefered tab to the local storage
       if (typeof window !== 'undefined') {
-        localStorage.setItem(STORAGE_KEY, language)
+        localStorage.setItem(STORAGE_KEY, tab)
       }
 
-      // Update the language state. It will reflect on all code-samples tabs
-      state.tabsLanguage = language
+      // Updates the tab. It will reflect on all code-samples tabs
+      state.preferedTab = tab
     },
   },
 })

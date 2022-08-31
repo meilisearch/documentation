@@ -23,7 +23,7 @@ module.exports = function (fetchedSamples) {
     }
   **/
   return fetchedSamples.reduce((allSamples, sampleSet) => {
-    const { samples, language, label } = sampleSet
+    const { samples, language, label, cachableTab } = sampleSet
 
     for (const sampleId in samples) {
       const sampleBody = samples[sampleId]
@@ -36,6 +36,7 @@ module.exports = function (fetchedSamples) {
           {
             language, // language identifier. Ex: csharp
             label, // label appearing on the tab
+            cachableTab, // Wether the tab can be set as prefered tab in the local storage
             code: renderCodeSample({ // render in HTML
               sampleBody,
               sampleId,

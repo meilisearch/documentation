@@ -2,13 +2,13 @@
   <!-- The click listener updates the prefered tabs language state in ./store.js -->
   <div class="code-samples-wrapper" @click="updateLanguage">
     <!-- the active-name prop defines the current active tab -->
-    <tabs v-if="samples" type="border-card" :active-name="tabsLanguage" class="tab-content">
+    <tabs v-if="samples" type="border-card" :active-name="preferedTab" class="tab-content">
       <!-- the `name` prop compares with the parent `active-name` to determine if it is the active tab or not -->
       <tab
         v-for="sample in samples"
-        :key="sample.language"
+        :key="`${sample.language}-${sample.label}`"
         :label="sample.label"
-        :name="sample.language"
+        :name="`${sample.label}`"
       >
         <div v-html="sample.code" />
       </tab>
@@ -32,16 +32,19 @@ export default {
   data() {
     return {
       samples: undefined,
-      preferedLanguage: undefined,
+      defaultTab: undefined,
+      ignoredTabs: [],
     }
   },
   computed: {
-    tabsLanguage() {
-      this.resolvePreferedTabsLanguage()
-      return this.preferedLanguage
+    preferedTab() {
+      this.resolvePreferedTab()
+
+      return this.defaultTab
     },
   },
   created() {
+    this.ignoredTabs = CODE_SAMPLES[this.id].filter(tab => !tab.cachableTab).map(tab => tab.label)
     this.samples = CODE_SAMPLES[this.id]
   },
   methods: {
@@ -49,20 +52,24 @@ export default {
     * Check if the prefered language found in the store has an existing matching code-sample-id.
     * If not, defaults to the first language it finds in the list (often bash).
     */
-    resolvePreferedTabsLanguage: function () {
-      const languages = this.samples.map(sample => sample.language)
-      const storedTabsLanguage = this.$store.state.tabsLanguage
-      this.preferedLanguage = languages.includes(storedTabsLanguage) ? storedTabsLanguage : languages[0]
+    resolvePreferedTab: function () {
+      const languages = this.samples.map(sample => sample.label)
+
+      const storedPreferedTab = this.$store.state.preferedTab
+      this.defaultTab = languages.includes(storedPreferedTab) ? storedPreferedTab : languages[0]
     },
     /*
     * Updates the tabs language state with the current active tab language.
     * Storage of the state is done in `./store.js`
     */
-    updateLanguage: function (event) {
+    updatePreferedTab: function (event) {
       const classList = [...event.target.classList] // transform DOMTokenList to Array type to make it iterable.
       if (classList.includes('el-tabs__item')) { // check if clicked element is a tab
-        const tabsLanguage = event.target.id.replace('tab-', '')
-        this.$store.commit('changeTabsLanguage', tabsLanguage)
+        const tabName = event.target.id.replace('tab-', '')
+
+        // Update the prefered tab in the store.
+        // Only updates if the tab can be a prefered tab (see cachableTab in sdks.json)
+        if (!this.ignoredTabs.includes(tabName)) { this.$store.commit('changePreferedTab', tabName) }
       }
     },
   },
