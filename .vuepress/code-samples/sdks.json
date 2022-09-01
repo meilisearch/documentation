@@ -1,86 +1,86 @@
 [
   {
     "language": "bash",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "cURL",
     "url": "https://raw.githubusercontent.com/meilisearch/documentation/master/.code-samples.meilisearch.yaml"
   },
   {
     "language": "javascript",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "JS",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-js/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "python",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "Python",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-python/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "php",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "PHP",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-php/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "java",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "Java",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-java/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "ruby",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "Ruby",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-ruby/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "go",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "Go",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-go/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "csharp",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "C#",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dotnet/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "rust",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "Rust",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-rust/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "swift",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "Swift",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-swift/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "dart",
-    "cachableTab": true,
+    "cacheableTab": true,
     "label": "Dart",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-dart/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "javascript",
-    "cachableTab": false,
+    "cacheableTab": false,
     "label": "Vanilla JS",
     "comment_not_used_field": "This scope is `instant-meilisearch` and not meilisearch-js. We cannot name if `instant-meilisearch` because we neet to stay consistent with `Vue` and `React` naming",
     "url": "https://raw.githubusercontent.com/meilisearch/instant-meilisearch/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "javascript",
-    "cachableTab": false,
+    "cacheableTab": false,
     "label": "React",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-react/main/.code-samples.meilisearch.yaml"
   },
   {
     "language": "javascript",
-    "cachableTab": false,
+    "cacheableTab": false,
     "label": "Vue.js",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-vue/main/.code-samples.meilisearch.yaml"
   }
