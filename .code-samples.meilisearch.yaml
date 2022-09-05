@@ -986,4 +986,3 @@ getting_started_pagination: |-
     --data-binary '{
       "maxTotalHits": 500
     }'
-    
