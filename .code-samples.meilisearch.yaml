@@ -971,4 +971,4 @@ synonyms_guide_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "great": ["fantastic"], "fantastic": ["great"]
-      }'
+    }'
