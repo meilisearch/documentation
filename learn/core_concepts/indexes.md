@@ -81,7 +81,7 @@ Designate the distinct attribute using the [update settings endpoint](/reference
 
 ### Synonyms
 
-Your dataset may contain words with similar meanings. For these, you can define a list of synonyms: words that will be treated as the same or similar for search purposes. Words set as synonyms won't always return the same results due to factors like allowed typos and splitting the word.
+Your dataset may contain words with similar meanings. For these, you can define a list of synonyms: words that will be treated as the same or similar for search purposes. Words set as synonyms won't always return the same results due to factors like typos and splitting the query.
 
 Since synonyms are defined for a given index, they won't apply to any other index on the same Meilisearch instance. You can create your list of synonyms using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update synonyms endpoint](/reference/api/synonyms.md#update-synonyms).
 
