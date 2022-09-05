@@ -28,28 +28,9 @@ Currently, these are Meilisearch's asynchronous operations:
 
 All of Meilisearch's asynchronous operations belong to a category called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need the task's unique identifier.
 
-### Task API response
-
-The response from the [task API](/reference/api/tasks.md) will always include the following fields in the stated order:
-
-| Field        | Type    | Description                                                                                                      |
-|--------------|---------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `uid`        | integer | The unique sequential identifier of the task                                                                     |
-| `indexUid`   | string  | The unique index identifier (always `null` for dumps)                                                                                      |
-| `status`     | string  | The status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`                                                                                                                                    |
-| `type`       | string  | The type of task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`                                                                       |
-| `details`    | object  | Detailed information on the task payload                                                               |
-| `error`      | object  | Error details and context. Only present when a task has the `failed` status                                                |
-| `duration`   | string  | The total elapsed time the task spent in the `processing` state, in ISO 8601 format     |
-| `enqueuedAt` | string  | The date and time when the task was first `enqueued`, in RFC 3339 format                           |
-| `startedAt`  | string  | The date and time when the task began `processing`, in RFC 3339 format                                                                                                                       |
-| `finishedAt` | string  | The date and time when the task finished processing, whether `failed` or `succeeded`, in RFC 3339 format.                                                                                                                          |
-
-If a task fails due to an error, all error fields will be appended to the task response in an `error` object.
-
 ### Summarized task objects
 
-All asynchronous operations return a summarized version of [the full `task` object](#task-api-response). It contains the following fields in the stated order:
+All asynchronous operations return a summarized version of [the full `task` object](/reference/api/tasks.md#task-object). It contains the following fields in the stated order:
 
 | Field      | Type    | Description                              |
 |------------|---------|---------------------------------         |

@@ -8,7 +8,7 @@ Filters have several use-cases, such as restricting the results a specific user 
 
 Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria.
 
-To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
+To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/settings.md#filterable-attributes).
 
 **This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by Meilisearch before they can be used.
 
@@ -41,7 +41,7 @@ Suppose you have a collection of movies containing the following fields:
 ]
 ```
 
-If you want to filter results based on the `director` and `genres` attributes, you must add them to the [`filterableAttributes` list](/reference/api/filterable_attributes.md):
+If you want to filter results based on the `director` and `genres` attributes, you must add them to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes):
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
@@ -184,7 +184,7 @@ Suppose that you have a dataset containing several movies in the following forma
 ]
 ```
 
-If you want to enable filtering using `director`, `release_date`, `genres`, and `rating`, you must add these attributes to the [`filterableAttributes` index setting](/reference/api/filterable_attributes.md).
+If you want to enable filtering using `director`, `release_date`, `genres`, and `rating`, you must add these attributes to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes).
 
 You can then restrict a search so it only returns movies released after 18 March 1995 with the following filter containing a single condition:
 
@@ -310,7 +310,7 @@ Using the `facets` search parameter adds `facetDistribution` to the returned obj
 ```
 
 ::: note
-By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/faceting.md).
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
 :::
 
 ##### Example

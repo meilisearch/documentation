@@ -972,3 +972,18 @@ synonyms_guide_1: |-
     --data-binary '{
       "great": ["fantastic"], "fantastic": ["great"]
     }'
+getting_started_faceting: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxValuesPerFacet": 2
+    }'
+getting_started_pagination: |-
+  curl \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings/pagination' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "maxTotalHits": 500
+    }'
+    

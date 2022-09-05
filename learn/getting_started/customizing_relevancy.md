@@ -118,7 +118,7 @@ Meilisearch allows you to ignore certain words in your search queries by adding 
 
 If you search for `the cat` after running the above command, Meilisearch will consider your search query to be `cat`, improving the speed and relevancy of your search.
 
-You can read more about stop words in the [API reference](/reference/api/stop_words.md).
+You can read more about stop words in the [API reference](/reference/api/settings.md#stop-words).
 
 ## Synonyms
 
@@ -148,5 +148,31 @@ Meilisearch accepts one typo for query terms containing `5` or more characters b
 The above code sample sets the minimum word size for one typo to `4` characters. If you search for `swaj` now, you should get some results.
 
 You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance.md).
+
+## Faceting
+
+Meilisearch allows you to create faceted search interfaces, refining search results based on broad categories called facets. Like filters, you need to add the attributes you want to use as facets to `filterableAttributes`.
+
+When creating a faceted search interface, it is helpful to display how results are distributed between the different categories. For example, a user might want to know how many of their results have a `genre` of `comedy` and how many have a `genre` of `horror`. Meilisearch supports this with [the `facets` search parameter](/reference/api/search.md#facets).
+
+Using the faceting settings, you can configure the maximum number of facet values returned for each facet.
+
+Suppose your results contain the following values for the `genres` facet: `Action`, `Adventure`, `Science Fiction`, and `Comedy`. After running the below code sample, you would only see how results are distributed between the `Action` and `Adventure` genres.
+
+<CodeSamples id= "getting_started_faceting" />
+
+You can read more about faceting in our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
+
+## Pagination
+
+By default, Meilisearch returns 1000 results per search. This limit protects your database from malicious scraping.
+
+The code sample below sets this limit to 500:
+
+<CodeSamples id= "getting_started_pagination" />
+
+Now, users won't be able to access search results beyond 500.
+
+You can read more about pagination in our [dedicated guide](/learn/advanced/pagination.md).
 
 The next chapter tackles more advanced topics, including security and data backup.

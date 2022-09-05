@@ -5,7 +5,7 @@ Currently, Meilisearch databases can only be opened by the Meilisearch version y
 If you already have a Meilisearch database with some data you don’t want to lose, you are in the right place!
 
 ::: danger
-This guide does not work for versions below v0.15. For more information, contact support.
+This guide does not work for versions below v0.15. For more information, [contact support](https://slack.meilisearch.com/).
 :::
 
 ## Step 1: Verify your database version
@@ -244,6 +244,6 @@ If you are using Meilisearch v0.20 or below, migration should be done in two ste
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
-Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/displayed_attributes.md#update-displayed-attributes).
+Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
 
 Congratulations! You have successfully migrated your Meilisearch database to the latest version! 🎉

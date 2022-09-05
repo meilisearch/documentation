@@ -2,11 +2,11 @@
 
 A dump is a compressed file containing an export of your Meilisearch instance. It contains all your indexes, documents, and settings, but in a raw unprocessed form. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to create an identical dataset.
 
-A dump can be imported when launching Meilisearch, but be advised that it may take some time to index.
+Creating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.
 
 ## Creating a dump
 
-To create a dump of your dataset, you need to use the appropriate HTTP route: [`POST /dumps`](/reference/api/dump.md#create-a-dump). The dump creation process is an asynchronous task that takes time proportional to the size of your dataset.
+To create a dump of your dataset, you need to use the appropriate HTTP route: `POST /dumps`:
 
 <CodeSamples id="post_dump_1" />
 
@@ -44,13 +44,19 @@ This command should return an object with detailed information about the dump op
 }
 ```
 
+The dump creation process is an asynchronous task that takes time proportional to the size of your dataset. All indexes of the current instance are exported along with their documents and settings and saved as a single `.dump` file.
+
 After dump creation is finished—when `status` is `succeeded`—the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary. You can customize [this using the `--dumps-dir` configuration option](/learn/configuration/instance_options.md#dumps-destination). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
 
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
 
 ## Importing a dump
 
-When a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed until the importing process is complete.
+Dump imports must be performed when launching a Meilisearch instance [using the `import-dump` command-line option](/learn/configuration/instance_options.md#import-dump).
+
+During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same `uid` as an index in the dump file will be overwritten.
+
+While a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed until the importing process is complete.
 
 Dumps from v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/api/version.md#example) and proceed accordingly.
 

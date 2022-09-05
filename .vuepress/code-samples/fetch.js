@@ -40,6 +40,7 @@ async function requestSamples() {
         samples: sampleYamlToJs(body, sdk),
         language: sdk.language,
         label: sdk.label,
+        cacheableTab: sdk.cacheableTab,
       }
     } catch (e) {
       // Crashes are not thrown. File will be ignored and warning raised
