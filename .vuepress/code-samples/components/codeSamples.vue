@@ -48,7 +48,13 @@ export default {
     },
   },
   created() {
-    this.ignoredTabs = CODE_SAMPLES[this.id].filter(tab => !tab.cacheableTab).map(tab => tab.label)
+    // Add to the ignored list the tabs that cannot be a preferred tab in the local storage
+    if (CODE_SAMPLES[this.id]) {
+      this.ignoredTabs = CODE_SAMPLES[this.id].filter(tab => !tab.cacheableTab).map(tab => tab.label)
+    } else {
+      this.ignoredTabs = []
+    }
+
     this.samples = CODE_SAMPLES[this.id]
   },
   methods: {
