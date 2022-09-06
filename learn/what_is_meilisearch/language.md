@@ -6,6 +6,7 @@ Meilisearch is multilingual, featuring optimized support for:
 - Chinese
 - Japanese
 - Hebrew
+- Thai
 
 We aim to provide global language support, and your feedback helps us move closer to that goal. If you notice inconsistencies in your search results or the way your documents are processed, please [open an issue in the Meilisearch repository](https://github.com/meilisearch/meilisearch/issues/new/choose).
 
@@ -29,6 +30,7 @@ Under the hood, Meilisearch relies on tokenizers that identify the most importan
 - A pipeline specifically tailored for Chinese
 - A pipeline specifically tailored for Japanese
 - A pipeline specifically tailored for Hebrew
+- A pipeline specifically tailored for Thai
 
 ### My language does not use whitespace to separate words. Can I still use Meilisearch?
 
