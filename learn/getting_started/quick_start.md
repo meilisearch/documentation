@@ -185,7 +185,9 @@ Meilisearch stores data in the form of discrete records, called [documents](/lea
 Currently, Meilisearch only supports [JSON, CSV, and NDJSON formats](/learn/core_concepts/documents.md#dataset-format).
 :::
 
-The previous command added documents from `movies.json` to a new index called `movies`. After adding documents, you should receive a response like this:
+The previous command added documents from `movies.json` to a new index called `movies`.
+
+By default, Meilisearch combines consecutive document requests into a batch to be processed together. This process is called auto-batching, and it significantly speeds up indexing. After adding documents, you should receive a response like this:
 
 ```json
 {

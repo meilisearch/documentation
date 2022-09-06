@@ -106,6 +106,17 @@ If no master key is provided in a `development` environment, all routes will be 
 
 [Learn more about Meilisearch's use of security keys.](/learn/security/master_api_keys.md)
 
+### Disable auto-batching
+
+::: warning
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+:::
+
+**Environment variable**: `MEILI_DISABLE_AUTO_BATCHING`
+**CLI option**: `--disable-auto-batching`
+
+Deactivates auto-batching when provided.
+
 ### Disable analytics
 
 ::: warning
