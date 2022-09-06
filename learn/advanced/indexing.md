@@ -28,15 +28,13 @@ Multi-threading is unfortunately not possible in machines with only one processo
 
 ## Improving indexing performance
 
-If you encounter performance issues during the indexing we recommend trying the following points:
+If you encounter performance issues during indexing, we recommend trying the following:
 
-- Make sure you are using the latest [stable version of Meilisearch](https://github.com/meilisearch/meilisearch/releases). New releases often include performance improvements that can significantly increase indexing speed.
+- Make sure you are using the latest [stable version of Meilisearch](https://github.com/meilisearch/meilisearch/releases). New releases often include performance improvements that can significantly increase indexing speed
 
-- indexing is a memory-intensive and multi-threaded operation. This means **the more memory and processor cores available, the faster Meilisearch will index new documents**. When trying to improve indexing speed, using a machine with more processor cores is more effective than increasing RAM.
+- Indexing is a memory-intensive and multi-threaded operation. This means **the more memory and processor cores available, the faster Meilisearch will index new documents**. When trying to improve indexing speed, using a machine with more processor cores is more effective than increasing RAM.
 
 - **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/configuration/instance_options.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
-
-  - If you want to speed up indexing but don't wish to batch documents manually, consider giving our [experimental auto-batcher](/learn/experimental/auto-batching.md) a try.
 
 - **Meilisearch should not be your main database**. The more documents you add, the longer will indexing and search take, so you should only index documents you want to retrieve when searching.
 
