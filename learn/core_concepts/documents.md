@@ -124,3 +124,19 @@ Since CSV does not support arrays or nested objects, `cast` cannot be converted 
 ::: note
 If you don't specify the data type for an attribute, it will default to `:string`.
 :::
+
+## Auto-batching
+
+Auto-batching combines consecutive document addition requests into a batch to be processed together. This significantly speeds up the indexing process.
+
+For document addition requests to be added to the same batch, they need to:
+
+- Target the same index
+- Have the same update method (i.e., [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
+- Be immediately consecutive
+
+Tasks within the same batch share the same values for `startedAt`, `finishedAt`, `duration`, and the same `error` object, if an error occurs.
+
+If a task fails within a batch, the whole batch does not fail.
+
+You can deactivate auto-batching using the `--disable-auto-batching` command flag or the `MEILI_DISABLE_AUTO_BATCHING` environment variable.
