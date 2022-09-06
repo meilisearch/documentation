@@ -2,8 +2,15 @@
 
 If multiple words have an equivalent meaning in your dataset, you can [create a list of synonyms](/reference/api/settings.md#update-synonyms). This will make your search results more relevant.
 
-In general, **a search on a word will return the same results as a search on any of its synonyms**.
-There is one exception to this rule, [detailed below](#multi-word-phrases).
+Words set as synonyms won't always return the same results. With the default settings, the `movies` dataset should return 547 results for `great` and 66 for `fantastic`. Let's set them as synonyms:
+
+<CodeSamples id="synonyms_guide_1" />
+
+With the new settings, searching for `great` returns 595 results and `fantastic` returns 423 results. This is due to various factors like [typos](/learn/configuration/typo_tolerance.md#minwordsizefortypos) and [splitting the query](/learn/advanced/concat.md#split-queries) to find relevant documents. The search for `great` will allow only one typo (e.g. `create`) and take into account all variations of `great` (e.g. `greatest`) along with `fantastic`.
+
+::: warning
+The number of search results may vary depending on changes to the `movies` dataset.
+:::
 
 ## Normalization
 
