@@ -126,7 +126,7 @@ The `synonyms` array lets you associate certain words in your dataset, telling M
 
 <CodeSamples id= "getting_started_synonyms" />
 
-This will set `winnie` and `piglet` as synonyms; searching for either word will show the same results.
+This will set `winnie` and `piglet` as synonyms. Searching for either won't always return the same results due to factors like typos and splitting the query.
 
 You can read more about it in our [dedicated guide](/learn/configuration/synonyms.md).
 

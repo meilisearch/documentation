@@ -965,6 +965,13 @@ settings_guide_faceting_1: |-
     --data-binary '{
       "maxValuesPerFacet": 5
     }'
+synonyms_guide_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "great": ["fantastic"], "fantastic": ["great"]
+    }'
 getting_started_faceting: |-
   curl \
     -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
@@ -979,4 +986,3 @@ getting_started_pagination: |-
     --data-binary '{
       "maxTotalHits": 500
     }'
-    
