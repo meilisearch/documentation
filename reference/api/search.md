@@ -33,22 +33,23 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 ### Body
 
-| Search Parameter                                        | Type             | Default value | Description                                        |
-| :------------------------------------------------------ | :--------------- | :------------ | :------------------------------------------------- |
-| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                       |
-| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                        |
-| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned               |
-| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value             |
-| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet             |
-| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents    |
-| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped         |
-| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words           |
-| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                     |
-| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute |
-| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term |
-| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term   |
-| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                     |
-| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value        |
+| Search Parameter                                        | Type             | Default value | Description                                                           |
+| :------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------------------------- |
+| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                                          |
+| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                                           |
+| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                                  |
+| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value                                |
+| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet                                |
+| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents                       |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped                            |
+| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words                              |
+| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                                        |
+| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute                    |
+| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term                    |
+| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term                      |
+| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                                        |
+| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value                           |
+| **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents as search results |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -127,22 +128,23 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 ### Query parameters
 
-| Search Parameter                                        | Type             | Default value | Description                                        |
-| :------------------------------------------------------ | :--------------- | :------------ | :------------------------------------------------- |
-| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                       |
-| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                        |
-| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned               |
-| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value             |
-| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet             |
-| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents    |
-| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped         |
-| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words           |
-| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                     |
-| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute |
-| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term |
-| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term   |
-| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                     |
-| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value        |
+| Search Parameter                                        | Type             | Default value | Description                                                           |
+| :------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------------------------- |
+| **[`q`](#query-q)**                                     | String           | `""`          | Query string                                                          |
+| **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                                           |
+| **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                                  |
+| **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value                                |
+| **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet                                |
+| **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents                       |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped                            |
+| **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words                              |
+| **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                                        |
+| **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute                    |
+| **[`highlightPreTag`](#highlight-tags)**                | String           | `"<em>"`      | String inserted at the start of a highlighted term                    |
+| **[`highlightPostTag`](#highlight-tags)**               | String           | `"</em>"`     | String inserted at the end of a highlighted term                      |
+| **[`showMatchesPosition`](#show-matches-position)**     | Boolean          | `false`       | Return matching terms location                                        |
+| **[`sort`](#sort)**                                     | Array of strings | `null`        | Sort search results by an attribute's value                           |
+| **[`matchingStrategy`](#matching-strategy)**            | String           | `last`        | Strategy used to match query terms within documents as search results |
 
 [Learn more about how to use each search parameter](#search-parameters).
 
@@ -227,6 +229,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`highlightPostTag`](#highlight-tags)**               | `"</em>"`     | String inserted at the end of a highlighted term   |
 | **[`showMatchesPosition`](#show-matches-position)**     | `false`       | Return matching terms location                     |
 | **[`sort`](#sort)**                                     | `null`        | Sort search results by an attribute's value        |
+| **[`matchingStrategy`](#matching-strategy)**            | String        | `last`                                             | Strategy used to match query terms within documents as search results
 
 ### Query (q)
 
@@ -735,3 +738,9 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ```
 
 [You can read more about location-based sorting in our dedicated guide.](/learn/advanced/geosearch.md#sorting-results-with-geopoint)
+
+### Matching strategy
+
+**Parameter**: `matchingStrategy`
+**Expected value**: `last` or `all`
+**Default value**: `last`
