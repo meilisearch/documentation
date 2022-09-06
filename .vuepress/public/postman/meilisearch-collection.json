@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "453f3754-4b37-4654-8fe3-b2b3aef24048",
-		"name": "Meilisearch v0.28",
+		"_postman_id": "5ad97bb3-840b-40dc-9012-482a0c2c52a5",
+		"name": "Meilisearch v0.29",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8898306"
 	},
@@ -308,6 +308,11 @@
 								{
 									"key": "highlightPostTag",
 									"value": "</mark>",
+									"disabled": true
+								},
+								{
+									"key": "matchingStrategy",
+									"value": "all",
 									"disabled": true
 								}
 							]
