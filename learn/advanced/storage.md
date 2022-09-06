@@ -71,3 +71,11 @@ These metrics are highly dependent on the machine that is running Meilisearch. R
 It is important to note that **there is no reliable way to predict the final size of a database**. This is true for just about any search engine on the market—we're just the only ones saying it out loud.
 
 Database size is affected by a large number of criteria, including settings, relevancy rules, use of facets, the number of different languages present, and more.
+
+## Soft deletion
+
+Meilisearch renders deleted documents inaccessible to all users but does not immediately remove them from the database. This is a common optimization technique called "soft deletion". Soft deleted documents are permanently deleted at a later date—the precise time depends on index size and available disk space.
+
+When updating a document, Meilisearch deletes the current record and creates a new one containing the new data. This means soft deletion, as well as its associated performance increase, also affect document updates.
+
+If you are developing an application that handles sensitive data, it might be important to check how soft deletion interacts with relevant data retention legislation.
