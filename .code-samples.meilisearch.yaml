@@ -986,3 +986,18 @@ getting_started_pagination: |-
     --data-binary '{
       "maxTotalHits": 500
     }'
+search_parameter_guide_matching_strategy_1: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "big fat liar"
+    }'      
+search_parameter_guide_matching_strategy_2: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "big fat liar",
+      "matchingStrategy": "all"
+    }'    
