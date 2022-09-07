@@ -745,7 +745,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 **Expected value**: `last` or `all`
 **Default value**: `last`
 
-Defines the strategy used to match query terms in documents. `last` returns documents containing all the query words first. If there aren't enough documents to meet the requested `limit`, it will remove one query term at a time, starting from the end of the query term.
+Defines the strategy used to match query terms in documents. `last` returns documents containing all the query words first. If there aren't enough documents to meet the requested `limit`, it will remove one query term at a time, starting from the end of the query.
 
 <CodeSamples id="search_parameter_guide_matching_strategy_1" />
 
