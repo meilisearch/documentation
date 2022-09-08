@@ -62,11 +62,11 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 **Default value**: N/A
 **Description**: An array of API actions permitted for the key, represented as strings. API actions are only possible on authorized [`indexes`](#indexes). `["*"]` for all actions.
 
-::: warning
-We do not recommend creating keys that can perform all actions.
-:::
-
 You can use `*` as a wildcard to access all endpoints for the `documents`, `indexes`, `tasks`, `settings`, `stats` and `dumps` actions. For example, `documents.*` gives access to all document actions.
+
+::: warning
+For security reasons, we do not recommend creating keys that can perform all actions.
+:::
 
 | Name                   | Description                                                                                                                                                                                                                                                                      |
 | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
