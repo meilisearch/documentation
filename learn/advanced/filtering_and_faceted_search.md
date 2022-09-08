@@ -109,7 +109,7 @@ String expressions combine conditions using the following filter operators and p
 - `IN [valueA, valueB]` selects all documents whose chosen field contains at least one of the specified values. The expression `genres IN [horror, comedy]` returns all documents whose `genres` includes either `horror`, `comedy`, or both
 - `EXIST` checks for the existence of a field. Fields with empty or null values still count as existing. The expression `release_date NOT EXIST` returns all documents without a `release_date`
 
-When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" AND title = "AND"`.
+When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
 
 ::: tip
 String expressions are read left to right. `NOT` takes precedence over `AND` and `AND` takes precedence over `OR`. You can use parentheses to ensure expressions are correctly parsed.
