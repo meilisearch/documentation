@@ -102,12 +102,12 @@ The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-i
 
 String expressions combine conditions using the following filter operators and parentheses:
 
-- `NOT` returns all documents that do not satisfy a condition, including results missing the specified attribute. The expression `NOT genres = horror` returns all documents whose `genre` is not `horror` and documents missing a `genres` field
+- `NOT` returns all documents that do not satisfy a condition, including results missing the specified attribute. The expression `NOT genres = horror` returns all documents whose `genres` do not contain `horror` and all documents missing a `genres` field
 - `AND` operates by connecting two conditions and only returns documents that satisfy both of them: `genres = horror AND director = 'Jordan Peele'`
 - `OR` connects two conditions and returns results that satisfy at least one of them: `genres = horror OR genres = comedy`
 - `TO` is equivalent to `>= AND <=`. The expression `release_date 795484800 TO 972129600` translates to `release_date >= 795484800 AND release_date <= 972129600`
 - `IN [valueA, valueB]` selects all documents whose chosen field contains at least one of the specified values. The expression `genres IN [horror, comedy]` returns all documents whose `genres` includes either `horror`, `comedy`, or both
-- `EXIST` checks for the existence of a field. Fields with empty or null values still count as existing. The expression `release_date NOT EXIST` returns all documents without a `release_date`
+- `EXISTS` checks for the existence of a field. Fields with empty or null values still count as existing. The expression `release_date NOT EXISTS` returns all documents without a `release_date`
 
 When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
 
