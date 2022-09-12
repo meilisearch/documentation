@@ -4,7 +4,7 @@ Adding new documents to an index is a multi-threaded and memory-intensive operat
 
 ## RAM
 
-By default, our indexer uses the `sysinfo` Rust library to calculate a machine's total memory size. Meilisearch then adapts its behavior so indexing uses a maximum two thirds of available resources. Alternatively, you can use the `[--max-indexing-memory](/learn/configuration/instance_options.md#max-indexing-memory)` instance option to manually control the maximum amount of RAM Meilisearch can consume.
+By default, our indexer uses the `sysinfo` Rust library to calculate a machine's total memory size. Meilisearch then adapts its behavior so indexing uses a maximum two thirds of available resources. Alternatively, you can use the [`--max-indexing-memory`](/learn/configuration/instance_options.md#max-indexing-memory) instance option to manually control the maximum amount of RAM Meilisearch can consume.
 
 It is important to prevent Meilisearch from using all available memory during indexing. If that happens, there are two negative consequences:
 
