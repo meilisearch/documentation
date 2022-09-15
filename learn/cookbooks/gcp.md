@@ -78,7 +78,7 @@ Configuring your Meilisearch instance in a production environment is not just st
 
 ### 1. Make your domain name point to your instance IP
 
-If you want to use a custom domain name (or sub-domain), add a record to your domain name provider account. Otherwise, you can skip this step.
+If you want to use a custom domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, you can skip this step.
 
 ![The my-gcp-instance domain](/gcp/08.domain.png)
 
