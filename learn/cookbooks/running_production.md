@@ -227,7 +227,7 @@ Once your domain name has been set up, you are ready to configure SSL/TLS and us
 
 #### 3.2. Option A: Certbot
 
-Using certbot in your Linux server is very straightforward. This tool will generate a free SSL/TLS certificate for your domain name, and automatically handle its installation on your server. The certbot documentation contains detailed instructions for many operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/lets-encrypt/debianbuster-nginx).
+Using certbot in your Linux server is very straightforward. This tool will generate a free SSL/TLS certificate for your domain name, and automatically handle its installation on your server. The certbot documentation contains detailed instructions for many operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/instructions?ws=nginx&os=debianbuster).
 
 First of all, install the packages on your system:
 
