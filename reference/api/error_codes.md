@@ -1,4 +1,4 @@
-# Errors
+# Error codes
 
 In this page you may find an exhaustive list of Meilisearch API errors.
 
