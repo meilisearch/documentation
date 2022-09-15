@@ -135,6 +135,6 @@ For document addition requests to be added to the same batch, they need to:
 - Have the same update method (i.e., [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Be immediately consecutive
 
-Tasks within the same batch share the same values for `startedAt`, `finishedAt`, `duration`, and the same `error` object, if an [internal](/reference/api/overview.md#errors) error occurs. If a task fails due to an invalid document, it will not be processed with the batch and will have its own error message.
+Tasks within the same batch share the same values for `startedAt`, `finishedAt`, `duration`, and the same `error` object, if an [internal](/reference/api/overview.md#errors) error occurs. If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally.
 
 You can deactivate auto-batching using the `--disable-auto-batching` command-line flag or the `MEILI_DISABLE_AUTO_BATCHING` environment variable.
