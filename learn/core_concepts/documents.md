@@ -137,4 +137,4 @@ Meilisearch batches document addition requests when they:
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`. They also share the same `error` object, if an [internal](/reference/api/overview.md#errors) error occurs. If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally.
 
-You can deactivate auto-batching using the `--disable-auto-batching` command-line flag or the `MEILI_DISABLE_AUTO_BATCHING` environment variable.
+You can deactivate auto-batching using the `--disable-auto-batching` command-line flag or the `MEILI_DISABLE_AUTO_BATCHING` environment variable. This is useful in cases where you want to avoid any potential bugs in the feature or reduce visibility latency. When auto-batching is disabled, the whole queue takes longer to process, but each individual task will be processed earlier (until a certain number of processed tasks).
