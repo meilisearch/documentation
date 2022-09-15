@@ -129,12 +129,12 @@ If you don't specify the data type for an attribute, it will default to `:string
 
 Auto-batching combines consecutive document addition requests into a batch to be processed together. This significantly speeds up the indexing process.
 
-For document addition requests to be added to the same batch, they need to:
+Meilisearch batches document addition requests when they:
 
 - Target the same index
 - Have the same update method (i.e., [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Be immediately consecutive
 
-Tasks within the same batch share the same values for `startedAt`, `finishedAt`, `duration`, and the same `error` object, if an [internal](/reference/api/overview.md#errors) error occurs. If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally.
+Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`. They also share the same `error` object, if an [internal](/reference/api/overview.md#errors) error occurs. If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally.
 
 You can deactivate auto-batching using the `--disable-auto-batching` command-line flag or the `MEILI_DISABLE_AUTO_BATCHING` environment variable.
