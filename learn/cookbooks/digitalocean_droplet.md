@@ -79,7 +79,7 @@ Configuring your Meilisearch in a **production** environment on DigitalOcean dro
 
 ### 1. Make your domain name point to your droplet
 
-If you want to use your own domain name (or sub-domain), add a record to your domain name provider account.
+If you want to use your own domain name (or sub-domain), add `A record` in your domain name provider account.
 
 ![An interface for editing DNS records with "Type": A, "Name": droplet, "IPv4 address": 165.227.56.77, and "TTL": Auto](/digitalocean/11.domain-a-record.png)
 
