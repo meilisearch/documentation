@@ -359,7 +359,7 @@ You can write a filter expression in string syntax using logical connectives:
 You can write the same filter as an array:
 
 ```
-[["genres = horror", "genres = mystery"], "director = 'Jordan Peele']
+[["genres = horror", "genres = mystery"], "director = 'Jordan Peele'"]
 ```
 
 You can then use the filter in a search query:
