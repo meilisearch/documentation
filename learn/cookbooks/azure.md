@@ -20,19 +20,19 @@ You can deploy a Meilisearch instance via the official [Meilisearch Docker image
 
 When clicking this button, you'll be redirected to the Azure Portal and asked a few questions:
 
-- "Region": This is the deployment region. You should select a region close to you or your users.
-- "Environment": The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This setting has no effect on the type of resources deployed. It's just for convenience.
-- "Application Name": The name of your application. This name should be **unique across all Azure customers**. The URL where your application is deployed will contain this value.
-- "Location": This is the resources' location. For reasons out of scope of this documentation, this parameter is different from the _Region_ one. By default, it is set to `eastus`, but you can type any Azure location (like `francecentral`, `westeurope`, or `japaneast`).
-- "`Meilisearch_apikey`": This will be the [master key](/learn/security/master_api_keys.md) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key.
+- "Region": This is the deployment region. You should select a region close to you or your users
+- "Environment": The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This setting has no effect on the type of resources deployed. It's just for convenience
+- "Application Name": The name of your application. This name should be **unique across all Azure customers**. The URL where your application is deployed will contain this value
+- "Location": This is the resources' location. For reasons out of scope of this documentation, this parameter is different from the _Region_ one. By default, it is set to `eastus`, but you can type any Azure location (like `francecentral`, `westeurope`, or `japaneast`)
+- "`Meilisearch_apikey`": This will be the [master key](/learn/security/master_api_keys.md) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key
 
-Once you have filled in these fields, click the **Review + create** button, and then the **Create** button.
+Once you have filled in these fields, click the "Review + create" button and then the "Create" button.
 
 ::: warning
 By default, the instance created is on a Standard plan. This will incur costs in your subscription. You can change it to a Free tier later, or by editing the Infrastructure as Code ([see below](#what-is-happening-with-this-one-click-button)).
 :::
 
-After a few minutes, the deployment will be complete. You'll be able to access your instance URL by clicking on the **Outputs** tabs on the left.
+After a few minutes, the deployment will be complete. You'll be able to access your instance URL by clicking on the "Outputs" tabs on the left.
 
 ![The Azure portal showing information about your Meilisearch deployment](/azure/02.azure-output.png)
 
