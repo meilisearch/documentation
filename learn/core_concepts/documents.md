@@ -135,7 +135,7 @@ Meilisearch batches document addition requests when they:
 - Have the same update method (i.e., [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Are immediately consecutive
 
-Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`. 
+Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.
 
 If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally. If an [`internal`](/reference/api/overview.md#errors) error occurs, the whole batch will fail and all tasks within it will share the same `error` object.
 
