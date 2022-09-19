@@ -41,7 +41,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value             |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet             |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents    |
-| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped         |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped         |
 | **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words           |
 | **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                     |
 | **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute |
@@ -135,7 +135,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value             |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet             |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents    |
-| **[`attributesToCrop`](#attributes-to-crop)**           | Array od strings | `null`        | Attributes whose values have to be cropped         |
+| **[`attributesToCrop`](#attributes-to-crop)**           | Array of strings | `null`        | Attributes whose values have to be cropped         |
 | **[`cropLength`](#crop-length)**                        | Integer          | `10`          | Maximum length of cropped value in words           |
 | **[`cropMarker`](#crop-marker)**                        | String           | `"…"`         | String marking crop boundaries                     |
 | **[`attributesToHighlight`](#attributes-to-highlight)** | Array of strings | `null`        | Highlight matching terms contained in an attribute |
@@ -359,7 +359,7 @@ You can write a filter expression in string syntax using logical connectives:
 You can write the same filter as an array:
 
 ```
-[["genres = horror", "genres = mystery"], "director = 'Jordan Peele']
+[["genres = horror", "genres = mystery"], "director = 'Jordan Peele'"]
 ```
 
 You can then use the filter in a search query:
