@@ -74,8 +74,6 @@ Database size is affected by a large number of criteria, including settings, rel
 
 ## Soft deletion
 
-Meilisearch renders deleted documents inaccessible to all users but does not immediately remove them from the database. This is a common optimization technique called "soft deletion". Soft deleted documents are permanently deleted at a later date—the precise time depends on index size and available disk space.
+Meilisearch renders deleted documents inaccessible to all users but does not immediately remove them from the database. This is a common optimization technique called "soft deletion". Soft deleted documents are permanently deleted at a later date—the precise time depends on index size and available disk space. It might be important to check how soft deletion interacts with relevant data retention legislation.
 
 When updating a document, Meilisearch deletes the current record and creates a new one containing the new data. This means soft deletion, as well as its associated performance increase, also affect document updates.
-
-If you are developing an application that handles sensitive data, it might be important to check how soft deletion interacts with relevant data retention legislation.
