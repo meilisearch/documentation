@@ -50,26 +50,26 @@ Index settings can be thought of as a JSON object containing many different opti
 
 You can customize the following index settings:
 
-- [Ranking rules](#ranking-rules)
+- [Displayed and searchable attributes](#displayed-and-searchable-attributes)
 - [Distinct attribute](#distinct-attribute)
-- [Synonyms](#synonyms)
+- [Faceting](#faceting)
 - [Filterable attributes](#filterable-attributes)
+- [Pagination](#pagination)
+- [Ranking rules](#ranking-rules)
 - [Sortable attributes](#sortable-attributes)
 - [Stop words](#stop-words)
-- [Displayed and searchable attributes](#displayed-and-searchable-attributes)
+- [Synonyms](#synonyms)
 - [Typo tolerance](#typo-tolerance)
-- [Pagination](#pagination)
-- [Faceting](#faceting)
 
 To change index settings, use the [update settings endpoint](/reference/api/settings.md#update-settings) or any of the child routes.
 
-### Ranking rules
+### Displayed and searchable attributes
 
-Meilisearch uses ranking rules to sort matching documents so that the most relevant documents appear at the top. All indexes are created with the same built-in ranking rules executed in default order. The order of these rules matters: the first rule has the most impact, and the last rule has the least.
+By default, every document field is searchable and displayed in response to search queries. However, you can choose to set some fields as non-searchable, non-displayed, or both.
 
-You can alter this order or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/settings.md#update-ranking-rules).
+You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective endpoints for [displayed attributes](/reference/api/settings.md#update-displayed-attributes) and [searchable attributes](/reference/api/settings.md#update-searchable-attributes).
 
-[Learn more about ranking rules](/learn/core_concepts/relevancy.md)
+[Learn more about displayed and searchable attributes](/learn/configuration/displayed_searchable_attributes.md)
 
 ### Distinct attribute
 
@@ -79,13 +79,13 @@ Designate the distinct attribute using the [update settings endpoint](/reference
 
 [Learn more about distinct attribute](/learn/configuration/distinct.md)
 
-### Synonyms
+### Faceting
 
-Your dataset may contain words with similar meanings. For these, you can define a list of synonyms: words that will be treated as the same or similar for search purposes. Words set as synonyms won't always return the same results due to factors like typos and splitting the query.
+Facets are a specific use-case of filters in Meilisearch: whether something is a facet or filter depends on your UI and UX design. Like filters, you need to add your facets to [`filterableAttributes`](/reference/api/settings.md#update-filterable-attributes), then make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
-Since synonyms are defined for a given index, they won't apply to any other index on the same Meilisearch instance. You can create your list of synonyms using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update synonyms endpoint](/reference/api/settings.md#update-synonyms).
+By default, Meilisearch returns `100` facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update faceting settings endpoint](/reference/api/settings.md#update-faceting-settings).
 
-[Learn more about synonyms](/learn/configuration/synonyms.md)
+[Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Filterable attributes
 
@@ -94,6 +94,20 @@ Filtering allows you to refine your search based on different categories. For ex
 Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/settings.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
 [Learn more about filtering](/learn/advanced/filtering_and_faceted_search.md)
+
+### Pagination
+
+To protect your database from malicious scraping, Meilisearch only returns up to `1000` results for a search query. You can change this limit using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update pagination settings endpoint](/reference/api/settings.md#update-pagination-settings).
+
+[Learn more about pagination](/learn/advanced/pagination.md)
+
+### Ranking rules
+
+Meilisearch uses ranking rules to sort matching documents so that the most relevant documents appear at the top. All indexes are created with the same built-in ranking rules executed in default order. The order of these rules matters: the first rule has the most impact, and the last rule has the least.
+
+You can alter this order or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/settings.md#update-ranking-rules).
+
+[Learn more about ranking rules](/learn/core_concepts/relevancy.md)
 
 ### Sortable attributes
 
@@ -111,13 +125,13 @@ Change your index's stop words list using the [update settings endpoint](/refere
 
 [Learn more about stop words](/reference/api/settings.md#stop-words)
 
-### Displayed and searchable attributes
+### Synonyms
 
-By default, every document field is searchable and displayed in response to search queries. However, you can choose to set some fields as non-searchable, non-displayed, or both.
+Your dataset may contain words with similar meanings. For these, you can define a list of synonyms: words that will be treated as the same or similar for search purposes. Words set as synonyms won't always return the same results due to factors like typos and splitting the query.
 
-You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective endpoints for [displayed attributes](/reference/api/settings.md#update-displayed-attributes) and [searchable attributes](/reference/api/settings.md#update-searchable-attributes).
+Since synonyms are defined for a given index, they won't apply to any other index on the same Meilisearch instance. You can create your list of synonyms using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update synonyms endpoint](/reference/api/settings.md#update-synonyms).
 
-[Learn more about displayed and searchable attributes](/learn/configuration/displayed_searchable_attributes.md)
+[Learn more about synonyms](/learn/configuration/synonyms.md)
 
 ### Typo tolerance
 
@@ -131,17 +145,3 @@ Typo tolerance is a built-in feature that helps you find relevant results even w
 You can update the typo tolerance settings using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/settings.md#update-typo-tolerance-settings).
 
 [Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
-
-### Pagination
-
-To protect your database from malicious scraping, Meilisearch only returns up to `1000` results for a search query. You can change this limit using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update pagination settings endpoint](/reference/api/settings.md#update-pagination-settings).
-
-[Learn more about pagination](/learn/advanced/pagination.md)
-
-### Faceting
-
-Facets are a specific use-case of filters in Meilisearch: whether something is a facet or filter depends on your UI and UX design. Like filters, you need to add your facets to [`filterableAttributes`](/reference/api/settings.md#update-filterable-attributes), then make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
-
-By default, Meilisearch returns `100` facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update faceting settings endpoint](/reference/api/settings.md#update-faceting-settings).
-
-[Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)
