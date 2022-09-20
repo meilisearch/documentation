@@ -91,18 +91,12 @@ The code below creates an index called `books` and sets `reference_number` as it
 
 ```json
 {
-    "uid":1,
-    "indexUid": "books",
-    "status": "succeeded",
-    "type": "indexCreation",
-    "details":{
-        "primaryKey": "reference_number"
-        },
-    "duration": "PT0.006751S",
-    "enqueuedAt": "2021-12-30T10:19:00.318884Z",
-    "startedAt": "2021-12-30T10:19:00.320177Z",
-    "finishedAt": "2021-12-30T10:19:00.325635Z"
-}    
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "indexCreation",
+  "enqueuedAt": "2022-09-20T12:06:24.364352Z"
+}
 ```
 
 ### Setting the primary key on document addition
@@ -117,18 +111,11 @@ The code below adds a document to the `books` index and sets `reference_number` 
 
 ```json
 {
-    "uid": 1,
-    "indexUid": "books",
-    "status": "succeeded",
-    "type": "documentAdditionOrUpdate",
-    "details":{
-        "receivedDocuments":1,
-        "indexedDocuments":1
-        },
-    "duration": "PT0.010418S",
-    "enqueuedAt": "2021-12-30T10:38:22.331502Z",
-    "startedAt": "2021-12-30T10:38:22.332686Z",
-    "finishedAt": "2021-12-30T10:38:22.341920Z"
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "documentAdditionOrUpdate",
+  "enqueuedAt": "2022-09-20T12:08:55.463926Z"
 }
 ```
 
@@ -144,17 +131,11 @@ The code below updates the primary key to `title`:
 
 ```json
 {
-    "uid":1,
-    "indexUid": "books",
-    "status": "succeeded",
-    "type": "indexUpdate",
-    "details":{
-        "primaryKey": "title"
-        },
-        "duration": "PT0.001119S",
-        "enqueuedAt": "2022-04-13T18:27:36.756494Z",
-        "startedAt": "2022-04-13T18:27:36.757567Z",
-        "finishedAt": "2022-04-13T18:27:36.758686Z"
+  "taskUid": 1,
+  "indexUid": "books",
+  "status": "enqueued",
+  "type": "indexUpdate",
+  "enqueuedAt": "2022-09-20T12:10:06.444672Z"
 }
 ```
 
