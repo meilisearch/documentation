@@ -751,7 +751,7 @@ Defines the strategy used to match query terms in documents. `last` returns docu
 
 With the above code sample, Meilisearch will first return documents that contain all three words. If the results don't meet the requested `limit`, it will return documents with just `big fat` followed by just `big`.
 
-`all`, on the other hand, only returns documents that contain all the query words. Meilisearch will not match any more documents even if there aren't enough to meet the requested `limit`.
+`all`, on the other hand, only returns documents that contain all query terms. Meilisearch will not match any more documents even if there aren't enough to meet the requested `limit`.
 
 Searching for `big fat liar` will only return documents that contain all three words.
 
