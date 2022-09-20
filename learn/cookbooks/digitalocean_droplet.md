@@ -49,7 +49,7 @@ Tags are a very good method to know who created resources, and for organizing re
 
 ![The search bar, meilisearch, and search-team tags](/digitalocean/06.add-tags.png)
 
-### 7. Finally click on "Create Droplet"
+### 7. Click on "Create Droplet"
 
 ![The "Create Droplet" button](/digitalocean/07.create-droplet.png)
 
