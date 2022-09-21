@@ -265,7 +265,7 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 ## Search preview
 
-Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
+Meilisearch offers a browser-based search preview where you can search through a selected index. You can access it any time Meilisearch is running at `http://127.0.0.1:7700`.
 
 ![Meilisearch's search preview showing the movies index](/search_preview/default.png)
 
