@@ -19,11 +19,11 @@ Once you have downloaded the [Postman collection](/postman/meilisearch-collectio
 
 ![Selecting "Edit" from the overflow menu](/postman/edit.png)
 
-Set the token if needed (set to `masterKey` by default):
+Set the "Token" if needed (set to `masterKey` by default):
 
 ![The "Token" field set to masterKey and "Type" to Bearer Token in the "Authorization" tab.](/postman/set_token.png)
 
-Set the host URL (set to Meilisearch's local port by default) and the index UID (set to `indexUID` by default):
+Set `url` (set to Meilisearch's local port by default) and `indexUID` (set to `indexUID` by default):
 
 ![Setting the "url" to http://localhost:7700/ and "indexUID" to indexUId in the Variables tab.](/postman/set_variables.png)
 
