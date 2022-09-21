@@ -18,7 +18,7 @@ This page describes the **index-level settings** available in Meilisearch and ho
 
 ## Displayed attributes
 
-The fields whose attributes are added to the [displayed-attributes list](/learn/configuration/displayed_searchable_attributes.md) are **contained in each matching document**.
+The fields whose attributes are added to the [displayed attributes list](/learn/configuration/displayed_searchable_attributes.md) are **contained in each matching document**.
 
 Documents returned upon search contain only displayed fields.
 
@@ -176,7 +176,7 @@ With the settings in the example above, documents will be sorted by decreasing n
 
 ## Searchable attributes
 
-The content of the fields whose attributes are added to the [searchable-attributes list](/reference/api/settings.md#searchable-attributes) are **searched for matching query words**.
+The content of the fields whose attributes are added to the [searchable attributes list](/reference/api/settings.md#searchable-attributes) are **searched for matching query words**.
 
 `searchableAttributes=[<String>, <String>, ...]`
 
