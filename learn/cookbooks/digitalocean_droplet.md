@@ -1,7 +1,5 @@
 # Deploy a Meilisearch instance on DigitalOcean
 
-**Table of Contents**:
-
 [[toc]]
 
 ## Deploy Meilisearch on a DigitalOcean droplet
@@ -15,7 +13,7 @@ In any DigitalOcean page, when you are logged in, you will find a menu in the up
 
 ### 2. Select Meilisearch snapshot
 
-By default, DigitalOcean will display the "distributions" tab. Select the "Marketplace" tab and search for "meili". Select it.
+By default, DigitalOcean will display the "Distributions" tab. Select the "Marketplace" tab and search for "meili". Select it.
 
 ![Searching for 'meili' in Marketplace](/digitalocean/02.marketplace.png)
 
@@ -31,7 +29,7 @@ Select the region where you want to deploy your droplet. Remember, the closer yo
 
 ![Selecting the London data center region](/digitalocean/04.select-region.png)
 
-### 5. Add your ssh key
+### 5. Add your SSH key
 
 Select your SSH key in order to be able to connect to your droplet later. If you don't see your SSH key add yours to your account.
 
@@ -51,7 +49,7 @@ Tags are a very good method to know who created resources, and for organizing re
 
 ![The search bar, meilisearch, and search-team tags](/digitalocean/06.add-tags.png)
 
-### 7. Finally click on 'Create Droplet'
+### 7. Click on "Create Droplet"
 
 ![The "Create Droplet" button](/digitalocean/07.create-droplet.png)
 
