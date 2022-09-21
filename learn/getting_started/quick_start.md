@@ -269,9 +269,7 @@ Meilisearch offers a search preview where you can preview search results. It com
 
 ![Meilisearch's search preview showing the movies index](/search_preview/default.png)
 
-::: note
 For security reasons, the search preview is only available in [development mode.](/learn/configuration/instance_options.md#environment)
-:::
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
