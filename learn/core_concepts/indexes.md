@@ -77,7 +77,7 @@ If your dataset contains multiple similar documents, you may want to return only
 
 Designate the distinct attribute using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update distinct attribute endpoint](/reference/api/settings.md#update-distinct-attribute). **You can only set one field as the distinct attribute per index.**
 
-[Learn more about the distinct attribute.](/learn/configuration/distinct.md)
+[Learn more about distinct attributes.](/learn/configuration/distinct.md)
 
 ### Faceting
 
