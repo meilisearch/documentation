@@ -564,6 +564,10 @@ By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may
 `attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings.md#synonyms) and [stop words](/reference/api/settings.md#stop-words).
 :::
 
+::: warning
+`attributesToHighlight` will highlight all attributes added to the `attributesToHighlight` array even if they are not set as `searchableAttributes`.
+:::
+
 #### Example
 
 The following query highlights matches present in the `overview` attribute:
@@ -637,6 +641,10 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 **Default value**: `false`
 
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
+
+::: warning
+`showMatchesPosition` will consider all attributes that contain words matching the query terms even if they are not set as `searchableAttributes`.
+:::
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 

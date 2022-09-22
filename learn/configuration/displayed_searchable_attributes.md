@@ -25,8 +25,12 @@ Meilisearch uses an ordered list to determine which attributes are searchable. T
 
 In other words, the `searchableAttributes` list serves two purposes:
 
-1. It designates the fields that are searchable.
-2. It dictates the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
+1. It designates the fields that are searchable
+2. It dictates the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)
+
+::: warning
+Documents with matching query terms will still [highlight](/reference/api/search.md#attributes-to-highlight) and [match](/reference/api/search.md#show-matches-position) attributes even if they are not part of `searchableAttributes`.
+:::
 
 There are two possible modes for the `searchableAttributes` list.
 
