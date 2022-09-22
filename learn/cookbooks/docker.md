@@ -20,7 +20,7 @@ The `latest` tag will always download the most recent Meilisearch release. Meili
 
 ## Run Meilisearch
 
-After running `docker pull` and downloading the Meilisearch image, use `docker run` to launch it:
+After completing the previous step, use `docker run` to launch the Meilisearch image:
 
 ```sh
 docker run -it --rm \
@@ -35,7 +35,7 @@ Meilisearch accepts a number of instance options during launch. You can configur
 
 #### Passing instance options with environment variables
 
-To pass environment variables to Docker, you must pass the `-e` argument to `docker run`. The example below launches Meilisearch with a master key:
+To pass environment variables to Docker, add the `-e` argument to `docker run`. The example below launches Meilisearch with a master key:
 
 ```sh
 docker run -it --rm \
@@ -47,7 +47,7 @@ docker run -it --rm \
 
 #### Passing instance options with CLI arguments
 
-If you want to pass command-line arguments to Meilisearch with Docker, you must explicitly run the `meilisearch` binary after indicating the Meilisearch image you want to use:
+If you want to pass command-line arguments to Meilisearch with Docker, you must add a line to the end of your `docker run` command explicitly launching the `meilisearch` binary:
 
 ```sh
 docker run -it --rm \
@@ -74,11 +74,11 @@ docker run -it --rm \
   getmeili/meilisearch:v0.28
 ```
 
-The example above uses `$(pwd)/meili_data`, which is a directory in the host machine. Depending on your OS, mounting volumes from the host to the container might result in performance loss and is only recommended when developing and prototyping your application.
+The example above uses `$(pwd)/meili_data`, which is a directory in the host machine. Depending on your OS, mounting volumes from the host to the container might result in performance loss and is only recommended when developing your application.
 
 ### Generating dumps and updating Meilisearch
 
-To export a dump, [use the dumps endpoint as described in our dedicated dumps guide](/learn/advanced/dumps.md). Once the task is complete, you can access the dump file in `/meili_data/dumps` inside the volume you configured with `-v`.
+To export a dump, [use the create dump endpoint as described in our dumps guide](/learn/advanced/dumps.md). Once the task is complete, you can access the dump file in `/meili_data/dumps` inside the volume you passed with `-v`.
 
 To import a dump, use the `--import-dump` command-line option and specify the path to the dump file. Make sure the path points to a volume reachable by Docker:
 
@@ -94,7 +94,7 @@ docker run -it --rm \
 If you are using a shared volume, you must delete `/meili_data/data.ms` before importing a dump.
 :::
 
-You must use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/advanced/updating.md)
+Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/advanced/updating.md)
 
 ### Snapshots
 
@@ -120,4 +120,4 @@ docker run -it --rm \
   meilisearch --import-snapshot /meili_data/snapshots/data.ms.snapshot
 ```
 
-You can use snapshots when migrating data between Meilisearch instances using the same release version. [Read more about snapshots in our dedicated guide.](/learn/advanced/snapshots.md)
+Use snapshots for backup or when migrating data between two Meilisearch instances of the same version. [Read more about snapshots in our guide.](/learn/advanced/snapshots.md)
