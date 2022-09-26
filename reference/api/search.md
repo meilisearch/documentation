@@ -346,7 +346,7 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
 
-For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search and filter expressions](/learn/advanced/filtering_and_faceted_search.md).
+For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search, and filter expressions](/learn/advanced/filtering_and_faceted_search.md).
 
 #### Example
 
