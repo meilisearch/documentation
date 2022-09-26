@@ -69,7 +69,7 @@ By default, every document field is searchable and displayed in response to sear
 
 You can update these field attributes using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective endpoints for [displayed attributes](/reference/api/settings.md#update-displayed-attributes) and [searchable attributes](/reference/api/settings.md#update-searchable-attributes).
 
-[Learn more about displayed and searchable attributes](/learn/configuration/displayed_searchable_attributes.md)
+[Learn more about displayed and searchable attributes.](/learn/configuration/displayed_searchable_attributes.md)
 
 ### Distinct attribute
 
@@ -77,7 +77,7 @@ If your dataset contains multiple similar documents, you may want to return only
 
 Designate the distinct attribute using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update distinct attribute endpoint](/reference/api/settings.md#update-distinct-attribute). **You can only set one field as the distinct attribute per index.**
 
-[Learn more about distinct attribute](/learn/configuration/distinct.md)
+[Learn more about distinct attributes.](/learn/configuration/distinct.md)
 
 ### Faceting
 
@@ -85,7 +85,7 @@ Facets are a specific use-case of filters in Meilisearch: whether something is a
 
 By default, Meilisearch returns `100` facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update faceting settings endpoint](/reference/api/settings.md#update-faceting-settings).
 
-[Learn more about faceting](/learn/advanced/filtering_and_faceted_search.md)
+[Learn more about faceting.](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Filterable attributes
 
@@ -93,13 +93,13 @@ Filtering allows you to refine your search based on different categories. For ex
 
 Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/settings.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
-[Learn more about filtering](/learn/advanced/filtering_and_faceted_search.md)
+[Learn more about filtering.](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Pagination
 
 To protect your database from malicious scraping, Meilisearch only returns up to `1000` results for a search query. You can change this limit using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update pagination settings endpoint](/reference/api/settings.md#update-pagination-settings).
 
-[Learn more about pagination](/learn/advanced/pagination.md)
+[Learn more about pagination.](/learn/advanced/pagination.md)
 
 ### Ranking rules
 
@@ -107,7 +107,7 @@ Meilisearch uses ranking rules to sort matching documents so that the most relev
 
 You can alter this order or define custom ranking rules to return certain results first. This can be done using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update ranking rules endpoint](/reference/api/settings.md#update-ranking-rules).
 
-[Learn more about ranking rules](/learn/core_concepts/relevancy.md)
+[Learn more about ranking rules.](/learn/core_concepts/relevancy.md)
 
 ### Sortable attributes
 
@@ -115,7 +115,7 @@ By default, Meilisearch orders results according to their relevancy. You can alt
 
 Add the attributes you'd like to sort by to `sortableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update sortable attributes endpoint](/reference/api/settings.md#update-sortable-attributes). You can then use the [`sort` search parameter](/reference/api/search.md#sort) to sort your results in ascending or descending order.
 
-[Learn more about sorting](/learn/advanced/sorting.md)
+[Learn more about sorting.](/learn/advanced/sorting.md)
 
 ### Stop words
 
@@ -123,7 +123,7 @@ Your dataset may contain words you want to ignore during search because, for exa
 
 Change your index's stop words list using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/settings.md#update-stop-words). In addition to improving relevancy, designating common words as stop words greatly improves performance.
 
-[Learn more about stop words](/reference/api/settings.md#stop-words)
+[Learn more about stop words.](/reference/api/settings.md#stop-words)
 
 ### Synonyms
 
@@ -131,7 +131,7 @@ Your dataset may contain words with similar meanings. For these, you can define 
 
 Since synonyms are defined for a given index, they won't apply to any other index on the same Meilisearch instance. You can create your list of synonyms using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update synonyms endpoint](/reference/api/settings.md#update-synonyms).
 
-[Learn more about synonyms](/learn/configuration/synonyms.md)
+[Learn more about synonyms.](/learn/configuration/synonyms.md)
 
 ### Typo tolerance
 
@@ -144,4 +144,4 @@ Typo tolerance is a built-in feature that helps you find relevant results even w
 
 You can update the typo tolerance settings using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/settings.md#update-typo-tolerance-settings).
 
-[Learn more about typo tolerance](/learn/configuration/typo_tolerance.md)
+[Learn more about typo tolerance.](/learn/configuration/typo_tolerance.md)
