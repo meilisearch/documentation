@@ -26,7 +26,7 @@ After completing the previous step, use `docker run` to launch the Meilisearch i
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.28
+  getmeili/meilisearch:v0.29
 ```
 
 ### Configure Meilisearch
@@ -53,7 +53,7 @@ If you want to pass command-line arguments to Meilisearch with Docker, you must 
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.28
+  getmeili/meilisearch:v0.29
   meilisearch --master-key="MASTER_KEY"
 ```
 
@@ -71,7 +71,7 @@ To keep your data intact between reboots, specify a dedicated volume by running 
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.28
+  getmeili/meilisearch:v0.29
 ```
 
 The example above uses `$(pwd)/meili_data`, which is a directory in the host machine. Depending on your OS, mounting volumes from the host to the container might result in performance loss and is only recommended when developing your application.
@@ -86,7 +86,7 @@ To import a dump, use Meilisearch's `--import-dump` command-line option and spec
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.28
+  getmeili/meilisearch:v0.29
   meilisearch --import-dump /meili_data/dumps/20200813-042312213.dump
 ```
 
@@ -106,7 +106,7 @@ To generate a Meilisearch snapshot with Docker, launch Meilisearch with `--sched
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.28
+  getmeili/meilisearch:v0.29
   meilisearch --schedule-snapshot --snapshot-dir /meili_data/snapshots
 ```
 
@@ -118,7 +118,7 @@ To import a snapshot, launch Meilisearch with the `--import-snapshot` option:
 docker run -it --rm \
   -p 7700:7700 \
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.28
+  getmeili/meilisearch:v0.29
   meilisearch --import-snapshot /meili_data/snapshots/data.ms.snapshot
 ```
 
