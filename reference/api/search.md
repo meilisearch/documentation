@@ -745,14 +745,20 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 **Expected value**: `last` or `all`
 **Default value**: `last`
 
-Defines the strategy used to match query terms in documents. `last` returns documents containing all the query words first. If there aren't enough documents to meet the requested `limit`, it will remove one query term at a time, starting from the end of the query.
+Defines the strategy used to match query terms in documents.
+
+#### `last`
+
+`last` returns documents containing all the query terms first. If there are not enough results containing all query terms to meet the requested `limit`, Meilisearch will remove one query term at a time, starting from the end of the query.
 
 <CodeSamples id="search_parameter_guide_matching_strategy_1" />
 
-With the above code sample, Meilisearch will first return documents that contain all three words. If the results don't meet the requested `limit`, it will return documents with just `big fat` followed by just `big`.
+With the above code sample, Meilisearch will first return documents that contain all three words. If the results don't meet the requested `limit`, it will also return documents containing only the first two terms, `big fat`, followed by documents containing only `big`.
 
-`all`, on the other hand, only returns documents that contain all query terms. Meilisearch will not match any more documents even if there aren't enough to meet the requested `limit`. Searching for `big fat liar` will only return documents that contain all three words.
+#### `all`
+
+`all` only returns documents that contain all query terms. Meilisearch will not match any more documents even if there aren't enough to meet the requested `limit`. 
 
 <CodeSamples id="search_parameter_guide_matching_strategy_2" />
 
-`all` usually returns fewer search results compared to `last`.
+The above code sample would only return documents containing all three words.
