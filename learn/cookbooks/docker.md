@@ -1,24 +1,24 @@
 # Using Meilisearch with Docker
 
-Docker is a tool that packages applications into containers portable across a wide range of environments. When using Docker for development, we recommend following [the official instructions to install Docker Desktop](https://docs.docker.com/get-docker/).
+In this guide you will learn how to use Docker to download and run Meilisearch, configure its behavior, and manage your Meilisearch data.
 
-In this guide you will learn how to use Docker to download and run Meilisearch, configure your instance, and manage your Meilisearch data.
+Docker is a tool that bundles applications into containers. Docker containers ensure your application runs the same way in many different environments. When using Docker for development, we recommend following [the official instructions to install Docker Desktop](https://docs.docker.com/get-docker/).
 
 ## Download Meilisearch with Docker
 
 Docker containers are distributed in images. To use Meilisearch, use the `docker pull` command to download a Meilisearch image:
 
 ```sh
-docker pull getmeili/meilisearch:v0.28
+docker pull getmeili/meilisearch:v0.29
 ```
 
-Meilisearch deploys a new Docker image for every new release. All images are tagged with the release version—indicated in the example above by the text following the `:`. You can see [the full list of available Meilisearch Docker images](https://hub.docker.com/r/getmeili/meilisearch/tags#!) on Docker Hub.
+Meilisearch deploys a new Docker image with every release of the engine. Each image is tagged with the corresponding Meilisearch version, indicated in the above example by the text following the `:` symbol. You can see [the full list of available Meilisearch Docker images](https://hub.docker.com/r/getmeili/meilisearch/tags#!) on Docker Hub.
 
 ::: warning
 The `latest` tag will always download the most recent Meilisearch release. Meilisearch advises against using it, as it might result in different machines running different images if significant time passes between setting up each one of them.
 :::
 
-## Run Meilisearch
+## Run Meilisearch with Docker
 
 After completing the previous step, use `docker run` to launch the Meilisearch image:
 
@@ -31,7 +31,7 @@ docker run -it --rm \
 
 ### Configure Meilisearch
 
-Meilisearch accepts a number of instance options during launch. You can configure instance options in two ways: environment variables and CLI arguments. Some options are only available as CLI arguments—[consult our configuration reference for an exhaustive list](/learn/configuration/instance_options.md).
+Meilisearch accepts a number of instance options during launch. You can configure these optional arguments in two ways: environment variables and CLI arguments. Note that some options are only available as CLI arguments—[consult our configuration reference for more details](/learn/configuration/instance_options.md).
 
 #### Passing instance options with environment variables
 
@@ -80,7 +80,7 @@ The example above uses `$(pwd)/meili_data`, which is a directory in the host mac
 
 To export a dump, [use the create dump endpoint as described in our dumps guide](/learn/advanced/dumps.md). Once the task is complete, you can access the dump file in `/meili_data/dumps` inside the volume you passed with `-v`.
 
-To import a dump, use the `--import-dump` command-line option and specify the path to the dump file. Make sure the path points to a volume reachable by Docker:
+To import a dump, use Meilisearch's `--import-dump` command-line option and specify the path to the dump file. Make sure the path points to a volume reachable by Docker:
 
 ```sh
 docker run -it --rm \
@@ -90,8 +90,10 @@ docker run -it --rm \
   meilisearch --import-dump /meili_data/dumps/20200813-042312213.dump
 ```
 
+Note that exporting and importing dumps require using command-line arguments. [For more information on how to use Docker to run Meilisearch with CLI options, refer to this guide's relevant section.](#passing-instance-options-with-cli-arguments)
+
 ::: warning
-If you are using a shared volume, you must delete `/meili_data/data.ms` before importing a dump.
+If you are using storing your data in a persistent volume as instructed in [the data persistency section](#data-persistency), you must delete `/meili_data/data.ms` in that volume before importing a dump.
 :::
 
 Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/advanced/updating.md)
