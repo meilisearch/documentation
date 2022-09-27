@@ -57,6 +57,12 @@ If your query is `Hello - World`:
 
 **Explanation:** This limit is enforced for performance and storage reasons. Overly large internal data structures—resulting from documents with too many fields—lead to overly large databases on disk, and slower search performance.
 
+## Maximum number of concurrent requests
+
+**Limitation:** Meilisearch can handle a maximum of 126 requests at the same time. Requests exceeding this limit will cause Meilisearch to thrown an internal error.
+
+**Explanation:** This limit is set by [LMDB](/learn/advanced/storage.md#lmdb), Meilisearch's storage engine.
+
 ## Maximum number of documents in an index
 
 **Limitation:** An index can contain no more than 4,294,967,296 documents.
