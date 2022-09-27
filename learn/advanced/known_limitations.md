@@ -100,3 +100,9 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 **Limitation:** By default, Meilisearch returns up to 1000 documents per search.
 
 **Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings.md#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/search.md) and has no effect on the [get documents endpoint](/reference/api/documents.md#get-documents).
+
+## Large datasets and internal errors
+
+**Limitation:** Meilisearch might throw an internal error when indexing large datasets.
+
+**Explanation:** Indexing datasets over 2GB in size can result in Meilisearch opening too many file descriptors. Raise your machine's resource usage limits with `ulimit` or a similar tool available in your environment.
