@@ -757,7 +757,7 @@ With the above code sample, Meilisearch will first return documents that contain
 
 #### `all`
 
-`all` only returns documents that contain all query terms. Meilisearch will not match any more documents even if there aren't enough to meet the requested `limit`. 
+`all` only returns documents that contain all query terms. Meilisearch will not match any more documents even if there aren't enough to meet the requested `limit`.
 
 <CodeSamples id="search_parameter_guide_matching_strategy_2" />
 
