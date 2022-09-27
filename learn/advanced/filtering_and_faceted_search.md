@@ -224,6 +224,12 @@ You can use this filter when searching for `Planet of the Apes`:
 
 <CodeSamples id="filtering_guide_3" />
 
+`NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
+
+```SQL
+rating >= 3 AND (NOT director = "Tim Burton" AND director EXISTS)
+```
+
 ## Filtering with `_geoRadius`
 
 If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
