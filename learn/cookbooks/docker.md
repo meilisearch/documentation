@@ -42,7 +42,7 @@ docker run -it --rm \
   -p 7700:7700 \
   -e MEILI_MASTER_KEY='MASTER_KEY'\
   -v $(pwd)/meili_data:/meili_data \
-  getmeili/meilisearch:v0.28
+  getmeili/meilisearch:v0.29
 ```
 
 #### Passing instance options with CLI arguments
