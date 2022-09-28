@@ -59,9 +59,9 @@ If your query is `Hello - World`:
 
 ## Maximum number of concurrent requests
 
-**Limitation:** Meilisearch can handle a maximum of 126 requests at the same time. Requests exceeding this limit will cause Meilisearch to thrown an internal error.
+**Limitation:** Meilisearch can receive a maximum of 126 API requests at the same time. Requests exceeding this limit will cause Meilisearch to thrown an internal error.
 
-**Explanation:** This limit is set by [LMDB](/learn/advanced/storage.md#lmdb), Meilisearch's storage engine.
+**Explanation:** This limit applies only to receiving requests, not to processing or adding them to the Tasks queue. It is set by [LMDB](/learn/advanced/storage.md#lmdb), Meilisearch's storage engine.
 
 ## Maximum number of documents in an index
 
