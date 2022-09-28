@@ -2,7 +2,7 @@
 
 In this guide you will learn how to use Docker to download and run Meilisearch, configure its behavior, and manage your Meilisearch data.
 
-Docker is a tool that bundles applications into containers. Docker containers ensure your application runs the same way in many different environments. When using Docker for development, we recommend following [the official instructions to install Docker Desktop](https://docs.docker.com/get-docker/).
+Docker is a tool that bundles applications into containers. Docker containers ensure your application runs the same way in different environments. When using Docker for development, we recommend following [the official instructions to install Docker Desktop](https://docs.docker.com/get-docker/).
 
 ## Download Meilisearch with Docker
 
@@ -31,7 +31,7 @@ docker run -it --rm \
 
 ### Configure Meilisearch
 
-Meilisearch accepts a number of instance options during launch. You can configure these optional arguments in two ways: environment variables and CLI arguments. Note that some options are only available as CLI arguments—[consult our configuration reference for more details](/learn/configuration/instance_options.md).
+Meilisearch accepts a number of instance options during launch. You can configure these in two ways: environment variables and CLI arguments. Note that some options are only available as CLI arguments—[consult our configuration reference for more details](/learn/configuration/instance_options.md).
 
 #### Passing instance options with environment variables
 
@@ -90,7 +90,7 @@ docker run -it --rm \
   meilisearch --import-dump /meili_data/dumps/20200813-042312213.dump
 ```
 
-Note that exporting and importing dumps require using command-line arguments. [For more information on how to use Docker to run Meilisearch with CLI options, refer to this guide's relevant section.](#passing-instance-options-with-cli-arguments)
+Note that exporting and importing dumps require using command-line arguments. [For more information on how to run Meilisearch with CLI options and Docker, refer to this guide's relevant section.](#passing-instance-options-with-cli-arguments)
 
 ::: warning
 If you are storing your data in a persistent volume as instructed in [the data persistency section](#data-persistency), you must delete `/meili_data/data.ms` in that volume before importing a dump.
