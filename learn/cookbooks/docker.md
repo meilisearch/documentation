@@ -93,7 +93,7 @@ docker run -it --rm \
 Note that exporting and importing dumps require using command-line arguments. [For more information on how to use Docker to run Meilisearch with CLI options, refer to this guide's relevant section.](#passing-instance-options-with-cli-arguments)
 
 ::: warning
-If you are using storing your data in a persistent volume as instructed in [the data persistency section](#data-persistency), you must delete `/meili_data/data.ms` in that volume before importing a dump.
+If you are storing your data in a persistent volume as instructed in [the data persistency section](#data-persistency), you must delete `/meili_data/data.ms` in that volume before importing a dump.
 :::
 
 Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/advanced/updating.md)
