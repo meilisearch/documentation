@@ -643,7 +643,7 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
 ::: warning
-`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as `searchableAttributes`.
+`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
 :::
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
