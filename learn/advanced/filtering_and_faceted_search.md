@@ -102,10 +102,14 @@ The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-i
 
 String expressions combine conditions using the following filter operators and parentheses:
 
-- `NOT` only returns documents that do not satisfy a condition : `NOT genres = horror`
+- `NOT` returns all documents that do not satisfy a condition. The expression `NOT genres = horror` returns all documents whose `genres` do not contain `horror` and all documents missing a `genres` field
 - `AND` operates by connecting two conditions and only returns documents that satisfy both of them: `genres = horror AND director = 'Jordan Peele'`
 - `OR` connects two conditions and returns results that satisfy at least one of them: `genres = horror OR genres = comedy`
 - `TO` is equivalent to `>= AND <=`. The expression `release_date 795484800 TO 972129600` translates to `release_date >= 795484800 AND release_date <= 972129600`
+- `IN [valueA, valueB, …, valueN]` selects all documents whose chosen field contains at least one of the specified values. The expression `genres IN [horror, comedy]` returns all documents whose `genres` includes either `horror`, `comedy`, or both
+- `EXISTS` checks for the existence of a field. Fields with empty or null values still count as existing. The expression `release_date NOT EXISTS` returns all documents without a `release_date`
+
+When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
 
 ::: tip
 String expressions are read left to right. `NOT` takes precedence over `AND` and `AND` takes precedence over `OR`. You can use parentheses to ensure expressions are correctly parsed.
@@ -219,6 +223,12 @@ rating >= 3 AND (NOT director = "Tim Burton")
 You can use this filter when searching for `Planet of the Apes`:
 
 <CodeSamples id="filtering_guide_3" />
+
+`NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
+
+```SQL
+rating >= 3 AND (NOT director = "Tim Burton" AND director EXISTS)
+```
 
 ## Filtering with `_geoRadius`
 

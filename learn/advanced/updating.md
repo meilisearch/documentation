@@ -113,7 +113,7 @@ If you are updating to v0.28, keys imported from the old version will have their
 If your dump was created in Meilisearch v0.21 or above, continue to [step 3](#step-3-create-the-dump).
 :::
 
-When creating dumps, Meilisearch calls the same method as the [get documents endpoint](/reference/api/documents.md#get-documents). This means that all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
+When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 
 Start by verifying that all attributes are included in the displayed attributes list:
 

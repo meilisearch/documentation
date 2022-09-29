@@ -4,7 +4,7 @@ Adding new documents to an index is a multi-threaded and memory-intensive operat
 
 ## RAM
 
-By default, our indexer uses the `sysinfo` Rust library to calculate a machine's total memory size. Meilisearch then adapts its behavior so indexing uses a maximum two thirds of available resources. Alternatively, you can use the `[--max-indexing-memory](/learn/configuration/instance_options.md#max-indexing-memory)` instance option to manually control the maximum amount of RAM Meilisearch can consume.
+By default, our indexer uses the `sysinfo` Rust library to calculate a machine's total memory size. Meilisearch then adapts its behavior so indexing uses a maximum two thirds of available resources. Alternatively, you can use the [`--max-indexing-memory`](/learn/configuration/instance_options.md#max-indexing-memory) instance option to manually control the maximum amount of RAM Meilisearch can consume.
 
 It is important to prevent Meilisearch from using all available memory during indexing. If that happens, there are two negative consequences:
 
@@ -22,21 +22,19 @@ Memory overconsumption can still happen in two cases:
 
 In machines with multi-core processors, the indexer avoids using more than half of the available processing units. For example, if your machine has twelve cores, the indexer will try to use six of them at most. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
 
-You can override Meilisearch's default threading limit by using the `[--max-indexing-threads](/learn/configuration/instance_options.md#max-indexing-threads)` instance option. Allowing Meilisearch to use all processor cores for indexing might negatively impact your users' search experience.
+You can override Meilisearch's default threading limit by using the [`--max-indexing-threads`](/learn/configuration/instance_options.md#max-indexing-threads) instance option. Allowing Meilisearch to use all processor cores for indexing might negatively impact your users' search experience.
 
 Multi-threading is unfortunately not possible in machines with only one processor core.
 
 ## Improving indexing performance
 
-If you encounter performance issues during the indexing we recommend trying the following points:
+If you encounter performance issues during indexing, we recommend trying the following:
 
 - Make sure you are using the latest [stable version of Meilisearch](https://github.com/meilisearch/meilisearch/releases). New releases often include performance improvements that can significantly increase indexing speed.
 
-- indexing is a memory-intensive and multi-threaded operation. This means **the more memory and processor cores available, the faster Meilisearch will index new documents**. When trying to improve indexing speed, using a machine with more processor cores is more effective than increasing RAM.
+- Indexing is a memory-intensive and multi-threaded operation. This means **the more memory and processor cores available, the faster Meilisearch will index new documents**. When trying to improve indexing speed, using a machine with more processor cores is more effective than increasing RAM.
 
 - **Bigger HTTP payloads are processed more quickly than smaller payloads**. For example, adding the same 100,000 documents in two batches of 50,000 documents will be quicker than adding them in four batches of 25,000 documents. By default, Meilisearch sets the maximum payload size to 100MB, but [you can change this value if necessary](/learn/configuration/instance_options.md#payload-limit-size). That said, **the bigger the payload is, the higher the memory consumption will be**. An instance may crash if it requires more RAM than is currently available in a machine.
-
-  - If you want to speed up indexing but don't wish to batch documents manually, consider giving our [experimental auto-batcher](/learn/experimental/auto-batching.md) a try.
 
 - **Meilisearch should not be your main database**. The more documents you add, the longer will indexing and search take, so you should only index documents you want to retrieve when searching.
 

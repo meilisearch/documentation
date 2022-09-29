@@ -4,65 +4,63 @@ Using our GCP custom image, Meilisearch can be deployed on GCP in just a few min
 
 The following guide will walk you through every step to deploy Meilisearch in a GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
 
-**Table of contents**:
-
 [[toc]]
 
 ## Part 1: Deploy a Meilisearch instance
 
 ### 1. Import Meilisearch custom image on your GCP account
 
-- Navigate to `Compute Engine` => `Images`.
+- Navigate to "Compute Engine" -> "Images"
 
 ![Page titled 'Images'](/gcp/01.compute-engine.png)
 
-- Click on `[+] CREATE IMAGE`.
+- Click on "[+] CREATE IMAGE"
 
 ![Adding image name(permanent), source, and cloud storage file](/gcp/02.image-info.png)
 
-- Give it a name (`meilisearch-example`).
+- Give it a name (`meilisearch-example`)
 
-- For the `Source` field select `Virtual disk (VMDK, VHD)`.
+- For the "Source" field select "Virtual disk (VMDK, VHD)"
 
-- If you are prompted to enable Cloud Build tools and grant permissions, do it.
+- If you are prompted to enable Cloud Build tools and grant permissions, do it
 
-- Copy the following URI in the `Cloud Storage file` field.
+- Copy the following URI in the "Cloud Storage file" field
 
 ```
 meilisearch-image/meilisearch-v0.28.0-debian-10.vmdk
 ```
 
-- **The other fields are not required.**
+- **The other fields are not required**
 
-- Click on `Create`. You may have to wait up to 6 minutes while the Meilisearch custom image imports to your account.
+- Click on "Create". You may have to wait up to 6 minutes while the Meilisearch custom image imports to your account
 
 ![meilisearch-example successfully imported](/gcp/03.import-image.png)
 
 ### 2. Create a new GCP Compute Engine instance from the imported image
 
-- Open the tab `Images` and click on the name of the image that you just imported, and click on the `[+] Create instance` button.
+- Open the tab "Images" and click on the name of the image that you just imported, and click on the "[+] Create instance" button
 
 ![The meilisearch-v-X-X-X instance](/gcp/04.create-instance.png)
 
 - Give your instance a name
 
-- In the `Machine configuration` section, make sure to pick a `Machine type` with enough memory to run Meilisearch according to your needs. More memory means faster searching.
+- In the "Machine configuration" section, make sure to pick a "Machine type" with enough memory to run Meilisearch according to your needs. More memory means faster searching
 
-![Selecting the E2 series and e2-medium (2 vCPU, 4 GB memory machine type)](/gcp/05.machine-configuration.png)
+![Selecting the 'E2' series and 'e2-medium (2 vCPU, 4 GB memory)' machine type](/gcp/05.machine-configuration.png)
 
-- In the `Boot disk` section, click the `Change` button.
+- In the "Boot disk" section, click the "Change" button
 
-- From the `Custom images` tab, select the image that you just imported in the previous steps (meilisearch-vX-X-X) from the drop down menu. Don't forget to set the `Size` of the disk to an amount corresponding to your needs. When you are done, click on `Select`.
+- From the "Custom images" tab, select the image that you just imported in the previous steps (meilisearch-vX-X-X) from the drop down menu. Don't forget to set the "Size" of the disk to an amount corresponding to your needs. When you are done, click on "Select"
 
-![Selecting the Balanced persistent disk Boot disk type and 10GB Size](/gcp/06.boot-disk.png)
+![Selecting the 'Balanced persistent disk' Boot disk type and 10GB Size](/gcp/06.boot-disk.png)
 
-- In the `Firewall` section, make sure to check the `Allow HTTP traffic` and `Allow HTTPS traffic` boxes so that your Meilisearch instance can communicate with the internet.
+- In the "Firewall" section, make sure to check the "Allow HTTP traffic" and "Allow HTTPS traffic" boxes so that your Meilisearch instance can communicate with the internet
 
-- Finally, click on the `Create` button. After a minute or two, your Meilisearch instance should be up and running.
+- Finally, click on the "Create" button. After a minute or two, your Meilisearch instance should be up and running
 
 ![The meilisearch-gcp-test instance running successfully](/gcp/07.instance-running.png)
 
-You can check that your instance is running correctly by copying and pasting the `External IP` address provided by GCP into your browser, or by typing the following command on your terminal:
+You can check that your instance is running correctly by copying and pasting the "External IP" address provided by GCP into your browser, or by typing the following command on your terminal:
 
 ```bash
 curl http://<your-external-ip>/health
@@ -108,21 +106,21 @@ To start the configuration process, connect via SSH to your new Meilisearch inst
 
 #### 2.2.1 Option 1: Using the Google Cloud Console
 
-Navigate to Compute Engine => VM instances. Click on the name of your instance, and then click on the SSH button (make sure to have pop-ups enabled or the window may be blocked). The connection will be established and the script will automatically run.
+Navigate to "Compute Engine" -> "VM instances". Click on the name of your instance, and then click on the "SSH" button (make sure to have pop-ups enabled or the window may be blocked). The connection will be established and the script will automatically run.
 
 #### 2.2.2 Option 2: Add your SSH key to the Compute Engine metadata
 
-- Make sure that you have an SSH public key (normally stored in `~/.ssh/id_rsa.pub`). If you haven't created your SSH key or want to generate a new one, you can follow [this guide](https://www.ssh.com/ssh/keygen/).
+- Make sure that you have an SSH public key (normally stored in `~/.ssh/id_rsa.pub`). If you haven't created your SSH key or want to generate a new one, you can follow [this guide](https://www.ssh.com/ssh/keygen/)
 
-- On the GCP dashboard, navigate to `Compute Engine` => `Metadata`, and click on the`SSH Keys` tab. Click on `Edit`.
+- On the GCP dashboard, navigate to "Compute Engine" -> "Metadata", and click on the "SSH Keys" tab. Click on "Edit"
 
-- To add a new SSH key, click on `+ Add item`. Copy your Public key and paste it on the new box that has been created on the GCP interface. Usually you can read your public key by running the following command on a terminal:
+- To add a new SSH key, click on "+ Add item". Copy your Public key and paste it on the new box that has been created on the GCP interface. Usually you can read your public key by running the following command on a terminal:
 
 ```bash
 cat ~/.ssh/id_rsa.pub
 ```
 
-- Click on `Save`.
+- Click on "Save"
 
 Now establish an SSH connection using the same username that is present on your SSH key. If you are adding your local system key, it will probably be your username on your local system. To know what this username is in UNIX-like systems, run the command:
 
