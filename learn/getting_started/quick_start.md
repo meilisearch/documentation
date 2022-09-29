@@ -51,7 +51,7 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.28
+docker pull getmeili/meilisearch:v0.29
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
