@@ -13,19 +13,19 @@ The following guide will walk you through every step to deploy Meilisearch in an
 
 ### 1. Launch an instance from the AWS console
 
-After logging into your [AWS Console](https://aws.amazon.com/console), navigate to the **Compute** service. Then go to **EC2**, and finally open your **Instances** console.
+After logging into your [AWS Console](https://aws.amazon.com/console), navigate to the "Compute" service. Then go to "EC2", and finally open your "Instances" console.
 
 ![Page titled 'Instances'. Text in center of screen: You do not have any instances in this region](/aws/01.launch-instances.png)
 
-In the top-right corner, click on the **Launch instances** button to start the process of configuring your Meilisearch instance.
+In the top-right corner, click on the "Launch instances" button to start the process of configuring your Meilisearch instance.
 
 ### 2. Select 'Meilisearch' AMI from 'Community AMIs'
 
-You will now select which AMI or system Image to use to run your instance. Type **"meilisearch"** in the search bar and select the **Community AMIs** tab on the left sidebar.
+You will now select which AMI or system Image to use to run your instance. Type `meilisearch` in the search bar and select the "Community AMIs" tab on the left sidebar.
 
 ![Page titled: 'Step 1: Choose an Amazon Machine Image (AMI)'](/aws/02.select-ami.png)
 
-Click on **Select** (right side of the screen) to confirm your choice.
+Click on "Select" (right side of the screen) to confirm your choice.
 
 ### 3. Size and specs
 
@@ -36,10 +36,10 @@ Select the specifications of the server you want Meilisearch to run on.
 We recommend prioritizing memory allocation for better Meilisearch performance.
 
 ::: tip
-The **free tier** is sufficient for tests or prototypes, but not recommended for large datasets.
+The free tier is sufficient for tests or prototypes, but not recommended for large datasets.
 :::
 
-Once you've made your choice, click on **Next: Configure instance details** to continue.
+Once you've made your choice, click on "Next: Configure instance details" to continue.
 
 ### 4. Instance details
 
@@ -47,7 +47,7 @@ Here you can specify [details of your Instance](https://docs.aws.amazon.com/efs/
 
 ![Page titled 'Step 3: Configure Instance Details'. Important: You can launch multiple instances from the same AMI, request Spot instances to take advantage of lower pricing, and assign access management role to the instance.](/aws/04.instance-details.png)
 
-Click **Next: Add Storage** to keep going.
+Click "Next: Add Storage" to keep going.
 
 ### 5. Storage
 
@@ -55,9 +55,9 @@ Choose the storage **device** and **size** for your Meilisearch instance.
 
 ![Page titled 'Step 4: Add Storage'. Text at bottom of screen: Free tier eligible users can get up to 30GB of EBS General Purpose (SSD) or Magnetic storage.](/aws/05.storage.png)
 
-The amount of storage space required can [vary drastically](/learn/advanced/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents). We have the **Volume Type** set to **General Purpose SSD (gp2)**.
+The amount of storage space required can [vary drastically](/learn/advanced/storage.md#measured-disk-usage) depending on the data you plan to index. In this example, we will use 25 GiB, which is more than enough for most small datasets (< 1 million documents). We have the "Volume Type" set to "General Purpose SSD (gp2)".
 
-When you're ready, click on **Next: Add Tags** to continue.
+When you're ready, click on "Next: Add Tags" to continue.
 
 ### 6. Tags
 
@@ -65,43 +65,43 @@ Tags are used to identify your resources in AWS. **They are not required by Meil
 
 ![Page titled 'Step 5: Add Tags'. Text in center of screen: Make sure your IAM policy includes permissions to create tags. ](/aws/06.tags.png)
 
-Click on **Next: Configure Security Groups**.
+Click on "Next: Configure Security Groups".
 
 ### 7. Security groups: Networking and connectivity
 
 For your Meilisearch instance to communicate with the outside world, it is very important to allow SSH connections, HTTP, and HTTPS traffic.
 
-- Click on **Add rule** and select **SSH** from the drop-down menu. This will open the SSH port (22).
-- Click on **Add rule** and select **HTTP** from the drop-down menu. This will open the HTTP port (80).
-- Click on **Add rule** and select **HTTPS** from the drop-down menu. This will open the HTTPS port (443).
+- Click on "Add rule" and select "SSH" from the drop-down menu. This will open the SSH port (22)
+- Click on "Add rule" and select "HTTP" from the drop-down menu. This will open the HTTP port (80)
+- Click on "Add rule" and select "HTTPS" from the drop-down menu. This will open the HTTPS port (443)
 
 ![Page titled 'Step 6: Configure Security group'. Warning: Rules with sources of 0.0.0.0/0 allow all IP addresses to access your instance. We recommend setting security group rules to allow access from known IP addresses only.](/aws/07.security.png)
 
-By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP addresses that are allowed to request your Meilisearch instance, go to the **Source** column and select the **Custom** option. The **Source** is set to **Anywhere** by default.
+By default, opened ports accept inbound traffic from any origin. If you prefer to restrict the IP addresses that are allowed to request your Meilisearch instance, go to the "Source" column and select the "Custom" option. The "Source" is set to "Anywhere" by default.
 
 You can also **use an existing security group**, if preferred.
 
-Once your configuration looks similar to the above image, click on **Review and Launch**.
+Once your configuration looks similar to the above image, click on "Review and Launch".
 
 ### 8. Set and download key pair
 
 Once you have reviewed your instance configuration, there is one last step before you can launch your Instance.
 
-Click on **Launch** and a pop-up window will ask you to select a **key pair**. This key pair is very important as it will be your private key to access the instance via SSH, which is required to [configure your Meilisearch instance in a production environment](#part-2-configure-production-settings).
+Click on "Launch" and a pop-up window will ask you to select a **key pair**. This key pair is very important as it will be your private key to access the instance via SSH, which is required to [configure your Meilisearch instance in a production environment](#part-2-configure-production-settings).
 
 ![A popup titled: "Select an existing key pair or create a new key pair". Inside the popup, there is a form that allows you to configure key pairs. It also contains a warning: "Download and store your private key file in a secure accessible location. You cannot download it again once it has been created"](/aws/08.key-pair.png)
 
-If you have an existing Key Pair, you can use that. Otherwise, select the option **Create a new key pair** and give it a name. Then, click on **Download Key Pair** and store this file somewhere safe.
+If you have an existing Key Pair, you can use that. Otherwise, select the option "Create a new key pair" and give it a name. Then, click on "Download Key Pair" and store this file somewhere safe.
 
-Once you've downloaded your key pair (and only then), click on **Launch Instances**, then on **View Instances**.
+Once you've downloaded your key pair (and only then), click on "Launch Instances", then on "View Instances".
 
 ### 9. Enjoy your Meilisearch instance running on AWS!
 
-Your instance may take a minute or two to get up and running (see the **Instance state** column).
+Your instance may take a minute or two to get up and running (see the "Instance state" column).
 
 ![AWS dashboard showing an active instance](/aws/09.launch.png)
 
-Once the **Instance state** is **Running**, use your web browser to navigate to the **Public IPv4 address** or the **Public IPv4 DNS** displayed in your AWS instances dashboard. You should see the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview.md).
+Once the "Instance state" is "Running", use your web browser to navigate to the "Public IPv4 address" or the "Public IPv4 DNS" displayed in your AWS instances dashboard. You should see the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview.md).
 
 ![Meilisearch search preview allowing users to search an example dataset](/aws/10.enjoy.png)
 

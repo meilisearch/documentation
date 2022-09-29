@@ -12,7 +12,7 @@ If your Meilisearch application stores sensitive data belonging to multiple user
 
 ### What are tenant tokens and how are they different from API keys in Meilisearch?
 
-Tenant tokens are small packages of encrypted data presenting proof a user can access a certain index. They contain not only security credentials, but also instructions on which documents within that index the user is allowed to see.
+Tenant tokens are small packages of encrypted data presenting proof a user can access a certain index. They contain not only security credentials, but also instructions on which documents within that index the user is allowed to see. **Tenant tokens only give access to the search endpoints.**
 
 To use tokens in Meilisearch, you only need to have a system for token generation in place. The quickest method to generate tenant tokens is [using one of our official SDKs](#generating-tenant-tokens-with-an-sdk). It is also possible to [generate a token from scratch](#generating-tenant-tokens-without-a-meilisearch-sdk).
 

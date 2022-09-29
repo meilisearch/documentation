@@ -171,10 +171,6 @@ Congratulations! You're ready to move on to the next step!
 
 For this quick start, we will be using a collection of movies as our dataset. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file into your working directory.
 
-::: note
-Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You can read more about this in our [documents guide](/learn/core_concepts/documents.md#dataset-format).
-:::
-
 Open a new terminal window and run the following command:
 
 <CodeSamples id="getting_started_add_documents_md" />
@@ -182,7 +178,7 @@ Open a new terminal window and run the following command:
 Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents.md). Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes.md).
 
 ::: note
-Currently, Meilisearch only supports [JSON, CSV, and NDJSON formats](/learn/core_concepts/documents.md#dataset-format).
+Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You can read more about this in our [documents guide](/learn/core_concepts/documents.md#dataset-format).
 :::
 
 The previous command added documents from `movies.json` to a new index called `movies`. After adding documents, you should receive a response like this:
@@ -265,9 +261,11 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 ## Search preview
 
-Meilisearch offers a search preview where you can preview search results. It comes with a search bar that allows you to search a selected index. You can access it in your browser at `http://127.0.0.1:7700` any time Meilisearch is running.
+Meilisearch offers a browser-based search preview where you can search through a selected index. You can access it any time Meilisearch is running at `http://127.0.0.1:7700`.
 
 ![Meilisearch's search preview showing the movies index](/search_preview/default.png)
+
+For security reasons, the search preview is only available in [development mode.](/learn/configuration/instance_options.md#environment)
 
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
