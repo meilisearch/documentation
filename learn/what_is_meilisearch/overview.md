@@ -20,7 +20,7 @@ _Meilisearch helps the Rust community find crates on [crates.meilisearch.com](ht
 - **Blazing fast** (answers < 50 milliseconds): Priority is given to fast answers for a smooth search experience.
 - [Search as you type](/learn/what_is_meilisearch/features.md#search-as-you-type): Results are updated on each keystroke. To make this possible, we use [prefix-search](/learn/advanced/prefix.md#prefix-search).
 - [Typo tolerance](/learn/what_is_meilisearch/features.md#typo-tolerant): Understands typos and misspellings.
-- [Tokenization](/learn/advanced/tokenization.md) in **English**, **Chinese**, and **all languages that uses space as a word divider**.
+- [Tokenization](/learn/advanced/tokenization.md) in **English**, **Chinese**, and **all languages that use space as a word divider**.
 - **Return the whole document**: The entire document is returned upon search.
 - **Highly customizable search and indexing**:
   - [Custom ranking](/learn/core_concepts/relevancy.md): Customize the relevancy of the search engine and the ranking of the search results.
