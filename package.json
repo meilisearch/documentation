@@ -44,7 +44,7 @@
     "vuex": "^3.6.2"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=12 <=18"
   },
   "resolutions": {
     "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#add_ignore_pattern"
