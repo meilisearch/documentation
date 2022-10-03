@@ -183,7 +183,7 @@ Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You ca
 
 The previous command added documents from `movies.json` to a new index called `movies`.
 
-By default, Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called auto-batching, and it significantly speeds up indexing. After adding documents, you should receive a response like this:
+By default, Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called [auto-batching](/learn/core_concepts/documents.md#auto-batching), and it significantly speeds up indexing. After adding documents, you should receive a response like this:
 
 ```json
 {

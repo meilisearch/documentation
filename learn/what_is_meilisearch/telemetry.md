@@ -170,6 +170,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `typo_tolerance.min_word_size_for_typos.two_typos` | The defined value for the `minWordSizeForTypos.twoTypos` parameter                          | 9
 | `pagination.max_total_hits`                        | The defined value for the `pagination.maxTotalHits` property                                | 1000
 | `faceting.max_values_per_facet`                    | The defined value for the `faceting.maxValuesPerFacet` property                             | 100
-| `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | `false`
+| `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | false
 | `most_used_matching_strategy`                      | The most used word matching strategy among all search requests in the aggregated event      | `last`
-| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false` | `true`
+| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false` | true
