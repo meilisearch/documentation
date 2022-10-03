@@ -196,3 +196,6 @@
 
 # Rename indexation to indexing
 /learn/advanced/indexation.html                     /learn/advanced/indexing.html
+
+# Remove autobatching
+/learn/experimental/auto-batching.html              /learn/core_concepts/documents.html

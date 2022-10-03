@@ -60,7 +60,13 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 **Type**: Array
 **Default value**: N/A
-**Description**: An array of API actions permitted for the key, represented as strings. API actions are only possible on authorized [`indexes`](#indexes). `["*"]` for all actions
+**Description**: An array of API actions permitted for the key, represented as strings. API actions are only possible on authorized [`indexes`](#indexes). `["*"]` for all actions.
+
+You can use `*` as a wildcard to access all endpoints for the `documents`, `indexes`, `tasks`, `settings`, `stats` and `dumps` actions. For example, `documents.*` gives access to all document actions.
+
+::: warning
+For security reasons, we do not recommend creating keys that can perform all actions.
+:::
 
 | Name                   | Description                                                                                                                                                                                                                                                                      |
 | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -71,7 +77,7 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 | **`indexes.create`**   | Provides access to the [create index](/reference/api/indexes.md#create-an-index) endpoint                                                                                                                                                                                        |
 | **`indexes.get`**      | Provides access to the [get one index](/reference/api/indexes.md#get-one-index) and [list all indexes](/reference/api/indexes.md#list-all-indexes) endpoints. **Non-authorized `indexes` will be omitted from the response**                                                     |
 | **`indexes.update`**   | Provides access to the [update index](/reference/api/indexes.md#update-an-index) endpoint                                                                                                                                                                                        |
-| **`indexes.delete`**   | Provides access to the [delete index](/reference/api/indexes.md#delete-an-index) endpoint                                                                                                                                                                                        |
+| **`indexes.delete`**   | Provides access to the [delete index](/reference/api/indexes.md#delete-an-index) endpoint                                                                                                                                                                                       |
 | **`tasks.get`**        | Provides access to the [get one task](/reference/api/tasks.md#get-one-task) and [get tasks](/reference/api/tasks.md#get-tasks) endpoints. **Tasks from non-authorized `indexes` will be omitted from the response**                                                              |
 | **`settings.get`**     | Provides access to the [get settings](/reference/api/settings.md#get-settings) endpoint and equivalents for all subroutes                                                                                                                                                        |
 | **`settings.update`**  | Provides access to the [update settings](/reference/api/settings.md#update-settings) and [reset settings](/reference/api/settings.md#reset-settings) endpoints and equivalents for all subroutes                                                                                 |

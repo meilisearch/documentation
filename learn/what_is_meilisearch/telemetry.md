@@ -119,10 +119,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.max_index_size`                             | Value of `--max-index-size`/`MEILI_MAX_INDEX_SIZE` in bytes                                 | 336042103
 | `infos.max_task_db_size`                           | Value of `--max-task-db-size`/`MEILI_MAX_TASK_DB_SIZE` in bytes                             | 336042103
 | `infos.http_payload_size_limit`                    | Value of `--http-payload-size-limit`/`MEILI_HTTP_PAYLOAD_SIZE_LIMIT` in bytes               | 336042103
-| `infos.enable_autobatching`                        | `true` if `--enable-autobatching` is activated, otherwise `false`                           | true
-| `infos.max_batch_size`                             | Value of `--max-batch-size`, otherwise `null`                                               | 1000
-| `infos.max_documents_per_batch`                    | Value of `--max-documents-per-batch`, otherwise `null`                                      | 1000
-| `infos.debounce_duration_sec`                      | Value of `--debounce-duration-sec` in seconds, otherwise `0`                                | 3600
 | `infos.log_level`                                  | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
 | `infos.max_indexing_memory`                        | Value of `--max-indexing-memory`/`MEILI_MAX_INDEXING_MEMORY` in bytes                       | 336042103
 | `infos.max_indexing_threads`                       | Value of `--max-indexing-threads`/`MEILI_MAX_INDEXING_THREADS` in integer                   | 4
@@ -174,3 +170,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `typo_tolerance.min_word_size_for_typos.two_typos` | The defined value for the `minWordSizeForTypos.twoTypos` parameter                          | 9
 | `pagination.max_total_hits`                        | The defined value for the `pagination.maxTotalHits` property                                | 1000
 | `faceting.max_values_per_facet`                    | The defined value for the `faceting.maxValuesPerFacet` property                             | 100
+| `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | false
+| `most_used_matching_strategy`                      | The most used word matching strategy among all search requests in the aggregated event      | `last`
+| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false` | true

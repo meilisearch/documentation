@@ -21,5 +21,6 @@ Pipelines include many language-specific operations. Currently, we have four pip
 2. A specialized Chinese pipeline using [Jieba](https://github.com/messense/jieba-rs)
 3. A specialized Japanese pipeline using [Lindera](https://github.com/lindera-morphology/lindera)
 4. A specialized Hebrew pipeline based off the default Meilisearch pipeline. Uses [Niqqud](https://docs.rs/niqqud/latest/niqqud/) for normalization
+5. A specialized Thai pipeline using [dictionary-based](https://github.com/PyThaiNLP/nlpo3) segmentation
 
 For more details, check out the [tokenizer contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md).
