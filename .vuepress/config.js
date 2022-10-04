@@ -227,6 +227,10 @@ module.exports = {
               path: '/learn/cookbooks/postman_collection',
             },
             {
+              title: 'Use with Docker',
+              path: '/learn/cookbooks/docker',
+            },
+            {
               title: 'Add a search bar to your docs',
               path: '/learn/cookbooks/search_bar_for_docs',
             },
