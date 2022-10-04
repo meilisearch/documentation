@@ -103,6 +103,6 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 ## Large datasets and internal errors
 
-**Limitation:** Meilisearch might throw an internal error when indexing large datasets.
+**Limitation:** Meilisearch might throw an internal error when indexing large batches of documents.
 
-**Explanation:** Indexing datasets over 2GB in size can result in Meilisearch opening too many file descriptors. Depending on your system, this might reach your system's resource usage limits and trigger an internal error. Use `ulimit` or a similar tool to increase resource consumption limits.
+**Explanation:** Indexing a batch of documents that is over 2GB in size can result in Meilisearch opening too many file descriptors. Depending on your system, this might reach your system's default resource usage limits and trigger an internal error. Use `ulimit` or a similar tool to increase resource consumption limits e.g. call `ulimit -Sn 3000` just before running Meilisearch.
