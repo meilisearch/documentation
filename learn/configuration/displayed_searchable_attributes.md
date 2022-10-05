@@ -2,8 +2,8 @@
 
 By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
-- [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list): attributes whose values are searched for matching query words.
-- [`displayedAttributes`](/learn/configuration/displayed_searchable_attributes.md#displayed-fields): attributes whose fields are displayed in documents.
+- [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list): Attributes whose values are searched for matching query words
+- [`displayedAttributes`](/learn/configuration/displayed_searchable_attributes.md#displayed-fields): Attributes whose fields are displayed in documents
 
 This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
 
@@ -25,8 +25,8 @@ Meilisearch uses an ordered list to determine which attributes are searchable. T
 
 In other words, the `searchableAttributes` list serves two purposes:
 
-1. It designates the fields that are searchable.
-2. It dictates the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
+1. It designates the fields that are searchable
+2. It dictates the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order)
 
 There are two possible modes for the `searchableAttributes` list.
 
