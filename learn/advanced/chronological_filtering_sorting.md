@@ -1,4 +1,4 @@
-# Filtering and sorting with timestamps
+# Filtering and sorting with chronological values
 
 In this guide, you will learn about Meilisearch's approach to date and time values, how to prepare your dataset for indexing, and how to chronologically sort and filter search results.
 
