@@ -50,7 +50,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 #### Example
 
-Suppose that you manage a database of movies with the following fields: `id`, `overview`, `genres`, `title`, `release_date`. These fields all contain useful information; however, **some are more useful to search than others**. To make the `id` and `release_date` fields non-searchable and re-order the remaining fields by importance, you might update the searchable attributes list in the following way.
+Suppose that you manage a database of movies with the following fields: `id`, `overview`, `genres`, `title`, `release_date`. These fields all contain useful information. However, **some are more useful to search than others**. To make the `id` and `release_date` fields non-searchable and re-order the remaining fields by importance, you might update the searchable attributes list in the following way.
 
 <CodeSamples id="field_properties_guide_searchable_1" />
 
