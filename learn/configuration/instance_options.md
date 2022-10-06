@@ -106,6 +106,19 @@ If no master key is provided in a `development` environment, all routes will be 
 
 [Learn more about Meilisearch's use of security keys.](/learn/security/master_api_keys.md)
 
+### Disable auto-batching
+
+::: warning
+🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+:::
+
+**Environment variable**: `MEILI_DISABLE_AUTO_BATCHING`
+**CLI option**: `--disable-auto-batching`
+
+Deactivates auto-batching when provided.
+
+[Learn more about auto-batching.](/learn/core_concepts/documents.md#auto-batching)
+
 ### Disable analytics
 
 ::: warning
@@ -184,13 +197,13 @@ _This option is not available as an environment variable._
 
 Defines how much detail should be present in Meilisearch's logs.
 
-Meilisearch currently supports four log levels, listed in order of increasing verbosity:
+Meilisearch currently supports five log levels, listed in order of increasing verbosity:
 
 - `'ERROR'`: only log unexpected events indicating Meilisearch is not functioning as expected
-- `'WARN:'` log all unexpected events, regardless of their severity
-- `'INFO:'` log all events. This is the default value of `--log-level`
+- `'WARN'`: log all unexpected events, regardless of their severity
+- `'INFO'`: log all events. This is the default value of `--log-level`
 - `'DEBUG'`: log all events and include detailed information on Meilisearch's internal processes. Useful when diagnosing issues and debugging
-- `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `DEBUG` before considering `TRACE`.
+- `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `'DEBUG'` before considering `'TRACE'`.
 
 ### Max index size
 

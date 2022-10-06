@@ -1,5 +1,4 @@
-name: GitHub pages and scraping
-
+name: Deploy documentation
 on:
   push:
     branches:
@@ -8,12 +7,12 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-20.04
-
+    name: build and deploy to Netlify
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: "yarn"
           cache-dependency-path: yarn.lock
       - name: Publish
@@ -27,6 +26,7 @@ jobs:
   scrape-docs:
     needs: build-deploy
     runs-on: ubuntu-20.04
+    name: scrape and push content on Meilisearch instance
     steps:
       - uses: actions/checkout@v3
       - name: Run docs-scraper

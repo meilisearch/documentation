@@ -51,7 +51,7 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.28
+docker pull getmeili/meilisearch:v0.29
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
@@ -62,11 +62,7 @@ docker run -it --rm \
     meilisearch --env="development"
 ```
 
-Data written to a **Docker container is not persistent** and is wiped every time the container is stopped. We recommend using a shared Docker volume between containers and host machines to provide persistent storage.
-
-On macOS and Windows, do not mount volumes from the host to the container—this will make I/O operations between the filesystems very slow. Instead make sure the mounted volumes remain inside the Docker virtual machine. If this is not an option, we recommend using the native application or a [cloud-hosted option](#cloud-deploy).
-
-You can learn more about Docker by consulting [its official documentation](https://docs.docker.com/get-docker/).
+You can learn more about [using Meilisearch with Docker in our dedicated guide](https://docs.docker.com/get-docker/).
 :::
 
 ::: tab APT
@@ -181,7 +177,9 @@ Meilisearch stores data in the form of discrete records, called [documents](/lea
 Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You can read more about this in our [documents guide](/learn/core_concepts/documents.md#dataset-format).
 :::
 
-The previous command added documents from `movies.json` to a new index called `movies`. After adding documents, you should receive a response like this:
+The previous command added documents from `movies.json` to a new index called `movies`.
+
+By default, Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called [auto-batching](/learn/core_concepts/documents.md#auto-batching), and it significantly speeds up indexing. After adding documents, you should receive a response like this:
 
 ```json
 {

@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "453f3754-4b37-4654-8fe3-b2b3aef24048",
-		"name": "Meilisearch v0.28",
+		"_postman_id": "5ad97bb3-840b-40dc-9012-482a0c2c52a5",
+		"name": "Meilisearch v0.29",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8898306"
 	},
@@ -79,7 +79,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austin\",              \"genre\": \"romance\",    \"price\": 3.5 },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" , \"price\": 10.0 },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\",    \"price\": 25.99 },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
+							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austen\",              \"genre\": \"romance\",    \"price\": 3.5 },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" , \"price\": 10.0 },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\",    \"price\": 25.99 },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -308,6 +308,11 @@
 								{
 									"key": "highlightPostTag",
 									"value": "</mark>",
+									"disabled": true
+								},
+								{
+									"key": "matchingStrategy",
+									"value": "all",
 									"disabled": true
 								}
 							]

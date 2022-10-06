@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'Meilisearch Documentation v0.28',
+  title: 'Meilisearch Documentation v0.29',
   description: 'Open source Instant Search Engine',
   theme: 'default-prefers-color-scheme',
   themeConfig: {
@@ -227,6 +227,10 @@ module.exports = {
               path: '/learn/cookbooks/postman_collection',
             },
             {
+              title: 'Use with Docker',
+              path: '/learn/cookbooks/docker',
+            },
+            {
               title: 'Add a search bar to your docs',
               path: '/learn/cookbooks/search_bar_for_docs',
             },
@@ -268,21 +272,6 @@ module.exports = {
                   path: '/learn/cookbooks/qovery',
                 },
               ],
-            },
-          ],
-        },
-        {
-          title: '🧪 Experimental',
-          collapsable: false,
-          path: '/learn/experimental/overview.html',
-          children: [
-            {
-              title: 'Overview',
-              path: '/learn/experimental/overview',
-            },
-            {
-              title: 'Auto-batching',
-              path: '/learn/experimental/auto-batching',
             },
           ],
         },
