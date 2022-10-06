@@ -170,7 +170,7 @@ One of the key usage differences between Algolia and Meilisearch is how they app
 
 **In Meilisearch,** [index settings](/learn/configuration/settings.md) and [search parameters](/reference/api/search.md#search-parameters) are two distinct categories. Settings affect all searches on an index, while parameters affect the results of a single search.
 
-Some Meilisearch parameters require index settings to be configured beforehand; for example, to use the search parameter `sort` you must first configure the index setting `sortableAttributes`. However, unlike in Algolia, an index setting can never be used as a parameter and vice versa.
+Some Meilisearch parameters require index settings to be configured beforehand. For example, you must first configure the index setting `sortableAttributes` to use the search parameter `sort`. However, unlike in Algolia, an index setting can never be used as a parameter and vice versa.
 
 ### Settings and parameters comparison
 
