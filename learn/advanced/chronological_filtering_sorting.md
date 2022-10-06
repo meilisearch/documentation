@@ -1,10 +1,10 @@
-# Filtering and sorting with chronological values
+# Filtering and sorting by date
 
 In this guide, you will learn about Meilisearch's approach to date and time values, how to prepare your dataset for indexing, and how to chronologically sort and filter search results.
 
 ## Preparing your documents
 
-To filter and sort search results based on chronological values, your documents must have a numeric field containing a UNIX timestamp. In this videogames dataset, the release year is formatted as a timestamp:
+To filter and sort search results based on chronological values, your documents must have a numeric field containing a [UNIX timestamp](https://kb.narrative.io/what-is-unix-time). In this videogames dataset, the release year is formatted as a timestamp:
 
 ```json
 [
@@ -29,9 +29,9 @@ To filter and sort search results based on chronological values, your documents 
 ]
 ```
 
-If your chronological data is expressed in datetime formats such as ISO 8601 like `"2022-01-01"`, you must convert it to a numeric value before indexing it with Meilisearch.
+If your chronological data is expressed in another format, like [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), you must convert it to a numeric value before indexing it with Meilisearch.
 
-Most programming languages have built-in tools to help you with this process:
+Most programming languages have built-in tools to help you with this process. The example below converts a game's release year, `2018`, to a numeric timestamp using JavaScript:
 
 ```js
 let game = {
@@ -53,14 +53,21 @@ game = {
 ```
 
 :::tip
-When preparing your dataset, it can be useful to leave the date and time fields in your documents intact. In the example above, we keep the `year` field because it is more readable than the raw `timestamp`.
+When preparing your dataset, it can be useful to leave the original date and time fields in your documents intact. In the example above, we keep the `year` field because it is more readable than the raw `timestamp`.
 :::
 
-After adding a numeric timestamp to all documents, index your dataset as usual.
+After adding a numeric timestamp to all documents, index your data as usual:
 
-## Chronological filtering
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/games/documents' \
+  -H 'Content-Type: application/json' \
+  --data-binary @games.json
+```
 
-To filter search results, add your document's timestamp field to the `filterableAttributes` index setting:
+## Filtering by timestamp
+
+To filter search results based on their timestamp, add your document's timestamp field to the list of [`filterableAttributes`](/reference/api/settings.md#update-filterable-attributes):
 
 ```sh
 curl \
@@ -71,7 +78,7 @@ curl \
   ]'
 ```
 
-Once you have configured `filterableAttributes`, you can filter your search results chronologically. The following query only returns games released between 2018 and 2022:
+Once you have configured `filterableAttributes`, you can filter search results by date. The following query only returns games released between 2018 and 2022:
 
 ```sh
 curl \
@@ -83,7 +90,7 @@ curl \
   }'
 ```
 
-## Chronological sorting
+## Sorting by timestamp
 
 To sort search results chronologically, add your document's timestamp field to the `sortableAttributes` index setting:
 
@@ -96,7 +103,7 @@ curl \
   ]'
 ```
 
-Once you have configured `sortableAttributes`, you can sort your search results chronologically. The following query returns all `adventure` games ordered from the newest to oldest release date:
+Once you have configured `sortableAttributes`, you can sort your search results based on their timestamp. The following query returns all `adventure` games sorted from most recent to oldest:
 
 ```sh
 curl \
