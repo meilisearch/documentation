@@ -1081,7 +1081,11 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 Words added to the `stopWords` list are ignored in future search queries.
 
 ::: note
-Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`. You can find stop words in different languages [here](https://sites.google.com/site/kevinbouge/stopwords-lists).
+Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
+:::
+
+::: tip
+You can find lists of possible stop words in different languages [here](https://sites.google.com/site/kevinbouge/stopwords-lists). Please note that you will need to tweak them to work for your dataset, as these lists will not work as they are for all use cases.
 :::
 
 ### Get stop words
