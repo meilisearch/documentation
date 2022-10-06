@@ -1085,7 +1085,7 @@ Stop words are strongly related to the language used in your dataset. For exampl
 :::
 
 ::: tip
-[This website maintained by a french developer](https://sites.google.com/site/kevinbouge/stopwords-lists) offers lists of possible stop words in different languages. Note that, depending on your dataset and use case, you will need to tweak these lists for optimal results.
+[This website maintained by a French developer](https://sites.google.com/site/kevinbouge/stopwords-lists) offers lists of possible stop words in different languages. Note that, depending on your dataset and use case, you will need to tweak these lists for optimal results.
 :::
 
 ### Get stop words
