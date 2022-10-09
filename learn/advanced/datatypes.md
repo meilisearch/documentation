@@ -119,7 +119,7 @@ During indexing, Meilisearch uses dot notation to eliminate nested fields:
 {
   "id": 0,
   "patient_name.forename": "Imogen",
-  "patient_name.surname": "Temult",
+  "patient_name.surname": "Temult"
 }
 ```
 
@@ -137,7 +137,7 @@ Imagine that the example document above includes an additional object, `address`
   "address.home.city": "Milano",
   "address.work.street": "Ca' Corner Della Regina, 2215",
   "address.work.postcode": "30135",
-  "address.work.city": "Venezia",
+  "address.work.city": "Venezia"
 }
 ```
 
@@ -156,7 +156,7 @@ Meilisearch's internal flattening process also eliminates nesting in arrays of o
     {
       "date": "2019-01-01",
       "doctor": "Dorian Storm"
-    },
+    }
   ]
 }
 ```
