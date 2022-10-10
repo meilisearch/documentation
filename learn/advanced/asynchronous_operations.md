@@ -109,7 +109,7 @@ Had the task failed, the response would have included an `error` object:
         "message": "Document does not have a `:primaryKey` attribute: `:documentRepresentation`.",
         "code": "internal",
         "type": "missing_document_id",
-        "link": "https://docs.meilisearch.com/errors#missing-document-id",
+        "link": "https://docs.meilisearch.com/errors#missing-document-id"
     },
     "duration": "PT1S",
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
