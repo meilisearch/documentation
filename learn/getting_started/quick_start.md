@@ -62,7 +62,7 @@ docker run -it --rm \
     meilisearch --env="development"
 ```
 
-You can learn more about [using Meilisearch with Docker in our dedicated guide](https://docs.docker.com/get-docker/).
+You can learn more about [using Meilisearch with Docker in our dedicated guide](/learn/cookbooks/docker.md).
 :::
 
 ::: tab APT
