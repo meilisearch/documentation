@@ -271,7 +271,7 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 ## Front-end integration
 
-The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a plugin that establishes communication between your Meilisearch instance and [InstantSearch](https://github.com/algolia/instantsearch.js). InstantSearch, an open-source project powered by Algolia, is the tool that renders all the components needed to start searching.
+The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a plugin that establishes communication between your Meilisearch instance and [InstantSearch](https://github.com/algolia/instantsearch.js). InstantSearch, an open-source project developed by Algolia, is the tool that renders all the components needed to start searching.
 
 <CodeSamples id="getting_started_front_end_integration_md" />
 
