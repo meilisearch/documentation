@@ -3224,13 +3224,13 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docs-searchbar.js@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-2.1.1.tgz#ed9519c0f39a99ad9d231963245e4fc81edd994b"
-  integrity sha512-K9QkhpLUi8KRoEoI8Gz7dOAYHSPUZ0uB3qb0QkWsq9cU+FAMCZPQoePfN9TObTKcX95AYQUXHV2cgd1StHYWrg==
+docs-searchbar.js@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-2.4.0.tgz#d2f65e11ae8662787fc1571d682823046cb15c94"
+  integrity sha512-R5SOwIwVul6cssi+omE2h6JaFSCFp/k3xDgLKZfb6oDhF8Yed15hR1vcrKsSnF+XkNruhCJvTYoMGb9+MEPWvg==
   dependencies:
     autocomplete.js "^0.38.1"
-    meilisearch "^0.25.0"
+    meilisearch "^0.28.0"
     to-factory "^1.0.0"
     zepto "^1.2.0"
 
@@ -5767,10 +5767,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-meilisearch@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.25.0.tgz#8e980fbdd36b9fe6ed606205e262418f21e64d84"
-  integrity sha512-TSIJTh5lva7WHBaoG3arNYQXuIAQkcD3BY09h2nHhjHS/wzxWKJM45x5bEC67Grw8zXihVqqmWty4a4ps4S+tg==
+meilisearch@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.28.0.tgz#650f08a56ef0a989a41d13233f7a744cfa7f54df"
+  integrity sha512-zC50xLyPWBtfAIZiFTSJyYJp/a5bO+dSSigBKUEoShFkuv9+/KC4J3T3ZejNVHXG2DU0ohOMf8TZ3HAHXNd3EA==
   dependencies:
     cross-fetch "^3.1.5"
 
@@ -8909,12 +8909,12 @@ vuepress-plugin-img-lazy@^1.0.4:
     markdown-it-img-lazy "^1.0.2"
     markdown-it-imsize "^2.0.1"
 
-vuepress-plugin-meilisearch@0.12.1:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.1.tgz#4b9d1d92462118d82e23cb6cee010e123892714a"
-  integrity sha512-ivXmYtTWStLMfXwn1qMN8HEbKiUP55tEj4mir/ZubQ+jRZNnSHNEAE8Ce0Xs0SpqCwxcoZCuGTsLYCyJw1vdXA==
+vuepress-plugin-meilisearch@^0.12.4:
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.4.tgz#35012abfa637c0182032d329d7abb6eaa4d49212"
+  integrity sha512-plD+xCmjF5I5BChHLTeLu2cCzu1fusrW9Ubak8Iyt0wTThV4l8eKeaxSnt0JEFhTv5cF1nosPtuubczeSJjjaA==
   dependencies:
-    docs-searchbar.js "^2.1.1"
+    docs-searchbar.js "^2.4.0"
 
 vuepress-plugin-seo@^0.1.4:
   version "0.1.4"
