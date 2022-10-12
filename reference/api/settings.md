@@ -1084,6 +1084,10 @@ Words added to the `stopWords` list are ignored in future search queries.
 Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
 :::
 
+::: tip
+[This website maintained by a French developer](https://sites.google.com/site/kevinbouge/stopwords-lists) offers lists of possible stop words in different languages. Note that, depending on your dataset and use case, you will need to tweak these lists for optimal results.
+:::
+
 ### Get stop words
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/settings/stop-words" />
