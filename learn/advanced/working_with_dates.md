@@ -43,7 +43,8 @@ let game = {
   "release_date": "2018-10-18T00:00Z"
 };
 
-const timestamp = Date.parse(game.year);
+const timestampInMilliseconds = Date.parse(game.year); // Date.parse returns the timestamp in milliseconds
+const timestamp = timestampInMilliseconds / 1000; // UNIX timestamps must be in seconds
 
 game = {
   "id": 0,
