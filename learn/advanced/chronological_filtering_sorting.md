@@ -4,7 +4,9 @@ In this guide, you will learn about Meilisearch's approach to date and time valu
 
 ## Preparing your documents
 
-To filter and sort search results based on chronological values, your documents must have a numeric field containing a [UNIX timestamp](https://kb.narrative.io/what-is-unix-time). In this videogames dataset, the release year is formatted as a timestamp:
+To filter and sort search results chronologically, your documents must have at least one numeric field containing a [UNIX timestamp](https://kb.narrative.io/what-is-unix-time).
+
+As an example, consider a database of video games. In this dataset, the release year is formatted as a timestamp:
 
 ```json
 [
@@ -31,7 +33,7 @@ To filter and sort search results based on chronological values, your documents 
 
 If your chronological data is expressed in another format, like [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), you must convert it to a numeric value before indexing it with Meilisearch.
 
-Most programming languages have built-in tools to help you with this process. The example below converts a game's release year, `2018`, to a numeric timestamp using JavaScript:
+Most programming languages have built-in tools to help you with this process. The JavaScript example below converts a game's release year, `2018`, to a numeric timestamp:
 
 ```js
 let game = {
@@ -56,7 +58,7 @@ game = {
 When preparing your dataset, it can be useful to leave the original date and time fields in your documents intact. In the example above, we keep the `year` field because it is more readable than the raw `timestamp`.
 :::
 
-After adding a numeric timestamp to all documents, index your data as usual:
+After adding a numeric timestamp to all documents, [index your data](/reference/api/documents.md#add-or-replace-documents) as usual. See below for an example using our nonexistent video games dataset.
 
 ```sh
 curl \
@@ -92,7 +94,7 @@ curl \
 
 ## Sorting by timestamp
 
-To sort search results chronologically, add your document's timestamp field to the `sortableAttributes` index setting:
+To sort search results chronologically, add your document's timestamp field to the list of [`sortableAttributes`](/reference/api/settings.md#update-sortable-attributes):
 
 ```sh
 curl \
@@ -103,14 +105,14 @@ curl \
   ]'
 ```
 
-Once you have configured `sortableAttributes`, you can sort your search results based on their timestamp. The following query returns all `adventure` games sorted from most recent to oldest:
+Once you have configured `sortableAttributes`, you can sort your search results based on their timestamp. The following query returns all games sorted from most recent to oldest:
 
 ```sh
 curl \
   -X POST 'http://localhost:7700/indexes/games/search' \
   -H 'Content-Type: application/json' \
   --data-binary '{
-    "q": "adventure",
+    "q": "",
     "sort": ["release_date:desc"]
   }'
 ```
