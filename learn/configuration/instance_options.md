@@ -100,7 +100,7 @@ Sets the instance's master key, automatically protecting all routes except [`GET
 You must supply an alphanumeric string when using this option.
 :::
 
-Providing a master key is mandatory when `--env` is set to `production`; if none is given, then Meilisearch will throw an error and refuse to launch.
+Providing a master key is mandatory when `--env` is set to `production`. If none is given, Meilisearch will throw an error and refuse to launch.
 
 If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
 
@@ -242,14 +242,14 @@ Setting `--max-indexing-memory` to a value bigger than or equal to your machine'
 **Default value**: half of the available threads
 **Expected value**: an integer
 
-Sets the maximum number of threads Meilisearch can use during indexation. By default, the indexer avoids using more than half of a machine's total processing units. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
+Sets the maximum number of threads Meilisearch can use during indexing. By default, the indexer avoids using more than half of a machine's total processing units. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
 
 If `--max-indexing-threads` is higher than the real number of cores available in the machine, Meilisearch uses the maximum number of available cores.
 
-In single-core machines, Meilisearch has no choice but to use the only core available for indexation. This may lead to a degraded search experience during indexation.
+In single-core machines, Meilisearch has no choice but to use the only core available for indexing. This may lead to a degraded search experience during indexing.
 
 ::: danger
-Avoid setting `--max-indexing-threads` to the total of your machine's processor cores. Though doing so might speed up indexation, it is likely to severely impact search experience.
+Avoid setting `--max-indexing-threads` to the total of your machine's processor cores. Though doing so might speed up indexing, it is likely to severely impact search experience.
 :::
 
 ### Max TASK_DB size

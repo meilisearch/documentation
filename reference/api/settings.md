@@ -202,7 +202,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Displayed attributes
 
-The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints; it has no impact on the [GET documents endpoint](/reference/api/documents.md#get-documents).
+The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints. It has no impact on the [GET documents endpoint](/reference/api/documents.md#get-documents).
 
 By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
