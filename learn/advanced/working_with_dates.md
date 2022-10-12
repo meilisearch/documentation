@@ -31,7 +31,7 @@ As an example, consider a database of video games. In this dataset, the release 
 ]
 ```
 
-If your chronological data is expressed in another format, like [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), you must convert it to a numeric value before indexing it with Meilisearch.
+If your date field is expressed in a format other than a numeric timestamp, like [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), you must convert it before indexing it with Meilisearch.
 
 Most programming languages have built-in tools to help you with this process. The JavaScript example below converts a game's release date, `"2018-10-18"`, to a numeric timestamp:
 
