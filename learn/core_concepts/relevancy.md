@@ -17,7 +17,7 @@ Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algo
 
 **The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs, but [you can change it](/reference/api/settings.md#update-ranking-rules).
 
-Deleting a rule will mean that Meilisearch no longer sorts results based on that rule. For example, **if you delete the [typo ranking rule](/learn/core_concepts/relevancy.md#_2-typo), documents with typos will still be considered during search**, but they will no longer be sorted by increasing number of typos.
+Deleting a rule means that Meilisearch will no longer sort results based on that rule. For example, **if you delete the [typo ranking rule](/learn/core_concepts/relevancy.md#_2-typo), documents with typos will still be considered during search**, but they will no longer be sorted by increasing number of typos.
 
 ### Built-in rules
 
