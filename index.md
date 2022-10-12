@@ -4,7 +4,7 @@ Welcome to the Meilisearch documentation. Here you'll find everything you need t
 
 [<linkButton text="🚀 QUICK START"/>](/learn/getting_started/quick_start.md)
 
-Looking for SDK documentation? Check out [this page](/learn/what_is_meilisearch/sdks.md) or use the Integrations dropdown menu at the top of the screen for quick access.
+Looking for SDK documentation? Check out [this list of official Meilisearch libraries](/learn/what_is_meilisearch/sdks.md) or use the Integrations dropdown menu at the top of the screen for quick access.
 
 ## Meilisearch news
 
