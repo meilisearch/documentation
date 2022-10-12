@@ -8,7 +8,7 @@ Looking for SDK documentation? Check out [this list of official Meilisearch libr
 
 ## Meilisearch news
 
-**Announcing cloud-hosted Meilisearch:** Join the closed beta by [filling out this form](https://meilisearch.typeform.com/to/FtnzvZfh), or [log in here](https://cloud.meilisearch.com/login) if you already have an account.
+**Announcing Meilisearch Cloud:** Join the closed beta by [filling out this form](https://meilisearch.typeform.com/to/FtnzvZfh), or [log in here](https://cloud.meilisearch.com/login) if you already have an account.
 
 **We just raised a 15M Series A! 🥳** Check out the [TechCrunch exclusive](https://techcrunch.com/2022/10/10/meilisearch-lands-15m-investment-to-grow-its-search-as-a-service-business/), or learn more [on our blog](https://blog.meilisearch.com/meilisearch-series-a/).
 
