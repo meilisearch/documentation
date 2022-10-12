@@ -221,7 +221,15 @@ Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move
 }
 ```
 
-## Step 4: Delete the database folder
+## Step 4: Stop the Meilisearch instance
+
+Stop your Meilisearch instance. If you're running Meilisearch as a `systemctl` service, you can stop your instance with:
+
+```bash
+systemctl stop meilisearch
+```
+
+## Step 5: Delete the database folder
 
 To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
@@ -229,7 +237,7 @@ To delete the old Meilisearch version, you need to delete the `data.ms` folder. 
 If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 :::
 
-## Step 5: Import the dump
+## Step 6: Import the dump
 
 Now that you’ve got your dump, install the [latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the CLI option:
 
