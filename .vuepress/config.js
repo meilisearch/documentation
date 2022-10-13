@@ -176,6 +176,7 @@ module.exports = {
             '/learn/advanced/geosearch',
             '/learn/advanced/pagination',
             '/learn/advanced/sorting',
+            '/learn/advanced/working_with_dates',
             {
               title: 'Updating Meilisearch',
               path: '/learn/advanced/updating',
