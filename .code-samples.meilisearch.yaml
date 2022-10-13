@@ -1002,3 +1002,38 @@ search_parameter_guide_matching_strategy_2: |
       "q": "big fat liar",
       "matchingStrategy": "all"
     }'    
+date_guide_index_1: |
+  curl \
+    -x post 'http://localhost:7700/indexes/games/documents' \
+    -h 'content-type: application/json' \
+    --data-binary @games.json
+date_guide_filterable_attributes_1: |
+  curl \
+    -X PUT 'http://localhost:7700/indexes/games/settings/filterable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "release_timestamp"
+    ]'
+date_guide_filter_1: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/games/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "filter": "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
+    }'
+date_guide_sortable_attributes_1: |
+  curl \
+    -X PUT 'http://localhost:7700/indexes/games/settings/sortable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "release_timestamp"
+    ]'
+date_guide_sort_1: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/games/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "sort": ["release_timestamp:desc"]
+    }'

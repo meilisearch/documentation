@@ -61,59 +61,24 @@ When preparing your dataset, it can be useful to leave the original date and tim
 
 After adding a numeric timestamp to all documents, [index your data](/reference/api/documents.md#add-or-replace-documents) as usual. See below for an example using our nonexistent video games dataset.
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/games/documents' \
-  -H 'Content-Type: application/json' \
-  --data-binary @games.json
-```
+<CodeSamples id="date_guide_index_1" />
 
 ## Filtering by timestamp
 
 To filter search results based on their timestamp, add your document's timestamp field to the list of [`filterableAttributes`](/reference/api/settings.md#update-filterable-attributes):
 
-```sh
-curl \
-  -X PUT 'http://localhost:7700/indexes/games/settings/filterable-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "release_timestamp"
-  ]'
-```
+<CodeSamples id="date_guide_filterable_attributes_1" />
 
 Once you have configured `filterableAttributes`, you can filter search results by date. The following query only returns games released between 2018 and 2022:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/games/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "",
-    "filter": "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
-  }'
-```
+<CodeSamples id="date_guide_filter_1" />
 
 ## Sorting by timestamp
 
 To sort search results chronologically, add your document's timestamp field to the list of [`sortableAttributes`](/reference/api/settings.md#update-sortable-attributes):
 
-```sh
-curl \
-  -X PUT 'http://localhost:7700/indexes/games/settings/sortable-attributes' \
-  -H 'Content-Type: application/json' \
-  --data-binary '[
-    "release_timestamp"
-  ]'
-```
+<CodeSamples id="date_guide_sortable_attributes_1" />
 
 Once you have configured `sortableAttributes`, you can sort your search results based on their timestamp. The following query returns all games sorted from most recent to oldest:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/games/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "",
-    "sort": ["release_timestamp:desc"]
-  }'
-```
+<CodeSamples id="date_guide_sort_1" />
