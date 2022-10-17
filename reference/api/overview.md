@@ -48,7 +48,7 @@ All paginated responses contain the following fields:
 
 ### `/tasks` endpoint
 
-The `/tasks` endpoint uses a different type of pagination; hence the response contains different fields. You can read more about it in the [tasks API reference](/reference/api/tasks.md#get-tasks).
+Since the `/tasks` endpoint uses a different type of pagination, the response contains different fields. You can read more about it in the [tasks API reference](/reference/api/tasks.md#get-tasks).
 
 ## Parameters
 
