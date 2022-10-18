@@ -13,6 +13,9 @@
       <div v-else-if="method.toLowerCase() === 'delete'" class="method delete">
         DELETE
       </div>
+      <div v-else-if="method.toLowerCase() === 'patch'" class="method delete">
+        PATCH
+      </div>
       <div v-else class="method">
         {{ method }}
       </div>
@@ -69,6 +72,11 @@ div.route {
 
 .route div.method.delete {
   background-color: #ff5c5c;
+  color: white;
+}
+
+.route div.method.patch {
+  background-color: #968efa;
   color: white;
 }
 
