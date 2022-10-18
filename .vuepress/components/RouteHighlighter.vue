@@ -13,7 +13,7 @@
       <div v-else-if="method.toLowerCase() === 'delete'" class="method delete">
         DELETE
       </div>
-      <div v-else-if="method.toLowerCase() === 'patch'" class="method delete">
+      <div v-else-if="method.toLowerCase() === 'patch'" class="method patch">
         PATCH
       </div>
       <div v-else class="method">
