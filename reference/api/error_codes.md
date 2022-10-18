@@ -78,7 +78,6 @@ The `indexes` field for the provided API key resource is invalid. It should be a
 
 The given `name` is invalid. It should either be a string or `null`.
 
-
 ## `invalid_api_key_uid`
 
 The given `uid` is invalid. The `uid` must follow the [uuid v4](https://www.sohamkamani.com/uuid-versions-explained) format.
@@ -107,7 +106,7 @@ There is an error in the provided index format, check out our guide on [index cr
 
 An internal error occurred while trying to access the requested index.
 
- ## `invalid_ranking_rule`
+## `invalid_ranking_rule`
 
 The provided ranking rules are invalid. This may be due to syntax errors in your ranking rules or specifying custom ranking rules on reserved fields or reserved expressions. For more information on ranking rule configuration, check our [relevancy guide](/learn/core_concepts/relevancy.md#ranking-rules).
 
