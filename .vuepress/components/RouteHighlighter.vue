@@ -76,7 +76,7 @@ div.route {
 }
 
 .route div.method.patch {
-  background-color: #968efa;
+  background-color: #d93988;
   color: white;
 }
 
