@@ -306,7 +306,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 The distinct attribute is a field whose value will always be unique in the returned documents.
 
 ::: warning
-Updating distinct attributes will re-index all documents in the index, which can take some time.
+Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
 [To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
@@ -516,7 +516,7 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 Attributes in the `filterableAttributes` list can be used as filters or facets.
 
 ::: warning
-Updating filterable attributes will re-index all documents in the index, which can take some time.
+Updating filterable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
 [To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
@@ -869,7 +869,7 @@ The values associated with attributes in the `searchableAttributes` list are sea
 By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
 ::: warning
-Updating searchable attributes will re-index all documents in the index, which can take some time.
+Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
 [To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
@@ -984,7 +984,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search.md#sort).
 
 ::: warning
-Updating sortable attributes will re-index all documents in the index, which can take some time.
+Updating sortable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
@@ -1093,7 +1093,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 Words added to the `stopWords` list are ignored in future search queries.
 
 ::: warning
-Updating stop words will re-index all documents in the index, which can take some time.
+Updating stop words will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
 ::: note
