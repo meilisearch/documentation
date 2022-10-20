@@ -118,12 +118,12 @@ This value is always `null` for `dumpCreation` tasks.
 **Type**: Object
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
-| Name          | Description                                         |
-| :------------ | :-------------------------------------------------- |
-| **`message`** | A human-readable description of the error           |
+| Name          | Description                                            |
+| :------------ | :----------------------------------------------------- |
+| **`message`** | A human-readable description of the error              |
 | **`code`**    | The [error code](/reference/errors/error_codes.md)     |
-| **`type`**    | The [error type](/reference/error/overview.md#errors) |
-| **`link`**    | A link to the relevant section of the documentation |
+| **`type`**    | The [error type](/reference/errors/overview.md#errors) |
+| **`link`**    | A link to the relevant section of the documentation    |
 
 ### `duration`
 

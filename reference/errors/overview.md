@@ -20,9 +20,9 @@ Failed requests are always accompanied by a JSON-formatted error response. Meili
 
 | Type              | Description                                                                                                                                                                                                              |
 | :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `invalid_request` | This is due to an error in the user input. It is accompanied by the HTTP code `4xx`                                                                                                                                      |
-| `internal`        | This is due to machine or configuration constraints. The most common cause is reaching or exceeding hard limits, such as the size of the disk, the size limit of an index, etc. It is accompanied by the HTTP code `5xx` |
-| `auth`            | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx`                                                                                                              |
+| **`invalid_request`** | This is due to an error in the user input. It is accompanied by the HTTP code `4xx`                                                                                                                                      |
+| **`internal`**        | This is due to machine or configuration constraints. The most common cause is reaching or exceeding hard limits, such as the size of the disk, the size limit of an index, etc. It is accompanied by the HTTP code `5xx` |
+| **`auth`**            | This type of error is related to authentication and authorization. It is accompanied by the HTTP code `4xx`                                                                                                              |
 
 ### Error format
 
@@ -35,11 +35,11 @@ Failed requests are always accompanied by a JSON-formatted error response. Meili
 }
 ```
 
-| Field     | Description                                           |
-| :-------- | :---------------------------------------------------- |
-| `message` | Human-readable description of the error               |
-| `code`    | [Error code](/reference/errors/error_codes.md)        |
-| `type`    | [Type](#errors) of error returned                     |
-| `link`    | Link to the the relevant section of the documentation |
+|  Field     | Description                                       |
+| :-------- | :------------------------------------------------ |
+| **`message`** | Human-readable description of the error           |
+| **`code`**    | [Error code](/reference/errors/error_codes.md)    |
+| **`type`**    | [Type](#errors) of error returned                 |
+| **`link`**    | Link to the relevant section of the documentation |
 
 If you're having trouble understanding an error, take a look at the [complete list](/reference/errors/error_codes.md) of `code` values and descriptions.
