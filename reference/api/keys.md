@@ -208,7 +208,7 @@ API keys are displayed in descending order based on their `createdAt` date. This
 
 <RouteHighlighter method="GET" route="/keys/{key_or_uid}"/>
 
-Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/api/error_codes.md#api-key-not-found).
+Get information on the specified key. Attempting to use this endpoint with a non-existent or deleted key will result in [an error](/reference/errors/error_codes.md#api-key-not-found).
 
 ### Path parameters
 
