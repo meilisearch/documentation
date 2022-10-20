@@ -323,7 +323,10 @@ module.exports = {
               title: 'Status codes and Meilisearch errors',
               path: '/reference/errors/overview',
             },
-            '/reference/errors/error_codes',
+            {
+              title: 'Error codes',
+              path: '/reference/errors/error_codes',
+            },
           ],
         },
       ],
