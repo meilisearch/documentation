@@ -329,6 +329,17 @@ module.exports = {
             },
           ],
         },
+        {
+          title: '❌ Errors',
+          path: '/reference/errors/overview.html',
+          collapsable: false,
+          children: [
+            {
+              title: 'Status codes and Meilisearch errors',
+              path: '/reference/errors/overview',
+            },
+          ],
+        },
       ],
     },
   },
