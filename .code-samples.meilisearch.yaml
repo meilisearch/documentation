@@ -318,12 +318,12 @@ get_version_1: |-
     -X GET 'http://localhost:7700/version'
 distinct_attribute_guide_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/jackets/settings' \
+    -X PATCH 'http://localhost:7700/indexes/jackets/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "distinctAttribute": "product_id" }'
 field_properties_guide_searchable_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "searchableAttributes": [
@@ -334,7 +334,7 @@ field_properties_guide_searchable_1: |-
     }'
 field_properties_guide_displayed_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "displayedAttributes": [
