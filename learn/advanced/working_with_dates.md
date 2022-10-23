@@ -43,7 +43,7 @@ let game = {
   "release_date": "2018-10-18T00:00Z"
 };
 
-const timestampInMilliseconds = Date.parse(game.year); // Date.parse returns the timestamp in milliseconds
+const timestampInMilliseconds = Date.parse(game.release_date); // Date.parse returns the timestamp in milliseconds
 const timestamp = timestampInMilliseconds / 1000; // UNIX timestamps must be in seconds
 
 game = {
@@ -56,7 +56,7 @@ game = {
 ```
 
 :::tip
-When preparing your dataset, it can be useful to leave the original date and time fields in your documents intact. In the example above, we keep the `release_date` field because it is more readable than the raw `timestamp`.
+When preparing your dataset, it can be useful to leave the original date and time fields in your documents intact. In the example above, we keep the `release_date` field because it is more readable than the raw `release_timestamp`.
 :::
 
 After adding a numeric timestamp to all documents, [index your data](/reference/api/documents.md#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
