@@ -329,7 +329,7 @@ module.exports = {
             },
           ],
         },
-      ],
+      ],ya
     },
   },
   plugins: [
@@ -338,7 +338,7 @@ module.exports = {
       {
         pattern: '**/*.md',
         strictExt: true,
-        ignoreFilePattern: ['errors', 'document_structure'],
+        ignoreFilePattern: ['document_structure'],
         ignoreHashPattern: ['actions-2', 'primary-key-2'],
         exitLevel: 'warn',
       },
