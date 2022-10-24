@@ -71,7 +71,7 @@ Response body:
 }
 ```
 
-If you're having trouble understanding an error, take a look at the [complete list](/reference/api/error_codes.md) of `code` values and descriptions.
+If you're having trouble understanding an error, take a look at the [complete list](/reference/errors/error_codes.md) of `code` values and descriptions.
 
 ## Asynchronous operations
 
