@@ -63,6 +63,10 @@ Meilisearch accepts datasets in the following formats:
 - [NDJSON](#ndjson)
 - [CSV](#csv)
 
+::: note
+If you use the [Gatsby](https://github.com/meilisearch/gatsby-plugin-meilisearch/) plugin, Meilisearch accepts datasets in Markdown format.
+:::
+
 #### JSON
 
 Documents represented as JSON objects are key-value pairs enclosed by curly brackets. As such, [any rule that applies to formatting JSON objects](https://www.w3schools.com/js/js_json_objects.asp) also applies to formatting Meilisearch documents. For example, an attribute must be a string, while a value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
