@@ -269,6 +269,24 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 ![Meilisearch's search preview indicating the indexes dropdown in the upper right corner](/search_preview/multiple_indexes.png)
 
+## Customization
+
+At this point, you can configure your Meilisearch instance and customize your index. When searching, you can use search parameters to refine your results.
+
+### Instance options
+
+These allow you to configure your Meilisearch instance at launch with [environment variables](/learn/configuration/instance_options.md#environment-variables) and [command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags). You need to relaunch your instance to alter them.
+
+**Instance options affect your entire Meilisearch instance**, not just a single index.
+
+### Index settings
+
+[Index settings](/reference/api/settings.md) allow you to customize search behavior. You can either update all settings globally using the [update settings endpoint](/reference/api/settings.md#update-settings) or individually using a specific child route.
+
+### Search parameters
+
+[Search parameters](/reference/api/search.md#search-parameters) are used with the search endpoints to improve relevancy. They allow you to alter search results and behavior.
+
 ## Front-end integration
 
 The only step missing now is adding a search bar to your project. The easiest way of achieving this is to use [instant-meilisearch](https://github.com/meilisearch/instant-meilisearch): a plugin that establishes communication between your Meilisearch instance and [InstantSearch](https://github.com/algolia/instantsearch.js). InstantSearch, an open-source project developed by Algolia, is the tool that renders all the components needed to start searching.
