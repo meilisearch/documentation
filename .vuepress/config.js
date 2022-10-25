@@ -312,7 +312,21 @@ module.exports = {
             '/reference/api/health',
             '/reference/api/version',
             '/reference/api/dump',
-            '/reference/api/error_codes',
+          ],
+        },
+        {
+          title: '❌ Errors',
+          path: '/reference/errors/overview.html',
+          collapsable: false,
+          children: [
+            {
+              title: 'Status codes and Meilisearch errors',
+              path: '/reference/errors/overview',
+            },
+            {
+              title: 'Error codes',
+              path: '/reference/errors/error_codes',
+            },
           ],
         },
       ],
@@ -324,7 +338,7 @@ module.exports = {
       {
         pattern: '**/*.md',
         strictExt: true,
-        ignoreFilePattern: ['errors', 'document_structure'],
+        ignoreFilePattern: ['document_structure'],
         ignoreHashPattern: ['actions-2', 'primary-key-2'],
         exitLevel: 'warn',
       },
