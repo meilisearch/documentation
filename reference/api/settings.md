@@ -1313,8 +1313,8 @@ Typo tolerance helps users find relevant results even when their search queries 
 | **`enabled`**                      | Boolean          | `true`        | Whether typo tolerance is enabled or not                                         |
 | **`minWordSizeForTypos.oneTypo`**  | Integer          | `5`           | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   |
 | **`minWordSizeForTypos.twoTypos`** | Integer          | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
-| **`disableOnWords`**               | Array of strings | `[]`          | An array of words for which the typo tolerance feature is disabled               |
-| **`disableOnAttributes`**          | Array of strings | `[]`          | An array of attributes for which the typo tolerance feature is disabled          |
+| **`disableOnWords`**               | Array of strings | Empty         | An array of words for which the typo tolerance feature is disabled               |
+| **`disableOnAttributes`**          | Array of strings | Empty         | An array of attributes for which the typo tolerance feature is disabled          |
 
 ### Get typo tolerance settings
 
@@ -1387,6 +1387,8 @@ Partially update the typo tolerance settings for an index.
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ### Reset typo tolerance settings
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
 Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object).
 
