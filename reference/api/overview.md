@@ -6,7 +6,7 @@ Meilisearch is a RESTful API. This page describes the general behavior of the AP
 
 ### OpenAPI
 
-The Meilisearch OpenAPI specifications:
+You can download the Meilisearch OpenAPI specifications at:
 
 - [YAML](https://bump.sh/doc/meilisearch.yaml)
 - [JSON](https://bump.sh/doc/meilisearch.json)
@@ -21,7 +21,7 @@ This API documentation uses the following conventions:
 
 ## Authorization
 
-By [providing Meilisearch with a master key at launch](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance), you protect your instance from unauthorized requests. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except `/health`).
+By [providing Meilisearch with a master key at launch](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance), you protect your instance from unauthorized requests. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health.md).
 
 <CodeSamples id="authorization_header_1" />
 
@@ -52,18 +52,17 @@ Since the `/tasks` endpoint uses a different type of pagination, the response co
 
 ## Parameters
 
-Parameters are options you can pass to an API endpoint to modify its response. There are three main types of parameter in Meilisearch's API: request body parameters, path parameters, and query parameters.
+Parameters are options you can pass to an API endpoint to modify its response. There are three main types of parameters in Meilisearch's API: request body parameters, path parameters, and query parameters.
 
 ### Request body parameters
 
 These parameters are mandatory parts of POST, PUT, and PATCH requests. They accept a wide variety of values and data types depending on the resource you're modifying. You must add these parameters to your request's data payload.
 
-
 ### Path parameters
 
 These are parameters you pass to the API in the endpoint's path. They are used to identify a resource uniquely. You can have multiple path parameters, e.g., `/indexes/{index_uid}/documents/{document_id}`.
 
-We omit this section if an endpoint does not take any path parameters.
+If an endpoint does not take any path parameters, this section is not present in that endpoint's documentation.
 
 ### Query parameters
 
