@@ -52,7 +52,12 @@ Since the `/tasks` endpoint uses a different type of pagination, the response co
 
 ## Parameters
 
-Parameters are options passed to the endpoint to influence the response. They are added at the end of the string for GET requests. For POST requests, they are added to the body.
+Parameters are options you can pass to an API endpoint to modify its response. There are three main types of parameter in Meilisearch's API: request body parameters, path parameters, and query parameters.
+
+### Request body parameters
+
+These parameters are mandatory parts of POST, PUT, and PATCH requests. They accept a wide variety of values and data types depending on the resource you're modifying. You must add these parameters to your request's data payload.
+
 
 ### Path parameters
 
