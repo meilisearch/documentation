@@ -47,7 +47,7 @@ A complete test can be done using the following command:
 yarn test
 ```
 
-The tests are triggered on build and on any pull request to master.
+The tests are triggered on build and on any pull request to main.
 
 #### Checking dead links
 
@@ -75,7 +75,7 @@ yarn style
 
 ### Deployment
 
-The documentation is deployed as a static website. The master branch is automatically deployed at [https://docs.meilisearch.com](https://docs.meilisearch.com).
+The documentation is deployed as a static website. The main branch is automatically deployed at [https://docs.meilisearch.com](https://docs.meilisearch.com).
 
 You can build the static website using the following command:
 
