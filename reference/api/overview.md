@@ -4,20 +4,20 @@ Welcome to the Meilisearch API documentation. If you are new to Meilisearch, che
 
 Meilisearch is a RESTful API. This page describes the general behavior of the API.
 
-## OpenAPI
+### OpenAPI
 
 The Meilisearch OpenAPI specifications:
 
-- [JSON](https://bump.sh/doc/meilisearch.json)
 - [YAML](https://bump.sh/doc/meilisearch.yaml)
+- [JSON](https://bump.sh/doc/meilisearch.json)
 
 ## Document conventions
 
 The API documentation uses the following conventions:
 
-- Curly braces (`{}`) in API routes represent path parameters, e.g. GET `/indexes/{index_uid}`
+- Curly braces (`{}`) in API routes represent path parameters, e.g., GET `/indexes/{index_uid}`
 - Required fields are marked by an asterisk (`*`)
-- Placeholder text is in uppercase characters with underscore delimiters, e.g. `MASTER_KEY`
+- Placeholder text is in uppercase characters with underscore delimiters, e.g., `MASTER_KEY`
 
 ## Authorization
 
@@ -25,7 +25,7 @@ By [providing Meilisearch with a master key at launch](/learn/security/master_ap
 
 <CodeSamples id="authorization_header_1" />
 
-The [`/keys`](/reference/api/keys.md) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes. 
+The [`/keys`](/reference/api/keys.md) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
 
 ::: note
  v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:
