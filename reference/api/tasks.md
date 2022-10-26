@@ -254,3 +254,7 @@ Get a single task.
   "finishedAt":"2021-08-10T14:29:19.000000Z"
 }
 ```
+
+## Cancel tasks
+
+## Delete tasks

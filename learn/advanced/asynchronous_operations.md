@@ -120,7 +120,7 @@ Had the task failed, the response would have included an `error` object:
 
 ### Filtering tasks
 
-You can filter tasks based on `status`, `type`, or `indexUid`. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
+You can filter tasks based on `status`, `type`, `indexUid`, or date. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
 
 <CodeSamples id="get_all_tasks_filtering_1" />
 
@@ -129,6 +129,28 @@ Use the ampersand character `&` to combine filters, equivalent to a logical `AND
 For example, the following command would return all `documentAdditionOrUpdate` tasks that either `succeeded` or `failed`:
 
 <CodeSamples id="get_all_tasks_filtering_2" />
+
+#### Filtering by date
+
+You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `startedAt`, and `finishedAt` fields. This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The following date syntaxes are valid:
+
+- `Y-M-D`
+- `Y-M-DTH:M:SZ`
+- `Y-M-DTH:M:S+01:00`
+
+<CodeSamples id="async_guide_filter_by_date" />
+
+The above code sample will return all tasks `enqueued` **after** 11:49:53 am on 11 Oct 2020. It will start with the tasks `enqueued` at 11:49:54 am on 11 Oct 2020.
+
+::: note
+The date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+:::
+
+#### Combining filters
+
+You can combine the above mentioned filters to see tasks meeting specific requirements. The following code sample will return all `documentAdditionOrUpdate` or `documentDeletion` type tasks with `processing` or `enqueued` statuses in the `movies` index:
+
+<CodeSamples id="async_guide_multiple_filters" />
 
 At this time, `OR` operations between different filters are not supported. For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
 
