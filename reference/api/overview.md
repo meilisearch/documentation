@@ -13,7 +13,7 @@ The Meilisearch OpenAPI specifications:
 
 ## Document conventions
 
-The API documentation uses the following conventions:
+This API documentation uses the following conventions:
 
 - Curly braces (`{}`) in API routes represent path parameters, e.g., GET `/indexes/{index_uid}`
 - Required fields are marked by an asterisk (`*`)
@@ -64,7 +64,7 @@ We omit this section if an endpoint does not take any path parameters.
 
 These optional parameters are a sequence of key-value pairs and appear after the question mark (`?`) in the endpoint. You can list multiple query parameters by separating them with an ampersand (`&`). The order of query parameters does not matter.
 
-We omit this section if an endpoint does not take any query parameters.
+If an endpoint does not take any query parameters, this section is not present in that endpoint's documentation.
 
 ## Headers
 
@@ -78,7 +78,7 @@ Meilisearch currently supports the following formats:
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
 
-The only endpoints which currently accept NDJSON and CSV `Content-Type` are the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints. For all others, use `Content-Type: application/json`.
+Only the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints accept  NDJSON and CSV. For all others, use `Content-Type: application/json`.
 
 ## Request body
 
