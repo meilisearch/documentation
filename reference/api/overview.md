@@ -15,17 +15,17 @@ The Meilisearch OpenAPI specifications:
 
 The API documentation uses the following conventions:
 
-- Curly braces (`{}`) represent path parameters, e.g., GET `/indexes/{index_uid}`
+- Curly braces (`{}`) in API routes represent path parameters, e.g. GET `/indexes/{index_uid}`
 - Required fields are marked by an asterisk (`*`)
-- Placeholder text is in uppercase characters with underscore delimiters, e.g., `MASTER_KEY`
+- Placeholder text is in uppercase characters with underscore delimiters, e.g. `MASTER_KEY`
 
 ## Authorization
 
-Once you [provide Meilisearch with a master key at launch](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance), you must include the `Authorization` header for all your API requests. The `Authorization` header provides the credentials needed to access a protected resource.
+By [providing Meilisearch with a master key at launch](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance), you protect your instance from unauthorized requests. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except `/health`).
 
 <CodeSamples id="authorization_header_1" />
 
-While the master key grants full access to your Meilisearch instance, it should only be used for managing the [`/keys`](/reference/api/keys.md) route. We recommend using API keys for most of your day-to-day operations. API keys grant access to specific indexes, routes, and endpoints.
+The [`/keys`](/reference/api/keys.md) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes. 
 
 ::: note
  v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:
