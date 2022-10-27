@@ -152,6 +152,14 @@ For example, the following command would return all `documentAdditionOrUpdate` t
 
 <CodeSamples id="get_all_tasks_filtering_2" />
 
+### Filtering by `canceledBy`
+
+You can use the `canceledBy` filter to get the tasks canceled by a particular `taskCancelation` task.
+
+The code sample below filter all tasks canceled by the task with `taskUid` `9`:
+
+<CodeSamples id="async_guide_canceled_by" />
+
 #### Filtering by date
 
 You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `startedAt`, and `finishedAt` fields. This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The following date syntaxes are valid:

@@ -288,7 +288,7 @@ A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`)
 | **`uid`** *       | [`uid`](#uid) of the requested task                       |
 | **`status`**      | [status](#status) of the requested task                   |
 | **`type`** *      | [`type`](#uid) of the requested task                      |
-| **`indexUid`** *  | [`indexUid`](#indexUid) of the requested task             |
+| **`indexUid`** *  | [`indexUid`](#indexuid) of the requested task             |
 | **`beforeXAt`** * | Before the requested task was `enqueuedAt` or `startedAt` |
 | **`afterXAt`** *  | After the requested task was `enqueuedAt` or `startedAt`  |
 
