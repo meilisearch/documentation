@@ -82,7 +82,7 @@ Meilisearch currently supports the following formats:
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
 
-Only the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints accept  NDJSON and CSV. For all others, use `Content-Type: application/json`.
+Only the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints accept NDJSON and CSV. For all others, use `Content-Type: application/json`.
 
 ## Request body
 
