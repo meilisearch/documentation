@@ -2,19 +2,19 @@
 
 Meilisearch has two ways to backup its data: `snapshots` and `dumps`.
 
-### Snapshots
+## Snapshots
 
-**Snapshots** make it possible to schedule the creation of hard copies of your database.
+Snapshots make it possible to schedule the creation of hard copies of your database. These copies are bound to a specific Meilisearch version.
 
-This feature is **intended mainly as a safeguard**: ensuring that if some failure occurs, you're able to relaunch your database quickly and efficiently from a snapshot.
+This feature is **intended mainly as a safeguard**: if a failure occurs, you're able to relaunch your database quickly and efficiently.
 
-The documents in a snapshot are already "indexed" and ready to go, greatly increasing import speed. However, as a result, **snapshots are not compatible between different versions of Meilisearch**.
+The documents in a snapshot are already indexed and ready to go, greatly increasing import speed. However, **snapshots are not compatible between different versions of Meilisearch**.
 
-### Dumps
+## Dumps
 
-**Dumps**, on the other hand, export Meilisearch data in a way that is not bound to a specific Meilisearch version.
+Dumps export Meilisearch data in a way that is not bound to a specific Meilisearch version. This means **dumps are ideal for migrating your data when you upgrade Meilisearch.**
 
-As a result, importing a dump requires Meilisearch to re-index all of your documents. This process requires an amount of time and memory corresponding to the size of the database (the number of documents, their size, and the complexity of any index settings).
+**Importing a dump requires Meilisearch to re-index all your documents.** This process requires a significant amount of time and memory corresponding to the size of the database.
 
 ::: note
 We do not recommend using dumps from a new Meilisearch version to import an older version.
@@ -22,12 +22,11 @@ We do not recommend using dumps from a new Meilisearch version to import an olde
 For example, you can import a dump from Meilisearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
 :::
 
-### Conclusion
+## Conclusion
 
 To summarize:
 
-- **Snapshots are highly efficient, but not portable** between different versions of Meilisearch.
-- **Dumps are portable, but not very efficient**.
-  - Frequently launching Meilisearch from a dump would cause your performance to suffer.
+- Snapshots are highly efficient, but not portable between different versions of Meilisearch
+- Dumps are portable between different Meilisearch versions, but not very efficient
 
-For more information, have a look at the reference documentation for [snapshots](/learn/advanced/snapshots.md) and [dumps](/learn/advanced/dumps.md).
+For more information, have a look at the the documentation guides for [snapshots](/learn/advanced/snapshots.md) and [dumps](/learn/advanced/dumps.md).

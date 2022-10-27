@@ -1,20 +1,20 @@
 # Storage
 
-::: tip
+Meilisearch is, in many ways, a database. It stores indexed documents along with the data needed to return relevant search results.
 
-- If the database does not shrink after deleting documents or indexes, it is expected behavior. You are not losing space, Meilisearch is keeping this space for performance reasons.
-- You should have the same amount of RAM than the space taken on disk by Meilisearch for optimal performances.
-  :::
+## Database location
 
-Meilisearch is a database. It stores the indexed documents along with the data needed to perform lightning search.
+Meilisearch creates the database in the moment you first launch an instance. By default, you can find it inside a `data.ms` folder located in the same directory as the `meilisearch` binary.
 
-Writing a database is hard, and we do not want to reinvent the wheel, so Meilisearch uses a storage engine under the hood. Using a storage engine allows Meilisearch to focus on improving search relevancy and search performance while abstracting the complicated task of creating, reading and updating documents on disk, and in memory.
+The database location can change depending on a number of factors, such as whether you have configured a different database path with the [`--db-path` instance option](/learn/configuration/instance_options.md#database-path), or if you're using an OS virtualization tool like [Docker](https://docker.com).
 
 ## LMDB
 
-The storage engine of Meilisearch is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP, and it has ACID properties.
+Creating a database from scratch and managing it hard work. It would make no sense to try and reinvent the wheel, so Meilisearch uses a storage engine under the hood. This allows Meilisearch to focus on improving search relevancy and search performance while abstracting the complicated task of creating, reading and updating documents on disk and in memory.
 
-We chose LMDB after we successfully (or not) tried Meilisearch with [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/) and decided to move on with LMDB because it is the best combination of performance and stability for Meilisearch.
+The storage engine Meilisearch uses under the hood is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP and has ACID properties.
+
+We chose LMDB after extensive testing with LMDB itself, [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/). We chose LMDB because it provided us with the best combination between performance and stability.
 
 ### Memory mapping
 
@@ -31,6 +31,7 @@ The choice of LMDB comes with certain pros and cons. In order to understand this
 #### Database size
 
 When freeing entries from the database (in our case, removing documents from Meilisearch), one can observe that no space disk is released. The space previously used by the entry is marked as free for LMDB but not made available for the operating system.
+
 Unlike other storage engines, LMDB chooses this design for performance issues as there is no need for a compaction phase.
 
 As a result, you may see that the disk occupied by LMDB and therefore by Meilisearch keeps growing even if you are deleting indexes or documents. This is normal behavior, and you can note that the database will not grow again if you write some data after deleting indexes or documents.
@@ -39,7 +40,7 @@ As a result, you may see that the disk occupied by LMDB and therefore by Meilise
 
 Since LMDB is memory mapped, it is the operating system that manages the real memory allocated (or not) to Meilisearch.
 
-Thus, if you run Meilisearch as a standalone program on a server, LMDB will use the maximum RAM it can use.
+Thus, if you run Meilisearch as a standalone program on a server, LMDB will use the maximum RAM it can use. In general, you should have the same amount of RAM than the space taken on disk by Meilisearch for optimal performance.
 
 On the other hand, if you run Meilisearch along with other programs, the OS will manage memory based on everyone's need. This makes Meilisearch's memory usage quite flexible when used in development.
 
