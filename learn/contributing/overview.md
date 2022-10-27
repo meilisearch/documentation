@@ -3,7 +3,7 @@
 There are many ways to contribute to Meilisearch, such as:
 
 - [Contributing to the documentation](/learn/contributing/contributing_to_docs.md)
-- Contributing to the [main engine](https://github.com/meilisearch/meilisearch/blob/master/CONTRIBUTING.md)
+- Contributing to the [main engine](https://github.com/meilisearch/meilisearch/blob/main/CONTRIBUTING.md)
 - Contributing to [our integrations](https://github.com/meilisearch/integration-guides)
   - [Creating an integration](https://github.com/meilisearch/integration-guides/blob/main/resources/build-integration.md)
 - Creating written or video content (tutorials, blog posts, etc.)
