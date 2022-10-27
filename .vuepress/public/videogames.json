@@ -1,0 +1,20 @@
+[
+  {
+    "id": 0,
+    "title": "Return of the Obra Dinn",
+    "genre": "adventure",
+    "release_timestamp": 1538949600
+  },
+  {
+    "id": 1,
+    "title": "The Excavation of Hob's Barrow",
+    "genre": "adventure",
+    "release_timestamp": 1664316000
+  },
+  {
+    "id": 2,
+    "title": "Bayonetta 2",
+    "genre": "action",
+    "release_timestamp": 1411164000
+  }
+]

@@ -1,7 +1,7 @@
 # This code-samples file is used by the Meilisearch documentation
 # Every example written here will be automatically fetched by
 # the documentation on build
-# You can read more on https://github.com/meilisearch/documentation/tree/master/.vuepress/code-samples
+# You can read more on https://github.com/meilisearch/documentation/tree/main/.vuepress/code-samples
 ---
 get_one_index_1: |-
 list_all_indexes_1: |-
@@ -154,3 +154,8 @@ getting_started_pagination: |-
 getting_started_front_end_integration_md: |-
 search_parameter_guide_matching_strategy_1: |-
 search_parameter_guide_matching_strategy_2: |-
+date_guide_index_1: |
+date_guide_filterable_attributes_1: |
+date_guide_filter_1: |
+date_guide_sortable_attributes_1: |
+date_guide_sort_1: |

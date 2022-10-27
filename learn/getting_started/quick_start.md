@@ -124,7 +124,7 @@ To install Meilisearch on Windows, you can:
 
 - use Docker (see "Docker" tab above)
 - [download the latest binary](https://github.com/meilisearch/Meilisearch/releases)
-- use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/) or equivalent
+- use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/), [WSL](https://learn.microsoft.com/en-us/windows/wsl/), or equivalent
 - compile from source (see "Source" tab above)
 
 To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
@@ -268,6 +268,24 @@ For security reasons, the search preview is only available in [development mode.
 If you have multiple indexes, you can switch between them using the indexes dropdown.
 
 ![Meilisearch's search preview indicating the indexes dropdown in the upper right corner](/search_preview/multiple_indexes.png)
+
+## Customization
+
+At this point, you can configure your Meilisearch instance and customize your index. When searching, you can use search parameters to refine your results.
+
+### Instance options
+
+These allow you to configure your Meilisearch instance at launch with [environment variables](/learn/configuration/instance_options.md#environment-variables) and [command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags). You need to relaunch your instance to alter them.
+
+**Instance options affect your entire Meilisearch instance**, not just a single index.
+
+### Index settings
+
+[Index settings](/reference/api/settings.md) allow you to customize search behavior. You can either update all settings globally using the [update settings endpoint](/reference/api/settings.md#update-settings) or individually using a specific child route.
+
+### Search parameters
+
+[Search parameters](/reference/api/search.md#search-parameters) are used with the search endpoints to improve relevancy. They allow you to alter search results and behavior.
 
 ## Front-end integration
 

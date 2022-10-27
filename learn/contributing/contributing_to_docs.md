@@ -63,10 +63,10 @@ All you need to continue is a [GitHub account](https://github.com).
 3. Use GitHub's text editor to make the change you want.
 4. Scroll down to where it says `Propose changes`. In the first text box, write a short description (e.g., "Fix typo"). In the second text box, write a longer description of your changes if necessary.
 5. Click `Propose changes` to continue. You should see a page that says `Comparing changes`. This screen is prompting you to create a pull request.
-6. Make sure the base repository is `meilisearch/documentation` and the base is `master`. Don't worry about the other two boxes—they automatically target the changes you just made.
-7. Below, you can see the changes you made compared to the master branch (what's currently published on docs.meilisearch.com). When you're ready, click `Create pull request`.
+6. Make sure the base repository is `meilisearch/documentation` and the base is `main`. Don't worry about the other two boxes—they automatically target the changes you just made.
+7. Below, you can see the changes you made compared to the main branch (what's currently published on docs.meilisearch.com). When you're ready, click `Create pull request`.
 8. **Congrats, you made your first PR!** Someone from the documentation team will review your pull request shortly. They may ask for changes, so keep an eye on your GitHub notifications.
-9. If everything looks good, your work will be merged into the `master` branch and become part of the official documentation site. You are now a Meilisearch Contributor! 🚀
+9. If everything looks good, your work will be merged into the `main` branch and become part of the official documentation site. You are now a Meilisearch Contributor! 🚀
 
 ## How we review contributions
 

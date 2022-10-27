@@ -6,10 +6,6 @@ sidebarDepth:  2
 
 The `/settings` route allows you to customize search settings for the given index. You can either modify all of an index's settings at once using the [update settings endpoint](#update-settings), or modify each one individually using the child routes.
 
-::: warning
-Updating any setting will cause all documents in that index to be re-indexed, which can take some time.
-:::
-
 For a conceptual overview of index settings, refer to our [indexes guide](/learn/core_concepts/indexes.md#index-settings).
 
 ## Settings object
@@ -309,6 +305,10 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The distinct attribute is a field whose value will always be unique in the returned documents.
 
+::: warning
+Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+:::
+
 [To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
 
 ### Get distinct attribute
@@ -514,6 +514,10 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 ## Filterable attributes
 
 Attributes in the `filterableAttributes` list can be used as filters or facets.
+
+::: warning
+Updating filterable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+:::
 
 [To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
@@ -864,6 +868,10 @@ The values associated with attributes in the `searchableAttributes` list are sea
 
 By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
+::: warning
+Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+:::
+
 [To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
 
 ### Get searchable attributes
@@ -975,6 +983,10 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search.md#sort).
 
+::: warning
+Updating sortable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
+:::
+
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
 
 ### Get sortable attributes
@@ -1080,11 +1092,13 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Words added to the `stopWords` list are ignored in future search queries.
 
-::: note
-Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
+::: warning
+Updating stop words will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
 ::: tip
+Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.
+
 [This website maintained by a French developer](https://sites.google.com/site/kevinbouge/stopwords-lists) offers lists of possible stop words in different languages. Note that, depending on your dataset and use case, you will need to tweak these lists for optimal results.
 :::
 
@@ -1299,8 +1313,8 @@ Typo tolerance helps users find relevant results even when their search queries 
 | **`enabled`**                      | Boolean          | `true`        | Whether typo tolerance is enabled or not                                         |
 | **`minWordSizeForTypos.oneTypo`**  | Integer          | `5`           | The minimum word size for accepting 1 typo; must be between `0` and `twoTypos`   |
 | **`minWordSizeForTypos.twoTypos`** | Integer          | `9`           | The minimum word size for accepting 2 typos; must be between `oneTypo` and `255` |
-| **`disableOnWords`**               | Array of strings | `[]`          | An array of words for which the typo tolerance feature is disabled               |
-| **`disableOnAttributes`**          | Array of strings | `[]`          | An array of attributes for which the typo tolerance feature is disabled          |
+| **`disableOnWords`**               | Array of strings | Empty         | An array of words for which the typo tolerance feature is disabled               |
+| **`disableOnAttributes`**          | Array of strings | Empty         | An array of attributes for which the typo tolerance feature is disabled          |
 
 ### Get typo tolerance settings
 
@@ -1373,6 +1387,8 @@ Partially update the typo tolerance settings for an index.
 You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
 ### Reset typo tolerance settings
+
+<RouteHighlighter method="DELETE" route="/indexes/{index_uid}/settings/typo-tolerance"/>
 
 Reset an index's typo tolerance settings to their [default value](#typo-tolerance-object).
 

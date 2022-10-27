@@ -199,3 +199,6 @@
 
 # Remove autobatching
 /learn/experimental/auto-batching.html              /learn/core_concepts/documents.html
+
+# New errors page
+/reference/api/error_codes.html                     /reference/errors/error_codes.html

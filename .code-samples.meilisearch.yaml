@@ -1,7 +1,7 @@
 # This code-samples file is used by the Meilisearch documentation
 # Every example written here will be automatically fetched by
 # the documentation on build
-# You can read more at https://github.com/meilisearch/documentation/tree/master/.vuepress/code-samples
+# You can read more at https://github.com/meilisearch/documentation/tree/main/.vuepress/code-samples
 ---
 get_one_index_1: |-
   curl \
@@ -318,12 +318,12 @@ get_version_1: |-
     -X GET 'http://localhost:7700/version'
 distinct_attribute_guide_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/jackets/settings' \
+    -X PATCH 'http://localhost:7700/indexes/jackets/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{ "distinctAttribute": "product_id" }'
 field_properties_guide_searchable_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "searchableAttributes": [
@@ -334,7 +334,7 @@ field_properties_guide_searchable_1: |-
     }'
 field_properties_guide_displayed_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "displayedAttributes": [
@@ -1003,3 +1003,38 @@ search_parameter_guide_matching_strategy_2: |
       "q": "big fat liar",
       "matchingStrategy": "all"
     }'    
+date_guide_index_1: |
+  curl \
+    -x post 'http://localhost:7700/indexes/games/documents' \
+    -h 'content-type: application/json' \
+    --data-binary @games.json
+date_guide_filterable_attributes_1: |
+  curl \
+    -X PUT 'http://localhost:7700/indexes/games/settings/filterable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "release_timestamp"
+    ]'
+date_guide_filter_1: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/games/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "filter": "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
+    }'
+date_guide_sortable_attributes_1: |
+  curl \
+    -X PUT 'http://localhost:7700/indexes/games/settings/sortable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "release_timestamp"
+    ]'
+date_guide_sort_1: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/games/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "sort": ["release_timestamp:desc"]
+    }'
