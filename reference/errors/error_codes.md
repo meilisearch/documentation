@@ -161,7 +161,7 @@ A document does not contain any value for the required primary key, and is thus 
 
 ## `missing_filters`
 
-The `/task/cancel/` endpoint requires one of the available [path parameters](/reference/api/tasks.md#path-parameters-2). This error prevents users from accidentally cancelling all `enqueued` and `processing` tasks.
+The [cancel tasks](/reference/api/tasks.md#cancel-tasks) endpoint requires one of the available [path parameters](/reference/api/tasks.md#path-parameters-2). This error prevents users from accidentally cancelling all `enqueued` and `processing` tasks.
 
 ## `missing_parameter`
 

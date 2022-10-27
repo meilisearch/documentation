@@ -139,11 +139,10 @@ Tasks within the same batch share the same values for `startedAt`, `finishedAt`,
 
 If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally. If an [`internal`](/reference/errors/overview.md#errors) error occurs, the whole batch will fail and all tasks within it will share the same `error` object.
 
-If the task you’re canceling is part of a batch, **the whole batch is stopped.** Meilisearch automatically creates a new batch once the current one is stopped and the specified tasks are canceled. The canceled tasks will not be part of the new batch.
-
-This means:
-
-- When the new batch is created, it may contain tasks that have been requested to be canceled in the meantime
-- Any progress the batch made before being canceled is lost
-
 You can deactivate auto-batching using the `--disable-auto-batching` command-line flag or the `MEILI_DISABLE_AUTO_BATCHING` environment variable. This is useful in cases where you want to avoid any potential bugs in the feature or reduce visibility latency. When auto-batching is disabled, the whole queue takes longer to process, but each individual task will be processed earlier (until a certain number of processed tasks).
+
+#### Auto-batching and task cancelation
+
+**If the task you’re canceling is part of a batch, the whole batch is stopped.** Meilisearch automatically creates a new batch once the current one is stopped and the specified tasks are canceled. The canceled tasks will not be part of the new batch.
+
+This means any progress the batch made before being canceled is lost and when the new batch is created, it may contain tasks that have been requested to be canceled in the meantime.

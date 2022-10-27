@@ -308,6 +308,8 @@ A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`)
 }
 ```
 
+You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
+
 ### Cancel all tasks
 
 You can cancel all tasks by using the following filter:
