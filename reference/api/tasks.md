@@ -269,7 +269,7 @@ Get a single task.
 
 <RouteHighlighter method="POST" route="/tasks/cancel?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
 
-Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, and date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
+Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, or date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
 
 ::: warning
 Using this route without any filters (POST `/tasks/cancel`) will result in the [`missing_filters`](/reference/errors/error_codes.md#missing-filters) error.
@@ -281,7 +281,7 @@ You can also cancel `taskCancelation` type tasks as long as they are in the `enq
 
 ### Query parameters
 
-A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`) is required.
+A valid `uid`, `status`, `type`, `indexUid`, or date(`beforeXAt` or `afterXAt`) is required.
 
 | Query Parameter   | Description                                               |
 | :---------------- | :-------------------------------------------------------- |
