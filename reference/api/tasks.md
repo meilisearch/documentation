@@ -113,17 +113,25 @@ This value is always `null` for `dumpCreation` tasks.
 | :------------ | :-------------------------------------------------------------------------------- |
 | **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file |
 
+#### `taskCancelation`
+
+| Name                | Description                                                                                                                                                                                          |
+| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**  | The number of tasks that can be canceled based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
+| **`canceledTasks`** | The number of tasks successfully canceled. If the task fails, this will be `0`                                                                                                                       |
+| **`originalQuery`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                                      |
+
 ### `error`
 
 **Type**: Object
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
-| Name          | Description                                         |
-| :------------ | :-------------------------------------------------- |
-| **`message`** | A human-readable description of the error           |
+| Name          | Description                                            |
+| :------------ | :----------------------------------------------------- |
+| **`message`** | A human-readable description of the error              |
 | **`code`**    | The [error code](/reference/errors/error_codes.md)     |
 | **`type`**    | The [error type](/reference/errors/overview.md#errors) |
-| **`link`**    | A link to the relevant section of the documentation |
+| **`link`**    | A link to the relevant section of the documentation    |
 
 ### `duration`
 
@@ -133,17 +141,17 @@ This value is always `null` for `dumpCreation` tasks.
 ### `enqueuedAt`
 
 **Type**: String
-**Description**: The date and time when the task was first `enqueued`, in RFC 3339 format
+**Description**: The date and time when the task was first `enqueued`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ### `startedAt`
 
 **Type**: String
-**Description**: The date and time when the task began `processing`, in RFC 3339 format
+**Description**: The date and time when the task began `processing`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ### `finishedAt`
 
 **Type**: String
-**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in RFC 3339 format
+**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ## Get tasks
 
@@ -256,5 +264,42 @@ Get a single task.
 ```
 
 ## Cancel tasks
+
+<RouteHighlighter method="POST" route="/tasks/cancel?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
+
+Cancel an `enqueued` or `processing` task. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
+
+The API key used must have the `tasks.cancel` action.
+
+You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state.
+
+### Path parameters
+
+A valid `uid`, `status`, `type`, `indexUid`,  and date(`beforeXAt` or `afterXAt`) is required.
+
+| Name              | Type   | Description                                                              |
+| :---------------- | :----- | :----------------------------------------------------------------------- |
+| **`uid`** *       | String | [`uid`](#uid) of the requested task                                      |
+| **`status`**      | String | [status](#status) of the requested task                                  |
+| **`type`** *      | String | [`type`](#uid) of the requested task                                     |
+| **`indexUid`** *  | String | [`indexUid`](#indexUid) of the requested task                            |
+| **`beforeXAt`** * | String | Before the requested task was `enqueuedAt`, `startedAt`, or `finishedAt` |
+| **`afterXAt`** *  | String | After the requested task was `enqueuedAt`, `startedAt`, or `finishedAt`  |
+
+### Example
+
+<CodeSamples id="cancel_task_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "taskUid": 3,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "taskCancelation",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+}
+```
 
 ## Delete tasks
