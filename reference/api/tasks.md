@@ -141,17 +141,17 @@ This value is always `null` for `dumpCreation` tasks.
 ### `enqueuedAt`
 
 **Type**: String
-**Description**: The date and time when the task was first `enqueued`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+**Description**: The date and time when the task was first `enqueued`, in RFC 3339 format
 
 ### `startedAt`
 
 **Type**: String
-**Description**: The date and time when the task began `processing`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+**Description**: The date and time when the task began `processing`, in RFC 3339 format
 
 ### `finishedAt`
 
 **Type**: String
-**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in RFC 3339 format
 
 ## Get tasks
 
@@ -267,7 +267,7 @@ Get a single task.
 
 <RouteHighlighter method="POST" route="/tasks/cancel?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
 
-Cancel an `enqueued` or `processing` task  based on `uid`, `status`, `type`, `indexUid`,  and date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
+Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, and date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
 
 ::: warning
 Using this route without any filters (POST `/tasks/cancel`) will result in the [`missing_filters`](/reference/errors/error_codes.md#missing-filters) error.
