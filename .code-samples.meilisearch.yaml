@@ -1039,10 +1039,10 @@ date_guide_sort_1: |
     }'
 async_guide_filter_by_date: |
   curl \
-  -X POST 'http://localhost:7700/tasks?afterEnqueuedAt>2020-10-11T11:49:53.000Z'
+    -X POST 'http://localhost:7700/tasks?afterEnqueuedAt>2020-10-11T11:49:53.000Z'
 async_guide_multiple_filters: |
   curl \
-  -X POST 'http://localhost:7700/tasks?indexUid=movies&type=documentAdditionOrUpdate,documentDeletion&status=processing,enqueued'
+    -X POST 'http://localhost:7700/tasks?indexUid=movies&type=documentAdditionOrUpdate,documentDeletion&status=processing,enqueued'
 cancel_task_1: |  
   curl \
     -X POST 'http://localhost:7700/tasks/cancel?uid=1,2'

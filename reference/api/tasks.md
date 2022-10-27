@@ -121,6 +121,8 @@ This value is always `null` for `dumpCreation` tasks.
 | **`canceledTasks`** | The number of tasks successfully canceled. If the task fails, this will be `0`                                                                                                                       |
 | **`originalQuery`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                                      |
 
+#### `taskDeletion`
+
 ### `error`
 
 **Type**: Object
@@ -141,17 +143,17 @@ This value is always `null` for `dumpCreation` tasks.
 ### `enqueuedAt`
 
 **Type**: String
-**Description**: The date and time when the task was first `enqueued`, in RFC 3339 format
+**Description**: The date and time when the task was first `enqueued`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ### `startedAt`
 
 **Type**: String
-**Description**: The date and time when the task began `processing`, in RFC 3339 format
+**Description**: The date and time when the task began `processing`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ### `finishedAt`
 
 **Type**: String
-**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in RFC 3339 format
+**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ## Get tasks
 
