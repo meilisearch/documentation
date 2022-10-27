@@ -47,12 +47,12 @@ This value is always `null` for `dumpCreation` tasks.
 ### `status`
 
 **Type**: String
-**Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`
+**Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`, `canceled`, and `deleted`
 
 ### `type`
 
 **Type**: String
-**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`
+**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, and `taskDeletion`
 
 ### `details`
 
