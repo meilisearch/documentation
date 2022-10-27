@@ -267,24 +267,28 @@ Get a single task.
 
 <RouteHighlighter method="POST" route="/tasks/cancel?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
 
-Cancel an `enqueued` or `processing` task. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
+Cancel an `enqueued` or `processing` task  based on `uid`, `status`, `type`, `indexUid`,  and date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
+
+::: warning
+Using this route without any filters (POST `/tasks/cancel`) will result in the [`missing_filters`](/reference/errors/error_codes.md#missing-filters) error.
+:::
 
 The API key used must have the `tasks.cancel` action.
 
 You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state.
 
-### Path parameters
+### Query parameters
 
-A valid `uid`, `status`, `type`, `indexUid`,  and date(`beforeXAt` or `afterXAt`) is required.
+A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`) is required.
 
-| Name              | Type   | Description                                                              |
-| :---------------- | :----- | :----------------------------------------------------------------------- |
-| **`uid`** *       | String | [`uid`](#uid) of the requested task                                      |
-| **`status`**      | String | [status](#status) of the requested task                                  |
-| **`type`** *      | String | [`type`](#uid) of the requested task                                     |
-| **`indexUid`** *  | String | [`indexUid`](#indexUid) of the requested task                            |
-| **`beforeXAt`** * | String | Before the requested task was `enqueuedAt`, `startedAt`, or `finishedAt` |
-| **`afterXAt`** *  | String | After the requested task was `enqueuedAt`, `startedAt`, or `finishedAt`  |
+| Query Parameter   | Description                                               |
+| :---------------- | :-------------------------------------------------------- |
+| **`uid`** *       | [`uid`](#uid) of the requested task                       |
+| **`status`**      | [status](#status) of the requested task                   |
+| **`type`** *      | [`type`](#uid) of the requested task                      |
+| **`indexUid`** *  | [`indexUid`](#indexUid) of the requested task             |
+| **`beforeXAt`** * | Before the requested task was `enqueuedAt` or `startedAt` |
+| **`afterXAt`** *  | After the requested task was `enqueuedAt` or `startedAt`  |
 
 ### Example
 
@@ -301,5 +305,13 @@ A valid `uid`, `status`, `type`, `indexUid`,  and date(`beforeXAt` or `afterXAt`
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
+### Cancel all tasks
+
+You can cancel all tasks by using the following filter:
+
+<RouteHighlighter method="POST" route="/tasks/cancel?status=processing,enqueued" />
+
+The API key used must have access to all indexes (`"indexes": [*]`) and the `task.cancel` action.
 
 ## Delete tasks
