@@ -341,7 +341,55 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
 :::
 
+Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
+=======
+<RouteHighlighter method="DELETE" route="/tasks?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
+
+Delete a finished (`succeeded`, `failed`, or `canceled` task based on `uid`, `status`, `type`, `indexUid`, and date. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
+
+Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) if you try retrieving a deleted task.
+>>>>>>> c8979a7a9 (update api)
+
+::: warning
+To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
+:::
+
+### Query parameters
+
+<<<<<<< HEAD
+A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeXAt` or `afterXAt`) field is required.
+
+| Query Parameter        | Description                                                                                                                          |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`). Use `uids=*` for all `uids`                                |
+| **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
+| **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
+| **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
+| **`canceledBy`**       | Delete tasks based on the `canceledBy` field                                                                                         |
+| **`beforeEnqueuedAt`** | Delete tasks **before** a specified `enqueuedAt` date                                                                                |
+| **`beforeStartedAt`**  | Delete tasks **before** a specified `startedAt` date                                                                                 |
+| **`beforeFinishedAt`** | Delete tasks **before** a specified `finishedAt` date                                                                                |
+| **`afterEnqueuedAt`**  | Delete tasks **after** a specified `enqueuedAt` date                                                                                 |
+| **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date                                                                                  |
+| **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date                                                                                 |
+
+::: note
+Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+:::
+
 [To learn more about using the query parameters, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
+=======
+A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`) is required.
+
+| Query Parameter   | Description                                                              |
+| :---------------- | :----------------------------------------------------------------------- |
+| **`uid`** *       | [`uid`](#uid) of the requested task                                      |
+| **`status`**      | [status](#status) of the requested task                                  |
+| **`type`** *      | [`type`](#uid) of the requested task                                     |
+| **`indexUid`** *  | [`indexUid`](#indexuid) of the requested task                            |
+| **`beforeXAt`** * | Before the requested task was `enqueuedAt`, `startedAt`, or `finishedAt` |
+| **`afterXAt`** *  | After the requested task was `enqueuedAt`, `startedAt`, or `finishedAt`  |
+>>>>>>> c8979a7a9 (update api)
 
 ### Example
 
@@ -359,16 +407,25 @@ Date filters are exclusive, meaning you can only filter tasks before or after a 
 }
 ```
 
+<<<<<<< HEAD
 ::: note
 Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is `null`.
 :::
 
+=======
+>>>>>>> c8979a7a9 (update api)
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 
 ### Delete all tasks
 
 You can delete all tasks by using the following filter:
 
+<<<<<<< HEAD
 <RouteHighlighter method="DELETE" route="/tasks?statuses=failed,canceled,succeeded" />
 
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys.md#actions) action.
+=======
+<RouteHighlighter method="DELETE" route="/tasks?status=failed,canceled,succeeded" />
+
+The API key used must have access to all indexes (`"indexes": [*]`) and the `task.delete` action.
+>>>>>>> c8979a7a9 (update api)

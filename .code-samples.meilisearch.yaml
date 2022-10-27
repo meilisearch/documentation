@@ -1048,6 +1048,7 @@ async_guide_filter_by_type_1: |
     -X POST 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'         
 async_guide_filter_by_index_uid_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?indexUid=movies' delete_task_1: |
+    -X POST 'http://localhost:7700/tasks?indexUids=movies'
+delete_task_1: |
   curl \
-    -X DELETE 'http://localhost:7700/tasks?uids=1,2'
+    -X DELETE 'http://localhost:7700/tasks?uid=1,2'
