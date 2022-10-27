@@ -113,17 +113,25 @@ This value is always `null` for `dumpCreation` tasks.
 | :------------ | :-------------------------------------------------------------------------------- |
 | **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file |
 
+#### `taskDeletion`
+
+| Name                | Description                                                                                                                                                                                         |
+| :------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**  | The number of tasks that can be deleted based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
+| **`canceledTasks`** | The number of tasks successfully deleted. If the task fails, this will be `0`                                                                                                                       |
+| **`originalQuery`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                            |
+
 ### `error`
 
 **Type**: Object
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
-| Name          | Description                                         |
-| :------------ | :-------------------------------------------------- |
-| **`message`** | A human-readable description of the error           |
+| Name          | Description                                            |
+| :------------ | :----------------------------------------------------- |
+| **`message`** | A human-readable description of the error              |
 | **`code`**    | The [error code](/reference/errors/error_codes.md)     |
 | **`type`**    | The [error type](/reference/errors/overview.md#errors) |
-| **`link`**    | A link to the relevant section of the documentation |
+| **`link`**    | A link to the relevant section of the documentation    |
 
 ### `duration`
 
@@ -258,3 +266,13 @@ Get a single task.
 ## Cancel tasks
 
 ## Delete tasks
+
+<RouteHighlighter method="DELETE" route="/tasks/cancel?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
+
+Delete a finished (`succeeded`, `failed`, or `canceled` task based on `uid`, `status`, `type`, `indexUid`, and date. If a user tries deleting a processing task (`enqueued` or `processing`), it won’t throw an error. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
+
+Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) if you try retrieving a deleted task.
+
+::: warning
+Using this route without any filters (DELETE `/tasks`) will result in the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error.
+:::

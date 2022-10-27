@@ -165,7 +165,11 @@ The payload is missing one or more required fields.
 
 ## `missing_payload`
 
-The Content-Type header was specified, but no request body was sent to the server or the request body is empty.  
+The Content-Type header was specified, but no request body was sent to the server or the request body is empty.
+
+## `missing_task_filters`
+
+The [delete tasks](/reference/api/tasks.md#delete-tasks) endpoint requires one of the available [path parameters](/reference/api/tasks.md#path-parameters-2). This error prevents users from accidentally deleting the entire history
 
 ## `no_space_left_on_device`
 
