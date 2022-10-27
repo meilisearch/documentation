@@ -66,7 +66,7 @@ If an endpoint does not take any path parameters, this section is not present in
 
 ### Query parameters
 
-These optional parameters are a sequence of key-value pairs and appear after the question mark (`?`) in the endpoint. You can list multiple query parameters by separating them with an ampersand (`&`). The order of query parameters does not matter.
+These optional parameters are a sequence of key-value pairs and appear after the question mark (`?`) in the endpoint. You can list multiple query parameters by separating them with an ampersand (`&`). The order of query parameters does not matter. They are mostly used with GET endpoints.
 
 If an endpoint does not take any query parameters, this section is not present in that endpoint's documentation.
 
