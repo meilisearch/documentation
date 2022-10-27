@@ -1043,3 +1043,6 @@ async_guide_filter_by_date: |
 async_guide_multiple_filters: |
   curl \
     -X POST 'http://localhost:7700/tasks?indexUid=movies&type=documentAdditionOrUpdate,documentDeletion&status=processing,enqueued'
+delete_task_1: |
+  curl \
+    -X DELETE 'http://localhost:7700/tasks?uid=1,2'

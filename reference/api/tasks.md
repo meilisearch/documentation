@@ -269,12 +269,51 @@ Get a single task.
 
 ## Delete tasks
 
-<RouteHighlighter method="DELETE" route="/tasks/cancel?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
+<RouteHighlighter method="DELETE" route="/tasks?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
 
-Delete a finished (`succeeded`, `failed`, or `canceled` task based on `uid`, `status`, `type`, `indexUid`, and date. If a user tries deleting a processing task (`enqueued` or `processing`), it won’t throw an error. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
+Delete a finished (`succeeded`, `failed`, or `canceled` task based on `uid`, `status`, `type`, `indexUid`, and date. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
 
 Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) if you try retrieving a deleted task.
 
 ::: warning
 Using this route without any filters (DELETE `/tasks`) will result in the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error.
 :::
+
+### Query parameters
+
+A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`) is required.
+
+| Query Parameter   | Description                                                              |
+| :---------------- | :----------------------------------------------------------------------- |
+| **`uid`** *       | [`uid`](#uid) of the requested task                                      |
+| **`status`**      | [status](#status) of the requested task                                  |
+| **`type`** *      | [`type`](#uid) of the requested task                                     |
+| **`indexUid`** *  | [`indexUid`](#indexuid) of the requested task                            |
+| **`beforeXAt`** * | Before the requested task was `enqueuedAt`, `startedAt`, or `finishedAt` |
+| **`afterXAt`** *  | After the requested task was `enqueuedAt`, `startedAt`, or `finishedAt`  |
+
+### Example
+
+<CodeSamples id="delete_task_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "taskUid": 3,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "taskDeletion",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
+
+### Delete all tasks
+
+You can delete all tasks by using the following filter:
+
+<RouteHighlighter method="DELETE" route="/tasks?status=failed,canceled,succeeded" />
+
+The API key used must have access to all indexes (`"indexes": [*]`) and the `task.delete` action.
