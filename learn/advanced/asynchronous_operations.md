@@ -215,7 +215,15 @@ When the returned value of `next` is `null`, you have reached the final page of 
 3. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error.
 4. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks)
 
-Tasks are processed in the order they were enqueued, with one exception: `dumpCreation`. Dumps are prioritized over all other tasks in the queue. Their task `uid` still reflects when they were enqueued relative to other tasks.
+### Task priority
+
+The following list shows different task types in decreasing order of priority:
+
+1. `taskCancelation`
+2. `taskDeletion`
+3. `snapshotCreation`
+4. `dumpCreation`
+5. All other task types in the order they were enqueued
 
 ## Terminate Meilisearch while a task is being processed
 
