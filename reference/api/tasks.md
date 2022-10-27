@@ -271,7 +271,7 @@ Get a single task.
 
 <RouteHighlighter method="DELETE" route="/tasks?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
 
-Delete a finished (`succeeded`, `failed`, or `canceled` task based on `uid`, `status`, `type`, `indexUid`, and date. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
+Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, or date. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
 
 Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) if you try retrieving a deleted task.
 
@@ -281,7 +281,7 @@ Using this route without any filters (DELETE `/tasks`) will result in the [`miss
 
 ### Query parameters
 
-A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`) is required.
+A valid `uid`, `status`, `type`, `indexUid`, or date(`beforeXAt` or `afterXAt`) is required.
 
 | Query Parameter   | Description                                                              |
 | :---------------- | :----------------------------------------------------------------------- |
