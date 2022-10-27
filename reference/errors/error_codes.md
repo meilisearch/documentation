@@ -102,6 +102,8 @@ The provided `_geo` field of one or more documents is invalid. Meilisearch expec
 
 There is an error in the provided index format, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
+## `invalid_task_date`
+
 ## `index_not_accessible`
 
 An internal error occurred while trying to access the requested index.
