@@ -273,7 +273,7 @@ Get a single task.
 
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, or date. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
 
-Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) if you try retrieving a deleted task.
+Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error if you try retrieving a deleted task.
 
 ::: warning
 Using this route without any filters (DELETE `/tasks`) will result in the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error.
