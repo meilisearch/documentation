@@ -239,7 +239,7 @@ When the returned value of `next` is `null`, you have reached the final page of 
 2. When your task reaches the front of the queue, Meilisearch begins working on it and changes the request `status` to `processing`
 3. You can cancel a task while it is in the `enqueued` or `processing` states. If canceled, it will have the `canceled` status  
 4. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error
-5. Tasks marked as `succeeded` or `failed` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks)
+5. Tasks marked as `succeeded`, `failed`, or `canceled` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks)
 6. Once a task is finished (`succeeded`, `failed`, or `canceled`), it can be deleted
 
 ### Task priority
