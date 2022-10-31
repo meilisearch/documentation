@@ -100,7 +100,7 @@ The code sample below uses the `Content-Encoding: gzip` header, indicating that 
 
 #### Response compression
 
-Meilisearch compresses a response if the request contains the `Accept-Encoding: gzip` header:
+Meilisearch compresses a response if the request contains the `Accept-Encoding` header. The code sample below uses the `gzip` algorithm:
 
 <CodeSamples id="api_reference_response_gzip_1" />
 
