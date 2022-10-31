@@ -83,5 +83,11 @@
     "cacheableTab": false,
     "label": "Vue.js",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-vue/main/.code-samples.meilisearch.yaml"
+  },
+  {
+    "language": "javascript",
+    "cacheableTab": false,
+    "label": "Vue3.js",
+    "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-vue/main/.code-samples-vue-3.meilisearch.yaml"
   }
 ]
