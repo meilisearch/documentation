@@ -84,6 +84,26 @@ Meilisearch currently supports the following formats:
 
 Only the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints accept NDJSON and CSV. For all others, use `Content-Type: application/json`.
 
+### Content encoding
+
+The `Content-Encoding` header compresses the media type. It improves transfer speed and reduces bandwidth consumption by sending and receiving a smaller,  compressed payload. The `Accept-Encoding` header indicates the compression algorithm the client understands. Meilisearch supports the following compression methods:
+
+- `br`: uses the [Brotli](https://en.wikipedia.org/wiki/Brotli) algorithm
+- `deflate`: uses the [zlib](https://en.wikipedia.org/wiki/Zlib) structure with the [deflate](https://en.wikipedia.org/wiki/DEFLATE) compression algorithm
+- `gzip`: uses the [Lempel-Ziv](https://en.wikipedia.org/wiki/LZ77_and_LZ78#LZ77) coding (LZ77) with a 32-bit CRC
+
+#### Request compression
+
+The code sample below compresses the request using the `Content-Encoding: gzip` header:
+
+<CodeSamples id="api_reference_request_gzip_1" />
+
+#### Response compression
+
+Meilisearch compresses a response if the request contains the `Accept-Encoding: gzip` header:
+
+<CodeSamples id="api_reference_response_gzip_1" />
+
 ## Request body
 
 The request body is data sent to the API. It is used with PUT, POST, and PATCH methods to create or update a resource. You must provide request bodies in JSON.
