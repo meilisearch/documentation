@@ -86,15 +86,15 @@ Only the [add documents](/reference/api/documents.md#add-or-replace-documents) a
 
 ### Content encoding
 
-The `Content-Encoding` header compresses the media type. It improves transfer speed and reduces bandwidth consumption by sending and receiving a smaller, compressed payload. The `Accept-Encoding` header indicates the compression algorithm the client understands. Meilisearch supports the following compression methods:
+The `Content-Encoding` header indicates that the media type is compressed by the given algorithm. It improves transfer speed and reduces bandwidth consumption by sending and receiving a smaller, compressed payload. The `Accept-Encoding` header indicates the compression algorithm the client understands. Meilisearch supports the following compression methods:
 
 - `br`: uses the [Brotli](https://en.wikipedia.org/wiki/Brotli) algorithm
 - `deflate`: uses the [zlib](https://en.wikipedia.org/wiki/Zlib) structure with the [deflate](https://en.wikipedia.org/wiki/DEFLATE) compression algorithm
-- `gzip`: uses the [Lempel-Ziv](https://en.wikipedia.org/wiki/LZ77_and_LZ78#LZ77) coding (LZ77) with a 32-bit CRC
+- `gzip`: uses the [GZip](https://en.wikipedia.org/wiki/Gzip) algorithm
 
 #### Request compression
 
-The code sample below compresses the request using the `Content-Encoding: gzip` header:
+The code sample below uses the `Content-Encoding: gzip` header, indicating that the request body is compressed using the `gzip` algorithm:
 
 <CodeSamples id="api_reference_request_gzip_1" />
 
