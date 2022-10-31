@@ -68,7 +68,7 @@ The `description` field for the provided API key resource is invalid. It should 
 
 ## `invalid_api_key_expires_at`
 
-The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the RFC 3339 format or be set to `null`.
+The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format or be set to `null`.
 
 ## `invalid_api_key_indexes`
 
@@ -103,6 +103,12 @@ The provided `_geo` field of one or more documents is invalid. Meilisearch expec
 There is an error in the provided index format, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
 ## `invalid_task_date`
+
+The date format used is invalid. It should either use a date or datetime in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format or be set to `null`.
+
+## `invalid_task_uid`
+
+The given task `uid` is invalid. Task `uid` can be an integer or a string containing only numeric characters.
 
 ## `index_not_accessible`
 
