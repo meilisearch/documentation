@@ -1,6 +1,6 @@
 # Snapshots
 
-A snapshot is an exact copy of the Meilisearch database, which is located by default in `./data.ms`. Snapshots are useful as quick backups and can be thought of as "pre-compiled copies".
+A snapshot is an exact copy of the Meilisearch database, located by default in `./data.ms`. Snapshots are useful as quick backups.
 
 Since databases are bound to the Meilisearch version that created them and snapshots are direct copies of the database, you cannot use snapshots to migrate data when upgrading Meilisearch.
 
