@@ -13,7 +13,7 @@ These startup options affect your entire Meilisearch instance, not just a single
 Pass **command-line options** and their respective values when launching a Meilisearch instance.
 
 ```bash
-./meilisearch --db-path ./meilifiles --http-addr '127.0.0.1:7700'
+./meilisearch --db-path ./meilifiles --http-addr 'localhost:7700'
 ```
 
 In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `--db-path` and `--http-addr` are options that modify this instance's behavior.
@@ -34,7 +34,7 @@ To configure a Meilisearch instance using environment variables, set the environ
 
 ```bash
 export MEILI_DB_PATH=./meilifiles
-export MEILI_HTTP_ADDR=127.0.0.1:7700
+export MEILI_HTTP_ADDR=localhost:7700
 ./meilisearch
 ```
 
@@ -82,7 +82,7 @@ When the server environment is set to `development`, providing a master key is n
 
 **Environment variable**: `MEILI_HTTP_ADDR`
 **CLI option**: `--http-addr`
-**Default value**: `"127.0.0.1:7700"`
+**Default value**: `"localhost:7700"`
 **Expected value**: an HTTP address and port
 
 Sets the HTTP address and port Meilisearch will use.
