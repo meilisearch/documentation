@@ -52,7 +52,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `type`
 
 **Type**: String
-**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, and `taskDeletion`
+**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, `taskDeletion`, and `indexSwap`
 
 ### `details`
 
@@ -116,6 +116,8 @@ This value is always `null` for `dumpCreation` tasks.
 #### `taskCancelation`
 
 #### `taskDeletion`
+
+#### `indexSwap`
 
 ### `error`
 

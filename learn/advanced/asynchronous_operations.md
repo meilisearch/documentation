@@ -32,13 +32,13 @@ All of Meilisearch's asynchronous operations belong to a category called "tasks"
 
 All asynchronous operations return a summarized version of [the full `task` object](/reference/api/tasks.md#task-object). It contains the following fields in the stated order:
 
-| Field        | Type    | Description                                                                                        |
-| ------------ | ------- | -------------------------------------------------------------------------------------------------- |
-| `taskUid`    | integer | Unique sequential identifier                                                                       |
-| `indexUid`   | string  | Unique index identifier (always `null` for `dumpCreation`, `taskCancelation`, and `taskDeletion`)  |
-| `status`     | string  | Status of the task. Value is `enqueued`                                                            |
-| `type`       | string  | Type of task                                                                                       |
-| `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued`              |
+| Field        | Type    | Description                                                                                                    |
+| ------------ | ------- | -------------------------------------------------------------------------------------------------------------- |
+| `taskUid`    | integer | Unique sequential identifier                                                                                   |
+| `indexUid`   | string  | Unique index identifier (always `null` for `dumpCreation`, `taskCancelation`, `taskDeletion`, and `indexSwap`) |
+| `status`     | string  | Status of the task. Value is `enqueued`                                                                        |
+| `type`       | string  | Type of task                                                                                                   |
+| `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued`                          |
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
