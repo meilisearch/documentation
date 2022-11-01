@@ -14,7 +14,7 @@ Meilisearch accepts a configuration file in the `.toml` format as an alternative
 
 You can download the configuration file using the following command:
 
-<CodeSamples id="configuration_file_download" />
+<CodeSamples id="instance_options_config_file_download_1" />
 
 Once downloaded, Meilisearch will use it as the default configuration file. You will see the it when you launch Meilisearch:
 
@@ -40,7 +40,7 @@ You can override the default configuration file using the `MEILI_CONFIG_FILE_PAT
 You can configure all environment variables and CLI options using a dedicated key in the configuration file. These keys follow the [snake case](https://en.wikipedia.org/wiki/Snake_case) convention. For example, `--import-dump` must be named `import_dump` in the file, `import_dumps` will throw an error.
 
 ::: warning
-The only exception is the `config_file_path` key. Specifying the `config_file_path` key in the configuration file will throw an error.
+The only exception is the `config_file_path` key. Specifying the `config_file_path` key in the configuration file will throw an [error](/learn/configuration/instance_options.md#defining-a-configuration-file-with-a-syntax-error).
 :::
 
 By default, the file is divided into sections separated by comments. Each key has a brief description followed by a link to the relevant section of the documentation. Some keys are commented out as they are not required when launching Meilisearch, for example, `import_snapshot`, or because the value provided in the file is not the default value like `max_indexing_memory`.
@@ -87,13 +87,13 @@ set MEILI_CONFIG_FILE_PATH="./config.toml"
 :::
 ::::
 
-#### Defining a non-existent config file
+#### Defining a non-existent configuration file
 
 ```
 Error: unable to open or read the "XXX" configuration file: No such file or directory (os error 2).
 ```
 
-#### Defining a config file with a syntax error
+#### Defining a configuration file with a syntax error
 
 ```
 Error: unknown field `XXX` at line Y column Z
