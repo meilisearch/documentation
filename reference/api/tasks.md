@@ -52,7 +52,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `type`
 
 **Type**: String
-**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, and `taskDeletion`
+**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, `taskDeletion`, and `indexSwap`
 
 ### `details`
 
@@ -126,6 +126,8 @@ This value is always `null` for `dumpCreation` tasks.
 ::: note
 Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
 :::
+
+#### `indexSwap`
 
 ### `error`
 
