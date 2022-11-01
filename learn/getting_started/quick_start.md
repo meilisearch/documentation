@@ -273,13 +273,15 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 At this point, you can configure your Meilisearch instance and customize your index. When searching, you can use search parameters to refine your results.
 
-### Configuration file
-
 ### Instance options
 
 These allow you to configure your Meilisearch instance at launch with [environment variables](/learn/configuration/instance_options.md#environment-variables) and [command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags). You need to relaunch your instance to alter them.
 
 **Instance options affect your entire Meilisearch instance**, not just a single index.
+
+### Configuration file
+
+Instead of providing command-line options or environment variables, you can provide a `.toml` [configuration file](/learn/configuration/instance_options.md#configuration-file). Once downloaded, it is loaded at launch. Like instance options, it affects your entire instance.
 
 ### Index settings
 

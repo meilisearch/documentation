@@ -142,10 +142,6 @@ module.exports = {
               path: '/learn/configuration/instance_options',
             },
             {
-              title: 'Configuration file',
-              path: '/learn/configuration/configuration_file',
-            },
-            {
               title: 'Index settings',
               collapsable: false,
               path: '/learn/configuration/settings.html',
