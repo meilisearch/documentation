@@ -119,17 +119,21 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `indexSwap`
 
+| Name        | Description                                                                                              |
+| :---------- | :------------------------------------------------------------------------------------------------------- |
+| **`swaps`** | An array listing swap operations object for that task. Each object must contain two indexes for swapping |
+
 ### `error`
 
 **Type**: Object
 **Description**: Error details and context. Only present when a task has the `failed` [status](#status)
 
-| Name          | Description                                         |
-| :------------ | :-------------------------------------------------- |
-| **`message`** | A human-readable description of the error           |
+| Name          | Description                                            |
+| :------------ | :----------------------------------------------------- |
+| **`message`** | A human-readable description of the error              |
 | **`code`**    | The [error code](/reference/errors/error_codes.md)     |
 | **`type`**    | The [error type](/reference/errors/overview.md#errors) |
-| **`link`**    | A link to the relevant section of the documentation |
+| **`link`**    | A link to the relevant section of the documentation    |
 
 ### `duration`
 

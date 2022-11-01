@@ -1043,3 +1043,15 @@ async_guide_filter_by_date: |
 async_guide_multiple_filters: |
   curl \
     -X POST 'http://localhost:7700/tasks?indexUid=movies&type=documentAdditionOrUpdate,documentDeletion&status=processing,enqueued'
+swap_indexes_1: |
+  curl \
+    -X POST 'http://localhost:7700/swap-indexes'\
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+   {
+      "indexes":[
+         "indexA",
+         "indexB"
+      ]
+   }
+  ]'

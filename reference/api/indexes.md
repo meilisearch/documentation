@@ -214,3 +214,33 @@ Delete an index.
 ```
 
 You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).
+
+## Swap indexes
+
+<RouteHighlighter method="POST" route="/indexes/swap-indexes"/>
+
+Swap indexes.
+
+### Body
+
+| Name            | Type  | Default value | Description                           |
+| :-------------- | :---- | :------------ | :------------------------------------ |
+| **`indexes`** * | Array | N/A           | Name of the two indexes to be swapped |
+
+### Example
+
+<CodeSamples id='swap_indexes_1' />
+
+#### Response
+
+```json
+{
+  "taskUid": 3,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "indexSwap",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+}
+```
+
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).

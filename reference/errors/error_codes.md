@@ -34,6 +34,10 @@ The requested dump could not be found.
 
 An error occurred during dump creation process, task aborted.
 
+## `duplicate_index_found`
+
+The indexes used in the `swaps` array have been declared multiple times. You must declare each index only once.
+
 ## `index_already_exists`
 
 An index with this UID already exists, check out our guide on [index creation](/learn/core_concepts/indexes.md).
