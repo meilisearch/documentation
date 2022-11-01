@@ -145,3 +145,7 @@ Typo tolerance is a built-in feature that helps you find relevant results even w
 You can update the typo tolerance settings using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update typo tolerance endpoint](/reference/api/settings.md#update-typo-tolerance-settings).
 
 [Learn more about typo tolerance.](/learn/configuration/typo_tolerance.md)
+
+## Swapping indexes
+
+Suppose you’re using `movies` in production. You make changes to the schema and settings in `movies_new`. To sync `movies_new` with Meilisearch in production, you will use index swapping. This means the new schema and settings from `movies_new` will be swapped with the schema and settings of `movies`.
