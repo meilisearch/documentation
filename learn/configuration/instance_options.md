@@ -46,6 +46,15 @@ Environment variables are always identical to the corresponding command-line opt
 
 ## All instance options
 
+### Configuration file
+
+**Environment variable**: `MEILI_CONFIG_FILE_PATH`
+**CLI option**: `--config-file-path`
+**Default**: `./config.toml`
+**Expected value**: a filepath
+
+Designates the location of the configuration file to load at launch.
+
 ### Database path
 
 **Environment variable**: `MEILI_DB_PATH`
