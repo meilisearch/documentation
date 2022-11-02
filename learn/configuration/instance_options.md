@@ -109,7 +109,7 @@ If no master key is provided in a `development` environment, all routes will be 
 ### Disable auto-batching
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_DISABLE_AUTO_BATCHING`
@@ -122,7 +122,7 @@ Deactivates auto-batching when provided.
 ### Disable analytics
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
@@ -161,7 +161,7 @@ _This option is not available as an environment variable._
 ### Ignore missing dump
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_IGNORE_MISSING_DUMP`
@@ -176,7 +176,7 @@ _This option is not available as an environment variable._
 ### Ignore dump if DB exists
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_IGNORE_DUMP_IF_DB_EXISTS`
@@ -277,7 +277,7 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 ### Schedule snapshot creation
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
@@ -326,7 +326,7 @@ _This option is not available as an environment variable._
 ### Ignore missing snapshot
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
@@ -341,7 +341,7 @@ _This option is not available as an environment variable._
 ### Ignore snapshot if DB exists
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
@@ -400,7 +400,7 @@ Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 #### SSL require auth
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
@@ -414,7 +414,7 @@ Sends a fatal alert if the client does not complete client authentication.
 #### SSL resumption
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
@@ -426,7 +426,7 @@ Activates SSL session resumption.
 #### SSL tickets
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_TICKETS`
