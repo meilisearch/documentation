@@ -134,7 +134,7 @@ The requested task type is invalid. Please use one of the [possible values](/ref
 
 ## `invalid_task_canceled_by`
 
-The provided task id is invalid.
+The provided task id is invalid. It must be an integer.
 
 ## `invalid_typo_tolerance_min_word_size_for_typos`
 
