@@ -34,6 +34,7 @@ This command should return an object with detailed information about the dump op
   "indexUid": null,
   "status": "succeeded",
   "type": "dumpCreation",
+  "canceledBy": null,
   "details": {
     "dumpUid": "20220621-161029217"
   },

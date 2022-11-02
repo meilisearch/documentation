@@ -211,6 +211,7 @@ Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move
   "indexUid": null,
   "status": "succeeded",
   "type": "dumpCreation",
+  "canceledBy": null,
   "details": {
     "dumpUid": "20220621-161029217"
   },

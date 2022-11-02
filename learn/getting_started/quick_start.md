@@ -205,6 +205,7 @@ If the document addition is successful, the response should look like this:
    "indexUid": "movies",
    "status": "succeeded",
    "type": "documentAdditionOrUpdate",
+   "canceledBy": null,
    "details":{
       "receivedDocuments": 19547,
       "indexedDocuments": 19547
