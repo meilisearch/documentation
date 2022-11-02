@@ -132,6 +132,10 @@ The requested task status is invalid. Please use one of the [possible values](/r
 
 The requested task type is invalid. Please use one of the [possible values](/reference/api/tasks.md#type).
 
+## `invalid_task_canceled_by`
+
+The provided task id is invalid.
+
 ## `invalid_typo_tolerance_min_word_size_for_typos`
 
 The `minWordSizeForTypos` object is invalid. The value for both `oneTypo` and `twoTypos` should be between `0` and `255`, and `twoTypos` should be greater or equal to `oneTypo`.
@@ -161,7 +165,7 @@ The payload does not contain a Content-Type header. Currently, Meilisearch only 
 
 A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones.
 
-## `missing_filters`
+## `missing_task_filters`
 
 The [cancel tasks](/reference/api/tasks.md#cancel-tasks) endpoint requires one of the available [path parameters](/reference/api/tasks.md#path-parameters-2). This error prevents users from accidentally cancelling all `enqueued` and `processing` tasks.
 
