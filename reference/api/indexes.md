@@ -219,13 +219,13 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 <RouteHighlighter method="POST" route="/indexes/swap-indexes"/>
 
-Swap indexes.
+Swap indexes. **You can only swap indexes in pairs.**
 
 ### Body
 
-| Name            | Type  | Default value | Description                           |
-| :-------------- | :---- | :------------ | :------------------------------------ |
-| **`indexes`** * | Array | N/A           | Name of the two indexes to be swapped |
+| Name            | Type  | Default value | Description                            |
+| :-------------- | :---- | :------------ | :------------------------------------- |
+| **`indexes`** * | Array | N/A           | Array of the two indexes to be swapped |
 
 ### Example
 
