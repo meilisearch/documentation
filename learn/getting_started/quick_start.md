@@ -158,7 +158,7 @@ On successfully running Meilisearch, you should see the following response:
 888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
 
 Database path:       "./data.ms"
-Server listening on: "127.0.0.1:7700"
+Server listening on: "localhost:7700"
 ```
 
 Congratulations! You're ready to move on to the next step!
@@ -259,7 +259,7 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 ## Search preview
 
-Meilisearch offers a browser-based search preview where you can search through a selected index. You can access it any time Meilisearch is running at `http://127.0.0.1:7700`.
+Meilisearch offers a browser-based search preview where you can search through a selected index. You can access it any time Meilisearch is running at `http://localhost:7700`.
 
 ![Meilisearch's search preview showing the movies index](/search_preview/default.png)
 
