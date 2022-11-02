@@ -272,7 +272,7 @@ Get a single task.
 Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, or date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
 
 ::: warning
-Using this route without any filters (POST `/tasks/cancel`) will result in the [`missing_filters`](/reference/errors/error_codes.md#missing-filters) error.
+Using this route without any filters (POST `/tasks/cancel`) will result in the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error.
 :::
 
 The API key used must have the `tasks.cancel` action.
