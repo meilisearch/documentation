@@ -65,6 +65,7 @@ When you query the [get task endpoint](/reference/api/tasks.md#get-one-task) usi
     "indexUid": "movies",
     "status": "enqueued",
     "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
     "details": { 
         "receivedDocuments": 67493,
         "indexedDocuments": null
@@ -84,6 +85,7 @@ Later, you check the request's status one more time. It was successfully process
     "indexUid": "movies",
     "status": "succeeded",
     "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
     "details": { 
             "receivedDocuments": 67493,
             "indexedDocuments": 67493
@@ -103,6 +105,7 @@ Had the task failed, the response would have included an `error` object:
     "indexUid": "movies",
     "status": "failed",
     "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
     "details": { 
             "receivedDocuments": 67493,
             "indexedDocuments": 0
@@ -199,6 +202,7 @@ This command returns tasks two at a time, starting from task `uid` `10`.
       "indexUid": "elements",
       "status": "succeeded",
       "type": "indexCreation",
+      "canceledBy": null,
       "details": {
         "primaryKey": null
       },
@@ -212,6 +216,7 @@ This command returns tasks two at a time, starting from task `uid` `10`.
       "indexUid": "particles",
       "status": "succeeded",
       "type": "indexCreation",
+      "canceledBy": null,
       "details": {
         "primaryKey": null
       },

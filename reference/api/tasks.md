@@ -10,6 +10,7 @@ The `/tasks` route gives information about the progress of [asynchronous operati
   "indexUid" :"movie",
   "status": "failed",
   "type": "indexDeletion",
+  "canceledBy": null,
   "details": {
     "deletedDocuments": 0
   },
@@ -53,6 +54,11 @@ This value is always `null` for `dumpCreation` tasks.
 
 **Type**: String
 **Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, `taskDeletion`, and `indexSwap`
+
+### `canceledBy`
+
+**Type**: Integer
+**Description**: Unique identifier of the `taskCancelation` task that canceled a given task. Default value is `null`.
 
 ### `details`
 
@@ -204,6 +210,7 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
       "indexUid":"movies",
       "status":"succeeded",
       "type":"documentAdditionOrUpdate",
+      "canceledBy": null,
       "details":{
         "receivedDocuments":100,
         "indexedDocuments":100
@@ -244,6 +251,7 @@ Get a single task.
   "indexUid":"movies",
   "status":"succeeded",
   "type":"settingsUpdate",
+  "canceledBy": null,
   "details":{
     "rankingRules":[
       "typo",
