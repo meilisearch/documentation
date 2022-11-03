@@ -12,13 +12,15 @@ These startup options affect your entire Meilisearch instance, not just a single
 
 Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables. Configuration files can be easily shared and versioned, and allow you to define multiple options.
 
-**Environment variables can overwrite the configuration file, and command-line options can overwrite environment variables.**
+**If used simultaneously, environment variables can overwrite the configuration file, and command-line options can overwrite environment variables.**
 
 You can download the configuration file using the following command:
 
 <CodeSamples id="instance_options_config_file_download_1" />
 
-Once downloaded, Meilisearch will use it as the default configuration file. You will see it when you launch Meilisearch:
+This default configuration file is divided into sections separated by comments. Each key has a brief description followed by a link to the relevant section of the documentation. Some keys are commented out as they are not required when launching Meilisearch, for example, `import_snapshot`, or because the value provided in the file is not the default value like `max_indexing_memory`.
+
+By default, Meilisearch will use the file `./config.toml` in the working directory as the default configuration file. You will see it when you launch Meilisearch:
 
 ```
 888b     d888          d8b 888 d8b                                            888
@@ -33,8 +35,6 @@ Once downloaded, Meilisearch will use it as the default configuration file. You 
 Config file path:       "./config.toml"
 ```
 
-If no configuration file is provided, the `Config file path` is set to `none`.
-
 You can override the default configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option.
 
 ### Configuration file format
@@ -44,8 +44,6 @@ You can configure all environment variables and CLI options using a dedicated ke
 ::: warning
 The only exception is the `config_file_path` key. Specifying the `config_file_path` key in the configuration file will throw an [error](/learn/configuration/instance_options.md#defining-a-configuration-file-with-a-syntax-error).
 :::
-
-By default, the file is divided into sections separated by comments. Each key has a brief description followed by a link to the relevant section of the documentation. Some keys are commented out as they are not required when launching Meilisearch, for example, `import_snapshot`, or because the value provided in the file is not the default value like `max_indexing_memory`.
 
 ### Configuration file errors
 
@@ -145,6 +143,10 @@ Environment variables are always identical to the corresponding command-line opt
 **Expected value**: a filepath
 
 Designates the location of the configuration file to load at launch.
+
+::: warning
+Specifying this option in the configuration file will throw an error.
+:::
 
 ### Database path
 
