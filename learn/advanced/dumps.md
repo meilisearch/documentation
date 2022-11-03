@@ -52,7 +52,7 @@ If a dump file is visible in the file system, the dump process was successfully 
 
 ## Importing a dump
 
-Dump imports must be performed when launching a Meilisearch instance [using the `--import-dump` configuration option](/learn/configuration/instance_options.md#import-dump).
+Import dumps by launching a Meilisearch instance [with the `--import-dump` configuration option](/learn/configuration/instance_options.md#import-dump).
 
 During a dump import, all indexes contained in the indicated `.dump` file are imported along with their associated documents and settings. Any existing index with the same `uid` as an index in the dump file will be overwritten.
 
@@ -68,7 +68,7 @@ For example, you can import a dump from Meilisearch v0.21 into v0.22 without any
 
 ### Importing a dump for v0.21 or above
 
-Once you have exported a dump you will be able to use the `.dump` file to [launch Meilisearch with the `--import-dump` configuration option](/learn/configuration/instance_options.md#import-dump).
+Once you have exported a dump you can use the resulting `.dump` file to [launch Meilisearch with the `--import-dump` configuration option](/learn/configuration/instance_options.md#import-dump).
 
 As the data contained in the dump needs to be indexed, the process will take some time to complete. Only when the dump has been fully imported will the Meilisearch server start, after which you can begin searching through your data.
 
