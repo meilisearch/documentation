@@ -120,7 +120,7 @@ Get the settings of an index.
 
 Update the settings of an index.
 
-Passing `null` to an index setting will reset it to its default value.
+Sending a value with a type other than the [one specified](/reference/api/settings.md#body) will result in an [error](/reference/errors/error_codes.md#bad-request).
 
 Updates in the settings route are **partial**. This means that any parameters not provided in the body will be left unchanged.
 
