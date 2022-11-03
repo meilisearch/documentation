@@ -10,13 +10,15 @@ These startup options affect your entire Meilisearch instance, not just a single
 
 ## Configuration file
 
-Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables.
+Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables. Configuration files can be easily shared and versioned, and allow you to define multiple options.
+
+**Environment variables can overwrite the configuration file, and command-line options can overwrite environment variables.**
 
 You can download the configuration file using the following command:
 
 <CodeSamples id="instance_options_config_file_download_1" />
 
-Once downloaded, Meilisearch will use it as the default configuration file. You will see the it when you launch Meilisearch:
+Once downloaded, Meilisearch will use it as the default configuration file. You will see it when you launch Meilisearch:
 
 ```
 888b     d888          d8b 888 d8b                                            888
@@ -45,11 +47,7 @@ The only exception is the `config_file_path` key. Specifying the `config_file_pa
 
 By default, the file is divided into sections separated by comments. Each key has a brief description followed by a link to the relevant section of the documentation. Some keys are commented out as they are not required when launching Meilisearch, for example, `import_snapshot`, or because the value provided in the file is not the default value like `max_indexing_memory`.
 
-### Priority
-
-Environment variables can overwrite the configuration file, and command-line options can overwrite environment variables.
-
-### Errors
+### Configuration file errors
 
 #### Defining `config_file_path` in the configuration file
 
