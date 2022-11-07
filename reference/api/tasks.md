@@ -117,11 +117,11 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `taskDeletion`
 
-| Name                | Description                                                                                                                                                                                         |
-| :------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**  | The number of tasks that can be deleted based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
-| **`canceledTasks`** | The number of tasks successfully deleted. If the task fails, this will be `0`                                                                                                                       |
-| **`originalQuery`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                            |
+| Name                  | Description                                                                                                                                                                                         |
+| :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**    | The number of tasks that can be deleted based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
+| **`canceledTasks`**   | The number of tasks successfully deleted. If the task fails, this will be `0`                                                                                                                       |
+| **`originalFilters`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                            |
 
 ### `error`
 
