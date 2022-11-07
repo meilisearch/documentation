@@ -38,6 +38,8 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum of documents returned for in a page         |
+| **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
@@ -70,10 +72,22 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`hits`**               | Array of objects | Results of the query                            |
 | **`offset`**             | Number           | Number of documents skipped                     |
 | **`limit`**              | Number           | Number of documents to take                     |
-| **`estimatedTotalHits`** | Number           | Total number of matches                         |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches               |
+| **`totalHits`**          | Number           | Exhaustive total number of matches              |
+| **`totalPages`**         | Number           | Exhaustive total number of search results pages |
+| **`hitsPerPage`**        | Number           | Number of results in each page                  |
+| **`page`**               | Number           | Current search results page                     |
 | **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facets)** |
 | **`processingTimeMs`**   | Number           | Processing time of the query                    |
 | **`query`**              | String           | Query originating the response                  |
+
+#### Exhaustive and estimated total number of search results
+
+By default, Meilisearch only returns an estimate of the total number of search results in a query: `estimatedTotalHits`. This happens because Meilisearch prioritizes relevancy and performance over providing an exhaustive number of search results. When working with `estimatedTotalHits`, use `offset` and `limit` to navigate between search results.
+
+If you require the total number of search results, use the `hitsPerPage` and `page` search parameters in your query. The response to this query replaces `estimatedTotalHits` with `totalHits` and includes an extra field with number of search results pages based on your `hitsPerPage`: `totalPages`. Using `totalHits` and `totalPages` may result in slightly reduced performance, but is recommended when creating UI elements such as numbered page selectors.
+
+You can [read more about pagination in our dedicated guide](/learn/advanced/pagination.md).
 
 ### Example
 
@@ -133,6 +147,8 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum of documents returned for in a page         |
+| **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
@@ -163,6 +179,10 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`hits`**               | Array of objects | Results of the query                            |
 | **`offset`**             | Number           | Number of documents skipped                     |
 | **`limit`**              | Number           | Number of documents to take                     |
+| **`totalHits`**          | Number           | Exhaustive total number of matches              |
+| **`totalPages`**         | Number           | Exhaustive total number of search results pages |
+| **`hitsPerPage`**        | Number           | Number of results in each page                  |
+| **`page`**               | Number           | Current search results page                     |
 | **`estimatedTotalHits`** | Number           | Total number of matches                         |
 | **`facets`**             | Object           | **[Distribution of the given facets](#facets)** |
 | **`processingTimeMs`**   | Number           | Processing time of the query                    |
@@ -218,6 +238,8 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum of documents returned for in a page         |
+| **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
 | **[`attributesToRetrieve`](#attributes-to-retrieve)**   | Array of strings | `["*"]`       | Attributes to display in the returned documents     |
@@ -305,9 +327,9 @@ You can combine phrase search and normal queries in a single search request. In 
 
 Sets the starting point in the search results, effectively skipping over a given number of documents.
 
-::: tip
+Queries using `offset` and `limit` only return an estimate of the total number of search results.
+
 You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
-:::
 
 ::: warning
 Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings.md#update-pagination-settings) returns an empty array.
@@ -327,9 +349,7 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 
 Sets the maximum number of documents returned by a single query.
 
-::: tip
 You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
-:::
 
 ::: warning
 A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings.md#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
@@ -340,6 +360,62 @@ A search query cannot return more results than configured in [`maxTotalHits`](/r
 If you want your query to return only **two** documents, set `limit` to `2`:
 
 <CodeSamples id="search_parameter_guide_limit_1" />
+
+### Number of results per page
+
+**Parameter**: `hitsPerPage`
+**Expected value**: Any positive integer
+**Default value**: `20`
+
+Sets the maximum number of documents returned for a single query. The value configured with this parameter dictates the number of total pages: if Meilisearch finds a total of `20` matches for a query and your `hitsPerPage` is set to `5`, `totalPages` is `4`.
+
+Queries containing `hitsPerPage` are exhaustive and do not return an `estimatedTotalHits`. Instead, the response body will include `totalHits` and `totalPages`.
+
+If you set `hitsPerPage` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive value for `totalHits`. The response body will also include `totalPages`, but its value will be `0`.
+
+You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
+
+#### Example
+
+The following example returns the first `15` results for a query:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "hitsPerPage": 15
+  }'
+```
+
+### Page
+
+**Parameter**: `page`
+**Expected value**: Any positive integer
+**Default value**: `1`
+
+Requests a specific results page. Pages are calculated using the `hitsPerPage` search parameter.
+
+Queries containing `page` are exhaustive and do not return an `estimatedTotalHits`. Instead, the response body will include two new fields: `totalHits` and `totalPages`.
+
+If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `totalPages` and `totalHits`.
+
+You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
+
+#### Example
+
+The following example returns the second page of search results:
+
+```sh
+curl \
+  -X POST 'http://localhost:7700/indexes/movies/search' \
+  -H 'Content-Type: application/json' \
+  --data-binary '{
+    "q": "",
+    "page": 2
+  }'
+```
 
 ### Filter
 
