@@ -54,6 +54,11 @@ This value is always `null` for `dumpCreation` tasks.
 **Type**: String
 **Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, and `taskDeletion`
 
+### `canceledBy`
+
+**Type**: Integer
+**Description**: Contains the `uid` of `taskCancelation` task, if this task was canceled. Otherwise set to `null`
+
 ### `details`
 
 **Type**: Object
@@ -115,11 +120,11 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `taskCancelation`
 
-| Name                | Description                                                                                                                                                                                          |
-| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**  | The number of tasks that can be canceled based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
-| **`canceledTasks`** | The number of tasks successfully canceled. If the task fails, this will be `0`                                                                                                                       |
-| **`originalQuery`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                                      |
+| Name                  | Description                                                                                                                                                                                          |
+| :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**    | The number of tasks that can be canceled based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
+| **`canceledTasks`**   | The number of tasks successfully canceled. If the task fails, this will be `0`                                                                                                                       |
+| **`originalFilters`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                                      |
 
 #### `taskDeletion`
 
