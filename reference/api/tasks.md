@@ -276,21 +276,25 @@ Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `s
 Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error if you try retrieving a deleted task.
 
 ::: warning
-Using this route without any filters (DELETE `/tasks`) will result in the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error.
+Using this route without any filters (DELETE `/tasks`) will result in the `missing_task_filters` error. This error prevents users from accidentally deleting the entire history.
 :::
 
 ### Query parameters
 
 A valid `uid`, `status`, `type`, `indexUid`, or date(`beforeXAt` or `afterXAt`) is required.
 
-| Query Parameter   | Description                                                              |
-| :---------------- | :----------------------------------------------------------------------- |
-| **`uid`** *       | [`uid`](#uid) of the requested task                                      |
-| **`status`**      | [status](#status) of the requested task                                  |
-| **`type`** *      | [`type`](#uid) of the requested task                                     |
-| **`indexUid`** *  | [`indexUid`](#indexuid) of the requested task                            |
-| **`beforeXAt`** * | Before the requested task was `enqueuedAt`, `startedAt`, or `finishedAt` |
-| **`afterXAt`** *  | After the requested task was `enqueuedAt`, `startedAt`, or `finishedAt`  |
+| Query Parameter          | Description                                   |
+| :----------------------- | :-------------------------------------------- |
+| **`uid`** *              | [`uid`](#uid) of the requested task           |
+| **`status`**             | [status](#status) of the requested task       |
+| **`type`** *             | [`type`](#uid) of the requested task          |
+| **`indexUid`** *         | [`indexUid`](#indexuid) of the requested task |
+| **`beforeEnqueuedAt`** * | Before the requested task was `enqueuedAt`    |
+| **`beforeStartedAt`** *  | Before the requested task was `startedAt`     |
+| **`beforeFinishedAt`** * | Before the requested task was `finishedAt`    |
+| **`afterEnqueuedAt`** *  | After the requested task was `enqueuedAt`     |
+| **`afterStartedAt`** *   | After the requested task was `startedAt`      |
+| **`afterFinishedAt`** *  | After the requested task was `finishedAt`     |
 
 ### Example
 
