@@ -283,18 +283,19 @@ Using this route without any filters (DELETE `/tasks`) will result in the `missi
 
 A valid `uid`, `status`, `type`, `indexUid`, or date(`beforeXAt` or `afterXAt`) is required.
 
-| Query Parameter          | Description                                   |
-| :----------------------- | :-------------------------------------------- |
-| **`uid`** *              | [`uid`](#uid) of the requested task           |
-| **`status`**             | [status](#status) of the requested task       |
-| **`type`** *             | [`type`](#uid) of the requested task          |
-| **`indexUid`** *         | [`indexUid`](#indexuid) of the requested task |
-| **`beforeEnqueuedAt`** * | Before the requested task was `enqueuedAt`    |
-| **`beforeStartedAt`** *  | Before the requested task was `startedAt`     |
-| **`beforeFinishedAt`** * | Before the requested task was `finishedAt`    |
-| **`afterEnqueuedAt`** *  | After the requested task was `enqueuedAt`     |
-| **`afterStartedAt`** *   | After the requested task was `startedAt`      |
-| **`afterFinishedAt`** *  | After the requested task was `finishedAt`     |
+| Query Parameter        | Description                                                              |
+| :--------------------- | :----------------------------------------------------------------------- |
+| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uid`s with a comma (`,`) |
+| **`statuses`**         | Delete tasks based on `status`                                           |
+| **`types`**            | Delete tasks based on `type`                                             |
+| **`indexUids`**        | Delete tasks based on `indexUid`. Case-sensitive                         |
+| **`canceledBy`**       | Delete tasks based on the `canceledBy` field                             |
+| **`beforeEnqueuedAt`** | Delete tasks before a specified `enqueuedAt` date                        |
+| **`beforeStartedAt`**  | Delete tasks before a specified `startedAt` date                         |
+| **`beforeFinishedAt`** | Delete tasks before a specified `finishedAt` date                        |
+| **`afterEnqueuedAt`**  | Delete tasks after a specified `enqueuedAt` date                         |
+| **`afterStartedAt`**   | Delete tasks after a specified `startedAt` date                          |
+| **`afterFinishedAt`**  | Delete tasks after a specified `finishedAt` date                         |
 
 ### Example
 
