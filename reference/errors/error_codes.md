@@ -102,13 +102,13 @@ The provided `_geo` field of one or more documents is invalid. Meilisearch expec
 
 There is an error in the provided index format, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
-## `invalid_task_date`
+## `invalid_task_date_filter`
 
 The date format used is invalid. It should either use a date or datetime in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format or be set to `null`.
 
-## `invalid_task_uid`
+## `invalid_task_uids_filter`
 
-The given task `uid` is invalid. Task `uid` can be an integer or a string containing only numeric characters.
+One or more of the given task `uid`s is invalid. Task `uid`s can be an integer or a string containing only numeric characters.
 
 ## `index_not_accessible`
 
@@ -130,11 +130,11 @@ The database is in an invalid state. Deleting the database and re-indexing shoul
 
 The `data.ms` folder is in an invalid state. Your `.mdb` file is corrupted or the `data.ms` folder has been replaced by a file.
 
-## `invalid_task_status`
+## `invalid_task_statuses_filter`
 
 The requested task status is invalid. Please use one of the [possible values](/reference/api/tasks.md#status).
 
-## `invalid_task_type`
+## `invalid_task_types_filter`
 
 The requested task type is invalid. Please use one of the [possible values](/reference/api/tasks.md#type).
 
