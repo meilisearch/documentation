@@ -67,17 +67,17 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `documentAdditionOrUpdate`
 
-| Name                    | Description                  |
-| :---------------------- | :--------------------------- |
-| **`receivedDocuments`** | Number of documents received |
-| **`indexedDocuments`**  | Number of documents indexed  |
+| Name                    | Description                                                                            |
+| :---------------------- | :------------------------------------------------------------------------------------- |
+| **`receivedDocuments`** | Number of documents received                                                           |
+| **`indexedDocuments`**  | Number of documents indexed. `null` when the task status is `enqueued` or `processing` |
 
 #### `documentDeletion`
 
-| Name                      | Description                     |
-| :------------------------ | :------------------------------ |
-| **`receivedDocumentIds`** | Number of document ids received |
-| **`deletedDocuments`**    | Number of documents deleted     |
+| Name                      | Description                                                                            |
+| :------------------------ | :------------------------------------------------------------------------------------- |
+| **`receivedDocumentIds`** | Number of document ids received                                                        |
+| **`deletedDocuments`**    | Number of documents deleted. `null` when the task status is `enqueued` or `processing` |
 
 #### `indexCreation`
 
@@ -93,9 +93,9 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `indexDeletion`
 
-| Name                   | Description                                                                                       |
-| :--------------------- | :------------------------------------------------------------------------------------------------ |
-| **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index |
+| Name                   | Description                                                                                                                                                  |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index. `null` when the task status is `enqueued` or `processing` |
 
 #### `settingsUpdate`
 
@@ -115,9 +115,9 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `dumpCreation`
 
-| Name          | Description                                                                       |
-| :------------ | :-------------------------------------------------------------------------------- |
-| **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file |
+| Name          | Description                                                                                                                                  |
+| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file. `null` when the task status is `enqueued` or `processing` |
 
 #### `taskCancelation`
 
