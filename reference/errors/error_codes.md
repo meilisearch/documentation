@@ -173,7 +173,11 @@ The payload is missing one or more required fields.
 
 ## `missing_payload`
 
-The Content-Type header was specified, but no request body was sent to the server or the request body is empty.  
+The Content-Type header was specified, but no request body was sent to the server or the request body is empty.
+
+## `missing_task_filters`
+
+The [cancel tasks](/reference/api/tasks.md#cancel-tasks) and [delete tasks](/reference/api/tasks.md#delete-tasks) endpoints require one of the available path parameters.
 
 ## `no_space_left_on_device`
 

@@ -148,15 +148,17 @@ If the task was deleted, Meilisearch would return a [`task_not_found`](/referenc
 
 ### Filtering tasks
 
-You can filter tasks based on `status`, `type`, `indexUid`, or date. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
+You can filter tasks based on `uid`, `status`, `type`, `indexUid`, or date. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
 
 <CodeSamples id="get_all_tasks_filtering_1" />
 
 Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. Use the comma character `,` to add multiple filter values for a single field.
 
-For example, the following command would return all `documentAdditionOrUpdate` tasks that either `succeeded` or `failed`:
+The following command would return all `documentAdditionOrUpdate` tasks that either `succeeded` or `failed`:
 
 <CodeSamples id="get_all_tasks_filtering_2" />
+
+#### Filtering by `canceledBy`
 
 #### Filtering by date
 

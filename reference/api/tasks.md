@@ -169,13 +169,21 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 ### Query parameters
 
-| Query Parameter | Default Value                  | Description                                                                                                    |
-| :-------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------- |
-| **`limit`**     | `20`                           | Number of tasks to return                                                                                      |
-| **`from`**      | `uid` of the last created task | `uid` of the first task returned                                                                               |
-| **`status`**    | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |
-| **`type`**      | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |
-| **`indexUid`**  | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |
+| Query Parameter        | Default Value                  | Description                                                                                                    |
+| :--------------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------- |
+| **`limit`**            | `20`                           | Number of tasks to return                                                                                      |
+| **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                               |
+| **`uids`**             | `*` (all uids)                 | Filter tasks by their `uid`. Separate multiple tasks with a comma (`,`)                                        |
+| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |
+| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |
+| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |
+| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-canceledby) by their `canceledBy` field |
+| **`beforeEnqueuedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `enqueuedAt` field       |
+| **`beforeStartedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `startedAt` field        |
+| **`beforeFinishedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `finishedAt` field       |
+| **`afterEnqueuedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `enqueuedAt` field       |
+| **`afterStartedAt`**   | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `startedAt` field        |
+| **`afterFinishedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `finishedAt` field       |
 
 ### Response
 
