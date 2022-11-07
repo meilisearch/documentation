@@ -39,6 +39,7 @@ module.exports = {
             items: [
               { text: 'Rails', link: 'https://github.com/meilisearch/meilisearch-rails' },
               { text: 'Laravel', link: 'https://github.com/laravel/scout' },
+              { text: 'Symfony', link: 'https://github.com/meilisearch/meilisearch-symfony' },
             ],
           },
           {
