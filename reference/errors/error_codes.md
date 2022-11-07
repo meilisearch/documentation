@@ -165,10 +165,6 @@ The payload does not contain a Content-Type header. Currently, Meilisearch only 
 
 A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones.
 
-## `missing_task_filters`
-
-The [cancel tasks](/reference/api/tasks.md#cancel-tasks) endpoint requires one of the available [path parameters](/reference/api/tasks.md#path-parameters-2). This error prevents users from accidentally canceling all `enqueued` and `processing` tasks.
-
 ## `missing_parameter`
 
 The payload is missing one or more required fields.

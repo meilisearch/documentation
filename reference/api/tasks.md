@@ -277,7 +277,7 @@ Get a single task.
 Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, or date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
 
 ::: warning
-Using this route without any filters (POST `/tasks/cancel`) will result in the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error.
+Using this route without any filters (POST `/tasks/cancel`) will result in the `missing_task_filters` error. This error prevents users from accidentally canceling all `enqueued` and `processing` tasks.
 :::
 
 The API key used must have the `tasks.cancel` action.
@@ -288,14 +288,16 @@ You can also cancel `taskCancelation` type tasks as long as they are in the `enq
 
 A valid `uid`, `status`, `type`, `indexUid`, or date(`beforeXAt` or `afterXAt`) is required.
 
-| Query Parameter   | Description                                               |
-| :---------------- | :-------------------------------------------------------- |
-| **`uid`** *       | [`uid`](#uid) of the requested task                       |
-| **`status`**      | [status](#status) of the requested task                   |
-| **`type`** *      | [`type`](#uid) of the requested task                      |
-| **`indexUid`** *  | [`indexUid`](#indexuid) of the requested task             |
-| **`beforeXAt`** * | Before the requested task was `enqueuedAt` or `startedAt` |
-| **`afterXAt`** *  | After the requested task was `enqueuedAt` or `startedAt`  |
+| Query Parameter          | Description                                   |
+| :----------------------- | :-------------------------------------------- |
+| **`uid`** *              | [`uid`](#uid) of the requested task           |
+| **`status`**             | [status](#status) of the requested task       |
+| **`type`** *             | [`type`](#uid) of the requested task          |
+| **`indexUid`** *         | [`indexUid`](#indexuid) of the requested task |
+| **`beforeEnqueuedAt`** * | Before the requested task was `enqueuedAt`    |
+| **`beforeStartedAt`** *  | Before the requested task was `startedAt`     |
+| **`afterEnqueuedAt`** *  | After the requested task was `enqueuedAt`     |
+| **`afterStartedAt`** *   | After the requested task was `startedAt`      |
 
 ### Example
 
