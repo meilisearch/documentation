@@ -155,7 +155,7 @@ For example, the following command would return all `documentAdditionOrUpdate` t
 
 <CodeSamples id="get_all_tasks_filtering_2" />
 
-### Filtering by `canceledBy`
+#### Filtering by `canceledBy`
 
 You can use the `canceledBy` filter to get the tasks canceled by one or more `taskCancelation` tasks.
 
