@@ -381,6 +381,7 @@ Date filters are exclusive, meaning you can only filter tasks before or after a 
 =======
 A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`) is required.
 
+<<<<<<< HEAD
 | Query Parameter   | Description                                                              |
 | :---------------- | :----------------------------------------------------------------------- |
 | **`uid`** *       | [`uid`](#uid) of the requested task                                      |
@@ -390,6 +391,20 @@ A valid `uid`, `status`, `type`, `indexUid`, and date(`beforeXAt` or `afterXAt`)
 | **`beforeXAt`** * | Before the requested task was `enqueuedAt`, `startedAt`, or `finishedAt` |
 | **`afterXAt`** *  | After the requested task was `enqueuedAt`, `startedAt`, or `finishedAt`  |
 >>>>>>> c8979a7a9 (update api)
+=======
+| Query Parameter          | Description                                   |
+| :----------------------- | :-------------------------------------------- |
+| **`uid`** *              | [`uid`](#uid) of the requested task           |
+| **`status`**             | [status](#status) of the requested task       |
+| **`type`** *             | [`type`](#uid) of the requested task          |
+| **`indexUid`** *         | [`indexUid`](#indexuid) of the requested task |
+| **`beforeEnqueuedAt`** * | Before the requested task was `enqueuedAt`    |
+| **`beforeStartedAt`** *  | Before the requested task was `startedAt`     |
+| **`beforeFinishedAt`** * | Before the requested task was `finishedAt`    |
+| **`afterEnqueuedAt`** *  | After the requested task was `enqueuedAt`     |
+| **`afterStartedAt`** *   | After the requested task was `startedAt`      |
+| **`afterFinishedAt`** *  | After the requested task was `finishedAt`     |
+>>>>>>> 8de295d50 (update query parameters + remove error)
 
 ### Example
 
