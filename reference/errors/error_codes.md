@@ -134,7 +134,7 @@ The requested task type is invalid. Please use one of the [possible values](/ref
 
 ## `invalid_task_canceled_by_filter`
 
-The provided query parameter is invalid.
+The provided query parameter is invalid. Please use one of the [available query parameters](/reference/api/tasks.md#query-parameters-1).
 
 ## `invalid_typo_tolerance_min_word_size_for_typos`
 
