@@ -128,7 +128,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `error`
 
 **Type**: Object
-**Description**: Error details and context. Only present when a task has the `failed` [status](#status)
+**Description**: Error details and context. Set to `null` by default. When a task has the `failed` [status](#status), it returns the following fields:
 
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
@@ -208,6 +208,7 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
       "indexUid":"movies_reviews",
       "status":"enqueued",
       "type":"documentAdditionOrUpdate",
+      "error": null,
       "duration":null,
       "enqueuedAt":"2021-08-12T10:00:00.000000Z",
       "startedAt":null,
@@ -223,6 +224,7 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
         "receivedDocuments":100,
         "indexedDocuments":100
       },
+      "error": null,
       "duration":"PT16S",
       "enqueuedAt":"2021-08-11T09:25:53.000000Z",
       "startedAt":"2021-08-11T10:03:00.000000Z",
@@ -270,6 +272,7 @@ Get a single task.
       "exactness"
     ]
   },
+  "error": null,
   "duration":"PT1S",
   "enqueuedAt":"2021-08-10T14:29:17.000000Z",
   "startedAt":"2021-08-10T14:29:18.000000Z",

@@ -70,6 +70,7 @@ When you query the [get task endpoint](/reference/api/tasks.md#get-one-task) usi
         "receivedDocuments": 67493,
         "indexedDocuments": null
     },
+    "error": null,
     "duration": null,
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
     "startedAt": null,
@@ -90,6 +91,7 @@ Later, you check the request's status one more time. It was successfully process
             "receivedDocuments": 67493,
             "indexedDocuments": 67493
     },
+    "error": null,
     "duration": "PT1S",
     "enqueuedAt": "2021-08-10T14:29:17.000000Z",
     "startedAt": "2021-08-10T14:29:18.000000Z",
@@ -137,6 +139,7 @@ If the task was canceled while it was `enqueued` or `processing`:
     "canceledTasks": 0,
     "originalQuery": "type=documentAdditionOrUpdate&documentDeletion"
   },
+  "error": null,
   "duration": "PT1S",
   "enqueuedAt": "2021-08-10T14:29:17.000000Z",
   "startedAt": "2021-08-10T14:29:18.000000Z",
@@ -208,6 +211,7 @@ This command returns tasks two at a time, starting from task `uid` `10`.
       "details": {
         "primaryKey": null
       },
+      "error": null,
       "duration": "PT0.006034S",
       "enqueuedAt": "2022-06-20T13:41:42.446908Z",
       "startedAt": "2022-06-20T13:41:42.447477Z",
@@ -222,6 +226,7 @@ This command returns tasks two at a time, starting from task `uid` `10`.
       "details": {
         "primaryKey": null
       },
+      "error": null,
       "duration": "PT0.007317S",
       "enqueuedAt": "2022-06-20T13:41:31.841575Z",
       "startedAt": "2022-06-20T13:41:31.842116Z",

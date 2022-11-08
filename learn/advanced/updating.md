@@ -215,6 +215,7 @@ Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move
   "details": {
     "dumpUid": "20220621-161029217"
   },
+  "error": null,
   "duration": "PT0.025872S",
   "enqueuedAt": "2022-06-21T16:10:29.217688Z",
   "startedAt": "2022-06-21T16:10:29.218297Z",
