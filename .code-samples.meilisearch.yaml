@@ -1046,6 +1046,6 @@ async_guide_multiple_filters: |
 cancel_task_1: |  
   curl \
     -X POST 'http://localhost:7700/tasks/cancel?uid=1,2'
-async_guide_canceled_by: |
+async_guide_canceled_by_1: |
   curl \
     -X GET 'http://localhost:7700/tasks?canceledBy=9,15'    

@@ -161,7 +161,7 @@ You can use the `canceledBy` filter to get the tasks canceled by one or more `ta
 
 The code sample below filters all tasks canceled by the task with `taskUid`s `9` and `15`:
 
-<CodeSamples id="async_guide_canceled_by" />
+<CodeSamples id="async_guide_canceled_by_1" />
 
 #### Filtering by date
 
