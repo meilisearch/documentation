@@ -269,9 +269,9 @@ Get a single task.
 
 ## Delete tasks
 
-<RouteHighlighter method="DELETE" route="/tasks?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
+<RouteHighlighter method="DELETE" route="/tasks?{task_uid}"/>
 
-Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, or date. Task deletion is an atomic transaction, either all tasks are successfully deleted, or none are.
+Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction, **either all tasks are successfully deleted, or none are**.
 
 Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error if you try retrieving a deleted task.
 
@@ -281,21 +281,21 @@ Using this route without any filters (DELETE `/tasks`) will result in the `missi
 
 ### Query parameters
 
-A valid `uid`, `status`, `type`, `indexUid`, or date(`beforeXAt` or `afterXAt`) is required.
+A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeXAt` or `afterXAt`) field is required.
 
-| Query Parameter        | Description                                                              |
-| :--------------------- | :----------------------------------------------------------------------- |
-| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uid`s with a comma (`,`) |
-| **`statuses`**         | Delete tasks based on `status`                                           |
-| **`types`**            | Delete tasks based on `type`                                             |
-| **`indexUids`**        | Delete tasks based on `indexUid`. Case-sensitive                         |
-| **`canceledBy`**       | Delete tasks based on the `canceledBy` field                             |
-| **`beforeEnqueuedAt`** | Delete tasks before a specified `enqueuedAt` date                        |
-| **`beforeStartedAt`**  | Delete tasks before a specified `startedAt` date                         |
-| **`beforeFinishedAt`** | Delete tasks before a specified `finishedAt` date                        |
-| **`afterEnqueuedAt`**  | Delete tasks after a specified `enqueuedAt` date                         |
-| **`afterStartedAt`**   | Delete tasks after a specified `startedAt` date                          |
-| **`afterFinishedAt`**  | Delete tasks after a specified `finishedAt` date                         |
+| Query Parameter        | Description                                                                                   |
+| :--------------------- | :-------------------------------------------------------------------------------------------- |
+| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`)                      |
+| **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`)               |
+| **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`)                    |
+| **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Case-sensitive |
+| **`canceledBy`**       | Delete tasks based on the `canceledBy` field                                                  |
+| **`beforeEnqueuedAt`** | Delete tasks before a specified `enqueuedAt` date                                             |
+| **`beforeStartedAt`**  | Delete tasks before a specified `startedAt` date                                              |
+| **`beforeFinishedAt`** | Delete tasks before a specified `finishedAt` date                                             |
+| **`afterEnqueuedAt`**  | Delete tasks after a specified `enqueuedAt` date                                              |
+| **`afterStartedAt`**   | Delete tasks after a specified `startedAt` date                                               |
+| **`afterFinishedAt`**  | Delete tasks after a specified `finishedAt` date                                              |
 
 ### Example
 
@@ -321,4 +321,4 @@ You can delete all tasks by using the following filter:
 
 <RouteHighlighter method="DELETE" route="/tasks?status=failed,canceled,succeeded" />
 
-The API key used must have access to all indexes (`"indexes": [*]`) and the `task.delete` action.
+The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys.md#actions) action.
