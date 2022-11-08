@@ -285,19 +285,19 @@ The API key used must have the [`task.delete`](/reference/api/keys.md#actions) a
 
 A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeXAt` or `afterXAt`) field is required.
 
-| Query Parameter        | Description                                                                                   |
-| :--------------------- | :-------------------------------------------------------------------------------------------- |
-| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`)                      |
-| **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`)               |
-| **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`)                    |
-| **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Case-sensitive |
-| **`canceledBy`**       | Delete tasks based on the `canceledBy` field                                                  |
-| **`beforeEnqueuedAt`** | Delete tasks before a specified `enqueuedAt` date                                             |
-| **`beforeStartedAt`**  | Delete tasks before a specified `startedAt` date                                              |
-| **`beforeFinishedAt`** | Delete tasks before a specified `finishedAt` date                                             |
-| **`afterEnqueuedAt`**  | Delete tasks after a specified `enqueuedAt` date                                              |
-| **`afterStartedAt`**   | Delete tasks after a specified `startedAt` date                                               |
-| **`afterFinishedAt`**  | Delete tasks after a specified `finishedAt` date                                              |
+| Query Parameter        | Description                                                                                                                          |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`). Use `uids=*` for all `uids                                 |
+| **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
+| **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
+| **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
+| **`canceledBy`**       | Delete tasks based on the `canceledBy` field                                                                                         |
+| **`beforeEnqueuedAt`** | Delete tasks before a specified `enqueuedAt` date                                                                                    |
+| **`beforeStartedAt`**  | Delete tasks before a specified `startedAt` date                                                                                     |
+| **`beforeFinishedAt`** | Delete tasks before a specified `finishedAt` date                                                                                    |
+| **`afterEnqueuedAt`**  | Delete tasks after a specified `enqueuedAt` date                                                                                     |
+| **`afterStartedAt`**   | Delete tasks after a specified `startedAt` date                                                                                      |
+| **`afterFinishedAt`**  | Delete tasks after a specified `finishedAt` date                                                                                     |
 
 ### Example
 
