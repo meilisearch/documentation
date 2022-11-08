@@ -32,32 +32,43 @@ All of Meilisearch's asynchronous operations belong to a category called "tasks"
 
 All asynchronous operations return a summarized version of [the full `task` object](/reference/api/tasks.md#task-object). It contains the following fields in the stated order:
 
-| Field        | Type    | Description                                                                                                    |
-| ------------ | ------- | -------------------------------------------------------------------------------------------------------------- |
-| `taskUid`    | integer | Unique sequential identifier                                                                                   |
-| `indexUid`   | string  | Unique index identifier (always `null` for `dumpCreation`, `taskCancelation`, `taskDeletion`, and `indexSwap`) |
-| `status`     | string  | Status of the task. Value is `enqueued`                                                                        |
-| `type`       | string  | Type of task                                                                                                   |
-| `enqueuedAt` | string  | Represents the date and time in the RFC 3339 format when the task has been `enqueued`                          |
+| Field            | Type    | Description                                                                           |
+| :--------------- | :------ | :------------------------------------------------------------------------------------ |
+| **`taskUid`**    | Integer | Unique sequential identifier                                                          |
+| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](#global-tasks))             |
+| **`status`**     | String  | Status of the task. Value is `enqueued`                                               |
+| **`type`**       | String  | Type of task                                                                          |
+| **`enqueuedAt`** | String  | Represents the date and time in the RFC 3339 format when the task has been `enqueued` |
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
+### Global tasks
+
+Some task types are not associated with a particular index but apply to the entire instance. These tasks are called global tasks. Global tasks display `null` for the `indexUid` field.
+
+Meilisearch considers the following task types as global:
+
+- [`dumpCreation`](/reference/api/tasks.md#dumpcreation)
+- [`taskCancelation`](/reference/api/tasks.md#taskcancelation)
+- [`taskDeletion`](/reference/api/tasks.md#taskdeletion)
+- [`indexSwap`](/reference/api/tasks.md#indexswap)
+
 ### Task `status`
 
-Task responses always contain a field indicating the request's current `status`. This field has four possible values:
+Task responses always contain a field indicating the request's current `status`. This field has one of the following possible values:
 
-- `enqueued`: the task request has been received and will be processed soon
-- `processing`: the task is being processed
-- `succeeded`: the task has been successfully processed
-- `failed`: a failure occurred when processing the task. No changes were made to the database
-- `canceled`: the task was canceled
-- `deleted`: the task was deleted
+- **`enqueued`**: the task request has been received and will be processed soon
+- **`processing`**: the task is being processed
+- **`succeeded`**: the task has been successfully processed
+- **`failed`**: a failure occurred when processing the task. No changes were made to the database
+- **`canceled`**: the task was canceled
+- **`deleted`**: the task was deleted
 
 #### Examples
 
 Suppose you add a new document to your instance using the [add documents endpoint](/reference/api/documents.md#add-or-replace-documents) and receive a `taskUid` in response.
 
-When you query the [get task endpoint](/reference/api/tasks.md#get-one-task) using this value, you see that it has been enqueued:
+When you query the [get task endpoint](/reference/api/tasks.md#get-one-task) using this value, you see that it has been `enqueued`:
 
 ```json
 {
@@ -78,7 +89,7 @@ When you query the [get task endpoint](/reference/api/tasks.md#get-one-task) usi
 }
 ```
 
-Later, you check the request's status one more time. It was successfully processed:
+Later, you check the request's status one more time. It was successfully processed and the status is `succeeded`:
 
 ```json
 {
@@ -99,7 +110,7 @@ Later, you check the request's status one more time. It was successfully process
 }
 ```
 
-Had the task failed, the response would have included an `error` object:
+Had the task failed, the response would have included a detailed `error` object explaining why the task failed:
 
 ```json
 {
@@ -125,7 +136,7 @@ Had the task failed, the response would have included an `error` object:
 }
 ```
 
-If the task was canceled while it was `enqueued` or `processing`:
+If the task was canceled while it was `enqueued` or `processing`, it would have the `canceled` status:
 
 ```json
 {
@@ -147,23 +158,39 @@ If the task was canceled while it was `enqueued` or `processing`:
 }
 ```
 
-If the task was deleted, Meilisearch would return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
+If the task is deleted after it was processed (`succeeded`, `failed`, or `canceled`), Meilisearch would return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
 
 ### Filtering tasks
 
-You can filter tasks based on `uid`, `status`, `type`, `indexUid`, or date. For example, the following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
+You can filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date.
 
-<CodeSamples id="get_all_tasks_filtering_1" />
+#### Filter by `uid`
 
-Use the ampersand character `&` to combine filters, equivalent to a logical `AND`. Use the comma character `,` to add multiple filter values for a single field.
+The following code sample returns tasks with `uid`s `5`, `10`, and `13`:
 
-The following command would return all `documentAdditionOrUpdate` tasks that either `succeeded` or `failed`:
+<CodeSamples id="async_guide_filter_by_id_1" />
 
-<CodeSamples id="get_all_tasks_filtering_2" />
+#### Filter by `status`
 
-#### Filtering by `canceledBy`
+The following code sample returns tasks with the `failed` and `canceled` statuses:
 
-#### Filtering by date
+<CodeSamples id="async_guide_filter_by_status_1" />
+
+#### Filter by `type`
+
+The following code sample returns `dumpCreation` and `indexSwap` tasks:
+
+<CodeSamples id="async_guide_filter_by_type_1" />
+
+#### Filter by `indexUid`
+
+The following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
+
+<CodeSamples id="async_guide_filter_by_index_uid_1" />
+
+#### Filter by `canceledBy`
+
+#### Filter by date
 
 You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `startedAt`, and `finishedAt` fields. This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The following date syntaxes are valid:
 
@@ -171,7 +198,7 @@ You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `st
 - `Y-M-DTH:M:SZ`
 - `Y-M-DTH:M:S+01:00`
 
-<CodeSamples id="async_guide_filter_by_date" />
+<CodeSamples id="async_guide_filter_by_date_1" />
 
 The above code sample will return all tasks `enqueued` **after** 11:49:53 am on 11 Oct 2020. It will start with the tasks `enqueued` at 11:49:54 am on 11 Oct 2020.
 
@@ -179,11 +206,13 @@ The above code sample will return all tasks `enqueued` **after** 11:49:53 am on 
 The date filters are exclusive, meaning you can only filter tasks before or after a specified date.
 :::
 
-#### Combining filters
+#### Combine filters
 
-You can combine the above mentioned filters to see tasks meeting specific requirements. The following code sample will return all `documentAdditionOrUpdate` or `documentDeletion` type tasks with `processing` or `enqueued` statuses in the `movies` index:
+You can combine the above mentioned filters to get tasks meeting specific requirements. Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`. Use the comma character (`,`) to add multiple filter values for a single field.
 
-<CodeSamples id="async_guide_multiple_filters" />
+The following code sample will return all `documentAdditionOrUpdate` and `documentDeletion` type tasks with `processing` status in the `movies` index:
+
+<CodeSamples id="async_guide_multiple_filters_1" />
 
 At this time, `OR` operations between different filters are not supported. For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
 

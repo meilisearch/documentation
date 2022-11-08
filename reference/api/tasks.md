@@ -14,16 +14,16 @@ The `/tasks` route gives information about the progress of [asynchronous operati
   "details": {
     "deletedDocuments": 0
   },
-    "error": {
-      "message": "Index `movie` not found.",
-      "code": "index_not_found",
-      "type": "invalid_request",
-      "link": "https://docs.meilisearch.com/errors#index_not_found"
-    },
-      "duration": "PT0.001192S",
-      "enqueuedAt": "2022-08-04T12:28:15.159167Z",
-      "startedAt": "2022-08-04T12:28:15.161996Z",
-      "finishedAt": "2022-08-04T12:28:15.163188Z"
+  "error": {
+    "message": "Index `movie` not found.",
+    "code": "index_not_found",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#index_not_found"
+  },
+  "duration": "PT0.001192S",
+  "enqueuedAt": "2022-08-04T12:28:15.159167Z",
+  "startedAt": "2022-08-04T12:28:15.161996Z",
+  "finishedAt": "2022-08-04T12:28:15.163188Z"
 }
 ```
 
@@ -42,7 +42,7 @@ The task `uid` is incremented **globally.**
 **Description**:  Unique identifier of the targeted index
 
 ::: note
-This value is always `null` for `dumpCreation` tasks.
+This value is always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks).
 :::
 
 ### `status`
@@ -128,7 +128,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `error`
 
 **Type**: Object
-**Description**: Error details and context. Set to `null` by default. When a task has the `failed` [status](#status), it returns the following fields:
+**Description**: Error details and context. Set to `null` by default. When a task has the [`failed`](#status) status, it returns the following fields:
 
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
@@ -169,21 +169,21 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 ### Query parameters
 
-| Query Parameter        | Default Value                  | Description                                                                                                    |
-| :--------------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------- |
-| **`limit`**            | `20`                           | Number of tasks to return                                                                                      |
-| **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                               |
-| **`uids`**             | `*` (all uids)                 | Filter tasks by their `uid`. Separate multiple tasks with a comma (`,`)                                        |
-| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |
-| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |
-| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |
-| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-canceledby) by their `canceledBy` field |
-| **`beforeEnqueuedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `enqueuedAt` field       |
-| **`beforeStartedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `startedAt` field        |
-| **`beforeFinishedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `finishedAt` field       |
-| **`afterEnqueuedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `enqueuedAt` field       |
-| **`afterStartedAt`**   | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `startedAt` field        |
-| **`afterFinishedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-by-date) by their `finishedAt` field       |
+| Query Parameter        | Default Value                  | Description                                                                                                                                                              |
+| :--------------------- | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                                |
+| **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                         |
+| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-uid) by their `uid`. Separate multiple task `uids` with a comma (`,`)                                |
+| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-status) by their `status`. Separate multiple task `statuses` with a comma (`,`)                      |
+| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-type) by their `type`. Separate multiple task `types` with a comma (`,`)                             |
+| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-indexuid) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
+| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)            |
+| **`beforeEnqueuedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                    |
+| **`beforeStartedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                     |
+| **`beforeFinishedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                    |
+| **`afterEnqueuedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                    |
+| **`afterStartedAt`**   | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                     |
+| **`afterFinishedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                    |
 
 ### Response
 
@@ -208,6 +208,7 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
       "indexUid":"movies_reviews",
       "status":"enqueued",
       "type":"documentAdditionOrUpdate",
+      "canceledBy": null,
       "error": null,
       "duration":null,
       "enqueuedAt":"2021-08-12T10:00:00.000000Z",
