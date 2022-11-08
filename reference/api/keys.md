@@ -2,6 +2,10 @@
 
 The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must first [set the master key](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance). Once a master key is set, you can access these endpoints by supplying it in the header of the request, or using API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
 
+::: warning
+Accessing the `/keys` route without setting a master key will throw a [`missing_master_key`](/reference/errors/error_codes.md#missing-master-key) error.
+:::
+
 [Learn more about managing keys and their rights](/learn/security/master_api_keys.md).
 
 ## Key object
