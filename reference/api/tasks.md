@@ -279,6 +279,8 @@ Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#ta
 Using this route without any filters (DELETE `/tasks`) will result in the `missing_task_filters` error. This error prevents users from accidentally deleting the entire history.
 :::
 
+The API key used must have the [`task.delete`](/reference/api/keys.md#actions) action.
+
 ### Query parameters
 
 A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeXAt` or `afterXAt`) field is required.
