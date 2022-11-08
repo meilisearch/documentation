@@ -1048,4 +1048,5 @@ async_guide_filter_by_type_1: |
     -X POST 'http://localhost:7700/tasks?type=dumpCreation,indexSwap'         
 async_guide_filter_by_index_uid_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?indexUid=movies' 
+    -X POST 'http://localhost:7700/tasks?indexUid=movies'
+ 
