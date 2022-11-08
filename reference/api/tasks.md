@@ -272,7 +272,7 @@ Get a single task.
 
 ## Cancel tasks
 
-<RouteHighlighter method="POST" route="/tasks/cancel?{task_uid_or_status_or_type_indexUid_or_afterXAt_or_beforeXAt}"/>
+<RouteHighlighter method="POST" route="/tasks/cancel?{task_uid}"/>
 
 Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, or date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
 
@@ -286,20 +286,20 @@ You can also cancel `taskCancelation` type tasks as long as they are in the `enq
 
 ### Query parameters
 
-A valid `uid`, `status`, `type`, `indexUid`, or date(`beforeXAt` or `afterXAt`) is required.
+A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterXAt`) field is required.
 
-| Query Parameter        | Description                                                              |
-| :--------------------- | :----------------------------------------------------------------------- |
-| **`uids`**             | Cancel tasks based on `uid`. Separate multiple `uid`s with a comma (`,`) |
-| **`statuses`**         | Cancel tasks based on `status`                                           |
-| **`types`**            | Cancel tasks based on `type`                                             |
-| **`indexUids`**        | Cancel tasks based on `indexUid`. Case-sensitive                         |
-| **`beforeEnqueuedAt`** | Cancel tasks before a specified `enqueuedAt` date                        |
-| **`beforeStartedAt`**  | Cancel tasks before a specified `startedAt` date                         |
-| **`beforeFinishedAt`** | Cancel tasks before a specified `finishedAt` date                        |
-| **`afterEnqueuedAt`**  | Cancel tasks after a specified `enqueuedAt` date                         |
-| **`afterStartedAt`**   | Cancel tasks after a specified `startedAt` date                          |
-| **`afterFinishedAt`**  | Cancel tasks after a specified `finishedAt` date                         |
+| Query Parameter        | Description                                                                                   |
+| :--------------------- | :-------------------------------------------------------------------------------------------- |
+| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`)                      |
+| **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`)               |
+| **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`)                    |
+| **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Case-sensitive |
+| **`beforeEnqueuedAt`** | Delete tasks before a specified `enqueuedAt` date                                             |
+| **`beforeStartedAt`**  | Delete tasks before a specified `startedAt` date                                              |
+| **`beforeFinishedAt`** | Delete tasks before a specified `finishedAt` date                                             |
+| **`afterEnqueuedAt`**  | Delete tasks after a specified `enqueuedAt` date                                              |
+| **`afterStartedAt`**   | Delete tasks after a specified `startedAt` date                                               |
+| **`afterFinishedAt`**  | Delete tasks after a specified `finishedAt` date                                              |
 
 ### Example
 
@@ -325,6 +325,6 @@ You can cancel all tasks by using the following filter:
 
 <RouteHighlighter method="POST" route="/tasks/cancel?status=processing,enqueued" />
 
-The API key used must have access to all indexes (`"indexes": [*]`) and the `task.cancel` action.
+The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys.md#actions) action.
 
 ## Delete tasks
