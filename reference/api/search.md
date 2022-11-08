@@ -375,6 +375,10 @@ If you set `hitsPerPage` to `0`, Meilisearch processes your request, but does no
 
 You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
 
+::: note
+`hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
+:::
+
 #### Example
 
 The following example returns the first `15` results for a query:
@@ -402,6 +406,10 @@ Queries containing `page` are exhaustive and do not return an `estimatedTotalHit
 If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `totalPages` and `totalHits`.
 
 You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
+
+::: note
+`hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
+:::
 
 #### Example
 
