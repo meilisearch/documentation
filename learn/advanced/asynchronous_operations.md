@@ -146,9 +146,9 @@ If the task was canceled while it was `enqueued` or `processing`, it would have 
   "type": "taskCancelation",
   "canceledBy": 5,
   "details": {
-    "matchedTasks": 9000,
-    "canceledTasks": 0,
-    "originalQuery": "type=documentAdditionOrUpdate&documentDeletion"
+    "matchedTasks": 1,
+    "canceledTasks": 1,
+    "originalQuery": "uid=1"
   },
   "error": null,
   "duration": "PT1S",
@@ -305,8 +305,10 @@ What happens to an asynchronous operation when Meilisearch is terminated changes
 - `processing`: there will be no consequences, since no part of the task has been committed to the database. After restarting, the task will be treated as `enqueued`
 - `succeeded`: there will be no data loss since the request was successfully completed
 - `failed`: the task failed and nothing has been altered in the database
+- `canceled`: the task was canceled and nothing has been altered in the database
+- `deleted`: the task was deleted and nothing has been altered in the database
 
-You can use [the `/tasks` route](/reference/api/tasks.md) to determine a task's `status`.
+You can use the [`/tasks`](/reference/api/tasks.md) route to determine a task's `status`.
 
 ### Example
 
