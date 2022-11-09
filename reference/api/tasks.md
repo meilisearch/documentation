@@ -230,6 +230,10 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 Get a single task.
 
+::: note
+Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error if you try retrieving a deleted task.
+:::
+
 ### Path parameters
 
 | Name             | Type   | Description                         |
@@ -273,13 +277,9 @@ Get a single task.
 
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction, **either all tasks are successfully deleted, or none are**.
 
-Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error if you try retrieving a deleted task.
-
 ::: warning
 Using this route without any filters (DELETE `/tasks`) will result in the `missing_task_filters` error. This error prevents users from accidentally deleting the entire history.
 :::
-
-The API key used must have the [`task.delete`](/reference/api/keys.md#actions) action.
 
 ### Query parameters
 
@@ -287,7 +287,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 
 | Query Parameter        | Description                                                                                                                          |
 | :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
-| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`). Use `uids=*` for all `uids                                 |
+| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`). Use `uids=*` for all `uids`                                |
 | **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
 | **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
 | **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
