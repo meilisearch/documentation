@@ -221,11 +221,15 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 Swap indexes. **You can only swap indexes in pairs.**
 
+::: note
+Sending `[]` is valid but no swap operation will be performed.
+:::
+
 ### Body
 
-| Name            | Type  | Default value | Description                            |
-| :-------------- | :---- | :------------ | :------------------------------------- |
-| **`indexes`** * | Array | N/A           | Array of the two indexes to be swapped |
+| Name            | Type             | Default value | Description                                 |
+| :-------------- | :--------------- | :------------ | :------------------------------------------ |
+| **`indexes`** * | Array of strings | N/A           | Array of the two `indexeUid`s to be swapped |
 
 ### Example
 
@@ -242,5 +246,9 @@ Swap indexes. **You can only swap indexes in pairs.**
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
+::: note
+Since `indexSwap` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is `null`.
+:::
 
 You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).
