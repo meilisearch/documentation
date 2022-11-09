@@ -280,8 +280,6 @@ Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `ind
 Using this route without any filters (POST `/tasks/cancel`) will result in the `missing_task_filters` error. This error prevents users from accidentally canceling all `enqueued` and `processing` tasks.
 :::
 
-The API key used must have the [`task.cancel`](/reference/api/keys.md#actions) action.
-
 You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state.
 
 ### Query parameters
