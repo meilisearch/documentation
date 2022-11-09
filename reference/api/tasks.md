@@ -314,6 +314,9 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+::: note
+Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is `null`.
+:::
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 
