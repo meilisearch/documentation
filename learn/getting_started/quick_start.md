@@ -279,7 +279,7 @@ These allow you to configure your Meilisearch instance at launch with [environme
 
 **Instance options affect your entire Meilisearch instance**, not just a single index.
 
-### Configuration file
+#### Configuration file
 
 Instead of providing command-line options or environment variables, you can provide a `.toml` [configuration file](/learn/configuration/instance_options.md#configuration-file). Once downloaded, it is loaded at launch. Like instance options, it affects your entire instance.
 
