@@ -8,95 +8,6 @@ You can configure Meilisearch at launch with **command-line options**, **environ
 
 These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/learn/configuration/settings.md).
 
-## Configuration file
-
-Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables. Configuration files can be easily shared and versioned, and allow you to define multiple options.
-
-**If used simultaneously, environment variables can overwrite the configuration file, and command-line options can overwrite environment variables.**
-
-You can download the configuration file using the following command:
-
-<CodeSamples id="instance_options_config_file_download_1" />
-
-This default configuration file is divided into sections separated by comments. Each key has a brief description followed by a link to the relevant section of the documentation. Some keys are commented out as they are not required when launching Meilisearch, for example, `import_snapshot`, or because the value provided in the file is not the default value like `max_indexing_memory`.
-
-By default, Meilisearch will use the file `./config.toml` in the working directory as the default configuration file. You will see it when you launch Meilisearch:
-
-```
-888b     d888          d8b 888 d8b                                            888
-8888b   d8888          Y8P 888 Y8P                                            888
-88888b.d88888              888                                                888
-888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
-
-Config file path:       "./config.toml"
-```
-
-You can override the default configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option.
-
-### Configuration file format
-
-You can configure all environment variables and CLI options using a dedicated key in the configuration file. These keys follow the [snake case](https://en.wikipedia.org/wiki/Snake_case) convention. For example, `--import-dump` must be named `import_dump` in the file, `import_dumps` will throw an error.
-
-::: warning
-The only exception is the `config_file_path` key. Specifying the `config_file_path` key in the configuration file will throw an [error](/learn/configuration/instance_options.md#defining-a-configuration-file-with-a-syntax-error).
-:::
-
-### Configuration file errors
-
-#### Defining `config_file_path` in the configuration file
-
-```
-Error: `config_file_path` is not supported in configuration file.
-```
-
-You can only set the configuration file path using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
-
-:::: tabs
-::: tab CLI
-
-```sh
-./meilisearch --config-file-path="./config.toml"
-```
-
-:::
-
-::: tab Environment variable
-
-Linux/MacOS:
-
-```sh
-export MEILI_CONFIG_FILE_PATH="./config.toml"
-./meilisearch
-```
-
-Windows:
-
-```sh
-set MEILI_CONFIG_FILE_PATH="./config.toml"
-./meilisearch
-```
-
-:::
-::::
-
-#### Defining a non-existent configuration file
-
-```
-Error: unable to open or read the "XXX" configuration file: No such file or directory (os error 2).
-```
-
-#### Defining a configuration file with a syntax error
-
-```
-Error: unknown field `XXX` at line Y column Z
-```
-
-All key names must follow snake case.
-
 ## Command-line options and flags
 
 Pass **command-line options** and their respective values when launching a Meilisearch instance.
@@ -132,6 +43,69 @@ In the previous example, `./meilisearch` is the command that launches a Meilisea
 Environment variables for command-line flags accept `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`. Any other value is considered `true`.
 
 Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. **Some options (e.g., `--import-snapshots`) are not available as environment variables.**
+
+## Configuration file
+
+Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables. Configuration files can be easily shared and versioned, and allow you to define multiple options.
+
+**When used simultaneously, environment variables overwrite the configuration file, and command-line options overwrite environment variables.**
+
+You can download the configuration file using the following command:
+
+<CodeSamples id="instance_options_config_file_download_1" />
+
+By default, Meilisearch will use `config.toml` in the working directory as the default configuration file. You will see it when you launch Meilisearch:
+
+```
+888b     d888          d8b 888 d8b                                            888
+8888b   d8888          Y8P 888 Y8P                                            888
+88888b.d88888              888                                                888
+888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
+
+Config file path:       "./config.toml"
+```
+
+You can override the default configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
+
+:::: tabs
+::: tab CLI
+
+```sh
+./meilisearch --config-file-path="./config.toml"
+```
+
+:::
+
+::: tab Environment variable
+
+Linux/MacOS:
+
+```sh
+export MEILI_CONFIG_FILE_PATH="./config.toml"
+./meilisearch
+```
+
+Windows:
+
+```sh
+set MEILI_CONFIG_FILE_PATH="./config.toml"
+./meilisearch
+```
+
+:::
+::::
+
+### Configuration file format
+
+You can configure all environment variables and CLI options using a dedicated option in the configuration file. These options follow the [snake case](https://en.wikipedia.org/wiki/Snake_case) convention. For example, `--import-dump` must be named `import_dump` in the file.
+
+::: warning
+Specifying the `config_file_path` option in the configuration file will throw an error.
+:::
 
 ## All instance options
 
