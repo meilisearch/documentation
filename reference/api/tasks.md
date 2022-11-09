@@ -315,6 +315,10 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 }
 ```
 
+::: note
+Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is `null`.
+:::
+
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 
 ### Delete all tasks
