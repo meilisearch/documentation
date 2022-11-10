@@ -119,9 +119,9 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `indexSwap`
 
-| Name        | Description                                                                                               |
-| :---------- | :-------------------------------------------------------------------------------------------------------- |
-| **`swaps`** | An array listing swap operations objects for that task. Each object must contain two indexes for swapping |
+| Name        | Description                                            |
+| :---------- | :----------------------------------------------------- |
+| **`swaps`** | Object containing the payload for the `indexSwap` task |
 
 ### `error`
 

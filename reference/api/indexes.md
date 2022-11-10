@@ -221,15 +221,17 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 Swap indexes. **You can only swap indexes in pairs.**
 
-::: note
-Sending `[]` is valid but no swap operation will be performed.
-:::
+Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `indexB` and vice-versa in the task history. `enqueued` tasks are left unmodified.
 
 ### Body
 
 | Name            | Type             | Default value | Description                                 |
 | :-------------- | :--------------- | :------------ | :------------------------------------------ |
 | **`indexes`** * | Array of strings | N/A           | Array of the two `indexeUid`s to be swapped |
+
+::: note
+Sending `[]` is valid but no swap operation will be performed.
+:::
 
 ### Example
 
