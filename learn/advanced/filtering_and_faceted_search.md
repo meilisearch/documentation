@@ -18,7 +18,7 @@ Updating `filterableAttributes` requires recreating the entire index. This may t
 By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
 :::
 
-Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
+Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. Filtering with `inf` or `NaN` as numbers will throw an error. But filtering with  `inf` or `NaN` as strings will work for all fields except [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).  
 
 ### Example
 
