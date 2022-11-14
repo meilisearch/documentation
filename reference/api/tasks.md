@@ -325,6 +325,6 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 You can delete all tasks by using the following filter:
 
-<RouteHighlighter method="DELETE" route="/tasks?status=failed,canceled,succeeded" />
+<RouteHighlighter method="DELETE" route="/tasks?statuses=failed,canceled,succeeded" />
 
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys.md#actions) action.
