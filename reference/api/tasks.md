@@ -48,7 +48,7 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 ### `status`
 
 **Type**: String
-**Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`, `canceled`, and `deleted`
+**Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`, and `canceled`
 
 ### `type`
 
