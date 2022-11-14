@@ -159,7 +159,7 @@ For example, the following command would return all `documentAdditionOrUpdate` t
 
 You can use the `canceledBy` filter to get the tasks canceled by one or more `taskCancelation` tasks.
 
-The code sample below filters all tasks canceled by the task with `taskUid`s `9` and `15`:
+The code sample below filters all tasks canceled by the task with `uid`s `9` and `15`:
 
 <CodeSamples id="async_guide_canceled_by_1" />
 
