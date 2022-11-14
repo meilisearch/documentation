@@ -184,7 +184,7 @@ The [cancel tasks](/reference/api/tasks.md#cancel-tasks) and [delete tasks](/ref
 
 ## `missing_task_filters`
 
-The [cancel tasks](/reference/api/tasks.md#cancel-tasks) and [delete tasks](/reference/api/tasks.md#delete-tasks) endpoints require one of the available path parameters.
+The [cancel tasks](/reference/api/tasks.md#cancel-tasks) and [delete tasks](/reference/api/tasks.md#delete-tasks) endpoints require one of the available query parameters.
 
 ## `no_space_left_on_device`
 

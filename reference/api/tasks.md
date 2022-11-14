@@ -165,7 +165,7 @@ Task deletion can be successful and still have `deletedTasks: 0`. This happens w
 ### `finishedAt`
 
 **Type**: String
-**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+**Description**: The date and time when the task finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ## Get tasks
 

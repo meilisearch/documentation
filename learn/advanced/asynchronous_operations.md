@@ -194,9 +194,9 @@ The following command returns all tasks belonging to the index `movies`. Note th
 
 You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `startedAt`, and `finishedAt` fields. This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The following date syntaxes are valid:
 
-- `Y-M-D`
-- `Y-M-DTH:M:SZ`
-- `Y-M-DTH:M:S+01:00`
+- `YYYY-MM-DD`
+- `YYYY-MM-DDTHH:MM:SSZ`
+- `YYYY-MM-DDTHH:MM:SS+01:00`
 
 <CodeSamples id="async_guide_filter_by_date_1" />
 
@@ -208,7 +208,7 @@ The date filters are exclusive, meaning you can only filter tasks before or afte
 
 #### Combine filters
 
-You can combine the above mentioned filters to get tasks meeting specific requirements. Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`. Use the comma character (`,`) to add multiple filter values for a single field.
+You can combine the above mentioned filters to get tasks meeting specific requirements. Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`. Use the comma character (`,`) to add multiple filter values for a single field, equivalent to a logical `OR`.
 
 The following code sample will return all `documentAdditionOrUpdate` and `documentDeletion` type tasks with `processing` status in the `movies` index:
 
