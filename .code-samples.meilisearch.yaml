@@ -1042,10 +1042,10 @@ async_guide_filter_by_date: |
     -X POST 'http://localhost:7700/tasks?afterEnqueuedAt>2020-10-11T11:49:53.000Z'
 async_guide_multiple_filters: |
   curl \
-    -X POST 'http://localhost:7700/tasks?indexUid=movies&type=documentAdditionOrUpdate,documentDeletion&status=processing,enqueued'
+    -X POST 'http://localhost:7700/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing,enqueued'
 cancel_task_1: |  
   curl \
-    -X POST 'http://localhost:7700/tasks/cancel?uid=1,2'
+    -X POST 'http://localhost:7700/tasks/cancel?uids=1,2'
 async_guide_canceled_by_1: |
   curl \
     -X GET 'http://localhost:7700/tasks?canceledBy=9,15'    

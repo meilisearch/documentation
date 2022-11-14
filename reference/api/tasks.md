@@ -131,7 +131,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `error`
 
 **Type**: Object
-**Description**: Error details and context. Contains the error definition, if this task has `failed`. [status](#status). Otherwise, set to `null`
+**Description**: Error details and context. Contains the error definition, if this task has `failed` [status](#status). Otherwise, set to `null`
 
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
@@ -314,6 +314,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
 ```
+
 ::: note
 Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is `null`.
 :::
