@@ -192,7 +192,13 @@ The following command returns all tasks belonging to the index `movies`. Note th
 
 #### Filter by date
 
-You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `startedAt`, and `finishedAt` fields. This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The following date syntaxes are valid:
+You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `startedAt`, and `finishedAt` fields:
+
+- `enqueuedAt` → `beforeEnqueuedAt` or `afterEnqueuedAt`
+- `startedAt` → `beforeStartedAt` or `afterStartedAt`
+- `finishedAt` →`beforeFinishedAt`  or `afterFinishedAt`
+
+This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The following date syntaxes are valid:
 
 - `YYYY-MM-DD`
 - `YYYY-MM-DDTHH:MM:SSZ`
@@ -281,7 +287,7 @@ When the returned value of `next` is `null`, you have reached the final page of 
 3. You can cancel a task while it is in the `enqueued` or `processing` states. If canceled, it will have the `canceled` status  
 4. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error
 5. Tasks marked as `succeeded`, `failed`, or `canceled` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks)
-6. Once a task is finished (`succeeded`, `failed`, or `canceled`), it can be deleted
+6. Once a task is finished (`succeeded`, `failed`, or `canceled`), it can be [deleted](/reference/api/tasks.md#delete-tasks)
 
 ### Task priority
 
