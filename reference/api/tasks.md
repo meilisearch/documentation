@@ -219,6 +219,10 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
       "status":"enqueued",
       "type":"documentAdditionOrUpdate",
       "canceledBy": null,
+      "details":{
+        "receivedDocuments":100,
+        "indexedDocuments":0
+      },
       "error": null,
       "duration":null,
       "enqueuedAt":"2021-08-12T10:00:00.000000Z",
