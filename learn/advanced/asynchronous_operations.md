@@ -53,6 +53,10 @@ Meilisearch considers the following task types as global:
 - [`taskDeletion`](/reference/api/tasks.md#taskdeletion)
 - [`indexSwap`](/reference/api/tasks.md#indexswap)
 
+::: note
+Your API key must have access to all indexes (`"indexes": [*]`) in order to access global tasks.
+:::
+
 ### Task `status`
 
 Task responses always contain a field indicating the request's current `status`. This field has one of the following possible values:
