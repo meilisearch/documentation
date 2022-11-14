@@ -131,7 +131,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `error`
 
 **Type**: Object
-**Description**: Error details and context. Only present when a task has the `failed` [status](#status)
+**Description**: Error details and context. Contains the error definition, if this task has `failed`. [status](#status). Otherwise, set to `null`
 
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
@@ -324,7 +324,7 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 You can cancel all tasks by using the following filter:
 
-<RouteHighlighter method="POST" route="/tasks/cancel?status=processing,enqueued" />
+<RouteHighlighter method="POST" route="/tasks/cancel?statuses=processing,enqueued" />
 
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys.md#actions) action.
 
