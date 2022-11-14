@@ -219,15 +219,15 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 <RouteHighlighter method="POST" route="/indexes/swap-indexes"/>
 
-Swap indexes. **You can only swap indexes in pairs.**
+Swap indexes. **You can only swap indexes in pairs.** Swapping indexes is an atomic transaction, **either all indexes are successfully swapped, or none are.**
 
 Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `indexB` and vice-versa in the task history. `enqueued` tasks are left unmodified.
 
 ### Body
 
-| Name            | Type             | Default value | Description                                 |
-| :-------------- | :--------------- | :------------ | :------------------------------------------ |
-| **`indexes`** * | Array of strings | N/A           | Array of the two `indexeUid`s to be swapped |
+| Name            | Type             | Default value | Description                                |
+| :-------------- | :--------------- | :------------ | :----------------------------------------- |
+| **`indexes`** * | Array of strings | N/A           | Array of the two `indexUid`s to be swapped |
 
 ::: note
 Sending `[]` is valid but no swap operation will be performed.

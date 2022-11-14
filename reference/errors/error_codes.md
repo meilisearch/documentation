@@ -36,7 +36,7 @@ An error occurred during dump creation process, task aborted.
 
 ## `duplicate_index_found`
 
-The indexes used in the `swaps` array have been declared multiple times. You must declare each index only once.
+The indexes used in the `indexes` array have been declared multiple times. You must declare each index only once.
 
 ## `index_already_exists`
 
