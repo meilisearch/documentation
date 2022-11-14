@@ -1036,17 +1036,17 @@ async_guide_filter_by_date_1: |
     -X POST 'http://localhost:7700/tasks?afterEnqueuedAt>2020-10-11T11:49:53.000Z'
 async_guide_multiple_filters_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?indexUid=movies&type=documentAdditionOrUpdate,documentDeletion&status=processing'
+    -X POST 'http://localhost:7700/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
 async_guide_filter_by_id_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?uid=5,10,13'
+    -X POST 'http://localhost:7700/tasks?uids=5,10,13'
 async_guide_filter_by_status_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?status=failed,canceled'
+    -X POST 'http://localhost:7700/tasks?statuses=failed,canceled'
 async_guide_filter_by_type_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?type=dumpCreation,indexSwap'         
+    -X POST 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'         
 async_guide_filter_by_index_uid_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?indexUid=movies'
+    -X POST 'http://localhost:7700/tasks?indexUids=movies'
  
