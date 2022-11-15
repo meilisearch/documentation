@@ -138,7 +138,7 @@ Task deletion can be successful and still have `deletedTasks: 0`. This happens w
 ### `error`
 
 **Type**: Object
-**Description**: Error details and context. Set to `null` by default. When a task has the [`failed`](#status) status, it returns the following fields:
+**Description**: If the task has a `failed` [status](#status), it contains the error definition. Otherwise, set to `null`
 
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
