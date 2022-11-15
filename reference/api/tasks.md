@@ -123,6 +123,10 @@ This value is always `null` for `dumpCreation` tasks.
 | **`deletedTasks`**    | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                                                              |
 | **`originalFilters`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                                                       |
 
+::: note
+Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
+:::
+
 ### `error`
 
 **Type**: Object
