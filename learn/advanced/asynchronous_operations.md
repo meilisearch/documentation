@@ -114,7 +114,7 @@ Later, you check the request's status one more time. It was successfully process
 }
 ```
 
-Had the task failed, the response would have included a detailed `error` object explaining why the task failed:
+Had the task failed, the response would have included a detailed `error` object:
 
 ```json
 {
@@ -162,7 +162,7 @@ If the task was canceled while it was `enqueued` or `processing`, it would have 
 }
 ```
 
-If the task is deleted after it was processed (`succeeded`, `failed`, or `canceled`), Meilisearch would return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
+If a task is deleted after it was processed (`succeeded`, `failed`, or `canceled`), Meilisearch returns a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
 
 ### Filtering tasks
 
@@ -213,7 +213,7 @@ This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 The above code sample will return all tasks `enqueued` **after** 11:49:53 am on 11 Oct 2020. It will start with the tasks `enqueued` at 11:49:54 am on 11 Oct 2020.
 
 ::: note
-The date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
 :::
 
 #### Combine filters
