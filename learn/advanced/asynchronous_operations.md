@@ -290,10 +290,11 @@ When the returned value of `next` is `null`, you have reached the final page of 
 2. When your task reaches the front of the queue, Meilisearch begins working on it and changes the request `status` to `processing`
 3. You can cancel a task while it is in the `enqueued` or `processing` states. If canceled, it will have the `canceled` status  
 4. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error
-5. Tasks marked as `succeeded`, `failed`, or `canceled` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks)
-6. Once a task is finished (`succeeded`, `failed`, or `canceled`), it can be [deleted](/reference/api/tasks.md#delete-tasks)
+5. Tasks marked as `succeeded`, `failed`, or `canceled` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks). They can be deleted using the [delete tasks route](/reference/api/tasks.md#delete-tasks)
 
 ### Task priority
+
+Tasks are processed in the order they were enqueued. `taskCancelation`, `taskDeletion`, `snapshotCreation`, and `dumpCreation`are prioritized over all other tasks in the queue. Their task `uid`s reflect when they were enqueued relative to other tasks.
 
 The following list shows different task types in decreasing order of priority:
 
@@ -316,9 +317,8 @@ What happens to an asynchronous operation when Meilisearch is terminated changes
 - `succeeded`: there will be no data loss since the request was successfully completed
 - `failed`: the task failed and nothing has been altered in the database
 - `canceled`: the task was canceled and nothing has been altered in the database
-- `deleted`: the task was deleted and nothing has been altered in the database
 
-You can use the [`/tasks`](/reference/api/tasks.md) route to determine a task's `status`.
+You can use [the `/tasks` route](/reference/api/tasks.md) to determine a task's `status`.
 
 ### Example
 
