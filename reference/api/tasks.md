@@ -117,11 +117,11 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `taskDeletion`
 
-| Name                  | Description                                                                                                                                                                             |
-| :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**    | The number of matched tasks based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
-| **`canceledTasks`**   | The number of tasks successfully deleted. If the task fails, this will be `0`                                                                                                           |
-| **`originalFilters`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                |
+| Name                  | Description                                                                                                                                                                                                                    |
+| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**    | The number of matched tasks based on the request. If the API key used with the request doesn’t have access to any of the indexes specified in the request, tasks relating to that index will not be included in `matchedTasks` |
+| **`deletedTasks`**    | The number of tasks successfully deleted. If the task deletion fails, this will be `0`                                                                                                                                         |
+| **`originalFilters`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                                                       |
 
 ### `error`
 
@@ -278,7 +278,7 @@ Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#ta
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
 ::: warning
-Using this route without any filters (DELETE `/tasks`) will result in the `missing_task_filters` error. This error prevents users from accidentally deleting the entire history.
+To prevent users from accidentally deleting the entire history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
 :::
 
 ### Query parameters
@@ -300,8 +300,10 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 | **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date                                                                                 |
 
 ::: note
-The date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
 :::
+
+[To learn more about using the query parameters, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
 
 ### Example
 
@@ -320,7 +322,7 @@ The date filters are exclusive, meaning you can only filter tasks before or afte
 ```
 
 ::: note
-Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is `null`.
+Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is `null`.
 :::
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
