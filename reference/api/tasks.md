@@ -275,7 +275,7 @@ Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#ta
 
 <RouteHighlighter method="DELETE" route="/tasks?{task_uid}"/>
 
-Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction, **either all tasks are successfully deleted, or none are**.
+Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
 ::: warning
 Using this route without any filters (DELETE `/tasks`) will result in the `missing_task_filters` error. This error prevents users from accidentally deleting the entire history.
