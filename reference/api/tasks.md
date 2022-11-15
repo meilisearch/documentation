@@ -57,7 +57,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `canceledBy`
 
 **Type**: Integer
-**Description**: Contains the `uid` of `taskCancelation` task, if this task was canceled. Otherwise set to `null`
+**Description**: if the task was canceled, `canceledBy` contains the `uid` of a `taskCancelation` task . If the task was not canceled, `canceledBy` is always `null`
 
 ### `details`
 
@@ -122,7 +122,7 @@ This value is always `null` for `dumpCreation` tasks.
 
 | Name                  | Description                                                                                                                                                                             |
 | :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**    | The number of matched tasks based on the request. If the API key doesn’t have access to any of the indexes specified in the request, those tasks will not be included in `matchedTasks` |
+| **`matchedTasks`**    | The number of matched tasks based on the request. If the API key used with the request doesn’t have access to any of the indexes specified in the request, tasks relating to that index will not be included in `matchedTasks` |
 | **`canceledTasks`**   | The number of tasks successfully canceled. If the task fails, this will be `0`                                                                                                          |
 | **`originalFilters`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                         |
 
@@ -131,7 +131,7 @@ This value is always `null` for `dumpCreation` tasks.
 ### `error`
 
 **Type**: Object
-**Description**: Error details and context. Contains the error definition, if this task has `failed` [status](#status). Otherwise, set to `null`
+**Description**: If the task has `failed` [status](#status), contains the error definition. Otherwise, set to `null`
 
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
@@ -274,7 +274,7 @@ Get a single task.
 
 <RouteHighlighter method="POST" route="/tasks/cancel?{task_uid}"/>
 
-Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, or date. Task cancelation is an atomic transaction, **either all tasks are successfully canceled or none are**.
+Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, or date. Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
 ::: warning
 Using this route without any filters (POST `/tasks/cancel`) will result in the `missing_task_filters` error. This error prevents users from accidentally canceling all `enqueued` and `processing` tasks.
@@ -300,7 +300,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date                                                                                     |
 
 ::: note
-The date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
 :::
 
 ### Example
@@ -320,7 +320,7 @@ The date filters are exclusive, meaning you can only filter tasks before or afte
 ```
 
 ::: note
-Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is `null`.
+Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is `null`.
 :::
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
