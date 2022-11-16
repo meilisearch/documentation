@@ -70,14 +70,14 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 | Name                    | Description                                                                            |
 | :---------------------- | :------------------------------------------------------------------------------------- |
 | **`receivedDocuments`** | Number of documents received                                                           |
-| **`indexedDocuments`**  | Number of documents indexed. `null` when the task status is `enqueued` or `processing` |
+| **`indexedDocuments`**  | Number of documents indexed. `null` while the task status is `enqueued` or `processing` |
 
 #### `documentDeletion`
 
 | Name                   | Description                                                                            |
 | :--------------------- | :------------------------------------------------------------------------------------- |
-| **`matchedDocuments`** | Number of document to be deleted based on the request                                 |
-| **`deletedDocuments`** | Number of documents deleted. `null` when the task status is `enqueued` or `processing` |
+| **`matchedDocuments`** | Number of documents queued for deletion                                                      |
+| **`deletedDocuments`** | Number of documents deleted. `null` while the task status is `enqueued` or `processing` |
 
 #### `indexCreation`
 
@@ -95,7 +95,7 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 | Name                   | Description                                                                                                                                                  |
 | :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index. `null` when the task status is `enqueued` or `processing` |
+| **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index. `null` while the task status is `enqueued` or `processing` |
 
 #### `settingsUpdate`
 
@@ -117,7 +117,7 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 | Name          | Description                                                                                                                                  |
 | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file. `null` when the task status is `enqueued` or `processing` |
+| **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file. `null` while the task status is `enqueued` or `processing` |
 
 #### `taskCancelation`
 
