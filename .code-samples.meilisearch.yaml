@@ -1038,5 +1038,4 @@ date_guide_sort_1: |
       "q": "",
       "sort": ["release_timestamp:desc"]
     }'
-instance_options_config_file_download_1: |
-  curl https://raw.githubusercontent.com/meilisearch/meilisearch/main/config.toml > config.toml
+
