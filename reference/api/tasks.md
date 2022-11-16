@@ -53,7 +53,7 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 ### `type`
 
 **Type**: String
-**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, `taskDeletion`, and `indexSwap`
+**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `indexSwap`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, `taskDeletion`, and `snapshotCreation`
 
 ### `canceledBy`
 
@@ -122,6 +122,10 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 #### `taskCancelation`
 
 #### `taskDeletion`
+
+### `snapshotCreation`
+
+The `details` object is set to `null` for `snapshotCreation` tasks
 
 #### `indexSwap`
 
