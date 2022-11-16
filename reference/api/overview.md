@@ -86,7 +86,7 @@ Only the [add documents](/reference/api/documents.md#add-or-replace-documents) a
 
 ### Content encoding
 
-The `Content-Encoding` header indicates the media type is compressed by a given algorithm. Compression improves transfer speed and reduces bandwidth consumption by sending and receiving smaller payloads. The `Accept-Encoding` header,  instead, indicates the compression algorithm the client understands. 
+The `Content-Encoding` header indicates the media type is compressed by a given algorithm. Compression improves transfer speed and reduces bandwidth consumption by sending and receiving smaller payloads. The `Accept-Encoding` header, instead, indicates the compression algorithm the client understands. 
 
 Meilisearch supports the following compression methods:
 
