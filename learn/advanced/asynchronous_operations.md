@@ -132,7 +132,7 @@ If the task was canceled while it was `enqueued` or `processing`:
   "details": {
     "matchedTasks": 9000,
     "canceledTasks": 0,
-    "originalFilters": "types=documentAdditionOrUpdate&documentDeletion"
+    "originalFilters": "?types=documentAdditionOrUpdate&documentDeletion"
   },
   "duration": "PT1S",
   "enqueuedAt": "2021-08-10T14:29:17.000000Z",
