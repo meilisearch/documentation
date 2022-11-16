@@ -140,7 +140,7 @@ Had the task failed, the response would have included a detailed `error` object:
 }
 ```
 
-If the task was canceled while it was `enqueued` or `processing`, it would have the `canceled` status:
+If the task had been canceled while it was `enqueued` or `processing`, it would have the `canceled` status:
 
 ```json
 {
