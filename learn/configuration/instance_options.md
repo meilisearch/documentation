@@ -69,7 +69,7 @@ By default, Meilisearch will use `config.toml` in the working directory as the d
 Config file path:       "./config.toml"
 ```
 
-You can override the default configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
+You can override the default location of the configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
 
 :::: tabs
 ::: tab CLI
