@@ -168,9 +168,9 @@ When your query contains either `hitsPerPage`, `page`, or both these search para
 
 #### Search pages with `hitsPerPage` and `page`
 
-`hitsPerPage` defines the maximum number of search results in a page.
+`hitsPerPage` defines the maximum number of search results on a page.
 
-Since `hitsPerPage` defines the number of results in a page, it has a direct effect on the total number of pages for a query. For example, if a query returns 100 results, setting `hitsPerPage` to `25` means you will have four pages of search results. Settings `hitsPerPage` to `50`, instead, means you will have only two pages of search results.
+Since `hitsPerPage` defines the number of results on a page, it has a direct effect on the total number of pages for a query. For example, if a query returns 100 results, setting `hitsPerPage` to `25` means you will have four pages of search results. Settings `hitsPerPage` to `50`, instead, means you will have only two pages of search results.
 
 The following example returns the first 25 search results for a query:
 

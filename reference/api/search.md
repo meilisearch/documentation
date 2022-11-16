@@ -75,7 +75,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches               |
 | **`totalHits`**          | Number           | Exhaustive total number of matches              |
 | **`totalPages`**         | Number           | Exhaustive total number of search result pages |
-| **`hitsPerPage`**        | Number           | Number of results in each page                  |
+| **`hitsPerPage`**        | Number           | Number of results on each page                  |
 | **`page`**               | Number           | Current search results page                     |
 | **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facets)** |
 | **`processingTimeMs`**   | Number           | Processing time of the query                    |
@@ -181,7 +181,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`limit`**              | Number           | Number of documents to take                     |
 | **`totalHits`**          | Number           | Exhaustive total number of matches              |
 | **`totalPages`**         | Number           | Exhaustive total number of search results pages |
-| **`hitsPerPage`**        | Number           | Number of results in each page                  |
+| **`hitsPerPage`**        | Number           | Number of results on each page                  |
 | **`page`**               | Number           | Current search results page                     |
 | **`estimatedTotalHits`** | Number           | Total number of matches                         |
 | **`facets`**             | Object           | **[Distribution of the given facets](#facets)** |
