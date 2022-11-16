@@ -9,7 +9,7 @@ This guide will teach you how to protect your Meilisearch instance by setting a 
 To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key can be of any length, but must be composed of valid UTF-8 characters.
 
 ::: warning
-You need to set a master key to access the [`/keys`](/reference/api/keys.md) route. Otherwise you will get a [`missing_master_key`](/reference/errors/error_codes.md#missing-master-key) error.
+You need to set a master key to access the [`/keys`](/reference/api/keys.md) route. Otherwise, you will get a [`missing_master_key`](/reference/errors/error_codes.md#missing-master-key) error.
 :::
 
 Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/learn/configuration/instance_options.md#master-key).
