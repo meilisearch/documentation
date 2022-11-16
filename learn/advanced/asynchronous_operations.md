@@ -152,7 +152,7 @@ If the task had been canceled while it was `enqueued` or `processing`, it would 
   "details": {
     "matchedTasks": 1,
     "canceledTasks": 1,
-    "originalQuery": "uid=1"
+    "originalQuery": "?uid=1"
   },
   "error": null,
   "duration": "PT1S",
@@ -193,6 +193,12 @@ The following command returns all tasks belonging to the index `movies`. Note th
 <CodeSamples id="async_guide_filter_by_index_uid_1" />
 
 #### Filter by `canceledBy`
+
+You can use the `canceledBy` filter to get the tasks canceled by one or more `taskCancelation` tasks.
+
+The code sample below filters all tasks canceled by the task with `uid`s `9` and `15`:
+
+<CodeSamples id="async_guide_canceled_by_1" />
 
 #### Filter by date
 

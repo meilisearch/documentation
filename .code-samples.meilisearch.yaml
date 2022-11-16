@@ -1049,3 +1049,9 @@ async_guide_filter_by_type_1: |
 async_guide_filter_by_index_uid_1: |
   curl \
     -X POST 'http://localhost:7700/tasks?indexUids=movies'
+cancel_task_1: |  
+  curl \
+    -X POST 'http://localhost:7700/tasks/cancel?uids=1,2'
+async_guide_canceled_by_1: |
+  curl \
+    -X GET 'http://localhost:7700/tasks?canceledBy=9,15'    
