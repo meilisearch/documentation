@@ -138,6 +138,10 @@ The requested task status is invalid. Please use one of the [possible values](/r
 
 The requested task type is invalid. Please use one of the [possible values](/reference/api/tasks.md#type).
 
+## `invalid_task_canceled_by_filter`
+
+The provided query parameter is invalid. Please use one of the [available query parameters](/reference/api/tasks.md#query-parameters-1): `uids`, `statuses`, `types`, `indexUids`, `beforeEnqueuedAt`, `beforeStartedAt`, `beforeFinishedAt`, `afterEnqueuedAt`, `afterStartedAt`, or `afterFinishedAt`.
+
 ## `invalid_typo_tolerance_min_word_size_for_typos`
 
 The `minWordSizeForTypos` object is invalid. The value for both `oneTypo` and `twoTypos` should be between `0` and `255`, and `twoTypos` should be greater or equal to `oneTypo`.

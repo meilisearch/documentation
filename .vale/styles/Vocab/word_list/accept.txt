@@ -75,3 +75,4 @@ UIs
 JWTs
 APIs
 AMIs
+[Cc]ancelation

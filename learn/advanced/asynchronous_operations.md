@@ -193,6 +193,12 @@ The following command returns all tasks belonging to the index `movies`. Note th
 
 #### Filter by `canceledBy`
 
+You can use the `canceledBy` filter to get the tasks canceled by one or more `taskCancelation` tasks.
+
+The code sample below filters all tasks canceled by the task with `uid`s `9` and `15`:
+
+<CodeSamples id="async_guide_canceled_by_1" />
+
 #### Filter by date
 
 You can filter tasks using `beforeXAt` and `afterXAt` with the `enqueuedAt`, `startedAt`, and `finishedAt` fields:
