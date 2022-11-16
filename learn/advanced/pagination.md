@@ -6,13 +6,13 @@ In this guide, we discuss two different approaches to pagination supported by Me
 
 ## Choosing the right pagination UI
 
-There are many UI patterns that help your users navigate through search results. One common and efficient solution in Meilisearch is using `offset` and `limit` to create interfaces centered around [previous and next buttons](#previous-and-next-buttons).
+There are many UI patterns that help your users navigate through search results. One common and efficient solution in Meilisearch is using `offset` and `limit` to create interfaces centered around ["Previous" and "Next" buttons](#previous-and-next-buttons).
 
-Other solutions, such as creating a page selector allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents.
+Other solutions, such as [creating a page selector](/learn/advanced/pagination.md#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents.
 
-## "Previous" and "next" buttons
+## "Previous" and "Next" buttons
 
-Using "previous" and "next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page.
+Using "Previous" and "Next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page.
 
 Though this approach offers less precision than a full-blown page selector, it does not require knowing the exact number of search results. Since calculating the exhaustive number of documents matching a query is a resource-intensive process, interfaces like this might offer better performance.
 
@@ -35,7 +35,7 @@ To implement this interface in a website or application, we make our queries wit
 
 #### `limit` and `offset`
 
-Previous and next buttons can be implemented using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters.
+"Previous" and "Next" buttons can be implemented using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters.
 
 `limit` sets the size of a page. If you set `limit` to `10`, Meilisearch's response will contain a maximum of 10 search results. `offset` skips a number of search results. If you set `offset` to `20`, Meilisearch's response will skip the first 20 search results.
 
@@ -142,7 +142,7 @@ document.querySelector('#next_button').onclick = function () { updatePageNumber(
 
 ## Numbered page selectors
 
-This type of pagination consists of a numbered list of pages accompanied by next and previous buttons. This is a common UI pattern that offers users a significant amount of precision when navigating results.
+This type of pagination consists of a numbered list of pages accompanied by "Next" and "Previous" buttons. This is a common UI pattern that offers users a significant amount of precision when navigating results.
 
 Calculating the total amount of search results for a query is a resource-intensive process. Because of that, page selectors might lead to slower interfaces.
 
@@ -238,7 +238,7 @@ for (let i = 0; i < totalPages; i += 1) {
 
 #### Adding navigation buttons
 
-Your users are likely to be more interested in the page immediately after or before the current search results page. Because of this, it is often helpful to add "next" and "previous" buttons to your page list.
+Your users are likely to be more interested in the page immediately after or before the current search results page. Because of this, it is often helpful to add "Next" and "Previous" buttons to your page list.
 
 In this example, we add these buttons as the first and last elements of our page navigation component:
 
@@ -255,7 +255,7 @@ pageNavigation.prepend(buttonPrevious);
 pageNavigation.append(buttonNext);
 ```
 
-We can also disable them as required when at the first or last page of search results:
+We can also disable them as required when on the first or last page of search results:
 
 ```js
 buttonNext.disabled = results.page === results.totalPages;
