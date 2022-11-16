@@ -120,11 +120,11 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `taskCancelation`
 
-| Name                  | Description                                                                                                                                                                                                                    |
-| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**    | The number of matched tasks based on the request. If the API key used with the request doesn’t have access to any of the indexes specified in the request, tasks relating to that index will not be included in `matchedTasks` |
-| **`canceledTasks`**   | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                                                         |
-| **`originalFilters`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                                                                |
+| Name                  | Description                                                                                                                                                                                |
+| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**    | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
+| **`canceledTasks`**   | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                      |
+| **`originalFilters`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                            |
 
 ::: note
 Task cancelation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
