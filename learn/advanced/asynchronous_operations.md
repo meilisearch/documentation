@@ -151,7 +151,7 @@ If the task had been canceled while it was `enqueued` or `processing`, it would 
   "details": {
     "matchedTasks": 1,
     "canceledTasks": 1,
-    "originalQuery": "uid=1"
+    "originalQuery": "?uid=1"
   },
   "error": null,
   "duration": "PT1S",
