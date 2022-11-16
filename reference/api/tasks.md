@@ -58,12 +58,7 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 ### `canceledBy`
 
 **Type**: Integer
-**Description**: Unique identifier of the `taskCancelation` task that canceled a given task. Default value is `null`.
-
-### `canceledBy`
-
-**Type**: Integer
-**Description**: if the task was canceled, `canceledBy` contains the `uid` of a `taskCancelation` task . If the task was not canceled, `canceledBy` is always `null`
+**Description**: If the task was canceled, `canceledBy` contains the `uid` of a `taskCancelation` task . If the task was not canceled, `canceledBy` is always `null`
 
 ### `details`
 
@@ -138,7 +133,7 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 
 #### `taskDeletion`
 
-### `snapshotCreation`
+#### `snapshotCreation`
 
 The `details` object is set to `null` for `snapshotCreation` tasks
 

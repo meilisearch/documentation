@@ -66,7 +66,6 @@ Task responses always contain a field indicating the request's current `status`.
 - **`succeeded`**: the task has been successfully processed
 - **`failed`**: a failure occurred when processing the task. No changes were made to the database
 - **`canceled`**: the task was canceled
-- **`deleted`**: the task was deleted
 
 #### Examples
 
