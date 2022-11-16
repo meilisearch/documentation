@@ -10,19 +10,20 @@ The `/tasks` route gives information about the progress of [asynchronous operati
   "indexUid" :"movie",
   "status": "failed",
   "type": "indexDeletion",
+  "canceledBy": null,
   "details": {
     "deletedDocuments": 0
   },
-    "error": {
-      "message": "Index `movie` not found.",
-      "code": "index_not_found",
-      "type": "invalid_request",
-      "link": "https://docs.meilisearch.com/errors#index_not_found"
-    },
-      "duration": "PT0.001192S",
-      "enqueuedAt": "2022-08-04T12:28:15.159167Z",
-      "startedAt": "2022-08-04T12:28:15.161996Z",
-      "finishedAt": "2022-08-04T12:28:15.163188Z"
+  "error": {
+    "message": "Index `movie` not found.",
+    "code": "index_not_found",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#index_not_found"
+  },
+  "duration": "PT0.001192S",
+  "enqueuedAt": "2022-08-04T12:28:15.159167Z",
+  "startedAt": "2022-08-04T12:28:15.161996Z",
+  "finishedAt": "2022-08-04T12:28:15.163188Z"
 }
 ```
 
@@ -41,18 +42,23 @@ The task `uid` is incremented **globally.**
 **Description**:  Unique identifier of the targeted index
 
 ::: note
-This value is always `null` for `dumpCreation` tasks.
+This value is always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks).
 :::
 
 ### `status`
 
 **Type**: String
-**Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`, `canceled`, and `deleted`
+**Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`, and `canceled`
 
 ### `type`
 
 **Type**: String
-**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, and `taskDeletion`
+**Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `indexSwap`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, `taskDeletion`, and `snapshotCreation`
+
+### `canceledBy`
+
+**Type**: Integer
+**Description**: Unique identifier of the `taskCancelation` task that canceled a given task. Default value is `null`.
 
 ### `canceledBy`
 
@@ -66,17 +72,17 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `documentAdditionOrUpdate`
 
-| Name                    | Description                  |
-| :---------------------- | :--------------------------- |
-| **`receivedDocuments`** | Number of documents received |
-| **`indexedDocuments`**  | Number of documents indexed  |
+| Name                    | Description                                                                            |
+| :---------------------- | :------------------------------------------------------------------------------------- |
+| **`receivedDocuments`** | Number of documents received                                                           |
+| **`indexedDocuments`**  | Number of documents indexed. `null` while the task status is `enqueued` or `processing` |
 
 #### `documentDeletion`
 
-| Name                      | Description                     |
-| :------------------------ | :------------------------------ |
-| **`receivedDocumentIds`** | Number of document ids received |
-| **`deletedDocuments`**    | Number of documents deleted     |
+| Name                   | Description                                                                            |
+| :--------------------- | :------------------------------------------------------------------------------------- |
+| **`matchedDocuments`** | Number of documents queued for deletion                                                      |
+| **`deletedDocuments`** | Number of documents deleted. `null` while the task status is `enqueued` or `processing` |
 
 #### `indexCreation`
 
@@ -92,9 +98,9 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `indexDeletion`
 
-| Name                   | Description                                                                                       |
-| :--------------------- | :------------------------------------------------------------------------------------------------ |
-| **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index |
+| Name                   | Description                                                                                                                                                  |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index. `null` while the task status is `enqueued` or `processing` |
 
 #### `settingsUpdate`
 
@@ -114,9 +120,9 @@ This value is always `null` for `dumpCreation` tasks.
 
 #### `dumpCreation`
 
-| Name          | Description                                                                       |
-| :------------ | :-------------------------------------------------------------------------------- |
-| **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file |
+| Name          | Description                                                                                                                                  |
+| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file. `null` while the task status is `enqueued` or `processing` |
 
 #### `taskCancelation`
 
@@ -131,6 +137,12 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 :::
 
 #### `taskDeletion`
+
+### `snapshotCreation`
+
+The `details` object is set to `null` for `snapshotCreation` tasks
+
+#### `indexSwap`
 
 ### `error`
 
@@ -162,7 +174,7 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 ### `finishedAt`
 
 **Type**: String
-**Description**: The date and time when the task finished `processing`, whether `failed` or `succeeded`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
+**Description**: The date and time when the task finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ## Get tasks
 
@@ -176,13 +188,21 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 ### Query parameters
 
-| Query Parameter | Default Value                  | Description                                                                                                    |
-| :-------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------- |
-| **`limit`**     | `20`                           | Number of tasks to return                                                                                      |
-| **`from`**      | `uid` of the last created task | `uid` of the first task returned                                                                               |
-| **`status`**    | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`                   |
-| **`type`**      | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`                     |
-| **`indexUid`**  | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Case-sensitive |
+| Query Parameter        | Default Value                  | Description                                                                                                                                                              |
+| :--------------------- | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                                |
+| **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                         |
+| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-uid) by their `uid`. Separate multiple task `uids` with a comma (`,`)                                |
+| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-status) by their `status`. Separate multiple task `statuses` with a comma (`,`)                      |
+| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-type) by their `type`. Separate multiple task `types` with a comma (`,`)                             |
+| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-indexuid) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
+| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)            |
+| **`beforeEnqueuedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                    |
+| **`beforeStartedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                     |
+| **`beforeFinishedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                    |
+| **`afterEnqueuedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                    |
+| **`afterStartedAt`**   | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                     |
+| **`afterFinishedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                    |
 
 ### Response
 
@@ -207,6 +227,12 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
       "indexUid":"movies_reviews",
       "status":"enqueued",
       "type":"documentAdditionOrUpdate",
+      "canceledBy": null,
+      "details":{
+        "receivedDocuments":100,
+        "indexedDocuments":0
+      },
+      "error": null,
       "duration":null,
       "enqueuedAt":"2021-08-12T10:00:00.000000Z",
       "startedAt":null,
@@ -217,10 +243,12 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
       "indexUid":"movies",
       "status":"succeeded",
       "type":"documentAdditionOrUpdate",
+      "canceledBy": null,
       "details":{
         "receivedDocuments":100,
         "indexedDocuments":100
       },
+      "error": null,
       "duration":"PT16S",
       "enqueuedAt":"2021-08-11T09:25:53.000000Z",
       "startedAt":"2021-08-11T10:03:00.000000Z",
@@ -257,6 +285,7 @@ Get a single task.
   "indexUid":"movies",
   "status":"succeeded",
   "type":"settingsUpdate",
+  "canceledBy": null,
   "details":{
     "rankingRules":[
       "typo",
@@ -267,6 +296,7 @@ Get a single task.
       "exactness"
     ]
   },
+  "error": null,
   "duration":"PT1S",
   "enqueuedAt":"2021-08-10T14:29:17.000000Z",
   "startedAt":"2021-08-10T14:29:18.000000Z",

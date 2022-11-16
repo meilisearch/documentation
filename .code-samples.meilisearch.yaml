@@ -85,12 +85,6 @@ get_all_tasks_1: |-
 get_task_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks/1'
-get_all_tasks_filtering_1: |-
-  curl \
-    -X GET 'http://localhost:7700/tasks?indexUid=movies'
-get_all_tasks_filtering_2: |-
-  curl \
-    -X GET 'http://localhost:7700/tasks?status=succeeded,failed&type=documentAdditionOrUpdate'
 get_all_tasks_paginating_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?limit=2&from=10
@@ -1037,12 +1031,24 @@ date_guide_sort_1: |
       "q": "",
       "sort": ["release_timestamp:desc"]
     }'
-async_guide_filter_by_date: |
+async_guide_filter_by_date_1: |
   curl \
     -X POST 'http://localhost:7700/tasks?afterEnqueuedAt>2020-10-11T11:49:53.000Z'
-async_guide_multiple_filters: |
+async_guide_multiple_filters_1: |
   curl \
-    -X POST 'http://localhost:7700/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing,enqueued'
+    -X POST 'http://localhost:7700/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
+async_guide_filter_by_id_1: |
+  curl \
+    -X POST 'http://localhost:7700/tasks?uids=5,10,13'
+async_guide_filter_by_status_1: |
+  curl \
+    -X POST 'http://localhost:7700/tasks?statuses=failed,canceled'
+async_guide_filter_by_type_1: |
+  curl \
+    -X POST 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'         
+async_guide_filter_by_index_uid_1: |
+  curl \
+    -X POST 'http://localhost:7700/tasks?indexUids=movies'
 cancel_task_1: |  
   curl \
     -X POST 'http://localhost:7700/tasks/cancel?uids=1,2'
