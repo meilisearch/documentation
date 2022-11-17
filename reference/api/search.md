@@ -385,15 +385,7 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 
 The following example returns the first 15 results for a query:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "",
-    "hitsPerPage": 15
-  }'
-```
+<CodeSamples id="search_parameter_guide_hitsperpage_1" />
 
 ### Page
 
@@ -417,15 +409,7 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 
 The following example returns the second page of search results:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "",
-    "page": 2
-  }'
-```
+<CodeSamples id="search_parameter_guide_page_1" />
 
 ### Filter
 

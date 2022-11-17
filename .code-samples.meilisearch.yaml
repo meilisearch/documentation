@@ -389,6 +389,22 @@ search_parameter_guide_limit_1: |-
       "q": "shifu",
       "limit": 2
     }'
+search_parameter_guide_hitsperpage_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "hitsPerPage": 15
+    }'
+search_parameter_guide_page_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "page": 2
+    }'
 search_parameter_guide_retrieve_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
