@@ -152,7 +152,7 @@ Calculating the total amount of search results for a query is a resource-intensi
 
 By default, Meilisearch queries only return `estimatedTotalHits`. This value is likely to change as a user navigates search results and should not be used to create calculate the number of search result pages.
 
-When your query contains either `hitsPerPage`, `page`, or both these search parameters, Meilisearch returns `totalHits` and `totalPages` instead of `estimatedTotalHits`. `totalHits` contains the exhaustive number of results for that query, and `totalPages` contains the exhaustive number of pages of search results for the same query:
+When your query contains either [`hitsPerPage`](/reference/api/search.md#number-of-results-per-page), [`page`](/reference/api/search.md#page), or both these search parameters, Meilisearch returns `totalHits` and `totalPages` instead of `estimatedTotalHits`. `totalHits` contains the exhaustive number of results for that query, and `totalPages` contains the exhaustive number of pages of search results for the same query:
 
 ```json
 {
