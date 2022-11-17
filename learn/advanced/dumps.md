@@ -1,12 +1,14 @@
 # Dumps
 
+Meilisearch stores its database in files located in `./data.ms` by default. Because this database is bound to the version of Meilisearch that created it, you must use dumps to migrate data between Meilisearch releases.
+
 A dump is a compressed file containing an export of your Meilisearch instance. It contains all your indexes, documents, and settings, but in a raw unprocessed form. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to create an identical dataset.
 
 Creating a dump is also referred to as exporting it, whereas launching Meilisearch with a dump is referred to as importing it.
 
 ## Creating a dump
 
-To create a dump of your dataset, you need to use the appropriate HTTP route: `POST /dumps`:
+To create a dump of your dataset, to use the [create a dump endpoint](/reference/api/dump.md#create-a-dump):
 
 <CodeSamples id="post_dump_1" />
 
