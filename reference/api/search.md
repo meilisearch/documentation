@@ -87,6 +87,8 @@ By default, Meilisearch only returns an estimate of the total number of search r
 
 If you require the total number of search results, use the `hitsPerPage` and `page` search parameters in your query. The response to this query replaces `estimatedTotalHits` with `totalHits` and includes an extra field with number of search results pages based on your `hitsPerPage`: `totalPages`. Using `totalHits` and `totalPages` may result in slightly reduced performance, but is recommended when creating UI elements such as numbered page selectors.
 
+Neither `estimatedTotalHits` nor `totalHits` can exceed the limit configured in [the `maxTotalHits` index setting](/reference/api/settings.md#pagination).
+
 You can [read more about pagination in our dedicated guide](/learn/advanced/pagination.md).
 
 ### Example
