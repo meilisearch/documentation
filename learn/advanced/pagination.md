@@ -99,7 +99,7 @@ document.querySelector('#next_button').onclick = function () { updatePageNumber(
 
 #### Disabling navigation buttons for first and last pages
 
-It is often helpful to disable navigation buttons when the user cannot move to the "next" or "previous" page.
+It is often helpful to disable navigation buttons when the user cannot move to the "Next" or "Previous" page.
 
 The "Previous" button should be disabled whenever your `offset` is `0`, as this indicates your user is on the first results page.
 
