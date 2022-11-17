@@ -140,7 +140,7 @@ The requested task type is invalid. Please use one of the [possible values](/ref
 
 ## `invalid_task_canceled_by_filter`
 
-The provided query parameter is invalid. Please use one of the [available query parameters](/reference/api/tasks.md#query-parameters-1): `uids`, `statuses`, `types`, `indexUids`, `beforeEnqueuedAt`, `beforeStartedAt`, `beforeFinishedAt`, `afterEnqueuedAt`, `afterStartedAt`, or `afterFinishedAt`.
+The provided query parameter is invalid. Please use one of the [available query parameters](/reference/api/tasks.md#query-parameters-2): `uids`, `statuses`, `types`, `indexUids`, `beforeEnqueuedAt`, `beforeStartedAt`, `beforeFinishedAt`, `afterEnqueuedAt`, `afterStartedAt`, or `afterFinishedAt`.
 
 ## `invalid_typo_tolerance_min_word_size_for_typos`
 
