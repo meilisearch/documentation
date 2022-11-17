@@ -223,11 +223,13 @@ Swap indexes. **You can only swap indexes in pairs.** Swapping indexes is an ato
 
 Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `indexB` and vice-versa in the task history. `enqueued` tasks are left unmodified.
 
+[To learn more about index swapping, refer to our dedicated guide.](/learn/core_concepts/indexes.md#swapping-indexes)
+
 ### Body
 
-| Name            | Type             | Default value | Description                                |
-| :-------------- | :--------------- | :------------ | :----------------------------------------- |
-| **`indexes`** * | Array of strings | N/A           | Array of the two `indexUid`s to be swapped |
+| Name           | Type             | Default value | Description                                |
+| :------------- | :--------------- | :------------ | :----------------------------------------- |
+| **`indexes`*** | Array of strings | N/A           | Array of the two `indexUid`s to be swapped |
 
 ::: note
 Sending `[]` is valid but no swap operation will be performed.

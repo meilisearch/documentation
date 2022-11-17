@@ -148,6 +148,12 @@ You can update the typo tolerance settings using the [update settings endpoint](
 
 ## Swapping indexes
 
-Suppose you want to deploy a new version of your `movies` index in production. The changes you made are in `movies_new`. To sync `movies_new` with Meilisearch in production, you will use index swapping. This means that the schema, settings, and task history of  `movies` will be swapped with the schema, settings, and task history of `movies_new` **without any downtime for the search clients**. The task history of `enqueued` tasks is not modified. Swapping indexes is an atomic transaction: **either all indexes are successfully swapped, or none are**.
+Suppose you want to deploy a new version of your `movies` index in production. This `movies` index is where your users are currently making search requests. The changes you made are in `movies_new`. To sync `movies_new` with Meilisearch in production, you will use index swapping.
+
+This means that the schema, settings, and task history of  `movies` will be swapped with the schema, settings, and task history of `movies_new` **without any downtime for the search clients**. The task history of `enqueued` tasks is not modified.
+
+Once swapped, your users will still be making search requests to the `movies` index but it will contain the data of `movies_new`. You can delete `movies_new` after the swap or keep it in case something goes wrong and you want to swap back.
+
+Swapping indexes is an atomic transaction: **either all indexes are successfully swapped, or none are**.
 
 You can perform multiple swap operations using the [swap indexes endpoint](/reference/api/indexes.md#swap-indexes).
