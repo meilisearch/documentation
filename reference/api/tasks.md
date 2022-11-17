@@ -133,6 +133,16 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 
 #### `taskDeletion`
 
+| Name                  | Description                                                                                                                                                                                                                    |
+| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**    | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
+| **`deletedTasks`**    | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                                                              |
+| **`originalFilters`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                                                       |
+
+::: note
+Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
+:::
+
 #### `snapshotCreation`
 
 The `details` object is set to `null` for `snapshotCreation` tasks
@@ -262,6 +272,10 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 Get a single task.
 
+::: note
+Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error if you try retrieving a deleted task.
+:::
+
 ### Path parameters
 
 | Name             | Type   | Description                         |
@@ -365,3 +379,65 @@ You can cancel all tasks by using the following filter:
 The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys.md#actions) action.
 
 ## Delete tasks
+
+<RouteHighlighter method="DELETE" route="/tasks?{task_uid}"/>
+
+Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
+
+::: warning
+To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
+:::
+
+### Query parameters
+
+A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeXAt` or `afterXAt`) field is required.
+
+| Query Parameter        | Description                                                                                                                          |
+| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`). Use `uids=*` for all `uids`                                |
+| **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
+| **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
+| **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
+| **`canceledBy`**       | Delete tasks based on the `canceledBy` field                                                                                         |
+| **`beforeEnqueuedAt`** | Delete tasks **before** a specified `enqueuedAt` date                                                                                |
+| **`beforeStartedAt`**  | Delete tasks **before** a specified `startedAt` date                                                                                 |
+| **`beforeFinishedAt`** | Delete tasks **before** a specified `finishedAt` date                                                                                |
+| **`afterEnqueuedAt`**  | Delete tasks **after** a specified `enqueuedAt` date                                                                                 |
+| **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date                                                                                  |
+| **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date                                                                                 |
+
+::: note
+Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+:::
+
+[To learn more about using the query parameters, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
+
+### Example
+
+<CodeSamples id="delete_task_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "taskUid": 3,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "taskDeletion",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+}
+```
+
+::: note
+Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is `null`.
+:::
+
+You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
+
+### Delete all tasks
+
+You can delete all tasks by using the following filter:
+
+<RouteHighlighter method="DELETE" route="/tasks?statuses=failed,canceled,succeeded" />
+
+The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys.md#actions) action.
