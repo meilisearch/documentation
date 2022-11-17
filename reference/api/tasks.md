@@ -133,7 +133,6 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 
 #### `taskDeletion`
 
-
 | Name                  | Description                                                                                                                                                                                                                    |
 | :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`matchedTasks`**    | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
