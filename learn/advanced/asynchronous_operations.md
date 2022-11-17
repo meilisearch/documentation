@@ -151,7 +151,7 @@ If the task had been canceled while it was `enqueued` or `processing`, it would 
   "details": {
     "matchedTasks": 1,
     "canceledTasks": 1,
-    "originalQuery": "?uid=1"
+    "originalFilter": "?uid=1"
   },
   "error": null,
   "duration": "PT1S",
@@ -161,7 +161,7 @@ If the task had been canceled while it was `enqueued` or `processing`, it would 
 }
 ```
 
-If a task is deleted after it was processed (`succeeded`, `failed`, or `canceled`), Meilisearch returns a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
+If a task is deleted after it was finished (`succeeded`, `failed`, or `canceled`), Meilisearch returns a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
 
 ### Filtering tasks
 

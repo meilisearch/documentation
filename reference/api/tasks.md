@@ -67,16 +67,16 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 #### `documentAdditionOrUpdate`
 
-| Name                    | Description                                                                            |
-| :---------------------- | :------------------------------------------------------------------------------------- |
-| **`receivedDocuments`** | Number of documents received                                                           |
+| Name                    | Description                                                                             |
+| :---------------------- | :-------------------------------------------------------------------------------------- |
+| **`receivedDocuments`** | Number of documents received                                                            |
 | **`indexedDocuments`**  | Number of documents indexed. `null` while the task status is `enqueued` or `processing` |
 
 #### `documentDeletion`
 
-| Name                   | Description                                                                            |
-| :--------------------- | :------------------------------------------------------------------------------------- |
-| **`matchedDocuments`** | Number of documents queued for deletion                                                      |
+| Name                   | Description                                                                             |
+| :--------------------- | :-------------------------------------------------------------------------------------- |
+| **`matchedDocuments`** | Number of documents queued for deletion                                                 |
 | **`deletedDocuments`** | Number of documents deleted. `null` while the task status is `enqueued` or `processing` |
 
 #### `indexCreation`
@@ -93,8 +93,8 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 #### `indexDeletion`
 
-| Name                   | Description                                                                                                                                                  |
-| :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name                   | Description                                                                                                                                                   |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index. `null` while the task status is `enqueued` or `processing` |
 
 #### `settingsUpdate`
@@ -115,17 +115,17 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 #### `dumpCreation`
 
-| Name          | Description                                                                                                                                  |
-| :------------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name          | Description                                                                                                                                   |
+| :------------ | :-------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`dumpUid`** | The generated `uid` of the dump. This is also the name of the generated dump file. `null` while the task status is `enqueued` or `processing` |
 
 #### `taskCancelation`
 
-| Name                  | Description                                                                                                                                                                                |
-| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**    | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
-| **`canceledTasks`**   | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                      |
-| **`originalFilters`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                            |
+| Name                 | Description                                                                                                                                                                                |
+| :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**   | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
+| **`canceledTasks`**  | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                      |
+| **`originalFilter`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                            |
 
 ::: note
 Task cancelation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
@@ -133,11 +133,11 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 
 #### `taskDeletion`
 
-| Name                  | Description                                                                                                                                                                                                                    |
-| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**    | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
-| **`deletedTasks`**    | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                                                              |
-| **`originalFilters`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                                                       |
+| Name                 | Description                                                                                                                                                                                |
+| :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`matchedTasks`**   | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
+| **`deletedTasks`**   | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                          |
+| **`originalFilter`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                   |
 
 ::: note
 Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
