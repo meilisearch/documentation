@@ -148,11 +148,11 @@ You can update the typo tolerance settings using the [update settings endpoint](
 
 ## Swapping indexes
 
-Suppose you have an index in production, `movies,` where your users are currently making search requests. You want to deploy a new version of `movies` with different settings, but updating it normally could cause downtime for your users. This problem can be solved using index swapping.
+Suppose you have an index in production, `movies`, where your users are currently making search requests. You want to deploy a new version of `movies` with different settings, but updating it normally could cause downtime for your users. This problem can be solved using index swapping.
 
 To use index swapping, you would create a second index, `movies_new`, containing all the changes you want to make to `movies`.
 
-This means that the schema, settings, and task history of  `movies` will be swapped with the schema, settings, and task history of `movies_new` **without any downtime for the search clients**. The task history of `enqueued` tasks is not modified.
+This means that the documents, settings, and task history of  `movies` will be swapped with the schema, settings, and task history of `movies_new` **without any downtime for the search clients**. The task history of `enqueued` tasks is not modified.
 
 Once swapped, your users will still be making search requests to the `movies` index but it will contain the data of `movies_new`. You can delete `movies_new` after the swap or keep it in case something goes wrong and you want to swap back.
 
