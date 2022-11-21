@@ -143,4 +143,4 @@ You can deactivate auto-batching using the `--disable-auto-batching` command-lin
 
 #### Auto-batching and task cancelation
 
-If the task you’re canceling is part of a batch, Meilisearch interrupts the whole process, discards all progress, and cancels that task. Then, it automatically creates a new batch without the cancelled task and immediately starts processing it.
+If the task you’re canceling is part of a batch, Meilisearch interrupts the whole process, discards all progress, and cancels that task. Then, it automatically creates a new batch without the canceled task and immediately starts processing it.

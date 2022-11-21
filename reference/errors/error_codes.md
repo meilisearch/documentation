@@ -108,7 +108,7 @@ The date format used is invalid. It should either use a date or datetime in the 
 
 ## `invalid_task_uids_filter`
 
-One or more of the given task `uid`s is invalid. Task `uid`s can be an integer or a string containing only numeric characters.
+One or more of the given task `uids` is invalid. Task `uids` can be an integer or a string containing only numeric characters.
 
 ## `index_not_accessible`
 
