@@ -122,12 +122,22 @@ cargo build --release
 
 To install Meilisearch on Windows, you can:
 
-- use Docker (see "Docker" tab above)
-- [download the latest binary](https://github.com/meilisearch/Meilisearch/releases)
-- use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/), [WSL](https://learn.microsoft.com/en-us/windows/wsl/), or equivalent
-- compile from source (see "Source" tab above)
+- Use Docker (see "Docker" tab above)
+- Download the latest binary (see "Direct download" tab above)
+- Use the installation script (see "cURL" tab above) if you have installed [Cygwin](https://www.cygwin.com/), [WSL](https://learn.microsoft.com/en-us/windows/wsl/), or equivalent
+- Compile from source (see "Source" tab above)
 
 To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
+
+:::
+
+::: tab Direct download
+
+If none of the other installation options work for you, you can always download the Meilisearch binary directly on GitHub.
+
+Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearch/releases/latest), scroll down to "Assets", and select the binary corresponding to your operating system.
+
+:::
 
 ::::
 
