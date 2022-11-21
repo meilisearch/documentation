@@ -134,8 +134,8 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `start_since_days`                                 | Number of days since instance was launched                                                  | 365
 | `user_agent`                                       | User-agent header encountered during API calls                                              | ["Meilisearch Ruby (2.1)", "Ruby (3.0)"]
 | `requests.99th_response_time`                      | Highest latency from among the fastest 99% of successful search requests                    | 57ms
-| `requests.total_succeeded`                         | Total number of successful search requests                                                  | 3456
-| `requests.total_failed`                            | Total number of failed search requests                                                      | 24
+| `requests.total_succeeded`                         | Total number of successful requests                                                         | 3456
+| `requests.total_failed`                            | Total number of failed requests                                                             | 24
 | `requests.total_received`                          | Total number of received search requests                                                    | 3480
 | `sort.with_geoPoint`                               | `true` if the sort rule `_geoPoint` is specified, otherwise `false`                         | true
 | `sort.avg_criteria_number`                         | Average number of sort criteria among all search requests containing the `sort` parameter   | 2
@@ -144,15 +144,15 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `q.max_terms_number`                               | Highest number of terms given for the `q` parameter                                         | 5
 | `pagination.max_limit`                             | Highest value given for the `limit` parameter                                               | 60
 | `pagination.max_offset`                            | Highest value given for the `offset` parameter                                              | 1000
-| `formatting.max_attributes_to_retrieve`            | Maximum number of attributes to retrieve  | 100
-| `formatting.max_attributes_to_highlight`           | Maximum number of attributes to highlight  | 100
+| `formatting.max_attributes_to_retrieve`            | Maximum number of attributes to retrieve                                                    | 100
+| `formatting.max_attributes_to_highlight`           | Maximum number of attributes to highlight                                                   | 100
 | `formatting.highlight_pre_tag`                     | `true` if `highlightPreTag` is specified, otherwise `false`                                 | false
 | `formatting.highlight_post_tag`                    | `true` if `highlightPostTag` is specified, otherwise `false`                                | false
 | `formatting.max_attributes_to_crop`                | Maximum number of attributes to crop | 100
 | `formatting.crop_length`                           | `true` if `cropLength` is specified, otherwise `false`                                      | false
 | `formatting.crop_marker`                           | `true` if `cropMarker` is specified, otherwise `false`                                      | false
 | `formatting.show_matches_position`                 | `true` if `showMatchesPosition` is used in this batch, otherwise `false`                    | false
-| `facets.avg_facets_number` | Average number of facets | 10
+| `facets.avg_facets_number`                         | Average number of facets                                                                    | 10
 | `primary_key`                                      | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
 | `payload_type`                                     | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                                   | `true` if a document addition or update request triggered index creation, otherwise `false` | true
@@ -193,3 +193,4 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated
+| `requests.total_received`                          | Total number of requests received                                                           | 3480
