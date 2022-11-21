@@ -369,7 +369,7 @@ module.exports = {
         apiKey:
           '06UKvqod16fff6018934c85a4d393534b1b96cd6c3a5ee492bcd4a4e720e26fb24ef1cbb',
         indexUid: 'docs',
-        placeholder: 'Type / to start searching',
+        placeholder: 'Type \'s\' or \'/\' to search',
         enableDarkMode: 'auto', // Default: false
       },
     ],
