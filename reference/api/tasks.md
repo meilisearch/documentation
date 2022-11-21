@@ -76,7 +76,7 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 | Name                   | Description                                                                             |
 | :--------------------- | :-------------------------------------------------------------------------------------- |
-| **`matchedDocuments`** | Number of documents queued for deletion                                                 |
+| **`providedIds`**      | Number of documents queued for deletion                                                 |
 | **`deletedDocuments`** | Number of documents deleted. `null` while the task status is `enqueued` or `processing` |
 
 #### `indexCreation`
