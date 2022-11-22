@@ -64,15 +64,15 @@ Environment variables are always identical to the corresponding command-line opt
 
 Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables. Configuration files can be easily shared and versioned, and allow you to define multiple options.
 
-**When used simultaneously, environment variables overwrite the configuration file, and command-line options overwrite environment variables.**
+**When used simultaneously, environment variables override the configuration file, and command-line options override environment variables.**
 
-You can download the configuration file using the following command:
+You can download a default configuration file using the following command:
 
 ```sh
 curl https://raw.githubusercontent.com/meilisearch/meilisearch/main/config.toml > config.toml
 ```
 
-By default, Meilisearch will use `config.toml` in the working directory as the default configuration file. You will see it when you launch Meilisearch:
+By default, Meilisearch will look for a `config.toml` file in the working directory. If it is present, it will be used as the configuration file. You can verify this when you launch Meilisearch:
 
 ```
 888b     d888          d8b 888 d8b                                            888
@@ -117,12 +117,16 @@ set MEILI_CONFIG_FILE_PATH="./config.toml"
 :::
 ::::
 
-### Configuration file format
+### Configuration file formatting
 
-You can configure all environment variables and CLI options using a dedicated option in the configuration file. These options follow the [snake case](https://en.wikipedia.org/wiki/Snake_case) convention. For example, `--import-dump` must be named `import_dump` in the file.
+You can configure any environment variable or CLI option using a configuration file. In configuration files, options must be written in [snake case](https://en.wikipedia.org/wiki/Snake_case). For example, `--import-dump` would be written as `import_dump`.
+
+```toml
+import_dump = "./example.dump"
+```
 
 ::: warning
-Specifying the `config_file_path` option in the configuration file will throw an error.
+Specifying the `config_file_path` option within the configuration file will throw an error. This is the only configuration option that cannot be set within a configuration file.
 :::
 
 ## All instance options
@@ -137,7 +141,7 @@ Specifying the `config_file_path` option in the configuration file will throw an
 Designates the location of the configuration file to load at launch.
 
 ::: warning
-Specifying this option in the configuration file will throw an error.
+Specifying this option in the configuration file itself will throw an error (assuming Meilisearch is able to find your configuration file).
 :::
 
 ### Database path
