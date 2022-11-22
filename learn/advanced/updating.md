@@ -141,7 +141,7 @@ If you're unsure where your Meilisearch directory is located, try this:
 
 :::: tabs
 
-::: tab UNIX / macOS
+::: tab UNIX
 
 ```bash
 which meilisearch
