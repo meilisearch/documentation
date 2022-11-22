@@ -322,7 +322,7 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 
 ::: tab Environment variable
 
-UNIX / macOS:
+UNIX:
 
 ```bash
 export MEILI_MASTER_KEY="MASTER_KEY"

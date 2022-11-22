@@ -260,7 +260,7 @@ If your master key was set up using the command-line option, relaunch the instan
 
 If your master key was configured with an environment variable, unset `MEILI_MASTER_KEY` and relaunch the instance.
 
-UNIX / macOS:
+UNIX:
 
 ```sh
 export MEILI_MASTER_KEY=
