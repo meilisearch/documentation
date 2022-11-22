@@ -33,7 +33,7 @@ The above flag disables analytics for the Meilisearch instance and does not acce
 To configure a Meilisearch instance using environment variables, set the environment variable prior to launching the instance. If you are unsure how to do this, read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#command-line-options-and-flags) instead.
 
 :::: tabs
-::: tab Linux/MacOS
+::: tab UNIX / macOS
 
 ```sh
 export MEILI_DB_PATH=./meilifiles
@@ -100,7 +100,7 @@ You can override the default location of the configuration file using the `MEILI
 
 ::: tab Environment variable
 
-Linux/MacOS:
+UNIX / MacOS:
 
 ```sh
 export MEILI_CONFIG_FILE_PATH="./config.toml"
