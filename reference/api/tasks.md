@@ -58,7 +58,7 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 ### `canceledBy`
 
 **Type**: Integer
-**Description**: If the task was canceled, `canceledBy` contains the `uid` of a `taskCancelation` task . If the task was not canceled, `canceledBy` is always `null`
+**Description**: If the task was canceled, `canceledBy` contains the `uid` of a `taskCancelation` task. If the task was not canceled, `canceledBy` is always `null`
 
 ### `details`
 
@@ -123,9 +123,9 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 | Name                 | Description                                                                                                                                                                                |
 | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**   | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
+| **`matchedTasks`**   | The number of matched tasks. If the API key used for the request doesn’t have access to an index, tasks relating to that index will not be included in `matchedTasks` |
 | **`canceledTasks`**  | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                      |
-| **`originalFilter`** | The filter used in the [`/tasks/cancel`](#cancel-tasks) request                                                                                                                            |
+| **`originalFilter`** | The filter used in the [cancel task](#cancel-tasks) request                                                                                                                            |
 
 ::: note
 Task cancelation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
@@ -135,9 +135,9 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 
 | Name                 | Description                                                                                                                                                                                |
 | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`matchedTasks`**   | The number of matched tasks. If the API key used with the request doesn’t have access to any of the specified indexes, tasks relating to that index will not be included in `matchedTasks` |
+| **`matchedTasks`**   | The number of matched tasks. If the API key used for the request doesn’t have access to an index, tasks relating to that index will not be included in `matchedTasks` |
 | **`deletedTasks`**   | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                                          |
-| **`originalFilter`** | The filter used in the [`/tasks`](#delete-tasks) request                                                                                                                                   |
+| **`originalFilter`** | The filter used in the [delete task](#delete-tasks) request                                                                                                                                   |
 
 ::: note
 Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
@@ -145,14 +145,14 @@ Task deletion can be successful and still have `deletedTasks: 0`. This happens w
 
 #### `snapshotCreation`
 
-The `details` object is set to `null` for `snapshotCreation` tasks
+The `details` object is set to `null` for `snapshotCreation` tasks.
 
 #### `indexSwap`
 
 ### `error`
 
 **Type**: Object
-**Description**: If the task has the `failed` [status](#status), it contains the error definition. Otherwise, set to `null`
+**Description**: If the task has the `failed` [status](#status), then this object contains the error definition. Otherwise, set to `null`
 
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
@@ -273,7 +273,7 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 Get a single task.
 
 ::: note
-Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error if you try retrieving a deleted task.
+If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
 :::
 
 ### Path parameters
@@ -317,17 +317,23 @@ Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#ta
 
 <RouteHighlighter method="POST" route="/tasks/cancel?{task_uid}"/>
 
-Cancel an `enqueued` or `processing` task based on `uid`, `status`, `type`, `indexUid`, or date. Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
+Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued, processed, or completed. 
+
+Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
 ::: warning
-To prevent users from accidentally canceling all tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (POST `/tasks/cancel`).
+To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (e.g. `POST /tasks/cancel`).
 :::
 
-You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state.
+::: Did you know?
+
+You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` type tasks are processed in reverse order, such that the last one you enqueue will be processed first.
+
+:::
 
 ### Query parameters
 
-A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterXAt`) field is required.
+A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterXAt`) parameter is required.
 
 | Query Parameter        | Description                                                                                                                          |
 | :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
@@ -346,7 +352,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
 :::
 
-[To learn more about using the query parameters, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
+[To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
 
 ### Example
 
@@ -372,7 +378,7 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 ### Cancel all tasks
 
-You can cancel all tasks by using the following filter:
+You can cancel all processing and enqueued tasks using the following filter:
 
 <RouteHighlighter method="POST" route="/tasks/cancel?statuses=processing,enqueued" />
 
@@ -390,7 +396,7 @@ To prevent users from accidentally deleting the entire task history, Meilisearch
 
 ### Query parameters
 
-A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeXAt` or `afterXAt`) field is required.
+A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeXAt` or `afterXAt`) parameter is required.
 
 | Query Parameter        | Description                                                                                                                          |
 | :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
@@ -410,7 +416,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
 :::
 
-[To learn more about using the query parameters, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
+[To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
 
 ### Example
 

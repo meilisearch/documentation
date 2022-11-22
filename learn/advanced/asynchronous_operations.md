@@ -139,7 +139,7 @@ Had the task failed, the response would have included a detailed `error` object:
 }
 ```
 
-If the task had been canceled while it was `enqueued` or `processing`, it would have the `canceled` status:
+If the task had been canceled while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field:
 
 ```json
 {
@@ -195,7 +195,7 @@ The following command returns all tasks belonging to the index `movies`. Note th
 
 You can use the `canceledBy` filter to get the tasks canceled by one or more `taskCancelation` tasks.
 
-The code sample below filters all tasks canceled by the task with `uid`s `9` and `15`:
+The code sample below filters all tasks canceled by the tasks with `uid`s `9` and `15`:
 
 <CodeSamples id="async_guide_canceled_by_1" />
 
@@ -295,11 +295,13 @@ When the returned value of `next` is `null`, you have reached the final page of 
 2. When your task reaches the front of the queue, Meilisearch begins working on it and changes the request `status` to `processing`
 3. You can cancel a task while it is in the `enqueued` or `processing` states. If canceled, it will have the `canceled` status  
 4. Once the task has completed processing, Meilisearch marks it as `succeeded`, if it was successful, or `failed`, if there was an error
-5. Tasks marked as `succeeded`, `failed`, or `canceled` are not deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks). They can be deleted using the [delete tasks route](/reference/api/tasks.md#delete-tasks)
+5. Tasks marked as `succeeded`, `failed`, or `canceled` are not automatically deleted and will remain visible in [the task list](/reference/api/tasks.md#get-tasks). They can be deleted manually using the [delete tasks route](/reference/api/tasks.md#delete-tasks)
 
 ### Task priority
 
-Tasks are processed in the order they were enqueued. `taskCancelation`, `taskDeletion`, `snapshotCreation`, and `dumpCreation`are prioritized over all other tasks in the queue. Their task `uid`s reflect when they were enqueued relative to other tasks.
+Tasks are processed in the order they were enqueued, with the exception of `taskCancelation` which is processed in reverse order.
+
+`taskCancelation`, `taskDeletion`, `snapshotCreation`, and `dumpCreation` are prioritized over all other tasks in the queue. Their task `uid`s still reflect when they were enqueued relative to other tasks.
 
 The following list shows different task types in decreasing order of priority:
 
