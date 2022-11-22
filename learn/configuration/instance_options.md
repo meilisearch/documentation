@@ -109,7 +109,7 @@ If no master key is provided in a `development` environment, all routes will be 
 ### Disable auto-batching
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_DISABLE_AUTO_BATCHING`
@@ -122,7 +122,7 @@ Deactivates auto-batching when provided.
 ### Disable analytics
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
@@ -147,7 +147,7 @@ Sets the directory where Meilisearch will create dump files.
 
 ### Import dump
 
-**Environment variable**: N/A
+**Environment variable**: `MEILI_IMPORT_DUMP`
 **CLI option**: `--import-dump`
 **Default value**: none
 **Expected value**: a filepath pointing to a `.dump` file
@@ -161,10 +161,10 @@ _This option is not available as an environment variable._
 ### Ignore missing dump
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
-**Environment variable**: N/A
+**Environment variable**: `MEILI_IGNORE_MISSING_DUMP`
 **CLI option**: `--ignore-missing-dump`
 
 Prevents Meilisearch from throwing an error when `--import-dump` does not point to a valid dump file. Instead, Meilisearch will start normally without importing any dump.
@@ -176,10 +176,10 @@ _This option is not available as an environment variable._
 ### Ignore dump if DB exists
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
-**Environment variable**: N/A
+**Environment variable**: `MEILI_IGNORE_DUMP_IF_DB_EXISTS`
 **CLI option**: `--ignore-dump-if-db-exists`
 
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-dump`. Instead, the dump will be ignored and Meilisearch will launch using the existing database.
@@ -277,7 +277,7 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 ### Schedule snapshot creation
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
@@ -307,7 +307,7 @@ Defines the interval between each snapshot. Value must be given in seconds.
 
 ### Import snapshot
 
-**Environment variable**: N/A
+**Environment variable**: `MEILI_IMPORT_SNAPSHOT`
 **CLI option**: `--import-snapshot`
 **Default value**: `None`
 **Expected value**: a filepath pointing to a snapshot file
@@ -326,10 +326,10 @@ _This option is not available as an environment variable._
 ### Ignore missing snapshot
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
-**Environment variable**: N/A
+**Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
 **CLI option**: `--ignore-missing-snapshot`
 
 Prevents a Meilisearch instance from throwing an error when [`--import-snapshot`](#import-snapshot) does not point to a valid snapshot file.
@@ -341,10 +341,10 @@ _This option is not available as an environment variable._
 ### Ignore snapshot if DB exists
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
-**Environment variable**: N/A
+**Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and Meilisearch will launch using the existing database.
@@ -400,7 +400,7 @@ Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 #### SSL require auth
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
@@ -414,7 +414,7 @@ Sends a fatal alert if the client does not complete client authentication.
 #### SSL resumption
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
@@ -426,7 +426,7 @@ Activates SSL session resumption.
 #### SSL tickets
 
 ::: warning
-🚩 This is a CLI flag and does not take any values. Assigning a value will throw an error. 🚩
+🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 :::
 
 **Environment variable**: `MEILI_SSL_TICKETS`
