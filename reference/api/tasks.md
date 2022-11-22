@@ -230,7 +230,7 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
     {
       "uid":1,
       "indexUid":"movies_reviews",
-      "status":"enqueued",
+      "status":"failed",
       "type":"documentAdditionOrUpdate",
       "canceledBy": null,
       "details":{
@@ -347,7 +347,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date                                                                                  |
 
 ::: note
-Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
 :::
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
@@ -411,7 +411,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 | **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date                                                                                 |
 
 ::: note
-Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
 :::
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)

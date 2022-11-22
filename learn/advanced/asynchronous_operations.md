@@ -219,7 +219,7 @@ This filter accepts the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format.
 The above code sample will return all tasks `enqueued` **after** 11:49:53 am on 11 Oct 2020. It will start with the tasks `enqueued` at 11:49:54 am on 11 Oct 2020.
 
 ::: note
-Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
+Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
 :::
 
 #### Combine filters
