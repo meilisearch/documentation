@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "5ad97bb3-840b-40dc-9012-482a0c2c52a5",
-		"name": "Meilisearch v0.29",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "8898306"
+		"_postman_id": "a4f9078b-c91f-4399-9a98-5e4adc5099a2",
+		"name": "Meilisearch v0.30",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -314,6 +313,16 @@
 									"key": "matchingStrategy",
 									"value": "all",
 									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "hitsPerPage",
+									"value": "50",
+									"disabled": true
 								}
 							]
 						}
@@ -360,6 +369,24 @@
 			"name": "Tasks",
 			"item": [
 				{
+					"name": "Get one task",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tasks/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tasks",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get all tasks",
 					"request": {
 						"method": "GET",
@@ -374,18 +401,58 @@
 							],
 							"query": [
 								{
-									"key": "type",
+									"key": "uids",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "indexUids",
+									"value": "books",
+									"disabled": true
+								},
+								{
+									"key": "types",
 									"value": "documentAdditionOrUpdate",
 									"disabled": true
 								},
 								{
-									"key": "status",
+									"key": "statuses",
 									"value": "failed",
 									"disabled": true
 								},
 								{
-									"key": "indexUid",
-									"value": "books",
+									"key": "beforeEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "canceledBy",
+									"value": null,
 									"disabled": true
 								},
 								{
@@ -404,18 +471,168 @@
 					"response": []
 				},
 				{
-					"name": "Get one task",
+					"name": "Cancel tasks",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/tasks/0",
+							"raw": "{{url}}/tasks",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"tasks",
-								"0"
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "uids",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "indexUids",
+									"value": "books",
+									"disabled": true
+								},
+								{
+									"key": "types",
+									"value": "documentAdditionOrUpdate",
+									"disabled": true
+								},
+								{
+									"key": "statuses",
+									"value": "failed",
+									"disabled": true
+								},
+								{
+									"key": "beforeEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "canceledBy",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete tasks",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tasks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "uids",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "indexUids",
+									"value": "books",
+									"disabled": true
+								},
+								{
+									"key": "types",
+									"value": "documentAdditionOrUpdate",
+									"disabled": true
+								},
+								{
+									"key": "statuses",
+									"value": "failed",
+									"disabled": true
+								},
+								{
+									"key": "beforeEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "canceledBy",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "10",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -568,6 +785,39 @@
 							]
 						},
 						"description": "Can only change the document identifier if it has not already been added before."
+					},
+					"response": []
+				},
+				{
+					"name": "Swap indexes",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    { \"indexes\": [\"books\", \"books_temp\"] }\n]"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/swap-indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"swap-indexes"
+							]
+						}
 					},
 					"response": []
 				},
