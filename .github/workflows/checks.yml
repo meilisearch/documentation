@@ -52,9 +52,10 @@ jobs:
   vale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: errata-ai/vale-action@reviewdog
         with:
+          version: 2.21.0
           fail_on_error: true
           debug: true
         env:
