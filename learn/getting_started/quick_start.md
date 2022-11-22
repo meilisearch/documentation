@@ -349,6 +349,10 @@ The master key should only be used for retrieving and managing API keys. For reg
 
 <CodeSamples id="getting_started_communicating_with_a_protected_instance" />
 
+::: warning
+Accessing the `/keys` route without setting a master key will return an [error](/reference/errors/error_codes.md#missing-master-key).
+:::
+
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 
 ## What's next?

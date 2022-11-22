@@ -159,6 +159,10 @@ The payload does not contain a Content-Type header. Currently, Meilisearch only 
 
 A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones.
 
+## `missing_master_key`
+
+You need to set a master key before you can access the `/keys` route. Read more about setting a master key at launch in our [dedicated guide](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance).
+
 ## `missing_parameter`
 
 The payload is missing one or more required fields.
