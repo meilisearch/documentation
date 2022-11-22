@@ -86,7 +86,7 @@ You should see the following successful response:
 888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
 
 Database path: "./data.ms"
-Server listening on: "127.0.0.1:7700"
+Server listening on: "localhost:7700"
 ```
 
 ## Step 2: Run Meilisearch as a service
@@ -115,7 +115,7 @@ After=systemd-user-sessions.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/meilisearch --http-addr 127.0.0.1:7700 --env production --master-key Y0urVery-S3cureAp1K3y
+ExecStart=/usr/bin/meilisearch --http-addr localhost:7700 --env production --master-key Y0urVery-S3cureAp1K3y
 
 [Install]
 WantedBy=default.target
@@ -126,7 +126,7 @@ EOF
 For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys.md). You can check our [quick start](/learn/getting_started/quick_start.md#setup-and-installation) guide for more information on how to get Meilisearch up and running.
 :::
 
-As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `127.0.0.1`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.
+As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `local`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.
 
 ### 2.2. Enable and start service
 
@@ -187,7 +187,7 @@ server {
     listen [::]:80 default_server;
     server_name _;
     location / {
-        proxy_pass  http://127.0.0.1:7700;
+        proxy_pass  http://localhost:7700;
     }
 }
 EOF
@@ -299,7 +299,7 @@ server {
     server_name example.com;
 
     location / {
-        proxy_pass  http://127.0.0.1:7700;
+        proxy_pass  http://localhost:7700;
     }
 
     listen [::]:443 ssl ipv6only=on;
