@@ -32,13 +32,13 @@ All of Meilisearch's asynchronous operations belong to a category called "tasks"
 
 All asynchronous operations return a summarized version of [the full `task` object](/reference/api/tasks.md#task-object). It contains the following fields in the stated order:
 
-| Field            | Type    | Description                                                                           |
-| :--------------- | :------ | :------------------------------------------------------------------------------------ |
-| **`taskUid`**    | Integer | Unique sequential identifier                                                          |
-| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](#global-tasks))             |
-| **`status`**     | String  | Status of the task. Value is `enqueued`                                               |
-| **`type`**       | String  | Type of task                                                                          |
-| **`enqueuedAt`** | String  | Represents the date and time in the RFC 3339 format when the task has been `enqueued` |
+| Field            | Type    | Description                                                                                                                   |
+| :--------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------- |
+| **`taskUid`**    | Integer | Unique sequential identifier                                                                                                  |
+| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](#global-tasks))                                                     |
+| **`status`**     | String  | Status of the task. Value is `enqueued`                                                                                       |
+| **`type`**       | String  | Type of task                                                                                                                  |
+| **`enqueuedAt`** | String  | Represents the date and time in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format when the task has been `enqueued` |
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
 
@@ -52,6 +52,7 @@ Meilisearch considers the following task types as global:
 - [`taskCancelation`](/reference/api/tasks.md#taskcancelation)
 - [`taskDeletion`](/reference/api/tasks.md#taskdeletion)
 - [`indexSwap`](/reference/api/tasks.md#indexswap)
+- [`snapshotCreation`](/reference/api/tasks.md#snapshotcreation)
 
 ::: note
 Your API key must have access to all indexes (`"indexes": [*]`) in order to access global tasks.

@@ -317,7 +317,7 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 <RouteHighlighter method="POST" route="/tasks/cancel?{task_uid}"/>
 
-Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued, processed, or completed. 
+Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued, processed, or completed.
 
 Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
@@ -337,16 +337,14 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 
 | Query Parameter        | Description                                                                                                                          |
 | :--------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
-| **`uids`**             | Delete tasks based on `uid`. Separate multiple `uids` with a comma (`,`). Use `uids=*` for all `uids`                                |
-| **`statuses`**         | Delete tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
-| **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
-| **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
-| **`beforeEnqueuedAt`** | Delete tasks **before** a specified `enqueuedAt` date                                                                                |
-| **`beforeStartedAt`**  | Delete tasks **before** a specified `startedAt` date                                                                                 |
-| **`beforeFinishedAt`** | Delete tasks **before** a specified `finishedAt` date                                                                                |
-| **`afterEnqueuedAt`**  | Delete tasks **after** a specified `enqueuedAt` date                                                                                 |
-| **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date                                                                                  |
-| **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date                                                                                 |
+| **`uids`**             | Cancel tasks based on `uid`. Separate multiple `uids` with a comma (`,`). Use `uids=*` for all `uids`                                |
+| **`statuses`**         | Cancel tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
+| **`types`**            | Cancel tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
+| **`indexUids`**        | Cancel tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
+| **`beforeEnqueuedAt`** | Cancel tasks **before** a specified `enqueuedAt` date                                                                                |
+| **`beforeStartedAt`**  | Cancel tasks **before** a specified `startedAt` date                                                                                 |
+| **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt` date                                                                                 |
+| **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date                                                                                  |
 
 ::: note
 Date filters are exclusive, meaning you can only filter tasks before or after a specified date.
@@ -378,7 +376,7 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 ### Cancel all tasks
 
-You can cancel all processing and enqueued tasks using the following filter:
+You can cancel all `processing` and `enqueued` tasks using the following filter:
 
 <RouteHighlighter method="POST" route="/tasks/cancel?statuses=processing,enqueued" />
 
@@ -442,7 +440,7 @@ You can use this `taskUid` to get more details on the [status of the task](#get-
 
 ### Delete all tasks
 
-You can delete all tasks by using the following filter:
+You can delete all finished tasks by using the following filter:
 
 <RouteHighlighter method="DELETE" route="/tasks?statuses=failed,canceled,succeeded" />
 
