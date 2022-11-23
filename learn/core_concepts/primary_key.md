@@ -159,6 +159,7 @@ This error occurs when you add documents for the first time and Meilisearch [fai
     "indexUid": "books",
     "status": "failed",
     "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
     "details":{
         "receivedDocuments":5,
         "indexedDocuments":null
@@ -186,6 +187,7 @@ This error occurs when your index already has a primary key, but one of the docu
     "indexUid": "books",
     "status": "failed",
     "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
     "details":{
         "receivedDocuments":1,
         "indexedDocuments":null
@@ -213,6 +215,7 @@ This happens when your document id does not have the correct [format](#formattin
     "indexUid": "books",
     "status": "failed",
     "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
     "details":{
         "receivedDocuments":5,
         "indexedDocuments":null
