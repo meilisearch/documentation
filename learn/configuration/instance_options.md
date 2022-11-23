@@ -87,6 +87,8 @@ By default, Meilisearch will look for a `config.toml` file in the working direct
 Config file path:       "./config.toml"
 ```
 
+If the `Config file path` is anything other than `"none"`, it means that a configuration file was successfully located and used to start Meilisearch.
+
 You can override the default location of the configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
 
 :::: tabs
@@ -131,7 +133,7 @@ Specifying the `config_file_path` option within the configuration file will thro
 
 ## All instance options
 
-### Configuration file
+### Configuration file path
 
 **Environment variable**: `MEILI_CONFIG_FILE_PATH`
 **CLI option**: `--config-file-path`
