@@ -279,6 +279,10 @@ These allow you to configure your Meilisearch instance at launch with [environme
 
 **Instance options affect your entire Meilisearch instance**, not just a single index.
 
+#### Configuration file
+
+As an alternative to providing command-line options or environment variables at launch, you can configure your Meilisearch instance using a [configuration file](/learn/configuration/instance_options.md#configuration-file) in `.toml` format. If a configuration file is present at the root of your working directory, it will be loaded at launch.
+
 ### Index settings
 
 [Index settings](/reference/api/settings.md) allow you to customize search behavior. You can either update all settings globally using the [update settings endpoint](/reference/api/settings.md#update-settings) or individually using a specific child route.
@@ -318,7 +322,7 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 
 ::: tab Environment variable
 
-Linux/MacOS:
+UNIX:
 
 ```bash
 export MEILI_MASTER_KEY="MASTER_KEY"

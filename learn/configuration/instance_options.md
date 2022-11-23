@@ -4,7 +4,7 @@ sidebarDepth: 2
 
 # Configure Meilisearch at launch
 
-You can configure Meilisearch at launch with **environment variables** and **command-line options**.
+You can configure Meilisearch at launch with **command-line options**, **environment variables**, or a **configuration file**.
 
 These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/learn/configuration/settings.md).
 
@@ -32,11 +32,27 @@ The above flag disables analytics for the Meilisearch instance and does not acce
 
 To configure a Meilisearch instance using environment variables, set the environment variable prior to launching the instance. If you are unsure how to do this, read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#command-line-options-and-flags) instead.
 
-```bash
+:::: tabs
+::: tab UNIX
+
+```sh
 export MEILI_DB_PATH=./meilifiles
 export MEILI_HTTP_ADDR=localhost:7700
 ./meilisearch
 ```
+
+:::
+
+::: tab Windows
+
+```sh
+set MEILI_DB_PATH=./meilifiles
+set MEILI_HTTP_ADDR=127.0.0.1:7700
+./meilisearch
+```
+
+:::
+::::
 
 In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `MEILI_DB_PATH` and `MEILI_HTTP_ADDR` are environment variables that modify this instance's behavior.
 
@@ -44,7 +60,91 @@ Environment variables for command-line flags accept `n`, `no`, `f`, `false`, `of
 
 Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. **Some options (e.g., `--import-snapshots`) are not available as environment variables.**
 
+## Configuration file
+
+Meilisearch accepts a configuration file in the `.toml` format as an alternative to command-line options and environment variables. Configuration files can be easily shared and versioned, and allow you to define multiple options.
+
+**When used simultaneously, environment variables override the configuration file, and command-line options override environment variables.**
+
+You can download a default configuration file using the following command:
+
+```sh
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/main/config.toml > config.toml
+```
+
+By default, Meilisearch will look for a `config.toml` file in the working directory. If it is present, it will be used as the configuration file. You can verify this when you launch Meilisearch:
+
+```
+888b     d888          d8b 888 d8b                                            888
+8888b   d8888          Y8P 888 Y8P                                            888
+88888b.d88888              888                                                888
+888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
+888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
+888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
+888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
+888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
+
+Config file path:       "./config.toml"
+```
+
+If the `Config file path` is anything other than `"none"`, it means that a configuration file was successfully located and used to start Meilisearch.
+
+You can override the default location of the configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
+
+:::: tabs
+::: tab CLI
+
+```sh
+./meilisearch --config-file-path="./config.toml"
+```
+
+:::
+
+::: tab Environment variable
+
+UNIX:
+
+```sh
+export MEILI_CONFIG_FILE_PATH="./config.toml"
+./meilisearch
+```
+
+Windows:
+
+```sh
+set MEILI_CONFIG_FILE_PATH="./config.toml"
+./meilisearch
+```
+
+:::
+::::
+
+### Configuration file formatting
+
+You can configure any environment variable or CLI option using a configuration file. In configuration files, options must be written in [snake case](https://en.wikipedia.org/wiki/Snake_case). For example, `--import-dump` would be written as `import_dump`.
+
+```toml
+import_dump = "./example.dump"
+```
+
+::: warning
+Specifying the `config_file_path` option within the configuration file will throw an error. This is the only configuration option that cannot be set within a configuration file.
+:::
+
 ## All instance options
+
+### Configuration file path
+
+**Environment variable**: `MEILI_CONFIG_FILE_PATH`
+**CLI option**: `--config-file-path`
+**Default**: `./config.toml`
+**Expected value**: a filepath
+
+Designates the location of the configuration file to load at launch.
+
+::: warning
+Specifying this option in the configuration file itself will throw an error (assuming Meilisearch is able to find your configuration file).
+:::
 
 ### Database path
 
