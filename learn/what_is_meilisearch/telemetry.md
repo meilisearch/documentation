@@ -162,7 +162,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `ranking_rules.attribute_position`                 | Position of the `attribute` ranking rule if any, otherwise `null`                           | 4
 | `ranking_rules.sort_position`                      | Position of the `sort` ranking rule                                                         | 5
 | `ranking_rules.exactness_position`                 | Position of the `exactness` ranking rule if any, otherwise `null`                           | 6
-| `ranking_rules.values`                             | An array representing the ranking rules without the custom asc-desc rules                   | `['words', 'typo', 'attribute', 'sort', 'exactness']`
+| `ranking_rules.values`                             | A string representing the ranking rules without the custom asc-desc rules                   | "words, typo, attribute, sort, exactness"
 | `sortable_attributes.total`                        | Number of sortable attributes                                                               | 3
 | `sortable_attributes.has_geo`                      | `true` if `_geo` is set as a sortable attribute, otherwise `false`                          | true
 | `filterable_attributes.total`                      | Number of filterable attributes                                                             | 3
