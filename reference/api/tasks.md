@@ -149,6 +149,10 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 
 #### `indexSwap`
 
+| Name        | Description                                            |
+| :---------- | :----------------------------------------------------- |
+| **`swaps`** | Object containing the payload for the `indexSwap` task |
+
 ### `error`
 
 **Type**: Object

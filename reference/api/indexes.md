@@ -214,3 +214,51 @@ Delete an index.
 ```
 
 You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).
+
+## Swap indexes
+
+<RouteHighlighter method="POST" route="/indexes/swap-indexes"/>
+
+Swap the documents, settings, and task history of two or more indexes. **You can only swap indexes in pairs.** However, a single request can swap as many index pairs as you wish.
+
+Swapping indexes is an atomic transaction: **either all indexes are successfully swapped, or none are.**
+
+Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `indexB` and vice-versa in the task history. `enqueued` tasks are left unmodified.
+
+[To learn more about index swapping, refer to this short guide.](/learn/core_concepts/indexes.md#swapping-indexes)
+
+### Body
+
+An object containing some string arrays, each called `indexes`.
+
+| Name           | Type             | Default value | Description                                |
+| :------------- | :--------------- | :------------ | :----------------------------------------- |
+| **`indexes`*** | Array of strings | N/A           | Array of the two `indexUid`s to be swapped |
+
+You can send multiple `indexes` arrays in a single request. Each `indexes` array should contain only two elements: the `indexUid`s of the two indexes to be swapped.
+
+::: note
+Sending `[]` is valid but no swap operation will be performed.
+:::
+
+### Example
+
+<CodeSamples id='swap_indexes_1' />
+
+#### Response
+
+```json
+{
+  "taskUid": 3,
+  "indexUid": null,
+  "status": "enqueued",
+  "type": "indexSwap",
+  "enqueuedAt": "2021-08-12T10:00:00.000000Z"
+}
+```
+
+::: note
+Since `indexSwap` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is always `null`.
+:::
+
+You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).

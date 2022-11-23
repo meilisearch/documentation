@@ -1058,3 +1058,19 @@ delete_task_1: |
 cancel_task_1: |  
   curl \
     -X POST 'http://localhost:7700/tasks/cancel?uids=1,2'
+swap_indexes_1: |
+  curl \
+    -X POST 'http://localhost:7700/swap-indexes'\
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+   {
+      "indexes":[
+         "indexA",
+         "indexB"
+      ],
+      "indexes":[
+         "indexX",
+         "indexY"
+      ]
+   }
+  ]'
