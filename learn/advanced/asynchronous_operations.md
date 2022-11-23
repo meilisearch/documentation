@@ -44,7 +44,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ### Global tasks
 
-Some task types are not associated with a particular index but apply to the entire instance. These tasks are called global tasks. Global tasks display `null` for the `indexUid` field.
+Some task types are not associated with a particular index but apply to the entire instance. These tasks are called global tasks. Global tasks always display `null` for the `indexUid` field.
 
 Meilisearch considers the following task types as global:
 
@@ -140,19 +140,24 @@ Had the task failed, the response would have included a detailed `error` object:
 }
 ```
 
-If the task had been canceled while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field:
+If the task had been [canceled](/reference/api/tasks.md#cancel-tasks) while it was `enqueued` or `processing`, it would have the `canceled` status and a non-`null` value for the `canceledBy` field:
 
 ```json
 {
   "uid": 1,
   "indexUid": null,
   "status": "canceled",
-  "type": "taskCancelation",
+  "type": "settingsUpdate",
   "canceledBy": 5,
   "details": {
-    "matchedTasks": 1,
-    "canceledTasks": 1,
-    "originalFilter": "?uid=1"
+    "rankingRules":[
+      "typo",
+      "ranking:desc",
+      "words",
+      "proximity",
+      "attribute",
+      "exactness"
+    ]
   },
   "error": null,
   "duration": "PT1S",
@@ -162,7 +167,7 @@ If the task had been canceled while it was `enqueued` or `processing`, it would 
 }
 ```
 
-If a task is deleted after it was finished (`succeeded`, `failed`, or `canceled`), Meilisearch returns a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
+Once a task is [deleted](/reference/api/tasks.md#delete-tasks), Meilisearch returns a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
 
 ### Filtering tasks
 

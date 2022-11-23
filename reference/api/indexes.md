@@ -235,9 +235,9 @@ An object containing some string arrays, each called `indexes`.
 | :------------- | :--------------- | :------------ | :----------------------------------------- |
 | **`indexes`*** | Array of strings | N/A           | Array of the two `indexUid`s to be swapped |
 
+::: note
 You can send multiple `indexes` arrays in a single request. Each `indexes` array should contain only two elements: the `indexUid`s of the two indexes to be swapped.
 
-::: note
 Sending `[]` is valid but no swap operation will be performed.
 :::
 

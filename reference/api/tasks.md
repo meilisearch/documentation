@@ -329,10 +329,8 @@ Task cancelation is an atomic transaction: **either all tasks are successfully c
 To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (e.g. `POST /tasks/cancel`).
 :::
 
-::: Did you know?
-
+::: tip Did you know?
 You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` type tasks are processed in reverse order, such that the last one you enqueue will be processed first.
-
 :::
 
 ### Query parameters
@@ -373,7 +371,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 ```
 
 ::: note
-Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is `null`.
+Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
 :::
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
@@ -437,7 +435,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 ```
 
 ::: note
-Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is `null`.
+Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
 :::
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
