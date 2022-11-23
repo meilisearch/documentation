@@ -51,14 +51,14 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.29
+docker pull getmeili/meilisearch:v0.30
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
     -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:v0.29 \
+    getmeili/meilisearch:v0.30 \
     meilisearch --env="development"
 ```
 
@@ -158,7 +158,7 @@ On successfully running Meilisearch, you should see the following response:
 888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
 
 Database path:       "./data.ms"
-Server listening on: "127.0.0.1:7700"
+Server listening on: "localhost:7700"
 ```
 
 Congratulations! You're ready to move on to the next step!
@@ -261,7 +261,7 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 ## Search preview
 
-Meilisearch offers a browser-based search preview where you can search through a selected index. You can access it any time Meilisearch is running at `http://127.0.0.1:7700`.
+Meilisearch offers a browser-based search preview where you can search through a selected index. You can access it any time Meilisearch is running at `http://localhost:7700`.
 
 ![Meilisearch's search preview showing the movies index](/search_preview/default.png)
 
@@ -280,6 +280,10 @@ At this point, you can configure your Meilisearch instance and customize your in
 These allow you to configure your Meilisearch instance at launch with [environment variables](/learn/configuration/instance_options.md#environment-variables) and [command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags). You need to relaunch your instance to alter them.
 
 **Instance options affect your entire Meilisearch instance**, not just a single index.
+
+#### Configuration file
+
+As an alternative to providing command-line options or environment variables at launch, you can configure your Meilisearch instance using a [configuration file](/learn/configuration/instance_options.md#configuration-file) in `.toml` format. If a configuration file is present at the root of your working directory, it will be loaded at launch.
 
 ### Index settings
 
@@ -320,7 +324,7 @@ The Meilisearch API is unprotected by default, making all routes publicly access
 
 ::: tab Environment variable
 
-Linux/MacOS:
+UNIX:
 
 ```bash
 export MEILI_MASTER_KEY="MASTER_KEY"
@@ -350,6 +354,10 @@ Here's how to use the master key you set to [get all keys](/reference/api/keys.m
 The master key should only be used for retrieving and managing API keys. For regular API calls, such as search, use an API key:
 
 <CodeSamples id="getting_started_communicating_with_a_protected_instance" />
+
+::: warning
+Accessing the `/keys` route without setting a master key will return an [error](/reference/errors/error_codes.md#missing-master-key).
+:::
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 

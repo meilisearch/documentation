@@ -1,7 +1,7 @@
 # This code-samples file is used by the Meilisearch documentation
 # Every example written here will be automatically fetched by
 # the documentation on build
-# You can read more at https://github.com/meilisearch/documentation/tree/master/.vuepress/code-samples
+# You can read more at https://github.com/meilisearch/documentation/tree/main/.vuepress/code-samples
 ---
 get_one_index_1: |-
   curl \
@@ -383,6 +383,22 @@ search_parameter_guide_limit_1: |-
       "q": "shifu",
       "limit": 2
     }'
+search_parameter_guide_hitsperpage_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "hitsPerPage": 15
+    }'
+search_parameter_guide_page_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "page": 2
+    }'
 search_parameter_guide_retrieve_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -677,6 +693,7 @@ phrase_search_1: |-
     -H 'Content-Type: application/json' \
   --data-binary '{ "q": "\"african american\" horror" }'
 authorization_header_1: |-
+  # replace the MASTER_KEY placeholder with your master key
   curl \
     -X GET 'http://localhost:7700/keys' \
     -H 'Authorization: Bearer MASTER_KEY'
@@ -1074,3 +1091,7 @@ swap_indexes_1: |
       ]
    }
   ]'
+api_reference_request_gzip_1: |
+  cat ~/movies.json | gzip | curl -X POST 'http://localhost:7700/indexes/movies/documents' --data-binary @- -H 'Content-Type: application/json' -H 'Content-Encoding: gzip'
+api_reference_response_gzip_1: |
+  curl -sH 'Accept-encoding: gzip' 'http://localhost:7700/indexes/movies/search' | gzip -

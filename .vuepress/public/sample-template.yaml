@@ -1,7 +1,7 @@
 # This code-samples file is used by the Meilisearch documentation
 # Every example written here will be automatically fetched by
 # the documentation on build
-# You can read more on https://github.com/meilisearch/documentation/tree/master/.vuepress/code-samples
+# You can read more on https://github.com/meilisearch/documentation/tree/main/.vuepress/code-samples
 ---
 get_one_index_1: |-
 list_all_indexes_1: |-
@@ -62,6 +62,8 @@ filtering_guide_3: |-
 search_parameter_guide_query_1: |-
 search_parameter_guide_offset_1: |-
 search_parameter_guide_limit_1: |-
+search_parameter_guide_hitsperpage_1: |-
+search_parameter_guide_page_1: |-
 search_parameter_guide_retrieve_1: |-
 search_parameter_guide_crop_1: |-
 search_parameter_guide_highlight_1: |-
@@ -169,4 +171,5 @@ async_guide_filter_by_index_uid_1: |
 cancel_task_1: |
 delete_task_1: |
 swap_indexes_1: |
-
+api_reference_request_gzip_1: |
+api_reference_response_gzip_1: |

@@ -76,3 +76,5 @@ JWTs
 APIs
 AMIs
 [Cc]ancelation
+Brotli
+zlib

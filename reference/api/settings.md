@@ -623,7 +623,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 To protect your database from malicious scraping, Meilisearch has a default limit of 1000 results per search. This setting allows you to configure the maximum number of results returned per search.
 
-`maxTotalHits` takes priority over search parameters such as `limit` and `offset`.
+`maxTotalHits` takes priority over search parameters such as `limit`, `offset`, `hitsPerPage`, and `page`.
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 

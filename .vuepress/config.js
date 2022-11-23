@@ -5,6 +5,7 @@ module.exports = {
   theme: 'default-prefers-color-scheme',
   themeConfig: {
     docsRepo: 'meilisearch/documentation',
+    docsBranch: 'main',
     editLinks: true,
     logo: '/logo.svg',
     sidebarDepth: 1,
