@@ -6,7 +6,7 @@ Using this feature, it is possible to schedule snapshot creation at custom inter
 
 ## Creating snapshots
 
-For Meilisearch to create snapshots, the feature must be enabled by adding the following flag:
+To create snapshots, use the [`--schedule-snapshot` configuration option](/learn/configuration/instance_options.md#schedule-snapshot-creation):
 
 ```bash
 meilisearch --schedule-snapshot
@@ -14,7 +14,7 @@ meilisearch --schedule-snapshot
 
 By default, Meilisearch creates snapshots in a directory called `snapshots/` at the root of your Meilisearch.
 
-The destination can be modified with the `--snapshot-dir` flag.
+The destination can be modified with [`--snapshot-dir`](/learn/configuration/instance_options.md#snapshot-destination):
 
 ```bash
 meilisearch --schedule-snapshot --snapshot-dir mySnapShots/
@@ -24,7 +24,7 @@ Now snapshots are created in `mySnapShots/` directory.
 
 The first snapshot is created on launching Meilisearch. After that, snapshots are created routinely on a set interval until you deactivate snapshots by ending the Meilisearch instance. By default, one snapshot is taken every 24 hours.
 
-The amount of time between each new snapshot can be modified with the `--snapshot-interval-sec` flag.
+The amount of time between each new snapshot can be modified with [`--snapshot-interval-sec`](/learn/configuration/instance_options.md#snapshot-interval):
 
 ```bash
 meilisearch --schedule-snapshot --snapshot-interval-sec 3600
@@ -32,7 +32,7 @@ meilisearch --schedule-snapshot --snapshot-interval-sec 3600
 
 After running the above code, a snapshot is created every hour (3600 seconds).
 
-During snapshot creation, old snapshots are **automatically overwritten**. This means that only the most recent snapshot should be present in the folder at any given time.
+During snapshot creation, old snapshots are **automatically overwritten**. This means only the most recent snapshot should be present in the folder at any given time.
 
 [[More about snapshots flags and environment variables]](/learn/configuration/instance_options.md#schedule-snapshot-creation)
 

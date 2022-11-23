@@ -2,29 +2,42 @@
 
 In a perfect world, users would not need to look beyond the first search result to find what they were looking for. In practice, however, it is usually necessary to create some kind of pagination interface to browse through long lists of results.
 
-In this guide, we will discuss some of Meilisearch's current limitations, how these limitations impact common pagination interface patterns, and the recommended way of handling pagination when using Meilisearch.
+In this guide, we discuss two different approaches to pagination supported by Meilisearch: one using `offset` and `limit`, and another using `hitsPerPage` and `page`.
 
 ## Choosing the right pagination UI
 
-There are quite a few pagination interfaces you might want to implement in your application. Many common UI patterns have a page selector allowing users to jump to any search results page. To create a page selector, you must know the exact number of total results so you can calculate the precise number of result pages.
+There are many UI patterns that help your users navigate through search results. One common and efficient solution in Meilisearch is using `offset` and `limit` to create interfaces centered around ["Previous" and "Next" buttons](#previous-and-next-buttons).
 
-For performance reasons, however, Meilisearch cannot provide the exact number of results for a query. Instead, when using the [search endpoint](/reference/api/search.md), responses contain an `estimatedTotalHits` field. As its name indicates, `estimatedTotalHits` is only an estimate of how many documents match your user's query.
+Other solutions, such as [creating a page selector](/learn/advanced/pagination.md#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents.
 
-Because of this, we do not recommend creating interfaces with page selectors. If page selection is crucial to the software you are developing, see the [last section of this page](#not-recommended-page-selection) for tips that might help you work around Meilisearch's current limitations.
+Whatever UI you choose, there is a limited maximum number of search results Meilisearch will return for any given query. You can use [the `maxTotalHits` index setting](/reference/api/settings.md#pagination) to configure this, but be aware that higher limits may negatively impact search performance.
 
-Many other pagination UIs are fully compatible with Meilisearch, such as infinite scrolling and buttons that manually load more results on click. For an experience similar to page selection, we recommend creating pagination interfaces centered around [previous and next buttons](#recommended-previous-and-next-buttons).
+## "Previous" and "Next" buttons
 
-## Recommended: "Previous" and "Next" buttons
+Using "Previous" and "Next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page.
 
-Using previous and next buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page.
-
-Though this approach offers less precision than a full-blown page selector, it does not require knowing the precise number of search results. This makes it a good fit for Meilisearch's current capabilities.
+Though this approach offers less precision than a full-blown page selector, it does not require knowing the exact number of search results. Since calculating the exhaustive number of documents matching a query is a resource-intensive process, interfaces like this might offer better performance.
 
 ### Implementation
 
+To implement this interface in a website or application, we make our queries with the `limit` and `offset` search parameters. Response bodies will include an `estimatedTotalHits` field, containing a partial count of search results. This is Meilisearch's default behavior:
+
+```json
+{
+  "hits": [
+    …
+  ],
+  "query": "",
+  "processingTimeMs": 15,
+  "limit": 10,
+  "offset": 0,
+  "estimatedTotalHits": 471
+}
+```
+
 #### `limit` and `offset`
 
-Previous and next buttons can be implemented using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters.
+"Previous" and "Next" buttons can be implemented using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters.
 
 `limit` sets the size of a page. If you set `limit` to `10`, Meilisearch's response will contain a maximum of 10 search results. `offset` skips a number of search results. If you set `offset` to `20`, Meilisearch's response will skip the first 20 search results.
 
@@ -34,7 +47,7 @@ For example, you can use Meilisearch's JavaScript SDK to get the first ten films
 const results = await index.search("tarkovsky", { limit: 10, offset: 0 });
 ```
 
-You can use both parameters together to effectively create search pages.
+You can use both parameters together to create search pages.
 
 #### Search pages and calculating `offset`
 
@@ -86,7 +99,7 @@ document.querySelector('#next_button').onclick = function () { updatePageNumber(
 
 #### Disabling navigation buttons for first and last pages
 
-It is often helpful to disable navigation buttons when the user cannot move to the "next" or "previous" page.
+It is often helpful to disable navigation buttons when the user cannot move to the "Next" or "Previous" page.
 
 The "Previous" button should be disabled whenever your `offset` is `0`, as this indicates your user is on the first results page.
 
@@ -129,95 +142,124 @@ document.querySelector('#previous_button').onclick = function () { updatePageNum
 document.querySelector('#next_button').onclick = function () { updatePageNumber(this) }
 ```
 
-## Not recommended: Page selection
+## Numbered page selectors
 
-This type of pagination consists of a numbered list of pages accompanied by next and previous buttons.
+This type of pagination consists of a numbered list of pages accompanied by "Next" and "Previous" buttons. This is a common UI pattern that offers users a significant amount of precision when navigating results.
 
-This is a common UI pattern that offers users a significant amount of precision when navigating results. However, due to Meilisearch's [limitations](#choosing-the-right-pagination-ui), it is not a good fit for pagination with Meilisearch.
+Calculating the total amount of search results for a query is a resource-intensive process. Because of that, page selectors might lead to slower interfaces.
 
 ### Implementation
 
-The general implementation of a page selection interface is similar to our [recommended solution](#recommended-previous-and-next-buttons), with one significant addition: it includes a numbered page list.
+By default, Meilisearch queries only return `estimatedTotalHits`. This value is likely to change as a user navigates search results and should not be used to create calculate the number of search result pages.
 
-To create a numbered page list, however, you must know the exact number of total results. For example, if you have 100 results and your search result pages contain 10 results each, your selector must show a list of numbers going from 1 to 10.
+When your query contains either [`hitsPerPage`](/reference/api/search.md#number-of-results-per-page), [`page`](/reference/api/search.md#page), or both these search parameters, Meilisearch returns `totalHits` and `totalPages` instead of `estimatedTotalHits`. `totalHits` contains the exhaustive number of results for that query, and `totalPages` contains the exhaustive number of pages of search results for the same query:
 
-Since Meilisearch can only give you an estimate of total search results, it is difficult to implement page selectors when using Meilisearch.
-
-We recommend two different workarounds to create this kind of pagination interface with Meilisearch.
-
-#### Use `limit` to set a maximum number of search results
-
-By default, a search request returns 20 search results. You can change this value to a much higher number and treat it as the effective maximum of search results you will show a user. Doing so means the size of your `hits` array is the exact number of search results you have to paginate.
-
-For example, if you set `limit` to `300`, every search request made to Meilisearch returns at most 300 documents. If a query returns a `hits` array with 200 items and you want each page to display 20 results, you can create a page selector with 10 pages.
-
-In the following JavaScript snippet, each time a user searches, we make a new query with `limit` set to `300`. Once we receive the search results, we store them in a variable and create a list of numbered pages. When users click on any number in the page list, we display a new page:
-
-```js
-// Retrieve search results and create the page selector
-function getSearchResults(searchTerm) {
-  // The amount of results we want to display in each page
-  const hitsPerPage = 10
-
-  // The maximum amount of results we will display
-  const { hits } = await index.search(searchTerm, { limit: 300 })
-
-  // Clear the previous buttons…
-  const pagination = document.querySelector('.pagination')
-  pagination.innerHTML = ''
-
-  // …and create a new button for each search results page
-  for (let page = 0; page < hits.length; page += hitsPerPage) {
-    const numberBtn = document.createElement('button');
-    numberBtn.innerText = page / hitsPerPage
-
-    // When the user clicks on a page number, show that results page
-    numberBtn.onclick = function () { 
-      const pageNumber = parseInt(this.innerText)
-      changePage(pageNumber, hits, hitsPerPage)
-    }
-
-    pagination.appendChild(numberBtn)
-  }
-
-  // Display first search results page
-  changePage(1, hits, hitsPerPage)
+```json
+{
+  "hits": [
+    …
+  ],
+  "query": "",
+  "processingTimeMs": 35,
+  "hitsPerPage": 20,
+  "page": 1,
+  "totalPages": 4,
+  "totalHits": 100
 }
-
-// Display a page of search results
-function changePage(pageNumber, hits, hitsPerPage) {
-  const offset = (pageNumber - 1) * hitsPerPage
-  const paginatedHits = hits.slice(offset, offset + hitsPerPage)
-  const resultList = document.querySelector('.results')
-
-  resultList.innerHTML = ''
-
-  paginatedHits.map(hit => {
-    const resultItem = document.createElement('div');
-    resultItem.innerText = hit.title
-    resultList.appendChild(resultItem)
-  })
-}
-
-// Get the search bar and retrieve results every time the user makes a new query
-const searchBar = document.querySelector('.searchBar')
-searchBar.onChange(function () { getSearchResults('tarkovsky') })
 ```
 
-This method provides control and reliability. It also prevents users from paginating too far, which might result in performance gains. However, it limits the number of results your users can see. Additionally, we recommend caution when setting high values for `limit` as it can negatively impact performance.
+#### Search pages with `hitsPerPage` and `page`
+
+`hitsPerPage` defines the maximum number of search results on a page.
+
+Since `hitsPerPage` defines the number of results on a page, it has a direct effect on the total number of pages for a query. For example, if a query returns 100 results, setting `hitsPerPage` to `25` means you will have four pages of search results. Settings `hitsPerPage` to `50`, instead, means you will have only two pages of search results.
+
+The following example returns the first 25 search results for a query:
+
+```js
+const results = await index.search(
+  "tarkovsky", 
+  { 
+    hitsPerPage: 25, 
+  }
+);
+```
+
+To navigate through pages of search results, use the `page` search parameter. If you set `hitsPerPage` to `25` and your `totalPages` is `4`, `page` `1` contains documents from 1 to 25. Setting `page` to `2` instead returns documents from 26 to 50:
+
+```js
+const results = await index.search(
+  "tarkovsky", 
+  { 
+    hitsPerPage: 25, 
+    page: 2 
+  }
+);
+```
 
 ::: note
-By default, Meilisearch returns a maximum of 1000 search results. Consult our [index setting reference](/reference/api/settings.md#pagination) if you need to change this.
+`hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
 :::
 
-#### Use `estimatedTotalHits`
+#### Create a numbered page list
 
-Though we advise against it, you can use `estimatedTotalHits` to calculate the number of search result pages. This means your number of results and page count are likely to change until Meilisearch retrieves the last search result.
+The `totalPages` field included in the response contains the exhaustive count of search result pages based on your query's `hitsPerPage`. Use this to create a numbered list of pages.
 
-For example, a query's `estimatedTotalHits` might be `100` when you fetch the first page of search results. If you are showing 20 results per page, this means your interface will display a page selector with 5 pages. When you fetch the fifth and last page according to Meilisearch's current estimate, however, `estimatedTotalHits` might change to `300`. Your page list, previously displaying 5 pages, must now show 15 total pages.
+For ease of use, queries with `hitsPerPage` and `page` always return the current page number. This means you do not need to manually keep track of which page you are displaying.
 
-This method gives users access to all search results. However, it also results in an interface that might feel unreliable due to constant and unpredictable changes.
+In the following example, we create a list of page buttons dynamically and highlight the current page:
 
-## Unsatisfied? Let us know
+```js
+const pageNavigation = document.querySelector('#page-navigation');
+const listContainer = pageNavigation.querySelector('#page-list');
+const results = await index.search(
+  "tarkovsky", 
+  { 
+    hitsPerPage: 25, 
+    page: 1 
+  }
+);
 
-Is the current state of pagination in Meilisearch creating problems for you? Please share your thoughts with us in this [GitHub discussion](https://github.com/meilisearch/product/discussions/483). We are actively working on improving this aspect of Meilisearch and your input is greatly appreciated.
+const totalPages = results.totalPages;
+const currentPage = results.page;
+
+for (let i = 0; i < totalPages; i += 1) {
+  const listItem = document.createElement('li');
+  const pageButton = document.createElement('button');
+
+  pageButton.innerHTML = i;
+
+  if (currentPage === i) {
+    listItem.classList.add("current-page");
+  }
+
+  listItem.append(pageButton);
+  listContainer.append(listItem);
+}
+```
+
+#### Adding navigation buttons
+
+Your users are likely to be more interested in the page immediately after or before the current search results page. Because of this, it is often helpful to add "Next" and "Previous" buttons to your page list.
+
+In this example, we add these buttons as the first and last elements of our page navigation component:
+
+```js
+const pageNavigation = document.querySelector('#page-navigation');
+
+const buttonNext = document.createElement('button');
+buttonNext.innerHTML = 'Next';
+
+const buttonPrevious = document.createElement('button');
+buttonPrevious.innerHTML = 'Previous';
+
+pageNavigation.prepend(buttonPrevious);
+pageNavigation.append(buttonNext);
+```
+
+We can also disable them as required when on the first or last page of search results:
+
+```js
+buttonNext.disabled = results.page === results.totalPages;
+buttonPrevious.disabled = results.page === 1;
+```

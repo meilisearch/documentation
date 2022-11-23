@@ -389,6 +389,22 @@ search_parameter_guide_limit_1: |-
       "q": "shifu",
       "limit": 2
     }'
+search_parameter_guide_hitsperpage_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "hitsPerPage": 15
+    }'
+search_parameter_guide_page_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "",
+      "page": 2
+    }'
 search_parameter_guide_retrieve_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -1038,4 +1054,7 @@ date_guide_sort_1: |
       "q": "",
       "sort": ["release_timestamp:desc"]
     }'
-
+api_reference_request_gzip_1: |
+  cat ~/movies.json | gzip | curl -X POST 'http://localhost:7700/indexes/movies/documents' --data-binary @- -H 'Content-Type: application/json' -H 'Content-Encoding: gzip'
+api_reference_response_gzip_1: |
+  curl -sH 'Accept-encoding: gzip' 'http://localhost:7700/indexes/movies/search' | gzip -

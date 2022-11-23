@@ -75,3 +75,5 @@ UIs
 JWTs
 APIs
 AMIs
+Brotli
+zlib
