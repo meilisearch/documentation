@@ -156,7 +156,13 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `primary_key`                                      | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
 | `payload_type`                                     | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                                   | `true` if a document addition or update request triggered index creation, otherwise `false` | true
+| `ranking_rules.words_position`                     | Position of the `words` ranking rule if any, otherwise `null`                               | 1
+| `ranking_rules.typo_position`                      | Position of the `typo` ranking rule if any, otherwise `null`                                | 2
+| `ranking_rules.proximity_position`                 | Position of the `proximity` ranking rule if any, otherwise `null`                           | 3
+| `ranking_rules.attribute_position`                 | Position of the `attribute` ranking rule if any, otherwise `null`                           | 4
 | `ranking_rules.sort_position`                      | Position of the `sort` ranking rule                                                         | 5
+| `ranking_rules.exactness_position`                 | Position of the `exactness` ranking rule if any, otherwise `null`                           | 6
+| `ranking_rules.values`                             | An array representing the ranking rules without the custom asc-desc rules                   | `['words', 'typo', 'attribute', 'sort', 'exactness']`
 | `sortable_attributes.total`                        | Number of sortable attributes                                                               | 3
 | `sortable_attributes.has_geo`                      | `true` if `_geo` is set as a sortable attribute, otherwise `false`                          | true
 | `filterable_attributes.total`                      | Number of filterable attributes                                                             | 3
