@@ -123,6 +123,13 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.max_indexing_memory`                        | Value of `--max-indexing-memory`/`MEILI_MAX_INDEXING_MEMORY` in bytes                       | 336042103
 | `infos.max_indexing_threads`                       | Value of `--max-indexing-threads`/`MEILI_MAX_INDEXING_THREADS` in integer                   | 4
 | `infos.log_level`                                  | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
+| `infos.ssl_auth_path`                              | `true` if `--ssl-auth-path`/`MEILI_SSL_AUTH_PATH` is specified, otherwise `false`           | false
+| `infos.ssl_cert_path`                              | `true` if `--ssl-cert-path`/`MEILI_SSL_CERT_PATH` is specified, otherwise `false`           | false
+| `infos.ssl_key_path`                               | `true` if `--ssl-key-path`/`MEILI_SSL_KEY_PATH` is specified, otherwise `false`             | false
+| `infos.ssl_ocsp_path`                              | `true` if `--ssl-ocsp-path`/`MEILI_SSL_OCSP_PATH` is specified, otherwise `false`           | false
+| `infos.ssl_require_auth`                           | Value of `--ssl-require-auth`/`MEILI_SSL_REQUIRE_AUTH` as a boolean                         | false
+| `infos.ssl_resumption`                             | `true` if `--ssl-resumption`/`MEILI_SSL_RESUMPTION` is specified, otherwise `false`         | false
+| `infos.ssl_tickets`                                | `true` if `--ssl-tickets`/`MEILI_SSL_TICKETS` is specified, otherwise `false`               | false
 | `system.distribution`                              | Distribution on which Meilisearch is launched                                               | Arch Linux
 | `system.kernel_version`                            | Kernel version on which Meilisearch is launched                                             | 5.14.10
 | `system.cores`                                     | Number of cores                                                                             | 24
@@ -195,8 +202,10 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `synonyms.total`                                   | Number of synonyms                                                                          | 3
 | `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | false
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
-| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false` | true
+| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false`     | true
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated
-| `requests.total_received`                          | Total number of requests received                                                           | 3480
+| `per_document_id`                                  | `true` if the `DELETE /indexes/:indexUid/documents/:documentUid` endpoint was used, otherwise `false` | false
+| `clear_all`                                        | `true` if the `DELETE /indexes/:indexUid/documents` endpoint was used, otherwise `false`    | false
+| `per_batch`                                        | `true` if the `POST /indexes/:indexUid/documents/delete-batch` endpoint was used, otherwise `false`   | false
