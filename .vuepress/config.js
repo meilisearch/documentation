@@ -340,7 +340,7 @@ module.exports = {
         pattern: '**/*.md',
         strictExt: true,
         ignoreFilePattern: ['document_structure'],
-        ignoreHashPattern: ['actions-2', 'primary-key-2'],
+        ignoreHashPattern: ['actions-2', 'primary-key-2', 'query-parameters-2', 'query-parameters-3'],
         exitLevel: 'warn',
       },
     ],

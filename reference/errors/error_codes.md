@@ -34,6 +34,10 @@ The requested dump could not be found.
 
 An error occurred during dump creation process, task aborted.
 
+## `duplicate_index_found`
+
+The indexes used in the `indexes` array for a [swap index](/reference/api/indexes.md#swap-indexes) request have been declared multiple times. You must declare each index only once.
+
 ## `index_already_exists`
 
 An index with this UID already exists, check out our guide on [index creation](/learn/core_concepts/indexes.md).
@@ -68,7 +72,7 @@ The `description` field for the provided API key resource is invalid. It should 
 
 ## `invalid_api_key_expires_at`
 
-The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the RFC 3339 format or be set to `null`.
+The `expiresAt` field for the provided API key resource is invalid. It should either show a future date or datetime in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format or be set to `null`.
 
 ## `invalid_api_key_indexes`
 
@@ -102,6 +106,14 @@ The provided `_geo` field of one or more documents is invalid. Meilisearch expec
 
 There is an error in the provided index format, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
+## `invalid_task_date_filter`
+
+The date format used is invalid. It should either use a date or datetime in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format or be set to `null`.
+
+## `invalid_task_uids_filter`
+
+One or more of the given task `uids` is invalid. Task `uids` can be an integer or a string containing only numeric characters.
+
 ## `index_not_accessible`
 
 An internal error occurred while trying to access the requested index.
@@ -122,13 +134,17 @@ The database is in an invalid state. Deleting the database and re-indexing shoul
 
 The `data.ms` folder is in an invalid state. Your `.mdb` file is corrupted or the `data.ms` folder has been replaced by a file.
 
-## `invalid_task_status`
+## `invalid_task_statuses_filter`
 
 The requested task status is invalid. Please use one of the [possible values](/reference/api/tasks.md#status).
 
-## `invalid_task_type`
+## `invalid_task_types_filter`
 
 The requested task type is invalid. Please use one of the [possible values](/reference/api/tasks.md#type).
+
+## `invalid_task_canceled_by_filter`
+
+The `canceledBy` query parameter is invalid. It should be an integer. Multiple `uid`s should be separated by commas (`,`).
 
 ## `invalid_typo_tolerance_min_word_size_for_typos`
 
@@ -169,7 +185,11 @@ The payload is missing one or more required fields.
 
 ## `missing_payload`
 
-The Content-Type header was specified, but no request body was sent to the server or the request body is empty.  
+The Content-Type header was specified, but no request body was sent to the server or the request body is empty.
+
+## `missing_task_filters`
+
+The [cancel tasks](/reference/api/tasks.md#cancel-tasks) and [delete tasks](/reference/api/tasks.md#delete-tasks) endpoints require one of the available query parameters.
 
 ## `no_space_left_on_device`
 

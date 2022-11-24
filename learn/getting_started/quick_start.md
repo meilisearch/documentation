@@ -205,10 +205,12 @@ If the document addition is successful, the response should look like this:
    "indexUid": "movies",
    "status": "succeeded",
    "type": "documentAdditionOrUpdate",
+   "canceledBy": null,
    "details":{
       "receivedDocuments": 19547,
       "indexedDocuments": 19547
    },
+   "error": null,
    "duration": "PT0.030750S",
    "enqueuedAt": "2021-12-20T12:39:18.349288Z",
    "startedAt": "2021-12-20T12:39:18.352490Z",
