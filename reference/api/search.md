@@ -38,7 +38,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
-| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page         |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
@@ -74,7 +74,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`limit`**              | Number           | Number of documents to take                     |
 | **`estimatedTotalHits`** | Number           | Estimated total number of matches               |
 | **`totalHits`**          | Number           | Exhaustive total number of matches              |
-| **`totalPages`**         | Number           | Exhaustive total number of search result pages |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages  |
 | **`hitsPerPage`**        | Number           | Number of results on each page                  |
 | **`page`**               | Number           | Current search results page                     |
 | **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facets)** |
@@ -149,7 +149,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 | **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
-| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page         |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |
@@ -240,7 +240,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 | **[`q`](#query-q)**                                     | String           | `""`          | Query string                                        |
 | **[`offset`](#offset)**                                 | Integer          | `0`           | Number of documents to skip                         |
 | **[`limit`](#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                |
-| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page         |
+| **[`hitsPerPage`](#number-of-results-per-page)**        | Integer          | `1`           | Maximum number of documents returned for a page     |
 | **[`page`](#page)**                                     | Integer          | `1`           | Request a specific page of results                  |
 | **[`filter`](#filter)**                                 | Array of strings | `null`        | Filter queries by an attribute's value              |
 | **[`facets`](#facets)**                                 | Array of strings | `null`        | Display the count of matches per facet              |

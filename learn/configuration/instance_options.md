@@ -256,8 +256,6 @@ Imports the dump file located at the specified path. Path must point to a `.dump
 
 Meilisearch will only launch once the dump data has been fully indexed. The time this takes depends on the size of the dump file.
 
-_This option is not available as an environment variable._
-
 ### Ignore missing dump
 
 ::: warning
@@ -271,8 +269,6 @@ Prevents Meilisearch from throwing an error when `--import-dump` does not point 
 
 This option will trigger an error if `--import-dump` is not defined.
 
-_This option is not available as an environment variable._
-
 ### Ignore dump if DB exists
 
 ::: warning
@@ -285,8 +281,6 @@ _This option is not available as an environment variable._
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-dump`. Instead, the dump will be ignored and Meilisearch will launch using the existing database.
 
 This option will trigger an error if `--import-dump` is not defined.
-
-_This option is not available as an environment variable._
 
 ### Log level
 
@@ -421,8 +415,6 @@ This command will throw an error if:
 
 This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignore-snapshot-if-db-exists) and [`--ignore-missing-snapshot`](#ignore-missing-snapshot) options, respectively.
 
-_This option is not available as an environment variable._
-
 ### Ignore missing snapshot
 
 ::: warning
@@ -436,8 +428,6 @@ Prevents a Meilisearch instance from throwing an error when [`--import-snapshot`
 
 This command will throw an error if `--import-snapshot` is not defined.
 
-_This option is not available as an environment variable._
-
 ### Ignore snapshot if DB exists
 
 ::: warning
@@ -450,8 +440,6 @@ _This option is not available as an environment variable._
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and Meilisearch will launch using the existing database.
 
 This command will throw an error if `--import-snapshot` is not defined.
-
-_This option is not available as an environment variable._
 
 ### SSL options
 

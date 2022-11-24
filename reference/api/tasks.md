@@ -97,6 +97,12 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **`deletedDocuments`** | Number of deleted documents. This should equal the total number of documents in the deleted index. `null` while the task status is `enqueued` or `processing` |
 
+#### `indexSwap`
+
+| Name        | Description                                            |
+| :---------- | :----------------------------------------------------- |
+| **`swaps`** | Object containing the payload for the `indexSwap` task |
+
 #### `settingsUpdate`
 
 | Name                       | Description                   |
@@ -146,12 +152,6 @@ Task deletion can be successful and still have `deletedTasks: 0`. This happens w
 #### `snapshotCreation`
 
 The `details` object is set to `null` for `snapshotCreation` tasks.
-
-#### `indexSwap`
-
-| Name        | Description                                            |
-| :---------- | :----------------------------------------------------- |
-| **`swaps`** | Object containing the payload for the `indexSwap` task |
 
 ### `error`
 
@@ -326,7 +326,7 @@ Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `sta
 Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
 ::: warning
-To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (e.g. `POST /tasks/cancel`).
+To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (`POST /tasks/cancel`).
 :::
 
 ::: tip Did you know?
