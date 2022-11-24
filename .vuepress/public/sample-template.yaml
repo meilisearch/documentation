@@ -164,10 +164,10 @@ async_guide_multiple_filters: |
 async_guide_canceled_by_1: |
 async_guide_filter_by_date_1: |
 async_guide_multiple_filters_1: |
-async_guide_filter_by_id_1: |
-async_guide_filter_by_status_1: |
-async_guide_filter_by_type_1: |
-async_guide_filter_by_index_uid_1: |
-cancel_task_1: |
-delete_task_1: |
+async_guide_filter_by_ids_1: |
+async_guide_filter_by_statuses_1: |
+async_guide_filter_by_types_1: |
+async_guide_filter_by_index_uids_1: |
+cancel_tasks_1: |
+delete_tasks_1: |
 swap_indexes_1: |

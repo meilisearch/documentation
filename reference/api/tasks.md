@@ -356,7 +356,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 
 ### Example
 
-<CodeSamples id="cancel_task_1" />
+<CodeSamples id="cancel_tasks_1" />
 
 #### Response: `200 Ok`
 
@@ -420,7 +420,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 
 ### Example
 
-<CodeSamples id="delete_task_1" />
+<CodeSamples id="delete_tasks_1" />
 
 #### Response: `200 Ok`
 

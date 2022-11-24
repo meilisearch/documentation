@@ -177,25 +177,25 @@ You can filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`,
 
 The following code sample returns tasks with `uid`s `5`, `10`, and `13`:
 
-<CodeSamples id="async_guide_filter_by_id_1" />
+<CodeSamples id="async_guide_filter_by_ids_1" />
 
 #### Filter by `status`
 
 The following code sample returns tasks with the `failed` and `canceled` statuses:
 
-<CodeSamples id="async_guide_filter_by_status_1" />
+<CodeSamples id="async_guide_filter_by_statuses_1" />
 
 #### Filter by `type`
 
 The following code sample returns `dumpCreation` and `indexSwap` tasks:
 
-<CodeSamples id="async_guide_filter_by_type_1" />
+<CodeSamples id="async_guide_filter_by_types_1" />
 
 #### Filter by `indexUid`
 
 The following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
 
-<CodeSamples id="async_guide_filter_by_index_uid_1" />
+<CodeSamples id="async_guide_filter_by_index_uids_1" />
 
 #### Filter by `canceledBy`
 
