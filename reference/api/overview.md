@@ -98,13 +98,17 @@ Meilisearch supports the following compression methods:
 
 The code sample below uses the `Content-Encoding: gzip` header, indicating that the request body is compressed using the `gzip` algorithm:
 
-<CodeSamples id="api_reference_request_gzip_1" />
+```
+ cat ~/movies.json | gzip | curl -X POST 'http://localhost:7700/indexes/movies/documents' --data-binary @- -H 'Content-Type: application/json' -H 'Content-Encoding: gzip'
+```
 
 #### Response compression
 
 Meilisearch compresses a response if the request contains the `Accept-Encoding` header. The code sample below uses the `gzip` algorithm:
 
-<CodeSamples id="api_reference_response_gzip_1" />
+```
+curl -sH 'Accept-encoding: gzip' 'http://localhost:7700/indexes/movies/search' | gzip -
+```
 
 ## Request body
 

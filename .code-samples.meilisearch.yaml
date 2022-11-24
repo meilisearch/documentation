@@ -1091,7 +1091,3 @@ swap_indexes_1: |
       ]
    }
   ]'
-api_reference_request_gzip_1: |
-  cat ~/movies.json | gzip | curl -X POST 'http://localhost:7700/indexes/movies/documents' --data-binary @- -H 'Content-Type: application/json' -H 'Content-Encoding: gzip'
-api_reference_response_gzip_1: |
-  curl -sH 'Accept-encoding: gzip' 'http://localhost:7700/indexes/movies/search' | gzip -
