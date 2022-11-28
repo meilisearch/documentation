@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'Meilisearch Documentation v0.29',
+  title: 'Meilisearch Documentation v0.30',
   description: 'Open source Instant Search Engine',
   theme: 'default-prefers-color-scheme',
   themeConfig: {
@@ -341,7 +341,7 @@ module.exports = {
         pattern: '**/*.md',
         strictExt: true,
         ignoreFilePattern: ['document_structure'],
-        ignoreHashPattern: ['actions-2', 'primary-key-2'],
+        ignoreHashPattern: ['actions-2', 'primary-key-2', 'query-parameters-2', 'query-parameters-3'],
         exitLevel: 'warn',
       },
     ],

@@ -123,6 +123,13 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.max_indexing_memory`                        | Value of `--max-indexing-memory`/`MEILI_MAX_INDEXING_MEMORY` in bytes                       | 336042103
 | `infos.max_indexing_threads`                       | Value of `--max-indexing-threads`/`MEILI_MAX_INDEXING_THREADS` in integer                   | 4
 | `infos.log_level`                                  | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
+| `infos.ssl_auth_path`                              | `true` if `--ssl-auth-path`/`MEILI_SSL_AUTH_PATH` is specified, otherwise `false`           | false
+| `infos.ssl_cert_path`                              | `true` if `--ssl-cert-path`/`MEILI_SSL_CERT_PATH` is specified, otherwise `false`           | false
+| `infos.ssl_key_path`                               | `true` if `--ssl-key-path`/`MEILI_SSL_KEY_PATH` is specified, otherwise `false`             | false
+| `infos.ssl_ocsp_path`                              | `true` if `--ssl-ocsp-path`/`MEILI_SSL_OCSP_PATH` is specified, otherwise `false`           | false
+| `infos.ssl_require_auth`                           | Value of `--ssl-require-auth`/`MEILI_SSL_REQUIRE_AUTH` as a boolean                         | false
+| `infos.ssl_resumption`                             | `true` if `--ssl-resumption`/`MEILI_SSL_RESUMPTION` is specified, otherwise `false`         | false
+| `infos.ssl_tickets`                                | `true` if `--ssl-tickets`/`MEILI_SSL_TICKETS` is specified, otherwise `false`               | false
 | `system.distribution`                              | Distribution on which Meilisearch is launched                                               | Arch Linux
 | `system.kernel_version`                            | Kernel version on which Meilisearch is launched                                             | 5.14.10
 | `system.cores`                                     | Number of cores                                                                             | 24
@@ -134,8 +141,8 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `start_since_days`                                 | Number of days since instance was launched                                                  | 365
 | `user_agent`                                       | User-agent header encountered during API calls                                              | ["Meilisearch Ruby (2.1)", "Ruby (3.0)"]
 | `requests.99th_response_time`                      | Highest latency from among the fastest 99% of successful search requests                    | 57ms
-| `requests.total_succeeded`                         | Total number of successful search requests                                                  | 3456
-| `requests.total_failed`                            | Total number of failed search requests                                                      | 24
+| `requests.total_succeeded`                         | Total number of successful requests                                                         | 3456
+| `requests.total_failed`                            | Total number of failed requests                                                             | 24
 | `requests.total_received`                          | Total number of received search requests                                                    | 3480
 | `sort.with_geoPoint`                               | `true` if the sort rule `_geoPoint` is specified, otherwise `false`                         | true
 | `sort.avg_criteria_number`                         | Average number of sort criteria among all search requests containing the `sort` parameter   | 2
@@ -144,25 +151,43 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `q.max_terms_number`                               | Highest number of terms given for the `q` parameter                                         | 5
 | `pagination.max_limit`                             | Highest value given for the `limit` parameter                                               | 60
 | `pagination.max_offset`                            | Highest value given for the `offset` parameter                                              | 1000
+| `formatting.max_attributes_to_retrieve`            | Maximum number of attributes to retrieve                                                    | 100
+| `formatting.max_attributes_to_highlight`           | Maximum number of attributes to highlight                                                   | 100
 | `formatting.highlight_pre_tag`                     | `true` if `highlightPreTag` is specified, otherwise `false`                                 | false
 | `formatting.highlight_post_tag`                    | `true` if `highlightPostTag` is specified, otherwise `false`                                | false
+| `formatting.max_attributes_to_crop`                | Maximum number of attributes to crop | 100
 | `formatting.crop_length`                           | `true` if `cropLength` is specified, otherwise `false`                                      | false
 | `formatting.crop_marker`                           | `true` if `cropMarker` is specified, otherwise `false`                                      | false
 | `formatting.show_matches_position`                 | `true` if `showMatchesPosition` is used in this batch, otherwise `false`                    | false
-| `facets`                                           | `true` if `facets` is used in this batch, otherwise `false`                                 | false
+| `facets.avg_facets_number`                         | Average number of facets                                                                    | 10
 | `primary_key`                                      | Name of primary key when explicitly set as part of document addition, document update, index creation, or index update. Otherwise `null` | id
 | `payload_type`                                     | All values encountered in the `Content-Type` header, including invalid ones                 | ["application/json", "text/plain", "application/x-ndjson"]
 | `index_creation`                                   | `true` if a document addition or update request triggered index creation, otherwise `false` | true
+| `ranking_rules.words_position`                     | Position of the `words` ranking rule if any, otherwise `null`                               | 1
+| `ranking_rules.typo_position`                      | Position of the `typo` ranking rule if any, otherwise `null`                                | 2
+| `ranking_rules.proximity_position`                 | Position of the `proximity` ranking rule if any, otherwise `null`                           | 3
+| `ranking_rules.attribute_position`                 | Position of the `attribute` ranking rule if any, otherwise `null`                           | 4
 | `ranking_rules.sort_position`                      | Position of the `sort` ranking rule                                                         | 5
+| `ranking_rules.exactness_position`                 | Position of the `exactness` ranking rule if any, otherwise `null`                           | 6
+| `ranking_rules.values`                             | A string representing the ranking rules without the custom asc-desc rules                   | "words, typo, attribute, sort, exactness"
 | `sortable_attributes.total`                        | Number of sortable attributes                                                               | 3
 | `sortable_attributes.has_geo`                      | `true` if `_geo` is set as a sortable attribute, otherwise `false`                          | true
 | `filterable_attributes.total`                      | Number of filterable attributes                                                             | 3
 | `filterable_attributes.has_geo`                    | `true` if `_geo` is set as a filterable attribute, otherwise `false`                        | false
 | `searchable_attributes.total`                      | Number of searchable attributes                                                             | 4
-| `per_task_uid`                                     | `true` if a `uid` is used to fetch a particular task resource, otherwise `false`            | true
-| `filtered_by_index_uid`                            | `true` if the `GET /tasks` endpoint is filtered by `indexUid`, otherwise `false`            | false
-| `filtered_by_type`                                 | `true` if the `GET /tasks` endpoint is filtered by `type`, otherwise `false`                | false
-| `filtered_by_status`                               | `true` if the `GET /tasks` endpoint is filtered by `status`, otherwise `false`              | false
+| `searchable_attributes.with_wildcard`              | `true` if `*` is specified as a searchable attribute, otherwise `false`                     | false
+| `per_task_uid`                                     | `true` if a `uids` is used to fetch a particular task resource, otherwise `false`           | true
+| `filtered_by_uid`                                  | `true` if tasks are filtered by the `uids` query parameter, otherwise `false`               | false
+|`filtered_by_index_uid`                             | `true` if tasks are filtered by the `indexUids` query parameter, otherwise `false`          | false
+| `filtered_by_type`                                 | `true` if tasks are filtered by the `types` query parameter, otherwise `false`              | false
+| `filtered_by_status`                               | `true` if tasks are filtered by the `statuses` query parameter, otherwise `false`           | false
+| `filtered_by_canceled_by`                          | `true` if tasks are filtered by the `canceledBy` query parameter, otherwise `false`         | false
+| `filtered_by_before_enqueued_at`                   | `true` if tasks are filtered by the `beforeEnqueuedAt` query parameter, otherwise `false`   | false
+| `filtered_by_after_enqueued_at`                    | `true` if tasks are filtered by the `afterEnqueuedAt` query parameter, otherwise `false`    | false
+| `filtered_by_before_started_at`                    | `true` if tasks are filtered by the `beforeStartedAt` query parameter, otherwise `false`    |  false
+| `filtered_by_after_started_at`                     | `true` if tasks are filtered by the `afterStartedAt` query parameter, otherwise `false`     | false
+| `filtered_by_before_finished_at`                   | `true` if tasks are filtered by the `beforeFinishedAt` query parameter, otherwise `false`   | false
+| `filtered_by_after_finished_at`                    | `true` if tasks are filtered by the `afterFinishedAt` query parameter, otherwise `false`    | false
 | `typo_tolerance.enabled`                           | `true` if typo tolerance is enabled, otherwise `false`                                      | true
 | `typo_tolerance.disable_on_attributes`             | `true` if at least one value is defined for `disableOnAttributes`, otherwise `false`        | false
 | `typo_tolerance.disable_on_words`                  | `true` if at least one value is defined for `disableOnWords`, otherwise `false`             | false
@@ -170,6 +195,17 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `typo_tolerance.min_word_size_for_typos.two_typos` | The defined value for the `minWordSizeForTypos.twoTypos` parameter                          | 9
 | `pagination.max_total_hits`                        | The defined value for the `pagination.maxTotalHits` property                                | 1000
 | `faceting.max_values_per_facet`                    | The defined value for the `faceting.maxValuesPerFacet` property                             | 100
+| `distinct_attribute.set`                           | `true` if a field name is specified, otherwise `false`                                      | false
+| `displayed_attributes.total`                       | Number of displayed attributes                                                              | 3
+| `displayed_attributes.with_wildcard`               | `true` if `*` is specified as a displayed attribute, otherwise `false`                      | false
+| `stop_words.total`                                 | Number of stop words                                                                        | 3
+| `synonyms.total`                                   | Number of synonyms                                                                          | 3
 | `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | false
-| `most_used_matching_strategy`                      | The most used word matching strategy among all search requests in the aggregated event      | `last`
-| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false` | true
+| `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
+| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false`     | true
+| `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
+| `swap_operation_number`                            | Number of swap operations                                                                   | 2
+| `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated
+| `per_document_id`                                  | `true` if the `DELETE /indexes/:indexUid/documents/:documentUid` endpoint was used, otherwise `false` | false
+| `clear_all`                                        | `true` if the `DELETE /indexes/:indexUid/documents` endpoint was used, otherwise `false`    | false
+| `per_batch`                                        | `true` if the `POST /indexes/:indexUid/documents/delete-batch` endpoint was used, otherwise `false`   | false

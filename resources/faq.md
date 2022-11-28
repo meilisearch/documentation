@@ -45,6 +45,7 @@ Here is an example of a failed task:
     "indexUid": "movies",
     "status": "failed",
     "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
     "details": { 
             "receivedDocuments": 67493,
             "indexedDocuments": 0

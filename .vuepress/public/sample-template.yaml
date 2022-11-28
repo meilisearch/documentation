@@ -18,8 +18,6 @@ delete_documents_1: |-
 search_post_1: |-
 get_all_tasks_1: |-
 get_task_1: |-
-get_all_tasks_filtering_1: |-
-get_all_tasks_filtering_2: |-
 get_all_tasks_paginating_1: |-
 get_all_tasks_paginating_2: |-
 get_one_key_1: |-
@@ -64,6 +62,8 @@ filtering_guide_3: |-
 search_parameter_guide_query_1: |-
 search_parameter_guide_offset_1: |-
 search_parameter_guide_limit_1: |-
+search_parameter_guide_hitsperpage_1: |-
+search_parameter_guide_page_1: |-
 search_parameter_guide_retrieve_1: |-
 search_parameter_guide_crop_1: |-
 search_parameter_guide_highlight_1: |-
@@ -159,3 +159,13 @@ date_guide_filterable_attributes_1: |
 date_guide_filter_1: |
 date_guide_sortable_attributes_1: |
 date_guide_sort_1: |
+async_guide_filter_by_date_1: |
+async_guide_canceled_by_1: |
+async_guide_multiple_filters_1: |
+async_guide_filter_by_ids_1: |
+async_guide_filter_by_statuses_1: |
+async_guide_filter_by_types_1: |
+async_guide_filter_by_index_uids_1: |
+cancel_tasks_1: |
+delete_tasks_1: |
+swap_indexes_1: |
