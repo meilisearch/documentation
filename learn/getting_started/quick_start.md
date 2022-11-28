@@ -181,7 +181,6 @@ The previous command added documents from `movies.json` to a new index called `m
 
 Every index must have a [primary key](/learn/core_concepts/primary_key.md#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-
 By default, Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called [auto-batching](/learn/core_concepts/documents.md#auto-batching), and it significantly speeds up indexing. After adding documents, you should receive a response like this:
 
 ```json
