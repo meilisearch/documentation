@@ -177,7 +177,7 @@ Meilisearch stores data in the form of discrete records, called [documents](/lea
 Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You can read more about this in our [documents guide](/learn/core_concepts/documents.md#dataset-format).
 :::
 
-The previous command added documents from `movies.json` to a new index called `movies` and set `id` as the primary key. If it isn't set manually, Meilisearch [infers](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) it from your dataset. 
+The previous command added documents from `movies.json` to a new index called `movies` and set `id` as the primary key. If it isn't set manually, Meilisearch [infers](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) it from your dataset.
 
 Every index must have a [primary key](/learn/core_concepts/primary_key.md#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
