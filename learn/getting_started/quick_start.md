@@ -275,21 +275,15 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 At this point, you can configure your Meilisearch instance and customize your index. When searching, you can use search parameters to refine your results.
 
-### Instance options
+You can configure your Meilisearch instance with:
 
-These allow you to configure your Meilisearch instance at launch with [environment variables](/learn/configuration/instance_options.md#environment-variables) and [command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags). You need to relaunch your instance to alter them.
+- [Environment variables](/learn/configuration/instance_options.md#environment-variables) and [command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags) provided at launch
 
-**Instance options affect your entire Meilisearch instance**, not just a single index.
+- A [configuration file](/learn/configuration/instance_options.md#configuration-file) in `.toml` format
 
-#### Configuration file
-
-As an alternative to providing command-line options or environment variables at launch, you can configure your Meilisearch instance using a [configuration file](/learn/configuration/instance_options.md#configuration-file) in `.toml` format. If a configuration file is present at the root of your working directory, it will be loaded at launch.
-
-### Index settings
+**Both options affect your entire Meilisearch instance**, not just a single index.
 
 [Index settings](/reference/api/settings.md) allow you to customize search behavior. You can either update all settings globally using the [update settings endpoint](/reference/api/settings.md#update-settings) or individually using a specific child route.
-
-### Search parameters
 
 [Search parameters](/reference/api/search.md#search-parameters) are used with the search endpoints to improve relevancy. They allow you to alter search results and behavior.
 

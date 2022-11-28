@@ -58,7 +58,7 @@ In the previous example, `./meilisearch` is the command that launches a Meilisea
 
 Environment variables for command-line flags accept `n`, `no`, `f`, `false`, `off`, and `0` as `false`. An absent environment variable will also be considered as `false`. Any other value is considered `true`.
 
-Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase. **Some options (e.g., `--import-snapshots`) are not available as environment variables.**
+Environment variables are always identical to the corresponding command-line option, but prepended with `MEILI_` and written in all uppercase.
 
 ## Configuration file
 
