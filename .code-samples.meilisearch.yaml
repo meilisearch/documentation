@@ -527,7 +527,7 @@ add_movies_json_1: |-
 getting_started_add_documents_md: |-
   ```bash
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/documents' \
+    -X POST 'http://localhost:7700/indexes/movies/documents?primaryKey=id' \
     -H 'Content-Type: application/json' \
     --data-binary @movies.json
   ```
