@@ -144,7 +144,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Status page | ✅ | ✅ | ✅ | ✅ |
-| Free support channels | Instant messaging / chatbox (2-3h delay),<br> emails, <br> public Slack community, <br> GitHub issues & discussions,<br> Slack Connect | Instant messaging / chatbox, <br> public community forum |  Instant messaging/chatbox (24h-48h delay),<br> public Slack community, <br> GitHub issues. | Public Slack community, <br> public community forum,<br> GitHub issues |
+| Free support channels | Instant messaging / chatbox (2-3h delay),<br> emails, <br> public Discord community, <br> GitHub issues & discussions | Instant messaging / chatbox, <br> public community forum |  Instant messaging/chatbox (24h-48h delay),<br> public Slack community, <br> GitHub issues. | Public Slack community, <br> public community forum,<br> GitHub issues |
 | Paid support channels | _Support is free!_ | Emails | Emails, <br> phone, <br> private Slack | Web support, <br> emails, <br> phone |
 
 ## Approach comparison
