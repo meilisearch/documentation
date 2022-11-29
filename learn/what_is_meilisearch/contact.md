@@ -1,19 +1,26 @@
 # Contact us
 
-## Forum 📋
-
-Our preferred method of communication is our [forum on GitHub Discussions](https://github.com/meilisearch/meilisearch/discussions) (beta hype!). Asynchronous long-form discussion enables our increasingly distributed team and community to communicate across multiple timezones with minimal repetition.
-
-Your project announcements, feature proposals, support queries and sweet, sweet praise all belongs in the forum.
-
 ## Chat 💬
 
-Prefer the speed and fluidity of chat? Then join our [Slack community](https://slack.meilisearch.com/).
+We love to chat directly with users in our [Discord community](https://discord.gg/meilisearch)! Use it to:
 
-We think chat and forum discussions are [highly complementary](https://blog.discourse.org/2018/04/effectively-using-discourse-together-with-group-chat/), happily co-existing as two different modes of conversation. Try use the right tool for the job; but most importantly we just want to hear from you, regardless of medium!
+- **Connect** with other Meilisearch users
+- **Get support** from Meilisearch team members
+- **Give feedback** on the engine, integrations, or documentation
+- **Share what you've made** with Meilisearch
 
-## GitHub issues 🔩
+And much more!
 
-Bug reports should be added as issues in the corresponding repository, e.g., [meilisearch](https://github.com/meilisearch/meilisearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
+## Forum 📋
+
+Prefer asynchronous long-form discussion? Check out our [forum on GitHub Discussions](https://github.com/meilisearch/meilisearch/discussions) for support requests, feature proposals, and more.
+
+## Bug report 🛠️
+
+If you have a bug to report, please add it as an issue in the corresponding repository, e.g., [meilisearch](https://github.com/meilisearch/meilisearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
+
+## Product roadmap 🛣️
+
+Have a feature you'd like to see in a future Meilisearch release? Add or upvote it on our [public product roadmap](https://roadmap.meilisearch.com/tabs/1-under-consideration).
 
 _Any suggestion or feedback is highly appreciated. Thank you for your support!_
