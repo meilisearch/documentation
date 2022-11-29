@@ -116,8 +116,8 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |---|:---:|:----:|:---:|:---:|
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
 | Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
-| Official cloud-hosted solution | [Join the beta](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=comparative-table) | ✅ | ✅ | ✅ |
-| High availability | Available with [Meilisearch Cloud](https://meilisearch.typeform.com/to/FtnzvZfh?typeform-source=www.meilisearch.com) | ✅ | ✅ | ✅ |
+| Official cloud-hosted solution | [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
+| High availability | Available with [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
 | Upgrade path | Documents need to be reindexed | N/A  | Documents need to be reindexed | Documents need to be reindexed |
