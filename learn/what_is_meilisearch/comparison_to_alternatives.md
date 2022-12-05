@@ -151,14 +151,15 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 ### Meilisearch vs Elasticsearch
 
-Elasticsearch has been designed as a backend search engine and, although it is not at first suited for this purpose, is commonly used to build search bars for the end-users.
-Unlike Elasticsearch, which is a general search engine, Meilisearch focuses on delivering a specific kind of features.
+Elasticsearch is designed as a backend search engine. Although it is not suited for this purpose, it is commonly used to build search bars for end-users.
 
-Elasticsearch can handle search through massive amounts of data and perform text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to customize and tailor it to fit your needs.
-Meilisearch is intended to deliver performant instant search experiences aimed at end-users. However, processing complex queries or analyzing very large datasets is not possible.
+Elasticsearch can handle searching through massive amounts of data and performing text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to customize and tailor it to fit your needs.
+
+Unlike Elasticsearch, which is a general search engine designed for large amounts of log data (i.e. back-facing search), Meilisearch is intended to deliver performant instant-search experiences aimed at end-users (i.e. front-facing search).
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to Meilisearch.
-Meilisearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides prefix searching capability, makes search intuitive for users, and returns results instantly with near-perfect relevance.
+
+Meilisearch is a perfect choice if you need a simple and easy tool to deploy a typo-tolerant search bar that provides prefix searching capability, makes search intuitive for users, and returns results instantly with excellent relevance out of the box.
 
 ### Meilisearch vs Algolia
 

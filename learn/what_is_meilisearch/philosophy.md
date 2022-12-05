@@ -24,12 +24,10 @@ You can also **configure the [search parameters](/reference/api/search.md)** to 
 
 Meilisearch aims to be your go-to search backend when you want to build a great search experience for your end-users.
 
-It's not designed for searching through large data collections (> 10M documents) or industrial applications.
-
-As a result, we are fully committed to the philosophy of [prefix search](https://en.wikipedia.org/wiki/Trie).
+Meilisearch is designed for front-facing search, i.e. search for users of your site, app, or product. As a result, we are fully committed to the philosophy of [prefix search](https://en.wikipedia.org/wiki/Trie).
 
 ### Anti-pattern
 
-Meilisearch should **not be your main data store**. Meilisearch should contain only the data you want your users to search through. The more data Meilisearch contains, the less relevant it is.
+Meilisearch should **not be your main data store**. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/configuration/displayed_searchable_attributes.md#searchable-fields) to improve relevancy and response time.
 
 Meilisearch queries should be sent directly from the front-end. The more proxies there are between Meilisearch and the end-user, the slower the queries and search experience will be.
