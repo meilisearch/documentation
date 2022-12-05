@@ -296,7 +296,7 @@ This will give you a list of documents that contain your query terms in at least
       "id": 50393,
       "title": "Kung Fu Panda Holiday",
       "poster": "https://image.tmdb.org/t/p/w500/rV77WxY35LuYLOuQvBeD1nyWMuI.jpg",
-      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers.",
+      "overview": "The Winter Feast is Po's favorite holiday. Every year he and his father hang decorations, cook together, and serve noodle soup to the villagers. But this year Shifu informs Po that as Dragon Warrior, it is his duty to host the formal Winter Feast at the Jade Palace.",
       "release_date": 1290729600,
       "genres": [
         "Animation",
