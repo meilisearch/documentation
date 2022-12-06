@@ -217,7 +217,7 @@ You can use the response's `taskUid` to [track the status of your request](/refe
 
 ## Swap indexes
 
-<RouteHighlighter method="POST" route="/indexes/swap-indexes"/>
+<RouteHighlighter method="POST" route="/swap-indexes"/>
 
 Swap the documents, settings, and task history of two or more indexes. **You can only swap indexes in pairs.** However, a single request can swap as many index pairs as you wish.
 
