@@ -319,7 +319,7 @@ If you try retrieving a deleted task, Meilisearch will return a [`task_not_found
 
 ## Cancel tasks
 
-<RouteHighlighter method="POST" route="/tasks/cancel?{task_uid}"/>
+<RouteHighlighter method="POST" route="/tasks/cancel?{query_parameter}"/>
 
 Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `status`, `type`, `indexUid`, or the date at which they were enqueued, processed, or completed.
 
@@ -386,7 +386,7 @@ The API key used must have access to all indexes (`"indexes": [*]`) and the [`ta
 
 ## Delete tasks
 
-<RouteHighlighter method="DELETE" route="/tasks?{task_uid}"/>
+<RouteHighlighter method="DELETE" route="/tasks?{query_parameter}"/>
 
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
