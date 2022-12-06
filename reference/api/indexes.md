@@ -229,16 +229,16 @@ Swapping `indexA` and `indexB` will also replace every mention of `indexA` by `i
 
 ### Body
 
-An object containing some string arrays, each called `indexes`.
+An array of objects. Each object has only one key: `indexes`.
 
 | Name           | Type             | Default value | Description                                |
 | :------------- | :--------------- | :------------ | :----------------------------------------- |
 | **`indexes`*** | Array of strings | N/A           | Array of the two `indexUid`s to be swapped |
 
-::: note
-You can send multiple `indexes` arrays in a single request. Each `indexes` array should contain only two elements: the `indexUid`s of the two indexes to be swapped.
+Each `indexes` array must contain only two elements: the `indexUid`s of the two indexes to be swapped. Sending an empty array (`[]`) is valid, but no swap operation will be performed.
 
-Sending `[]` is valid but no swap operation will be performed.
+::: note
+You can swap multiple pairs of indexes with a single request. To do so, there must be one object for each pair of indexes to be swapped.
 :::
 
 ### Example
