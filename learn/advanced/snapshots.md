@@ -50,7 +50,7 @@ meilisearch --import-snapshot mySnapShots/data.ms.snapshot
 
 Take note that whenever you launch Meilisearch from a snapshot, it will **stop processing and throw an error** if it encounters either of the two following situations:
 
-1. A database already exists (i.e., you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary)
+1. A database already exists (that is, you have a non-empty `data.ms` folder in the same directory as your Meilisearch binary)
 2. No snapshot is found at the given path
 
 In both cases, **this behavior is [configurable](/learn/configuration/instance_options.md#ignore-missing-snapshot)**.

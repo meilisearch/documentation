@@ -61,7 +61,7 @@ You can also create [filters](/learn/advanced/filtering_and_faceted_search.md). 
 
 ## Boolean
 
-A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (i.e., `true` and `false`). Booleans can be searched as they are converted to strings.
+A Boolean value, which is either `true` or `false`, is received and converted to a lowercase human-readable text (that is, `true` and `false`). Booleans can be searched as they are converted to strings.
 
 ## `null`
 

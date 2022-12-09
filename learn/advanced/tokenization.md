@@ -8,7 +8,7 @@ This allows Meilisearch to function in several different languages with zero set
 
 ## Deep dive: The Meilisearch tokenizer
 
-When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called the tokenizer. The tokenizer is responsible for splitting each field by writing system (e.g. Latin alphabet, Chinese hanzi). It then applies the corresponding pipeline to each part of each document field.
+When you add documents to a Meilisearch index, the tokenization process is handled by an abstract interface called the tokenizer. The tokenizer is responsible for splitting each field by writing system (for example Latin alphabet, Chinese hanzi). It then applies the corresponding pipeline to each part of each document field.
 
 We can break down the tokenization process like so:
 

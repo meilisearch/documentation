@@ -2,7 +2,7 @@
 
 This quick start will walk you through setting up Meilisearch, adding documents, performing your first search, using the search preview, adding a search bar, and securing your instance.
 
-All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (e.g., [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
+All that is required is a [command line](https://www.learnenough.com/command-line-tutorial#sec-running_a_terminal) for installation, and some way to interact with Meilisearch afterwards (for example, [cURL](https://curl.se) or one of our [SDKs](/learn/what_is_meilisearch/sdks.md)).
 
 Let's get started!
 

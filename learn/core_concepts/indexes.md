@@ -89,7 +89,7 @@ By default, Meilisearch returns `100` facet values for each faceted field. You c
 
 ### Filterable attributes
 
-Filtering allows you to refine your search based on different categories. For example, you could search for all movies of a certain `genre`, e.g., `Science Fiction`, with a `rating` above `8`.
+Filtering allows you to refine your search based on different categories. For example, you could search for all movies of a certain `genre`, for example, `Science Fiction`, with a `rating` above `8`.
 
 Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/settings.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
@@ -119,7 +119,7 @@ Add the attributes you'd like to sort by to `sortableAttributes` using the [upda
 
 ### Stop words
 
-Your dataset may contain words you want to ignore during search because, for example, they don't add semantic value or occur too frequently (e.g., `the` or `of` in English). You can add these words to the [stop words list](/reference/api/settings.md#stop-words) and Meilisearch will ignore them during search.
+Your dataset may contain words you want to ignore during search because, for example, they don't add semantic value or occur too frequently (for example, `the` or `of` in English). You can add these words to the [stop words list](/reference/api/settings.md#stop-words) and Meilisearch will ignore them during search.
 
 Change your index's stop words list using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/settings.md#update-stop-words). In addition to improving relevancy, designating common words as stop words greatly improves performance.
 
@@ -135,7 +135,7 @@ Since synonyms are defined for a given index, they won't apply to any other inde
 
 ### Typo tolerance
 
-Typo tolerance is a built-in feature that helps you find relevant results even when your search queries contain spelling mistakes or typos, e.g., typing `chickne` instead of `chicken`. This setting allows you to do the following for your index:
+Typo tolerance is a built-in feature that helps you find relevant results even when your search queries contain spelling mistakes or typos, for example, typing `chickne` instead of `chicken`. This setting allows you to do the following for your index:
 
 - Enable or disable typo tolerance
 - Configure the minimum word size for typos
