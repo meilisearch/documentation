@@ -18,7 +18,7 @@ Our documentation aims to be:
 On the Meilisearch documentation team, [GitHub Issues](https://github.com/meilisearch/documentation/issues/new/choose) are the primary tool we use to track tasks. They're like elements in our to-do list. Here are some good uses for issues:
 
 - A detailed bug report
-- A request for a new technical feature (for example dark mode, versioning, etc.)
+- A request for a new technical feature (for example, dark mode, versioning, etc.)
 - A request for new content (for example, a tutorial, guide, or explanation)
 - A helpful suggestion for the future of the documentation
 
