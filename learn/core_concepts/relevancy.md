@@ -13,7 +13,7 @@ In order to ensure relevant results, search responses are sorted based on a set 
 
 Each index possesses a list of ranking rules stored as an array in the [settings object](/reference/api/settings.md). This array is **fully customizable**, meaning you can **delete existing rules, add new ones, and reorder them as needed**.
 
-Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents whenever a search query is made. The first ranking rule is applied to all documents, while each subsequent rule is only applied to documents that are considered equal under the previous rule (that is, as a tiebreaker).
+Meilisearch uses a [bucket sort](https://en.wikipedia.org/wiki/Bucket_sort) algorithm to rank documents whenever a search query is made. The first ranking rule applies to all documents, while each subsequent rule is only applied to documents considered equal under the previous rule as a tiebreaker.
 
 **The order in which ranking rules are applied matters.** The first rule in the array has the most impact, and the last rule has the least. Our default configuration meets most standard needs, but [you can change it](/reference/api/settings.md#update-ranking-rules).
 
