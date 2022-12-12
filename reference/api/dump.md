@@ -8,7 +8,7 @@ The `/dumps` route allows the creation of database dumps. Dumps are `.dump` file
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-Triggers a dump creation task. Once the process is complete, a dump is created in the [dumps directory](/learn/configuration/instance_options.md#dumps-destination). If the dumps directory does not exist yet, it will be created.
+Triggers a dump creation task. Once the process is complete, a dump is created in the [dumps directory](/learn/configuration/instance_options.md#dumps-directory). If the dumps directory does not exist yet, it will be created.
 
 Dump tasks take priority over all other tasks in the queue. This means that a newly created dump task will be processed as soon as the current task is finished.
 

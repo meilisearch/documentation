@@ -131,7 +131,7 @@ Now that all fields are displayed, proceed to the next step.
 
 ## Step 3: Create the dump
 
-Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options.md#dumps-destination) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
+Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options.md#dumps-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 ::: note
 If you are running Meilisearch in a service using `systemd`, like AWS or a DO droplet, the dumps folder can be found in the configuration file directory, `cd /var/opt/meilisearch/dumps`.
