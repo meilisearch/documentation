@@ -24,7 +24,7 @@ You can also **configure the [search parameters](/reference/api/search.md)** to 
 
 Meilisearch aims to be your go-to search backend when you want to build a great search experience for your end-users.
 
-Meilisearch is designed for front-facing search, that is search for users of your site, app, or product. As a result, we are fully committed to the philosophy of [prefix search](https://en.wikipedia.org/wiki/Trie).
+Meilisearch is designed for front-facing search, search for users of your site, app, or product. As a result, we are fully committed to the philosophy of [prefix search](https://en.wikipedia.org/wiki/Trie).
 
 ### Anti-pattern
 
