@@ -10,7 +10,7 @@ This guide does not work for versions below v0.15. For more information, [contac
 
 ## Step 1: Verify your database version
 
-Before we begin, you need to verify the version of Meilisearch that's compatible with your database, that is, the version that indexed the data. You can do so by launching a Meilisearch instance:
+Before we begin, you need to verify the version of Meilisearch that's compatible with your database, in other words, the version that indexed the data. You can do so by launching a Meilisearch instance:
 
 ```bash
 ./meilisearch --master-key="MASTER_KEY"
