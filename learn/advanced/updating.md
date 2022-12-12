@@ -38,7 +38,7 @@ The response should look something like this:
 
 If you get the error `Cannot open database, expected Meilisearch engine version: 0.X.X, current engine version 0.Y.Y`, your database is not compatible with the currently installed Meilisearch version.
 
-In this case, you need to download the compatible version now (that is, `0.X.X` in the above error message) to access and export your database.
+In this case, you need to download the compatible version now (`0.X.X` in the above error message) to access and export your database.
 
 :::: tabs
 
