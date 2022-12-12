@@ -89,7 +89,7 @@ By default, Meilisearch returns `100` facet values for each faceted field. You c
 
 ### Filterable attributes
 
-Filtering allows you to refine your search based on different categories. For example, you could search for all movies of a certain `genre`, for example, `Science Fiction`, with a `rating` above `8`.
+Filtering allows you to refine your search based on different categories. For example, you could search for all movies of a certain `genre`: `Science Fiction`, with a `rating` above `8`.
 
 Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/settings.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
