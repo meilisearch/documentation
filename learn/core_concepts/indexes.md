@@ -119,7 +119,7 @@ Add the attributes you'd like to sort by to `sortableAttributes` using the [upda
 
 ### Stop words
 
-Your dataset may contain words you want to ignore during search because, for example, they don't add semantic value or occur too frequently (for example, `the` or `of` in English). You can add these words to the [stop words list](/reference/api/settings.md#stop-words) and Meilisearch will ignore them during search.
+Your dataset may contain words you want to ignore during search because, for example, they don't add semantic value or occur too frequently (for instance, `the` or `of` in English). You can add these words to the [stop words list](/reference/api/settings.md#stop-words) and Meilisearch will ignore them during search.
 
 Change your index's stop words list using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update stop words endpoint](/reference/api/settings.md#update-stop-words). In addition to improving relevancy, designating common words as stop words greatly improves performance.
 
