@@ -18,7 +18,7 @@ A document is an object composed of one or more fields. Each field consists of a
 
 A field is a set of two data items linked together: an attribute and a value. Documents are made up of fields.
 
-An attribute functions a bit like a variable in most programming languages, that is, it is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
+An attribute functions a bit like a variable in most programming languages. It is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
 
 Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
