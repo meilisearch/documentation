@@ -234,7 +234,7 @@ Meilisearch automatically collects data from all instances that do not opt out u
 
 [Read more about our policy on data collection](/learn/what_is_meilisearch/telemetry.md), or take a look at [the comprehensive list of all data points we collect](/learn/what_is_meilisearch/telemetry.md#exhaustive-list-of-all-collected-data).
 
-### Dumps destination
+### Dumps directory
 
 **Environment variable**: `MEILI_DUMPS_DIR`
 **CLI option**: `--dumps-dir`
