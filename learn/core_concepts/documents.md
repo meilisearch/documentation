@@ -132,7 +132,7 @@ Auto-batching combines consecutive document addition requests into a single batc
 Meilisearch batches document addition requests when they:
 
 - Target the same index
-- Have the same update method (that is, [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
+- Have the same update method ([POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Are immediately consecutive
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.
