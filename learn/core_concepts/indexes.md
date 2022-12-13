@@ -18,7 +18,11 @@ One index's settings do not impact other indexes. For example, you could use a d
 
 ## Index creation
 
-If you try to add documents or settings to an index that does not already exist, Meilisearch will automatically create it for you. You can also create indexes manually using the [create index endpoint](/reference/api/indexes.md#create-an-index).
+If you try to add documents or settings to an index that does not already exist, Meilisearch will automatically create it for you.
+
+### Explicit index creation
+
+You can explicitly create an index with custom search settings using the [create index endpoint.](/reference/api/indexes.md#create-an-index) Once created, you can add documents using the [add documents endpoint.](/reference/api/documents.md#add-or-update-documents) Though accomplished using a single command, the index creation and document addition actions are separate. Hence, it is possible that one of them might not complete successfully. This can cause errors or missing documents.
 
 ## Index UID
 
