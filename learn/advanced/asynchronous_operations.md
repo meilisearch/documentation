@@ -17,12 +17,16 @@ Currently, these are Meilisearch's asynchronous operations:
 
 - Creating an index
 - Updating an index
+- Swapping indexes
 - Deleting an index
 - Updating index settings
 - Adding documents to an index
 - Updating documents in an index
 - Deleting documents from an index
+- Canceling a task
+- Deleting a task
 - Creating a dump
+- Creating snapshots
 
 ## Understanding tasks
 
