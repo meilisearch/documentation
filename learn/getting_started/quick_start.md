@@ -285,7 +285,7 @@ If you have multiple indexes, you can switch between them using the indexes drop
 
 ## Customization
 
-At this point, you can configure your entire Meilisearch instance, customize your index, and refine your results using:
+At this point, you can configure your entire Meilisearch instance, customize your indexes, and refine your results using:
 
 - [Environment variables](/learn/configuration/instance_options.md#environment-variables) and [command-line options](/learn/configuration/instance_options.md#command-line-options-and-flags)
 
