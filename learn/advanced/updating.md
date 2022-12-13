@@ -5,7 +5,7 @@ Currently, Meilisearch databases can only be opened by the Meilisearch version y
 If you already have a Meilisearch database with some data you don’t want to lose, you are in the right place!
 
 ::: danger
-This guide does not work for versions below v0.15. For more information, [contact support](https://slack.meilisearch.com/).
+This guide does not work for versions below v0.15. For more information, [contact support](https://discord.gg/meilisearch).
 :::
 
 ## Step 1: Verify your database version
