@@ -15,9 +15,9 @@ You can download the Meilisearch OpenAPI specifications at:
 
 This API documentation uses the following conventions:
 
-- Curly braces (`{}`) in API routes represent path parameters, e.g., GET `/indexes/{index_uid}`
+- Curly braces (`{}`) in API routes represent path parameters, for example, GET `/indexes/{index_uid}`
 - Required fields are marked by an asterisk (`*`)
-- Placeholder text is in uppercase characters with underscore delimiters, e.g., `MASTER_KEY`
+- Placeholder text is in uppercase characters with underscore delimiters, for example, `MASTER_KEY`
 
 ## Authorization
 
@@ -36,7 +36,7 @@ The [`/keys`](/reference/api/keys.md) route can only be accessed using the maste
 
 ## Pagination
 
-Meilisearch paginates all GET routes that return multiple resources, e.g., GET `/indexes`, GET `/documents`, GET `/keys`, etc. This allows you to work with manageable chunks of data. All these routes return 20 results per page, but you can configure it using the `limit` query parameter. You can move between pages using `offset`.
+Meilisearch paginates all GET routes that return multiple resources, for example, GET `/indexes`, GET `/documents`, GET `/keys`, etc. This allows you to work with manageable chunks of data. All these routes return 20 results per page, but you can configure it using the `limit` query parameter. You can move between pages using `offset`.
 
 All paginated responses contain the following fields:
 
@@ -60,7 +60,7 @@ These parameters are mandatory parts of POST, PUT, and PATCH requests. They acce
 
 ### Path parameters
 
-These are parameters you pass to the API in the endpoint's path. They are used to identify a resource uniquely. You can have multiple path parameters, e.g., `/indexes/{index_uid}/documents/{document_id}`.
+These are parameters you pass to the API in the endpoint's path. They are used to identify a resource uniquely. You can have multiple path parameters, for example, `/indexes/{index_uid}/documents/{document_id}`.
 
 If an endpoint does not take any path parameters, this section is not present in that endpoint's documentation.
 

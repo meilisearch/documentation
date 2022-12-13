@@ -141,7 +141,7 @@ The code below updates the primary key to `title`:
 
 ### Meilisearch guesses your primary key
 
-Suppose you add documents to an index without previously setting its primary key. In this case, Meilisearch will automatically look for an attribute containing the string `id` in a case-insensitive manner (e.g., `uid`, `BookId`, `ID`, `123id123`) in your first document and set it as the index's primary key.
+Suppose you add documents to an index without previously setting its primary key. In this case, Meilisearch will automatically look for an attribute containing the string `id` in a case-insensitive manner (for example, `uid`, `BookId`, `ID`, `123id123`) in your first document and set it as the index's primary key.
 
 If Meilisearch cannot find a suitable attribute, the document addition process will be interrupted and no documents will be added to your index.
 

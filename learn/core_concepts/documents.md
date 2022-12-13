@@ -18,7 +18,7 @@ A document is an object composed of one or more fields. Each field consists of a
 
 A field is a set of two data items linked together: an attribute and a value. Documents are made up of fields.
 
-An attribute functions a bit like a variable in most programming languages, i.e., it is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
+An attribute functions a bit like a variable in most programming languages. It is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
 
 Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
@@ -87,7 +87,7 @@ As an example, let's say you are creating an index that contains information abo
 In the above example:
 
 - `"id"`, `"title"`, `"genres"`, `"release-year"`, and `"cast"` are attributes
-- Each attribute is associated with a value, e.g., `"Kung Fu Panda"` is the value of `"title"`
+- Each attribute is associated with a value, for example, `"Kung Fu Panda"` is the value of `"title"`
 - The document contains a field with the primary key attribute and a unique document id as its value: `"id": "1564saqw12ss"`
 
 #### NDJSON
@@ -132,7 +132,7 @@ Auto-batching combines consecutive document addition requests into a single batc
 Meilisearch batches document addition requests when they:
 
 - Target the same index
-- Have the same update method (i.e., [POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
+- Have the same update method ([POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Are immediately consecutive
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.

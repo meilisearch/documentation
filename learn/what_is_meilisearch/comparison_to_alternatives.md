@@ -155,7 +155,7 @@ Elasticsearch is designed as a backend search engine. Although it is not suited 
 
 Elasticsearch can handle searching through massive amounts of data and performing text analysis. In order to make it effective for end-user searching, you need to spend time understanding more about how Elasticsearch works internally to be able to customize and tailor it to fit your needs.
 
-Unlike Elasticsearch, which is a general search engine designed for large amounts of log data (i.e. back-facing search), Meilisearch is intended to deliver performant instant-search experiences aimed at end-users (i.e. front-facing search).
+Unlike Elasticsearch, which is a general search engine designed for large amounts of log data (for example, back-facing search), Meilisearch is intended to deliver performant instant-search experiences aimed at end-users (for example, front-facing search).
 
 Elasticsearch can sometimes be too slow if you want to provide a full instant search experience. Most of the time, it is significantly slower in returning search results compared to Meilisearch.
 
@@ -229,11 +229,11 @@ Due to its extensible plugin architecture and customizable features, Solr is a s
 
 #### Bleve & Tantivy
 
-Bleve and Tantivy are search engine projects, respectively written in Golang and Rust, inspired by Apache Lucene and its algorithms (e.g., tf-idf, short for term frequency-inverse document frequency). Such as Lucene, both are libraries to be used for any search project; however they are not ready-to-use APIs.
+Bleve and Tantivy are search engine projects, respectively written in Golang and Rust, inspired by Apache Lucene and its algorithms (for example, tf-idf, short for term frequency-inverse document frequency). Such as Lucene, both are libraries to be used for any search project; however they are not ready-to-use APIs.
 
 #### Elasticsearch
 
-Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options, called index sharding, gives you the ability to divide indexes into physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing high-volume data streams, analyzing logs, and running complex queries. You can perform operations and analysis (e.g., calculate the average age of all users named "Thomas") on documents that match a specified query.
+Elasticsearch is a search engine based on the Lucene library and is most popular for full-text search. It provides a REST API accessed by JSON over HTTP. One of its key options, called index sharding, gives you the ability to divide indexes into physical spaces in order to increase performance and ensure high availability. Both Lucene and Elasticsearch have been designed for processing high-volume data streams, analyzing logs, and running complex queries. You can perform operations and analysis (for example, calculate the average age of all users named "Thomas") on documents that match a specified query.
 
 Today, Lucene and Elasticsearch are dominant players in the open-source search engine landscape. They both are solid solutions for a lot of different use cases in search, and also for building your own recommendation engine. They are good general products, but they require to be configured properly to get similar results to those of Meilisearch or Algolia.
 
@@ -241,7 +241,7 @@ Today, Lucene and Elasticsearch are dominant players in the open-source search e
 
 #### Algolia
 
-Algolia is a company providing a search engine on a SaaS model. Its software is closed source. In its early stages, Algolia offered mobile search engines that could be embedded in apps, facing the challenge of implementing the search algorithms from scratch. From the very beginning, the decision was made to build a search engine directly dedicated to the end-users, i.e., implementing search within mobile apps or websites.
+Algolia is a company providing a search engine on a SaaS model. Its software is closed source. In its early stages, Algolia offered mobile search engines that could be embedded in apps, facing the challenge of implementing the search algorithms from scratch. From the very beginning, the decision was made to build a search engine directly dedicated to the end-users, specifically, implementing search within mobile apps or websites.
 Algolia successfully demonstrated over the past few years how critical tolerating typos was in order to improve the users' experience, and in the same way, its impact on reducing bounce rate and increasing conversion.
 
 Apart from Algolia, a wide choice of SaaS products are available on the Search Engine Market. Most of them use Elasticsearch and fine-tune its settings in order to have a custom and personalized solution.

@@ -17,7 +17,7 @@ Prefer asynchronous long-form discussion? Check out our [forum on GitHub Discuss
 
 ## Bug report 🛠️
 
-If you have a bug to report, please add it as an issue in the corresponding repository, e.g., [meilisearch](https://github.com/meilisearch/meilisearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
+If you have a bug to report, please add it as an issue in the corresponding repository, for example, [meilisearch](https://github.com/meilisearch/meilisearch/issues), [meilisearch/documentation](https://github.com/meilisearch/documentation/issues) and so forth.
 
 ## Product roadmap 🛣️
 

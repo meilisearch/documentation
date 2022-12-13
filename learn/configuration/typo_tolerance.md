@@ -1,6 +1,6 @@
 # Typo tolerance
 
-Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, e.g., typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/settings.md#update-typo-tolerance-settings).
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, for example, typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/settings.md#update-typo-tolerance-settings).
 
 ## Configuring typo tolerance
 
@@ -77,9 +77,9 @@ Meilisearch uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/
 
 The [number of typos referenced above](#minwordsizefortypos) is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
 
-- substitution of a character (e.g., `kitten` → `sitten`)
-- insertion of a character (e.g., `siting` → `sitting`)
-- deletion of a character (e.g., `saturday` → `satuday`)
+- substitution of a character (for example, `kitten` → `sitten`)
+- insertion of a character (for example, `siting` → `sitting`)
+- deletion of a character (for example, `saturday` → `satuday`)
 
 By default, Meilisearch uses the following rules for matching documents. Note that these rules are **by word** and not for the whole query string.
 

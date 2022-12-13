@@ -247,7 +247,7 @@ Update the displayed attributes of an index.
 
 An array of strings. Each string should be an attribute that exists in the selected index.
 
-If an attribute contains an object, you can use dot notation to specify one or more of its keys, e.g., `"displayedAttributes": ["release_date.year"]`.
+If an attribute contains an object, you can use dot notation to specify one or more of its keys, for example, `"displayedAttributes": ["release_date.year"]`.
 
 ::: warning
 If the field does not exist, no error will be thrown.
@@ -349,7 +349,7 @@ Update the distinct attribute field of an index.
 
 A string. The string should be an attribute that exists in the selected index.
 
-If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, e.g., `"distinctAttribute": "product.skuid"`.
+If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, for example, `"distinctAttribute": "product.skuid"`.
 
 ::: warning
 If the field does not exist, no error will be thrown.

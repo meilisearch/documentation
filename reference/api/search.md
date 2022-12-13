@@ -578,9 +578,9 @@ You will get the following response with the **cropped text in the `_formatted` 
 
 Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop). If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
 
-Query terms are counted as part of the cropped value length. If `cropLength` is set to `2` and you search for one term (e.g., `shifu`), the cropped field will contain two words in total (e.g., `"…Shifu informs…"`).
+Query terms are counted as part of the cropped value length. If `cropLength` is set to `2` and you search for one term (for example, `shifu`), the cropped field will contain two words in total (for example, `"…Shifu informs…"`).
 
-Stop words are also counted against this number. If `cropLength` is set to `2` and you search for one term (e.g., `grinch`), the cropped result may contain a stop word (e.g., `"…the Grinch…"`).
+Stop words are also counted against this number. If `cropLength` is set to `2` and you search for one term (for example, `grinch`), the cropped result may contain a stop word (for example, `"…the Grinch…"`).
 
 If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom crop length for an attribute, that value has priority over `cropLength`.
 
