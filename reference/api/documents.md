@@ -1,6 +1,6 @@
 # Documents
 
-The `/documents` route allows you to create, manage, and delete documents.
+The `/documents` route allows you to create, manage and delete documents.
 
 [Learn more about documents.](/learn/core_concepts/documents.md)
 
