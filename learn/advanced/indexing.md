@@ -57,7 +57,7 @@ If you encounter performance issues during indexing, we recommend trying the fol
 ]
 ```
 
-- When creating a new index, first [configure its settings](/learn/configuration/settings.md) and only then add your documents. Following this order will significantly reduce indexing time.
+- When creating a new index, first [configure its settings](/reference/api/settings.md) and only then add your documents. Following this order will significantly reduce indexing time.
 
 - Since indexing speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance.
 
