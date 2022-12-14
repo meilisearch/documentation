@@ -816,6 +816,12 @@ To create a custom ranking rule, give an attribute followed by a colon (`:`) and
 - To apply an **ascending sort** (results sorted by increasing value): `attribute_name:asc`
 - To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
+::: warning
+If some documents do not contain the attribute defined in a custom ranking rule, the application of the ranking rule is undefined and the search results might not be sorted as you expected.
+
+We recommend that all your documents contain any attribute used in a custom ranking rule. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
+:::
+
 [To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy.md#ranking-rules)
 
 #### Example
