@@ -276,7 +276,7 @@ Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` 
 
 #### Example
 
-Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/learn/configuration/settings.md#filterable-attributes), and you want to get movies classified as either `Horror` **or** `Mystery` **and** directed by `Jordan Peele`.
+Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes), and you want to get movies classified as either `Horror` **or** `Mystery` **and** directed by `Jordan Peele`.
 
 ```SQL
 [["genres = horror", "genres = mystery"], "director = 'Jordan Peele'"]

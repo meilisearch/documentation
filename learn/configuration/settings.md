@@ -1,0 +1,17 @@
+# Index settings
+
+This table shows the **index-level settings** available in Meilisearch.
+
+|     | Variable                                                                       | Description                                                                      | Default value                                                                                |
+| --- | :----------------------------------------------------------------------------- | :------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------- |
+|     | **[`displayedAttributes`](/reference/api/settings.md#displayed-attributes)**   | Fields displayed in the returned documents                                       | All attributes found in the documents                                                        |
+|     | **[`distinctAttribute`](/reference/api/settings.md#distinct-attribute)**       | Search returns documents with distinct (different) values of the given field     | `null`                                                                                       |
+|     | **[`filterableAttributes`](/reference/api/settings.md#filterable-attributes)** | List of attributes that can be used for filtering                                | `[]`                                                                                         |
+|     | **[`pagination`](/learn/advanced/pagination.md)**                              | Pagination settings                                                              | `{"maxTotalHits": 1000}`                                                                     |
+|     | **[`faceting`](/learn/advanced/filtering_and_faceted_search.md)**              | Faceting settings                                                                | `{"maxValuesPerFacet": 100}`                                                                 |
+|     | **[`rankingRules`](/reference/api/settings.md#ranking-rules)**                 | List of ranking rules sorted by order of importance                              | [A list of ordered built-in ranking rules](/learn/core_concepts/relevancy.md#built-in-rules) |
+|     | **[`searchableAttributes`](/reference/api/settings.md#searchable-attributes)** | Fields in which to search for matching query words sorted by order of importance | All attributes found in the documents                                                        |
+|     | **[`sortableAttributes`](/reference/api/settings.md#sortable-attributes)**     | List of attributes to use when sorting search results                            | `[]`                                                                                         |
+|     | **[`stopWords`](/reference/api/settings.md#stop-words)**                       | List of words ignored by Meilisearch when present in search queries              | `[]`                                                                                         |
+|     | **[`synonyms`](/reference/api/settings.md#synonyms)**                          | List of associated words treated similarly                                       | `{}`                                                                                         |
+|     | **[`typoTolerance`](/reference/api/settings.md#typo-tolerance)**               | Object containing typo tolerance settings                                        | Enabled. One typo allowed for words of 5+ characters; two for words of 9+ characters.        |
