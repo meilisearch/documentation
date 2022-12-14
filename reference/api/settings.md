@@ -247,8 +247,6 @@ Update the displayed attributes of an index.
 
 An array of strings. Each string should be an attribute that exists in the selected index.
 
-`displayedAttributes=[<String>, <String>, ...]`
-
 If an attribute contains an object, you can use dot notation to specify one or more of its keys, for example, `"displayedAttributes": ["release_date.year"]`.
 
 ::: warning
@@ -567,8 +565,6 @@ Update an index's filterable attributes list.
 
 An array of strings containing the attributes that can be used as filters at query time.
 
-`filterableAttributes=[<String>, <String>, ...]`
-
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
 
 ::: warning
@@ -809,8 +805,6 @@ Update the ranking rules of an index.
 
 An array that contains ranking rules in order of importance.
 
-`rankingRules=[<String>, <String>, ...]`
-
 To create a custom ranking rule, give an attribute followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
 
 - To apply an **ascending sort** (results sorted by increasing value): `attribute_name:asc`
@@ -935,8 +929,6 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/core_concepts/relevancy.md#attribute-ranking-order): from the most important attribute to the least important attribute.
 
-`searchableAttributes=[<String>, <String>, ...]`
-
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
 ::: warning
@@ -1047,8 +1039,6 @@ Update an index's sortable attributes list.
 #### Body
 
 An array of strings. Each string should be an attribute that exists in the selected index.
-
-`sortableAttributes=[<String>, <String>, ...]`
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
@@ -1161,8 +1151,6 @@ Update the list of stop words of an index.
 #### Body
 
 An array of strings. Each string should be a single word.
-
-`stopWords=[<String>, <String>, ...]`
 
 If a list of stop words already exists, it will be overwritten (_replaced_).
 
