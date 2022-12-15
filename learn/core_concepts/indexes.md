@@ -24,7 +24,7 @@ If you try to add documents or settings to an index that does not already exist,
 
 ### Explicit index creation
 
-You can explicitly create an index using the [create index endpoint](/reference/api/indexes.md#create-an-index). Once created, you can add documents using the [add documents endpoint](/reference/api/documents.md#add-or-update-documents). 
+You can explicitly create an index using the [create index endpoint](/reference/api/indexes.md#create-an-index). Once created, you can add documents using the [add documents endpoint](/reference/api/documents.md#add-or-update-documents).
 
 While implicit index creation is more convenient, requiring only a single API request, **explicit index creation is considered safer for production**. This is because implicit index creation bundles multiple actions into a single task. If one action completes successfully while the other fails, the problem can be difficult to diagnose.
 
