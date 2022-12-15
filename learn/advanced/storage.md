@@ -10,11 +10,9 @@ The database location can change depending on a number of factors, such as wheth
 
 ## LMDB
 
-Creating a database from scratch and managing it is hard work. It would make no sense to try and reinvent the wheel, so Meilisearch uses an external storage engine under the hood. This allows the Meilisearch team to focus on improving search relevancy and search performance while abstracting away the complicated task of creating, reading and updating documents on disk and in memory.
+Creating a database from scratch and managing it is hard work. It would make no sense to try and reinvent the wheel, so Meilisearch uses a storage engine under the hood. This allows the Meilisearch team to focus on improving search relevancy and search performance while abstracting away the complicated task of creating, reading and updating documents on disk and in memory.
 
-The storage engine Meilisearch uses under the hood is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP and has ACID properties.
-
-After extensive testing of LMDB itself, [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/), we chose LMDB because it provided us with the best combination between performance and stability.
+Our storage engine Meilisearch is called [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP and has ACID properties. Though we considered other options, such as [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/), we chose LMDB because it provided us with the best combination between performance and stability.
 
 ### Memory mapping
 
