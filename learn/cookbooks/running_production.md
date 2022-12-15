@@ -12,15 +12,19 @@ Using Meilisearch on your own machine for your weekend project is fun, let's agr
 
 [Step 1: Install Meilisearch](/learn/cookbooks/running_production.md#step-1-install-meilisearch)
 
-[Step 2: Run Meilisearch as a service](/learn/cookbooks/running_production.md#step-2-run-meilisearch-as-a-service)
+[Step 2: Create user](/learn/cookbooks/running_production.md#step-2-create-user)
 
-+ [2.1. Create a service file](/learn/cookbooks/running_production.md#_2-1-create-a-service-file)
-+ [2.2. Enable and start service](/learn/cookbooks/running_production.md#_2-2-enable-and-start-service)
+[Step 3: Set configuration](/learn/cookbooks/running_production.md#step-3-set-configuration)
 
-[Step 3: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/learn/cookbooks/running_production.md#step-3-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 4: Run Meilisearch as a service](/learn/cookbooks/running_production.md#step-4-run-meilisearch-as-a-service)
 
-+ [3.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production.md#_3-1-creating-a-reverse-proxy-with-nginx)
-+ [3.2. Set up SSL/TLS for your Meilisearch](/learn/cookbooks/running_production.md#_3-2-set-up-ssl-tls-for-your-meilisearch)
++ [4.1. Create a service file](/learn/cookbooks/running_production.md#_4-1-create-a-service-file)
++ [4.2. Enable and start service](/learn/cookbooks/running_production.md#_4-2-enable-and-start-service)
+
+[Step 5: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/learn/cookbooks/running_production.md#step-5-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+
++ [5.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production.md#_5-1-creating-a-reverse-proxy-with-nginx)
++ [5.2. Set up SSL/TLS for your Meilisearch](/learn/cookbooks/running_production.md#_5-2-set-up-ssl-tls-for-your-meilisearch)
 
 [Conclusion](/learn/cookbooks/running_production.md#conclusion)
 
@@ -64,32 +68,44 @@ Meilisearch is finally installed and ready to use. To make it accessible from ev
 
 ```bash
 # Move the Meilisearch binary to your system binaries
-mv ./meilisearch /usr/bin/
+mv ./meilisearch /usr/local/bin/
 ```
 
-You can now start using Meilisearch! In your terminal, run the following command to launch meilisearch.
+## Step 2: Create user
+
+It is not a good idea run meilisearch as `root`. You should create own system user for meilisearch:
 
 ```bash
-meilisearch
+useradd -d /var/lib/meilisearch -b /bin/false -m -r meilisearch
 ```
 
-You should see the following successful response:
+## Step 3: Set configuration
 
-```
-888b     d888          d8b 888 d8b                                            888
-8888b   d8888          Y8P 888 Y8P                                            888
-88888b.d88888              888                                                888
-888Y88888P888  .d88b.  888 888 888 .d8888b   .d88b.   8888b.  888d888 .d8888b 88888b.
-888 Y888P 888 d8P  Y8b 888 888 888 88K      d8P  Y8b     "88b 888P"  d88P"    888 "88b
-888  Y8P  888 88888888 888 888 888 "Y8888b. 88888888 .d888888 888    888      888  888
-888   "   888 Y8b.     888 888 888      X88 Y8b.     888  888 888    Y88b.    888  888
-888       888  "Y8888  888 888 888  88888P'  "Y8888  "Y888888 888     "Y8888P 888  888
+Download default config to `/etc`:
 
-Database path: "./data.ms"
-Server listening on: "localhost:7700"
+```bash
+wget -qO /etc/meilisearch.toml https://raw.githubusercontent.com/meilisearch/meilisearch/main/config.toml
 ```
 
-## Step 2: Run Meilisearch as a service
+Update these lines to fit home folder of your newly created user:
+
+```ini
+env = "production"
+master_key = "YOUR_MASTER_KEY_VALUE"
+db_path = "/var/lib/meilisearch/data"
+dump_dir = "/var/lib/meilisearch/dumps"
+snapshot_dir = "/var/lib/meilisearch/snapshots"
+```
+
+Create configured directories and set proper privileges
+
+```bash
+mkdir /var/lib/meilisearch/data /var/lib/meilisearch/dumps /var/lib/meilisearch/snapshots
+chown -R meilisearch:meilisearch /var/lib/meilisearch
+chmod 750 /var/lib/meilisearch
+```
+
+## Step 4: Run Meilisearch as a service
 
 In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
 
@@ -99,7 +115,7 @@ If you are new to services and `systemd`, you can learn more about the basics of
 
 In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that Meilisearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart Meilisearch.
 
-### 2.1. Create a service file
+### 4.1. Create a service file
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
 
@@ -115,10 +131,13 @@ After=systemd-user-sessions.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/meilisearch --http-addr localhost:7700 --env production --master-key Y0urVery-S3cureAp1K3y
+WorkingDirectory=/var/lib/meilisearch
+ExecStart=/usr/local/bin/meilisearch --config-file-path /etc/meilisearch.toml
+User=meilisearch
+Group=meilisearch
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
 EOF
 ```
 
@@ -128,7 +147,7 @@ For more information on Meilisearch security and API keys see the [security docs
 
 As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `local`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.
 
-### 2.2. Enable and start service
+### 4.2. Enable and start service
 
 The service file you just built is all you need for creating your service. Now you must `enable` it to tell the operating system that we want it to run Meilisearch at every boot. You can then `start` the service to make it run immediately. Ensure everything is working smoothly by checking the service `status`.
 
@@ -155,11 +174,11 @@ At this point, Meilisearch is installed and running. It is protected from eventu
 
 But you probably want to open your Meilisearch to the outside world, and for now, it is isolated. Let's fix that in a safe way.
 
-## Step 3: Secure and finish your setup using a reverse proxy, domain name, and HTTPS
+## Step 5: Secure and finish your setup using a reverse proxy, domain name, and HTTPS
 
 It's time to safely make your brand new Meilisearch available to be requested from the outside world. For this purpose, you will use two of the main technologies available on the web: a Reverse Proxy and SSL/TLS.
 
-### 3.1. Creating a reverse proxy with [Nginx](https://www.nginx.com/)
+### 5.1. Creating a reverse proxy with [Nginx](https://www.nginx.com/)
 
 A reverse proxy is basically an application that will handle every communication between the outside world and your internal applications. Nginx will receive external HTTP requests and redirect them to Meilisearch. When Meilisearch has done its amazing job, it will communicate its response to Nginx, which will then transfer the latter to the user who originally sent the request. This is a common way to isolate and protect any application by adding a robust, secure, and fast gate-keeper such as Nginx, one of the safest and most efficient tools available online, and of course, open-source!
 
@@ -212,7 +231,7 @@ If you want to learn more about using Nginx as a Reverse Proxy, see [this dedica
 
 The only remaining problem is that Meilisearch processes requests via HTTP without any additional security. The content that is being transmitted over HTTP could easily be read or modified by attackers, and someone could get full or partial access to your data. In order to prevent this to happen, it's important to use the HTTPS, which will enable you to use a SSL/TLS certificate, and securely transmit data.
 
-### 3.2. Set up SSL/TLS for your Meilisearch
+### 5.2. Set up SSL/TLS for your Meilisearch
 
 SSL will let the user or client establish an authenticated connection to Meilisearch. In this way, a user can verify server's identity before sending sensitive data or making any request to it. Then, data is sent in an encrypted way that only Meilisearch server will be able to decrypt, providing you a fast, reliable, and automatic layer of security.
 
@@ -225,7 +244,7 @@ To illustrate this, if you had registered your domain name `example.com`, reques
 
 Once your domain name has been set up, you are ready to configure SSL/TLS and use HTTPS. You have two different options to achieve this goal. The first one is using [Certbot](https://certbot.eff.org/), an amazing, free, and very easy to use tool. If you already have SSL certificates issued from a `Certificate Authority or CA` for your domain name, the second option covers the steps you need to follow. Then, you will be ready to use Meilisearch safely in production!
 
-#### 3.2. Option A: Certbot
+#### 5.2.1. Option A: Certbot
 
 Using certbot in your Linux server is very straightforward. This tool will generate a free SSL/TLS certificate for your domain name, and automatically handle its installation on your server. The certbot documentation contains detailed instructions for many operating systems and servers, but we will follow the instructions for [Certbot on Debian with Nginx](https://certbot.eff.org/instructions?ws=nginx&os=debianbuster).
 
@@ -254,7 +273,7 @@ change by editing your web server's configuration.
 
 We recommend that you choose option 2, to redirect HTTP to HTTPS and always use a secure connection. You should be able to request your domain name with SSL as in `https://example.com` or `https://example.com/indexes`.
 
-#### 3.2. Option B: Custom SSL/TLS certificates
+#### 5.2.2. Option B: Custom SSL/TLS certificates
 
 When a `Certificate Authority` issues a SSL certificate for you, you receive at least two files with encrypted keys:
 
