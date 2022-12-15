@@ -349,8 +349,6 @@ Update the distinct attribute field of an index.
 
 A string. The string should be an attribute that exists in the selected index.
 
-`distinctAttribute=<String>`
-
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, for example, `"distinctAttribute": "product.skuid"`.
 
 ::: warning
@@ -1257,8 +1255,6 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 #### Body
 
 An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
-
-`synonyms=<Object>`
 
 [To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms.md)
 
