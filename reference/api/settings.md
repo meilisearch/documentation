@@ -245,6 +245,10 @@ Update the displayed attributes of an index.
 
 #### Body
 
+```
+[<String>, <String>, …]
+```
+
 An array of strings. Each string should be an attribute that exists in the selected index.
 
 If an attribute contains an object, you can use dot notation to specify one or more of its keys, for example, `"displayedAttributes": ["release_date.year"]`.
@@ -346,6 +350,10 @@ Update the distinct attribute field of an index.
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
+
+```
+<String>
+```
 
 A string. The string should be an attribute that exists in the selected index.
 
@@ -455,6 +463,10 @@ Partially update the faceting settings for an index. Any parameters not provided
 
 #### Body
 
+```
+{maxValuesPerFacet: <Integer>}
+```
+
 | Name                    | Type    | Default value | Description                                                                                                  |
 | :---------------------- | :------ | :------------ | :----------------------------------------------------------------------------------------------------------- |
 | **`maxValuesPerFacet`** | Integer | `100`         | Maximum number of facet values returned for each facet. Values are sorted in ascending lexicographical order |
@@ -560,6 +572,10 @@ Update an index's filterable attributes list.
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
+
+```
+[<String>, <String>, …]
+```
 
 An array of strings containing the attributes that can be used as filters at query time.
 
@@ -672,6 +688,10 @@ Partially update the pagination settings for an index.
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
+
+```
+{maxTotalHits: <Integer>}
+```
 
 | Name               | Type    | Default value | Description                                                 |
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
@@ -801,6 +821,10 @@ Update the ranking rules of an index.
 
 #### Body
 
+```
+[<String>, <String>, …]
+```
+
 An array that contains ranking rules in order of importance.
 
 To create a custom ranking rule, give an attribute followed by a colon (`:`) and either `asc` for ascending order or `desc` for descending order.
@@ -925,6 +949,10 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 #### Body
 
+```
+[<String>, <String>, …]
+```
+
 An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/core_concepts/relevancy.md#attribute-ranking-order): from the most important attribute to the least important attribute.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
@@ -1035,6 +1063,10 @@ Update an index's sortable attributes list.
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
+
+```
+[<String>, <String>, …]
+```
 
 An array of strings. Each string should be an attribute that exists in the selected index.
 
@@ -1148,6 +1180,10 @@ Update the list of stop words of an index.
 
 #### Body
 
+```
+[<String>, <String>, …]
+```
+
 An array of strings. Each string should be a single word.
 
 If a list of stop words already exists, it will be overwritten (_replaced_).
@@ -1253,6 +1289,13 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
+
+```
+{
+  <String>: [<String>, <String>, …],
+  …
+}
+```
 
 An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
 
@@ -1365,6 +1408,18 @@ Partially update the typo tolerance settings for an index.
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
 
 #### Body
+
+```
+{
+  "enabled": <Boolean>,
+  "minWordSizeForTypos": {
+    "oneTypo": <Integer>,
+    "twoTypos": <Integer>
+  },
+  "disableOnWords": [<String>, <String>, …],
+  "disableOnAttributes": [<String>, <String>, …]
+}
+```
 
 | Name                               | Type             | Default Value | Description                                                                      |
 | :--------------------------------- | :--------------- | :------------ | :------------------------------------------------------------------------------- |
