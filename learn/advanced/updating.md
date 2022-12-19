@@ -21,9 +21,9 @@ If Meilisearch launches successfully, use the get version endpoint, note your `p
 <CodeSamples id="updating_guide_check_version_new_authorization_header" />
 
 ::: note
-If you're using v0.24 or below, use the `X-MEILI-API-KEY: apiKey` authorization header:
+If you get a [`missing_authorization_header`](/reference/errors/error_codes.md#missing-authorization-header) error code, you might be using v0.24 or below. Change the authorization header to `X-MEILI-API-KEY`
 
- <CodeSamples id="updating_guide_check_version_old_authorization_header" />
+<CodeSamples id="updating_guide_check_version_old_authorization_header" />
 :::
 
 The response should look something like this:
