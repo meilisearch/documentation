@@ -274,6 +274,10 @@ module.exports = {
                   title: 'Deploy on Qovery',
                   path: '/learn/cookbooks/qovery',
                 },
+                {
+                  title: 'Update Meilisearch on the cloud',
+                  path: '/learn/cookbooks/update_cloud',
+                },
               ],
             },
           ],
