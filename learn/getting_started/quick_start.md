@@ -73,7 +73,7 @@ Launch Meilisearch to start the server.
 
 ```bash
 # Add Meilisearch package
-sudo echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" > /etc/apt/sources.list.d/fury.list
+echo "deb [trusted=yes] https://apt.fury.io/meilisearch/ /" | sudo tee /etc/apt/sources.list.d/fury.list
 
 # Update APT and install Meilisearch
 sudo apt update && sudo apt install meilisearch-http
