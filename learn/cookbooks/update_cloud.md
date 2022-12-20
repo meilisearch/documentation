@@ -1,4 +1,4 @@
-# Update Meilisearch on the cloud
+# Update Meilisearch on cloud platforms
 
 ::: danger
 This guide does not work for versions below v0.15. For more information, [contact support](https://discord.gg/meilisearch)
