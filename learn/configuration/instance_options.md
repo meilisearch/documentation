@@ -6,7 +6,7 @@ sidebarDepth: 2
 
 You can configure Meilisearch at launch with **command-line options**, **environment variables**, or a **configuration file**.
 
-These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/reference/api/settings.md).
+These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/learn/configuration/settings.md).
 
 ## Command-line options and flags
 
