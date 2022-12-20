@@ -160,7 +160,7 @@ const BATCH_SIZE = 1000;
 
 Meilisearch's default settings are designed to deliver a fast and relevant search experience that works for most use-cases.
 
-To customize your index settings, we recommend following [this guide](/reference/api/settings.md). To learn more about the differences between settings in Algolia and Meilisearch, read on.
+To customize your index settings, we recommend following [this guide](/learn/core_concepts/indexes.md#index-settings). To learn more about the differences between settings in Algolia and Meilisearch, read on.
 
 ### Index settings vs. search parameters
 
