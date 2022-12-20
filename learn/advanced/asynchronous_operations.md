@@ -138,7 +138,7 @@ After a task has been [deleted](/reference/api/tasks.md#delete-tasks), trying to
 
 Querying the tasks endpoint returns all instance tasks that have not been deleted. Use the `filter` query parameter to filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date.
 
-To filter tasks, pass the selected parameters to the get tasks endpoint, separating multiple values with a comma (`,`):
+To filter tasks, pass the selected parameters to the [get tasks endpoint](/reference/api/tasks.md#get-tasks), separating multiple values with a comma (`,`):
 
 <CodeSamples id="async_guide_filter_by_ids_1" />
 
@@ -167,7 +167,7 @@ This filter accepts dates formatted according to [RFC 3339](https://www.ietf.org
 The above code sample will return all tasks `enqueued` **after** 11:49:53:00 on 11 Oct 2020.
 
 ::: note
-Date filters are equivalent to `<` or `>` operations and do not include the specified value in the valid time interval. It is not possible to perform `≤` or `≥` operations with a task date filter.
+Date filters are equivalent to `<` or `>` operations and do not include the specified value. It is not possible to perform `≤` or `≥` operations with a task date filter.
 :::
 
 ### Combine filters
@@ -178,17 +178,17 @@ The following code sample returns all `documentAdditionOrUpdate` and `documentDe
 
 <CodeSamples id="async_guide_multiple_filters_1" />
 
-`OR` operations between different filters are not supported. For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
+**`OR` operations between different filters are not supported.** For example, you cannot view only tasks which have a type of `documentAddition` **or** a status of `failed`.
 
 ## Paginating tasks
 
 By default, Meilisearch returns a list of 20 tasks for each request. You can adjust the number of documents returned using the `limit` parameter, and control where the list begins using the `from` parameter.
 
-For each call to this endpoint, the response will include the `next` field. Pass this value to `from` to view the next set of results. It is common to refer to sets of results as pages, and to the process of splitting and fetching these sets as pagination.
+For each call to this endpoint, the response will include the `next` field. Pass this value to your next call's `from` parameter to view the next set of results. It is common to refer to sets of results as pages, and to the process of splitting and fetching these sets as pagination.
 
 When the value of `next` is `null`, there are no more tasks to view.
 
-This command returns tasks two at a time, starting from task `uid` `10`.
+The following command returns two tasks at a time, starting from task `uid` `10`:
 
 <CodeSamples id="get_all_tasks_paginating_1" />
 

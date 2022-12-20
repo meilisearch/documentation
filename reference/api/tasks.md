@@ -2,7 +2,6 @@
 
 The `/tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations.md).
 
-
 ## Task object
 
 ```json
@@ -186,7 +185,7 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 **Type**: String
 **Description**: The date and time when the task finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
-## Summarized task object
+### Summarized task object
 
 When an API request triggers an asynchronous process, Meilisearch returns a summarized task object. This object contains the following fields in the stated order:
 
