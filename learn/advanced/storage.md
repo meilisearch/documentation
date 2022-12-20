@@ -1,6 +1,6 @@
 # Storage
 
-Meilisearch is, in many ways, a database. It stores indexed documents along with the data needed to return relevant search results.
+Meilisearch is in many ways a database: it stores indexed documents along with the data needed to return relevant search results.
 
 ## Database location
 
@@ -10,11 +10,9 @@ The database location can change depending on a number of factors, such as wheth
 
 ## LMDB
 
-Creating a database from scratch and managing it hard work. It would make no sense to try and reinvent the wheel, so Meilisearch uses a storage engine under the hood. This allows Meilisearch to focus on improving search relevancy and search performance while abstracting the complicated task of creating, reading and updating documents on disk and in memory.
+Creating a database from scratch and managing it is hard work. It would make no sense to try and reinvent the wheel, so Meilisearch uses a storage engine under the hood. This allows the Meilisearch team to focus on improving search relevancy and search performance while abstracting away the complicated task of creating, reading and updating documents on disk and in memory.
 
-The storage engine Meilisearch uses under the hood is a [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP and has ACID properties.
-
-We chose LMDB after extensive testing with LMDB itself, [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/). We chose LMDB because it provided us with the best combination between performance and stability.
+Our storage engine Meilisearch is called [Lightning Memory-Mapped Database](http://www.lmdb.tech/doc/) (LMDB for short). LMDB is a transactional key-value store written in C that was developed for OpenLDAP and has ACID properties. Though we considered other options, such as [Sled](https://github.com/spacejam/sled) and [RocksDB](https://rocksdb.org/), we chose LMDB because it provided us with the best combination of performance, stability, and features.
 
 ### Memory mapping
 
@@ -26,15 +24,13 @@ For the best performance, it is recommended to provide the same amount of RAM as
 
 ### Understanding LMDB
 
-The choice of LMDB comes with certain pros and cons. In order to understand this choice, its upsides and downsides, we need to have an insight on how LMDB impact size and memory usage. This is well explained in [a blog post of LMDB](https://www.symas.com/post/understanding-lmdb-database-file-sizes-and-memory-utilization) and we are trying to summarize it here.
+The choice of LMDB comes with certain pros and cons, especially regarding database size and memory usage. We summarize the most important aspects of LMDB here, but check out this [blog post by LMDB's developers](https://www.symas.com/post/understanding-lmdb-database-file-sizes-and-memory-utilization) for more in-depth information.
 
 #### Database size
 
-When freeing entries from the database (in our case, removing documents from Meilisearch), one can observe that no space disk is released. The space previously used by the entry is marked as free for LMDB but not made available for the operating system.
+When deleting documents from a Meilisearch index, you may notice disk space usage remains the same. This happens because LMDB internally marks that space as free, but does not make it available for the operating system at large. This design choice leads to better performance, as there is no need for periodic compaction operations. As a result, disk space occupied by LMDB (and thus by Meilisearch) tends to increase over time.
 
-Unlike other storage engines, LMDB chooses this design for performance issues as there is no need for a compaction phase.
-
-As a result, you may see that the disk occupied by LMDB and therefore by Meilisearch keeps growing even if you are deleting indexes or documents. This is normal behavior, and you can note that the database will not grow again if you write some data after deleting indexes or documents.
+It is not currently possible to calculate the precise maximum amount of space a Meilisearch instance can occupy. However, disk space usage is dictated in part by index and task database size. This means you can have a general idea of the upper size boundaries by taking into account the number of indexes in your instance together with the values configured for `--max-index-size` and `--max-task-db`.
 
 #### Memory usage
 
