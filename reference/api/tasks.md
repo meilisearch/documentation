@@ -192,7 +192,7 @@ When an API request triggers an asynchronous process, Meilisearch returns a summ
 | Field            | Type    | Description                                                                                                                   |
 | :--------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------- |
 | **`taskUid`**    | Integer | Unique sequential identifier                                                                                                  |
-| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](#global-tasks))                                                     |
+| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks))           |
 | **`status`**     | String  | Status of the task. Value is `enqueued`                                                                                       |
 | **`type`**       | String  | Type of task                                                                                                                  |
 | **`enqueuedAt`** | String  | Represents the date and time in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format when the task has been `enqueued` |
