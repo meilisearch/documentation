@@ -200,6 +200,10 @@ meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meili
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
+::: danger Updating from  v0.27, v0.28, or v0.29 to v0.30 with the documents containing the `_geo` field
+You might not be able to import your dump due to Meilisearch allowing malformed `_geo` fields in the above mentioned versions. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
+:::
+
 ## Step 8: Restart Meilisearch as a service
 
 Once your dump has been correctly imported, press `Ctrl`+`C`  to stop Meilisearch. Next, execute the command below to run the script to configure Meilisearch and restart it as a service:
