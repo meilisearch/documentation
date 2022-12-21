@@ -16,11 +16,11 @@ Before we begin, you need to verify the version of Meilisearch that's compatible
 ./meilisearch --master-key="MASTER_KEY"
 ```
 
-If Meilisearch launches successfully, use the get version endpoint, note your `pkgVersion`, and [proceed to the next step](#step-2-set-all-fields-as-displayed-attributes).
+If Meilisearch launches successfully, use the get version endpoint and note your `pkgVersion`:
 
 <CodeSamples id="updating_guide_check_version_new_authorization_header" />
 
-::: note
+::: warning
 If Meilisearch returns a [`missing_authorization_header`](/reference/errors/error_codes.md#missing-authorization-header) error code, you might be using v0.24 or below. Change the authorization header to `X-MEILI-API-KEY: apiKey`:
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
@@ -35,6 +35,8 @@ The response should look something like this:
   "pkgVersion": "x.y.z"
 }
 ```
+
+If your `pkgVersion` is 0.21 or above, you can jump to [step 3](#step-3-create-the-dump). If not, proceed to the next step.
 
 If you get the error `Cannot open database, expected Meilisearch engine version: 0.X.X, current engine version 0.Y.Y`, your database is not compatible with the currently installed Meilisearch version.
 
@@ -125,7 +127,7 @@ If it's something else, then you need to reset the list of displayed attributes.
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
-This command returns a `taskUid`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-one-task). Once the status is `succeeded`, you're good to go.
+This command returns a `updateId`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-one-task). Once the status is `processed`, you're good to go.
 
 Now that all fields are displayed, proceed to the next step.
 
@@ -245,11 +247,13 @@ Now that you’ve got your dump, install the [latest version of Meilisearch](/le
 
 ```bash
 # launch the latest version of Meilisearch with the master key and import the specified dump file
-./meilisearch --import-dump /dumps/your_dump_file.dump --master-key="MASTER_KEY"
+./meilisearch --import-dump /dumps/{your_dump_file.dump} --master-key="MASTER_KEY"
 ```
 
 ::: warning
 If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
+
+This two-step process won't be necessary with v1.
 :::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
