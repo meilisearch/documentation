@@ -4,15 +4,17 @@
 This guide does not work for versions below v0.15. For more information, [contact support](https://discord.gg/meilisearch)
 :::
 
-The following guide walks you through the steps required to update your Meilisearch instance from an older version to the most recent on DigitalOcean, AWS, or GCP when using the Meilisearch official images.
+The following guide walks you through the steps required to update your Meilisearch instance from an older version to the most recent on DigitalOcean, AWS, or GCP using the Meilisearch official images.
 
-You can [connect via SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/) to your cloud instance, and depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`. Alternatively, you can use the [Droplet Console](https://docs.digitalocean.com/products/droplets/how-to/connect-with-console/).
+You can [connect via SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/) to your cloud instance, and depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
 ::: tip
 If you are using v0.22 or above, use our [migration script](https://github.com/meilisearch/meilisearch-migration) to update to a newer Meilisearch version without losing data or settings.
 :::
 
 ## Step 1: Verify your database version
+
+Before we begin, you need to verify the version of Meilisearch that's compatible with your database, in other words, the version that indexed the data.
 
 Use the get version endpoint to check your Meilisearch version:
 
@@ -48,15 +50,15 @@ The response should look something like this:
 If you are updating to v0.28 or above, keys imported from the old version will have their `key` and `uid` fields regenerated
 :::
 
-If your `pkgVersion` is 0.21 or higher, you can jump to [step 3](#step-3-create-the-dump). If not, proceed to the next step.
+If your `pkgVersion` is 0.21 or above, you can jump to [step 3](#step-3-create-the-dump). If not, proceed to the next step.
 
 ## Step 2: Set all fields as displayed attributes
 
 ::: warning
-This step is only requited if you are using v0.20 or below.
+This step is only required if you are using v0.20 or below.
 :::
 
-When creating dumps using Meilisearch versions v0.20 or below, all fields must be displayed to be saved in the dump.
+When creating dumps using Meilisearch versions v0.20 or below, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md) to be saved in the dump.
 
 Start by verifying that all attributes are included in the displayed attributes list:
 
@@ -91,7 +93,7 @@ Once the status updates to `processed`, you're good to go.
 
 ## Step 3: Create the dump
 
-Before creating your dump, ensure that your dump directory is accessible. By default, dumps are created in a folder called `dumps` in the configuration file directory: `/var/opt/meilisearch/dumps`
+Before creating your dump, ensure that your [dump directory](/learn/configuration/instance_options.md#dumps-directory) is accessible. By default, dumps are created in a folder called `dumps` in the configuration file directory: `/var/opt/meilisearch/dumps`
 
 Use the following command to create a dump of your Meilisearch database:
 
@@ -155,7 +157,9 @@ systemctl stop meilisearch
 
 ## Step 5: Create a backup
 
-We suggest creating a backup in case something goes wrong. Move the binary of the current Meilisearch version and the database to the `tmp/` folder:
+Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` can be found at `/var/lib/meilisearch/data.ms`.
+
+Move the binary of the current Meilisearch version and the database to the `tmp/` folder:
 
 ```
 mv /usr/bin/meilisearch /tmp
@@ -164,13 +168,7 @@ mv /var/lib/meilisearch/data.ms /tmp/
 
 ## Step 6: Install the desired version of Meilisearch
 
-Dumps from Meilisearch v0.20.0 and below are no longer compatible with the new versions. Thus migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch between v0.21 and v0.24, inclusive. Second, create another dump with that instance (v0.21 to v0.24) and import it to a final instance running your targeted version.
-
-::: note
-Once Meilisearch v1 is released, this two-step process won't be necessary as v1 will be compatible with dumps from all previous versions.
-:::
-
-Use the command below to download the Meilisearch binary:
+Install the latest version of Meilisearch using:
 
 ```sh
 # replace {meilisearch_version} with the version of your choice. Use the format: `vX.X.X`
@@ -191,12 +189,18 @@ mv meilisearch /usr/bin/meilisearch
 
 ## Step 7: Launch Meilisearch and import the dump
 
-Now that you've got the desired Meilisearch version, execute the command below to import the dump at launch.
+Execute the command below to import the dump at launch.
 
 ```
 # replace {dump_uid.dump} with the name of your dump file
 meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meilisearch/dumps/{dump_uid.dump}"
 ```
+
+::: warning
+If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
+
+Once Meilisearch v1 is released, this two-step process won't be necessary as v1 will be compatible with dumps from all previous versions.
+:::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
@@ -212,7 +216,7 @@ Once your dump has been correctly imported, press `Ctrl`+`C`  to stop Meilisearc
 meilisearch-setup
 ```
 
-Don't forget to set `displayedAttributes` back to its previous value if required. You can do this using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
+If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
 
 ## Step 9: Clean files or rollback
 
