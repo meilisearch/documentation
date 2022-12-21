@@ -1,20 +1,20 @@
 # Update to the latest Meilisearch version
 
-Currently, Meilisearch databases can only be opened by the Meilisearch version you used to create them. The following guide will walk you through all the steps to migrate an existing database from an older version of Meilisearch to the most recent one.
-
-If you already have a Meilisearch database with some data you don’t want to lose, you are in the right place!
-
 ::: danger
 This guide does not work for versions below v0.15. For more information, [contact support](https://discord.gg/meilisearch).
+:::
+
+Currently, Meilisearch databases can only be opened by the Meilisearch version you used to create them. The following guide will walk you through all the steps to migrate an existing database from an older version of Meilisearch to the most recent one.
+
+If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you are able to your cloud instance connect via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
+
+::: tip
+If you are using v0.22 or above, use our [migration script](https://github.com/meilisearch/meilisearch-migration) to update to a newer Meilisearch version without losing data or settings.
 :::
 
 ## Step 1: Verify your database version
 
 Before we begin, you need to verify the version of Meilisearch that's compatible with your database, in other words, the version that indexed the data. You can do so by launching a Meilisearch instance:
-
-```bash
-./meilisearch --master-key="MASTER_KEY"
-```
 
 If Meilisearch launches successfully, use the get version endpoint and note your `pkgVersion`:
 
@@ -111,7 +111,7 @@ If you are updating to v0.28, keys imported from the old version will have their
 
 ## Step 2: Set all fields as displayed attributes
 
-::: note
+::: warning
 If your dump was created in Meilisearch v0.21 or above, continue to [step 3](#step-3-create-the-dump).
 :::
 
@@ -123,7 +123,7 @@ Start by verifying that all attributes are included in the displayed attributes 
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-3-create-the-dump).
 
-If it's something else, then you need to reset the list of displayed attributes. Before doing this, make sure you save your list of displayed attributes somewhere so you can restore it afterwards.
+If it's something else, save the current list of displayed attributes to restore it after the migration is complete. Next, reset the list of displayed attributes to its default value (["*"]) using:
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_new" />
 
@@ -203,7 +203,19 @@ The server should return a response that looks like this:
 }
 ```
 
-This command returns a `taskUid`. You can use this to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
+::: note
+The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
+
+```sh
+curl \
+  -X GET /dumps/:dump_uid/status
+  -H 'Authorization: Bearer API_KEY' 
+# -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
+```
+
+:::
+
+Use the `taskUid` to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 
@@ -227,37 +239,158 @@ Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move
 
 ## Step 4: Stop the Meilisearch instance
 
-Stop your Meilisearch instance. If you're running Meilisearch as a `systemctl` service, you can stop your instance with:
+Stop your Meilisearch instance. If you're running Meilisearch as a `systemctl` service, connect via SSH to your cloud instance and execute the following command to stop Meilisearch:
 
 ```bash
 systemctl stop meilisearch
 ```
 
-## Step 5: Delete the database folder
+You may need to prefix the above command with `sudo` if you are not connected as root.
 
-To delete the old Meilisearch version, you need to delete the `data.ms` folder. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
+## Step 5: Create a backup
+
+Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
 ::: note
 If you are using the Meilisearch official images on DigitalOcean, AWS, or GCP, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 :::
 
-## Step 6: Import the dump
+Move the binary of the current Meilisearch version and the database to the `tmp/` folder:
 
-Now that you’ve got your dump, install the [latest version of Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation) and [import the dump](/learn/advanced/dumps.md#importing-a-dump) at launch using the CLI option:
+:::: tabs
+
+::: tab Meilisearch instance
+
+```
+
+```
+
+:::
+
+::: tab Cloud platforms
+
+```
+mv /usr/bin/meilisearch /tmp
+mv /var/lib/meilisearch/data.ms /tmp/
+```
+
+:::
+
+::::
+
+## Step 6: Install the desired version of Meilisearch
+
+Install the latest version of Meilisearch using:
+
+:::: tabs
+
+::: tab Meilisearch instance
+
+```
+# Install Meilisearch
+curl -L https://install.meilisearch.com | sh
+
+# Launch Meilisearch
+./meilisearch
+```
+
+:::
+
+::: tab Cloud platforms
+
+```sh
+# replace {meilisearch_version} with the version of your choice. Use the format: `vX.X.X`
+curl "https://github.com/meilisearch/meilisearch/releases/download/{meilisearch_version}/meilisearch-linux-amd64" --output meilisearch --location --show-error
+```
+
+:::
+
+::::
+
+Give execute permission to the Meilisearch binary:
+
+```
+chmod +x meilisearch
+```
+
+For cloud platforms, move the new Meilisearch binary to the `/usr/bin` directory containing the executable files:
+
+```
+mv meilisearch /usr/bin/meilisearch
+```
+
+## Step 7: Launch Meilisearch and import the dump
+
+Execute the command below to import the dump at launch:
+
+:::: tabs
+
+::: tab Meilisearch instance
 
 ```bash
 # launch the latest version of Meilisearch with the master key and import the specified dump file
 ./meilisearch --import-dump /dumps/{your_dump_file.dump} --master-key="MASTER_KEY"
 ```
 
+:::
+
+::: tab Cloud platforms
+
+```sh
+# replace {dump_uid.dump} with the name of your dump file
+meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meilisearch/dumps/{dump_uid.dump}"
+```
+
+:::
+
+::::
+
 ::: warning
 If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
 
-This two-step process won't be necessary with v1.
+Once Meilisearch v1 is released, this two-step process won't be necessary as v1 will be compatible with dumps from all previous versions.
 :::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
-Finally, don’t forget to set `displayedAttributes` back to its previous value if necessary. You can do this using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
+::: danger `_geo` field in v0.27, v0.28, and v0.29
+You might not be able to import your dump due to Meilisearch allowing malformed `_geo` fields in the above-mentioned versions. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
+:::
 
-Congratulations! You have successfully migrated your Meilisearch database to the latest version! 🎉
+## Step 8: Restart Meilisearch as a service
+
+Once your dump has been correctly imported, press `Ctrl`+`C`  to stop Meilisearch. Next, execute the following command to run the script to configure Meilisearch and restart it as a service:
+
+```
+meilisearch-setup
+```
+
+If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
+
+## Step 9: Delete backup files or rollback
+
+Now that your Meilisearch instance is up and running, you can delete the backup files with the following commands:
+
+```
+rm /tmp/meilisearch
+rm -r /tmp/data.ms
+```
+
+You can also delete the dump file using:
+
+```
+rm /var/opt/meilisearch/dumps/{dump_uid.dump}
+```
+
+If for some reason, something went wrong, you can always roll back to the previous version. Move the files back to their previous location using:
+
+```
+mv /tmp/meilisearch /usr/bin/meilisearch
+mv /tmp/data.ms /var/lib/meilisearch/data.ms
+```
+
+And run the configuration script:
+
+```
+meilisearch-setup
+```
