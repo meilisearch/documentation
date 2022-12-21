@@ -218,7 +218,7 @@ meilisearch-setup
 
 If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
 
-## Step 9: Clean files or rollback
+## Step 9: Delete backup files or rollback
 
 Now that your Meilisearch instance is up and running, you can delete the backup files with the following commands:
 
