@@ -243,7 +243,7 @@ It is common to search books based on an author's name. `sort` can help grouping
 ]
 ```
 
-#### Sorting and nested fields
+#### Sorting nested fields
 
 Use dot notation to sort results based on a document's nested fields. The following query sorts returned documents by their user review scores:
 
