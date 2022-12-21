@@ -453,20 +453,6 @@ _geoRadius(lat, lng, distance_in_meters)
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-#### Filtering and nested fields
-
-It is also possible to use dot notation to filter results based on a document's nested fields. The following query only returns thrillers with good user reviews:
-
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "thriller",
-    "filter": "rating.user >= 90"
-  }'
-```
-
 ### Facets
 
 **Parameter**: `facets`
@@ -830,20 +816,6 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ```
 
 [You can read more about location-based sorting in our dedicated guide.](/learn/advanced/geosearch.md#sorting-results-with-geopoint)
-
-#### Sorting and nested fields
-
-It is also possible to use dot notation to sort results based on a document's nested fields. The following query sorts returned documents by their user review scores:
-
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/books/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "science fiction",
-    "sort": ["rating.user:asc"]
-  }'
-```
 
 ### Matching strategy
 
