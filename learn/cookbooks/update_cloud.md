@@ -6,7 +6,7 @@ This guide does not work for versions below v0.15. For more information, [contac
 
 The following guide walks you through the steps required to update your Meilisearch instance from an older version to the most recent on DigitalOcean, AWS, or GCP using the Meilisearch official images.
 
-You can [connect via SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/) to your cloud instance, and depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
+You can connect via SSH to your cloud instance, and depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
 ::: tip
 If you are using v0.22 or above, use our [migration script](https://github.com/meilisearch/meilisearch-migration) to update to a newer Meilisearch version without losing data or settings.
