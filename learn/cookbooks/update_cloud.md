@@ -6,7 +6,7 @@ This guide does not work for versions below v0.15. For more information, [contac
 
 The following guide walks you through the steps required to update your Meilisearch instance from an older version to the most recent on DigitalOcean, AWS, or GCP using the Meilisearch official images.
 
-You can connect via SSH to your cloud instance, and depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
+You must be able to your cloud instance connect via SSH, and depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
 ::: tip
 If you are using v0.22 or above, use our [migration script](https://github.com/meilisearch/meilisearch-migration) to update to a newer Meilisearch version without losing data or settings.
@@ -25,7 +25,7 @@ curl \
 ```
 
 ::: warning
-If Meilisearch returns a [`missing_authorization_header`](/reference/errors/error_codes.md#missing-authorization-header) error code, you might be using v0.24 or below. Change the authorization header to `X-MEILI-API-KEY: apiKey`:
+If Meilisearch returns a [`missing_authorization_header`](/reference/errors/error_codes.md#missing-authorization-header) error code, you might be using v0.24 or below. Change the authorization header to `X-MEILI-API-KEY: API_KEY`:
 
 ```sh
 curl \
@@ -115,7 +115,15 @@ curl \
 ```
 
 ::: note
-The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`.
+The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
+
+```sh
+curl \
+  -X GET /dumps/:dump_uid/status
+  -H 'Authorization: Bearer API_KEY' 
+# -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
+```
+
 :::
 
 Use the `taskUid` to track the status of the dump with the get task endpoint:
@@ -181,7 +189,7 @@ Give execute permission to the Meilisearch binary:
 chmod +x meilisearch
 ```
 
-Move the new Meilisearch binary to the systemd directory containing the executable files:
+Move the new Meilisearch binary to the `/usr/bin` directory containing the executable files:
 
 ```
 mv meilisearch /usr/bin/meilisearch
