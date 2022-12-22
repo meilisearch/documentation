@@ -247,15 +247,7 @@ It is common to search books based on an author's name. `sort` can help grouping
 
 Use dot notation to sort results based on a document's nested fields. The following query sorts returned documents by their user review scores:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/books/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "science fiction",
-    "sort": ["rating.users:asc"]
-  }'
-```
+<CodeSamples id="sorting_guide_sort_nested_1" />
 
 ## Sorting and custom ranking rules
 

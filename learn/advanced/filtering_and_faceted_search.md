@@ -261,15 +261,7 @@ When using a dataset of restaurants containing geopositioning data, we can filte
 
 Use dot notation to filter results based on a document's nested fields. The following query only returns thrillers with good user reviews:
 
-```sh
-curl \
-  -X POST 'http://localhost:7700/indexes/movies/search' \
-  -H 'Content-Type: application/json' \
-  --data-binary '{
-    "q": "thriller",
-    "filter": "rating.users >= 90"
-  }'
-```
+<CodeSamples id="filtering_guide_nested_1" />
 
 ## Faceted search
 

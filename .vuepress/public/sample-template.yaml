@@ -59,6 +59,7 @@ field_properties_guide_displayed_1: |-
 filtering_guide_1: |-
 filtering_guide_2: |-
 filtering_guide_3: |-
+filtering_guide_nested_1: |-
 search_parameter_guide_query_1: |-
 search_parameter_guide_offset_1: |-
 search_parameter_guide_limit_1: |-
@@ -101,6 +102,7 @@ sorting_guide_update_sortable_attributes_1: |-
 sorting_guide_update_ranking_rules_1: |-
 sorting_guide_sort_parameter_1: |-
 sorting_guide_sort_parameter_2: |-
+sorting_guide_sort_nested_1: |-
 get_sortable_attributes_1: |-
 update_sortable_attributes_1: |-
 reset_sortable_attributes_1: |-
