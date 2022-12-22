@@ -35,6 +35,10 @@ Suppose you have a collection of movies containing the following fields:
       "Horror",
       "Mystery"
     ],
+    "rating": {
+      "critics": 86,
+      "users": 73
+    },
     "overview": "Husband and wife Gabe and Adelaide Wilson take their…"
   },
   …
@@ -182,13 +186,16 @@ Suppose that you have a dataset containing several movies in the following forma
       "Horror",
       "Thriller"
     ],
-    "rating": 4
+    "rating": {
+      "critics": 86,
+      "users": 73
+    },
   },
   …
 ]
 ```
 
-If you want to enable filtering using `director`, `release_date`, `genres`, and `rating`, you must add these attributes to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes).
+If you want to enable filtering using `director`, `release_date`, `genres`, and `rating.users`, you must add these attributes to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes).
 
 You can then restrict a search so it only returns movies released after 18 March 1995 with the following filter containing a single condition:
 
@@ -217,7 +224,7 @@ Note that filtering on string values is case-insensitive.
 If you only want well-rated movies that weren't directed by `Tim Burton`, you can use this filter:
 
 ```SQL
-rating >= 3 AND (NOT director = "Tim Burton")
+rating.users >= 80 AND (NOT director = "Tim Burton")
 ```
 
 You can use this filter when searching for `Planet of the Apes`:
@@ -227,7 +234,7 @@ You can use this filter when searching for `Planet of the Apes`:
 `NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
 
 ```SQL
-rating >= 3 AND (NOT director = "Tim Burton" AND director EXISTS)
+rating.users >= 80 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
 ## Filtering with `_geoRadius`
@@ -249,6 +256,12 @@ When using a dataset of restaurants containing geopositioning data, we can filte
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
 [You can read more about filtering results with `_geoRadius` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius)
+
+#### Filtering by nested fields
+
+Use dot notation to filter results based on a document's nested fields. The following query only returns thrillers with good user reviews:
+
+<CodeSamples id="filtering_guide_nested_1" />
 
 ## Faceted search
 

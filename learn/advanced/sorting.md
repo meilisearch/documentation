@@ -45,6 +45,10 @@ Suppose you have collection of books containing the following fields:
     "genres": [
       "science fiction"
     ],
+    "rating": {
+      "critics": 95,
+      "users": 87
+    },
     "price": 5.00
   },
   {
@@ -54,6 +58,10 @@ Suppose you have collection of books containing the following fields:
     "genres": [
       "science fiction"
     ],
+    "rating": {
+      "critics": 90,
+      "users": 92
+    },
     "price": 10.00
   },
   {
@@ -64,6 +72,10 @@ Suppose you have collection of books containing the following fields:
       "feminism",
       "philosophy"
     ],
+    "rating": {
+      "critics": 86,
+      "users": 73
+    },
     "price": 10.00
   },
   {
@@ -73,6 +85,10 @@ Suppose you have collection of books containing the following fields:
     "genres": [
       "fantasy"
     ],
+    "rating": {
+      "critics": 84,
+      "users": 80
+    },
     "price": 5.00
   },
   …
@@ -156,6 +172,10 @@ With our example dataset, the results look like this:
     "genres": [
       "science fiction"
     ],
+    "rating": {
+      "critics": 95,
+      "users": 87
+    },
     "price": 5.00
   },
   {
@@ -165,6 +185,10 @@ With our example dataset, the results look like this:
     "genres": [
       "science fiction"
     ],
+    "rating": {
+      "critics": 90,
+      "users": 92
+    },
     "price": 10.00
   }
 ]
@@ -183,6 +207,10 @@ It is common to search books based on an author's name. `sort` can help grouping
     "genres": [
       "science fiction"
     ],
+    "rating": {
+      "critics": 90,
+      "users": 92
+    },
     "price": 10.00
   },
   {
@@ -192,6 +220,10 @@ It is common to search books based on an author's name. `sort` can help grouping
     "genres": [
       "fantasy"
     ],
+    "rating": {
+      "critics": 84,
+      "users": 80
+    },
     "price": 5.00
   },
   {
@@ -202,10 +234,20 @@ It is common to search books based on an author's name. `sort` can help grouping
       "feminism",
       "philosophy"
     ],
+    "rating": {
+      "critics": 86,
+      "users": 73
+    },
     "price": 10.00
   }
 ]
 ```
+
+#### Sorting by nested fields
+
+Use dot notation to sort results based on a document's nested fields. The following query sorts returned documents by their user review scores:
+
+<CodeSamples id="sorting_guide_sort_nested_1" />
 
 ## Sorting and custom ranking rules
 

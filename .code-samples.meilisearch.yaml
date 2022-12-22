@@ -362,6 +362,14 @@ filtering_guide_3: |-
       "q": "Planet of the Apes",
       "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" 
     }' \
+filtering_guide_nested_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "thriller",
+      "filter": "rating.users >= 90"
+    }'
 search_parameter_guide_query_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
@@ -642,6 +650,14 @@ sorting_guide_update_ranking_rules_1: |-
       "attribute",
       "exactness"
     ]'
+sorting_guide_sort_nested_1: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/books/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "science fiction",
+      "sort": ["rating.users:asc"]
+    }'
 sorting_guide_sort_parameter_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/books/search' \

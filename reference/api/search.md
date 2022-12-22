@@ -439,7 +439,7 @@ You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
-#### Filtering results `_geoRadius`
+#### Filtering results with `_geoRadius`
 
 If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
 
