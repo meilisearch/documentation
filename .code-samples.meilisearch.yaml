@@ -454,81 +454,6 @@ search_parameter_guide_show_matches_position_1: |-
       "q": "winter feast",
       "showMatchesPosition": true
     }'
-settings_guide_synonyms_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/tops/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "synonyms": {
-        "sweater": ["jumper"],
-        "jumper": ["sweater"]
-      }
-    }'
-settings_guide_stop_words_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "stopWords": [
-        "the",
-        "a",
-        "an"
-      ]
-    }'
-settings_guide_ranking_rules_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "rankingRules": [
-        "words",
-        "typo",
-        "proximity",
-        "attribute",
-        "sort",
-        "exactness",
-        "release_date:asc",
-        "rank:desc"
-      ]
-    }'
-settings_guide_distinct_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/jackets/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{ "distinctAttribute": "product_id" }'
-settings_guide_searchable_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "searchableAttributes": [
-        "title",
-        "overview",
-        "genres"
-      ]
-    }'
-settings_guide_displayed_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "displayedAttributes": [
-        "title",
-        "overview",
-        "genres",
-        "release_date"
-      ]
-    }'
-settings_guide_sortable_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/books/settings' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "sortableAttributes": [
-        "price",
-        "author"
-      ]
-    }'
 add_movies_json_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents'\
@@ -898,16 +823,6 @@ typo_tolerance_guide_4: |-
         "twoTypos": 10
       }
     }'
-settings_guide_typo_tolerance_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/typo-tolerance' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "minWordSizeForTypos": {
-        "twoTypos": 12
-      },
-      "disableOnAttributes": ["title"]
-    }'
 updating_guide_check_version_new_authorization_header: |-
   curl \
     -X GET 'http://localhost:7700/version' \
@@ -936,13 +851,6 @@ getting_started_typo_tolerance: |-
     --data-binary '{
       "minWordSizeForTypos": { "oneTypo": 4 }
   }'
-settings_guide_pagination_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/pagination' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "maxTotalHits": 50
-    }'
 get_pagination_settings_1: |-
   curl \
     -X GET 'http://localhost:7700/indexes/books/settings/pagination'
@@ -969,13 +877,6 @@ update_faceting_settings_1: |-
 reset_faceting_settings_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/books/settings/faceting'
-settings_guide_faceting_1: |-
-  curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings/faceting' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "maxValuesPerFacet": 5
-    }'
 synonyms_guide_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/movies/settings/synonyms' \

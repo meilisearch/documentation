@@ -18,7 +18,7 @@ The `settings` object contains two arrays for this purpose: `filterableAttribute
 
 The above code sample adds `mass` and `_geo` to `filterableAttributes` and `sortableAttributes` setting you up for the next sections.
 
-To learn more about the `settings` object and how to configure it, refer to our [dedicated guide](/learn/configuration/settings.md).
+To learn more about the `settings` object and how to configure it, check out the [API reference](/reference/api/settings.md).
 
 ## Filtering
 

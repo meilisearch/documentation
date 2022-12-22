@@ -271,7 +271,7 @@ Additionally, keep in mind queries go through a normalization process that strip
 
 #### Placeholder search
 
-When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/configuration/settings.md#custom-ranking-rule). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.**
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -507,7 +507,7 @@ You would get the following response:
 
 Configures which attributes will be retrieved in the returned documents.
 
-If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/learn/configuration/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
+If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/api/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
 
 ::: note
 If an attribute has been removed from `displayedAttributes`, `attributesToRetrieve` will silently ignore it and the field will not appear in your returned documents.

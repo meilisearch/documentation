@@ -160,7 +160,7 @@ const BATCH_SIZE = 1000;
 
 Meilisearch's default settings are designed to deliver a fast and relevant search experience that works for most use-cases.
 
-To customize your index settings, we recommend following [this guide](/learn/configuration/settings.md). To learn more about the differences between settings in Algolia and Meilisearch, read on.
+To customize your index settings, we recommend following [this guide](/learn/core_concepts/indexes.md#index-settings). To learn more about the differences between settings in Algolia and Meilisearch, read on.
 
 ### Index settings vs. search parameters
 
@@ -168,7 +168,7 @@ One of the key usage differences between Algolia and Meilisearch is how they app
 
 **In Algolia,** [API parameters](https://www.algolia.com/doc/api-reference/api-parameters/) is a flexible category that includes both index settings and search parameters. Many API parameters can be used both at indexing time—to set default behavior—or at search time—to override that behavior.
 
-**In Meilisearch,** [index settings](/learn/configuration/settings.md) and [search parameters](/reference/api/search.md#search-parameters) are two distinct categories. Settings affect all searches on an index, while parameters affect the results of a single search.
+**In Meilisearch,** [index settings](/reference/api/settings.md) and [search parameters](/reference/api/search.md#search-parameters) are two distinct categories. Settings affect all searches on an index, while parameters affect the results of a single search.
 
 Some Meilisearch parameters require index settings to be configured beforehand. For example, you must first configure the index setting `sortableAttributes` to use the search parameter `sort`. However, unlike in Algolia, an index setting can never be used as a parameter and vice versa.
 
