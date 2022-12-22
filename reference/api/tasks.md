@@ -187,7 +187,7 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 
 ### Summarized task object
 
-When an API request triggers an asynchronous process, Meilisearch returns a summarized task object. This object contains the following fields in the stated order:
+When an API request triggers an asynchronous process, Meilisearch returns a summarized task object. This object contains the following fields:
 
 | Field            | Type    | Description                                                                                                                   |
 | :--------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------- |

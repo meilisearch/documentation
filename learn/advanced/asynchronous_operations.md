@@ -5,13 +5,11 @@ sidebarDepth: 2
 ---
 # Tasks and asynchronous operations
 
-All index writes are processed **asynchronously**. This means that task requests are not handled immediately—instead, Meilisearch places these operations in a queue and processes them in the order they were received.
+Many operations in Meilisearch are processed **asynchronously**. These API requests are not handled immediately—instead, Meilisearch places them in a queue and processes them in the order they were received.
 
-## Which operations are async?
+## Which operations are asynchronous?
 
-Every operation that might take a long time to be processed is handled asynchronously.
-
-For example, updating the `filterableAttributes` index setting will require as much time as re-indexing all the documents in this index. Because of that, Meilisearch adds your update request to the task queue and processes it as soon as possible.
+Every operation that might take a long time to be processed is handled asynchronously. Processing operations asynchronously allows Meilisearch to handle resource-intensive tasks without impacting search performance.
 
 Currently, these are Meilisearch's asynchronous operations:
 
@@ -26,13 +24,62 @@ Currently, these are Meilisearch's asynchronous operations:
 
 ## Understanding tasks
 
-Meilisearch's asynchronous operations are called "tasks". After you have requested an asynchronous operation, you can use the [task API](/reference/api/tasks.md) to find the detailed status of your request. To do so, you will need the task's unique identifier.
+When an API request triggers an asynchronous process, Meilisearch creates a task and places it in a [task queue](#task-queue).
 
-### Summarized task objects
+### Task objects
 
-Asynchronous operations return a summarized version of [the full `task` object](/reference/api/tasks.md#task-object). You can use the summarized task's `taskUid` to follow [its status](/reference/api/tasks.md#get-one-task).
+Tasks are objects containing information that allow you to track its progress and troubleshoot problems when things go wrong.
 
-### Global tasks
+A task object includes data not present in the original request, such as when the request was enqueued, the type of request, and an error code when the task fails:
+
+```json
+{
+    "uid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
+    "details": { 
+        "receivedDocuments": 67493,
+        "indexedDocuments": null
+    },
+    "error": null,
+    "duration": null,
+    "enqueuedAt": "2021-08-10T14:29:17.000000Z",
+    "startedAt": null,
+    "finishedAt": null
+}
+```
+
+For a comprehensive description of each task object field, consult the [Task API reference](/reference/api/tasks.md).
+
+#### Summarized task objects
+
+When you make an API request for an asynchronous operation, Meilisearch returns a summarized version of [the full `task` object](/reference/api/tasks.md#task-object).
+
+```json
+{
+  "taskUid": 0,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "indexCreation",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+Use the summarized task's `taskUid` to [track the progress of a task](/reference/api/tasks.md#get-one-task).
+
+#### Task `status`
+
+Tasks always contain a field indicating the task's current `status`. This field has one of the following possible values:
+
+- **`enqueued`**: the task has been received and will be processed soon
+- **`processing`**: the task is being processed
+- **`succeeded`**: the task has been successfully processed
+- **`failed`**: a failure occurred when processing the task. No changes were made to the database
+- **`canceled`**: the task was canceled
+
+#### Global tasks
 
 Some task types are not associated with a particular index but apply to the entire instance. These tasks are called global tasks. Global tasks always display `null` for the `indexUid` field.
 
@@ -48,15 +95,42 @@ Meilisearch considers the following task types as global:
 In a protected instance, your API key must have access to all indexes (`"indexes": [*]`) to view global tasks.
 :::
 
-### Task `status`
+### Task queue
 
-Task responses always contain a field indicating the task's current `status`. This field has one of the following possible values:
+After creating a task, Meilisearch places it in a queue. Enqueued tasks are processed one at a time, following the order in which they were requested.
 
-- **`enqueued`**: the task has been received and will be processed soon
-- **`processing`**: the task is being processed
-- **`succeeded`**: the task has been successfully processed
-- **`failed`**: a failure occurred when processing the task. No changes were made to the database
-- **`canceled`**: the task was canceled
+#### Task queue priority
+
+Meilisearch considers certain tasks high-priority and always places them at the top of the queue.
+
+The following types of tasks are always processed as soon as possible:
+
+1. `taskCancelation`
+2. `taskDeletion`
+3. `snapshotCreation`
+4. `dumpCreation`
+
+All other tasks are processed in the order they were enqueued.
+
+## Task workflow
+
+When you make a [request for an asynchronous operation](#which-operations-are-async), Meilisearch processes all tasks following the same steps:
+
+1. Meilisearch creates a task, puts it in the task queue, and returns a [summarized `task` object](/learn/advanced/asynchronous_operations.md#summarized-task-objects). Task `status` set to `enqueued`
+2. When your task reaches the front of the queue, Meilisearch begins working on it. Task `status` set to `processing`
+3. Meilisearch finishes the task. Status set to `succeeded` if task was successfully processed, or `failed` if there was an error
+
+#### Canceling and deleting tasks
+
+You can cancel a task while it is in `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks.md#cancel-tasks). Doing so changes a task's `status` to `canceled`.
+
+Meilisearch does not automatically delete tasks once their status is `succeeded`, `failed`, or `canceled`. These tasks remain visible in [the task list](/reference/api/tasks.md#get-tasks). To delete them, use the [delete tasks route](/reference/api/tasks.md#delete-tasks).
+
+::: note
+**Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
+
+Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch discards all progress made on `processing` tasks and resets them to `enqueued`. Task handling proceeds as normal once the instance is relaunched.
+:::
 
 #### Examples
 
@@ -83,7 +157,7 @@ When you query the [get task endpoint](/reference/api/tasks.md#get-one-task) usi
 }
 ```
 
-Later, you check the request's status one more time. It was successfully processed and its status changed to `succeeded`:
+Later, you check the task's progress one more time. It was successfully processed and its `status` changed to `succeeded`:
 
 ```json
 {
@@ -136,15 +210,35 @@ After a task has been [deleted](/reference/api/tasks.md#delete-tasks), trying to
 
 ## Filtering tasks
 
-Querying the tasks endpoint returns all instance tasks that have not been deleted. Use the `filter` query parameter to filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date.
+Querying the `GET /tasks` endpoint returns all tasks that have not been deleted. Use query parameters to filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Separate multiple values with a comma (`,`).
 
-To filter tasks, pass the selected parameters to the [get tasks endpoint](/reference/api/tasks.md#get-tasks), separating multiple values with a comma (`,`):
+#### Filter by `status`
+
+The following code sample returns tasks with `uid`s `5`, `10`, and `13`:
 
 <CodeSamples id="async_guide_filter_by_ids_1" />
 
 ### Filter by `canceledBy`
 
-When cancelling tasks, Meilisearch generates a new `taskCancellation` task. Use the `canceledBy` filter to view all tasks canceled by one or more `taskCancelation` task:
+The following code sample returns tasks with the `failed` and `canceled` statuses:
+
+<CodeSamples id="async_guide_filter_by_statuses_1" />
+
+#### Filter by `type`
+
+The following code sample returns `dumpCreation` and `indexSwap` tasks:
+
+<CodeSamples id="async_guide_filter_by_types_1" />
+
+#### Filter by `indexUid`
+
+The following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
+
+<CodeSamples id="async_guide_filter_by_index_uids_1" />
+
+### Filter by `canceledBy`
+
+Use the `canceledBy` filter to view all tasks canceled by one or more `taskCancelation` tasks:
 
 <CodeSamples id="async_guide_canceled_by_1" />
 
@@ -172,9 +266,9 @@ Date filters are equivalent to `<` or `>` operations and do not include the spec
 
 ### Combine filters
 
-You can combine task filters to get tasks meeting specific requirements. Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`.
+You can combine task filters. Use the ampersand character (`&`) to combine filters, equivalent to a logical `AND`.
 
-The following code sample returns all `documentAdditionOrUpdate` and `documentDeletion` type tasks with `processing` status in the `movies` index:
+The following code sample returns all tasks in the `movies` index that have the type `documentAdditionOrUpdate` or `documentDeletion` and have the `status` of `processing`.
 
 <CodeSamples id="async_guide_multiple_filters_1" />
 
@@ -182,11 +276,9 @@ The following code sample returns all `documentAdditionOrUpdate` and `documentDe
 
 ## Paginating tasks
 
-By default, Meilisearch returns a list of 20 tasks for each request. You can adjust the number of documents returned using the `limit` parameter, and control where the list begins using the `from` parameter.
+By default, Meilisearch returns a list of 20 tasks for each request. You can adjust the number of tasks returned using the `limit` parameter, and control where the list begins using the `from` parameter.
 
-For each call to this endpoint, the response will include the `next` field. Pass this value to your next call's `from` parameter to view the next set of results. It is common to refer to sets of results as pages, and to the process of splitting and fetching these sets as pagination.
-
-When the value of `next` is `null`, there are no more tasks to view.
+For each call to this endpoint, the response will include the `next` field. When you call the endpoint again, pass this value as the `from` parameter to view the next set of results.
 
 The following command returns two tasks at a time, starting from task `uid` `10`:
 
@@ -210,25 +302,3 @@ To view the next set of results, you would repeat the same query, replacing the 
 <CodeSamples id="get_all_tasks_paginating_2" />
 
 When the returned value of `next` is `null`, you have reached the final set of results.
-
-## Terminate Meilisearch while a task is being processed
-
-**Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
-
-Meilisearch's asynchronous tasks are atomic. This means that all operations concerning a specific task are bundled in one transaction. If any of those operations fails or is interrupted before reaching its end, nothing is committed to the database.
-
-What happens to an asynchronous operation when Meilisearch is terminated changes depending on the request's `status`:
-
-- `enqueued`: the task will remain enqueued and will be processed as usual once Meilisearch has been restarted
-- `processing`: there will be no consequences, since nothing has been committed to the database. After restarting, the task will be treated as `enqueued`
-- `succeeded`: there will be no data loss since the request was successfully completed
-- `failed`: the task failed and nothing has been altered in the database
-- `canceled`: the task was canceled and nothing has been altered in the database
-
-You can use [the `/tasks` route](/reference/api/tasks.md) to determine a task's `status`.
-
-### Example
-
-Suppose you have used the update documents endpoint to add a single batch of 100 documents to Meilisearch.
-
-If you terminate the instance after 99 documents have been successfully added, none of the 100 documents will be present in the dataset when you restart Meilisearch. The same is true if the 100th document raises an error. **Either all documents in a batch are added, or none are.**
