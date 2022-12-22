@@ -114,7 +114,7 @@ All other tasks are processed in the order they were enqueued.
 
 ## Task workflow
 
-When you make a [request for an asynchronous operation](#which-operations-are-async), Meilisearch processes all tasks following the same steps:
+When you make a [request for an asynchronous operation](#which-operations-are-asynchronous), Meilisearch processes all tasks following the same steps:
 
 1. Meilisearch creates a task, puts it in the task queue, and returns a [summarized `task` object](/learn/advanced/asynchronous_operations.md#summarized-task-objects). Task `status` set to `enqueued`
 2. When your task reaches the front of the queue, Meilisearch begins working on it. Task `status` set to `processing`
