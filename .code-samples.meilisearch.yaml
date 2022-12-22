@@ -932,7 +932,7 @@ search_parameter_guide_matching_strategy_2: |
     }'    
 date_guide_index_1: |
   curl \
-    -x post 'http://localhost:7700/indexes/games/documents' \
+    -x POST 'http://localhost:7700/indexes/games/documents' \
     -h 'content-type: application/json' \
     --data-binary @games.json
 date_guide_filterable_attributes_1: |
