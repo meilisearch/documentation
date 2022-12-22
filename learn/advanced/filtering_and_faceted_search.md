@@ -257,7 +257,7 @@ When using a dataset of restaurants containing geopositioning data, we can filte
 
 [You can read more about filtering results with `_geoRadius` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius)
 
-#### Filtering nested fields
+#### Filtering by nested fields
 
 Use dot notation to filter results based on a document's nested fields. The following query only returns thrillers with good user reviews:
 
