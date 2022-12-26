@@ -62,13 +62,13 @@ Instance creation in progress...
 
 ### 9. Test Meilisearch
 
-Copy the public IP address:
+To copy the public IP address, click on it:
 
-![meilisearch-droplet-name instance's IP: 165.227.56.77](/digitalocean/09.copy-ip.png)
+![meilisearch-droplet-name instance's IP: 165.227.56.77](/digitalocean/copy-ip.png)
 
-Paste it in your browser. If this screen is shown, your Meilisearch is now ready!
+Paste it into your browser. If you can access the search preview, your Meilisearch is now ready!
 
-![Meilisearch search preview](/digitalocean/09.test-meili.png)
+![Meilisearch search preview](/digitalocean/test-meili.png)
 
 ## Configure production settings in your Meilisearch droplet
 
