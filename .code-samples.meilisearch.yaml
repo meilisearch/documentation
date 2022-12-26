@@ -1057,6 +1057,15 @@ async_guide_multiple_filters_1: |
 async_guide_filter_by_ids_1: |
   curl \
     -X GET 'http://localhost:7700/tasks?uids=5,10,13'
+async_guide_filter_by_statuses_1: |	
+  curl \	
+    -X GET 'http://localhost:7700/tasks?statuses=failed,canceled'	
+async_guide_filter_by_types_1: |	
+  curl \	
+    -X GET 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'         	
+async_guide_filter_by_index_uids_1: |	
+  curl \	
+    -X GET 'http://localhost:7700/tasks?indexUids=movies'
 async_guide_canceled_by_1: |
   curl \
     -X GET 'http://localhost:7700/tasks?canceledBy=9,15'      
