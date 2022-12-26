@@ -210,15 +210,15 @@ After a task has been [deleted](/reference/api/tasks.md#delete-tasks), trying to
 
 ## Filtering tasks
 
-Querying the `GET /tasks` endpoint returns all tasks that have not been deleted. Use query parameters to filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Separate multiple values with a comma (`,`).
+Querying the [get tasks endpoint](/reference/api/tasks.md#get-tasks) returns all tasks that have not been deleted. Use query parameters to filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Separate multiple values with a comma (`,`).
 
-#### Filter by `status`
+#### Filter by `uid`
 
 The following code sample returns tasks with `uid`s `5`, `10`, and `13`:
 
 <CodeSamples id="async_guide_filter_by_ids_1" />
 
-### Filter by `canceledBy`
+### Filter by `status`
 
 The following code sample returns tasks with the `failed` and `canceled` statuses:
 
