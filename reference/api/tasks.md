@@ -185,6 +185,20 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 **Type**: String
 **Description**: The date and time when the task finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
+### Summarized task object
+
+When an API request triggers an asynchronous process, Meilisearch returns a summarized task object. This object contains the following fields:
+
+| Field            | Type    | Description                                                                                                                   |
+| :--------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------- |
+| **`taskUid`**    | Integer | Unique sequential identifier                                                                                                  |
+| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks))           |
+| **`status`**     | String  | Status of the task. Value is `enqueued`                                                                                       |
+| **`type`**       | String  | Type of task                                                                                                                  |
+| **`enqueuedAt`** | String  | Represents the date and time in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format when the task has been `enqueued` |
+
+You can use this `taskUid` to get more details on [the status of the task](#get-one-task).
+
 ## Get tasks
 
 <RouteHighlighter method="GET" route="/tasks"/>
@@ -201,10 +215,10 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 | :--------------------- | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                                |
 | **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                         |
-| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-uid) by their `uid`. Separate multiple task `uids` with a comma (`,`)                                |
-| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-status) by their `status`. Separate multiple task `statuses` with a comma (`,`)                      |
-| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-type) by their `type`. Separate multiple task `types` with a comma (`,`)                             |
-| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-indexuid) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
+| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                                |
+| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                      |
+| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                             |
+| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
 | **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)            |
 | **`beforeEnqueuedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                    |
 | **`beforeStartedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                     |

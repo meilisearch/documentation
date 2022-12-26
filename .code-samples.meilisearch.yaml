@@ -979,7 +979,7 @@ async_guide_filter_by_statuses_1: |
     -X GET 'http://localhost:7700/tasks?statuses=failed,canceled'
 async_guide_filter_by_types_1: |
   curl \
-    -X GET 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'         
+    -X GET 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'
 async_guide_filter_by_index_uids_1: |
   curl \
     -X GET 'http://localhost:7700/tasks?indexUids=movies'
