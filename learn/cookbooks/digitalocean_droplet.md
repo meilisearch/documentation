@@ -1,67 +1,64 @@
 # Deploy a Meilisearch instance on DigitalOcean
 
-[[toc]]
-
 ## Deploy Meilisearch on a DigitalOcean droplet
 
 ### 1. Create a new "droplet"
 
-A "droplet" is a set of resources, as a Virtual Machine, or a Server, in which you can run your own applications.
-In any DigitalOcean page, when you are logged in, you will find a menu in the upper-right corner. Click on "Create" -> "Droplets".
+A "droplet" is a set of resources, such as a Virtual Machine, or a Server, in which you can run your applications.
 
-![Selecting "Droplets Create cloud servers" from the "Create" dropdown](/digitalocean/01.create.png)
+Once you log in to your DigitalOcean account, click the green "Create" button at the top-right of the page and select "Droplets".
 
-### 2. Select Meilisearch snapshot
+![Selecting "Droplets" from the "Create" dropdown](/digitalocean/create.png)
 
-By default, DigitalOcean will display the "Distributions" tab. Select the "Marketplace" tab and search for "meili". Select it.
-
-![Searching for 'meili' in Marketplace](/digitalocean/02.marketplace.png)
-
-### 3. Select your plan
-
-Select your plan. Plans start at $5 (click on "See all plans" for more options). Memory-optimized options will give you better results for a production environment on big datasets.
-
-![Selecting the plan based on your usage](/digitalocean/03.select-plan.png)
-
-### 4. Select a region for your droplet
+### 2. Select a region for your droplet
 
 Select the region where you want to deploy your droplet. Remember, the closer you are to your users or customers, the better will be their search experience with Meilisearch.
 
-![Selecting the London data center region](/digitalocean/04.select-region.png)
+![Selecting the London data center region](/digitalocean/select-region.png)
 
-### 5. Add your SSH key
+### 3. Select Meilisearch image
 
-Select your SSH key in order to be able to connect to your droplet later. If you don't see your SSH key add yours to your account.
+By default, DigitalOcean will display the "OS" tab. Select the "Marketplace" tab, search for "Meilisearch", and select the image.
 
-If you need help with this, visit [this link](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)
+![Search results for 'Meilisearch' in Marketplace](/digitalocean/marketplace.png)
 
-You can also set a password for `root` user if you prefer this authentication method, but it is less secure.
+### 4. Choose size
 
-![Selecting SSH keys for authentication](/digitalocean/05.add-ssh-key.png)
+This is where you choose the amount of RAM, storage, and CPU cores your droplet will have. Select your plan. Plans start at $5 (click on "See all plans" for more options). Memory-optimized options will give you better results for a production environment on big datasets.
+
+![Selecting the plan based on your usage](/digitalocean/select-plan.png)
+
+### 5. Choose an authentication method
+
+You can either use SSH keys or a password to log in to your droplet. We recommend using SSH keys as they are more secure.
+
+Check the boxes for the existing keys you want to add to your droplet. If you don't have any existing keys, you can [create a new one](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
+
+![Selecting SSH keys for authentication](/digitalocean/add-ssh-key.png)
 
 ### 6. Choose your droplet name and tags
 
 Here you can select the name that will be visible everywhere in your DigitalOcean account. Choose wisely! Droplets can only contain alphanumeric characters, dashes, and periods.
 
-![Adding 'meilisearch-droplet-name' as the hostname](/digitalocean/06.droplet-name.png)
+![Adding 'meilisearch-droplet-name' as the hostname](/digitalocean/droplet-name.png)
 
 Tags are a very good method to know who created resources, and for organizing resources or projects. Tags can contain letters, numbers, colons, dashes, and underscores. Try to always add some tags to make clear what are the server purposes.
 
-![The search bar, meilisearch, and search-team tags](/digitalocean/06.add-tags.png)
+![The search bar, meilisearch, and search-team tags](/digitalocean/add-tags.png)
 
 ### 7. Click on "Create Droplet"
 
-![The "Create Droplet" button](/digitalocean/07.create-droplet.png)
+![The "Create Droplet" button](/digitalocean/create-droplet.png)
 
 ### 8. Your Meilisearch is running (in **development** environment)
 
 Instance creation in progress...
 
-![Progress bar for the meilisearch-droplet-name instance](/digitalocean/08.creating.png)
+![Progress bar for the meilisearch-droplet-name instance](/digitalocean/creating-droplet.png)
 
 ... done!
 
-![meilisearch-droplet-name instance created successfully](/digitalocean/08.created-ip.png)
+![meilisearch-droplet-name instance created successfully](/digitalocean/created-droplet.png)
 
 ### 9. Test Meilisearch
 
