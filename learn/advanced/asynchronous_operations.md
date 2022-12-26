@@ -28,9 +28,9 @@ When an API request triggers an asynchronous process, Meilisearch creates a task
 
 ### Task objects
 
-Tasks are objects containing information that allow you to track its progress and troubleshoot problems when things go wrong.
+Tasks are objects containing information that allow you to track their progress and troubleshoot problems when things go wrong.
 
-A task object includes data not present in the original request, such as when the request was enqueued, the type of request, and an error code when the task fails:
+A [task object](/reference/api/tasks.md#task-object) includes data not present in the original request, such as when the request was enqueued, the type of request, and an error code when the task fails:
 
 ```json
 {
@@ -51,11 +51,11 @@ A task object includes data not present in the original request, such as when th
 }
 ```
 
-For a comprehensive description of each task object field, consult the [Task API reference](/reference/api/tasks.md).
+For a comprehensive description of each task object field, consult the [task API reference](/reference/api/tasks.md).
 
 #### Summarized task objects
 
-When you make an API request for an asynchronous operation, Meilisearch returns a summarized version of [the full `task` object](/reference/api/tasks.md#task-object).
+When you make an API request for an asynchronous operation, Meilisearch returns a [summarized version](/reference/api/tasks.md#summarized-task-object) of the full `task` object.
 
 ```json
 {
@@ -101,7 +101,7 @@ After creating a task, Meilisearch places it in a queue. Enqueued tasks are proc
 
 #### Task queue priority
 
-Meilisearch considers certain tasks high-priority and always places them at the top of the queue.
+Meilisearch considers certain tasks high-priority and always places them at the front of the queue.
 
 The following types of tasks are always processed as soon as possible:
 
@@ -120,9 +120,9 @@ When you make a [request for an asynchronous operation](#which-operations-are-as
 2. When your task reaches the front of the queue, Meilisearch begins working on it. Task `status` set to `processing`
 3. Meilisearch finishes the task. Status set to `succeeded` if task was successfully processed, or `failed` if there was an error
 
-#### Canceling and deleting tasks
+### Canceling and deleting tasks
 
-You can cancel a task while it is in `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks.md#cancel-tasks). Doing so changes a task's `status` to `canceled`.
+You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks.md#cancel-tasks). Doing so changes a task's `status` to `canceled`.
 
 Meilisearch does not automatically delete tasks once their status is `succeeded`, `failed`, or `canceled`. These tasks remain visible in [the task list](/reference/api/tasks.md#get-tasks). To delete them, use the [delete tasks route](/reference/api/tasks.md#delete-tasks).
 
@@ -212,7 +212,7 @@ After a task has been [deleted](/reference/api/tasks.md#delete-tasks), trying to
 
 Querying the [get tasks endpoint](/reference/api/tasks.md#get-tasks) returns all tasks that have not been deleted. Use query parameters to filter tasks based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Separate multiple values with a comma (`,`).
 
-#### Filter by `uid`
+### Filter by `uid`
 
 The following code sample returns tasks with `uid`s `5`, `10`, and `13`:
 
@@ -224,13 +224,13 @@ The following code sample returns tasks with the `failed` and `canceled` statuse
 
 <CodeSamples id="async_guide_filter_by_statuses_1" />
 
-#### Filter by `type`
+### Filter by `type`
 
 The following code sample returns `dumpCreation` and `indexSwap` tasks:
 
 <CodeSamples id="async_guide_filter_by_types_1" />
 
-#### Filter by `indexUid`
+### Filter by `indexUid`
 
 The following command returns all tasks belonging to the index `movies`. Note that the `indexUid` is case-sensitive:
 
