@@ -14,8 +14,7 @@ If you are using v0.22 or above, use our [migration script](https://github.com/m
 
 ## Step 1: Verify your database version
 
-Before we begin, you need to verify the version of Meilisearch that's compatible with your database. Use the `GET /version` endpoint and note your `pkgVersion`:
-
+Before we begin, you need to verify the version of Meilisearch that's compatible with your database. Use the get version endpoint and note your `pkgVersion`:
 
 <CodeSamples id="updating_guide_check_version_new_authorization_header" />
 
@@ -37,17 +36,13 @@ The response should look something like this:
 
 If your `pkgVersion` is 0.21 or above, you can jump to [step 3](#step-3-create-the-dump). If not, proceed to the next step.
 
-If you get the error `Cannot open database, expected Meilisearch engine version: 0.X.X, current engine version 0.Y.Y`, your database is not compatible with the currently installed Meilisearch version.
-
-In this case, you need to download the compatible version now (`0.X.X` in the above error message) to access and export your database.
-
 ::: note
 If you are updating to v0.28 or above, keys imported from the old version will have their `key` and `uid` fields regenerated.
 :::
 
 ## Step 2: Set all fields as displayed attributes
 
-::: tip
+::: note
 If your dump was created in Meilisearch v0.21 or above, continue to [step 3](#step-3-create-the-dump).
 :::
 
@@ -55,16 +50,23 @@ When creating dumps using Meilisearch versions below v0.21, all fields must be [
 
 Start by verifying that all attributes are included in the displayed attributes list:
 
-<CodeSamples id="updating_guide_get_displayed_attributes_new" />
+<CodeSamples id="updating_guide_get_displayed_attributes_old_authorization_header" />
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-3-create-the-dump).
 
-If it's something else, save the current list of displayed attributes to restore it after the migration is complete. Next, reset the list of displayed attributes to its default value `(["*"])`:
+If it's something else, save the current list of displayed attributes to restore it after the migration is complete. Next, reset the list of displayed attributes to its default value `(["*"])` using:
 
-<CodeSamples id="updating_guide_reset_displayed_attributes_new" />
+<CodeSamples id="updating_guide_reset_displayed_attributes_old_authorization_header" />
 
-This command returns an `updateId`. You can use this to [track the status of the operation](/reference/api/tasks.md#get-one-task). Once the status is `processed`, you're good to go.
+This command returns an `updateId`. Use the get update endpoint to track the status of the operation:
 
+```sh
+# replace {updateId} with the updateId returned by the previous request
+curl \
+    -X GET 'http://localhost:7700/indexes/movies/updates/{updateId}'
+```
+
+Once the status is `processed`, you're good to go.
 
 ## Step 3: Create the dump
 
@@ -138,6 +140,8 @@ The server should return a response that looks like this:
 }
 ```
 
+Use the `taskUid` to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
+
 ::: note
 The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
 
@@ -150,27 +154,7 @@ curl \
 
 :::
 
-Use the `taskUid` to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
-
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
-
-```json
-{
-  "uid": 1,
-  "indexUid": null,
-  "status": "succeeded",
-  "type": "dumpCreation",
-  "canceledBy": null,
-  "details": {
-    "dumpUid": "20220621-161029217"
-  },
-  "error": null,
-  "duration": "PT0.025872S",
-  "enqueuedAt": "2022-06-21T16:10:29.217688Z",
-  "startedAt": "2022-06-21T16:10:29.218297Z",
-  "finishedAt": "2022-06-21T16:10:29.244169Z"
-}
-```
 
 ## Step 4: Stop the Meilisearch instance
 
@@ -259,6 +243,12 @@ For cloud platforms, move the new Meilisearch binary to the `/usr/bin` directory
 mv meilisearch /usr/bin/meilisearch
 ```
 
+::: warning
+If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
+
+Once Meilisearch v1 is released, this two-step process won't be necessary as v1 will be compatible with dumps from all previous versions.
+:::
+
 ## Step 7: Launch Meilisearch and import the dump
 
 Execute the command below to import the dump at launch:
@@ -285,12 +275,6 @@ meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meili
 
 ::::
 
-::: warning
-If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
-
-Once Meilisearch v1 is released, this two-step process won't be necessary as v1 will be compatible with dumps from all previous versions.
-:::
-
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
 ::: danger `_geo` field in v0.27, v0.28, and v0.29
@@ -309,34 +293,7 @@ If required, set `displayedAttributes` back to its previous value using the [upd
 
 ## Step 9: Delete backup files or rollback
 
-Now that your updated Meilisearch instance is up and running, delete the backup files:
-
-```
-rm -r /tmp/meilisearch
-rm -r /tmp/data.ms
-```
-
-You can also delete the dump file if desired:
-
-:::: tabs
-
-::: tab Local installation
-
-```
-rm /path/to/your/meilisearch/directory/meilisearch/dumps/{dump_uid.dump}
-```
-
-:::
-
-::: tab Cloud platforms
-
-```
-rm /var/opt/meilisearch/dumps/{dump_uid.dump}
-```
-
-:::
-
-::::
+Now that your updated Meilisearch instance is up and running, verify that the dump import was successful and no data was lost.
 
 If for some reason, something went wrong, you can always roll back to the previous version. Move the files back to their previous location using:
 
@@ -367,3 +324,32 @@ And run the configuration script:
 ```
 meilisearch-setup
 ```
+
+If all went well, you can delete the backup files using:
+
+```
+rm -r /tmp/meilisearch
+rm -r /tmp/data.ms
+```
+
+You can also delete the dump file if desired:
+
+:::: tabs
+
+::: tab Local installation
+
+```
+rm /path/to/your/meilisearch/directory/meilisearch/dumps/{dump_uid.dump}
+```
+
+:::
+
+::: tab Cloud platforms
+
+```
+rm /var/opt/meilisearch/dumps/{dump_uid.dump}
+```
+
+:::
+
+::::
