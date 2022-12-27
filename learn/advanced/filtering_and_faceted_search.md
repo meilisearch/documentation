@@ -8,7 +8,7 @@ Filters have several use-cases, such as restricting the results a specific user 
 
 Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria.
 
-To use a document field as a filter, you must first add its attribute to [`filterableAttributes`](/reference/api/settings.md#filterable-attributes). Suppose you have a collection of movies containing the following fields:
+To use a document field as a filter, you must first add its attribute to [`filterableAttributes`](/reference/api/settings.md#filterable-attributes). Suppose you have a collection of movies called `movies_rating` containing the following fields:
 
 ```json
 [
@@ -154,6 +154,8 @@ You can write the same filter mixing arrays and strings:
 
 ## Filter operators
 
+Meilisearch supports the following filters operators:
+
 ::: note
 When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
 :::
@@ -250,7 +252,7 @@ It has higher precedence than `AND` and `OR`.
 
 ### `AND`
 
-`AND` connects two conditions and only returns documents that satisfy both of them. `AND` has  higher precedence than `OR`.
+`AND` connects two conditions and only returns documents that satisfy both of them. `AND` has higher precedence than `OR`.
 
 The following expression returns all `horror`movies directed by `Jordan Peele`:
 
@@ -270,7 +272,7 @@ genres = horror OR genres = comedy
 
 ### Example
 
-Suppose that you have a dataset containing several movies in the following format:
+Suppose that your `movies_rating` dataset contains several movies in the following format:
 
 ```json
 [
