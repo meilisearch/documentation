@@ -1,5 +1,5 @@
 ---
-# Suggestion: style_guide.FirstPerson
+# Suggestion: Meilisearch.FirstPerson
 
 # We want to avoid using singular first person pronouns
 extends: existence

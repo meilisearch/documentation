@@ -1,5 +1,5 @@
 ---
-# Suggestion: style_guide.British.yml
+# Suggestion: Meilisearch.British.yml
 # Checks for American  spelling
 #
 extends: substitution

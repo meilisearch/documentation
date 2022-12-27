@@ -1,7 +1,7 @@
 ---
-# Warning: style_guide.SentenceLength
+# Warning: Meilisearch.SentenceLength
 
-# Counts words in a sentence and alerts if a sentence exceeds 42 words.
+# Counts words in a sentence and alerts if a sentence exceeds 40 words.
 extends: occurrence
 message: 'Shorter sentences improve readability (max 40 words).'
 scope: sentence
