@@ -8,21 +8,7 @@ Filters have several use-cases, such as restricting the results a specific user 
 
 Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria.
 
-To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/settings.md#filterable-attributes).
-
-**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by Meilisearch before they can be used.
-
-Updating `filterableAttributes` requires recreating the entire index. This may take a significant amount of time depending on your dataset size.
-
-::: note
-By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
-:::
-
-Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. Filtering with infinite (`inf` and `-inf`) or [Not a Number](https://en.wikipedia.org/wiki/NaN) (`NaN`) as numbers will throw an error as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). Filtering with  `inf` or `NaN` as strings will work for all fields except [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).  
-
-### Example
-
-Suppose you have a collection of movies containing the following fields:
+To use a document field as a filter, you must first add its attribute to [`filterableAttributes`](/reference/api/settings.md#filterable-attributes). Suppose you have a collection of movies containing the following fields:
 
 ```json
 [
@@ -45,29 +31,33 @@ Suppose you have a collection of movies containing the following fields:
 ]
 ```
 
-If you want to filter results based on the `director` and `genres` attributes, you must add them to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes):
+If you want to filter results based on the `director` and `genres` attributes, you must add them to the `filterableAttributes` list:
 
 <CodeSamples id="faceted_search_update_settings_1" />
+
+**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by Meilisearch before they can be used.
+
+Updating `filterableAttributes` requires recreating the entire index. This may take a significant amount of time depending on your dataset size.
+
+::: note
+By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
+:::
+
+Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. Filtering with infinite (`inf` and `-inf`) or [Not a Number](https://en.wikipedia.org/wiki/NaN) (`NaN`) as numbers will throw an error as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). Filtering with  `inf` or `NaN` as strings will work for all fields except [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).  
 
 ## Using filters
 
 Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
 
-`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
+`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or as a mix of both.
 
 ### Conditions
 
 Conditions are a filter's basic building blocks. They are always written in the `attribute OPERATOR value` format, where:
 
 - `attribute` is the attribute of the field you want to filter on
-- `OPERATOR` is the comparison operator and can be `=`, `!=`, `>`, `>=`, `<`, or `<=`
+- `OPERATOR` can be `=`, `!=`, `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IN`, `NOT`, `AND`, or `OR`
 - `value` is the value condition for the filter
-
-::: note
-`>`, `>=`, `<`, and `<=` only operate on numeric values and will ignore all other types of values.
-
-When operating on strings, `=` and `!=` are **case-insensitive**.
-:::
 
 #### Examples
 
@@ -104,34 +94,29 @@ The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-i
 
 #### Creating filter expressions with strings
 
-String expressions combine conditions using the following filter operators and parentheses:
+String expressions are read left to right. **`NOT` takes precedence over `AND` and `AND` takes precedence over `OR`**. You can use parentheses to ensure expressions are correctly parsed.
 
-- `NOT` returns all documents that do not satisfy a condition. The expression `NOT genres = horror` returns all documents whose `genres` do not contain `horror` and all documents missing a `genres` field
-- `AND` operates by connecting two conditions and only returns documents that satisfy both of them: `genres = horror AND director = 'Jordan Peele'`
-- `OR` connects two conditions and returns results that satisfy at least one of them: `genres = horror OR genres = comedy`
-- `TO` is equivalent to `>= AND <=`. The expression `release_date 795484800 TO 972129600` translates to `release_date >= 795484800 AND release_date <= 972129600`
-- `IN [valueA, valueB, …, valueN]` selects all documents whose chosen field contains at least one of the specified values. The expression `genres IN [horror, comedy]` returns all documents whose `genres` includes either `horror`, `comedy`, or both
-- `EXISTS` checks for the existence of a field. Fields with empty or null values still count as existing. The expression `release_date NOT EXISTS` returns all documents without a `release_date`
-
-When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
-
-::: tip
-String expressions are read left to right. `NOT` takes precedence over `AND` and `AND` takes precedence over `OR`. You can use parentheses to ensure expressions are correctly parsed.
+::: note
+Filtering on string values is case-insensitive.
+:::
 
 For instance, if you want your results to only include `comedy` and `horror` movies released after March 1995, the parentheses in the following query are mandatory:
 
-`(genres = horror OR genres = comedy) AND release_date > 795484800`
+```
+(genres = horror OR genres = comedy) AND release_date > 795484800
+```
 
 Failing to add these parentheses will cause the same query to be parsed as:
 
-`genres = horror OR (genres = comedy AND release_date > 795484800)`
+```
+genres = horror OR (genres = comedy AND release_date > 795484800)
+```
 
 Translated into English, the above expression will only return comedies released after March 1995 or horror movies regardless of their `release_date`.
-:::
 
 #### Creating filter expressions with arrays
 
-Array expressions establish logical connectives by nesting arrays of strings. They can have a maximum depth of two—array filter expressions with three or more levels of nesting will throw an error.
+Array expressions establish logical connectives by nesting arrays of strings. **They can have a maximum depth of two**—array filter expressions with three or more levels of nesting will throw an error.
 
 Outer array elements are connected by an `AND` operator. The following expression returns `horror` movies directed by `Jordan Peele`:
 
@@ -167,6 +152,122 @@ You can write the same filter mixing arrays and strings:
 [["genres = comedy, genres = horror"], "NOT director = 'Jordan Peele'"]
 ```
 
+## Filter operators
+
+::: note
+When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
+:::
+
+### Equality
+
+The equality operator (`=`) returns all documents that contain an attribute value equal to a specific value. When operating on strings, `=` is **case-insensitive**.
+
+::: note
+`null` and empty arrays will never be matched by the equality operator.
+:::
+
+### Inequality
+
+The inequality operator (`!=`) will select all documents not selected by the equality operator. When operating on strings, `!=` is **case-insensitive**.
+
+### Comparison
+
+The comparison operators (`>`, `<`, `>=`, `<=`) selects documents satisfying the comparison.
+
+::: note
+The right-hand side of the comparison must be a valid floating point number.
+:::
+
+### `TO`
+
+`TO` is equivalent to `>= AND <=`. The following expression will return all movies with `release_date` between `795484800` and `972129600` inclusive:
+
+```
+release_date 795484800 TO 972129600
+```
+
+### `EXISTS`
+
+The `EXISTS` operator checks for the existence of a field. Fields with empty or `null` values still count as existing.
+
+The following expression returns all documents that contain the `release_date` field, even if it is empty or `null`:
+
+```
+release_date EXISTS
+```
+
+The negated form of `EXISTS` can be written as:
+
+```
+attribute NOT EXISTS
+NOT attribute EXISTS
+```
+
+Both forms are equivalent.
+
+### `IN`
+
+`IN` combines equality operators by taking an array of comma-separated values delimited by square brackets. It selects all documents whose chosen field contains at least one of the specified values.
+
+Both of the following filters are equivalent:
+
+```
+attribute IN[value1, value2, …]
+
+attribute = value1 OR attribute = value2 OR …
+```
+
+The following expression returns all documents whose `genres` includes either `horror`, `comedy`, or both:
+
+```
+genres IN [horror, comedy]
+```
+
+The negated form of `IN` can be written as:
+
+```
+attribute NOT IN [value1, value2, …]
+NOT attribute IN [value1, value2, …]
+```
+
+Both are equivalent and mean:
+
+```
+attribute != value1 AND attribute != value2 AND …
+```
+
+### `NOT`
+
+The negation operator (`NOT`) selects all documents that do not satisfy a condition.
+
+The following expression will return all documents whose `genres` does not contain `horror` and documents with a missing `genres` field:
+
+```
+NOT genres = horror
+```
+
+It has higher precedence than `AND` and `OR`.
+
+### `AND`
+
+`AND` connects two conditions and only returns documents that satisfy both of them. `AND` has  higher precedence than `OR`.
+
+The following expression returns all `horror`movies directed by `Jordan Peele`:
+
+```
+genres = horror AND director = 'Jordan Peele'
+```
+
+### `OR`
+
+`OR` connects two conditions and returns results that satisfy at least one of them.
+
+The following expression returns either `horror` or `comedy` films:
+
+```
+genres = horror OR genres = comedy
+```
+
 ### Example
 
 Suppose that you have a dataset containing several movies in the following format:
@@ -195,39 +296,19 @@ Suppose that you have a dataset containing several movies in the following forma
 ]
 ```
 
-If you want to enable filtering using `director`, `release_date`, `genres`, and `rating.users`, you must add these attributes to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes).
+After adding `director`, `release_date`, `genres`, and `rating.users` to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes), you can use them for filtering.
 
-You can then restrict a search so it only returns movies released after 18 March 1995 with the following filter containing a single condition:
-
-```SQL
-release_date > 795484800
-```
-
-You can use this filter when searching for recent `Avengers` movies:
+The following code sample returns `Avengers` movies released after 18 March 1995:
 
 <CodeSamples id="filtering_guide_1" />
 
-You can also combine multiple conditions. For instance, you can limit your search so it only includes recent movies directed by either `Tim Burton` or `Christopher Nolan`:
-
-```SQL
-release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")
-```
-
-Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without constraints on its release date. This happens because `AND` takes precedence over `OR`.
-
-You can use this filter when searching for `Batman` movies:
+You can also combine multiple conditions. For instance, you can limit your search so it only includes `Batman` movies directed by either `Tim Burton` or `Christopher Nolan`:
 
 <CodeSamples id="filtering_guide_2" />
 
-Note that filtering on string values is case-insensitive.
+Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without constraints on its release date. This happens because `AND` takes precedence over `OR`.
 
-If you only want well-rated movies that weren't directed by `Tim Burton`, you can use this filter:
-
-```SQL
-rating.users >= 80 AND (NOT director = "Tim Burton")
-```
-
-You can use this filter when searching for `Planet of the Apes`:
+If you only want well-rated `Planet of the Apes` movies that weren't directed by `Tim Burton`, you can use this filter:
 
 <CodeSamples id="filtering_guide_3" />
 
@@ -251,17 +332,19 @@ _geoRadius(lat, lng, distance_in_meters)
 
 ### Example
 
-When using a dataset of restaurants containing geopositioning data, we can filter our search so it only includes places within two kilometres of our location:
+When using a dataset of restaurants containing geopositioning data, we can filter our search so it only includes places within two kilometers of our location:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
 [You can read more about filtering results with `_geoRadius` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius)
 
-#### Filtering by nested fields
+## Filtering by nested fields
 
 Use dot notation to filter results based on a document's nested fields. The following query only returns thrillers with good user reviews:
 
 <CodeSamples id="filtering_guide_nested_1" />
+
+[You can read more nested fields in our guide on data types.](/learn/advanced/datatypes.md)
 
 ## Faceted search
 

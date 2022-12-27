@@ -360,7 +360,7 @@ filtering_guide_3: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Planet of the Apes",
-      "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" 
+      "filter": "rating.users >= 80 AND (NOT director = \"Tim Burton\")" 
     }' \
 filtering_guide_nested_1: |-
   curl \
