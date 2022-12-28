@@ -1,3 +1,9 @@
+---
+
+sidebarDepth: 2
+
+---
+
 # Filtering and faceted search
 
 You can use Meilisearch's filters to refine search results.
@@ -6,9 +12,9 @@ Filters have several use-cases, such as restricting the results a specific user 
 
 ## Configuring filters
 
-Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria.
+Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria. To use a document field as a filter, you must first add its attribute to [`filterableAttributes`](/reference/api/settings.md#filterable-attributes).
 
-To use a document field as a filter, you must first add its attribute to [`filterableAttributes`](/reference/api/settings.md#filterable-attributes). Suppose you have a collection of movies called `movies_rating` containing the following fields:
+Suppose you have a collection of movies called `movies_rating` containing the following fields:
 
 ```json
 [
@@ -45,9 +51,13 @@ By default, `filterableAttributes` is empty. This means that filters do not work
 
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. Filtering with infinite (`inf` and `-inf`) or [Not a Number](https://en.wikipedia.org/wiki/NaN) (`NaN`) as numbers will throw an error as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). Filtering with  `inf` or `NaN` as strings will work for all fields except [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).  
 
-## Using filters
+## Filter basics
 
-Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
+Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added at search time, that is when a user searches your dataset. The `filter` search parameter refines search results by selecting documents that match the given filter and running the search query only on those documents.
+
+:::warning
+Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
+:::
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or as a mix of both.
 
@@ -94,7 +104,7 @@ The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-i
 
 #### Creating filter expressions with strings
 
-String expressions are read left to right. **`NOT` takes precedence over `AND` and `AND` takes precedence over `OR`**. You can use parentheses to ensure expressions are correctly parsed.
+String expressions are read left to right. You can use parentheses to ensure expressions are correctly parsed.
 
 ::: note
 Filtering on string values is case-insensitive.
@@ -154,7 +164,7 @@ You can write the same filter mixing arrays and strings:
 
 ## Filter operators
 
-Meilisearch supports the following filters operators:
+Meilisearch supports the following filter operators:
 
 ::: note
 When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
@@ -162,7 +172,7 @@ When creating an expression with a field name or value identical to a filter ope
 
 ### Equality
 
-The equality operator (`=`) returns all documents that contain an attribute value equal to a specific value. When operating on strings, `=` is **case-insensitive**.
+The equality operator (`=`) returns all documents that contain an attribute value equal to a specific value. When operating on strings, `=` is case-insensitive.
 
 ::: note
 `null` and empty arrays will never be matched by the equality operator.
@@ -170,11 +180,11 @@ The equality operator (`=`) returns all documents that contain an attribute valu
 
 ### Inequality
 
-The inequality operator (`!=`) will select all documents not selected by the equality operator. When operating on strings, `!=` is **case-insensitive**.
+The inequality operator (`!=`) will return all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
 
 ### Comparison
 
-The comparison operators (`>`, `<`, `>=`, `<=`) selects documents satisfying the comparison.
+The comparison operators (`>`, `<`, `>=`, `<=`) select documents satisfying a comparison.
 
 ::: note
 The right-hand side of the comparison must be a valid floating point number.
@@ -240,7 +250,7 @@ attribute != value1 AND attribute != value2 AND …
 
 ### `NOT`
 
-The negation operator (`NOT`) selects all documents that do not satisfy a condition.
+The negation operator (`NOT`) selects all documents that do not satisfy a condition. It has higher precedence than `AND` and `OR`.
 
 The following expression will return all documents whose `genres` does not contain `horror` and documents with a missing `genres` field:
 
@@ -248,13 +258,11 @@ The following expression will return all documents whose `genres` does not conta
 NOT genres = horror
 ```
 
-It has higher precedence than `AND` and `OR`.
-
 ### `AND`
 
 `AND` connects two conditions and only returns documents that satisfy both of them. `AND` has higher precedence than `OR`.
 
-The following expression returns all `horror`movies directed by `Jordan Peele`:
+The following expression returns all `horror` movies directed by `Jordan Peele`:
 
 ```
 genres = horror AND director = 'Jordan Peele'
@@ -270,7 +278,7 @@ The following expression returns either `horror` or `comedy` films:
 genres = horror OR genres = comedy
 ```
 
-### Example
+## Using filters
 
 Suppose that your `movies_rating` dataset contains several movies in the following format:
 
@@ -320,7 +328,7 @@ If you only want well-rated `Planet of the Apes` movies that weren't directed by
 rating.users >= 80 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
-## Filtering with `_geoRadius`
+### Filtering with `_geoRadius`
 
 If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
 
@@ -332,15 +340,13 @@ _geoRadius(lat, lng, distance_in_meters)
 
 `lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
 
-### Example
-
 When using a dataset of restaurants containing geopositioning data, we can filter our search so it only includes places within two kilometers of our location:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
 [You can read more about filtering results with `_geoRadius` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius)
 
-## Filtering by nested fields
+### Filtering by nested fields
 
 Use dot notation to filter results based on a document's nested fields. The following query only returns thrillers with good user reviews:
 
@@ -356,7 +362,7 @@ Faceted search provides users with a quick way to narrow down search results by 
 
 This is common in ecommerce sites like Amazon. When users perform a search, they are presented not only with a list of results but also with a list of facets which you can see on the sidebar in the image below:
 
-![Screenshot of an Amazon product search page displaying faceting UI](/faceted-search/facets-amazon.png)
+![Meilisearch demo for an ecommerce website displaying faceting UI](/faceted-search/facets-ecommerce.png)
 
 ### Filters or facets
 
@@ -364,9 +370,9 @@ In Meilisearch, facets are a specific use-case of filters. The question of wheth
 
 ### Using facets
 
-Like any other filter, attributes you want to use as facets must be added to the `filterableAttributes` list in the index's settings before they can be used.
+Like any other filter, attributes you want to use as facets must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes) in the index's settings before they can be used.
 
-Once they have been configured, you can search for facets with the `filter` search parameter.
+Once they have been configured, you can search for facets with [the `filter` search parameter](/reference/api/search.md#filter).
 
 :::warning
 Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
@@ -374,7 +380,7 @@ Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` 
 
 #### Example
 
-Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes), and you want to get movies classified as either `Horror` **or** `Mystery` **and** directed by `Jordan Peele`.
+Suppose you have added `director` and `genres` to the `filterableAttributes` list, and you want to get movies classified as either `horror` **or** `mystery` **and** directed by `Jordan Peele`.
 
 ```SQL
 [["genres = horror", "genres = mystery"], "director = 'Jordan Peele'"]
@@ -394,15 +400,15 @@ Meilisearch does not differentiate between facets and filters. This means that, 
 
 Using `facets` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
 
-In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
+The example below displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
 
-![IMDb facets](/faceted-search/facets-imdb.png)
+![Nobel prize demo facets](/faceted-search/facets-nobel-prize.png)
 
 #### Using `facets`
 
-[`facets` is a search parameter](/reference/api/search.md#facets) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
+The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
-Using the `facets` search parameter adds `facetDistribution` to the returned object.
+Using `facets` adds `facetDistribution` to the returned object.
 
 `facetDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
 
@@ -427,7 +433,7 @@ You can write a search query that gives you the distribution of `batman` movies 
 
 <CodeSamples id="faceted_search_facets_1"/>
 
-This query would return not only the matching movies, but also the `facetDistribution` key containing all relevant data:
+This query would return not only the matching movies but also the `facetDistribution` key containing all relevant data:
 
 ```json
 {
