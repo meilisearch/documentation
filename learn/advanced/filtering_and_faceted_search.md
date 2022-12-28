@@ -55,8 +55,8 @@ Filters work with numeric and string values. Empty fields or fields containing a
 
 Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added at search time, that is when a user searches your dataset. The `filter` search parameter refines search results by selecting documents that match the given filter and running the search query only on those documents.
 
-:::warning
-Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
+::: warning
+Please note that synonyms don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or as a mix of both.
@@ -84,7 +84,7 @@ director = 'Jordan Peele'
 director = "Tim Burton"
 ```
 
-Another condition could request movies released after 18 March 1995 (written as 795484800 in UNIX Epoch time):
+Another condition could request movies released after 18 March 1995 (written as `795484800` in UNIX Epoch time):
 
 ```
 release_date > 795484800
@@ -184,13 +184,13 @@ The inequality operator (`!=`) will return all documents not selected by the equ
 
 ### Comparison
 
-The comparison operators (`>`, `<`, `>=`, `<=`) select documents satisfying a comparison.
+The comparison operators (`>`, `<`, `>=`, `<=`, `TO`) select documents satisfying a comparison.
 
 ::: note
 The right-hand side of the comparison must be a valid floating point number.
 :::
 
-### `TO`
+#### `TO`
 
 `TO` is equivalent to `>= AND <=`. The following expression will return all movies with `release_date` between `795484800` and `972129600` inclusive:
 
@@ -318,14 +318,14 @@ You can also combine multiple conditions. For instance, you can limit your searc
 
 Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without constraints on its release date. This happens because `AND` takes precedence over `OR`.
 
-If you only want well-rated `Planet of the Apes` movies that weren't directed by `Tim Burton`, you can use this filter:
+If you only want recent `Planet of the Apes` movies that weren't directed by `Tim Burton`, you can use this filter:
 
 <CodeSamples id="filtering_guide_3" />
 
 `NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
 
 ```SQL
-rating.users >= 80 AND (NOT director = "Tim Burton" AND director EXISTS)
+release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
 ### Filtering with `_geoRadius`
@@ -340,7 +340,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 `lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
 
-When using a dataset of restaurants containing geopositioning data, we can filter our search so it only includes places within two kilometers of our location:
+When using a <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json"> dataset of restaurants</a> containing geopositioning data, we can filter our search so it only includes places within two kilometers of our location:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
@@ -368,72 +368,31 @@ This is common in ecommerce sites like Amazon. When users perform a search, they
 
 In Meilisearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
 
-### Using facets
+### Configuring facets
 
 Like any other filter, attributes you want to use as facets must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes) in the index's settings before they can be used.
 
-Once they have been configured, you can search for facets with [the `filter` search parameter](/reference/api/search.md#filter).
+Once they have been configured, you can search for facets with [the `facets` search parameter](/reference/api/search.md#facets).
 
-:::warning
-Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
+::: warning
+Please note that synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
 
-#### Example
+When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. The example below displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
 
-Suppose you have added `director` and `genres` to the `filterableAttributes` list, and you want to get movies classified as either `horror` **or** `mystery` **and** directed by `Jordan Peele`.
-
-```SQL
-[["genres = horror", "genres = mystery"], "director = 'Jordan Peele'"]
-```
-
-You can then use this filter to search for `thriller`:
-
-<CodeSamples id="faceted_search_filter_1" />
-
-### Facets distribution
-
-When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facets` search parameter](/reference/api/search.md#facets) in combination with `filter` when searching.
+![Nobel prize demo facets](/faceted-search/facets-nobel-prize.png)
 
 ::: note
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facets` can be used with any attributes added to `filterableAttributes`.
 :::
 
-Using `facets` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
+#### Facets distribution
 
-The example below displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
+Using `facets` will add an extra field,`facetDistribution`, to the returned search results containing the number of matching documents distributed among all the values of a given facet. The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
-![Nobel prize demo facets](/faceted-search/facets-nobel-prize.png)
-
-#### Using `facets`
-
-The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
-
-Using `facets` adds `facetDistribution` to the returned object.
-
-`facetDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
-
-```json
-{
-  "facetDistribution" : {
-    "genres" : {
-      "horror": 50,
-      "comedy": 34
-    }
-  }
-}
-```
-
-::: note
-By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
-:::
-
-##### Example
-
-You can write a search query that gives you the distribution of `batman` movies per genre:
+The following search query gives you the distribution of `batman` movies per genre:
 
 <CodeSamples id="faceted_search_facets_1"/>
-
-This query would return not only the matching movies but also the `facetDistribution` key containing all relevant data:
 
 ```json
 {
@@ -454,3 +413,9 @@ This query would return not only the matching movies but also the `facetDistribu
   }
 }
 ```
+
+`facetDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
+
+::: note
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
+:::
