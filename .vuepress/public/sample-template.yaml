@@ -139,6 +139,8 @@ updating_guide_check_version_old_authorization_header: |-
 updating_guide_get_displayed_attributes_old_authorization_header: |-
 updating_guide_reset_displayed_attributes_old_authorization_header: |-
 updating_guide_create_dump: |-
+updating_guide_get_update_status: |-
+updating_guide_get_dump_status: |-
 getting_started_typo_tolerance: |-
 settings_guide_pagination_1: |-
 get_pagination_settings_1: |-
