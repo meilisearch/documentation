@@ -16,6 +16,10 @@ To allow your users to sort results at search time you must:
 2. Add those attributes to the `sortableAttributes` index setting
 3. Update Meilisearch's [ranking rules](/learn/core_concepts/relevancy.md) (optional)
 
+::: note
+Meilisearch sorts strings in lexicographic order based on their byte values. This means, `á` which has a value of 225, will be sorted after `z`, which has a value of 122.  
+:::
+
 ### Select attributes for sorting
 
 Meilisearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
