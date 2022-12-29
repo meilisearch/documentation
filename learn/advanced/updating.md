@@ -64,6 +64,7 @@ This command returns an `updateId`. Use the get update endpoint to track the sta
 # replace {updateId} with the updateId returned by the previous request
 curl \
     -X GET 'http://localhost:7700/indexes/movies/updates/{updateId}'
+    -H 'X-Meili-API-Key: API_KEY'
 ```
 
 Once the status is `processed`, you're good to go.
@@ -160,6 +161,16 @@ Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move
 
 Stop your Meilisearch instance.
 
+:::: tabs
+
+::: tab Local installation
+
+If you're running Meilisearch locally, you can stop the program with `Ctrl + c`.
+
+:::
+
+::: tab Cloud platforms
+
 If you're running Meilisearch as a `systemctl` service, connect via SSH to your cloud instance and execute the following command to stop Meilisearch:
 
 ```bash
@@ -168,7 +179,9 @@ systemctl stop meilisearch
 
 You may need to prefix the above command with `sudo` if you are not connected as root.
 
-If you're running Meilisearch locally, you can stop the program with `Ctrl + c`.
+:::
+
+::::
 
 ## Step 5: Create a backup
 
@@ -211,11 +224,7 @@ Install the latest version of Meilisearch using:
 ::: tab Local installation
 
 ```bash
-# Install Meilisearch
 curl -L https://install.meilisearch.com | sh
-
-# Launch Meilisearch
-./meilisearch
 ```
 
 :::
@@ -259,7 +268,7 @@ Execute the command below to import the dump at launch:
 
 ```bash
 # replace {dump_uid.dump} with the name of your dump file
-./meilisearch --import-dump /dumps/{dump_uid.dump} --master-key="MASTER_KEY"
+./meilisearch --import-dump dumps/{dump_uid.dump} --master-key="MASTER_KEY"
 ```
 
 :::
@@ -283,7 +292,7 @@ You might not be able to import your dump due to Meilisearch due to an error aff
 
 ## Step 8: Restart Meilisearch as a service
 
-Once your dump has been correctly imported, press `Ctrl`+`C`  to stop Meilisearch. Next, execute the following command to run the script to configure Meilisearch and restart it as a service:
+If you're running a cloud instance, press `Ctrl`+`C`  to stop Meilisearch once your dump has been correctly imported. Next, execute the following command to run the script to configure Meilisearch and restart it as a service:
 
 ```
 meilisearch-setup
@@ -319,7 +328,7 @@ mv /tmp/data.ms /var/lib/meilisearch/data.ms
 
 ::::
 
-And run the configuration script:
+And run the configuration script at the root of your Meilisearch directory:
 
 ```
 meilisearch-setup
