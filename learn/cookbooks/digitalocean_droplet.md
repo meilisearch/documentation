@@ -24,7 +24,7 @@ By default, DigitalOcean will display the "OS" tab. Select the "Marketplace" tab
 
 ### 4. Choose size
 
-This is where you choose the amount of RAM, storage, and CPU cores your droplet will have. Select your plan based on your needs. Plans start at $5 (click on "See all plans" for more options). Memory-optimized options will give you better results for a production environment on big datasets.
+This is where you choose the amount of RAM, storage, and CPU cores your droplet will have. Select your plan based on your needs. Plans start at $4 (click on "See all plans" for more options). Memory-optimized options will give you better results for a production environment on big datasets.
 
 ![Selecting the plan based on your usage](/digitalocean/select-plan.png)
 
@@ -32,9 +32,9 @@ This is where you choose the amount of RAM, storage, and CPU cores your droplet 
 
 You can either use SSH keys or a password to log in to your droplet. We recommend using SSH keys as they are more secure.
 
-Check the boxes for the existing keys you want to add to your droplet. If you don't have any existing keys, you can [create a new one](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
-
 ![Selecting SSH keys for authentication](/digitalocean/add-ssh-key.png)
+
+Select the existing keys you want to add to your droplet. If you don't have any existing keys, you can [create a new one](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
 
 ### 6. Choose your droplet name and tags
 
@@ -50,7 +50,7 @@ Tags are great for managing resources. They are custom labels you assign to drop
 
 ![The "Create Droplet" button](/digitalocean/create-droplet.png)
 
-### 8. Your Meilisearch is running (in **development** environment)
+### 8. Meilisearch is running (in **development** environment)
 
 Instance creation in progress...
 
@@ -84,7 +84,7 @@ Type in your domain name in the "Enter domain field" and click "Add Domain".
 
 ![Domains tab on the Networking page](/digitalocean/add-domain.png)
 
-This should work out of the box. Your domain name should now be linked to your Meilisearch instance. You can now do a health check to verify that your instance is running and your DNS is well configured:
+This should work out of the box. Your domain name should now be linked to your Meilisearch instance. You can now do a health check to verify that your instance is running and your DNS is configured:
 
 ```bash
 curl -v http://<your-domain-name>/health
@@ -100,13 +100,11 @@ HTTP/1.1 200 OK
 …
 ```
 
-![Meilisearch interface](/digitalocean/11.working-domain.png)
-
 ### 2. Set master key and SSL (HTTPS)
 
-Meilisearch is currently running in a **development** environment. We haven't set up a master key, meaning that anyone can read/write to the Meilisearch instance. Since we aren't using HTTPS yet, this configuration is unsafe for **production**.
+Meilisearch is currently running in a **development** environment. We haven't set up a master key, meaning anyone can read/write to the Meilisearch instance. Since we aren't using HTTPS yet, this configuration is unsafe for **production**.
 
-To start the configuration process, either connect to your droplet [via SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/) or use the [Droplet Console](https://docs.digitalocean.com/products/droplets/how-to/connect-with-console/) in your preferred browser and follow the instructions:
+To start the configuration process, either connect to your droplet via SSH or use the Droplet Console in your preferred browser and follow the instructions:
 
 ### 2.1. Run the configuration script
 
