@@ -12,8 +12,6 @@ Filters have several use-cases, such as restricting the results a specific user 
 
 ## Configuring filters
 
-Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria. To use a document field as a filter, you must first add its attribute to [`filterableAttributes`](/reference/api/settings.md#filterable-attributes).
-
 Suppose you have a collection of movies called `movies_rating` containing the following fields:
 
 ```json
@@ -178,9 +176,21 @@ The equality operator (`=`) returns all documents that contain an attribute valu
 `null` and empty arrays will never be matched by the equality operator.
 :::
 
+The following expression returns all action movies:
+
+```
+genres = action
+```
+
 ### Inequality
 
 The inequality operator (`!=`) will return all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
+
+The following expression returns all movies without the `action` genre:
+
+```
+genres != action
+```
 
 ### Comparison
 
@@ -208,11 +218,11 @@ The following expression returns all documents that contain the `release_date` f
 release_date EXISTS
 ```
 
-The negated form of `EXISTS` can be written as:
+The negated form of the above expression can be written as:
 
 ```
-attribute NOT EXISTS
-NOT attribute EXISTS
+release_date NOT EXISTS
+NOT release_date EXISTS
 ```
 
 Both forms are equivalent.
@@ -221,31 +231,24 @@ Both forms are equivalent.
 
 `IN` combines equality operators by taking an array of comma-separated values delimited by square brackets. It selects all documents whose chosen field contains at least one of the specified values.
 
-Both of the following filters are equivalent:
-
-```
-attribute IN[value1, value2, …]
-
-attribute = value1 OR attribute = value2 OR …
-```
-
-The following expression returns all documents whose `genres` includes either `horror`, `comedy`, or both:
+Both of the following expressions are equivalent and return all documents whose `genres` includes either `horror`, `comedy`, or both:
 
 ```
 genres IN [horror, comedy]
+genres = horror OR genres = comedy
 ```
 
-The negated form of `IN` can be written as:
+The negated form of the above expression can be written as:
 
 ```
-attribute NOT IN [value1, value2, …]
-NOT attribute IN [value1, value2, …]
+genres NOT IN [horror, comedy]
+NOT genres IN [horror, comedy]
 ```
 
 Both are equivalent and mean:
 
 ```
-attribute != value1 AND attribute != value2 AND …
+genres != horror AND genres != comedy
 ```
 
 ### `NOT`
@@ -306,7 +309,7 @@ Suppose that your `movies_rating` dataset contains several movies in the followi
 ]
 ```
 
-After adding `director`, `release_date`, `genres`, and `rating.users` to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes), you can use them for filtering.
+After adding `director`, `release_date`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes), you can use them for filtering.
 
 The following code sample returns `Avengers` movies released after 18 March 1995:
 

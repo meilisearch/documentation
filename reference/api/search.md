@@ -470,7 +470,7 @@ This parameter can take two values:
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
 :::
 
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#using-facets)
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-facets)
 
 #### Example
 
