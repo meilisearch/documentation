@@ -200,6 +200,18 @@ The comparison operators (`>`, `<`, `>=`, `<=`, `TO`) select documents satisfyin
 The right-hand side of the comparison must be a valid floating point number.
 :::
 
+The expression below returns all documents with a user rating above 85:
+
+```
+rating.users > 85
+```
+
+To filter documents with a user rating of 80 or above but below 90, use:
+
+```
+rating.users >= 80 AND rating.users < 90
+```
+
 #### `TO`
 
 `TO` is equivalent to `>= AND <=`. The following expression will return all movies with `release_date` between `795484800` and `972129600` inclusive:
