@@ -4,7 +4,7 @@
 This guide does not work for versions below v0.15. For more information, [contact support](https://discord.gg/meilisearch).
 :::
 
-Currently, Meilisearch databases can only be safely opened by the Meilisearch version you used to create them. The following guide will walk you through all the steps to migrate an existing database from an older version of Meilisearch to the most recent one.
+Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps.md) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
@@ -54,7 +54,7 @@ Start by verifying that all attributes are included in the displayed attributes 
 
 If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#step-3-create-the-dump).
 
-If it's something else, save the current list of displayed attributes to restore it after the migration is complete. Next, reset the list of displayed attributes to its default value `(["*"])` using:
+If the response is anything else, save the current list of displayed attributes in a text file and then reset the displayed attributes list to its default value `(["*"])`:
 
 <CodeSamples id="updating_guide_reset_displayed_attributes_old_authorization_header" />
 
