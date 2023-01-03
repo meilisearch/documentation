@@ -26,7 +26,7 @@ This section contains instructions for upgrading from specific versions. Most ve
 
 - You might not be able to import your dump due to Meilisearch due to an error affecting `_geo` fields in **v0.27, v0.28, and v0.29**. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
 
-- If you are **updating to v0.28 or above**, keys imported from the old version will have their `key` and `uid` fields regenerated
+- If you are **updating to v0.28 or above**, existing keys will have their `key` and `uid` fields regenerated
 
 ## Step 1: Export data
 
@@ -76,7 +76,7 @@ Once the status is `processed`, you're good to go.
 
 Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options.md#dumps-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
-**Cloud platforms** like  DigitalOcean, AWS, and GCP are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
+**Cloud platforms** like DigitalOcean, AWS, and GCP are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
 
 If you're unsure where your Meilisearch directory is located, try this:
 
