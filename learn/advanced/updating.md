@@ -14,7 +14,7 @@ If you are using v0.22 or above, use our [migration script](https://github.com/m
 
 ## Step 1: Verify your database version
 
-Before we begin, you need to verify the version of Meilisearch that's compatible with your database. Use the get version endpoint and note your `pkgVersion`:
+First, verify the version of Meilisearch that's compatible with your database using the get version endpoint:
 
 <CodeSamples id="updating_guide_check_version_new_authorization_header" />
 
