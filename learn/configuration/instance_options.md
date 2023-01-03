@@ -287,7 +287,7 @@ This option will trigger an error if `--import-dump` is not defined.
 **Environment variable**: `MEILI_LOG_LEVEL`
 **CLI option**: `--log-level`
 **Default value**: `'INFO'`
-**Expected value**: one of `ERROR`, `WARN`, `INFO`, `DEBUG`, OR `TRACE`
+**Expected value**: one of `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`, OR `OFF`
 
 Defines how much detail should be present in Meilisearch's logs.
 
@@ -298,6 +298,7 @@ Meilisearch currently supports five log levels, listed in order of increasing ve
 - `'INFO'`: log all events. This is the default value of `--log-level`
 - `'DEBUG'`: log all events and include detailed information on Meilisearch's internal processes. Useful when diagnosing issues and debugging
 - `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `'DEBUG'` before considering `'TRACE'`.
+- `'OFF'`: disable logging
 
 ### Max index size
 
