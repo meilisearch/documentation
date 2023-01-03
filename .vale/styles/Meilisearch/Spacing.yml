@@ -1,5 +1,5 @@
 ---
-# Error: style_guide.Spacing.yml
+# Error: Meilisearch.Spacing.yml
 
 # Use a space between words, sentences, and punctuation marks
 extends: existence

@@ -1,5 +1,5 @@
 ---
-# Warning: style_guide.URLFormat.yml
+# Warning: Meilisearch.URLFormat.yml
 
 # Use "a URL"/"an HTML" instead of "an URL"/"a HTML"
 extends: substitution

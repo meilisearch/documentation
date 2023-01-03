@@ -1,5 +1,5 @@
 ---
-# Suggestion: style_guide.OxfordComma.yml
+# Suggestion: Meilisearch.OxfordComma.yml
 
 # Use the Oxford comma, this may not work as intended for complex sentences with many commas
 extends: existence

@@ -1,5 +1,5 @@
 ---
-# Error: style_guide.Typos.yml
+# Error: Meilisearch.Typos.yml
 
 # Lists any possible typos and the correct spelling 
 extends: substitution

@@ -1,5 +1,5 @@
 ---
-# Error: style_guide.MergeConflictMarkers.yml
+# Error: Meilisearch.MergeConflictMarkers.yml
 
 # Checks for the presence of merge conflict markers.
 extends: existence

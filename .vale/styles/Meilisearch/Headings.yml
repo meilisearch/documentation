@@ -1,5 +1,5 @@
 ---
-# Suggestion: style_guide.Headings.yml
+# Suggestion: Meilisearch.Headings.yml
 
 # Our headings should use sentence-style capitalization. The exceptions include any headings that maybe a list, start with "Step 1: Do this", and the list of words below
 extends: capitalization
