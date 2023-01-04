@@ -379,6 +379,8 @@ This is common in ecommerce sites like Amazon. When users perform a search, they
 
 ![Meilisearch demo for an ecommerce website displaying faceting UI](/faceted-search/facets-ecommerce.png)
 
+Faceted search interfaces often have a count of how many results belong to each facet. This UI gives users a visual clue of the range of results available for each facet.
+
 ### Filters or facets
 
 In Meilisearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
@@ -392,10 +394,6 @@ Once they have been configured, you can search for facets with [the `facets` sea
 ::: warning
 Please note that synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
-
-When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. The example below displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
-
-![Nobel prize demo facets](/faceted-search/facets-nobel-prize.png)
 
 ::: note
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facets` can be used with any attributes added to `filterableAttributes`.
