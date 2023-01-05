@@ -68,7 +68,12 @@ If the response is anything else, save the current list of displayed attributes 
 
 This command returns an `updateId`. Use the get update endpoint to track the status of the operation:
 
-<CodeSamples id="updating_guide_get_update_status" />
+```sh
+ # replace {updateId} with the updateId returned by the previous request
+  curl \
+    -X GET 'http://<your-domain-name>/indexes/movies/updates/{updateId}'
+    -H 'X-Meili-API-Key: API_KEY'
+```
 
 Once the status is `processed`, you're good to go.
 
@@ -147,7 +152,12 @@ Use the `taskUid` to [track the status](/reference/api/tasks.md#get-one-task) of
 ::: note
 The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
 
-<CodeSamples id="updating_guide_get_dump_status" />
+```sh
+  curl \
+    -X GET 'http://<your-domain-name>/dumps/:dump_uid/status'
+    -H 'Authorization: Bearer API_KEY' 
+  # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
+```
 
 :::
 
