@@ -476,7 +476,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/tasks",
+							"raw": "{{url}}/tasks/cancel",
 							"host": [
 								"{{url}}"
 							],
