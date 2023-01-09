@@ -9,7 +9,7 @@ Currently, Meilisearch databases are only compatible with the version of Meilise
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
 ::: tip
-If you are using v0.22 or above, use our [migration script](https://github.com/meilisearch/meilisearch-migration).
+If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
 :::
 
 ::: danger
@@ -24,9 +24,9 @@ This section contains instructions for upgrading from specific versions. Most ve
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 
-- You might not be able to import your dump due to Meilisearch due to an error affecting `_geo` fields in **v0.27, v0.28, and v0.29**. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
+- Due to an error affecting `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
 
-- If you are **updating to v0.28 or above**, existing keys will have their `key` and `uid` fields regenerated
+- If you are **updating to v0.28 or above**, existing keys will have their `key` and `uid` fields regenerated.
 
 ## Step 1: Export data
 
@@ -51,7 +51,7 @@ If your [`pkgVersion`](/reference/api/version.md#version-object) is 0.21 or abov
 ### Set all fields as displayed attributes
 
 ::: note
-If your dump was created in Meilisearch v0.21 or above, continue to the [next step](#create-the-dump).
+If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
 :::
 
 When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
@@ -60,7 +60,7 @@ Start by verifying that all attributes are included in the displayed attributes 
 
 <CodeSamples id="updating_guide_get_displayed_attributes_old_authorization_header" />
 
-If the response is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#create-the-dump).
+If the response for all indexes is `{'displayedAttributes': '["*"]'}`, you can move on to the [next step](#create-the-dump).
 
 If the response is anything else, save the current list of displayed attributes in a text file and then reset the displayed attributes list to its default value `(["*"])`:
 
@@ -69,13 +69,13 @@ If the response is anything else, save the current list of displayed attributes 
 This command returns an `updateId`. Use the get update endpoint to track the status of the operation:
 
 ```sh
- # replace {updateId} with the updateId returned by the previous request
+ # replace {indexUid} with the uid of your index and {updateId} with the updateId returned by the previous request
   curl \
-    -X GET 'http://<your-domain-name>/indexes/movies/updates/{updateId}'
+    -X GET 'http://<your-domain-name>/indexes/{indexUid}/updates/{updateId}'
     -H 'X-Meili-API-Key: API_KEY'
 ```
 
-Once the status is `processed`, you're good to go.
+Once the status is `processed`, you're good to go. Repeat this process for all indexes, then move on to creating your dump.
 
 ### Create the dump
 
@@ -193,7 +193,7 @@ You may need to prefix the above command with `sudo` if you are not connected as
 
 ### Create a backup
 
-Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary, unless you chose [another location](/learn/configuration/instance_options.md#database-path).
+Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/configuration/instance_options.md#database-path).
 
 On **cloud platforms**, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 
@@ -254,7 +254,7 @@ Give execute permission to the Meilisearch binary:
 chmod +x meilisearch
 ```
 
-For **cloud platforms**, move the new Meilisearch binary to the `/usr/bin` directory containing the executable files:
+For **cloud platforms**, move the new Meilisearch binary to the `/usr/bin` directory:
 
 ```
 mv meilisearch /usr/bin/meilisearch
@@ -304,11 +304,18 @@ meilisearch-setup
 
 If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
 
-### Delete backup files or rollback (_optional_)
+## Conclusion
 
 Now that your updated Meilisearch instance is up and running, verify that the dump import was successful and no data was lost.
 
-If for some reason, something went wrong, you can always roll back to the previous version. Move the files back to their previous location using:
+If everything looks good, then congratulations! You successfully migrated your database to the latest version of Meilisearch. Be sure to check out the [changelogs]().
+
+If something went wrong, you can always roll back to the previous version and try again. Be sure to check out the [version-specific update instructions](#version-specific-update-instructions), and feel free to [reach out for help](https://discord.gg/meilisearch) if the problem continues.
+
+### Delete backup files or rollback (_optional_)
+
+
+Move the files back to their previous location using:
 
 :::: tabs
 
