@@ -8911,10 +8911,10 @@ vuepress-html-webpack-plugin@^3.2.0:
     toposort "^1.0.0"
     util.promisify "1.0.0"
 
-vuepress-plugin-check-md@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-check-md/-/vuepress-plugin-check-md-0.0.2.tgz#e0c5f296948fa5df24280971ee6a725c00a88738"
-  integrity sha512-XwA/IiMNvR42L3ajmkr+6JY3JRnhDN+uluh1wLYl0VAI8VqTkXT7Ng4xlxgebfLPChEFPnJgcydGv8E52Zdpig==
+vuepress-plugin-check-md@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-check-md/-/vuepress-plugin-check-md-0.0.3.tgz#2ded2db8383d091c7a4d0c2bc7716c843e82fbec"
+  integrity sha512-ov9lw0g/b4ZIxjr3dcwYNDwMpfxLaOBhgOsDLnehdphx1eqaeJQ8MZO8PODE6aQWUuIUBzHOM3xQ9Kuvps3X3g==
   dependencies:
     check-md "1.0.0"
 

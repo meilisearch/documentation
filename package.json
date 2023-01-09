@@ -64,6 +64,6 @@
     "js-yaml": "^3.14.1",
     "markdownlint-cli": "^0.32.2",
     "vue-eslint-parser": "^9.1.0",
-    "vuepress-plugin-check-md": "^0.0.2"
+    "vuepress-plugin-check-md": "^0.0.3"
   }
 }
