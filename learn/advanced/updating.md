@@ -20,7 +20,7 @@ This guide only works for versions v0.15 and above. If you are using an older ve
 
 This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
 
-- If you are using **v0.24 or below**, use the `X-MEILI-API-KEY: API_KEY` authorization header:
+- If you are using **v0.24 or below**, use the `X-MEILI-API-Key: API_KEY` authorization header:
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 
@@ -72,7 +72,7 @@ This command returns an `updateId`. Use the get update endpoint to track the sta
  # replace {indexUid} with the uid of your index and {updateId} with the updateId returned by the previous request
   curl \
     -X GET 'http://<your-domain-name>/indexes/{indexUid}/updates/{updateId}'
-    -H 'X-Meili-API-Key: API_KEY'
+    -H 'X-MEILI-API-Key: API_KEY'
 ```
 
 Once the status is `processed`, you're good to go. Repeat this process for all indexes, then move on to creating your dump.
@@ -156,7 +156,7 @@ The response will vary slightly depending on your version. For v0.27 and below, 
   curl \
     -X GET 'http://<your-domain-name>/dumps/:dump_uid/status'
     -H 'Authorization: Bearer API_KEY' 
-  # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
+  # -H 'X-MEILI-API-Key: API_KEY' for v0.24 or below
 ```
 
 :::
@@ -205,7 +205,7 @@ Move the binary of the current Meilisearch installation and database to the `/tm
 
 ```
 mv /path/to/your/meilisearch/directory/meilisearch /tmp
-mv /path/to/your/meilisearch/directory/meilisearch/data.ms /tmp/
+mv /path/to/your/meilisearch/directory/data.ms /tmp/
 ```
 
 :::
@@ -220,8 +220,6 @@ mv /var/lib/meilisearch/data.ms /tmp/
 :::
 
 ::::
-
-## Step 3: Import data
 
 ### Install the desired version of Meilisearch
 
@@ -266,6 +264,8 @@ If you are using Meilisearch v0.20 or below, migration should be done in two ste
 Once Meilisearch v1 is released, this two-step process won't be necessary as v1 will be compatible with dumps from all previous versions.
 :::
 
+## Step 3: Import data
+
 ### Launch Meilisearch and import the dump
 
 Execute the command below to import the dump at launch:
@@ -308,12 +308,11 @@ If required, set `displayedAttributes` back to its previous value using the [upd
 
 Now that your updated Meilisearch instance is up and running, verify that the dump import was successful and no data was lost.
 
-If everything looks good, then congratulations! You successfully migrated your database to the latest version of Meilisearch. Be sure to check out the [changelogs]().
+If everything looks good, then congratulations! You successfully migrated your database to the latest version of Meilisearch. Be sure to check out the [changelogs](https://github.com/meilisearch/MeiliSearch/releases).
 
 If something went wrong, you can always roll back to the previous version and try again. Be sure to check out the [version-specific update instructions](#version-specific-update-instructions), and feel free to [reach out for help](https://discord.gg/meilisearch) if the problem continues.
 
 ### Delete backup files or rollback (_optional_)
-
 
 Move the files back to their previous location using:
 
@@ -323,7 +322,7 @@ Move the files back to their previous location using:
 
 ```
 mv /tmp/meilisearch /path/to/your/meilisearch/directory/meilisearch
-mv /tmp/data.ms /path/to/your/meilisearch/directory/meilisearch/data.ms
+mv /tmp/data.ms /path/to/your/meilisearch/directory/data.ms
 ```
 
 :::
