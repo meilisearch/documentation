@@ -95,7 +95,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
-| Multi-index search | [2023](https://github.com/meilisearch/product/issues/74) | ✅ | ✅ | ✅ |
+| Multi-index search | [In beta](https://github.com/meilisearch/instant-meilisearch/releases/tag/v0.10.1-multi-index-search.0) | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ❌ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
@@ -115,7 +115,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
-| Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
+| Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) <br> [Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json) <br> [Railway](https://railway.app/new/template/TXxa09?referralCode=YltNo3) <br> [Koyeb](https://app.koyeb.com/deploy?type=docker&image=getmeili/meilisearch&name=meilisearch-on-koyeb&ports=7700;http;/&env%5BMEILI_MASTER_KEY%5D=REPLACE_ME_WITH_A_STRONG_KEY) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
 | Official cloud-hosted solution | [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | High availability | Available with [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
@@ -127,7 +127,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | 1000, increasing limit possible by contacting support | No limitation | No limitation |
-| Maximum index size | 100GB default, configurable  | 128Gb | Constrained by RAM | No limitation |
+| Maximum index size | 100GiB default, configurable  | 128GB | Constrained by RAM | No limitation |
 | Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
 | Maximum document size | No limitation | 100KB, configurable | No limitation | 100KB default, configurable  |
 
@@ -135,9 +135,9 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| GitHub stars of the main project | 27K | N/A | 10K | 60K |
-| Number of contributors on the main project | 75 | N/A | 20 | 1,700 |
-| Public Slack community size | 1.5K | N/A | 700 | 14K |
+| GitHub stars of the main project | 32K | N/A | 12K | 62K |
+| Number of contributors on the main project | 115 | N/A | 30 | 1,800 |
+| Public Discord/Slack community size | 400 | N/A | 1,000 | 16K |
 
 ### Support
 
