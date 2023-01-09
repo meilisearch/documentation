@@ -314,7 +314,7 @@ If something went wrong, you can always roll back to the previous version and tr
 
 ### Delete backup files or rollback (_optional_)
 
-Move the files back to their previous location using:
+Delete the Meilisearch binary and `data.ms` folder created in the previous step. Next, move the old files back to their previous location using:
 
 :::: tabs
 
