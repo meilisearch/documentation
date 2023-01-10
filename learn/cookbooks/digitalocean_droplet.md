@@ -50,19 +50,9 @@ Tags are great for managing resources. They are custom labels you assign to drop
 
 ![The "Create Droplet" button](/digitalocean/create-droplet.png)
 
-### 8. Meilisearch is running (in **development** environment)
+### 8. Test Meilisearch
 
-Instance creation in progress...
-
-![Progress bar for the meilisearch-droplet-name instance](/digitalocean/creating-droplet.png)
-
-... done!
-
-![meilisearch-droplet-name instance created successfully](/digitalocean/created-droplet.png)
-
-### 9. Test Meilisearch
-
-Click on the droplet's public IP address to copy it:
+Once created, click on the droplet's public IP address to copy it:
 
 ![meilisearch-droplet-name instance's IP: 165.227.56.77](/digitalocean/copy-ip.png)
 
