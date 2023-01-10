@@ -20,7 +20,7 @@ This guide only works for versions v0.15 and above. If you are using an older ve
 
 This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
 
-- If you are using **v0.24 or below**, use the `X-MEILI-API-Key: API_KEY` authorization header:
+- If you are using **v0.24 or below**, use the `X-Meili-API-Key: API_KEY` authorization header:
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 
