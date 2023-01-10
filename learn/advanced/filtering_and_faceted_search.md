@@ -12,7 +12,7 @@ Filters have several use-cases, such as restricting the results a specific user 
 
 ## Configuring filters
 
-Suppose you have a collection of movies called `movies_rating` containing the following fields:
+Suppose you have a collection of movies called `movie_ratings` containing the following fields:
 
 ```json
 [
@@ -39,22 +39,22 @@ If you want to filter results based on the `director` and `genres` attributes, y
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
-**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by Meilisearch before they can be used.
-
-Updating `filterableAttributes` requires recreating the entire index. This may take a significant amount of time depending on your dataset size.
+**This step is mandatory and cannot be done at search time**  because Meilisearch needs to prepare an index before you can use filters. Updating `filterableAttributes` may take a significant amount of time depending on your dataset size.
 
 ::: note
-By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
+By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
 :::
 
-Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. Filtering with infinite (`inf` and `-inf`) or [Not a Number](https://en.wikipedia.org/wiki/NaN) (`NaN`) as numbers will throw an error as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). Filtering with  `inf` or `NaN` as strings will work for all fields except [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).  
+Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. 
+	
+Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
 
 ## Filter basics
 
-Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added at search time, that is when a user searches your dataset. The `filter` search parameter refines search results by selecting documents that match the given filter and running the search query only on those documents.
+Once you have configured `filterableAttributes`, you can use [the `filter` search parameter](/reference/api/search.md#filter). The `filter` search parameter refines search results by selecting documents matching the given filter and running the search query only on those documents.
 
 ::: warning
-Please note that synonyms don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
+[Synonyms](/learn/configuration/synonyms.md) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or as a mix of both.
@@ -102,7 +102,7 @@ The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-i
 
 #### Creating filter expressions with strings
 
-String expressions are read left to right. You can use parentheses to ensure expressions are correctly parsed.
+Meilisearch reads string expressions from left to right. You can use parentheses to ensure expressions are correctly parsed.
 
 ::: note
 Filtering on string values is case-insensitive.
@@ -124,7 +124,7 @@ Translated into English, the above expression will only return comedies released
 
 #### Creating filter expressions with arrays
 
-Array expressions establish logical connectives by nesting arrays of strings. **They can have a maximum depth of two**—array filter expressions with three or more levels of nesting will throw an error.
+Array expressions establish logical connectives by nesting arrays of strings. **Array filters can have a maximum depth of two**—expressions with three or more levels of nesting will throw an error.
 
 Outer array elements are connected by an `AND` operator. The following expression returns `horror` movies directed by `Jordan Peele`:
 
@@ -170,10 +170,10 @@ When creating an expression with a field name or value identical to a filter ope
 
 ### Equality
 
-The equality operator (`=`) returns all documents that contain an attribute value equal to a specific value. When operating on strings, `=` is case-insensitive.
+The equality operator (`=`) returns all documents containing an attribute equal to a specific value. When operating on strings, `=` is case-insensitive.
 
 ::: note
-`null` and empty arrays will never be matched by the equality operator.
+The equality operator does not return any results for `null` and empty arrays.
 :::
 
 The following expression returns all action movies:
@@ -184,7 +184,7 @@ genres = action
 
 ### Inequality
 
-The inequality operator (`!=`) will return all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
+The inequality operator (`!=`) returns all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
 
 The following expression returns all movies without the `action` genre:
 
@@ -214,7 +214,7 @@ rating.users >= 80 AND rating.users < 90
 
 #### `TO`
 
-`TO` is equivalent to `>= AND <=`. The following expression will return all movies with `release_date` between `795484800` and `972129600` inclusive:
+`TO` is equivalent to `>= AND <=`. The following expression returns all movies with `release_date` between `795484800` and `972129600` inclusive:
 
 ```
 release_date 795484800 TO 972129600
@@ -222,7 +222,7 @@ release_date 795484800 TO 972129600
 
 ### `EXISTS`
 
-The `EXISTS` operator checks for the existence of a field. Fields with empty or `null` values still count as existing.
+The `EXISTS` operator checks for the existence of a field. Fields with empty or `null` values count as existing.
 
 The following expression returns all documents that contain the `release_date` field, even if it is empty or `null`:
 
@@ -295,7 +295,7 @@ genres = horror OR genres = comedy
 
 ## Using filters
 
-Suppose that your `movies_rating` dataset contains several movies in the following format:
+Suppose that your `movie_ratings` dataset contains several movies in the following format:
 
 ```json
 [
@@ -367,7 +367,7 @@ Use dot notation to filter results based on a document's nested fields. The foll
 
 <CodeSamples id="filtering_guide_nested_1" />
 
-[You can read more nested fields in our guide on data types.](/learn/advanced/datatypes.md)
+[You can read more about nested fields in our guide on data types.](/learn/advanced/datatypes.md)
 
 ## Faceted search
 
@@ -379,29 +379,29 @@ This is common in ecommerce sites like Amazon. When users perform a search, they
 
 ![Meilisearch demo for an ecommerce website displaying faceting UI](/faceted-search/facets-ecommerce.png)
 
-Faceted search interfaces often have a count of how many results belong to each facet. This UI gives users a visual clue of the range of results available for each facet.
+Faceted search interfaces often have a count of how many results belong to each facet. This gives users a visual clue of the range of results available for each facet.
 
 ### Filters or facets
 
 In Meilisearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
 
-### Configuring facets
+### Configuring and using facets
 
 Like any other filter, attributes you want to use as facets must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes) in the index's settings before they can be used.
 
 Once they have been configured, you can search for facets with [the `facets` search parameter](/reference/api/search.md#facets).
 
 ::: warning
-Please note that synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
+Synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
 
 ::: note
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facets` can be used with any attributes added to `filterableAttributes`.
 :::
 
-#### Facets distribution
+#### Facet distribution
 
-Using `facets` will add an extra field,`facetDistribution`, to the returned search results containing the number of matching documents distributed among all the values of a given facet. The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
+Using `facets` will add an extra field,`facetDistribution`, to the returned search results containing the number of matching documents distributed among the values of a given facet. The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
 The following search query gives you the distribution of `batman` movies per genre:
 
