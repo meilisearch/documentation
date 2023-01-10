@@ -72,7 +72,7 @@ This command returns an `updateId`. Use the get update endpoint to track the sta
  # replace {indexUid} with the uid of your index and {updateId} with the updateId returned by the previous request
   curl \
     -X GET 'http://<your-domain-name>/indexes/{indexUid}/updates/{updateId}'
-    -H 'X-MEILI-API-Key: API_KEY'
+    -H 'X-Meili-API-Key: API_KEY'
 ```
 
 Once the status is `processed`, you're good to go. Repeat this process for all indexes, then move on to creating your dump.
@@ -156,7 +156,7 @@ The response will vary slightly depending on your version. For v0.27 and below, 
   curl \
     -X GET 'http://<your-domain-name>/dumps/:dump_uid/status'
     -H 'Authorization: Bearer API_KEY' 
-  # -H 'X-MEILI-API-Key: API_KEY' for v0.24 or below
+  # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 ```
 
 :::
@@ -204,8 +204,8 @@ Move the binary of the current Meilisearch installation and database to the `/tm
 ::: tab Local installation
 
 ```
-mv /path/to/your/meilisearch/directory/meilisearch /tmp
-mv /path/to/your/meilisearch/directory/data.ms /tmp/
+mv /path/to/your/meilisearch/directory/meilisearch/data.ms /tmp/
+mv /path/to/your/meilisearch/directory/meilisearch /tmp/
 ```
 
 :::
@@ -213,7 +213,7 @@ mv /path/to/your/meilisearch/directory/data.ms /tmp/
 ::: tab Cloud platforms
 
 ```
-mv /usr/bin/meilisearch /tmp
+mv /usr/bin/meilisearch /tmp/
 mv /var/lib/meilisearch/data.ms /tmp/
 ```
 
@@ -314,7 +314,7 @@ If something went wrong, you can always roll back to the previous version and tr
 
 ### Delete backup files or rollback (_optional_)
 
-Delete the Meilisearch binary and `data.ms` folder created in the previous step. Next, move the old files back to their previous location using:
+Delete the Meilisearch binary and `data.ms` folder created by the previous steps. Next, move the backup files back to their previous location using:
 
 :::: tabs
 
@@ -322,7 +322,7 @@ Delete the Meilisearch binary and `data.ms` folder created in the previous step.
 
 ```
 mv /tmp/meilisearch /path/to/your/meilisearch/directory/meilisearch
-mv /tmp/data.ms /path/to/your/meilisearch/directory/data.ms
+mv /tmp/data.ms /path/to/your/meilisearch/directory/meilisearch/data.ms
 ```
 
 :::
