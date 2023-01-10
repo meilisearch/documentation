@@ -45,8 +45,8 @@ If you want to filter results based on the `director` and `genres` attributes, y
 By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
 :::
 
-Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. 
-	
+Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
+
 Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
 
 ## Filter basics
@@ -92,13 +92,138 @@ release_date > 795484800
 As no specific schema is enforced at indexing, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally. For this reason, it is best to have homogeneous typing across fields, especially if numbers tend to become large.
 :::
 
-### Filter expressions
+### Filter operators
 
-You can build filter expressions by grouping basic conditions. Filter expressions can be written as strings, arrays, or a mix of both.
+Meilisearch supports the following filter operators:
+
+#### Equality
+
+The equality operator (`=`) returns all documents containing an attribute equal to a specific value. When operating on strings, `=` is case-insensitive.
+
+::: note
+The equality operator does not return any results for `null` and empty arrays.
+:::
+
+The following expression returns all action movies:
+
+```
+genres = action
+```
+
+#### Inequality
+
+The inequality operator (`!=`) returns all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
+
+The following expression returns all movies without the `action` genre:
+
+```
+genres != action
+```
+
+#### Comparison
+
+The comparison operators (`>`, `<`, `>=`, `<=`, `TO`) select documents satisfying a comparison. Comparison operators only apply only to numerical values.
+
+The expression below returns all documents with a user rating above 85:
+
+```
+rating.users > 85
+```
+
+To filter documents with a user rating of 80 or above but below 90, use:
+
+```
+rating.users >= 80 AND rating.users < 90
+```
+
+##### `TO`
+
+`TO` is equivalent to `>= AND <=`. The following expression returns all movies with a user rating of 80 or above but below 90:
+
+```
+rating.users 80 TO rating.users 89
+```
+
+#### `EXISTS`
+
+The `EXISTS` operator checks for the existence of a field. Fields with empty or `null` values count as existing.
+
+The following expression returns all documents that contain the `release_date` field, even if it is empty or `null`:
+
+```
+release_date EXISTS
+```
+
+The negated form of the above expression can be written as:
+
+```
+release_date NOT EXISTS
+NOT release_date EXISTS
+```
+
+Both forms are equivalent.
+
+#### `IN`
+
+`IN` combines equality operators by taking an array of comma-separated values delimited by square brackets. It selects all documents whose chosen field contains at least one of the specified values.
+
+Both of the following expressions are equivalent and return all documents whose `genres` includes either `horror`, `comedy`, or both:
+
+```
+genres IN [horror, comedy]
+genres = horror OR genres = comedy
+```
+
+The negated form of the above expression can be written as:
+
+```
+genres NOT IN [horror, comedy]
+NOT genres IN [horror, comedy]
+```
+
+Both are equivalent and mean:
+
+```
+genres != horror AND genres != comedy
+```
+
+#### `NOT`
+
+The negation operator (`NOT`) selects all documents that do not satisfy a condition. It has higher precedence than `AND` and `OR`.
+
+The following expression will return all documents whose `genres` does not contain `horror` and documents with a missing `genres` field:
+
+```
+NOT genres = horror
+```
+
+### Combining filter expressions
+
+You can build filter expressions by grouping basic conditions using `AND` and `OR`. Filter expressions can be written as strings, arrays, or a mix of both.
 
 ::: warning
 The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-index-with-get-route) only accepts string filter expressions.
 :::
+
+#### `AND`
+
+`AND` connects two conditions and only returns documents that satisfy both of them. `AND` has higher precedence than `OR`.
+
+The following expression returns all `horror` movies directed by `Jordan Peele`:
+
+```
+genres = horror AND director = 'Jordan Peele'
+```
+
+#### `OR`
+
+`OR` connects two conditions and returns results that satisfy at least one of them.
+
+The following expression returns either `horror` or `comedy` films:
+
+```
+genres = horror OR genres = comedy
+```
 
 #### Creating filter expressions with strings
 
@@ -121,6 +246,10 @@ genres = horror OR (genres = comedy AND release_date > 795484800)
 ```
 
 Translated into English, the above expression will only return comedies released after March 1995 or horror movies regardless of their `release_date`.
+
+::: note
+When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
+:::
 
 #### Creating filter expressions with arrays
 
@@ -160,139 +289,6 @@ You can write the same filter mixing arrays and strings:
 [["genres = comedy, genres = horror"], "NOT director = 'Jordan Peele'"]
 ```
 
-## Filter operators
-
-Meilisearch supports the following filter operators:
-
-::: note
-When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
-:::
-
-### Equality
-
-The equality operator (`=`) returns all documents containing an attribute equal to a specific value. When operating on strings, `=` is case-insensitive.
-
-::: note
-The equality operator does not return any results for `null` and empty arrays.
-:::
-
-The following expression returns all action movies:
-
-```
-genres = action
-```
-
-### Inequality
-
-The inequality operator (`!=`) returns all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
-
-The following expression returns all movies without the `action` genre:
-
-```
-genres != action
-```
-
-### Comparison
-
-The comparison operators (`>`, `<`, `>=`, `<=`, `TO`) select documents satisfying a comparison.
-
-::: note
-The right-hand side of the comparison must be a valid floating point number.
-:::
-
-The expression below returns all documents with a user rating above 85:
-
-```
-rating.users > 85
-```
-
-To filter documents with a user rating of 80 or above but below 90, use:
-
-```
-rating.users >= 80 AND rating.users < 90
-```
-
-#### `TO`
-
-`TO` is equivalent to `>= AND <=`. The following expression returns all movies with `release_date` between `795484800` and `972129600` inclusive:
-
-```
-release_date 795484800 TO 972129600
-```
-
-### `EXISTS`
-
-The `EXISTS` operator checks for the existence of a field. Fields with empty or `null` values count as existing.
-
-The following expression returns all documents that contain the `release_date` field, even if it is empty or `null`:
-
-```
-release_date EXISTS
-```
-
-The negated form of the above expression can be written as:
-
-```
-release_date NOT EXISTS
-NOT release_date EXISTS
-```
-
-Both forms are equivalent.
-
-### `IN`
-
-`IN` combines equality operators by taking an array of comma-separated values delimited by square brackets. It selects all documents whose chosen field contains at least one of the specified values.
-
-Both of the following expressions are equivalent and return all documents whose `genres` includes either `horror`, `comedy`, or both:
-
-```
-genres IN [horror, comedy]
-genres = horror OR genres = comedy
-```
-
-The negated form of the above expression can be written as:
-
-```
-genres NOT IN [horror, comedy]
-NOT genres IN [horror, comedy]
-```
-
-Both are equivalent and mean:
-
-```
-genres != horror AND genres != comedy
-```
-
-### `NOT`
-
-The negation operator (`NOT`) selects all documents that do not satisfy a condition. It has higher precedence than `AND` and `OR`.
-
-The following expression will return all documents whose `genres` does not contain `horror` and documents with a missing `genres` field:
-
-```
-NOT genres = horror
-```
-
-### `AND`
-
-`AND` connects two conditions and only returns documents that satisfy both of them. `AND` has higher precedence than `OR`.
-
-The following expression returns all `horror` movies directed by `Jordan Peele`:
-
-```
-genres = horror AND director = 'Jordan Peele'
-```
-
-### `OR`
-
-`OR` connects two conditions and returns results that satisfy at least one of them.
-
-The following expression returns either `horror` or `comedy` films:
-
-```
-genres = horror OR genres = comedy
-```
-
 ## Using filters
 
 Suppose that your `movie_ratings` dataset contains several movies in the following format:
@@ -327,7 +323,7 @@ The following code sample returns `Avengers` movies released after 18 March 1995
 
 <CodeSamples id="filtering_guide_1" />
 
-You can also combine multiple conditions. For instance, you can limit your search so it only includes `Batman` movies directed by either `Tim Burton` or `Christopher Nolan`:
+You can also combine multiple conditions. For example, you can limit your search so it only includes `Batman` movies directed by either `Tim Burton` or `Christopher Nolan`:
 
 <CodeSamples id="filtering_guide_2" />
 
