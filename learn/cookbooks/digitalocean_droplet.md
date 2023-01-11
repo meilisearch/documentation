@@ -1,6 +1,6 @@
 # Deploy a Meilisearch instance on DigitalOcean
 
-## Deploy Meilisearch on a DigitalOcean Droplet
+## Part 1: Deploy Meilisearch on a Droplet
 
 ### 1. Create a new Droplet
 
@@ -60,7 +60,7 @@ Paste it into your browser. If you can access the search preview, Meilisearch is
 
 ![Meilisearch search preview](/digitalocean/test-meili.png)
 
-## Configure production settings in your Meilisearch Droplet
+## Part 2: Configure production settings in your Meilisearch Droplet
 
 To configure Meilisearch for **production** on a DigitalOcean Droplet, [use SSH to access your Droplet](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/) and a script will guide you through the process. Alternatively, use the [Droplet Console](https://docs.digitalocean.com/products/droplets/how-to/connect-with-console/) with your preferred browser.
 
