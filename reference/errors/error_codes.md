@@ -54,6 +54,10 @@ An index with this UID was not found, check out our guide on [index creation](/l
 
 The requested index already has a primary key that cannot be changed.
 
+## `index_primary_key_multiple_candidates_found`
+
+[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed as the index contains multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes.md#update-an-index) to manually set a primary key or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
+
 ## `internal`
 
  Meilisearch experienced an internal error. Check the error message, and [open an issue](https://github.com/meilisearch/meilisearch/issues/new?assignees=&labels=&template=bug_report.md&title=) if necessary.
@@ -154,9 +158,9 @@ The `minWordSizeForTypos` object is invalid. The value for both `oneTypo` and `t
 
 The field you are trying to modify is immutable.
 
-## `primary_key_inference_failed`
+## `index_primary_key_no_candidate_found`
 
-The first provided document contains no fields with the substring `id`. [Manually designate the primary key](/learn/core_concepts/primary_key.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
+[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed as the index does not contain any fields ending with `id`. [Manually designate the primary key](/learn/core_concepts/primary_key.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
 
 ## `malformed_payload`
 
