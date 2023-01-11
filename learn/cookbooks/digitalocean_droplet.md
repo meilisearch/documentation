@@ -10,6 +10,8 @@ Once you log in to your DigitalOcean account, click the green "Create" button at
 
 ![Selecting "Droplets" from the "Create" dropdown](/digitalocean/create.png)
 
+[Refer to DigitalOcean's documentation to learn more about creating and configuring Droplets.](https://docs.digitalocean.com/tutorials/droplets/)
+
 ### 2. Select a region for your Droplet
 
 Select the region where you want to deploy your Droplet. Remember, the closer you are to your users, the better their search experience with Meilisearch will be.
