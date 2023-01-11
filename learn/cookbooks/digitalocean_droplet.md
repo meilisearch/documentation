@@ -34,7 +34,7 @@ You can either use SSH keys or a password to access your Droplet. We recommend u
 
 ![Selecting SSH keys for authentication](/digitalocean/add-ssh-key.png)
 
-Select the existing keys you want to add to your Droplet. If you don't have any existing keys, [follow DigitalOcean's instructions on how to create one](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
+Select the SSH keys you want to add to your Droplet. If you don't have a key, [follow DigitalOcean's instructions on how to create one](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
 
 ### 6. Choose your Droplet name and tags
 
@@ -52,7 +52,7 @@ Tags are great for managing resources. They are custom labels you assign to drop
 
 ### 8. Test Meilisearch
 
-Once created, click on the droplet's public IP address to copy it:
+Once created, click on the Droplet's public IP address to copy it:
 
 ![meilisearch-droplet-name instance's IP: 165.227.56.77](/digitalocean/copy-ip.png)
 
