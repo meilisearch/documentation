@@ -98,6 +98,8 @@ To create a mutual association between four words, this is the JSON syntax that 
 
 ## Multi-word phrases
 
+Meilisearch treats multi-word synonyms as [phrases](/reference/api/search.md#phrase-search-2).
+
 Take note that **multi-word phrases are treated differently** than associations between individual words.
 
 When a multi-word phrase is considered the synonym of another word or phrase, the **exact search query will always take precedence over its synonym(s)**.
@@ -122,4 +124,4 @@ Suppose you set `San Francisco` and `SF` as synonyms with a [mutual association]
 }
 ```
 
-If you input `SF` as a search query, then results containing `San Francisco` will also be returned. However, **they will be considered less [relevant](/learn/core_concepts/relevancy.md) than those containing `SF`**. The reverse is also true.
+If you input `SF` as a search query, then results containing the phrase `San Francisco` will also be returned. However, **they will be considered less [relevant](/learn/core_concepts/relevancy.md) than those containing `SF`**. The reverse is also true.
