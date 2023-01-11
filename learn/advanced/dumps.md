@@ -8,7 +8,7 @@ Creating a dump is also referred to as exporting it, whereas launching Meilisear
 
 ## Creating a dump
 
-To create a dump of your dataset, to use the [create a dump endpoint](/reference/api/dump.md#create-a-dump):
+To create a dump of your dataset, use the [create a dump endpoint](/reference/api/dump.md#create-a-dump):
 
 <CodeSamples id="post_dump_1" />
 
@@ -79,10 +79,6 @@ As the data contained in the dump needs to be indexed, the process will take som
 ```bash
 ./meilisearch --import-dump /dumps/20200813-042312213.dump
 ```
-
-### Importing a dump for v0.20 or below
-
-If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your v0.20 dump into an instance running any version of Meilisearch between v0.21 and v0.25. Second, export another dump from this instance and import it to a final instance running your targeted version.
 
 ## Use cases
 
