@@ -166,7 +166,7 @@ Configures the instance's environment. Value must be either `production` or `dev
 
 `production`:
 
-- Setting a [master key](/learn/security/master_api_keys.md) is **mandatory**
+- Setting a [master key](/learn/security/master_api_keys.md) of at least 16 bytes is **mandatory**
 - The [search preview interface](/learn/what_is_meilisearch/search_preview.md) is disabled
 
 `development`:

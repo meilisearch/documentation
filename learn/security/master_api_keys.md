@@ -4,9 +4,9 @@ This guide will teach you how to protect your Meilisearch instance by setting a 
 
 ## Protecting a Meilisearch instance
 
-**By default, Meilisearch's API is unprotected**. This means all routes are publicly accessible, and require no authorization to access.
+**By default, Meilisearch's API is unprotected**. This means all routes are publicly accessible and require no authorization to access.
 
-To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key can be of any length, but must be composed of valid UTF-8 characters.
+To protect a Meilisearch instance from unauthorized use, you must supply a master key at launch. This master key must be at least 16 bytes, composed of valid UTF-8 characters. In a production environment, Meilisearch will throw an error and refuse to launch if no master key is provided or if it is less than 16 bytes.
 
 ::: warning
 You need to set a master key to access the [`/keys`](/reference/api/keys.md) route. Otherwise, you will get a [`missing_master_key`](/reference/errors/error_codes.md#missing-master-key) error.

@@ -312,7 +312,7 @@ You should now have a working front-end search interface 🚀🔥
 
 ## Securing Meilisearch
 
-The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key (at least 16 bytes) to protect your instance from unauthorized use:
 
 :::: tabs
 
