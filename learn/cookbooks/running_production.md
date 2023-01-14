@@ -174,7 +174,7 @@ At this point, Meilisearch is installed and running. It is protected from eventu
 
 But you probably want to open your Meilisearch to the outside world, and for now, it is isolated. Let's fix that in a safe way.
 
-## Step 5: Secure and finish your setup using a reverse proxy, domain name, and HTTPS
+## Step 5: Secure and finish your setup
 
 It's time to safely make your brand new Meilisearch available to be requested from the outside world. For this purpose, you will use two of the main technologies available on the web: a Reverse Proxy and SSL/TLS.
 
