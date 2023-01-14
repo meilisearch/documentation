@@ -12,16 +12,16 @@ Using Meilisearch on your own machine for your weekend project is fun, let's agr
 
 [Step 1: Install Meilisearch](/learn/cookbooks/running_production.md#step-1-install-meilisearch)
 
-[Step 2: Create user](/learn/cookbooks/running_production.md#step-2-create-user)
+[Step 2: Create system user](/learn/cookbooks/running_production.md#step-2-create-system-user)
 
-[Step 3: Set configuration](/learn/cookbooks/running_production.md#step-3-set-configuration)
+[Step 3: Create a configuration file](/learn/cookbooks/running_production.md#step-3-create-a-configuration-file)
 
 [Step 4: Run Meilisearch as a service](/learn/cookbooks/running_production.md#step-4-run-meilisearch-as-a-service)
 
 + [4.1. Create a service file](/learn/cookbooks/running_production.md#_4-1-create-a-service-file)
 + [4.2. Enable and start service](/learn/cookbooks/running_production.md#_4-2-enable-and-start-service)
 
-[Step 5: Secure and finish your setup. Using a reverse proxy, domain name and HTTPS](/learn/cookbooks/running_production.md#step-5-secure-and-finish-your-setup-using-a-reverse-proxy-domain-name-and-https)
+[Step 5: Secure and finish your setup](/learn/cookbooks/running_production.md#step-5-secure-and-finish-your-setup)
 
 + [5.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production.md#_5-1-creating-a-reverse-proxy-with-nginx)
 + [5.2. Set up SSL/TLS for your Meilisearch](/learn/cookbooks/running_production.md#_5-2-set-up-ssl-tls-for-your-meilisearch)
@@ -73,13 +73,13 @@ mv ./meilisearch /usr/local/bin/
 
 ## Step 2: Create user
 
-It is not a good idea run meilisearch as `root`. You should create own system user for meilisearch:
+Running applications as root can introduce security flaws in your system. To prevent that from happening, create a dedicated system user for running Meilisearch:
 
 ```bash
 useradd -d /var/lib/meilisearch -b /bin/false -m -r meilisearch
 ```
 
-## Step 3: Set configuration
+## Step 3: Create a configuration file
 
 Download default config to `/etc`:
 
@@ -87,7 +87,7 @@ Download default config to `/etc`:
 wget -qO /etc/meilisearch.toml https://raw.githubusercontent.com/meilisearch/meilisearch/main/config.toml
 ```
 
-Update these lines to fit home folder of your newly created user:
+Update the following lines so Meilisearch stores its data in the home folder of your newly created user:
 
 ```ini
 env = "production"
@@ -97,7 +97,7 @@ dump_dir = "/var/lib/meilisearch/dumps"
 snapshot_dir = "/var/lib/meilisearch/snapshots"
 ```
 
-Create configured directories and set proper privileges
+Finally, create the directories you added to the configuration file and set proper privileges:
 
 ```bash
 mkdir /var/lib/meilisearch/data /var/lib/meilisearch/dumps /var/lib/meilisearch/snapshots
