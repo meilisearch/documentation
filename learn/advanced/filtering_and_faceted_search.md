@@ -47,7 +47,7 @@ By default, `filterableAttributes` is empty. Filters do not work without first e
 
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
-Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
+Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
 
 ## Filter basics
 
@@ -65,7 +65,7 @@ Conditions are a filter's basic building blocks. They are always written in the 
 
 - `attribute` is the attribute of the field you want to filter on
 - `OPERATOR` can be `=`, `!=`, `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IN`, `NOT`, `AND`, or `OR`
-- `value` is the value condition for the filter
+- `value` is the value the `OPERATOR` should look for in the `attribute` 
 
 #### Examples
 
@@ -89,7 +89,7 @@ release_date > 795484800
 ```
 
 ::: warning
-As no specific schema is enforced at indexing, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally. For this reason, it is best to have homogeneous typing across fields, especially if numbers tend to become large.
+Since Meilisearch does not enforce a specific schema when indexing data, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally. For this reason, it is best to have homogeneous typing across fields, especially when dealing with large numbers.
 :::
 
 ### Filter operators
