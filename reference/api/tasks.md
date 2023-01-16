@@ -211,21 +211,21 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 ### Query parameters
 
-| Query Parameter        | Default Value                  | Description                                                                                                                                                              |
-| :--------------------- | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                                |
-| **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                         |
-| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                                |
-| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                      |
-| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                             |
-| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
-| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)            |
-| **`beforeEnqueuedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                    |
-| **`beforeStartedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                     |
-| **`beforeFinishedAt`** | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                    |
-| **`afterEnqueuedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                    |
-| **`afterStartedAt`**   | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                     |
-| **`afterFinishedAt`**  | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                    |
+| Query Parameter        | Default Value                                      | Description                                                                                                                                                           |
+| :--------------------- | :------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`limit`**            | `20`                                               | Number of tasks to return                                                                                                                                             |
+| **`from`**             | `uid` of the last created task                     | `uid` of the first task returned                                                                                                                                      |
+| **`uids`**             | `*` (all uids)                                     | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                           |
+| **`statuses`**         | `*` (all statuses)                                 | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                    |
+| **`types`**            | `*` (all types)                                    | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                         |
+| **`indexUids`**        | `*` (all indexes)                                  | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
+| **`canceledBy`**       | N/A                                                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)         |
+| **`beforeEnqueuedAt`** | `*` (all tasks enqueued before the specified date) | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                 |
+| **`beforeStartedAt`**  | `*` (all tasks started before the specified date)  | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                  |
+| **`beforeFinishedAt`** | `*` (all tasks finished before the specified date) | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                 |
+| **`afterEnqueuedAt`**  | `*` (all tasks enqueued after the specified date)  | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                 |
+| **`afterStartedAt`**   | `*` (all tasks started after the specified date)   | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                  |
+| **`afterFinishedAt`**  | `*` (all tasks finished after the specified date)  | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                 |
 
 ### Response
 
@@ -357,10 +357,10 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`statuses`**         | Cancel tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
 | **`types`**            | Cancel tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
 | **`indexUids`**        | Cancel tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
-| **`beforeEnqueuedAt`** | Cancel tasks **before** a specified `enqueuedAt` date                                                                                |
-| **`beforeStartedAt`**  | Cancel tasks **before** a specified `startedAt` date                                                                                 |
-| **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt` date                                                                                 |
-| **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date                                                                                  |
+| **`beforeEnqueuedAt`** | Cancel tasks **before** a specified `enqueuedAt`.  Use `beforeEnqueuedAt=*` for all tasks enqueued before the specified date         |
+| **`beforeStartedAt`**  | Cancel tasks **before** a specified `startedAt`.  Use `beforeStartedAt=*` for all tasks started before the specified date            |
+| **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt`.  Use `afterEnqueuedAt=*` for all tasks enqueued after the specified date            |
+| **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt`.  Use `afterStartedAt=*` for all tasks started after the specified date               |
 
 ::: note
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
@@ -419,12 +419,12 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 | **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
 | **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
 | **`canceledBy`**       | Delete tasks based on the `canceledBy` field                                                                                         |
-| **`beforeEnqueuedAt`** | Delete tasks **before** a specified `enqueuedAt` date                                                                                |
-| **`beforeStartedAt`**  | Delete tasks **before** a specified `startedAt` date                                                                                 |
-| **`beforeFinishedAt`** | Delete tasks **before** a specified `finishedAt` date                                                                                |
-| **`afterEnqueuedAt`**  | Delete tasks **after** a specified `enqueuedAt` date                                                                                 |
-| **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date                                                                                  |
-| **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date                                                                                 |
+| **`beforeEnqueuedAt`** | Delete tasks **before** a specified `enqueuedAt`. Use `beforeEnqueuedAt=*` for all tasks enqueued before the specified date          |
+| **`beforeStartedAt`**  | Delete tasks **before** a specified `startedAt`. Use `beforeStartedAt=*` for all tasks started before the specified date             |
+| **`beforeFinishedAt`** | Delete tasks **before** a specified `finishedAt`. Use `beforeFinishedAt=*` for all tasks finished before the specified date          |
+| **`afterEnqueuedAt`**  | Delete tasks **after** a specified `enqueuedAt`. Use `afterEnqueuedAt=*` for all tasks enqueued after the specified date             |
+| **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt`. Use `afterStartedAt=*` for all tasks started after the specified date                |
+| **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt`. Use `afterFinishedAt=*` for all tasks finished after the specified date             |
 
 ::: note
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
