@@ -357,10 +357,10 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`statuses`**         | Cancel tasks based on `status`. Separate multiple `statuses` with a comma (`,`). Use `statuses=*` for all `statuses`                 |
 | **`types`**            | Cancel tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
 | **`indexUids`**        | Cancel tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
-| **`beforeEnqueuedAt`** | Cancel tasks **before** a specified `enqueuedAt`.  Use `beforeEnqueuedAt=*` for all tasks enqueued before the specified date         |
-| **`beforeStartedAt`**  | Cancel tasks **before** a specified `startedAt`.  Use `beforeStartedAt=*` for all tasks started before the specified date            |
-| **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt`.  Use `afterEnqueuedAt=*` for all tasks enqueued after the specified date            |
-| **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt`.  Use `afterStartedAt=*` for all tasks started after the specified date               |
+| **`beforeEnqueuedAt`** | Cancel tasks **before** a specified `enqueuedAt` date. Use `beforeEnqueuedAt=*` for all tasks enqueued before the specified date     |
+| **`beforeStartedAt`**  | Cancel tasks **before** a specified `startedAt` date. Use `beforeStartedAt=*` for all tasks started before the specified date        |
+| **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt` date. Use `afterEnqueuedAt=*` for all tasks enqueued after the specified date        |
+| **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` for all tasks started after the specified date           |
 
 ::: note
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
@@ -419,12 +419,12 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 | **`types`**            | Delete tasks based on `type`. Separate multiple `types` with a comma (`,`). Use `types=*` for all `types`                            |
 | **`indexUids`**        | Delete tasks based on `indexUid`. Separate multiple `uids` with a comma (`,`). Use `indexUids=*` for all `indexUids`. Case-sensitive |
 | **`canceledBy`**       | Delete tasks based on the `canceledBy` field                                                                                         |
-| **`beforeEnqueuedAt`** | Delete tasks **before** a specified `enqueuedAt`. Use `beforeEnqueuedAt=*` for all tasks enqueued before the specified date          |
-| **`beforeStartedAt`**  | Delete tasks **before** a specified `startedAt`. Use `beforeStartedAt=*` for all tasks started before the specified date             |
-| **`beforeFinishedAt`** | Delete tasks **before** a specified `finishedAt`. Use `beforeFinishedAt=*` for all tasks finished before the specified date          |
-| **`afterEnqueuedAt`**  | Delete tasks **after** a specified `enqueuedAt`. Use `afterEnqueuedAt=*` for all tasks enqueued after the specified date             |
-| **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt`. Use `afterStartedAt=*` for all tasks started after the specified date                |
-| **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt`. Use `afterFinishedAt=*` for all tasks finished after the specified date             |
+| **`beforeEnqueuedAt`** | Delete tasks **before** a specified `enqueuedAt` date. Use `beforeEnqueuedAt=*` for all tasks enqueued before the specified date     |
+| **`beforeStartedAt`**  | Delete tasks **before** a specified `startedAt` date. Use `beforeStartedAt=*` for all tasks started before the specified date        |
+| **`beforeFinishedAt`** | Delete tasks **before** a specified `finishedAt` date. Use `beforeFinishedAt=*` for all tasks finished before the specified date     |
+| **`afterEnqueuedAt`**  | Delete tasks **after** a specified `enqueuedAt` date. Use `afterEnqueuedAt=*` for all tasks enqueued after the specified date        |
+| **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` for all tasks started after the specified date           |
+| **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date. Use `afterFinishedAt=*` for all tasks finished after the specified date        |
 
 ::: note
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
