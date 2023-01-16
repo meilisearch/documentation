@@ -6,9 +6,7 @@ sidebarDepth: 2
 
 # Filtering and faceted search
 
-You can use Meilisearch's filters to refine search results.
-
-Filters have several use-cases, such as restricting the results a specific user has access to or creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
+Filters have several use-cases, such as refining search results and creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
 
 ## Configuring filters
 
@@ -65,7 +63,7 @@ Conditions are a filter's basic building blocks. They are always written in the 
 
 - `attribute` is the attribute of the field you want to filter on
 - `OPERATOR` can be `=`, `!=`, `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IN`, `NOT`, `AND`, or `OR`
-- `value` is the value the `OPERATOR` should look for in the `attribute` 
+- `value` is the value the `OPERATOR` should look for in the `attribute`
 
 #### Examples
 
@@ -197,7 +195,7 @@ The following expression will return all documents whose `genres` does not conta
 NOT genres = horror
 ```
 
-### Combining filter expressions
+### Filter expressions
 
 You can build filter expressions by grouping basic conditions using `AND` and `OR`. Filter expressions can be written as strings, arrays, or a mix of both.
 
