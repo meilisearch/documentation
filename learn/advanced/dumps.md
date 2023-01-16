@@ -50,7 +50,7 @@ This command should return an object with detailed information about the dump op
 
 The dump creation process is an asynchronous task that takes time proportional to the size of your dataset. All indexes of the current instance are exported along with their documents and settings and saved as a single `.dump` file.
 
-After dump creation is finished—when `status` is `succeeded`—the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary. You can customize [this using the `--dumps-dir` configuration option](/learn/configuration/instance_options.md#dumps-directory). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
+After dump creation is finished—when `status` is `succeeded`—the dump file is added to the dump directory. By default, this folder is named `dumps` and can be found in the same directory as your Meilisearch binary. You can customize [this using the `--dump-dir` configuration option](/learn/configuration/instance_options.md#dump-directory). **If the dump directory does not already exist when the dump creation process is called, Meilisearch will create it.**
 
 If a dump file is visible in the file system, the dump process was successfully completed. **Meilisearch will never create a partial dump file**, even if you interrupt an instance while it is generating a dump.
 

@@ -106,7 +106,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.env`                                        | Value of `--env`/`MEILI_ENV`                                                                | production
 | `infos.db_path`                                    | `true` if `--db-path`/`MEILI_DB_PATH` is specified, otherwise `false`                       | true
 | `infos.import_dump`                                | `true` if `--import-dump` is specified, otherwise `false`                                   | true
-| `infos.dumps_dir`                                  | `true` if `--dumps-dir`/`MEILI_DUMPS_DIR` is specified, otherwise `false`                   | true
+| `infos.dump_dir`                                  | `true` if `--dump-dir`/`MEILI_DUMP_DIR` is specified, otherwise `false`                   | true
 | `infos.ignore_missing_dump`                        | `true` if `--ignore-missing-dump` is activated, otherwise `false`                           | true
 | `infos.ignore_dump_if_db_exists`                   | `true` if `--ignore-dump-if-db-exists` is activated, otherwise `false`                      | true
 | `infos.import_snapshot`                            | `true` if `--import-snapshot` is specified, otherwise `false`                               | true
