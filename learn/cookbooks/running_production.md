@@ -71,7 +71,7 @@ Meilisearch is finally installed and ready to use. To make it accessible from ev
 mv ./meilisearch /usr/local/bin/
 ```
 
-## Step 2: Create user
+## Step 2: Create system user
 
 Running applications as root can introduce security flaws in your system. To prevent that from happening, create a dedicated system user for running Meilisearch:
 
