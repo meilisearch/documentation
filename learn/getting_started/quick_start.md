@@ -10,6 +10,14 @@ Let's get started!
 
 We'll start with downloading and installing Meilisearch. You have the option to install Meilisearch locally or deploy it over a cloud service.
 
+### Supported operating systems
+
+The following operating systems are compatible with the Meilisearch binary:
+
+- Any Linux distribution with `amd64/x86_64` or `aarch64/arm64` architecture using glibc 2.27 and later
+- macOS 12 and later with `amd64` or `arm64` architecture
+- Windows 11 and later
+
 ### Local installation
 
 :::: tabs
