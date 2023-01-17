@@ -371,14 +371,18 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 
 ### Schedule snapshot creation
 
-::: warning
-🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
-
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
+**Default value**: `false` or `86400` (24 hours)
+**Expected value**: a boolean or an integer
 
-Activates scheduled snapshots when provided. Snapshots are disabled by default.
+Activates scheduled snapshots. Snapshots are disabled by default.
+
+It is possible to use `--schedule-snapshot` as a flag. In this case, if `--schedule-snapshot` is present when launching an instance, Meilisearch takes a new snapshot every 24 hours.
+
+It is also possible to explicitly pass a boolean value to `--schedule-snapshot`. Meilisearch takes a new snapshot every 24 hours if `--schedule-snapshot=true`, and takes no snapshots if `--schedule-snapshot=false`.
+
+For more control over snapshot scheduling, pass an integer representing the interval in seconds between each snapshot. With `--schedule-snapshot=3600`, Meilisearch takes a new snapshot every hour.
 
 [Learn more about snapshots](/learn/advanced/snapshots.md).
 
@@ -390,15 +394,6 @@ Activates scheduled snapshots when provided. Snapshots are disabled by default.
 **Expected value**: a filepath pointing to a valid directory
 
 Sets the directory where Meilisearch will store snapshots.
-
-### Snapshot interval
-
-**Environment variable**: `MEILI_SNAPSHOT_INTERVAL_SEC`
-**CLI option**: `--snapshot-interval-sec`
-**Default value**: `86400` (1 day)
-**Expected value**: an integer
-
-Defines the interval between each snapshot. Value must be given in seconds.
 
 ### Import snapshot
 
