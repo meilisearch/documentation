@@ -165,7 +165,7 @@ This error occurs when you add documents for the first time and none of them hav
     "indexedDocuments":5
   },
   "error":{
-    "message": "The primary key inference process failed because the engine did not find any field ending with `id` in its name. Please specify the primary key manually using the `primaryKey` query parameter.",
+    "message": "The primary key inference failed as the engine did not find any field ending with `id` in its name. Please specify the primary key manually using the `primaryKey` query parameter.",
     "code": "index_primary_key_no_candidate_found",
     "type": "invalid_request",
     "link": "https://docs.meilisearch.com/errors#index-primary-key-no-candidate-found"
@@ -249,7 +249,7 @@ This error occurs when Meilisearch fails to guess your primary key as the index 
     "indexedDocuments":5
   },
   "error":{
-    "message": "The primary key inference process failed because the engine found 2 fields ending with `id` in their name, such as 'id' and 'author_id'. Please specify the primary key manually using the `primaryKey` query parameter.",
+    "message": "The primary key inference failed as the engine found 2 fields ending with `id` in their names: 'id' and 'author_id'. Please specify the primary key manually using the `primaryKey` query parameter.",
     "code": "index_primary_key_multiple_candidates_found",
     "type": "invalid_request",
     "link": "https://docs.meilisearch.com/errors#index-primary-key-multiple-candidates-found"
