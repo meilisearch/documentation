@@ -56,7 +56,7 @@ The requested index already has a primary key that cannot be changed.
 
 ## `index_primary_key_multiple_candidates_found`
 
-[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed as the index contains multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes.md#update-an-index) to manually set a primary key or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
+[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed as the index contains multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes.md#update-an-index) to manually set a primary key.
 
 ## `internal`
 
