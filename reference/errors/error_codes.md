@@ -16,7 +16,7 @@ The request is invalid, check the error message for more information.
 
 ## `database_size_limit_reached`
 
-The requested database has reached its maximum size, and no further documents can be added. For information on customizing the maximum database size accepted by Meilisearch, check out this [guide](/learn/configuration/instance_options.md#max-task-db-size).
+The requested database has reached its maximum size.
 
 ## `document_fields_limit_reached`
 
