@@ -95,7 +95,7 @@ Our restaurant dataset looks like this once we add geopositioning data:
 ```
 
 ::: warning
-Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_geo_field`](/reference/errors/error_codes.md#invalid-geo-field) error. In this case, the update will fail and no documents will be added or modified.
+Trying to index a dataset with one or more documents containing badly formatted `_geo` values will cause Meilisearch to throw an [`invalid_document_geo_field`](/reference/errors/error_codes.md#invalid-document-geo-field) error. In this case, the update will fail and no documents will be added or modified.
 :::
 
 ### Using `_geo` with CSV
