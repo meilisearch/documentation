@@ -194,17 +194,13 @@ Sets the HTTP address and port Meilisearch will use.
 **Default value**: `None`
 **Expected value**: an alphanumeric string
 
-Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need an API key to access endpoints such as `POST /search` and `GET /documents`. [You can read more about security keys in Meilisearch in our dedicated guide.](/learn/security/master_api_keys.md)
+Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health.md). This means you will need a valid API key to access all other endpoints.
 
-::: note
-You must supply an alphanumeric string when using this option.
-:::
+When `--env` is set to `production`, providing a master key is mandatory. If none is given, Meilisearch will throw an error and refuse to launch.
 
-Providing a master key is mandatory when `--env` is set to `production`. If none is given, Meilisearch will throw an error and refuse to launch.
+When `--env` is set to `development`, providing a master key is optional. If none is given, all routes will be unprotected and publicly accessible.
 
-If no master key is provided in a `development` environment, all routes will be unprotected and publicly accessible.
-
-[Learn more about Meilisearch's use of security keys.](/learn/security/master_api_keys.md)
+[Read more about master and API keys in our dedicated guide.](/learn/security/master_api_keys.md)
 
 ### Disable auto-batching
 
