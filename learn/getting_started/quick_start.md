@@ -18,6 +18,8 @@ The following operating systems are compatible with the Meilisearch binary:
 - macOS 12 and later with `amd64` or `arm64` architecture
 - Windows 11 and later
 
+[Read more about the supported operating systems here.](/learn/getting_started/supported_os.md)
+
 ### Local installation
 
 :::: tabs
