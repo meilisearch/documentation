@@ -2,7 +2,7 @@
 
 Please ensure your operating system is listed on this page before installing the Meilisearch binary. Refer to the [changelog](https://github.com/meilisearch/MeiliSearch/releases) for more information on operating system support changes.
 
-If the provided binaries don't work for you, we recommend compiling Meilisearch from the source files. If the compilation fails, Meilisearch is not compatible with your machine.
+If the provided [binaries](/learn/getting_started/quick_start.md#local-installation) don't work for you, we recommend compiling Meilisearch from the source files. If the compilation fails, Meilisearch is not compatible with your machine.
 
 ::: warning
 Any operating system or version not listed on this page does not mean Meilisearch won't work with it at all, we just don't guarantee it through our test suite.
@@ -10,7 +10,11 @@ Any operating system or version not listed on this page does not mean Meilisearc
 
 ## Linux
 
-The Meilisearch binary works on all Linux distributions with `amd64/x86_64` or `aarch64/arm64` architecture using glibc 2.27 and later.
+The Meilisearch binary works on all Linux distributions with `amd64/x86_64` or `aarch64/arm64` architecture using glibc 2.27 and later. You can check your glibc version using:
+
+```
+ldd --version
+```
 
 ## macOS
 
