@@ -5,7 +5,7 @@ Please ensure your operating system is listed on this page before installing the
 If the provided binaries don't work for you, we recommend compiling Meilisearch from the source files. If the compilation fails, Meilisearch is not compatible with your machine.
 
 ::: warning
-Any operating system or version not listed on this page does not mean Meilisearch won't work with it at all, we just don't guarantee it.
+Any operating system or version not listed on this page does not mean Meilisearch won't work with it at all, we just don't guarantee it through our test suite.
 :::
 
 ## Linux
