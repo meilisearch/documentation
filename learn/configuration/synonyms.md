@@ -124,4 +124,4 @@ Suppose you set `San Francisco` and `SF` as synonyms with a [mutual association]
 }
 ```
 
-If you input `SF` as a search query, then results containing the phrase `San Francisco` will also be returned. However, **they will be considered less [relevant](/learn/core_concepts/relevancy.md) than those containing `SF`**. The reverse is also true.
+If you input `SF` as a search query, Meilisearch will also return results containing the phrase `San Francisco`. However, **they will be considered less [relevant](/learn/core_concepts/relevancy.md) than those containing `SF`**. The reverse is also true: if your query is `San Francisco`, documents containing `San Francisco` will rank higher than those containing `SF`.
