@@ -117,7 +117,7 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 **Limitation:** The maximum size of an index is 500GiB, and the maximum size of the task database is 10GiB.
 
-**Explanation:** Meilisearch allocates all the virtual memory it requires upfront. The database maximum size ensures instances can contain several large indexes without reaching OS limits on the amount of virtual memory available to a single process.
+**Explanation:** Meilisearch allocates all the virtual memory it requires upfront. The maximum database size ensures instances can contain several large indexes without reaching operating system limits on the amount of virtual memory available to a single process.
 
 ## Maximum number of indexes in an instance
 
