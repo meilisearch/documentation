@@ -96,7 +96,7 @@ To create a mutual association between four words, this is the JSON syntax that 
 }
 ```
 
-## Multi-word phrases
+## Multi-word synonyms
 
 Meilisearch treats multi-word synonyms as [phrases](/reference/api/search.md#phrase-search-2).
 
@@ -104,7 +104,7 @@ Take note that **multi-word phrases are treated differently** than associations 
 
 When a multi-word phrase is considered the synonym of another word or phrase, the **exact search query will always take precedence over its synonym(s)**.
 
-::: tip
+::: note
 Multi-word synonyms are limited to a maximum of **three words**.
 For example, although you could make `League of Legends` and `LOL` into synonyms, you could not do the same for `The Lord of the Rings` and `LOTR`.
 :::
