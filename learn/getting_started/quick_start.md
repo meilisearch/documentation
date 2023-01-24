@@ -203,7 +203,7 @@ Meilisearch combines consecutive document requests into a single batch and proce
 }
 ```
 
-Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
+Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed at a later time**.
 
 Use the returned `taskUid` to [check the status](/reference/api/tasks.md) of your documents:
 
