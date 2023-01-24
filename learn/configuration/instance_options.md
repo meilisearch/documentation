@@ -373,16 +373,16 @@ Sets the maximum size of [accepted payloads](/learn/core_concepts/documents.md#d
 
 **Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
 **CLI option**: `--schedule-snapshot`
-**Default value**: `false` or `86400` (24 hours)
-**Expected value**: a boolean or an integer
+**Default value**: disabled if not present, `86400` if present without a value
+**Expected value**: `None` or an integer
 
 Activates scheduled snapshots. Snapshots are disabled by default.
 
-It is possible to use `--schedule-snapshot` as a flag. If `--schedule-snapshot` is present when launching an instance but has not been assigned a value, Meilisearch takes a new snapshot every 24 hours.
-
-It is also possible to explicitly pass a boolean value to `--schedule-snapshot`. Meilisearch takes a new snapshot every 24 hours when `--schedule-snapshot=true`, and takes no snapshots when `--schedule-snapshot=false`.
+It is possible to use `--schedule-snapshot` without a value. If `--schedule-snapshot` is present when launching an instance but has not been assigned a value, Meilisearch takes a new snapshot every 24 hours.
 
 For more control over snapshot scheduling, pass an integer representing the interval in seconds between each snapshot. When `--schedule-snapshot=3600`, Meilisearch takes a new snapshot every hour.
+
+When using the configuration file, it is also possible to explicitly pass a boolean value to `schedule_snapshot`. Meilisearch takes a new snapshot every 24 hours when `schedule_snapshot=true`, and takes no snapshots when `schedule_snapshot=false`.
 
 [Learn more about snapshots](/learn/advanced/snapshots.md).
 
