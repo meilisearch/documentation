@@ -51,6 +51,9 @@ exceptions:
   - Bleve & Tantivy
   - Google Cloud Console
   - AMIs
+  - Droplet
+  - Previous
+  - Next
   - '\b\s[0-9]:\s[A-Z]' # Step 1: Do this
   - '[0-9]\.\s[A-Z]'  # 1. Do this
   #- '"(.*?)"' #Ignore text in ""
