@@ -1,12 +1,8 @@
 # Supported operating systems
 
-Please ensure your operating system is listed on this page before installing the Meilisearch binary. Refer to the [changelog](https://github.com/meilisearch/MeiliSearch/releases) for more information on operating system support changes.
+This page lists operating systems Meilisearch officially supports and tests with every new release. Meilisearch binaries might still run in unsupported environments. Refer to the [changelog](https://github.com/meilisearch/MeiliSearch/releases) for more information on operating system support changes.
 
-If the provided [binaries](/learn/getting_started/quick_start.md#local-installation) don't work for you, we recommend compiling Meilisearch from the source files. If the compilation fails, Meilisearch is not compatible with your machine.
-
-::: warning
-Any operating system or version not listed on this page does not mean Meilisearch won't work with it at all, we just don't guarantee it through our test suite.
-:::
+If the provided [binaries](/learn/getting_started/quick_start.md#local-installation) don't work for you, try building Meilisearch from source. If compilation fails, Meilisearch is not compatible with your machine.
 
 ## Linux
 
