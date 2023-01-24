@@ -20,9 +20,7 @@ This guide only works for versions v0.15 and above. If you are using an older ve
 
 This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
 
-- If you are updating **from v0.19 or below**, please ensure all updates finish processing before creating the dump. `enqueued` updates will not be exported and may result in data loss.
-
-- If you are updating from **v0.20 or below**, the database creation date will not be imported to the new version.
+- If you are updating **from v0.20 or below**, please ensure all updates finish processing before creating the dump. `enqueued` updates will not be exported and may result in data loss.
 
 - If you are using **v0.24 or below**, use the `X-Meili-API-Key: API_KEY` authorization header:
 
