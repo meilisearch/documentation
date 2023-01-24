@@ -30,10 +30,6 @@ The requested document can't be retrieved. Either it doesn't exist, or the datab
 
 An error occurred during the dump creation process. The task was aborted.
 
-## `invalid_swap_duplicate_index_found`
-
-The indexes used in the [`indexes`](/reference/api/indexes.md#body-3) array for a [swap index](/reference/api/indexes.md#swap-indexes) request have been declared multiple times. You must declare each index only once.
-
 ## `immutable_api_key_actions`
 
 The [`actions`](/reference/api/keys.md#actions) field of an API key cannot be modified.
@@ -77,6 +73,10 @@ An index with this [`uid`](/reference/api/indexes.md#index-object) already exist
 ## `index_creation_failed`
 
 An error occurred while trying to create an index, check out our guide on [index creation](/learn/core_concepts/indexes.md).
+
+## `index_not_accessible`
+
+An internal error occurred while trying to access the requested index.
 
 ## `index_not_found`
 
@@ -300,6 +300,25 @@ This error occurs if:
 - The [`minWordSizeForTypos`](/reference/api/settings.md#typo-tolerance-object) field is invalid. It should either be an integer or set to `null`
 - The value of either [`oneTypo`](/reference/api/settings.md#typo-tolerance-object) or [`twoTypos`](/reference/api/settings.md#typo-tolerance-object) is invalid. It should either be an integer or set to `null`
 
+## `invalid_state`
+
+The database is in an invalid state. Deleting the database and re-indexing should solve the problem.
+
+## `invalid_store_file`
+
+The `data.ms` folder is in an invalid state. Your `.mdb` file is corrupted or the `data.ms` folder has been replaced by a file.
+
+## `invalid_swap_duplicate_index_found`
+
+The indexes used in the [`indexes`](/reference/api/indexes.md#body-3) array for a [swap index](/reference/api/indexes.md#swap-indexes) request have been declared multiple times. You must declare each index only once.
+
+## `invalid_swap_indexes`
+
+This error happens if:
+
+- The payload doesn't contain exactly two index [`uids`](/reference/api/indexes.md#body-3) for a swap operation
+- The payload contains an invalid index name in the [`indexes`](/reference/api/indexes.md#body-3) array
+
 ## `invalid_task_after_enqueued_at`
 
 The [`afterEnqueuedAt`](/reference/api/tasks.md#query-parameters) query parameter is invalid.
@@ -324,32 +343,13 @@ The [`beforeFinishedAt`](/reference/api/tasks.md#query-parameters) query paramet
 
 The [`beforeStartedAt`](/reference/api/tasks.md#query-parameters) query parameter is invalid.
 
+## `invalid_task_canceled_by`
+
+The [`canceledBy`](/reference/api/tasks.md#canceledby) query parameter is invalid. It should be an integer. Multiple `uid`s should be separated by commas (`,`).
+
 ## `invalid_task_index_uids`
 
 The [`indexUids`](/reference/api/tasks.md#query-parameters) query parameter contains an invalid index uid.
-
-## `invalid_task_uids`
-
-The [`uids`](/reference/api/tasks.md#query-parameters) query parameter is invalid.
-
-## `index_not_accessible`
-
-An internal error occurred while trying to access the requested index.
-
-## `invalid_state`
-
-The database is in an invalid state. Deleting the database and re-indexing should solve the problem.
-
-## `invalid_store_file`
-
-The `data.ms` folder is in an invalid state. Your `.mdb` file is corrupted or the `data.ms` folder has been replaced by a file.
-
-## `invalid_swap_indexes`
-
-This error happens if:
-
-- The payload doesn't contain exactly two index [`uids`](/reference/api/indexes.md#body-3) for a swap operation
-- The payload contains an invalid index name in the [`indexes`](/reference/api/indexes.md#body-3) array
 
 ## `invalid_task_limit`
 
@@ -363,9 +363,9 @@ The requested task status is invalid. Please use one of the [possible values](/r
 
 The requested task type is invalid. Please use one of the [possible values](/reference/api/tasks.md#type).
 
-## `invalid_task_canceled_by`
+## `invalid_task_uids`
 
-The [`canceledBy`](/reference/api/tasks.md#canceledby) query parameter is invalid. It should be an integer. Multiple `uid`s should be separated by commas (`,`).
+The [`uids`](/reference/api/tasks.md#query-parameters) query parameter is invalid.
 
 ## `io_error`
 
