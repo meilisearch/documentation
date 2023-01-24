@@ -149,6 +149,34 @@ If Meilisearch finds [multiple attributes ending with `id`](#index-primary-key-m
 
 This section covers some primary key errors and how to resolve them.
 
+### `index_primary_key_multiple_candidates_found`
+
+This error occurs when you add documents to an index for the first time and Meilisearch finds multiple attributes ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition).
+
+```json
+{
+  "uid": 4,
+  "indexUid": "books",
+  "status": "failed",
+  "type": "documentAdditionOrUpdate",
+  "canceledBy":null,
+  "details":{
+    "receivedDocuments":5,
+    "indexedDocuments":5
+  },
+  "error":{
+    "message": "The primary key inference failed as the engine found 2 fields ending with `id` in their names: 'id' and 'author_id'. Please specify the primary key manually using the `primaryKey` query parameter.",
+    "code": "index_primary_key_multiple_candidates_found",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#index-primary-key-multiple-candidates-found"
+  },
+  "duration": "PT0.006002S",
+  "enqueuedAt": "2023-01-17T10:44:42.625574Z",
+  "startedAt": "2023-01-17T10:44:42.626041Z",
+  "finishedAt": "2023-01-17T10:44:42.632043Z"
+}
+```
+
 ### `index_primary_key_no_candidate_found`
 
 This error occurs when you add documents to an index for the first time and none of them have an attribute ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition), or ensuring that all documents you add possess an `id` attribute.
@@ -175,34 +203,6 @@ This error occurs when you add documents to an index for the first time and none
   "startedAt": "2023-01-17T10:19:14.465369Z",
   "finishedAt": "2023-01-17T10:19:14.471948Z"
   }
-```
-
-### `missing_document_id`
-
-This error occurs when your index already has a primary key, but one of the documents you are trying to add is missing this attribute.
-
-```json
-{
-    "uid":1,
-    "indexUid": "books",
-    "status": "failed",
-    "type": "documentAdditionOrUpdate",
-    "canceledBy": null,
-    "details":{
-        "receivedDocuments":1,
-        "indexedDocuments":null
-        },
-    "error":{
-        "message": "Document doesn't have a `id` attribute: `{\"title\":\"Solaris\",\"author\":\"Stanislaw Lem\",\"genres\":[\"science fiction\"],\"price\":5.0.",
-        "code": "missing_document_id",
-        "type": "invalid_request",
-        "link": "https://docs.meilisearch.com/errors#missing_document_id"
-        },
-    "duration": "PT0.007899S",
-    "enqueuedAt": "2021-12-30T11:23:52.304689Z",
-    "startedAt": "2021-12-30T11:23:52.307632Z",
-    "finishedAt": "2021-12-30T11:23:52.312588Z"
-}
 ```
 
 ### `invalid_document_id`
@@ -233,30 +233,30 @@ This happens when your document id does not have the correct [format](#formattin
 }
 ```
 
-### `index_primary_key_multiple_candidates_found`
+### `missing_document_id`
 
-This error occurs when you add documents to an index for the first time and Meilisearch finds multiple attributes ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition).
+This error occurs when your index already has a primary key, but one of the documents you are trying to add is missing this attribute.
 
 ```json
 {
-  "uid": 4,
-  "indexUid": "books",
-  "status": "failed",
-  "type": "documentAdditionOrUpdate",
-  "canceledBy":null,
-  "details":{
-    "receivedDocuments":5,
-    "indexedDocuments":5
-  },
-  "error":{
-    "message": "The primary key inference failed as the engine found 2 fields ending with `id` in their names: 'id' and 'author_id'. Please specify the primary key manually using the `primaryKey` query parameter.",
-    "code": "index_primary_key_multiple_candidates_found",
-    "type": "invalid_request",
-    "link": "https://docs.meilisearch.com/errors#index-primary-key-multiple-candidates-found"
-  },
-  "duration": "PT0.006002S",
-  "enqueuedAt": "2023-01-17T10:44:42.625574Z",
-  "startedAt": "2023-01-17T10:44:42.626041Z",
-  "finishedAt": "2023-01-17T10:44:42.632043Z"
+    "uid":1,
+    "indexUid": "books",
+    "status": "failed",
+    "type": "documentAdditionOrUpdate",
+    "canceledBy": null,
+    "details":{
+        "receivedDocuments":1,
+        "indexedDocuments":null
+        },
+    "error":{
+        "message": "Document doesn't have a `id` attribute: `{\"title\":\"Solaris\",\"author\":\"Stanislaw Lem\",\"genres\":[\"science fiction\"],\"price\":5.0.",
+        "code": "missing_document_id",
+        "type": "invalid_request",
+        "link": "https://docs.meilisearch.com/errors#missing_document_id"
+        },
+    "duration": "PT0.007899S",
+    "enqueuedAt": "2021-12-30T11:23:52.304689Z",
+    "startedAt": "2021-12-30T11:23:52.307632Z",
+    "finishedAt": "2021-12-30T11:23:52.312588Z"
 }
 ```
