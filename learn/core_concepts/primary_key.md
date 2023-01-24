@@ -143,7 +143,7 @@ The code below updates the primary key to `title`:
 
 Suppose you add documents to an index without previously setting its primary key. In this case, Meilisearch will automatically look for an attribute ending with the string `id` in a case-insensitive manner (for example, `uid`, `BookId`, `ID`) in your first document and set it as the index's primary key.
 
-If Meilisearch finds multiple attributes ending with `id`, it will throw the [`index_primary_key_multiple_candidates_found`](#index-primary-key-multiple-candidates-found) error and ask you to manually set the primary key. If it cannot find a suitable attribute, it will throw the [`index_primary_key_no_candidate_found`](#index-primary-key-no-candidate-found) error. In both cases, the document addition process will be interrupted and no documents will be added to your index.
+If Meilisearch finds [multiple attributes ending with `id`](#index-primary-key-multiple-candidates-found) or [cannot find a suitable attribute](#index-primary-key-no-candidate-found), it will throw an error. In both cases, the document addition process will be interrupted and no documents will be added to your index.
 
 ## Primary key errors
 
@@ -151,7 +151,7 @@ This section covers some primary key errors and how to resolve them.
 
 ### `index_primary_key_no_candidate_found`
 
-This error occurs when you add documents for the first time and none of them have an attribute ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition), or ensuring that all documents you add possess an `id` attribute.
+This error occurs when you add documents to an index for the first time and none of them have an attribute ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition), or ensuring that all documents you add possess an `id` attribute.
 
 ```json
 {
@@ -161,8 +161,8 @@ This error occurs when you add documents for the first time and none of them hav
   "type": "documentAdditionOrUpdate",
   "canceledBy": null,
   "details":{
-    "receivedDocuments":5,
-    "indexedDocuments":5
+    "receivedDocuments": 5,
+    "indexedDocuments": null
   },
   "error":{
     "message": "The primary key inference failed as the engine did not find any field ending with `id` in its name. Please specify the primary key manually using the `primaryKey` query parameter.",
@@ -235,7 +235,7 @@ This happens when your document id does not have the correct [format](#formattin
 
 ### `index_primary_key_multiple_candidates_found`
 
-This error occurs when Meilisearch fails to guess your primary key as the index has multiple attributes containing `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition).
+This error occurs when you add documents to an index for the first time and Meilisearch finds multiple attributes ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition).
 
 ```json
 {

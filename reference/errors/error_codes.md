@@ -56,7 +56,7 @@ The requested index already has a primary key that cannot be changed.
 
 ## `index_primary_key_multiple_candidates_found`
 
-[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed as the index contains multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes.md#update-an-index) to manually set a primary key.
+[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed because the received documents contain multiple fields ending with `id`. Use the [update index endpoint](/reference/api/indexes.md#update-an-index) to manually set a primary key.
 
 ## `internal`
 
@@ -160,7 +160,7 @@ The field you are trying to modify is immutable.
 
 ## `index_primary_key_no_candidate_found`
 
-[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed as the index does not contain any fields ending with `id`. [Manually designate the primary key](/learn/core_concepts/primary_key.md#setting-the-primary-key) or add `id` to one of your fields so it can be used as the primary key during inference. We recommend manually setting the primary key.
+[Primary key inference](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) failed as the received documents do not contain any fields ending with `id`. [Manually designate the primary key](/learn/core_concepts/primary_key.md#setting-the-primary-key), or add some field ending with `id` to your documents.
 
 ## `malformed_payload`
 
