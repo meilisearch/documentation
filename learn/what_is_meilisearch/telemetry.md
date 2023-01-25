@@ -110,7 +110,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.ignore_missing_dump`                        | `true` if `--ignore-missing-dump` is activated, otherwise `false`                           | true
 | `infos.ignore_dump_if_db_exists`                   | `true` if `--ignore-dump-if-db-exists` is activated, otherwise `false`                      | true
 | `infos.import_snapshot`                            | `true` if `--import-snapshot` is specified, otherwise `false`                               | true
-| `infos.schedule_snapshot`                          | Value of `--schedule_snapshot`/`MEILI_SCHEDULE_SNAPSHOT` if scheduled snapshots are enabled, otherwise `None`   | `86400`
+| `infos.schedule_snapshot`                          | Value of `--schedule_snapshot`/`MEILI_SCHEDULE_SNAPSHOT` if scheduled snapshots are enabled, otherwise `None`   | 86400
 | `infos.snapshot_dir`                               | `true` if `--snapshot-dir`/`MEILI_SNAPSHOT_DIR` is specified, otherwise `false`             | true
 | `infos.ignore_missing_snapshot`                    | `true` if `--ignore-missing-snapshot` is activated, otherwise `false`                       | true
 | `infos.ignore_snapshot_if_db_exists`               | `true` if `--ignore-snapshot-if-db-exists` is activated, otherwise `false`                  | true
