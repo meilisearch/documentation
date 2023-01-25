@@ -184,6 +184,7 @@ module.exports = {
               title: 'Updating Meilisearch',
               path: '/learn/advanced/updating',
             },
+            '/learn/advanced/previous_docs_version',
             {
               title: 'Data backup',
               collapsable: false,
