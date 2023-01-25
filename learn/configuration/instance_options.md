@@ -382,7 +382,9 @@ It is possible to use `--schedule-snapshot` without a value. If `--schedule-snap
 
 For more control over snapshot scheduling, pass an integer representing the interval in seconds between each snapshot. When `--schedule-snapshot=3600`, Meilisearch takes a new snapshot every hour.
 
+::: note
 When using the configuration file, it is also possible to explicitly pass a boolean value to `schedule_snapshot`. Meilisearch takes a new snapshot every 24 hours when `schedule_snapshot=true`, and takes no snapshots when `schedule_snapshot=false`.
+:::
 
 [Learn more about snapshots](/learn/advanced/snapshots.md).
 
