@@ -8,7 +8,7 @@ This guide covers downloading Meilisearch's documentation repository, fetching t
 The process of accessing previous versions of Meilisearch's documentation is not user-friendly and significantly error-prone. In the absolute majority of cases, it is better to upgrade to the latest Meilisearch version than to follow this guide.
 :::
 
-## Dependencies and prerequisites
+## Prerequisites
 
 To make the best use of this guide, you should have some familiarity with the command line. Before beginning, you should also make sure the following tools are installed in your machine:
 
