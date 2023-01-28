@@ -81,14 +81,14 @@ The `docs-content` class is the main container of the textual content in this ex
 
 `lvlX` selectors should use the standard title tags like `h1`, `h2`, `h3`, etc. You can also use static classes. Set a unique `id` or `name` attribute to these elements.
 
-Every searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
+All searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
 
 If you use VuePress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/main/.vuepress/docs-scraper/docs-scraper.config.json) we use in production.
-In our case, the main container is `theme-default-content` and the selector the titles and sub-titles are `h1`, `h2`...
+In our case, the main container is `theme-default-content` and the selector the titles and subtitles are `h1`, `h2`...
 
 ::: tip
 
-More [optional fields are available](https://github.com/meilisearch/docs-scraper#all-the-config-file-settings) to fit your need.
+More [optional fields are available](https://github.com/meilisearch/docs-scraper#all-the-config-file-settings) to fit your needs.
 
 :::
 
