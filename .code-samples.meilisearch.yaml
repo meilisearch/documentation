@@ -312,32 +312,28 @@ get_version_1: |-
     -X GET 'http://localhost:7700/version'
 distinct_attribute_guide_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/jackets/settings' \
+    -X PUT 'http://localhost:7700/indexes/jackets/settings/distinct-attribute' \
     -H 'Content-Type: application/json' \
-    --data-binary '{ "distinctAttribute": "product_id" }'
+    --data-binary '"product_id"'
 field_properties_guide_searchable_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/searchable-attributes' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "searchableAttributes": [
+    --data-binary '[
         "title",
         "overview",
         "genres"
-      ]
-    }'
+      ]'
 field_properties_guide_displayed_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+    -X PUT 'http://localhost:7700/indexes/movies/settings/displayed-attributes' \
     -H 'Content-Type: application/json' \
-    --data-binary '{
-      "displayedAttributes": [
+    --data-binary '[
         "title",
         "overview",
         "genres",
         "release_date"
-      ]
-    }'
+      ]'
 filtering_guide_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \

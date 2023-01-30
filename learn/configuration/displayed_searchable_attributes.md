@@ -2,10 +2,28 @@
 
 By default, whenever a document is added to Meilisearch, all new attributes found in it are automatically added to two lists:
 
-- [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list): Attributes whose values are searched for matching query words
 - [`displayedAttributes`](/learn/configuration/displayed_searchable_attributes.md#displayed-fields): Attributes whose fields are displayed in documents
+- [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#the-searchableattributes-list): Attributes whose values are searched for matching query words
 
-This means that by default, every field in a document is **searchable** and **displayed**. These properties can be modified in the [settings](/reference/api/settings.md).
+This means that by default, every field in a document is **displayed** and **searchable**. These properties can be modified in the [settings](/reference/api/settings.md).
+
+## Displayed fields
+
+The fields whose attributes are added to the [`displayedAttributes` list](/reference/api/settings.md#displayed-attributes) are **displayed in each matching document**.
+
+Documents returned upon search contain only displayed fields.
+
+**By default, all field attributes are set as displayed**.
+
+Therefore, if a field attribute is not in the displayed-attribute list, the field won't be added to the returned documents.
+
+This list can be restricted to a selected set of attributes in the settings.
+
+#### Example
+
+Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `overview`, `release_date` and `genres`.
+
+<CodeSamples id="field_properties_guide_displayed_1" />
 
 ## Searchable fields
 
@@ -53,24 +71,6 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 Suppose that you manage a database of movies with the following fields: `id`, `overview`, `genres`, `title`, `release_date`. These fields all contain useful information. However, **some are more useful to search than others**. To make the `id` and `release_date` fields non-searchable and re-order the remaining fields by importance, you might update the searchable attributes list in the following way.
 
 <CodeSamples id="field_properties_guide_searchable_1" />
-
-## Displayed fields
-
-The fields whose attributes are added to the [`displayedAttributes` list](/reference/api/settings.md#displayed-attributes) are **displayed in each matching document**.
-
-Documents returned upon search contain only displayed fields.
-
-**By default, all field attributes are set as displayed**.
-
-Therefore, if a field attribute is not in the displayed-attribute list, the field won't be added to the returned documents.
-
-This list can be restricted to a selected set of attributes in the settings.
-
-#### Example
-
-Suppose you manage a database that contains information about movies. By adding the following settings, documents returned upon search will contain the fields `title`, `overview`, `release_date` and `genres`.
-
-<CodeSamples id="field_properties_guide_displayed_1" />
 
 ## Data storing
 
