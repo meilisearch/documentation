@@ -100,7 +100,7 @@ You can run the scraper with Docker. With our local Meilisearch instance set up 
 docker run -t --rm \
   --network=host \
   -e MEILISEARCH_HOST_URL='http://localhost:7700' \
-  -e MEILISEARCH_API_KEY='myMasterKey' \
+  -e MEILISEARCH_API_KEY='MASTER_KEY' \
   -v <absolute-path-to-your-config-file>:/docs-scraper/config.json \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
