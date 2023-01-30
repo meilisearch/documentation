@@ -74,10 +74,6 @@ An index with this [`uid`](/reference/api/indexes.md#index-object) already exist
 
 An error occurred while trying to create an index, check out our guide on [index creation](/learn/core_concepts/indexes.md).
 
-## `index_not_accessible`
-
-An internal error occurred while trying to access the requested index.
-
 ## `index_not_found`
 
 An index with this `uid` was not found, check out our guide on [index creation](/learn/core_concepts/indexes.md).
