@@ -20,7 +20,7 @@ You can install and run Meilisearch on your machine using `curl`.
 
 ```bash
 curl -L https://install.meilisearch.com | sh
-./meilisearch --master-key=myMasterKey
+./meilisearch --master-key=MASTER_KEY
 ```
 
 We provide a few [other installation methods](/learn/getting_started/quick_start.md#setup-and-installation).
