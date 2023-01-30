@@ -213,7 +213,7 @@ _[Docxtemplater](https://docxtemplater.com/) search bar demo_
 </html>
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `MASTER_KEY`.
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
 
