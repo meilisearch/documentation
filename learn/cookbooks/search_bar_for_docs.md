@@ -118,7 +118,7 @@ _More about [Meilisearch security](/learn/security/master_api_keys.md)._
 
 ::: tip
 
-We recommend running the scraper at each new deployment of your documentation, [as we do for the Meilisearch's one]().
+We recommend running the scraper at each new deployment of your documentation, [as we do for the Meilisearch's one](https://github.com/meilisearch/documentation/blob/main/.github/workflows/deploy.yml).
 
 :::
 
