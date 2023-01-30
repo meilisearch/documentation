@@ -52,8 +52,7 @@ exceptions:
   - Google Cloud Console
   - AMIs
   - Droplet
-  - Previous
-  - Next
+  - "(.*?)" #ignore words in quotes
   - '\b\s[0-9]:\s[A-Z]' # Step 1: Do this
   - '[0-9]\.\s[A-Z]'  # 1. Do this
   #- '"(.*?)"' #Ignore text in ""
