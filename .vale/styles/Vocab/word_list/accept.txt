@@ -81,7 +81,6 @@ zlib
 datetime
 GZip
 videogame
-toc
 gcp
 faq
 synon

@@ -4,8 +4,6 @@ Using our GCP custom image, Meilisearch can be deployed on GCP in just a few min
 
 The following guide will walk you through every step to deploy Meilisearch in a GCP Compute Engine instance. If you have any problems with our GCP image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-gcp).
 
-[[toc]]
-
 ## Part 1: Deploy a Meilisearch instance
 
 ### 1. Import Meilisearch custom image on your GCP account
