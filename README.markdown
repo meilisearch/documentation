@@ -73,6 +73,10 @@ You can test if the code is well-formatted without fixing it.
 yarn style
 ```
 
+### Handling images and other assets
+
+Screenshots, images, video demonstrations, etc should be placed in the `.vuepress/public/` folder and then referenced from any markdown files **without** `/.vuepress/public`. For example, if you create the file `.vuepress/public/my_cool_guide/my_cool_image.png` you would link to it from your document using `![my cool image](/my_cool_guide/my_cool_image.png`).
+
 ### Deployment
 
 The documentation is deployed as a static website. The main branch is automatically deployed at [https://docs.meilisearch.com](https://docs.meilisearch.com).
