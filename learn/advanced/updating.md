@@ -24,7 +24,10 @@ This section contains instructions for upgrading from specific versions. Most ve
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 
-- Due to an error affecting `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
+- If you are updating from **v0.25 or below**:
+  - The `private` and `public` keys have been deprecated and replaced by two default API keys with similar permissions: `Default Admin API Key` and `Default Search API Key`.
+  - The `updates` API has been replaced with the `tasks` API.
+- Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
 
 - If you are **updating to v0.28 or above**, existing keys will have their `key` and `uid` fields regenerated.
 
