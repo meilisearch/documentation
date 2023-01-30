@@ -30,7 +30,7 @@ Meilisearch is open-source and can run either on your server or on any cloud pro
 ::: note
 
 The host URL and the API key you will provide in the next steps correspond to the credentials of this Meilisearch instance.
-In the example above, the host URL is `http://localhost:7700` and the API key is `myMasterKey`.
+In the example above, the host URL is `http://localhost:7700` and the API key is `MASTER_KEY`.
 
 :::
 
@@ -171,7 +171,7 @@ module.exports = {
 }
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `MASTER_KEY`.
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 
 These three fields are mandatory, but more [optional fields are available](https://github.com/meilisearch/vuepress-plugin-meilisearch#customization) to customize your search bar.
