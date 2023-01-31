@@ -82,4 +82,4 @@ As the data contained in the dump needs to be indexed, the process will take som
 
 ## Use cases
 
-Dumps are used to restore your database after [updating Meilisearch](/learn/advanced/updating.md) or to copy your database to other Meilisearch instances without having to worry about their respective versions. For more on this subject, see a [comparison of snapshots and dumps](/learn/advanced/snapshots_vs_dumps.md).
+Dumps are used to restore your database after [updating Meilisearch](/learn/update_and_migration/updating.md) or to copy your database to other Meilisearch instances without having to worry about their respective versions. For more on this subject, see a [comparison of snapshots and dumps](/learn/advanced/snapshots_vs_dumps.md).

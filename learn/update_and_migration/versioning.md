@@ -34,4 +34,4 @@ Consult the [SDK versioning policy](https://github.com/meilisearch/integration-g
 
 The Meilisearch documentation follows the latest Meilisearch version. Meilisearch does not maintain documentation for past releases.
 
-It is possible to [access previous versions of the Meilisearch documentation website](/learn/advanced/previous_docs_versions), though the process can be complex for inexperienced users. You are strongly encouraged to always use the latest Meilisearch release.
+It is possible to [access previous versions of the Meilisearch documentation website](/learn/update_and_migration/previous_docs_version.md), though the process can be complex for inexperienced users. You are strongly encouraged to always use the latest Meilisearch release.

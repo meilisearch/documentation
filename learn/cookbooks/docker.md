@@ -96,7 +96,7 @@ Note that exporting and importing dumps require using command-line arguments. [F
 If you are storing your data in a persistent volume as instructed in [the data persistency section](#data-persistency), you must delete `/meili_data/data.ms` in that volume before importing a dump.
 :::
 
-Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/advanced/updating.md)
+Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/update_and_migration/updating.md)
 
 ### Snapshots
 
