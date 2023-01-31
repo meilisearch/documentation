@@ -167,18 +167,19 @@ module.exports = {
         },
         {
           title: '🔢 Update and migration',
-          path: '/learn/advanced/asynchronous_operations.html',
+          path: '/learn/update_and_migration/updating.html',
           collapsable: false,
           children: [
-            '/learn/advanced/previous_docs_version',
-            {
-              title: 'Migrating from Algolia',
-              path: '/learn/getting_started/algolia_migration',
-            },
             {
               title: 'Updating Meilisearch',
-              path: '/learn/advanced/updating',
+              path: '/learn/update_and_migration/updating',
             },
+            {
+              title: 'Migrating from Algolia',
+              path: '/learn/update_and_migration/algolia_migration',
+            },
+            '/learn/update_and_migration/versioning',
+            '/learn/update_and_migration/previous_docs_version',
           ],
         },
         {
