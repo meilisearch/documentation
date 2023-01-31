@@ -166,7 +166,7 @@ module.exports = {
           ],
         },
         {
-          title: '🔢 Updates and versioning',
+          title: '🔢 Update and migration',
           path: '/learn/advanced/asynchronous_operations.html',
           collapsable: false,
           children: [

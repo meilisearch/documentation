@@ -1,4 +1,4 @@
-# Consulting documentation of previous versions
+# Accessing previous documentation versions
 
 Meilisearch's documentation only covers the latest stable release. It is possible, however, to consult the documentation of previous Meilisearch versions stored in our Git repository.
 
@@ -12,10 +12,10 @@ The process of accessing previous versions of Meilisearch's documentation is not
 
 To make the best use of this guide, you should have some familiarity with the command line. Before beginning, you should also make sure the following tools are installed in your machine:
 
-- Git
-- Node v14
-- Yarn
-- Python 3
+- [Git](https://git-scm.com/)
+- [Node v14](https://nodejs.org/en/)
+- [Yarn](https://classic.yarnpkg.com/en/)
+- [Python 3](https://www.python.org)
 
 ## Cloning the repository
 
