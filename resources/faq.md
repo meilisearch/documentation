@@ -78,15 +78,11 @@ For more accurate features and issues, everything is detailed in the issues of a
 
 ## I have just updated Meilisearch, and I am getting an error: "Cannot open database, expected Meilisearch engine version..."
 
-Until our first stable release (v1.0), Meilisearch minor versions are not compatible with each other. This means **every new version is considered breaking** with the small exception of bug-fixing patches. To fix this error, simply delete your database folder (`data.ms` by default) and re-index your documents with the current-version engine. See [updating Meilisearch](/learn/advanced/updating.md) for more information.
+Meilisearch major versions introduce breaking changes and are not compatible with each other. Meilisearch version 0 releases, such as v0.30 or v0.24, are also not compatible with each other. Consult the [updating guide](/learn/advanced/updating.md) for more information on how to safely migrate your data between Meilisearch releases.
 
 ## What are the recommended requirements for hosting a Meilisearch instance?
 
-**The short answer: we don't know yet!**
-
-Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a Meilisearch database. At this stage, our engine is changing constantly, which means benchmarks are constantly out of date.
-
-Once our engine is completely stable (v1), we will provide detailed benchmarks with different datasets. Until then, read on to learn how to optimize your Meilisearch instance.
+Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a Meilisearch database. There are a few aspects to keep in mind when optimizing your instance.
 
 ### Memory usage
 
@@ -123,13 +119,9 @@ Meilisearch also uses disk space as [virtual memory](/learn/advanced/storage.md#
 
 At this time, the number of CPU cores has no direct impact on index or search speed. However, **the more cores you provide to the engine, the more search queries it will be able to process at the same time**.
 
-::: tip
-Our new engine (currently in development) **will support multi-core indexing at launch**.
-:::
-
 #### Speeding up Meilisearch
 
-Meilisearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your Meilisearch instance is querying slowly, there are two primary methods to speed it up:
+Meilisearch is designed to be fast (≤50ms response time), so speeding it up is rarely necessary. However, if you find that your Meilisearch instance is querying slowly, there are two primary methods to improve search performance:
 
 1. Increase the amount of RAM (or virtual memory)
 2. Reduce the size of the database
