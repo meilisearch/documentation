@@ -117,6 +117,10 @@ module.exports = {
               ],
             },
             {
+              title: 'Installation',
+              path: '/learn/getting_started/installation',
+            },
+            {
               title: 'Migrating from Algolia',
               path: '/learn/getting_started/algolia_migration',
             },
