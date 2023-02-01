@@ -82,7 +82,7 @@ Meilisearch major versions introduce breaking changes and are not compatible wit
 
 ## What are the recommended requirements for hosting a Meilisearch instance?
 
-Indexing documents is a highly complex process, making it difficult to accurately estimate the size and memory use of a Meilisearch database. There are a few aspects to keep in mind when optimizing your instance.
+Indexing documents is a complex process, making it difficult to accurately estimate the size and memory use of a Meilisearch database. There are a few aspects to keep in mind when optimizing your instance.
 
 ### Memory usage
 
