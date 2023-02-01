@@ -535,6 +535,6 @@ module.exports = {
 
       amplitude.init("c823626ba80dd6aafb16601a74e0f603");
     `,
-    ]
+    ],
   ],
 }
