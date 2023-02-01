@@ -105,6 +105,7 @@ module.exports = {
           path: '/learn/getting_started/quick_start.html',
           collapsable: false,
           children: [
+            '/learn/getting_started/installation',
             '/learn/getting_started/quick_start',
             {
               title: 'Meilisearch 101',
@@ -115,10 +116,6 @@ module.exports = {
                 '/learn/getting_started/customizing_relevancy',
                 '/learn/getting_started/getting_ready_for_production',
               ],
-            },
-            {
-              title: 'Installation',
-              path: '/learn/getting_started/installation',
             },
             {
               title: 'Migrating from Algolia',

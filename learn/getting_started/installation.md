@@ -1,6 +1,6 @@
 # Installation
 
-We'll start with downloading and installing Meilisearch. You have the option to install Meilisearch locally or deploy it over a cloud service.
+You can install Meilisearch locally or deploy it over a cloud service. This guide covers each option in detail.
 
 ## Local installation
 
@@ -48,7 +48,6 @@ docker pull getmeili/meilisearch:v0.30
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
-    -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:v0.30 \
     meilisearch --env="development"
@@ -135,7 +134,7 @@ Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearc
 
 ## Meilisearch Cloud
 
-[Meilisearch Cloud](https://cloud.meilisearch.com/login) is one of the easiest way to get started with Meilisearch. Try our free plan.
+[Meilisearch Cloud](https://www.meilisearch.com/pricing) is one of the easiest way to get started with Meilisearch. The Build plan allows you to index up to 100k documents and perform 10k search requests per month for free!
 
 ## Cloud deploy
 
