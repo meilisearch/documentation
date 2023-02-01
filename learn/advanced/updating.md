@@ -16,21 +16,6 @@ If you are running Meilisearch as a `systemctl` service using v0.22 or above, tr
 This guide only works for versions v0.15 and above. If you are using an older version, please [contact support](https://discord.gg/meilisearch) for more information.
 :::
 
-## Version-specific update instructions
-
-This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
-
-- If you are using **v0.24 or below**, use the `X-Meili-API-Key: API_KEY` authorization header:
-
-<CodeSamples id="updating_guide_check_version_old_authorization_header" />
-
-- If you are updating from **v0.25 or below**:
-  - The `private` and `public` keys have been deprecated and replaced by two default API keys with similar permissions: `Default Admin API Key` and `Default Search API Key`.
-  - The `updates` API has been replaced with the `tasks` API.
-- Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
-
-- If you are **updating to v0.28 or above**, existing keys will have their `key` and `uid` fields regenerated.
-
 ## Step 1: Export data
 
 ### Verify your database version
@@ -48,6 +33,12 @@ The response should look something like this:
   "pkgVersion": "x.y.z"
 }
 ```
+
+::: note
+If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. Use the `X-Meili-API-Key: API_KEY` authorization header:
+
+<CodeSamples id="updating_guide_check_version_old_authorization_header" />
+:::
 
 If your [`pkgVersion`](/reference/api/version.md#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
 
@@ -295,6 +286,10 @@ meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meili
 
 ::::
 
+::: danger `_geo` field in v0.27, v0.28, and v0.29
+Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
+:::
+
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
 ### Restart Meilisearch as a service
@@ -375,3 +370,12 @@ rm /var/opt/meilisearch/dumps/{dump_uid.dump}
 :::
 
 ::::
+
+## Version-specific update instructions
+
+This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
+
+- If you are updating from **v0.25 or below**, be aware that:
+  - The `private` and `public` keys have been deprecated and replaced by two default API keys with similar permissions: `Default Admin API Key` and `Default Search API Key`.
+  - The `updates` API has been replaced with the `tasks` API.
+- If you are **updating to v0.28 or above**, existing keys will have their `key` and `uid` fields regenerated.
