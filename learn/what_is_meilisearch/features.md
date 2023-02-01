@@ -20,11 +20,11 @@ Instead of letting typos ruin your search experience, Meilisearch will always fi
 
 ## Geosearch
 
-Explore the physical world. [Geosearch](/learn/advanced/geosearch.md) allows you to filter and sort results based on their physical location.
+Explore the physical world. [Geosearch](/learn/advanced/geosearch.md) allows you to filter and sort results based on their geographic location.
 
 ## Filters
 
-Define [filters](/learn/advanced/filtering_and_faceted_search.md) to refine results based on user-defined criteria.
+Create [filters](/learn/advanced/filtering_and_faceted_search.md) to refine results based on user-defined criteria.
 
 ## Faceting
 
@@ -60,4 +60,4 @@ Manage complex multi-user applications handling sensitive data. [Tenant tokens](
 
 ## Index swapping
 
-Deploy major database updates with zero search downtime! Our [index swapping](/learn/core_concepts/indexes.md#swapping-indexes) functionality helps you make big changes seamlessly.
+Use [index swapping](/learn/core_concepts/indexes.md#swapping-indexes) to deploy major database updates with zero search downtime.
