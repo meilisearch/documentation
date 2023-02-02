@@ -2,7 +2,7 @@
 
 Currently, Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that Meilisearch uses under the hood.
 
-This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size), a [default database size limit of 100GiB](/learn/configuration/instance_options.md#max-index-size), and a [default search limit of 20 hits](/reference/api/search.md#limit).
+This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search.md#limit).
 
 ## Maximum number of query words
 
@@ -106,3 +106,21 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 **Limitation:** By default, Meilisearch returns up to 1000 documents per search.
 
 **Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings.md#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/search.md) and has no effect on the [get documents endpoint](/reference/api/documents.md#get-documents).
+
+## Large datasets and internal errors
+
+**Limitation:** Meilisearch might throw an internal error when indexing large batches of documents.
+
+**Explanation:** Indexing a large batch of documents, such as a JSON file over 3.5GB in size, can result in Meilisearch opening too many file descriptors. Depending on your machine, this might reach your system's default resource usage limits and trigger an internal error. Use [`ulimit`](https://www.ibm.com/docs/en/aix/7.1?topic=u-ulimit-command) or a similar tool to increase resource consumption limits before running Meilisearch. For example, call `ulimit -Sn 3000` in a UNIX environment to raise the number of allowed open file descriptors to 3000.
+
+## Maximum database size
+
+**Limitation:** The maximum size of an index is 500GiB, and the maximum size of the task database is 10GiB.
+
+**Explanation:** Meilisearch allocates all the virtual memory it requires upfront. The maximum database size ensures instances can contain several large indexes without reaching operating system limits on the amount of virtual memory available to a single process.
+
+## Maximum number of indexes in an instance
+
+**Limitation:** A single Meilisearch instance can safely contain around 180 indexes in Linux and macOS environments, and around 15 indexes in Windows environments.
+
+**Explanation:** Operating systems restrict the amount of virtual memory available to a single process. Since Meilisearch allocates the maximum index size for each index upfront, this effectively creates a limit on how many indexes an instance can contain. The values provided are indicative: because of the particularities of each specific setup, the actual maximum number of indexes per instance will vary from machine to machine. A Linux install might contain 200 indexes without issue, or return allocation failures at 181 indexes depending on the runtime environment.

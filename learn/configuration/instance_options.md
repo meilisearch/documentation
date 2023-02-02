@@ -285,19 +285,6 @@ Meilisearch currently supports five log levels, listed in order of increasing ve
 - `'TRACE'`: log all events and include even more detailed information on Meilisearch's internal processes. We do not advise using this level as it is extremely verbose. Use `'DEBUG'` before considering `'TRACE'`.
 - `'OFF'`: disable logging
 
-### Max index size
-
-**Environment variable**: `MEILI_MAX_INDEX_SIZE`
-**CLI option**: `--max-index-size`
-**Default value**: `107374182400` (100 GiB)
-**Expected value**: an integer
-
-Sets the maximum size of the index. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
-
-The `index` stores processed data and is different from the `task` database, which handles [pending tasks](/learn/advanced/asynchronous_operations.md).
-
-[Learn more about Meilisearch's database and storage engine.](/learn/advanced/storage.md)
-
 ### Max indexing memory
 
 **Environment variable**: `MEILI_MAX_INDEXING_MEMORY`
@@ -331,19 +318,6 @@ In single-core machines, Meilisearch has no choice but to use the only core avai
 ::: danger
 Avoid setting `--max-indexing-threads` to the total of your machine's processor cores. Though doing so might speed up indexing, it is likely to severely impact search experience.
 :::
-
-### Max TASK_DB size
-
-**Environment variable**: `MEILI_MAX_TASK_DB_SIZE`
-**CLI option**: `--max-task-db-size`
-**Default value**: `107374182400` (100 GiB)
-**Expected value**: an integer
-
-Sets the maximum size of the `task` database. Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
-
-The `task` database handles [pending tasks](/learn/advanced/asynchronous_operations.md). This is different from the `index` database, which only stores processed data.
-
-[Learn more about Meilisearch's database and storage engine.](/learn/advanced/storage.md)
 
 ### Payload limit size
 
