@@ -48,9 +48,9 @@ docker pull getmeili/meilisearch:v0.30
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
+    -e MEILI_ENV='development' \
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:v0.30 \
-    meilisearch --env="development"
+    getmeili/meilisearch:v0.30
 ```
 
 You can learn more about [using Meilisearch with Docker in our dedicated guide](/learn/cookbooks/docker.md).
