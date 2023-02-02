@@ -202,7 +202,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `synonyms.total`                                   | Number of synonyms                                                                          | 3
 | `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | false
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
-| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false`     | true
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated

@@ -79,3 +79,4 @@ AMIs
 Brotli
 zlib
 glibc
+autogenerate
