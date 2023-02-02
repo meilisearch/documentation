@@ -22,7 +22,7 @@ Instead of letting typos ruin your search experience, Meilisearch will always fi
 
 ## Geosearch
 
-Explore the physical world. [Geosearch](/learn/advanced/geosearch.md) allows you to filter and sort results based on their geographic location.
+Search in the real world. [Geosearch](/learn/advanced/geosearch.md), also known as location-based search, allows you to filter and sort results based on their geographic location.
 
 ## Filtering
 
@@ -30,7 +30,7 @@ Create [filters](/learn/advanced/filtering_and_faceted_search.md) to refine resu
 
 ## Faceting
 
-Build intuitive navigation interfaces with [faceted search](/learn/advanced/filtering_and_faceted_search.md).
+Classify search results into categories and build intuitive navigation interfaces with [faceted search](/learn/advanced/filtering_and_faceted_search.md).
 
 ## Sorting
 
@@ -38,11 +38,11 @@ Build intuitive navigation interfaces with [faceted search](/learn/advanced/filt
 
 ## API key management
 
-[Protect your instance with API keys](/learn/security/master_api_keys.md). Control which users can access what indexes, routes, and endpoints.
+Protect your instance with [API keys](/learn/security/master_api_keys.md). Set expiration dates and control access to indexes and endpoints so that your data is always safe.
 
 ## Multitenancy
 
-Manage complex multi-user applications handling sensitive data. [Tenant tokens](/learn/security/tenant_tokens.md) help you decide which documents each one of your users can search.
+Manage complex multi-user applications. [Tenant tokens](/learn/security/tenant_tokens.md) help you decide which documents each one of your users can search.
 
 ## Synonyms
 
