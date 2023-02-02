@@ -8,6 +8,8 @@ Currently, Meilisearch databases are only compatible with the version of Meilise
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
+[Refer to the Version-specific update warnings sections for more details on upgrading from specific versions.](#version-specific-update-warnings)
+
 ::: tip
 If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
 :::
@@ -308,7 +310,7 @@ Now that your updated Meilisearch instance is up and running, verify that the du
 
 If everything looks good, then congratulations! You successfully migrated your database to the latest version of Meilisearch. Be sure to check out the [changelogs](https://github.com/meilisearch/MeiliSearch/releases).
 
-If something went wrong, you can always roll back to the previous version and try again. Be sure to check out the [version-specific update instructions](#version-specific-update-instructions), and feel free to [reach out for help](https://discord.gg/meilisearch) if the problem continues.
+If something went wrong, you can always roll back to the previous version and try again. Be sure to check out the [version-specific update warnings](#version-specific-update-warnings), and feel free to [reach out for help](https://discord.gg/meilisearch) if the problem continues.
 
 ### Delete backup files or rollback (_optional_)
 
@@ -371,7 +373,7 @@ rm /var/opt/meilisearch/dumps/{dump_uid.dump}
 
 ::::
 
-## Version-specific update instructions
+## Version-specific update warnings
 
 This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
 
