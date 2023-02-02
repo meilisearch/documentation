@@ -82,6 +82,12 @@ Meilisearch major versions introduce breaking changes and are not compatible wit
 
 ## What are the recommended requirements for hosting a Meilisearch instance?
 
+**The short answer:**
+
+The recommended requirements for hosting a Meilisearch instance will depend on many factors, such as the number of documents, the size of those documents, the number of filters/sorts you will need, and more. For a quick estimate to start with, try to use a machine that has at least ten times the disk space of your dataset.
+
+**The long answer:**
+
 Indexing documents is a complex process, making it difficult to accurately estimate the size and memory use of a Meilisearch database. There are a few aspects to keep in mind when optimizing your instance.
 
 ### Memory usage
