@@ -1,8 +1,7 @@
 # Versioning policy
 
-Meilisearch releases contain performance improvements, bug fixes, and new features, but may not always maintain full compatibility between Meilisearch versions.
 
-This article describes the system behind Meilisearch's release versions and how they relate to SDK and documentation versions.
+This article describes the system behind Meilisearch's version numbering, compatibility between Meilisearch versions, and how Meilisearch version numbers relate to SDK and documentation versions.
 
 ## Engine versioning
 
@@ -26,12 +25,12 @@ Consult the [engine versioning policy](https://github.com/meilisearch/engine-tea
 
 Meilisearch release versions are not connected to SDK versions. SDKs follow their own release schedules and must address issues external to compatibility with Meilisearch. For example, there is no guarantee `meilisearch-js` v0.30 will work with Meilisearch v0.30.
 
-When using an SDK, consult its dedicated documentation and README to determine which Meilisearch versions and features it supports.
+When using an SDK, always consult its repository README, release description, and any dedicated documentation to determine which Meilisearch versions and features it supports.
 
 Consult the [SDK versioning policy](https://github.com/meilisearch/integration-guides/blob/main/resources/versioning.md) for more information.
 
 ## Documentation versioning
 
-The Meilisearch documentation follows the latest Meilisearch version. Meilisearch does not maintain documentation for past releases.
+This Meilisearch documentation website follows the latest Meilisearch version. We do not maintain documentation for past releases.
 
-It is possible to [access previous versions of the Meilisearch documentation website](/learn/update_and_migration/previous_docs_version.md), though the process can be complex for inexperienced users. You are strongly encouraged to always use the latest Meilisearch release.
+It is possible to [access previous versions of the Meilisearch documentation website](/learn/update_and_migration/previous_docs_version.md), but the process and results are less than ideal. Users are strongly encouraged to always use the latest Meilisearch release.
