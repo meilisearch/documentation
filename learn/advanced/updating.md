@@ -81,7 +81,7 @@ Once the status is `processed`, you're good to go. Repeat this process for all i
 
 ### Create the dump
 
-Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options.md#dumps-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
+Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options.md#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 **Cloud platforms** like DigitalOcean, AWS, and GCP are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
 
