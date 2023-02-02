@@ -78,4 +78,5 @@ AMIs
 [Cc]ancelation
 Brotli
 zlib
+glibc
 autogenerate
