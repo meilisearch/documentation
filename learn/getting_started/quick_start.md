@@ -191,7 +191,7 @@ The previous command added documents from `movies.json` to a new index called `m
 
 Every index must have a [primary key](/learn/core_concepts/primary_key.md#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-By default, Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called [auto-batching](/learn/core_concepts/documents.md#auto-batching), and it significantly speeds up indexing. After adding documents, you should receive a response like this:
+Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called [auto-batching](/learn/core_concepts/documents.md#auto-batching), and it significantly speeds up indexing. After adding documents, you should receive a response like this:
 
 ```json
 {
@@ -203,7 +203,7 @@ By default, Meilisearch combines consecutive document requests into a single bat
 }
 ```
 
-Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
+Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed at a later time**.
 
 Use the returned `taskUid` to [check the status](/reference/api/tasks.md) of your documents:
 
