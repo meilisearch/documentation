@@ -107,7 +107,7 @@
 /reference/features/sorting.html                        /learn/advanced/sorting.html
 
 # Remove Create section
-/create/how_to/meilisearch_react.html                    https://blog.meilisearch.com/how-to-implement-instant-search-within-5-minutes-in-your-react-app/
+/create/how_to/meilisearch_react.html               https://blog.meilisearch.com/instant-search-react-app/
 /create/how_to/aws.html                             /learn/cookbooks/aws.html
 /create/how_to/gcp.html                             /learn/cookbooks/gcp.html
 /create/how_to/qovery.html                          /learn/cookbooks/qovery.html
