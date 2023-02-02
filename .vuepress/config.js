@@ -31,7 +31,6 @@ module.exports = {
               { text: 'Ruby', link: 'https://github.com/meilisearch/meilisearch-ruby' },
               { text: 'Rust', link: 'https://github.com/meilisearch/meilisearch-rust' },
               { text: 'Swift', link: 'https://github.com/meilisearch/meilisearch-swift' },
-              { text: 'Firebase', link: 'https://github.com/meilisearch/firestore-meilisearch' },
             ],
           },
           {
@@ -55,6 +54,7 @@ module.exports = {
               { text: 'Gatsby', link: 'https://github.com/meilisearch/gatsby-plugin-meilisearch/' },
               { text: 'Vuepress', link: 'https://github.com/meilisearch/vuepress-plugin-meilisearch' },
               { text: 'Strapi', link: 'https://github.com/meilisearch/strapi-plugin-meilisearch/' },
+              { text: 'Firebase', link: 'https://github.com/meilisearch/firestore-meilisearch' },
             ],
           },
           {
