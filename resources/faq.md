@@ -76,10 +76,6 @@ Yes, as Meilisearch and its integration tools are open source, we maintain a [pu
 
 For more accurate features and issues, everything is detailed in the issues of all our [GitHub repositories](https://github.com/meilisearch/meilisearch/issues).
 
-## I have just updated Meilisearch, and I am getting an error: "Cannot open database, expected Meilisearch engine version..."
-
-Meilisearch major versions introduce breaking changes and are not compatible with each other. Meilisearch version 0 releases, such as v0.30 or v0.24, are also not compatible with each other. Consult the [updating guide](/learn/advanced/updating.md) for more information on how to safely migrate your data between Meilisearch releases.
-
 ## What are the recommended requirements for hosting a Meilisearch instance?
 
 **The short answer:**
