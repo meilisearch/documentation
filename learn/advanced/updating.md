@@ -35,7 +35,7 @@ The response should look something like this:
 ```
 
 ::: note
-If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. Use the `X-Meili-API-Key: API_KEY` authorization header:
+If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. For each command, replace the `Authorization: Bearer` header with the `X-Meili-API-Key: API_KEY` header:
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 :::
