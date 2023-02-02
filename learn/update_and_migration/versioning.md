@@ -23,7 +23,7 @@ Consult the [engine versioning policy](https://github.com/meilisearch/engine-tea
 
 ## SDK versioning
 
-Meilisearch release versions are not connected to SDK versions. SDKs follow their own release schedules and must address issues external to compatibility with Meilisearch. For example, there is no guarantee `meilisearch-js` v0.30 will work with Meilisearch v0.30.
+Meilisearch version numbers have no relationship to SDK version numbers. SDKs follow their own release schedules and must address issues external to compatibility with Meilisearch. For example, there is no guarantee `meilisearch-js` v0.30 will work with Meilisearch v0.30.
 
 When using an SDK, always consult its repository README, release description, and any dedicated documentation to determine which Meilisearch versions and features it supports.
 
