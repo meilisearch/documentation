@@ -141,17 +141,73 @@ The code below updates the primary key to `title`:
 
 ### Meilisearch guesses your primary key
 
-Suppose you add documents to an index without previously setting its primary key. In this case, Meilisearch will automatically look for an attribute containing the string `id` in a case-insensitive manner (for example, `uid`, `BookId`, `ID`, `123id123`) in your first document and set it as the index's primary key.
+Suppose you add documents to an index without previously setting its primary key. In this case, Meilisearch will automatically look for an attribute ending with the string `id` in a case-insensitive manner (for example, `uid`, `BookId`, `ID`) in your first document and set it as the index's primary key.
 
-If Meilisearch cannot find a suitable attribute, the document addition process will be interrupted and no documents will be added to your index.
+If Meilisearch finds [multiple attributes ending with `id`](#index-primary-key-multiple-candidates-found) or [cannot find a suitable attribute](#index-primary-key-no-candidate-found), it will throw an error. In both cases, the document addition process will be interrupted and no documents will be added to your index.
 
 ## Primary key errors
 
 This section covers some primary key errors and how to resolve them.
 
-### `primary_key_inference_failed`
+### `index_primary_key_multiple_candidates_found`
 
-This error occurs when you add documents for the first time and Meilisearch [fails to guess your primary key](#meilisearch-guesses-your-primary-key). It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition), or ensuring that all documents you add possess an `id` attribute.
+This error occurs when you add documents to an index for the first time and Meilisearch finds multiple attributes ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition).
+
+```json
+{
+  "uid": 4,
+  "indexUid": "books",
+  "status": "failed",
+  "type": "documentAdditionOrUpdate",
+  "canceledBy":null,
+  "details":{
+    "receivedDocuments":5,
+    "indexedDocuments":5
+  },
+  "error":{
+    "message": "The primary key inference failed as the engine found 2 fields ending with `id` in their names: 'id' and 'author_id'. Please specify the primary key manually using the `primaryKey` query parameter.",
+    "code": "index_primary_key_multiple_candidates_found",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#index-primary-key-multiple-candidates-found"
+  },
+  "duration": "PT0.006002S",
+  "enqueuedAt": "2023-01-17T10:44:42.625574Z",
+  "startedAt": "2023-01-17T10:44:42.626041Z",
+  "finishedAt": "2023-01-17T10:44:42.632043Z"
+}
+```
+
+### `index_primary_key_no_candidate_found`
+
+This error occurs when you add documents to an index for the first time and none of them have an attribute ending with `id`. It can be resolved by [manually setting the index's primary key](#setting-the-primary-key-on-document-addition), or ensuring that all documents you add possess an `id` attribute.
+
+```json
+{
+  "uid": 1,
+  "indexUid": "books",
+  "status": "failed",
+  "type": "documentAdditionOrUpdate",
+  "canceledBy": null,
+  "details":{
+    "receivedDocuments": 5,
+    "indexedDocuments": null
+  },
+  "error":{
+    "message": "The primary key inference failed as the engine did not find any field ending with `id` in its name. Please specify the primary key manually using the `primaryKey` query parameter.",
+    "code": "index_primary_key_no_candidate_found",
+    "type": "invalid_request",
+    "link": "https://docs.meilisearch.com/errors#index-primary-key-no-candidate-found"
+  },
+  "duration": "PT0.006579S",
+  "enqueuedAt": "2023-01-17T10:19:14.464858Z",
+  "startedAt": "2023-01-17T10:19:14.465369Z",
+  "finishedAt": "2023-01-17T10:19:14.471948Z"
+  }
+```
+
+### `invalid_document_id`
+
+This happens when your document id does not have the correct [format](#formatting-the-document-id). The document id can only be of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
 
 ```json
 {
@@ -165,15 +221,15 @@ This error occurs when you add documents for the first time and Meilisearch [fai
         "indexedDocuments":null
         },
     "error":{
-        "message": "The primary key inference process failed because the engine did not find any fields containing `id` substring in their name. If your document identifier does not contain any `id` substring, you can set the primary key of the index.",
-        "code": "primary_key_inference_failed",
+        "message": "Document identifier `1@` is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).",
+        "code": "invalid_document_id",
         "type": "invalid_request",
-        "link": "https://docs.meilisearch.com/errors#primary_key_inference_failed"
+        "link": "https://docs.meilisearch.com/errors#invalid_document_id"
         },
-    "duration": "PT0.007479S",
-    "enqueuedAt": "2021-12-30T11:17:49.708824Z",
-    "startedAt": "2021-12-30T11:17:49.709934Z",
-    "finishedAt": "2021-12-30T11:17:49.716303Z"
+    "duration": "PT0.009738S",
+    "enqueuedAt": "2021-12-30T11:28:59.075065Z",
+    "startedAt": "2021-12-30T11:28:59.076144Z",
+    "finishedAt": "2021-12-30T11:28:59.084803Z"
 }
 ```
 
@@ -202,33 +258,5 @@ This error occurs when your index already has a primary key, but one of the docu
     "enqueuedAt": "2021-12-30T11:23:52.304689Z",
     "startedAt": "2021-12-30T11:23:52.307632Z",
     "finishedAt": "2021-12-30T11:23:52.312588Z"
-}
-```
-
-### `invalid_document_id`
-
-This happens when your document id does not have the correct [format](#formatting-the-document-id). The document id can only be of type integer or string, composed of alphanumeric characters `a-z A-Z 0-9`, hyphens `-`, and underscores `_`.
-
-```json
-{
-    "uid":1,
-    "indexUid": "books",
-    "status": "failed",
-    "type": "documentAdditionOrUpdate",
-    "canceledBy": null,
-    "details":{
-        "receivedDocuments":5,
-        "indexedDocuments":null
-        },
-    "error":{
-        "message": "Document identifier `1@` is invalid. A document identifier can be of type integer or string, only composed of alphanumeric characters (a-z A-Z 0-9), hyphens (-) and underscores (_).",
-        "code": "invalid_document_id",
-        "type": "invalid_request",
-        "link": "https://docs.meilisearch.com/errors#invalid_document_id"
-        },
-    "duration": "PT0.009738S",
-    "enqueuedAt": "2021-12-30T11:28:59.075065Z",
-    "startedAt": "2021-12-30T11:28:59.076144Z",
-    "finishedAt": "2021-12-30T11:28:59.084803Z"
 }
 ```

@@ -1,128 +1,126 @@
 # Deploy a Meilisearch instance on DigitalOcean
 
-[[toc]]
+## Part 1: Deploy Meilisearch on a Droplet
 
-## Deploy Meilisearch on a DigitalOcean droplet
+### 1. Create a new Droplet
 
-### 1. Create a new "droplet"
+DigitalOcean Droplets are Linux-based virtual machines in which you can run your applications.
 
-A "droplet" is a set of resources, as a Virtual Machine, or a Server, in which you can run your own applications.
-In any DigitalOcean page, when you are logged in, you will find a menu in the upper-right corner. Click on "Create" -> "Droplets".
+Once you log in to your DigitalOcean account, click the green "Create" button at the top-right of the page and select "Droplets".
 
-![Selecting "Droplets Create cloud servers" from the "Create" dropdown](/digitalocean/01.create.png)
+![Selecting "Droplets" from the "Create" dropdown](/digitalocean/create.png)
 
-### 2. Select Meilisearch snapshot
+[Refer to DigitalOcean's documentation to learn more about creating and configuring Droplets.](https://docs.digitalocean.com/tutorials/droplets/)
 
-By default, DigitalOcean will display the "Distributions" tab. Select the "Marketplace" tab and search for "meili". Select it.
+### 2. Select a region for your Droplet
 
-![Searching for 'meili' in Marketplace](/digitalocean/02.marketplace.png)
+Select the region where you want to deploy your Droplet. Remember, the closer you are to your users, the better their search experience with Meilisearch will be.
 
-### 3. Select your plan
+![Selecting the London data center region](/digitalocean/select-region.png)
 
-Select your plan. Plans start at $5 (click on "See all plans" for more options). Memory-optimized options will give you better results for a production environment on big datasets.
+### 3. Select Meilisearch image
 
-![Selecting the plan based on your usage](/digitalocean/03.select-plan.png)
+By default, DigitalOcean displays the "OS" tab. Select the "Marketplace" tab, search for "Meilisearch", and select the image.
 
-### 4. Select a region for your droplet
+![Search results for 'Meilisearch' in Marketplace](/digitalocean/marketplace.png)
 
-Select the region where you want to deploy your droplet. Remember, the closer you are to your users or customers, the better will be their search experience with Meilisearch.
+### 4. Choose Droplet size
 
-![Selecting the London data center region](/digitalocean/04.select-region.png)
+This is where you choose the amount of RAM, storage, and CPU cores your Droplet will have. Select your plan based on your needs. Memory-optimized options will give you better results when working with big datasets.
 
-### 5. Add your SSH key
+![Selecting the plan based on your usage](/digitalocean/select-plan.png)
 
-Select your SSH key in order to be able to connect to your droplet later. If you don't see your SSH key add yours to your account.
+### 5. Choose an authentication method
 
-If you need help with this, visit [this link](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/)
+You can either use SSH keys or a password to access your Droplet. We recommend using SSH keys as they are more secure.
 
-You can also set a password for `root` user if you prefer this authentication method, but it is less secure.
+![Selecting SSH keys for authentication](/digitalocean/add-ssh-key.png)
 
-![Selecting SSH keys for authentication](/digitalocean/05.add-ssh-key.png)
+Select the SSH keys you want to add to your Droplet. If you don't have a key, [follow DigitalOcean's instructions on how to create one](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
 
-### 6. Choose your droplet name and tags
+### 6. Choose your Droplet name and tags
 
-Here you can select the name that will be visible everywhere in your DigitalOcean account. Choose wisely! Droplets can only contain alphanumeric characters, dashes, and periods.
+Here you can select the name that will be visible everywhere in your DigitalOcean account. Droplets can only contain alphanumeric characters, dashes, and periods.
 
-![Adding 'meilisearch-droplet-name' as the hostname](/digitalocean/06.droplet-name.png)
+![Adding 'meilisearch-droplet-name' as the hostname](/digitalocean/droplet-name.png)
 
-Tags are a very good method to know who created resources, and for organizing resources or projects. Tags can contain letters, numbers, colons, dashes, and underscores. Try to always add some tags to make clear what are the server purposes.
+Tags are great for managing resources. They are custom labels you assign to droplets. Tags can contain letters, numbers, colons, dashes, and underscores. You can use multiple tags for a single resource. Try naming tags based on a droplet's function.
 
-![The search bar, meilisearch, and search-team tags](/digitalocean/06.add-tags.png)
+![The search bar, meilisearch, and search-team tags](/digitalocean/add-tags.png)
 
 ### 7. Click on "Create Droplet"
 
-![The "Create Droplet" button](/digitalocean/07.create-droplet.png)
+![The "Create Droplet" button](/digitalocean/create-droplet.png)
 
-### 8. Your Meilisearch is running (in **development** environment)
+### 8. Test Meilisearch
 
-Instance creation in progress...
+Once created, click on the Droplet's public IP address to copy it:
 
-![Progress bar for the meilisearch-droplet-name instance](/digitalocean/08.creating.png)
+![meilisearch-droplet-name instance's IP: 165.227.56.77](/digitalocean/copy-ip.png)
 
-... done!
+Paste it into your browser. If you can access the search preview, Meilisearch is ready to use.
 
-![meilisearch-droplet-name instance created successfully](/digitalocean/08.created-ip.png)
+![Meilisearch search preview](/digitalocean/test-meili.png)
 
-### 9. Test Meilisearch
+## Part 2: Configure production settings in your Meilisearch Droplet
 
-Copy the public IP address:
+To configure Meilisearch for **production** on a DigitalOcean Droplet, [use SSH to access your Droplet](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/) and a script will guide you through the process. Alternatively, use the [Droplet Console](https://docs.digitalocean.com/products/droplets/how-to/connect-with-console/) with your preferred browser.
 
-![meilisearch-droplet-name instance's IP: 165.227.56.77](/digitalocean/09.copy-ip.png)
+### 1. Make your domain name point to your Droplet
 
-Paste it in your browser. If this screen is shown, your Meilisearch is now ready!
+If you want to use your own domain, click the "Create" button and select "Domain/DNS".
 
-![Meilisearch search preview](/digitalocean/09.test-meili.png)
+![Selecting Domain/DNS from the Create menu](/digitalocean/domain.png)
 
-## Configure production settings in your Meilisearch droplet
+Type in your domain name in the "Enter domain field" and click "Add Domain".
 
-Configuring your Meilisearch in a **production** environment on DigitalOcean droplet is very straightforward. Establish an SSH connection with your droplet and a script will guide you through the process.
+![Domains tab on the Networking page](/digitalocean/add-domain.png)
 
-### 1. Make your domain name point to your droplet
-
-If you want to use your own domain name (or sub-domain), add `A record` in your domain name provider account.
-
-![An interface for editing DNS records with "Type": A, "Name": droplet, "IPv4 address": 165.227.56.77, and "TTL": Auto](/digitalocean/11.domain-a-record.png)
-
-This should work out of the box. Your domain name should now be linked to your Meilisearch instance. You can now do a health check to verify that your instance is running and your DNS is well configured:
+This should work out of the box. Your domain name should now be linked to your Meilisearch instance. Use `curl` to access it and verify DNS has been properly configured:
 
 ```bash
 curl -v http://<your-domain-name>/health
 ```
 
-The server should answer with a `200 OK` status code and the following body `{"status": "available"}` as shown in the example below:
+The server should answer with a `200 OK` status code and the following body `{"status": "available"}`:
 
 ```bash
-...
+…
 HTTP/1.1 200 OK
-...
+…
 {"status": "available"}
-...
+…
 ```
 
-![Meilisearch interface](/digitalocean/11.working-domain.png)
+### 2. Set master key and SSL (HTTPS)
 
-### 2. Set API key and SSL (HTTPS)
+Meilisearch is currently running in a **development** environment. We haven't set up a master key, meaning anyone can read/write to the Meilisearch instance. Since we aren't using HTTPS yet, this configuration is unsafe for **production**.
 
-Meilisearch is currently running in a **development** environment. You haven't set up an API key, meaning that anyone can read/write from your Meilisearch, and you aren't using HTTPS yet, which makes this configuration unsafe for **production**.
-To start the configuration process, connect via SSH to your new Meilisearch Droplet and follow the instructions:
+To start the configuration process, either connect to your Droplet via SSH or use the Droplet Console in your preferred browser and follow the instructions:
 
 ### 2.1. Run the configuration script
 
 Open a terminal and start a new SSH connection with the IP you got from DigitalOcean.
 
-Write in your terminal `ssh root@<your-ip-address>` and press Enter to establish connection:
+Type in the following command in your terminal and press Enter to establish a connection:
 
 ```bash
-ssh root@42.42.42.42
+ssh root@DIGITAL_OCEAN_IP_ADDRESS
 ```
 
-Write `yes` and press Enter to accept the authentication process.
+Type `yes` and press Enter to accept the authentication process.
+
+::: note
+The above command is not required if you are using the Droplet Console.
+:::
 
 A script will run automatically, asking for your settings and desired configuration. If you want to run this script again anytime, you can do so by using the following command:
 
 ```bash
 meilisearch-setup
 ```
+
+The same script will run automatically if you use the Droplet Console.
 
 ### 3. Enjoy your ready-to-use Meilisearch droplet
 
@@ -137,11 +135,9 @@ curl -v https://<your-domain-name>/health
 The server should answer with a `200 OK` status code and the following body `{"status": "available"}` as shown in the example below:
 
 ```bash
-...
+…
 HTTP/1.1 200 OK
-...
+…
 {"status": "available"}
-...
+…
 ```
-
-**Enjoy**!

@@ -51,14 +51,14 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.30
+docker pull getmeili/meilisearch:v1.0
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
     -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:v0.30 \
+    getmeili/meilisearch:v1.0 \
     meilisearch --env="development"
 ```
 
@@ -312,7 +312,7 @@ You should now have a working front-end search interface 🚀🔥
 
 ## Securing Meilisearch
 
-The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key of at least 16 bytes to protect your instance from unauthorized use:
 
 :::: tabs
 

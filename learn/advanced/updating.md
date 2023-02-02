@@ -20,6 +20,8 @@ This guide only works for versions v0.15 and above. If you are using an older ve
 
 This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
 
+- If you are updating **from v0.20 or below**, please ensure all updates finish processing before creating the dump. `enqueued` updates will not be exported and may result in data loss.
+
 - If you are using **v0.24 or below**, use the `X-Meili-API-Key: API_KEY` authorization header:
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
@@ -257,12 +259,6 @@ For **cloud platforms**, move the new Meilisearch binary to the `/usr/bin` direc
 ```
 mv meilisearch /usr/bin/meilisearch
 ```
-
-::: warning
-If you are using Meilisearch v0.20 or below, migration should be done in two steps. First, import your dump into an instance running any version of Meilisearch from v0.21 to v0.24, inclusive. Second, export another dump from this instance and import it to a final instance running your targeted version.
-
-Once Meilisearch v1 is released, this two-step process won't be necessary as v1 will be compatible with dumps from all previous versions.
-:::
 
 ## Step 3: Import data
 

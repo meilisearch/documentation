@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a4f9078b-c91f-4399-9a98-5e4adc5099a2",
-		"name": "Meilisearch v0.30",
+		"_postman_id": "bcc2fb5b-d130-4a7b-9acf-c481248b2b9d",
+		"name": "Meilisearch v1.0",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -481,7 +481,8 @@
 								"{{url}}"
 							],
 							"path": [
-								"tasks"
+								"tasks",
+								"cancel"
 							],
 							"query": [
 								{
@@ -2035,7 +2036,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "masterKey",
+				"value": "aSampleMasterKey",
 				"type": "string"
 			}
 		]
