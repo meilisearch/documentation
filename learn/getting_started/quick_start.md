@@ -51,14 +51,14 @@ These commands launch the **latest stable release** of Meilisearch.
 
 ```bash
 # Fetch the latest version of Meilisearch image from DockerHub
-docker pull getmeili/meilisearch:v0.30
+docker pull getmeili/meilisearch:v1.0
 
 # Launch Meilisearch in development mode with a master key
 docker run -it --rm \
     -p 7700:7700 \
     -e MEILI_MASTER_KEY='MASTER_KEY'\
     -v $(pwd)/meili_data:/meili_data \
-    getmeili/meilisearch:v0.30 \
+    getmeili/meilisearch:v1.0 \
     meilisearch --env="development"
 ```
 
@@ -191,7 +191,7 @@ The previous command added documents from `movies.json` to a new index called `m
 
 Every index must have a [primary key](/learn/core_concepts/primary_key.md#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-By default, Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called [auto-batching](/learn/core_concepts/documents.md#auto-batching), and it significantly speeds up indexing. After adding documents, you should receive a response like this:
+Meilisearch combines consecutive document requests into a single batch and processes them together. This process is called [auto-batching](/learn/core_concepts/documents.md#auto-batching), and it significantly speeds up indexing. After adding documents, you should receive a response like this:
 
 ```json
 {
@@ -203,7 +203,7 @@ By default, Meilisearch combines consecutive document requests into a single bat
 }
 ```
 
-Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
+Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations.md). This means that rather than being processed instantly, **API requests are added to a queue and processed at a later time**.
 
 Use the returned `taskUid` to [check the status](/reference/api/tasks.md) of your documents:
 
@@ -312,7 +312,7 @@ You should now have a working front-end search interface 🚀🔥
 
 ## Securing Meilisearch
 
-The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key to protect your instance from unauthorized use:
+The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key of at least 16 bytes to protect your instance from unauthorized use:
 
 :::: tabs
 
