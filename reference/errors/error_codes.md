@@ -406,7 +406,7 @@ The payload does not contain a [Content-Type header](/reference/api/overview.md#
 
 A document does not contain any value for the required primary key, and is thus invalid. Check documents in the current addition for the invalid ones.
 
-`missing_index_uid`
+## `missing_index_uid`
 
 The payload is missing the [`uid`](/reference/api/indexes.md#index-object) field.
 
