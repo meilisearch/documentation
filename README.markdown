@@ -75,7 +75,7 @@ yarn style
 
 ### Handling images and other assets
 
-Screenshots, images, video demonstrations, etc should be placed in the `.vuepress/public/` folder and then referenced from any markdown files **without** `/.vuepress/public`. For example, if you create the file `.vuepress/public/my_cool_guide/my_cool_image.png` you would link to it from your document using `![my cool image](/my_cool_guide/my_cool_image.png`).
+Screenshots, images, GIFs, and video demonstrations should be placed in a relevant folder under `.vuepress/public/` and then referenced from any markdown file a using relative link. For example, if you create the file `.vuepress/public/my_cool_guide/my_cool_image.png`, you would link to it from your document using `![A description of my cool image](/my_cool_guide/my_cool_image.png`).
 
 ### Deployment
 
