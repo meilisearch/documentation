@@ -378,4 +378,4 @@ This section contains instructions for upgrading from specific versions. Most ve
 - If you are updating from **v0.25 or below**, be aware that:
   - The `private` and `public` keys have been deprecated and replaced by two default API keys with similar permissions: `Default Admin API Key` and `Default Search API Key`.
   - The `updates` API has been replaced with the `tasks` API.
-- If you are **updating to v0.28 or above**, existing keys will have their `key` and `uid` fields regenerated.
+- If you are **updating from v0.27 or above**, existing keys will have their `key` and `uid` fields regenerated.
