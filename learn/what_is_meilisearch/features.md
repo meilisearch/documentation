@@ -22,7 +22,7 @@ Instead of letting typos ruin your search experience, Meilisearch will always fi
 
 Explore the physical world. [Geosearch](/learn/advanced/geosearch.md) allows you to filter and sort results based on their geographic location.
 
-## Filters
+## Filtering
 
 Create [filters](/learn/advanced/filtering_and_faceted_search.md) to refine results based on user-defined criteria.
 
