@@ -5,7 +5,7 @@ This documentation website only covers the latest stable release of Meilisearch.
 This guide shows you how to clone Meilisearch's documentation repository, fetch the content for a specific version, and read it in your local machine.
 
 ::: warning
-While we provide this guide to help users of old versions accomplish their bare minimum needs, it is not intended as a long-term solution or to encourage users to continue using outdated versions of Meilisearch. In almost every case, **it is better to upgrade to the latest Meilisearch version**.
+While this guide's goal is to help users of old versions accomplish their bare minimum needs, it is not intended as a long-term solution or to encourage users to continue using outdated versions of Meilisearch. In almost every case, **it is better to upgrade to the latest Meilisearch version**.
 
 Depending on the version in question, the process of accessing old documentation may be difficult or error-prone. You have been warned!
 :::
@@ -41,14 +41,17 @@ For example, the following command retrieves the Meilisearch v0.20 documentation
 git checkout v0.20
 ```
 
-[View all documentation tags.](https://github.com/meilisearch/documentation/tags)
+Visit the repository on GitHub to [view all documentation tags](https://github.com/meilisearch/documentation/tags).
 
 ## Access the documentation
 
 There are three different ways of accessing the documentation of previous Meilisearch releases depending on the version you checked out.
 
-### v0.17 and above: run a local Vuepress server
+:::warning
+The site search bar is not functional in local copies of the documentation website.
+:::
 
+### v0.17 and above: run a local Vuepress server
 
 #### Install dependencies
 
@@ -60,28 +63,30 @@ yarn install
 
 #### Start the local server
 
-After installing dependencies, use yarn to start the server:
+After installing dependencies, use Yarn to start the server:
 
 ```sh
 yarn dev
 ```
 
-Yarn will build the website from the markdown source files. Once it is done, use your browser to navigate to `http://localhost:8080`.
+Yarn will build the website from the markdown source files. Once the server is online, use your browser to navigate to `http://localhost:8080`.
 
-::: warning
-The site search bar and SDK code samples are not available in local copies of the documentation website.
+:::warning
+SDK code samples are not available in local copies of the documentation for Meilisearch v0.17 and above.
 :::
 
 ### v0.11-v0.16: run a simple Python server
 
-Accessing Meilisearch documentation from v0.11 to v0.16 requires launching a Python HTTP server on your local machine. Run the following command on your console:
+Accessing Meilisearch documentation from v0.11 to v0.16 requires launching an HTTP server on your local machine. Run the following command on your console:
 
 ```sh
 python3 -m http.server 8080
 ```
 
-Once this is done, use your browser to navigate to `http://localhost:8080`.
+Once the server is online, use your browser to navigate to `http://localhost:8080`.
+
+The above example uses Python to launch a local server, but alternatives such as `npx serve`  work equally well.
 
 ### v0.8 to v0.10: read markdown source files
 
-Due to an unconsolidated build workflow on early versions of the documentation website involving multiple deprecated tools and libraries, we recommend browsing the source markdown files, either locally with the help of a modern text editor or using GitHub's interface.
+The build workflow on early versions of the documentation website involves multiple deprecated tools and libraries. We recommend browsing the source markdown files, either locally with the help of a modern text editor or using GitHub's interface.
