@@ -125,6 +125,10 @@ It should return something like this:
 
 ::::
 
+::: danger `_geo` field in v0.27, v0.28, and v0.29
+Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
+:::
+
 You can then create a dump of your database:
 
 <CodeSamples id="updating_guide_create_dump" />
@@ -285,10 +289,6 @@ meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meili
 :::
 
 ::::
-
-::: danger `_geo` field in v0.27, v0.28, and v0.29
-Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
-:::
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
