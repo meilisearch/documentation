@@ -6,6 +6,8 @@ sidebarDepth: 2
 
 # Features
 
+Meilisearch is a flexible and powerful user-focused search engine. Here are some of its major features.
+
 ## Search as you type
 
 Also called "instant search". Results are delivered while you're still inputting your query. Displayed results are changed in real-time whenever you type additional text into the search box.
