@@ -8,7 +8,7 @@ Currently, Meilisearch databases are only compatible with the version of Meilise
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
-[Refer to the Version-specific update warnings sections for more details on upgrading from specific versions.](#version-specific-update-warnings)
+If migrating to the latest version of Meilisearch will cause you to skip multiple versions, this may require changes to your codebase. [Refer to our version-specific update warnings for more details](#version-specific-warnings).
 
 ::: tip
 If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
@@ -373,9 +373,9 @@ rm /var/opt/meilisearch/dumps/{dump_uid.dump}
 
 ::::
 
-## Version-specific update warnings
+## Version-specific warnings
 
-This section contains instructions for upgrading from specific versions. Most versions don't require version-specific steps and you should be able to upgrade directly. If the version you are upgrading from isn't listed here, no additional steps are required.
+After migrating to the most recent version of Meilisearch, your code-base may require some changes. This section contains warnings for some of the most impactful version-specific changes. For full changelogs, see the [releases tab on GitHub](https://github.com/meilisearch/meilisearch/releases).
 
 - If you are updating from **v0.25 or below**, be aware that:
   - The `private` and `public` keys have been deprecated and replaced by two default API keys with similar permissions: `Default Admin API Key` and `Default Search API Key`.
