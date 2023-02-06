@@ -202,3 +202,7 @@
 
 # New errors page
 /reference/api/error_codes.html                     /reference/errors/error_codes.html
+
+# New "Update and migration" section
+/learn/getting_started/algolia_migration.html       /learn/update_and_migration/algolia_migration.html
+/learn/advanced/updating.html                       /learn/update_and_migration/updating.html

@@ -53,5 +53,5 @@ exceptions:
   - AMIs
   - '\b\s[0-9]:\s[A-Z]' # Step 1: Do this
   - '[0-9]\.\s[A-Z]'  # 1. Do this
+  - 'v[0-9][.][0-9]{1,2}' # e.g. v0.17
   #- '"(.*?)"' #Ignore text in ""
-  

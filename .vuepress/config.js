@@ -117,10 +117,6 @@ module.exports = {
                 '/learn/getting_started/getting_ready_for_production',
               ],
             },
-            {
-              title: 'Migrating from Algolia',
-              path: '/learn/getting_started/algolia_migration',
-            },
           ],
         },
         {
@@ -170,6 +166,23 @@ module.exports = {
           ],
         },
         {
+          title: '🔢 Update and migration',
+          path: '/learn/update_and_migration/updating.html',
+          collapsable: false,
+          children: [
+            {
+              title: 'Updating Meilisearch',
+              path: '/learn/update_and_migration/updating',
+            },
+            {
+              title: 'Migrating from Algolia',
+              path: '/learn/update_and_migration/algolia_migration',
+            },
+            '/learn/update_and_migration/versioning',
+            '/learn/update_and_migration/previous_docs_version',
+          ],
+        },
+        {
           title: '📚 Advanced topics',
           path: '/learn/advanced/asynchronous_operations.html',
           collapsable: false,
@@ -180,10 +193,6 @@ module.exports = {
             '/learn/advanced/pagination',
             '/learn/advanced/sorting',
             '/learn/advanced/working_with_dates',
-            {
-              title: 'Updating Meilisearch',
-              path: '/learn/advanced/updating',
-            },
             {
               title: 'Data backup',
               collapsable: false,
