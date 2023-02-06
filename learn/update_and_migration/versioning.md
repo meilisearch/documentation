@@ -20,7 +20,7 @@ Meilisearch releases new versions between four and six times a year. This number
 
 ### Support for previous versions
 
-Meilisearch only maintains the latest engine release. Currently, there are no EOL and LTS policies. These will be outlined with the launch of Meilisearch v2.
+Meilisearch only maintains the latest engine release. Currently, there are no EOL (End of Life) or LTS (Long-Term Support) policies.
 
 Consult the [engine versioning policy](https://github.com/meilisearch/engine-team/blob/main/resources/versioning-policy.md) for more information.
 
