@@ -107,7 +107,7 @@
 /reference/features/sorting.html                        /learn/advanced/sorting.html
 
 # Remove Create section
-/create/how_to/meilisearch_react.html                    https://blog.meilisearch.com/how-to-implement-instant-search-within-5-minutes-in-your-react-app/
+/create/how_to/meilisearch_react.html               https://blog.meilisearch.com/instant-search-react-app/
 /create/how_to/aws.html                             /learn/cookbooks/aws.html
 /create/how_to/gcp.html                             /learn/cookbooks/gcp.html
 /create/how_to/qovery.html                          /learn/cookbooks/qovery.html
@@ -199,3 +199,7 @@
 
 # New errors page
 /reference/api/error_codes.html                     /reference/errors/error_codes.html
+
+# New "Update and migration" section
+/learn/getting_started/algolia_migration.html       /learn/update_and_migration/algolia_migration.html
+/learn/advanced/updating.html                       /learn/update_and_migration/updating.html

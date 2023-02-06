@@ -167,7 +167,7 @@ Meilisearch was inspired by Algolia's product and the algorithms behind it. We i
 
 Meilisearch provides similar features and reaches the same level of relevance just as quickly as its competitor.
 
-If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/getting_started/algolia_migration.md).
+If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/update_and_migration/algolia_migration.md).
 
 #### Key similarities
 

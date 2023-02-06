@@ -28,9 +28,7 @@ The choice of LMDB comes with certain pros and cons, especially regarding databa
 
 #### Database size
 
-When deleting documents from a Meilisearch index, you may notice disk space usage remains the same. This happens because LMDB internally marks that space as free, but does not make it available for the operating system at large. This design choice leads to better performance, as there is no need for periodic compaction operations. As a result, disk space occupied by LMDB (and thus by Meilisearch) tends to increase over time.
-
-It is not currently possible to calculate the precise maximum amount of space a Meilisearch instance can occupy. However, disk space usage is dictated in part by index and task database size. This means you can have a general idea of the upper size boundaries by taking into account the number of indexes in your instance together with the values configured for `--max-index-size` and `--max-task-db`.
+When deleting documents from a Meilisearch index, you may notice disk space usage remains the same. This happens because LMDB internally marks that space as free, but does not make it available for the operating system at large. This design choice leads to better performance, as there is no need for periodic compaction operations. As a result, disk space occupied by LMDB (and thus by Meilisearch) tends to increase over time. It is not possible to calculate the precise maximum amount of space a Meilisearch instance can occupy.
 
 #### Memory usage
 

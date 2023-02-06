@@ -106,18 +106,15 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.env`                                        | Value of `--env`/`MEILI_ENV`                                                                | production
 | `infos.db_path`                                    | `true` if `--db-path`/`MEILI_DB_PATH` is specified, otherwise `false`                       | true
 | `infos.import_dump`                                | `true` if `--import-dump` is specified, otherwise `false`                                   | true
-| `infos.dumps_dir`                                  | `true` if `--dumps-dir`/`MEILI_DUMPS_DIR` is specified, otherwise `false`                   | true
+| `infos.dump_dir`                                  | `true` if `--dump-dir`/`MEILI_DUMP_DIR` is specified, otherwise `false`                   | true
 | `infos.ignore_missing_dump`                        | `true` if `--ignore-missing-dump` is activated, otherwise `false`                           | true
 | `infos.ignore_dump_if_db_exists`                   | `true` if `--ignore-dump-if-db-exists` is activated, otherwise `false`                      | true
 | `infos.import_snapshot`                            | `true` if `--import-snapshot` is specified, otherwise `false`                               | true
-| `infos.schedule_snapshot`                          | `true` if `--schedule-snapshot`/`MEILI_SCHEDULE_SNAPSHOT` is activated, otherwise `false`   | true
+| `infos.schedule_snapshot`                          | Value of `--schedule_snapshot`/`MEILI_SCHEDULE_SNAPSHOT` if scheduled snapshots are enabled, otherwise `None`   | 86400
 | `infos.snapshot_dir`                               | `true` if `--snapshot-dir`/`MEILI_SNAPSHOT_DIR` is specified, otherwise `false`             | true
-| `infos.snapshot_interval_sec`                      | Value of `--snapshot-interval-sec`/`MEILI_SNAPSHOT_INTERVAL_SEC` in seconds                 | 86400
 | `infos.ignore_missing_snapshot`                    | `true` if `--ignore-missing-snapshot` is activated, otherwise `false`                       | true
 | `infos.ignore_snapshot_if_db_exists`               | `true` if `--ignore-snapshot-if-db-exists` is activated, otherwise `false`                  | true
 | `infos.http_addr`                                  | `true` if `--http-addr`/`MEILI_HTTP_ADDR` is specified, otherwise `false`                   | true
-| `infos.max_index_size`                             | Value of `--max-index-size`/`MEILI_MAX_INDEX_SIZE` in bytes                                 | 336042103
-| `infos.max_task_db_size`                           | Value of `--max-task-db-size`/`MEILI_MAX_TASK_DB_SIZE` in bytes                             | 336042103
 | `infos.http_payload_size_limit`                    | Value of `--http-payload-size-limit`/`MEILI_HTTP_PAYLOAD_SIZE_LIMIT` in bytes               | 336042103
 | `infos.log_level`                                  | Value of `--log-level`/`MEILI_LOG_LEVEL`                                                    | debug
 | `infos.max_indexing_memory`                        | Value of `--max-indexing-memory`/`MEILI_MAX_INDEXING_MEMORY` in bytes                       | 336042103
@@ -202,7 +199,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `synonyms.total`                                   | Number of synonyms                                                                          | 3
 | `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | false
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
-| `infos.disable_auto_batching`                      | `true` if `--disable-auto-batching`/`MEILI_DISABLE_AUTO_BATCHING` is specified, otherwise `false`     | true
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated

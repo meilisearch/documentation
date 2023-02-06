@@ -8,7 +8,7 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents"/>
 
-Get documents by batch.
+Get a set of documents.
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
