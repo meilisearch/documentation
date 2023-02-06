@@ -30,8 +30,6 @@ Meilisearch version numbers have no relationship to SDK version numbers. For exa
 
 When using an SDK, always consult its repository README, release description, and any dedicated documentation to determine which Meilisearch versions and features it supports.
 
-Consult the [SDK versioning policy](https://github.com/meilisearch/integration-guides/blob/main/resources/versioning.md) for more information.
-
 ## Documentation versioning
 
 This Meilisearch documentation website follows the latest Meilisearch version. We do not maintain documentation for past releases.
