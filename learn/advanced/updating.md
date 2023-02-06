@@ -310,7 +310,7 @@ Now that your updated Meilisearch instance is up and running, verify that the du
 
 If everything looks good, then congratulations! You successfully migrated your database to the latest version of Meilisearch. Be sure to check out the [changelogs](https://github.com/meilisearch/MeiliSearch/releases).
 
-If something went wrong, you can always roll back to the previous version and try again. Be sure to check out the [version-specific update warnings](#version-specific-update-warnings), and feel free to [reach out for help](https://discord.gg/meilisearch) if the problem continues.
+If something went wrong, you can always roll back to the previous version. Feel free to [reach out for help](https://discord.gg/meilisearch) if the problem continues. If you successfully migrated your database but are having problems with your codebase, be sure to check out our [version-specific warnings](#version-specific-warnings).
 
 ### Delete backup files or rollback (_optional_)
 
