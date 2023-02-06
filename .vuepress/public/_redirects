@@ -156,10 +156,7 @@
 # Remove Feature reference
 /reference/features/                                /reference/api/
 
-# Remove Installation page
-/learn/getting_started/installation.html            /learn/getting_started/quick_start.html
-
-#Remove What's next page
+# Remove What's next page
 /learn/getting_started/whats_next.html              /learn/getting_started/quick_start.html
 
 # Remove Getting Started README.md
