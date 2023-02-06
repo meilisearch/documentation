@@ -20,6 +20,14 @@ Meilisearch's default [relevancy rules](/learn/core_concepts/relevancy.md) are d
 
 Instead of letting typos ruin your search experience, Meilisearch will always find the results you expect. Read more about typo tolerance in [this dedicated guide](/learn/configuration/typo_tolerance.md).
 
+## Synonyms
+
+[Define synonyms](/learn/configuration/synonyms.md) and craft a tailored, intuitive search experience.
+
+## Highlighting
+
+[Highlight](/reference/api/search.md#attributes-to-highlight) query terms and help users immediately find the matched text in a document.
+
 ## Geosearch
 
 Search in the real world. [Geosearch](/learn/advanced/geosearch.md), also known as location-based search, allows you to filter and sort results based on their geographic location.
@@ -44,13 +52,9 @@ Protect your instance with [API keys](/learn/security/master_api_keys.md). Set e
 
 Manage complex multi-user applications. [Tenant tokens](/learn/security/tenant_tokens.md) help you decide which documents each one of your users can search.
 
-## Synonyms
+## Index swapping
 
-[Define synonyms](/learn/configuration/synonyms.md) and craft a tailored, intuitive search experience.
-
-## Highlighting
-
-[Highlight](/reference/api/search.md#attributes-to-highlight) query terms and help users immediately find the matched text in a document.
+Use [index swapping](/learn/core_concepts/indexes.md#swapping-indexes) to deploy major database updates with zero search downtime.
 
 ## Comprehensive language support
 
@@ -59,7 +63,3 @@ Manage complex multi-user applications. [Tenant tokens](/learn/security/tenant_t
 ## Phrase search
 
 [Wrap search terms in double quotes (`"`) for strict queries](/reference/api/search.md#phrase-search) that only return exact matches.
-
-## Index swapping
-
-Use [index swapping](/learn/core_concepts/indexes.md#swapping-indexes) to deploy major database updates with zero search downtime.
