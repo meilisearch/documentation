@@ -5,7 +5,7 @@ By default, Meilisearch focuses on ordering results according to their relevancy
 This can be useful in many situations, such as when a user wants to see the cheapest products available in a webshop.
 
 ::: tip
-Sorting at search time can be particularly effective when combined with [placeholder searches](/learn/what_is_meilisearch/features.md#placeholder-search).
+Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search.md#placeholder-search).
 :::
 
 ## Configuring Meilisearch for sorting at search time

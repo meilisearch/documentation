@@ -23,14 +23,14 @@ curl -L https://install.meilisearch.com | sh
 ./meilisearch --master-key=MASTER_KEY
 ```
 
-There are [other ways to install Meilisearch](/learn/getting_started/quick_start.md#setup-and-installation).
+We provide a few [other installation methods](/learn/getting_started/quick_start.md#setup-and-installation).
 
 Meilisearch is open-source and can run either on your server or on any cloud provider.
 
 ::: note
 
 The host URL and the API key you will provide in the next steps correspond to the credentials of this Meilisearch instance.
-In the example above, the host URL is `http://localhost:7700` and the API key is `myMasterKey`.
+In the example above, the host URL is `http://localhost:7700` and the API key is `MASTER_KEY`.
 
 :::
 
@@ -81,14 +81,14 @@ The `docs-content` class is the main container of the textual content in this ex
 
 `lvlX` selectors should use the standard title tags like `h1`, `h2`, `h3`, etc. You can also use static classes. Set a unique `id` or `name` attribute to these elements.
 
-Every searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
+All searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
 
 If you use VuePress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/main/.vuepress/docs-scraper/docs-scraper.config.json) we use in production.
-In our case, the main container is `theme-default-content` and the selector the titles and sub-titles are `h1`, `h2`...
+In our case, the main container is `theme-default-content` and the selector the titles and subtitles are `h1`, `h2`...
 
 ::: tip
 
-More [optional fields are available](https://github.com/meilisearch/docs-scraper#all-the-config-file-settings) to fit your need.
+More [optional fields are available](https://github.com/meilisearch/docs-scraper#all-the-config-file-settings) to fit your needs.
 
 :::
 
@@ -118,7 +118,7 @@ _More about [Meilisearch security](/learn/security/master_api_keys.md)._
 
 ::: tip
 
-We recommend running the scraper at each new deployment of your documentation, [as we do for the Meilisearch's one](https://github.com/meilisearch/documentation/blob/master/.github/workflows/gh-pages-scraping.yml).
+We recommend running the scraper at each new deployment of your documentation, [as we do for the Meilisearch's one](https://github.com/meilisearch/documentation/blob/main/.github/workflows/deploy.yml).
 
 :::
 
@@ -171,7 +171,7 @@ module.exports = {
 }
 ```
 
-The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `myMasterKey`.
+The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch instance. Following on from this tutorial, they are respectively `http://localhost:7700` and `MASTER_KEY`.
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 
 These three fields are mandatory, but more [optional fields are available](https://github.com/meilisearch/vuepress-plugin-meilisearch#customization) to customize your search bar.
@@ -229,7 +229,7 @@ The default behavior of this library fits perfectly for a documentation search b
 
 ::: note
 
-For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/main/scripts/playground.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/main/MeiliSearchBox.vue).
+For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/main/playgrounds/html/index.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/main/MeiliSearchBox.vue).
 
 :::
 

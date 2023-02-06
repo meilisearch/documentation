@@ -265,23 +265,9 @@ Sets the search terms.
 
 ::: warning
 Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations.md#maximum-number-of-query-words).
-
-Additionally, keep in mind queries go through a normalization process that strips accents and diacritics, as well as making all terms lowercase.
 :::
 
-#### Placeholder search
-
-When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.**
-
-If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
-
-::: tip
-
-Placeholder search is particularly useful when building a [faceted search UI](/learn/advanced/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
-
-:::
-
-##### Example
+#### Example
 
 You can search for films mentioning `shifu` by setting the `q` parameter:
 
@@ -308,6 +294,22 @@ This will give you a list of documents that contain your query terms in at least
   "query": "shifu"
 }
 ```
+
+#### Query term normalization
+
+Query terms go through a normalization process that removes [non-spacing marks](https://www.compart.com/en/unicode/category/Mn). Because of this, Meilisearch effectively ignores accents and diacritics when returning results. For example, searching for `"sábia"` returns documents containing `"sábia"`, `"sabiá"`, and `"sabia"`.
+
+Normalization also converts all letters to lowercase. Searching for `"Video"` returns the same results as searching for `"video"`, `"VIDEO"`, or `"viDEO"`.
+
+#### Placeholder search
+
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.**
+
+If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
+
+::: tip
+Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
+:::
 
 #### Phrase search
 
