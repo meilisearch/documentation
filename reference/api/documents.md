@@ -175,7 +175,7 @@ If you send an already existing document (same [document id](/learn/core_concept
 
 To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents.md#add-or-replace-documents).
 
-If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, it only has to be done **the first time you add documents** to the index. After which, the task will result in an error if given.
+If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition) through this route, you may only do so **the first time you add documents** to the index. If you try to set the primary key after having added documents to the index, the task will return an error.
 
 This endpoint accepts the following content types:
 
