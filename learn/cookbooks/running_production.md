@@ -84,7 +84,7 @@ useradd -d /var/lib/meilisearch -b /bin/false -m -r meilisearch
 Download default config to `/etc`:
 
 ```bash
-wget -qO /etc/meilisearch.toml https://raw.githubusercontent.com/meilisearch/meilisearch/release-v1.0.0/config.toml
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > /etc/meilisearch.toml
 ```
 
 Update the following lines so Meilisearch stores its data in the home folder of your newly created user:
