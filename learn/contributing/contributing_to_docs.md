@@ -28,7 +28,7 @@ To open an issue you need a [GitHub account](https://github.com). Create a GitHu
 1. Log into your account
 2. Go to the [Meilisearch Documentation repository](https://github.com/meilisearch/documentation)
 3. Click on "Issues"
-4. Use the search bar to see if somebody else has reported the same problem. If they have,  upvote with a 👍 and **don't create that issue**!
+4. Use the search bar to see if somebody else has reported the same problem. If they have, upvote with a 👍 and **don't create that issue**!
 5. If no one reported the problem you experienced, click "New issue"
 6. Write a short and descriptive title, then add a longer summary explaining the issue. If you're reporting a bug, make sure to include steps to reproduce the error, as well as your OS and browser version
 7. Click "Submit new issue"
