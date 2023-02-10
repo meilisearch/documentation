@@ -245,46 +245,6 @@ To change the master key, first terminate your Meilisearch instance. Then relaun
 
 **Changing an instance's master key renders all active API keys invalid and generates new values for each one of them.** This is useful if your security is severely compromised and you must reset all API key values at once.
 
-## Disabling security
-
-You can disable instance protection by restarting Meilisearch without providing a master key:
-
-:::: tabs
-::: tab CLI
-
-If your master key was set up using the command-line option, relaunch the instance without the `--master-key` option:
-
-```sh
-./meilisearch
-```
-
-:::
-
-::: tab Environment variable
-
-If your master key was configured with an environment variable, unset `MEILI_MASTER_KEY` and relaunch the instance.
-
-UNIX:
-
-```sh
-export MEILI_MASTER_KEY=
-./meilisearch
-```
-
-Windows:
-
-```sh
-set MEILI_MASTER_KEY=
-./meilisearch
-```
-
-:::
-::::
-
-::: danger
-We strongly advise against deactivating key-based security for any Meilisearch instances used in production or containing sensitive information.
-:::
-
 ## Further security measures
 
 API keys alone might not be enough to handle more complex situations such as multi-tenant indexes. If your application must manage several users and sensitive data, we recommend you [consider using tenant tokens](/learn/security/tenant_tokens.md).
