@@ -9,6 +9,8 @@ There are many ways to contribute to Meilisearch, such as:
 - Creating written or video content (tutorials, blog posts, etc.)
 - Voting on our [public roadmap](https://roadmap.meilisearch.com/tabs/5-ideas)
 
+Before opening an issue or PR, please look through our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for your problem. If yes, please leave a comment letting us know that you're waiting for a fix or willing to work on it yourself. If not, please open a new issue describing the problem and informing us whether you want to work on it or not.
+
 There are also many different ways of contributing to the above repositories, and we value them all equally:
 
 - Giving feedback
