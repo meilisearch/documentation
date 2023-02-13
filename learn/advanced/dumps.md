@@ -62,15 +62,11 @@ During a dump import, all indexes contained in the indicated `.dump` file are im
 
 While a dump is being imported, the API is not available to the task queue. As a result, no read or write operations can be performed until the importing process is complete.
 
-Dumps from v0.20.0 and below are no longer compatible with the new versions. Before you start importing, check your [Meilisearch version](/reference/api/version.md#example) and proceed accordingly.
-
 ::: note
 We do not recommend using dumps to migrate from a new Meilisearch version to an older one.
 
 For example, you can import a dump from Meilisearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
 :::
-
-### Importing a dump for v0.21 or above
 
 Once you have exported a dump you can use the resulting `.dump` file to [launch Meilisearch with the `--import-dump` configuration option](/learn/configuration/instance_options.md#import-dump).
 
