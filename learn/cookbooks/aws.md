@@ -1,3 +1,8 @@
+---
+
+sidebarDepth: 2
+
+---
 
 # Deploy a Meilisearch instance on Amazon Web Services (AWS)
 
