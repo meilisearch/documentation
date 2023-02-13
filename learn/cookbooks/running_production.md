@@ -84,7 +84,7 @@ useradd -d /var/lib/meilisearch -b /bin/false -m -r meilisearch
 Download default config to `/etc`:
 
 ```bash
-wget -qO /etc/meilisearch.toml https://raw.githubusercontent.com/meilisearch/meilisearch/release-v0.30.5/config.toml
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > /etc/meilisearch.toml
 ```
 
 Update the following lines so Meilisearch stores its data in the home folder of your newly created user:
@@ -119,7 +119,7 @@ In Debian and other Linux distributions, `systemd` allows you to create and mana
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
 
-To run Meilisearch in a production environment, use the `--env` flag. Set the master key using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
+To run Meilisearch in a production environment, use the `--env` flag. Set a master key of at least 16 bytes using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
 
 Remember to choose a safe and random key and avoid exposing it in publicly accessible applications. You can change the master key with the following command:
 

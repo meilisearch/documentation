@@ -167,7 +167,7 @@ Meilisearch was inspired by Algolia's product and the algorithms behind it. We i
 
 Meilisearch provides similar features and reaches the same level of relevance just as quickly as its competitor.
 
-If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/getting_started/algolia_migration.md).
+If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/update_and_migration/algolia_migration.md).
 
 #### Key similarities
 
@@ -190,7 +190,7 @@ Additionally, Meilisearch is written in Rust, a modern systems-level programming
 
 The [pricing model for Algolia](https://www.algolia.com/pricing/) is based on the number of records kept and the number of API operations performed. It can be prohibitively expensive for small and medium-sized businesses.
 
-Meilisearch is **open-source** and can be **self-hosted**, but also offers a cloud-hosted product analogous to Algolia's service: [Meilisearch Cloud](https://cloud.meilisearch.com/login). Unlike Algolia, [pricing of Meilisearch Cloud](https://www.meilisearch.com/pricing) follows a set hourly rate based on the computing resources chosen, with no per-record or per-search fees. You can send your server as much traffic or data as it can manage.
+Meilisearch is **open-source** and can be **self-hosted**, but also offers a cloud-hosted product analogous to Algolia's service: [Meilisearch Cloud](https://cloud.meilisearch.com/register). Like Algolia, [pricing of Meilisearch Cloud](https://www.meilisearch.com/pricing) is based on the number of records stored and the number of search operations performed. However, Meilisearch offers a more generous free tier that allows more documents to be stored as well as fairer pricing for search usage. Meilisearch also offers a Pro tier for larger use cases to allow for more predictable pricing.
 
 ## A quick look at the search engine landscape
 

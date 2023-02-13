@@ -48,7 +48,7 @@ To learn more, refer to the [primary key explanation](/learn/core_concepts/prima
 
 By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB. You can [change the payload size limit](/learn/configuration/instance_options.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
-Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](/resources/faq.md#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
+Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](https://docs.meilisearch.com/faq.html#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
 When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), ensure:
 
@@ -138,8 +138,6 @@ Meilisearch batches document addition requests when they:
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.
 
 If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally. If an [`internal`](/reference/errors/overview.md#errors) error occurs, the whole batch will fail and all tasks within it will share the same `error` object.
-
-You can deactivate auto-batching using the `--disable-auto-batching` command-line flag or the `MEILI_DISABLE_AUTO_BATCHING` environment variable. This is useful in cases where you want to avoid any potential bugs in the feature or reduce visibility latency. When auto-batching is disabled, the whole queue takes longer to process, but each individual task will be processed earlier (until a certain number of processed tasks).
 
 #### Auto-batching and task cancelation
 
