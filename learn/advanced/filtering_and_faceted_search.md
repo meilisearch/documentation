@@ -33,11 +33,11 @@ Suppose you have a collection of movies called `movie_ratings` containing the fo
 ]
 ```
 
-If you want to filter results based on the `director` and `genres` attributes, you must add them to the `filterableAttributes` list:
+If you want to filter results based on the `director` and `genres` attributes, you must first add them to the `filterableAttributes` list:
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
-**This step is mandatory and cannot be done at search time**  because Meilisearch needs to prepare an index before you can use filters. Updating `filterableAttributes` may take a significant amount of time depending on your dataset size.
+**This step is mandatory and cannot be done at search time**. Updating `filterableAttributes` requires Meilisearch to re-configure your index, which will take an amount of time proportionate to your dataset size and complexity.
 
 ::: note
 By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
@@ -49,13 +49,13 @@ Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite
 
 ## Filter basics
 
-Once you have configured `filterableAttributes`, you can use [the `filter` search parameter](/reference/api/search.md#filter). The `filter` search parameter refines search results by selecting documents matching the given filter and running the search query only on those documents.
+Once you have designated certain attributes as `filterableAttributes`, you can use [the `filter` search parameter](/reference/api/search.md#filter) to filter your search according to those attributes. The `filter` search parameter refines search results by selecting documents matching the given filter and running the search query only on those documents.
 
 ::: warning
 [Synonyms](/learn/configuration/synonyms.md) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
 
-`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or as a mix of both.
+`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or mix of both.
 
 ### Conditions
 
@@ -128,7 +128,7 @@ The expression below returns all documents with a user rating above 85:
 rating.users > 85
 ```
 
-To filter documents with a user rating of 80 or above but below 90, use:
+To filter documents with a user rating of 80 or above but below 90, you would use:
 
 ```
 rating.users >= 80 AND rating.users < 90
