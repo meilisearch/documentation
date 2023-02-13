@@ -43,23 +43,23 @@ If you want to filter results based on the `director` and `genres` attributes, y
 By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
 :::
 
+### Filters and data types
+
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
 Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
+
+We recommend homogeneous typing across fields, especially when dealing with large numbers. This is because Meilisearch does not enforce a specific schema when indexing data, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally.
 
 ## Filter basics
 
 Once you have designated certain attributes as `filterableAttributes`, you can use [the `filter` search parameter](/reference/api/search.md#filter) to filter your search according to those attributes. The `filter` search parameter refines search results by selecting documents matching the given filter and running the search query only on those documents.
 
-::: warning
-[Synonyms](/learn/configuration/synonyms.md) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
-:::
-
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or mix of both.
 
 ### Conditions
 
-Conditions are a filter's basic building blocks. They are always written in the `attribute OPERATOR value` format, where:
+Conditions are a filter's basic building blocks. They are written in the `attribute OPERATOR value` format, where:
 
 - `attribute` is the attribute of the field you want to filter on
 - `OPERATOR` can be `=`, `!=`, `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IN`, `NOT`, `AND`, or `OR`
@@ -73,7 +73,7 @@ A basic condition could request movies containing the `horror` genre:
 genres = horror
 ```
 
-Note that string values containing whitespace must be enclosed in single or double quotes:
+String values containing whitespace must be enclosed in single or double quotes:
 
 ```
 director = 'Jordan Peele'
@@ -86,27 +86,31 @@ Another condition could request movies released after 18 March 1995 (written as 
 release_date > 795484800
 ```
 
-::: warning
-Since Meilisearch does not enforce a specific schema when indexing data, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally. For this reason, it is best to have homogeneous typing across fields, especially when dealing with large numbers.
-:::
-
 ### Filter operators
 
 Meilisearch supports the following filter operators:
 
+- [Equality](#equality)
+- [Inequality](#inequality)
+- [Comparison](#comparison)
+- [`EXISTS`](#exists)
+- [`IN`](#in)
+- [`NOT`](#not)
+- [Filter expressions](#filter-expressions)
+
 #### Equality
 
-The equality operator (`=`) returns all documents containing an attribute equal to a specific value. When operating on strings, `=` is case-insensitive.
-
-::: note
-The equality operator does not return any results for `null` and empty arrays.
-:::
+The equality operator (`=`) returns all documents containing a specific value for a given attribute. When operating on strings, `=` is case-insensitive.
 
 The following expression returns all action movies:
 
 ```
 genres = action
 ```
+
+::: note
+The equality operator does not return any results for `null` and empty arrays.
+:::
 
 #### Inequality
 
@@ -314,6 +318,10 @@ Suppose that your `movie_ratings` dataset contains several movies in the followi
   …
 ]
 ```
+
+::: warning
+[Synonyms](/learn/configuration/synonyms.md) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
+:::
 
 After adding `director`, `release_date`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes), you can use them for filtering.
 
