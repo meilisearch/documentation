@@ -118,9 +118,6 @@ primary_field_guide_update_document_primary_key: |-
 tenant_token_guide_search_no_sdk_1: |-
 tenant_token_guide_generate_sdk_1: |-
 tenant_token_guide_search_sdk_1: |-
-tenant_token_guide_fragment_rules_1: |-
-tenant_token_guide_fragment_key_1: |-
-tenant_token_guide_fragment_expiry_1: |-
 get_typo_tolerance_1: |-
 update_typo_tolerance_1: |-
 reset_typo_tolerance_1: |-
