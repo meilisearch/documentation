@@ -87,8 +87,7 @@ When the documentation is running in development mode: `yarn dev`, the fetching 
 
 ### Report page
 
-When the documentation is build using the build command: `yarn build`, a file reporting the missing sample ID's in the different SDK is generated. The file contains a table with all the samples ID and their presence in all SDK's.
+When building the website using `yarn build`, we generate a file reporting the missing code sample IDs in the different SDKs. This file is called `missing-samples.report.md` and is located at the root of the `.vuepress/code-samples` directory.
 
-The file is located at the root of the `.vuepress/code-samples` directory and is named `missing-samples.report.md`.
-The file is served in public and can be visited on the `/sample-report` route.
+You can access it using the `/sample-report` route.
 

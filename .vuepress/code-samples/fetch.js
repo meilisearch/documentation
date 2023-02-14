@@ -74,7 +74,7 @@ async function testPresenceOfSamples(languageSamples) {
   })
 
   allSampleIds.map((sampleId) => {
-    let line = `| ${sampleId} |`
+    let line = `| \`${sampleId}\` |`
 
     relevantLanguageSamples.map(sdk => {
       if (Object.keys(sdk.samples).includes(sampleId)) {
