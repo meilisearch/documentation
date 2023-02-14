@@ -192,7 +192,7 @@ We can query our instance to confirm which active keys can search our `patient_m
     },
     {
       "name": "Default Admin API Key",
-      "description": "Use it for all other than search operations. Caution! Do not expose it on a public frontend", 
+      "description": "Use it for all other than search operations. Caution! Do not expose it on a public frontend",
       "key": "380689dd379232519a54d15935750cc7625620a2ea2fc06907cb40ba5b421b6f",
       "uid": "20f7e4c4-612c-4dd1-b783-7934cc038213",
       "actions": [
@@ -244,6 +244,44 @@ Once a key is past its `expiresAt` date, using it for API authorization will ret
 To change the master key, first terminate your Meilisearch instance. Then relaunch it, [supplying a new value for the master key](#protecting-a-meilisearch-instance).
 
 **Changing an instance's master key renders all active API keys invalid and generates new values for each one of them.** This is useful if your security is severely compromised and you must reset all API key values at once.
+
+## Running an unprotected instance
+
+You can disable instance protection by restarting Meilisearch without providing a master key:
+
+:::: tabs
+::: tab CLI
+
+If your master key was set up using the command-line option, relaunch the instance without the `--master-key` option:
+
+```sh
+./meilisearch --env development
+```
+
+:::
+
+::: tab Environment variable
+
+If your master key was configured with an environment variable, unset `MEILI_MASTER_KEY` and relaunch the instance.
+
+UNIX:
+
+```sh
+export MEILI_ENV=development
+export MEILI_MASTER_KEY=
+./meilisearch
+```
+
+Windows:
+
+```sh
+set MEILI_ENV=development
+set MEILI_MASTER_KEY=
+./meilisearch
+```
+
+:::
+::::
 
 ## Further security measures
 
