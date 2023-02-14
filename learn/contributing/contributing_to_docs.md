@@ -53,7 +53,7 @@ In most cases, it is a good idea to [create an issue](#creating-your-first-issue
 
 To create a PR you need a [GitHub account](https://github.com). Create one if necessary, then follow these steps:
 
-1. Go to the documentation page you'd like to edit, scroll down, and click "Edit this page"  at the bottom left of the screen. This will take you to GitHub
+1. Go to the documentation page you'd like to edit, scroll down, and click "Edit this page" at the bottom left of the screen. This will take you to GitHub
 2. If you're not already signed in, do so now. You may be prompted to create a [fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo)
 3. Use GitHub's text editor to update the page
 4. Scroll down until you reach a box named "Propose changes"
