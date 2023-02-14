@@ -15,7 +15,7 @@ Our documentation aims to be:
 
 ### Issues
 
-The documentation team uses [GitHub Issues](https://github.com/meilisearch/documentation/issues/new/choose) to track tasks. Helpful issues include:
+The documentation team uses [GitHub Issues](https://github.com/meilisearch/documentation/issues/new) to track tasks. Helpful issues include:
 
 - Bug reports detailing technical issues with this website
 - Requests for new features such as versioning or an embedded console
@@ -43,7 +43,7 @@ Pull requests ("PRs" for short) are requests to integrate changes into a GitHub 
 
 Pull requests are particularly good when you want to:
 
-- **Solve an [existing issue](https://github.com/meilisearch/documentation/issues)**!
+- **Solve an [existing issue](https://github.com/meilisearch/documentation/issues)**
 - Fix a small error, such as a typo or broken link
 - Create or improve content about something you know very well—for example, a guide on how to integrate Meilisearch with a tool you have mastered
 
@@ -53,7 +53,7 @@ In most cases, it is a good idea to [create an issue](#creating-your-first-issue
 
 To create a PR you need a [GitHub account](https://github.com). Create one if necessary, then follow these steps:
 
-1. Go to the documentation page you'd like to edit, scroll down, and click **"Edit this page"** on the bottom left section of the page. This will take you to GitHub
+1. Go to the documentation page you'd like to edit, scroll down, and click "Edit this page"  at the bottom left of the screen. This will take you to GitHub
 2. If you're not already signed in, do so now. You may be prompted to create a [fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo)
 3. Use GitHub's text editor to update the page
 4. Scroll down until you reach a box named "Propose changes"
