@@ -87,6 +87,7 @@
   {
     "language": "javascript",
     "cacheableTab": false,
+    "ignoreInSamplesReport": true,
     "label": "Vue3.js",
     "url": "https://raw.githubusercontent.com/meilisearch/meilisearch-vue/main/.code-samples-vue-3.meilisearch.yaml"
   }
