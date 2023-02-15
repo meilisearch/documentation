@@ -223,6 +223,46 @@ body > .nav-link:hover, body > .dropdown-title:hover
   }
 
   // TODO: change the color of the borders with: #655678
+}
 
+.sample-report-class table thead{
+      background-color: $bgColor;
+      position: sticky !important;
+      top: 0px !important;
+  }
+
+@media (prefers-color-scheme: light) {
+  .sample-report-class table thead{
+      background-color: $bgColor;
+      position: sticky !important;
+      top: 0px !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .sample-report-class table thead{
+      background-color: $bgDarkColor;
+      position: sticky !important;
+      top: 0px !important;
+  }
+}
+
+
+.sample-report-class .theme-default-content{
+    max-width: 100%;
+}
+
+.sample-report-class table {
+  position: relative;
+  display: table;
+}
+
+.sample-report-class thead{
+  position: sticky !important;
+  top: 0px !important;
+}
+
+.sample-report-class header {
+  display: none;
 }
 
