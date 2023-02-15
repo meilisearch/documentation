@@ -69,7 +69,7 @@ Meilisearch accepts a configuration file in the `.toml` format as an alternative
 You can download a default configuration file using the following command:
 
 ```sh
-curl https://raw.githubusercontent.com/meilisearch/meilisearch/main/config.toml > config.toml
+curl https://raw.githubusercontent.com/meilisearch/meilisearch/latest/config.toml > config.toml
 ```
 
 By default, Meilisearch will look for a `config.toml` file in the working directory. If it is present, it will be used as the configuration file. You can verify this when you launch Meilisearch:

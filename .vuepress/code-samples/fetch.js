@@ -1,6 +1,6 @@
 const sdks = require('./sdks.json')
 const bent = require('bent')
-const { log, samplesToFiles, sampleYamlToJs } = require('./fetch-utils')
+const { log, logInFile, samplesToFiles, sampleYamlToJs, initLogFile } = require('./fetch-utils')
 const fs = require('fs')
 
 /*
@@ -41,6 +41,7 @@ async function requestSamples() {
         language: sdk.language,
         label: sdk.label,
         cacheableTab: sdk.cacheableTab,
+        ignoreInSamplesReport: sdk.ignoreInSamplesReport,
       }
     } catch (e) {
       // Crashes are not thrown. File will be ignored and warning raised
@@ -57,27 +58,46 @@ async function requestSamples() {
   return await Promise.all(fetchPromises)
 }
 
-async function testPresenceOfSamples(samples) {
+async function testPresenceOfSamples(languageSamples) {
   const rawTemplate = fs.readFileSync(`${process.cwd()}/.vuepress/public/sample-template.yaml`, 'utf-8')
   const template = sampleYamlToJs(rawTemplate, { label: 'template', url: 'local' })
-  const templateIds = Object.keys(template).map(key => key)
-  samples.map(sdk => {
-    const samplesId = Object.keys(sdk.samples).map(key => key)
-    const missingInSamples = templateIds.filter(x => !samplesId.includes(x))
-    if (missingInSamples.length > 0) {
-      log(`Some templates are missing in the ${sdk.label} lib:
-    ${missingInSamples.join('\n    ')}\n`, 'FF0000')
-    }
+  const allSampleIds = Object.keys(template)
+
+  let titles = '| Sample ids |'
+  let tableStructure = '| -- |'
+  const lines = []
+
+  const relevantLanguageSamples = languageSamples.filter(sdk => !sdk.ignoreInSamplesReport)
+  relevantLanguageSamples.map(sdk => {
+    titles = titles += `${sdk.label} |`
+    tableStructure += '--|'
   })
+
+  allSampleIds.map((sampleId) => {
+    let line = `| \`${sampleId}\` |`
+
+    relevantLanguageSamples.map(sdk => {
+      if (Object.keys(sdk.samples).includes(sampleId)) {
+        line += '✅ |'
+      } else {
+        line += '❌ |'
+      }
+    })
+    lines.push(line)
+  })
+
+  logInFile('\n')
+  logInFile(titles)
+  logInFile(tableStructure)
+  logInFile(lines.join('\n'))
 }
 
 async function fetchRemoteSamples() {
+  initLogFile()
   log('Fetching remote sample files...')
   const samples = (await requestSamples()).filter((sample) => sample)
   samplesToFiles(samples)
   testPresenceOfSamples(samples)
-  log(`File created with the following SDK's samples:
-    ${samples.map((sample) => sample.label).join('\n    ')}\n`)
 }
 
 module.exports = {

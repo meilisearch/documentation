@@ -26,6 +26,17 @@ const log = (msg, color = 'FFB4E1', label = 'CODE-SAMPLE-FETCHER') => {
   console.log(`\n${chalk.reset.inverse.bold.hex(color)(` ${label} `)} ${msg}`)
 }
 
+const logInFile = (msg) => {
+  fs.appendFileSync(
+    path.join(__dirname, 'missing-samples-report.md'),
+    msg + '\n'
+  )
+}
+
+const initLogFile = () => {
+  fs.writeFileSync(path.join(__dirname, 'missing-samples-report.md'), '# Code samples state\n')
+}
+
 /*
  * Writes file in JSON format
  */
@@ -38,6 +49,8 @@ function samplesToFiles(samples) {
 
 module.exports = {
   log,
+  logInFile,
   samplesToFiles,
   sampleYamlToJs,
+  initLogFile,
 }
