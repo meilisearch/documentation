@@ -247,12 +247,10 @@ To change the master key, first terminate your Meilisearch instance. Then relaun
 
 ## Running an unprotected instance
 
-You can disable instance protection by restarting Meilisearch in `development` environment without providing a master key:
+You can run an unprotected Meilisearch instance in the `development` environment without providing a master key:
 
 :::: tabs
 ::: tab CLI
-
-If your master key was set up using the command-line option, relaunch the instance without the `--master-key` option:
 
 ```sh
 ./meilisearch --env development
@@ -262,13 +260,10 @@ If your master key was set up using the command-line option, relaunch the instan
 
 ::: tab Environment variable
 
-If your master key was configured with an environment variable, unset `MEILI_MASTER_KEY` and relaunch the instance.
-
 UNIX:
 
 ```sh
 export MEILI_ENV=development
-export MEILI_MASTER_KEY=
 ./meilisearch
 ```
 
@@ -276,7 +271,6 @@ Windows:
 
 ```sh
 set MEILI_ENV=development
-set MEILI_MASTER_KEY=
 ./meilisearch
 ```
 
