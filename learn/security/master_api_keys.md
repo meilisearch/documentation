@@ -247,7 +247,7 @@ To change the master key, first terminate your Meilisearch instance. Then relaun
 
 ## Running an unprotected instance
 
-You can disable instance protection by restarting Meilisearch without providing a master key:
+You can disable instance protection by restarting Meilisearch in `development` environment without providing a master key:
 
 :::: tabs
 ::: tab CLI
