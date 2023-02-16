@@ -96,6 +96,8 @@ Meilisearch supports the following filter operators:
 - [`EXISTS`](#exists)
 - [`IN`](#in)
 - [`NOT`](#not)
+- [`AND`](#and)
+- [`OR`](#or)
 
 #### Equality
 
@@ -201,10 +203,6 @@ NOT genres = horror
 ### Filter expressions
 
 You can build filter expressions by grouping basic conditions using `AND` and `OR`. Filter expressions can be written as strings, arrays, or a mix of both.
-
-::: warning
-The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-index-with-get-route) only accepts string filter expressions.
-:::
 
 #### `AND`
 
