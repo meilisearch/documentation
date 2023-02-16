@@ -8,13 +8,13 @@ In this guide, we discuss two different approaches to pagination supported by Me
 
 There are many UI patterns that help your users navigate through search results. One common and efficient solution in Meilisearch is using `offset` and `limit` to create interfaces centered around ["Previous" and "Next" buttons](#previous-and-next-buttons).
 
-Other solutions, such as [creating a page selector](/learn/advanced/pagination.md#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents.
+Other solutions, such as [creating a page selector](/learn/advanced/pagination.md#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents. Numbered page selectors may lead to decreased performance.
 
-Whatever UI you choose, there is a limited maximum number of search results Meilisearch will return for any given query. You can use [the `maxTotalHits` index setting](/reference/api/settings.md#pagination) to configure this, but be aware that higher limits may negatively impact search performance.
+Whatever UI you choose, there is a limited maximum number of search results Meilisearch will return for any given query. You can use [the `maxTotalHits` index setting](/reference/api/settings.md#pagination) to configure this, but be aware that higher limits will negatively impact search performance.
 
 ## "Previous" and "Next" buttons
 
-Using "Previous" and "Next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page.
+Using "Previous" and "Next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page. This is Meilisearch's recommended solution when paginating interfaces.
 
 Though this approach offers less precision than a full-blown page selector, it does not require knowing the exact number of search results. Since calculating the exhaustive number of documents matching a query is a resource-intensive process, interfaces like this might offer better performance.
 
@@ -146,7 +146,7 @@ document.querySelector('#next_button').onclick = function () { updatePageNumber(
 
 This type of pagination consists of a numbered list of pages accompanied by "Next" and "Previous" buttons. This is a common UI pattern that offers users a significant amount of precision when navigating results.
 
-Calculating the total amount of search results for a query is a resource-intensive process. Because of that, page selectors might lead to slower interfaces.
+Calculating the total amount of search results for a query is a resource-intensive process. **Numbered page selectors might lead to performance issues**, especially if you increase `maxTotalHits` above its default value.
 
 ### Implementation
 

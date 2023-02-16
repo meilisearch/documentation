@@ -697,8 +697,8 @@ Partially update the pagination settings for an index.
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
-::: note
-Setting `maxTotalHits` to a high value might negatively impact performance and expose index data to malicious scraping.
+::: warning
+Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
 :::
 
 #### Example
