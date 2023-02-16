@@ -90,13 +90,12 @@ release_date > 795484800
 
 Meilisearch supports the following filter operators:
 
-- [Equality](#equality)
-- [Inequality](#inequality)
-- [Comparison](#comparison)
+- [Equality `=`](#equality)
+- [Inequality `!=`](#inequality)
+- [Comparison `> < <= >=`](#comparison)
 - [`EXISTS`](#exists)
 - [`IN`](#in)
 - [`NOT`](#not)
-- [Filter expressions](#filter-expressions)
 
 #### Equality
 
@@ -138,7 +137,7 @@ To filter documents with a user rating of 80 or above but below 90, you would us
 rating.users >= 80 AND rating.users < 90
 ```
 
-##### `TO`
+#### `TO`
 
 `TO` is equivalent to `>= AND <=`. The following expression returns all movies with a user rating of 80 or above but below 90:
 
