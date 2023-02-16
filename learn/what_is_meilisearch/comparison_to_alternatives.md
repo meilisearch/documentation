@@ -66,7 +66,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |         | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Schemaless | ✅ | ✅ | 🔶 <br>Automatic schema detection is supported but needs to be specified | ✅ |
-| Nested field support | ✅ | ✅ | ❌ | ✅ |
+| Nested field support | ✅ | ✅ | ✅ | ✅ |
 | Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
 | Native document formats | `JSON`, `NDJSON`, `CSV` | `JSON` | `JSON`, `NDJSON` | `JSON`, `NDJSON`, `CSV` |
 
@@ -76,12 +76,12 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |---|:---:|:----:|:---:|:---:|
 | Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Needs to be specified by fuzzy queries |
 | Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule | ❌|
-| Custom rules | ✅ | ✅ | 🔶 <br>Limited to one default sorting rule | 🔶 <br>Function score query
+| Custom ranking rules | ✅ | ✅ | 🔶 <br>Limited to three sorting rules | 🔶 <br>Function score query
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
 | Synonyms | ✅ | ✅ | ✅ | ✅ |
 | Stop words | ✅ | ✅ | ❌ | ✅ |
 | Automatic language detection | ✅ | ✅ | ❌ | ❌ |
-| All language supports | ✅ | ✅ | ❌ <br> Only space separated | ✅ |
+| All language supports | ✅ | ✅ | ✅ | ✅ |
 
 ##### Security
 
@@ -96,10 +96,10 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
 | Multi-index search | [2023](https://github.com/meilisearch/product/issues/74) | ✅ | ✅ | ✅ |
-| Exact phrase search | ✅ | ✅ | ❌ | ✅ |
+| Exact phrase search | ✅ | ✅ | ✅ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
-| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
-| Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ |
+| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ | ✅ |
+| Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ | ✅ |
 | Faceted search |  ✅ | ✅ | ✅ | ✅ |
 | Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
 | Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
@@ -120,7 +120,6 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | High availability | Available with [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
-| Upgrade path | Documents need to be reindexed | N/A  | Documents need to be reindexed | Documents need to be reindexed |
 
 ### Limits
 
