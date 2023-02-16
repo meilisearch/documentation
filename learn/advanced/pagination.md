@@ -14,7 +14,7 @@ Whatever UI you choose, there is a limited maximum number of search results Meil
 
 ## "Previous" and "Next" buttons
 
-Using "Previous" and "Next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page. This is Meilisearch's recommended solution when creating pagination interfaces.
+Using "Previous" and "Next" buttons for pagination means that users can easily navigate through results, but don't have the ability to jump to an arbitrary results page. This is Meilisearch's recommended solution when creating paginated interfaces.
 
 Though this approach offers less precision than a full-blown page selector, it does not require knowing the exact number of search results. Since calculating the exhaustive number of documents matching a query is a resource-intensive process, interfaces like this might offer better performance.
 
