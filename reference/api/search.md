@@ -131,7 +131,7 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 Search for documents matching a specific query in the given index.
 
 ::: warning
-This endpoint only accepts string filter expressions.
+This endpoint only accepts [string filter expressions](/learn/advanced/filtering_and_faceted_search.md#filter-expressions).
 :::
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
