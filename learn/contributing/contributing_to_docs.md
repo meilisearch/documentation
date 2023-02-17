@@ -111,10 +111,13 @@ If this happens to you and you think there has been some mistake, please let us 
 ```bash
 # Clone the repository
 git clone git@github.com:meilisearch/documentation.git meilisearch-documentation
+
 # Open the newly created directory
 cd meilisearch-documentation
+
 # Install dependencies
 yarn install
+
 # Run Meilisearch documentation on http://localhost:8080
 yarn dev
 ```
