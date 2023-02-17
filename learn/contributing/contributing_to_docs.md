@@ -140,21 +140,12 @@ Check for broken or dead links before submitting a pull request using:
 yarn check-links
 ```
 
-#### Checking Styling
+#### Checking styling
 
-The documentation follows styling rules. The following files will be checked: `*.vue`, `*.js`, and `*.md`.
-
-You can check out and fix the styling errors.
-
-```bash
-yarn style:fix
-```
-
-You can test if the code is well-formatted without fixing it.
+Run the following command to check for any styling errors like extra spaces or lines in `*.vue`, `*.js`, and `*.md` files:
 
 ```bash
 yarn style
-```
 
 ### Handling images and other assets
 

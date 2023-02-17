@@ -1,4 +1,9 @@
-# Meilisearch Documentation
+<p align="center">
+  <img src="assets/meilisearch-logo-light.svg?sanitize=true#gh-light-mode-only">
+  <img src="assets/meilisearch-logo-dark.svg?sanitize=true#gh-dark-mode-only">
+</p>
+
+<h1 align="center">Meilisearch Documentation</h1>
 
 <h4 align="center">
   <a href="https://www.meilisearch.com">Website</a> |
