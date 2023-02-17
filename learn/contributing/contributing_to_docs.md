@@ -94,11 +94,9 @@ We ask the following questions:
 
 Nothing makes us happier than getting a thoughtful, helpful PR that saves us time and effort and makes the documentation **even stronger**. Thank you in advance for your contribution!
 
-#### 🚨 Warning regarding PRs 🚨
-
 Our only major requirement for PR contributions is that the author responds to communication requests within a reasonable timeframe.
 
-Once you've opened a PR on this repo, one of our team members will stop by shortly to review it. If your PR is approved, nothing further is required from you. However, if in seven days you have not responded to a request for further changes or more information, we will consider the PR abandoned and close it.
+Once you've opened a PR on this repo, one of our team members will stop by shortly to review it. If your PR is approved, nothing further is required from you. However, **if in seven days you have not responded to a request for further changes or more information, we will consider the PR abandoned and close it**.
 
 If this happens to you and you think there has been some mistake, please let us know and we will try to rectify the situation.
 
