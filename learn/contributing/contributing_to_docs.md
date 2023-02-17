@@ -134,7 +134,7 @@ The tests are triggered on build and on any pull request to main.
 
 #### Checking dead links
 
-Making changes to the documentation without creating any dead links can be a tedious task. Before submitting any pull request, you can check the dead links.
+Check for broken or dead links before submitting a pull request using:
 
 ```bash
 yarn check-links
