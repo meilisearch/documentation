@@ -104,7 +104,7 @@ If this happens to you and you think there has been some mistake, please let us 
 
 ### Requirements
 
-- Node version >= v14 and <= v16
+- [Node version](https://nodejs.org/en/) >= v14 and <= v16
 
 ### Installing & Running
 
