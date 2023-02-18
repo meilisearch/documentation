@@ -120,7 +120,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | High availability | Available with [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
-| Upgrade path | Documents need to be reindexed | N/A  | Documents need not be reindexed  | Documents need to be reindexed |
+| Upgrade path | Documents are automatically reindexed on upgrade | N/A  | Documents are automatically reindexed on upgrade  | Documents are automatically reindexed on upgrade, up to 1 major version |
 
 ### Limits
 
