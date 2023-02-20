@@ -8,7 +8,7 @@
 /guides/main_concepts/documents.html                /learn/core_concepts/documents.html
 /guides/main_concepts/search.html                   /learn/what_is_meilisearch/features.html
 /guides/main_concepts/relevancy.html                /learn/core_concepts/relevancy.html
-/guides/advanced_guides/installation.html           /learn/getting_started/quick_start.html
+/guides/advanced_guides/installation.html           /learn/getting_started/installation.html
 /guides/advanced_guides/configuration.html          /learn/configuration/instance_options.html
 /guides/advanced_guides/search_parameters.html      /reference/api/search.html
 /guides/advanced_guides/filtering.html              /learn/advanced/filtering_and_faceted_search.html
@@ -65,7 +65,7 @@
 /learn/advanced/language.html                       /learn/what_is_meilisearch/language.html
 
 # Move installation
-/reference/features/installation.html               /learn/getting_started/quick_start.html
+/reference/features/installation.html               /learn/getting_started/installation.html
 
 # Rename tutorials to getting started
 /learn/tutorials                                    /learn/getting_started
