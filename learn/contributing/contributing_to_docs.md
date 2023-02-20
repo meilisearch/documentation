@@ -68,6 +68,8 @@ To create a PR you need a [GitHub account](https://github.com). Create one if ne
 
 ## How we review contributions
 
+### How we review issues
+
 When **reviewing issues**, we consider a few criteria:
 
 1. Is this task a priority for the documentation team?
@@ -75,6 +77,8 @@ When **reviewing issues**, we consider a few criteria:
 3. If it's a bug report, can we reproduce the error?
 
 If users show interest in an issue by upvoting or reporting similar problems, it is more likely the documentation will dedicate resources to that task.
+
+### How we review PRs
 
 For **reviewing contributor PRs**, we start by making sure the PR is up to our **quality standard**.
 
