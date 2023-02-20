@@ -15,7 +15,7 @@ Our documentation aims to be:
 
 ### Issues
 
-The documentation team uses [GitHub Issues](https://github.com/meilisearch/documentation/issues/new) to track tasks. Helpful issues include:
+The maintainers of Meilisearch's documentation use [GitHub Issues](https://github.com/meilisearch/documentation/issues/new) to track tasks. Helpful issues include:
 
 - Bug reports detailing technical issues with this website
 - Requests for new features such as versioning or an embedded console
@@ -47,7 +47,7 @@ Pull requests are particularly good when you want to:
 - Fix a small error, such as a typo or broken link
 - Create or improve content about something you know very well—for example, a guide on how to integrate Meilisearch with a tool you have mastered
 
-In most cases, it is a good idea to [create an issue](#creating-your-first-issue) before making a PR. This allows you to coordinate with the documentation team and find the best way of addressing the problem you want to solve.
+In most cases, it is a good idea to [create an issue](#creating-your-first-issue) before making a PR. This allows you to coordinate with the documentation maintainers and find the best way of addressing the problem you want to solve.
 
 #### Creating your first PR
 
@@ -63,14 +63,14 @@ To create a PR you need a [GitHub account](https://github.com). Create one if ne
 8. Make sure the base repository is set to `meilisearch/documentation` and the base branch is set to `main`. You can ignore the remaining fields
 9. This screen will also show you a "diff", which allows you to see the changes you made compared to what's currently published on the documentation website
 10. Click "Create pull request"
-11. **Congrats, you made your first PR!** Someone from the documentation team will review your pull request shortly. They may ask for changes, so keep an eye on your GitHub notifications
+11. **Congrats, you made your first PR!** A documentation maintainer will review your pull request shortly. They may ask for changes, so keep an eye on your GitHub notifications
 12. If everything looks good, your work will be merged into the `main` branch and become part of the official documentation site. You are now a Meilisearch Contributor! 🚀
 
 ## How we review contributions
 
 When **reviewing issues**, we consider a few criteria:
 
-1. Is this task a priority for the documentation team?
+1. Is this task a priority for the documentation maintainers?
 2. Is the documentation website the best place for this information? Sometimes an idea might work better on our blog than the docs, or it might be more effective to link to an external resource than write and maintain it ourselves
 3. If it's a bug report, can we reproduce the error?
 
