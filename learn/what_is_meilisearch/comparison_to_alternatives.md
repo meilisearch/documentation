@@ -76,7 +76,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |---|:---:|:----:|:---:|:---:|
 | Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Needs to be specified by fuzzy queries |
 | Orderable ranking rules | ✅ | ✅ | 🔶 <br>Field priority can be changed, but ranking rules order cannot be changed. | ❌|
-| Custom rules | ✅ | ✅ | ✅ | 🔶 <br>Function score query
+| Custom ranking rules | ✅ | ✅ | ✅ | 🔶 <br>Function score query
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
 | Synonyms | ✅ | ✅ | ✅ | ✅ |
 | Stop words | ✅ | ✅ | ❌ | ✅ |
