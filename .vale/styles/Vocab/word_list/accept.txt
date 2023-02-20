@@ -80,3 +80,4 @@ Brotli
 zlib
 glibc
 autogenerate
+[Uu]pvoting
