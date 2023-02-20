@@ -75,7 +75,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Needs to be specified by fuzzy queries |
-| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Field priority can be changed, but ranking rules order cannot be changed. | ❌|
+| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Field weight can be changed, but ranking rules order cannot be changed. | ❌|
 | Custom ranking rules | ✅ | ✅ | ✅ | 🔶 <br>Function score query |
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
 | Synonyms | ✅ | ✅ | ✅ | ✅ |
