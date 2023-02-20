@@ -39,7 +39,7 @@ To open an issue you need a [GitHub account](https://github.com). Create one if 
 
 You can also improve the documentation by making a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests).
 
-Pull requests ("PRs" for short) are requests to integrate changes into a GitHub repository. The simplest way to create a PR on our documentation is using the **"Edit this page"** link at the bottom left of every page.
+Pull requests ("PRs" for short) are requests to integrate changes into a GitHub repository. The simplest way to create a PR on our documentation is using the "Edit this page" link at the bottom left of every page.
 
 Pull requests are particularly good when you want to:
 
