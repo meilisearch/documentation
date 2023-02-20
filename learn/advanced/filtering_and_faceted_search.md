@@ -1,28 +1,16 @@
+---
+
+sidebarDepth: 2
+
+---
+
 # Filtering and faceted search
 
-You can use Meilisearch's filters to refine search results.
-
-Filters have several use-cases, such as restricting the results a specific user has access to or creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
+Filters have several use-cases, such as refining search results and creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
 
 ## Configuring filters
 
-Filters use [document fields](/learn/core_concepts/documents.md#fields) to establish filtering criteria.
-
-To use a document field as a filter, you must first add its attribute to the [`filterableAttributes` index setting](/reference/api/settings.md#filterable-attributes).
-
-**This step is mandatory and cannot be done at search time.** Filters need to be properly processed and prepared by Meilisearch before they can be used.
-
-Updating `filterableAttributes` requires recreating the entire index. This may take a significant amount of time depending on your dataset size.
-
-::: note
-By default, `filterableAttributes` is empty. This means that filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
-:::
-
-Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored. Filtering with infinite (`inf` and `-inf`) or [Not a Number](https://en.wikipedia.org/wiki/NaN) (`NaN`) as numbers will throw an error as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). Filtering with  `inf` or `NaN` as strings will work for all fields except [geo fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).  
-
-### Example
-
-Suppose you have a collection of movies containing the following fields:
+Suppose you have a collection of movies called `movie_ratings` containing the following fields:
 
 ```json
 [
@@ -45,29 +33,37 @@ Suppose you have a collection of movies containing the following fields:
 ]
 ```
 
-If you want to filter results based on the `director` and `genres` attributes, you must add them to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes):
+If you want to filter results based on the `director` and `genres` attributes, you must first add them to the `filterableAttributes` list:
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
-## Using filters
+**This step is mandatory and cannot be done at search time**. Updating `filterableAttributes` requires Meilisearch to re-configure your index, which will take an amount of time proportionate to your dataset size and complexity.
 
-Once you have configured `filterableAttributes`, you can start using [the `filter` search parameter](/reference/api/search.md#filter). Search parameters are added to at search time, that is, when a user searches your dataset.
+::: note
+By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
+:::
 
-`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, as an array, or as a mix of both.
+### Filters and data types
+
+Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
+
+Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
+
+We recommend homogeneous typing across fields, especially when dealing with large numbers. This is because Meilisearch does not enforce a specific schema when indexing data, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally.
+
+## Filter basics
+
+Once you have designated certain attributes as `filterableAttributes`, you can use [the `filter` search parameter](/reference/api/search.md#filter) to filter your search according to those attributes. The `filter` search parameter refines search results by selecting documents matching the given filter and running the search query only on those documents.
+
+`filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or mix of both.
 
 ### Conditions
 
-Conditions are a filter's basic building blocks. They are always written in the `attribute OPERATOR value` format, where:
+Conditions are a filter's basic building blocks. They are written in the `attribute OPERATOR value` format, where:
 
 - `attribute` is the attribute of the field you want to filter on
-- `OPERATOR` is the comparison operator and can be `=`, `!=`, `>`, `>=`, `<`, or `<=`
-- `value` is the value condition for the filter
-
-::: note
-`>`, `>=`, `<`, and `<=` only operate on numeric values and will ignore all other types of values.
-
-When operating on strings, `=` and `!=` are **case-insensitive**.
-:::
+- `OPERATOR` can be `=`, `!=`, `>`, `>=`, `<`, `<=`, `TO`, `EXISTS`, `IN`, `NOT`, `AND`, or `OR`
+- `value` is the value the `OPERATOR` should look for in the `attribute`
 
 #### Examples
 
@@ -77,61 +73,186 @@ A basic condition could request movies containing the `horror` genre:
 genres = horror
 ```
 
-Note that string values containing whitespace must be enclosed in single or double quotes:
+String values containing whitespace must be enclosed in single or double quotes:
 
 ```
 director = 'Jordan Peele'
 director = "Tim Burton"
 ```
 
-Another condition could request movies released after 18 March 1995 (written as 795484800 in UNIX Epoch time):
+Another condition could request movies released after 18 March 1995 (written as `795484800` in UNIX Epoch time):
 
 ```
 release_date > 795484800
 ```
 
-::: warning
-As no specific schema is enforced at indexing, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally. For this reason, it is best to have homogeneous typing across fields, especially if numbers tend to become large.
+### Filter operators
+
+Meilisearch supports the following filter operators:
+
+- [Equality `=`](#equality)
+- [Inequality `!=`](#inequality)
+- [Comparison `> < <= >=`](#comparison)
+- [`EXISTS`](#exists)
+- [`IN`](#in)
+- [`NOT`](#not)
+- [`AND`](#and)
+- [`OR`](#or)
+
+#### Equality
+
+The equality operator (`=`) returns all documents containing a specific value for a given attribute. When operating on strings, `=` is case-insensitive.
+
+The following expression returns all action movies:
+
+```
+genres = action
+```
+
+::: note
+The equality operator does not return any results for `null` and empty arrays.
 :::
+
+#### Inequality
+
+The inequality operator (`!=`) returns all documents not selected by the equality operator. When operating on strings, `!=` is case-insensitive.
+
+The following expression returns all movies without the `action` genre:
+
+```
+genres != action
+```
+
+#### Comparison
+
+The comparison operators (`>`, `<`, `>=`, `<=`, `TO`) select documents satisfying a comparison. Comparison operators only apply only to numerical values.
+
+The expression below returns all documents with a user rating above 85:
+
+```
+rating.users > 85
+```
+
+To filter documents with a user rating of 80 or above but below 90, you would use:
+
+```
+rating.users >= 80 AND rating.users < 90
+```
+
+#### `TO`
+
+`TO` is equivalent to `>= AND <=`. The following expression returns all movies with a user rating of 80 or above but below 90:
+
+```
+rating.users 80 TO rating.users 89
+```
+
+#### `EXISTS`
+
+The `EXISTS` operator checks for the existence of a field. Fields with empty or `null` values count as existing.
+
+The following expression returns all documents that contain the `release_date` field, even if it is empty or `null`:
+
+```
+release_date EXISTS
+```
+
+The negated form of the above expression can be written as:
+
+```
+release_date NOT EXISTS
+NOT release_date EXISTS
+```
+
+Both forms are equivalent.
+
+#### `IN`
+
+`IN` combines equality operators by taking an array of comma-separated values delimited by square brackets. It selects all documents whose chosen field contains at least one of the specified values.
+
+Both of the following expressions are equivalent and return all documents whose `genres` includes either `horror`, `comedy`, or both:
+
+```
+genres IN [horror, comedy]
+genres = horror OR genres = comedy
+```
+
+The negated form of the above expression can be written as:
+
+```
+genres NOT IN [horror, comedy]
+NOT genres IN [horror, comedy]
+```
+
+Both are equivalent and mean:
+
+```
+genres != horror AND genres != comedy
+```
+
+#### `NOT`
+
+The negation operator (`NOT`) selects all documents that do not satisfy a condition. It has higher precedence than `AND` and `OR`.
+
+The following expression will return all documents whose `genres` does not contain `horror` and documents with a missing `genres` field:
+
+```
+NOT genres = horror
+```
 
 ### Filter expressions
 
-You can build filter expressions by grouping basic conditions. Filter expressions can be written as strings, arrays, or a mix of both.
+You can build filter expressions by grouping basic conditions using `AND` and `OR`. Filter expressions can be written as strings, arrays, or a mix of both.
 
-::: warning
-The [`GET` route of the search endpoint](/reference/api/search.md#search-in-an-index-with-get-route) only accepts string filter expressions.
-:::
+#### `AND`
+
+`AND` connects two conditions and only returns documents that satisfy both of them. `AND` has higher precedence than `OR`.
+
+The following expression returns all `horror` movies directed by `Jordan Peele`:
+
+```
+genres = horror AND director = 'Jordan Peele'
+```
+
+#### `OR`
+
+`OR` connects two conditions and returns results that satisfy at least one of them.
+
+The following expression returns either `horror` or `comedy` films:
+
+```
+genres = horror OR genres = comedy
+```
 
 #### Creating filter expressions with strings
 
-String expressions combine conditions using the following filter operators and parentheses:
+Meilisearch reads string expressions from left to right. You can use parentheses to ensure expressions are correctly parsed.
 
-- `NOT` returns all documents that do not satisfy a condition. The expression `NOT genres = horror` returns all documents whose `genres` do not contain `horror` and all documents missing a `genres` field
-- `AND` operates by connecting two conditions and only returns documents that satisfy both of them: `genres = horror AND director = 'Jordan Peele'`
-- `OR` connects two conditions and returns results that satisfy at least one of them: `genres = horror OR genres = comedy`
-- `TO` is equivalent to `>= AND <=`. The expression `release_date 795484800 TO 972129600` translates to `release_date >= 795484800 AND release_date <= 972129600`
-- `IN [valueA, valueB, …, valueN]` selects all documents whose chosen field contains at least one of the specified values. The expression `genres IN [horror, comedy]` returns all documents whose `genres` includes either `horror`, `comedy`, or both
-- `EXISTS` checks for the existence of a field. Fields with empty or null values still count as existing. The expression `release_date NOT EXISTS` returns all documents without a `release_date`
-
-When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
-
-::: tip
-String expressions are read left to right. `NOT` takes precedence over `AND` and `AND` takes precedence over `OR`. You can use parentheses to ensure expressions are correctly parsed.
+::: note
+Filtering on string values is case-insensitive.
+:::
 
 For instance, if you want your results to only include `comedy` and `horror` movies released after March 1995, the parentheses in the following query are mandatory:
 
-`(genres = horror OR genres = comedy) AND release_date > 795484800`
+```
+(genres = horror OR genres = comedy) AND release_date > 795484800
+```
 
 Failing to add these parentheses will cause the same query to be parsed as:
 
-`genres = horror OR (genres = comedy AND release_date > 795484800)`
+```
+genres = horror OR (genres = comedy AND release_date > 795484800)
+```
 
 Translated into English, the above expression will only return comedies released after March 1995 or horror movies regardless of their `release_date`.
+
+::: note
+When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
 :::
 
 #### Creating filter expressions with arrays
 
-Array expressions establish logical connectives by nesting arrays of strings. They can have a maximum depth of two—array filter expressions with three or more levels of nesting will throw an error.
+Array expressions establish logical connectives by nesting arrays of strings. **Array filters can have a maximum depth of two**—expressions with three or more levels of nesting will throw an error.
 
 Outer array elements are connected by an `AND` operator. The following expression returns `horror` movies directed by `Jordan Peele`:
 
@@ -167,9 +288,9 @@ You can write the same filter mixing arrays and strings:
 [["genres = comedy, genres = horror"], "NOT director = 'Jordan Peele'"]
 ```
 
-### Example
+## Using filters
 
-Suppose that you have a dataset containing several movies in the following format:
+Suppose that your `movie_ratings` dataset contains several movies in the following format:
 
 ```json
 [
@@ -195,49 +316,33 @@ Suppose that you have a dataset containing several movies in the following forma
 ]
 ```
 
-If you want to enable filtering using `director`, `release_date`, `genres`, and `rating.users`, you must add these attributes to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes).
+::: warning
+[Synonyms](/learn/configuration/synonyms.md) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
+:::
 
-You can then restrict a search so it only returns movies released after 18 March 1995 with the following filter containing a single condition:
+After adding `director`, `release_date`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes), you can use them for filtering.
 
-```SQL
-release_date > 795484800
-```
-
-You can use this filter when searching for recent `Avengers` movies:
+The following code sample returns `Avengers` movies released after 18 March 1995:
 
 <CodeSamples id="filtering_guide_1" />
 
-You can also combine multiple conditions. For instance, you can limit your search so it only includes recent movies directed by either `Tim Burton` or `Christopher Nolan`:
-
-```SQL
-release_date > 795484800 AND (director = "Tim Burton" OR director = "Christopher Nolan")
-```
-
-Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without constraints on its release date. This happens because `AND` takes precedence over `OR`.
-
-You can use this filter when searching for `Batman` movies:
+You can also combine multiple conditions. For example, you can limit your search so it only includes `Batman` movies directed by either `Tim Burton` or `Christopher Nolan`:
 
 <CodeSamples id="filtering_guide_2" />
 
-Note that filtering on string values is case-insensitive.
+Here, the parentheses are mandatory: without them, the filter would return movies directed by `Tim Burton` and released after 1995 or any film directed by `Christopher Nolan`, without constraints on its release date. This happens because `AND` takes precedence over `OR`.
 
-If you only want well-rated movies that weren't directed by `Tim Burton`, you can use this filter:
-
-```SQL
-rating.users >= 80 AND (NOT director = "Tim Burton")
-```
-
-You can use this filter when searching for `Planet of the Apes`:
+If you only want recent `Planet of the Apes` movies that weren't directed by `Tim Burton`, you can use this filter:
 
 <CodeSamples id="filtering_guide_3" />
 
 `NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
 
 ```SQL
-rating.users >= 80 AND (NOT director = "Tim Burton" AND director EXISTS)
+release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
-## Filtering with `_geoRadius`
+### Filtering with `_geoRadius`
 
 If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
 
@@ -249,19 +354,19 @@ _geoRadius(lat, lng, distance_in_meters)
 
 `lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
 
-### Example
-
-When using a dataset of restaurants containing geopositioning data, we can filter our search so it only includes places within two kilometres of our location:
+When using a <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json"> dataset of restaurants</a> containing geopositioning data, we can filter our search so it only includes places within two kilometers of our location:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
 [You can read more about filtering results with `_geoRadius` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius)
 
-#### Filtering by nested fields
+### Filtering by nested fields
 
 Use dot notation to filter results based on a document's nested fields. The following query only returns thrillers with good user reviews:
 
 <CodeSamples id="filtering_guide_nested_1" />
+
+[You can read more about nested fields in our guide on data types.](/learn/advanced/datatypes.md)
 
 ## Faceted search
 
@@ -271,78 +376,35 @@ Faceted search provides users with a quick way to narrow down search results by 
 
 This is common in ecommerce sites like Amazon. When users perform a search, they are presented not only with a list of results but also with a list of facets which you can see on the sidebar in the image below:
 
-![Screenshot of an Amazon product search page displaying faceting UI](/faceted-search/facets-amazon.png)
+![Meilisearch demo for an ecommerce website displaying faceting UI](/faceted-search/facets-ecommerce.png)
+
+Faceted search interfaces often have a count of how many results belong to each facet. This gives users a visual clue of the range of results available for each facet.
 
 ### Filters or facets
 
 In Meilisearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
 
-### Using facets
+### Configuring and using facets
 
-Like any other filter, attributes you want to use as facets must be added to the `filterableAttributes` list in the index's settings before they can be used.
+Like any other filter, attributes you want to use as facets must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes) in the index's settings before they can be used.
 
-Once they have been configured, you can search for facets with the `filter` search parameter.
+Once they have been configured, you can search for facets with [the `facets` search parameter](/reference/api/search.md#facets).
 
-:::warning
-Please note that **synonyms don't apply to filters.** Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you **different results.**
+::: warning
+Synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
-
-#### Example
-
-Suppose you have added `director` and `genres` to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes), and you want to get movies classified as either `Horror` **or** `Mystery` **and** directed by `Jordan Peele`.
-
-```SQL
-[["genres = horror", "genres = mystery"], "director = 'Jordan Peele'"]
-```
-
-You can then use this filter to search for `thriller`:
-
-<CodeSamples id="faceted_search_filter_1" />
-
-### Facets distribution
-
-When creating a faceted search interface it is often useful to have a count of how many results belong to each facet. This can be done by using the [`facets` search parameter](/reference/api/search.md#facets) in combination with `filter` when searching.
 
 ::: note
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facets` can be used with any attributes added to `filterableAttributes`.
 :::
 
-Using `facets` will add an extra field to the returned search results containing the number of matching documents distributed among all the values of a given facet.
+#### Facet distribution
 
-In the example below, [IMDb](https://www.imdb.com) displays the facet count in parentheses next to each faceted category. This UI gives users a visual clue of the range of results available for each facet.
+Using `facets` will add an extra field,`facetDistribution`, to the returned search results containing the number of matching documents distributed among the values of a given facet. The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
-![IMDb facets](/faceted-search/facets-imdb.png)
-
-#### Using `facets`
-
-[`facets` is a search parameter](/reference/api/search.md#facets) and as such must be added to a search request. It expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
-
-Using the `facets` search parameter adds `facetDistribution` to the returned object.
-
-`facetDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
-
-```json
-{
-  "facetDistribution" : {
-    "genres" : {
-      "horror": 50,
-      "comedy": 34
-    }
-  }
-}
-```
-
-::: note
-By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
-:::
-
-##### Example
-
-You can write a search query that gives you the distribution of `batman` movies per genre:
+The following search query gives you the distribution of `batman` movies per genre:
 
 <CodeSamples id="faceted_search_facets_1"/>
-
-This query would return not only the matching movies, but also the `facetDistribution` key containing all relevant data:
 
 ```json
 {
@@ -363,3 +425,9 @@ This query would return not only the matching movies, but also the `facetDistrib
   }
 }
 ```
+
+`facetDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
+
+::: note
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
+:::

@@ -85,7 +85,6 @@ getting_started_geo_point: |-
 getting_started_sorting: |-
 getting_started_filtering: |-
 faceted_search_update_settings_1: |-
-faceted_search_filter_1: |-
 faceted_search_facets_1: |-
 faceted_search_walkthrough_filter_1: |-
 add_movies_json_1: |-
@@ -118,9 +117,6 @@ primary_field_guide_update_document_primary_key: |-
 tenant_token_guide_search_no_sdk_1: |-
 tenant_token_guide_generate_sdk_1: |-
 tenant_token_guide_search_sdk_1: |-
-tenant_token_guide_fragment_rules_1: |-
-tenant_token_guide_fragment_key_1: |-
-tenant_token_guide_fragment_expiry_1: |-
 get_typo_tolerance_1: |-
 update_typo_tolerance_1: |-
 reset_typo_tolerance_1: |-

@@ -83,3 +83,11 @@ The `url` is the raw link to access your sample file. It should look like this:
 ### Development mode
 
 When the documentation is running in development mode: `yarn dev`, the fetching is only done on the local sample file that contains the `cURL` examples.
+
+
+### Report page
+
+When building the website using `yarn build`, we generate a file reporting the missing code sample IDs in the different SDKs. This file is called `missing-samples.report.md` and is located at the root of the `.vuepress/code-samples` directory.
+
+You can access it using the `/sample-report` route.
+
