@@ -36,13 +36,13 @@
 /references/updates.html                            /reference/api/tasks.html
 /references/keys.html                               /reference/api/keys.html
 /references/settings.html                           /reference/api/settings.html
-/references/synonyms.html                           /reference/api/settings.html
-/references/stop_words.html                         /reference/api/settings.html
-/references/ranking_rules.html                      /reference/api/settings.html
-/references/attributes_for_faceting.html            /reference/api/settings.html
-/references/distinct_attribute.html                 /reference/api/settings.html
-/references/searchable_attributes.html              /reference/api/settings.html
-/references/displayed_attributes.html               /reference/api/settings.html
+/references/synonyms.html                           /reference/api/settings.html#synonyms
+/references/stop_words.html                         /reference/api/settings.html#stop-words
+/references/ranking_rules.html                      /reference/api/settings.html#ranking-rules
+/references/attributes_for_faceting.html            /reference/api/settings.html#filterable-attributes
+/references/distinct_attribute.html                 /reference/api/settings.html#distinct-attribute
+/references/searchable_attributes.html              /reference/api/settings.html#searchable-attributes
+/references/displayed_attributes.html               /reference/api/settings.html#displayed-attributes
 /references/stats.html                              /reference/api/stats.html
 /references/health.html                             /reference/api/health.html
 /references/version.html                            /reference/api/version.html
@@ -70,7 +70,7 @@
 # Rename tutorials to getting started
 /learn/tutorials                                    /learn/getting_started
 /learn/tutorials/getting_started.html               /learn/getting_started/quick_start.html
-/learn/tutorials/whats_next.html                    /learn/getting_started/quick_start.html
+/learn/tutorials/whats_next.html                    /learn/getting_started/quick_start.html#what-s-next
 
 # Move FAQ and Open API
 /reference/open-api                                 /open-api-readme
@@ -179,17 +179,17 @@
 /learn/advanced/typotolerance.html                  /learn/configuration/typo_tolerance.html
 
 # Move all settings to one page
-/reference/api/displayed_attributes.html            /reference/api/settings.html
-/reference/api/distinct_attribute.html              /reference/api/settings.html
-/reference/api/faceting.html                        /reference/api/settings.html
-/reference/api/filterable_attributes.html           /reference/api/settings.html
-/reference/api/pagination.html                      /reference/api/settings.html
-/reference/api/ranking_rules.html                   /reference/api/settings.html
-/reference/api/searchable_attributes.html           /reference/api/settings.html
-/reference/api/sortable_attributes.html             /reference/api/settings.html
-/reference/api/stop_words.html                      /reference/api/settings.html
-/reference/api/synonyms.html                        /reference/api/settings.html
-/reference/api/typo_tolerance.html                  /reference/api/settings.html
+/reference/api/displayed_attributes.html            /reference/api/settings.html#displayed-attributes
+/reference/api/distinct_attribute.html              /reference/api/settings.html#distinct-attribute
+/reference/api/faceting.html                        /reference/api/settings.html#faceting
+/reference/api/filterable_attributes.html           /reference/api/settings.html#filterable-attributes
+/reference/api/pagination.html                      /reference/api/settings.html#pagination
+/reference/api/ranking_rules.html                   /reference/api/settings.html#ranking-rules
+/reference/api/searchable_attributes.html           /reference/api/settings.html#searchable-attributes
+/reference/api/sortable_attributes.html             /reference/api/settings.html#sortable-attributes
+/reference/api/stop_words.html                      /reference/api/settings.html#stop-words
+/reference/api/synonyms.html                        /reference/api/settings.html#synonyms
+/reference/api/typo_tolerance.html                  /reference/api/settings.html#typo-tolerance
 
 # Rename indexation to indexing
 /learn/advanced/indexation.html                     /learn/advanced/indexing.html
