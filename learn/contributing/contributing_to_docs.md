@@ -147,10 +147,11 @@ Run the following command to check for any styling errors like extra spaces or l
 
 ```bash
 yarn style
+```
 
 ### Handling images and other assets
 
-Screenshots, images, GIFs, and video demonstrations should be placed in a relevant folder under `.vuepress/public/` and then referenced from any markdown file a using relative link. For example, if you create the file `.vuepress/public/my_cool_guide/my_cool_image.png`, you would link to it from your document using
+Screenshots, images, GIFs, and video demonstrations should be placed in a relevant folder under `.vuepress/public/` and then referenced from any markdown file a using relative link. For example, if you create the file `.vuepress/public/my_cool_guide/my_cool_image.png`, you would embed it in your document using
 
 ```md
 ![A description of my cool image](/my_cool_guide/my_cool_image.png)
