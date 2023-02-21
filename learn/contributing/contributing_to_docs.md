@@ -21,6 +21,10 @@ The maintainers of Meilisearch's documentation use [GitHub Issues](https://githu
 - Requests for new features such as versioning or an embedded console
 - Requests for new content such as new guides and tutorials
 
+Before opening an issue or PR, please look through our [open issues](https://github.com/meilisearch/documentation/issues) to see if one already exists for your problem. If yes, please leave a comment letting us know that you're waiting for a fix or willing to work on it yourself. If not, please open a new issue describing the problem and informing us whether you want to work on it or not.
+
+We love issues at Meilisearch, because they help us do our jobs better. Nine times out of ten, the most useful contribution is a simple GitHub issue that points out a problem and proposes a solution.
+
 #### Creating your first issue
 
 To open an issue you need a [GitHub account](https://github.com). Create one if necessary, then follow these steps:
@@ -90,3 +94,76 @@ We ask the following questions:
 8. In the case of new content, is the article in the right place? Should other articles in the documentation link to it?
 
 Nothing makes us happier than a thoughtful and helpful PR. Your PRs often save us time and effort, and they make the documentation **even stronger**.
+
+Our only major requirement for PR contributions is that the author responds to communication requests within a reasonable timeframe.
+
+Once you've opened a PR on this repo, one of our team members will stop by shortly to review it. If your PR is approved, nothing further is required from you. However, **if in seven days you have not responded to a request for further changes or more information, we will consider the PR abandoned and close it**.
+
+If this happens to you and you think there has been some mistake, please let us know and we will try to rectify the situation.
+
+## Local development
+
+### Requirements
+
+- [Node version](https://nodejs.org/en/) >= v14 and <= v16
+
+### Installing and running the docs
+
+```bash
+# Clone the repository
+git clone git@github.com:meilisearch/documentation.git meilisearch-documentation
+
+# Open the newly created directory
+cd meilisearch-documentation
+
+# Install dependencies
+yarn install
+
+# Run Meilisearch documentation on http://localhost:8080
+yarn dev
+```
+
+### Testing
+
+A complete test can be done using the following command:
+
+```bash
+yarn test
+```
+
+The tests are triggered on build and on any pull request to main.
+
+#### Checking dead links
+
+Check for broken or dead links before submitting a pull request using:
+
+```bash
+yarn check-links
+```
+
+#### Checking styling
+
+Run the following command to check for any styling errors like extra spaces or lines in `*.vue`, `*.js`, and `*.md` files:
+
+```bash
+yarn style
+```
+
+### Handling images and other assets
+
+Screenshots, images, GIFs, and video demonstrations should be placed in a relevant folder under `.vuepress/public/` and then referenced from any markdown file a using relative link. For example, if you create the file `.vuepress/public/my_cool_guide/my_cool_image.png`, you would embed it in your document using
+
+```md
+![A description of my cool image](/my_cool_guide/my_cool_image.png)
+```
+
+### Deployment
+
+The documentation is deployed as a static website. The main branch is automatically deployed at [https://docs.meilisearch.com](https://docs.meilisearch.com).
+
+You can build the static website using the following command:
+
+```bash
+yarn build
+# The website is now available in .vuepress/dist and you can serve it using any webserver.
+```
