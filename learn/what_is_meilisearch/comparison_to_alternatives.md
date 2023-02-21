@@ -65,7 +65,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |         | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Schemaless | ✅ | ✅ | ✅ <br>Automatic schema detection needs to be enabled | ✅ |
+| Schemaless | ✅ | ✅ | ✅ | ✅ |
 | Nested field support | ✅ | ✅ | ✅ | ✅ |
 | Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
 | Native document formats | `JSON`, `NDJSON`, `CSV` | `JSON` | `JSON`, `NDJSON` | `JSON`, `NDJSON`, `CSV` |
