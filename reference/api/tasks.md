@@ -360,7 +360,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`beforeEnqueuedAt`** | Cancel tasks **before** a specified `enqueuedAt` date. Use `beforeEnqueuedAt=*` to cancel all tasks                                  |
 | **`beforeStartedAt`**  | Cancel tasks **before** a specified `startedAt` date. Use `beforeStartedAt=*` to cancel all tasks                                    |
 | **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt` date. Use `afterEnqueuedAt=*` to cancel all tasks                                    |
-| **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` fto cancel all tasks                                     |
+| **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` to cancel all tasks                                      |
 
 ::: note
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.

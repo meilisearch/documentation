@@ -82,10 +82,6 @@ datetime
 GZip
 videogame
 gcp
-faq
-synon
-npm
-html
 Maneu
 Hoxie
 Bleve
@@ -103,3 +99,5 @@ Radford's
 Palo
 glibc
 autogenerate
+!\[(.*?)\]
+[toc]
