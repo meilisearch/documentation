@@ -13,9 +13,9 @@
 /guides/advanced_guides/search_parameters.html      /reference/api/search.html
 /guides/advanced_guides/filtering.html              /learn/advanced/filtering_and_faceted_search.html
 /guides/advanced_guides/faceted_search.html         /learn/advanced/filtering_and_faceted_search.html
-/guides/advanced_guides/authentication.html         /reference/features/authentication.html
+/guides/advanced_guides/authentication.html         /learn/security/master_api_keys.html
 /guides/advanced_guides/asynchronous_updates.html   /learn/advanced/asynchronous_operations.html
-/guides/advanced_guides/web_interface.html          /reference/features/web_interface.html
+/guides/advanced_guides/web_interface.html          /learn/what_is_meilisearch/search_preview.html
 /guides/advanced_guides/datatypes.html              /learn/advanced/datatypes.html
 /guides/advanced_guides/settings.html               /learn/configuration/settings.html
 /guides/advanced_guides/synonyms.html               /learn/configuration/synonyms.html
@@ -68,7 +68,7 @@
 /reference/features/installation.html               /learn/getting_started/installation.html
 
 # Rename tutorials to getting started
-/learn/tutorials                                    /learn/getting_started
+/learn/tutorials                                    /learn/getting_started/quick_start.html
 /learn/tutorials/getting_started.html               /learn/getting_started/quick_start.html
 /learn/tutorials/whats_next.html                    /learn/getting_started/quick_start.html#what-s-next
 
