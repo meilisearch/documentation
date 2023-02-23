@@ -385,8 +385,10 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 
 ::: note
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
+:::
 
-`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md) is set to a value higher than its default.
+::: warning
+`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
 :::
 
 #### Example
@@ -411,8 +413,10 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 
 ::: note
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
+:::
 
-`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md) is set to a value higher than its default.
+::: warning
+`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
 :::
 
 #### Example
