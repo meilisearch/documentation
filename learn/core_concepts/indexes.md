@@ -81,7 +81,7 @@ You can update these field attributes using the [update settings endpoint](/refe
 
 ### Distinct attribute
 
-If your dataset contains multiple similar documents, you may want to return only one on search. Suppose you have numerous black jackets in different sizes in your `costumes` index. Setting `costume_name` as the distinct attribute will mean Meiliserch will not return more than one black jacket with the same `costume_name`.
+If your dataset contains multiple similar documents, you may want to return only one on search. Suppose you have numerous black jackets in different sizes in your `costumes` index. Setting `costume_name` as the distinct attribute will mean Meilisearch will not return more than one black jacket with the same `costume_name`.
 
 Designate the distinct attribute using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update distinct attribute endpoint](/reference/api/settings.md#update-distinct-attribute). **You can only set one field as the distinct attribute per index.**
 

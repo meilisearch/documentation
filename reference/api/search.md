@@ -130,6 +130,10 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 
 Search for documents matching a specific query in the given index.
 
+::: warning
+This endpoint only accepts [string filter expressions](/learn/advanced/filtering_and_faceted_search.md#filter-expressions).
+:::
+
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
 
 :::note
@@ -383,6 +387,10 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
 :::
 
+::: warning
+`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
+:::
+
 #### Example
 
 The following example returns the first 15 results for a query:
@@ -405,6 +413,10 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 
 ::: note
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
+:::
+
+::: warning
+`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
 :::
 
 #### Example
@@ -472,7 +484,7 @@ This parameter can take two values:
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
 :::
 
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#using-facets)
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-and-using-facets)
 
 #### Example
 

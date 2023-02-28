@@ -336,7 +336,7 @@ field_properties_guide_displayed_1: |-
       ]'
 filtering_guide_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Avengers",
@@ -344,7 +344,7 @@ filtering_guide_1: |-
     }'
 filtering_guide_2: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Batman",
@@ -352,15 +352,15 @@ filtering_guide_2: |-
     }'
 filtering_guide_3: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Planet of the Apes",
-      "filter": "rating >= 3 AND (NOT director = \"Tim Burton\")" 
+      "filter": "release_date > 1577884550 AND (NOT director = \"Tim Burton\")"
     }' \
 filtering_guide_nested_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "thriller",
@@ -569,27 +569,13 @@ getting_started_communicating_with_a_protected_instance: |-
     -H 'Authorization: Bearer API_KEY'    
 faceted_search_update_settings_1: |-
   curl \
-    -X PATCH 'http://localhost:7700/indexes/movies/settings' \
+    -X PATCH 'http://localhost:7700/indexes/movie_ratings/settings' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "filterableAttributes": [
         "director",
         "genres"
       ]
-    }'
-faceted_search_filter_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "thriller",
-      "filter": [
-        [
-          "genres = Horror",
-          "genres = Mystery"
-        ],
-        "director = \"Jordan Peele\""
-        ]
     }'
 faceted_search_facets_1: |-
   curl \
