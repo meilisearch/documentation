@@ -99,5 +99,4 @@ Radford's
 Palo
 glibc
 autogenerate
-!\[(.*?)\]
 [toc]
