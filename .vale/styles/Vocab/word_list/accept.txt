@@ -101,3 +101,5 @@ glibc
 autogenerate
 [toc]
 [Uu]pvoting
+faq
+npm
