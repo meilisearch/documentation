@@ -1,3 +1,9 @@
+---
+
+sidebarDepth: 2
+
+---
+
 # Deploy a Meilisearch instance on DigitalOcean
 
 ## Part 1: Deploy Meilisearch on a Droplet

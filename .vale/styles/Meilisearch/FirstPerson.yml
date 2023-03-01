@@ -7,6 +7,7 @@ message: "Avoid first-person pronouns such as '%s' unless writing FAQs"
 link: 'https://developers.google.com/style/pronouns#personal-pronouns'
 ignorecase: true
 level: suggestion
+scope: sentence
 nonword: true
 tokens:
   - (?:^|\s)I\s

@@ -1,13 +1,14 @@
+---
+
+sidebarDepth: 2
+
+---
 
 # Deploy a Meilisearch instance on Amazon Web Services (AWS)
 
 Using our **Meilisearch [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html)**, Meilisearch can be deployed on AWS in just a few minutes.
 
 The following guide will walk you through every step to deploy Meilisearch in an AWS EC2 instance. If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
-
-**Table of contents**:
-
-[[toc]]
 
 ## Part 1: Deploy an out-of-the-box Meilisearch instance
 
