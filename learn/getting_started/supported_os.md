@@ -18,4 +18,6 @@ The Meilisearch binary works with macOS 12 and later with `amd64` or `arm64` arc
 
 ## Windows
 
-The Meilisearch binary works with Windows 11 and later.
+The Meilisearch binary works on Windows Server 2022 and later.
+
+It is likely the Meilisearch binary also works with Windows OS 10 and later. However, due to the differences between Windows OS and Windows Server, Meilisearch does not officially support Windows OS.
