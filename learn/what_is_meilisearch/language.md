@@ -25,7 +25,7 @@ If you'd like to help by developing a tokenizer pipeline yourself: first of all,
 
 ### What do you mean when you say Meilisearch offers _optimized_ support for a language?
 
-Optimized support for a language means Meilisearch has implemented internal processes specifically tailored to parsing that language, leading to more relevant results.
+Under the hood, Meilisearch relies on tokenizers that identify the most important parts of each document in a given dataset. Optimized support for a language means Meilisearch has implemented a tokenizer specifically tailored for that language.
 
 ### My language does not use whitespace to separate words. Can I still use Meilisearch?
 
