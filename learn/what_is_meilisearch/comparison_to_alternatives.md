@@ -44,15 +44,15 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | [Python client](https://github.com/meilisearch/meilisearch-python)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Ruby client](https://github.com/meilisearch/meilisearch-ruby)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Java client](https://github.com/meilisearch/meilisearch-java)              | ✅          | ✅      |        ✅   |       ✅        |
-| [Swift client](https://github.com/meilisearch/meilisearch-swift)              | ✅          | ✅      |   🔶 <br> WIP  |       ❌        |
-| [.NET client](https://github.com/meilisearch/meilisearch-dotnet)               | ✅          | ✅      |        ❌   |       ✅        |
+| [Swift client](https://github.com/meilisearch/meilisearch-swift)              | ✅          | ✅      |   ✅  |       ❌        |
+| [.NET client](https://github.com/meilisearch/meilisearch-dotnet)               | ✅          | ✅      |        ✅   |       ✅        |
 | [Rust client](https://github.com/meilisearch/meilisearch-rust)             | ✅          | ❌      |        🔶 <br> WIP  |       ✅        |
 | [Go client](https://github.com/meilisearch/meilisearch-go)              | ✅          | ✅     |        ✅   |       ✅        |
 | [Dart client](https://github.com/meilisearch/meilisearch-dart)               | ✅          | ✅     |        ✅   |       ❌        |
-| [Symfony](https://github.com/meilisearch/meilisearch-symfony) | ✅ | ✅ | ❌ | ❌ |
+| [Symfony](https://github.com/meilisearch/meilisearch-symfony) | ✅ | ✅ | ✅ | ❌ |
 | [Django](https://roadmap.meilisearch.com/c/60-django) | ❌ | ✅ | ❌ | ❌ |
 | [Rails](https://github.com/meilisearch/meilisearch-rails) | ✅ | ✅ | 🔶 <br>WIP | ✅ ||
-| [Official Laravel Scout Support](https://github.com/laravel/scout) | ✅ | ✅ | ❌ | ❌ |
+| [Official Laravel Scout Support](https://github.com/laravel/scout) | ✅ | ✅ | ❌ <br> Available as a standalone module | ❌ <br> Available as a standalone module |
 | [UI Search Kit](https://github.com/meilisearch/instant-meilisearch) | ✅ | ✅ | ✅ | ✅ |
 | [Docsearch](https://github.com/meilisearch/docs-scraper) | ✅ | ✅ | ✅ | ❌ |
 | [Strapi](https://github.com/meilisearch/strapi-plugin-meilisearch) | ✅ | ✅ | ❌ | ❌ |
@@ -65,8 +65,8 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |         | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Schemaless | ✅ | ✅ | 🔶 <br>Automatic schema detection is supported but needs to be specified | ✅ |
-| Nested field support | ✅ | ✅ | ❌ | ✅ |
+| Schemaless | ✅ | ✅ | ✅ | ✅ |
+| Nested field support | ✅ | ✅ | ✅ | ✅ |
 | Automatic document ID detection | ✅ | ❌ | ❌ | ❌ |
 | Native document formats | `JSON`, `NDJSON`, `CSV` | `JSON` | `JSON`, `NDJSON` | `JSON`, `NDJSON`, `CSV` |
 
@@ -75,20 +75,20 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Needs to be specified by fuzzy queries |
-| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Tie-breaking order is limited by a unique scoring rule | ❌|
-| Custom rules | ✅ | ✅ | 🔶 <br>Limited to one default sorting rule | 🔶 <br>Function score query
+| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Field weight can be changed, but ranking rules order cannot be changed. | ❌|
+| Custom ranking rules | ✅ | ✅ | ✅ | 🔶 <br>Function score query |
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
 | Synonyms | ✅ | ✅ | ✅ | ✅ |
 | Stop words | ✅ | ✅ | ❌ | ✅ |
 | Automatic language detection | ✅ | ✅ | ❌ | ❌ |
-| All language supports | ✅ | ✅ | ❌ <br> Only space separated | ✅ |
+| All language supports | ✅ | ✅ | ✅ | ✅ |
 
 ##### Security
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | API Key Management | ✅ | ✅ | ✅ | ✅ |
-| Tenant tokens & multi-tenant indexes | ✅ <br> [Multitenancy support](/learn/security/tenant_tokens.md) | ✅  <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Hard filters are not configurable per index for an end-user tenant key | ✅ <br> Role-based |
+| Tenant tokens & multi-tenant indexes | ✅ <br> [Multitenancy support](/learn/security/tenant_tokens.md) | ✅ | ✅ | ✅ <br> Role-based |
 
 ##### Search
 
@@ -96,11 +96,11 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
 | Multi-index search | [2023](https://github.com/meilisearch/product/issues/74) | ✅ | ✅ | ✅ |
-| Exact phrase search | ✅ | ✅ | ❌ | ✅ |
+| Exact phrase search | ✅ | ✅ | ✅ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
-| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | 🔶 <br> Does not support sort on string field | ✅ |
-| Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ |
-| Faceted search |  ✅ | ✅ | ✅ | ✅ |
+| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br> Up to 3 sort fields per search query | ✅ |
+| Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ | ✅ |
+| Faceted search |  ✅ | ✅ | ✅ <br> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
 | Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
 | Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
 
@@ -120,7 +120,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | High availability | Available with [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
 | Backward compatibility | ✅ | N/A | ✅ | ✅ |
-| Upgrade path | Documents need to be reindexed | N/A  | Documents need to be reindexed | Documents need to be reindexed |
+| Upgrade path | Documents are automatically reindexed on upgrade | N/A  | Documents are automatically reindexed on upgrade  | Documents are automatically reindexed on upgrade, up to 1 major version |
 
 ### Limits
 
