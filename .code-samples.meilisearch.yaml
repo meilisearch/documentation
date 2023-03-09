@@ -693,6 +693,11 @@ geosearch_guide_filter_usage_2: |-
     -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
     --data-binary '{ "filter": "_geoRadius(45.472735, 9.184019, 2000) AND type = pizza" }'
+geosearch_guide_filter_usage_3: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/restaurants/search' \
+    -H 'Content-type:application/json' \
+    --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.179175], [45.449484, 9.214024])" }'
 geosearch_guide_sort_settings_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \

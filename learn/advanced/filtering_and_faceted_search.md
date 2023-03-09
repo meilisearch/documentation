@@ -342,23 +342,15 @@ If you only want recent `Planet of the Apes` movies that weren't directed by `Ti
 release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
-### Filtering with `_geoRadius`
+### Filtering with `_geoRadius` and `_geoBoundingBox`
 
-If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
+If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
 
-`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
-
-```
-_geoRadius(lat, lng, distance_in_meters)
-```
-
-`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
-
-When using a <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json"> dataset of restaurants</a> containing geopositioning data, we can filter our search so it only includes places within two kilometers of our location:
+`_geoRadius` establishes a circular area based on a central point and a radius, while `_geoBoundingBox` establishes a rectangular area based on the bounding box's top left and bottom right corners. Results beyond the specified area will be excluded from your search.
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-[You can read more about filtering results with `_geoRadius` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius)
+[You can read more about filtering results with `_geoRadius` and `_geoBoundingBox` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius-and-geoboundingbox)
 
 ### Filtering by nested fields
 
