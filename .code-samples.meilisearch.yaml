@@ -1,7 +1,10 @@
 # This code-samples file is used by the Meilisearch documentation
 # Every example written here will be automatically fetched by
 # the documentation on build
+<<<<<<< HEAD
 # You can read more at https://github.com/meilisearch/documentation/tree/main/.vuepress/code-samples
+=======
+>>>>>>> 62a13754e (migration: add `curl` code samples file)
 ---
 get_one_index_1: |-
   curl \
@@ -892,7 +895,7 @@ getting_started_pagination: |-
     --data-binary '{
       "maxTotalHits": 500
     }'
-search_parameter_guide_matching_strategy_1: |
+search_parameter_guide_matching_strategy_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
@@ -900,7 +903,7 @@ search_parameter_guide_matching_strategy_1: |
       "q": "big fat liar",
       "matchingStrategy": "last"
     }'      
-search_parameter_guide_matching_strategy_2: |
+search_parameter_guide_matching_strategy_2: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
@@ -908,19 +911,19 @@ search_parameter_guide_matching_strategy_2: |
       "q": "big fat liar",
       "matchingStrategy": "all"
     }'    
-date_guide_index_1: |
+date_guide_index_1: |-
   curl \
     -x POST 'http://localhost:7700/indexes/games/documents' \
     -h 'content-type: application/json' \
     --data-binary @games.json
-date_guide_filterable_attributes_1: |
+date_guide_filterable_attributes_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/games/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "release_timestamp"
     ]'
-date_guide_filter_1: |
+date_guide_filter_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/games/search' \
     -H 'Content-Type: application/json' \
@@ -928,14 +931,14 @@ date_guide_filter_1: |
       "q": "",
       "filter": "release_timestamp >= 1514761200 AND release_timestamp < 1672527600"
     }'
-date_guide_sortable_attributes_1: |
+date_guide_sortable_attributes_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/games/settings/sortable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
       "release_timestamp"
     ]'
-date_guide_sort_1: |
+date_guide_sort_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/games/search' \
     -H 'Content-Type: application/json' \
@@ -943,34 +946,34 @@ date_guide_sort_1: |
       "q": "",
       "sort": ["release_timestamp:desc"]
     }'
-async_guide_filter_by_date_1: |
+async_guide_filter_by_date_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?afterEnqueuedAt=2020-10-11T11:49:53.000Z'
-async_guide_multiple_filters_1: |
+async_guide_multiple_filters_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?indexUids=movies&types=documentAdditionOrUpdate,documentDeletion&statuses=processing'
-async_guide_filter_by_ids_1: |
+async_guide_filter_by_ids_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?uids=5,10,13'
-async_guide_filter_by_statuses_1: |
+async_guide_filter_by_statuses_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?statuses=failed,canceled'
-async_guide_filter_by_types_1: |
+async_guide_filter_by_types_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?types=dumpCreation,indexSwap'
-async_guide_filter_by_index_uids_1: |
+async_guide_filter_by_index_uids_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?indexUids=movies'
-async_guide_canceled_by_1: |
+async_guide_canceled_by_1: |-
   curl \
     -X GET 'http://localhost:7700/tasks?canceledBy=9,15'      
-delete_tasks_1: |
+delete_tasks_1: |-
   curl \
     -X DELETE 'http://localhost:7700/tasks?uids=1,2'
-cancel_tasks_1: |  
+cancel_tasks_1: |-
   curl \
     -X POST 'http://localhost:7700/tasks/cancel?uids=1,2'
-swap_indexes_1: |
+swap_indexes_1: |-
   curl \
     -X POST 'http://localhost:7700/swap-indexes' \
     -H 'Content-Type: application/json' \
@@ -1058,3 +1061,11 @@ faceted_search_2: |-
         }
       ]
     }'
+filtering_update_settings_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/movie_ratings/settings/filterable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "genres",
+      "director"
+    ]'

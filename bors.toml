@@ -1,9 +1,0 @@
-status = [
-  'check-links',
-  'check-style',
-  'check-builds (14)',
-  'check-builds (16)',
-  'vale'
-]
-# 1 hour timeout
-timeout-sec = 3600

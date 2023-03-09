@@ -1,6 +1,10 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
+<<<<<<< HEAD
   title: 'Meilisearch Documentation v1.1',
+=======
+  title: 'Meilisearch Documentation v1.0',
+>>>>>>> f9bf3cdf5 (add awesome meilsearch link to top menu)
   description: 'Open source Instant Search Engine',
   theme: 'default-prefers-color-scheme',
   themeConfig: {
@@ -190,8 +194,12 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
+<<<<<<< HEAD
             '/learn/advanced/filtering',
             '/learn/advanced/faceted_search',
+=======
+            '/learn/advanced/filtering_and_faceted_search',
+>>>>>>> f9bf3cdf5 (add awesome meilsearch link to top menu)
             '/learn/advanced/geosearch',
             '/learn/advanced/pagination',
             '/learn/advanced/sorting',
@@ -292,6 +300,7 @@ module.exports = {
           ],
         },
         {
+<<<<<<< HEAD
           title: '🧪 Experimental',
           path: '/learn/experimental/metrics.html',
           collapsable: false,
@@ -300,6 +309,8 @@ module.exports = {
           ],
         },
         {
+=======
+>>>>>>> f9bf3cdf5 (add awesome meilsearch link to top menu)
           title: '👐 Contributing',
           path: '/learn/contributing/overview.html',
           collapsable: false,
@@ -328,7 +339,10 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
+<<<<<<< HEAD
             '/reference/api/multi_search',
+=======
+>>>>>>> f9bf3cdf5 (add awesome meilsearch link to top menu)
             '/reference/api/tasks',
             '/reference/api/keys',
             '/reference/api/settings',

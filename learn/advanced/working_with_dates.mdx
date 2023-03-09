@@ -1,0 +1,100 @@
+# Working with dates
+
+In this guide, you will learn about Meilisearch's approach to date and time values, how to prepare your dataset for indexing, and how to chronologically sort and filter search results.
+
+## Preparing your documents
+
+To filter and sort search results chronologically, your documents must have at least one numeric field containing a [UNIX timestamp](https://kb.narrative.io/what-is-unix-time).
+
+As an example, consider a database of video games. In this dataset, the release year is formatted as a timestamp:
+
+```json
+[
+  {
+    "id": 0,
+    "title": "Return of the Obra Dinn",
+    "genre": "adventure",
+    "release_timestamp": 1538949600
+  },
+  {
+    "id": 1,
+    "title": "The Excavation of Hob's Barrow",
+    "genre": "adventure",
+    "release_timestamp": 1664316000
+  },
+  {
+    "id": 2,
+    "title": "Bayonetta 2",
+    "genre": "action",
+    "release_timestamp": 1411164000
+  }
+]
+```
+
+If your date field is expressed in a format other than a numeric timestamp, like [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html), you must convert it before indexing it with Meilisearch.
+
+Most programming languages have built-in tools to help you with this process. The JavaScript example below converts a game's release date, `"2018-10-18"`, to a numeric timestamp:
+
+```js
+let game = {
+  "id": 0,
+  "title": "Return of the Obra Dinn",
+  "genre": "adventure",
+  "release_date": "2018-10-18T00:00Z"
+};
+
+const timestampInMilliseconds = Date.parse(game.release_date); // Date.parse returns the timestamp in milliseconds
+const timestamp = timestampInMilliseconds / 1000; // UNIX timestamps must be in seconds
+
+game = {
+  "id": 0,
+  "title": "Return of the Obra Dinn",
+  "genre": "adventure",
+  "release_date": "2018-10-18T00:00Z",
+  "release_timestamp": timestamp
+};
+```
+
+<Capsule intent="tip">
+When preparing your dataset, it can be useful to leave the original date and time fields in your documents intact. In the example above, we keep the `release_date` field because it is more readable than the raw `release_timestamp`.
+</Capsule>
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+After adding a numeric timestamp to all documents, [index your data](/reference/api/documents.md#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/datasets/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
+=======
+After adding a numeric timestamp to all documents, [index your data](/reference/api/documents#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
+>>>>>>> dfbda83d4 (remove `.md` file extension)
+=======
+After adding a numeric timestamp to all documents, [index your data](/reference/api/documents#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/datasets/videogames.json" download="https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/datasets/videogames.json">videogame dataset</a> to a `games` index:
+>>>>>>> 8e61e046c (fix broken links)
+=======
+After adding a numeric timestamp to all documents, [index your data](/reference/api/documents#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/datasets/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
+>>>>>>> 9aac80b2e (fix download value)
+=======
+After adding a numeric timestamp to all documents, [index your data](/reference/api/documents#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="https://raw.githubusercontent.com/meilisearch/documentation/main/assets/datasets/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
+>>>>>>> b3f86f5ad (update asset links to use main)
+
+<CodeSamples id="date_guide_index_1" />
+
+## Filtering by timestamp
+
+To filter search results based on their timestamp, add your document's timestamp field to the list of [`filterableAttributes`](/reference/api/settings#update-filterable-attributes):
+
+<CodeSamples id="date_guide_filterable_attributes_1" />
+
+Once you have configured `filterableAttributes`, you can filter search results by date. The following query only returns games released between 2018 and 2022:
+
+<CodeSamples id="date_guide_filter_1" />
+
+## Sorting by timestamp
+
+To sort search results chronologically, add your document's timestamp field to the list of [`sortableAttributes`](/reference/api/settings#update-sortable-attributes):
+
+<CodeSamples id="date_guide_sortable_attributes_1" />
+
+Once you have configured `sortableAttributes`, you can sort your search results based on their timestamp. The following query returns all games sorted from most recent to oldest:
+
+<CodeSamples id="date_guide_sort_1" />

@@ -1,6 +1,7 @@
 {
   "name": "documentation",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "Documentation for Meilisearch",
   "main": "index.js",
   "scripts": {
@@ -66,4 +67,25 @@
     "vue-eslint-parser": "^9.1.1",
     "vuepress-plugin-check-md": "^0.0.2"
   }
+=======
+  "description": "",
+  "main": "index.js",
+"dependencies": {},
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meilisearch/documentation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meilisearch/documentation/issues"
+  },
+<<<<<<< HEAD
+  "homepage": "https://github.com/meilisearch/documentation#readme"
+>>>>>>> ed92044b9 (add dependabot.yml)
+=======
+  "homepage": "https://meilisearch.com/docs"
+>>>>>>> 767869a18 (Apply suggestions from code review)
 }
