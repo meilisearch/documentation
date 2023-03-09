@@ -127,12 +127,11 @@ If you don't specify the data type for an attribute, it will default to `:string
 
 ### Auto-batching
 
-Auto-batching combines consecutive document addition requests into a single batch and processes them together. This significantly speeds up the indexing process.
+Auto-batching combines consecutive document addition and deletion requests into a single batch and processes them together while respecting the order. This significantly speeds up the indexing process.
 
-Meilisearch batches document addition requests when they:
+Meilisearch batches document addition and deletion requests when they:
 
 - Target the same index
-- Have the same update method ([POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Are immediately consecutive
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.
