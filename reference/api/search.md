@@ -131,7 +131,7 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 Search for documents matching a specific query in the given index.
 
 ::: warning
-This endpoint only accepts [string filter expressions](/learn/advanced/filtering_and_faceted_search.md#filter-expressions).
+This endpoint only accepts [string filter expressions](/learn/advanced/filtering_guide.md#filter-expressions).
 :::
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
@@ -229,7 +229,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search parameters
 
-Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for both `GET` and `POST` routes.
+Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET`, `POST`, and `/multi-index` routes.
 
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
@@ -312,7 +312,7 @@ When `q` isn't specified, Meilisearch performs a **placeholder search**.  A plac
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
+Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
 :::
 
 #### Phrase search
@@ -433,7 +433,7 @@ The following example returns the second page of search results:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
 
-For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search, and filter expressions](/learn/advanced/filtering_and_faceted_search.md).
+For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search, and filter expressions](/learn/advanced/filtering_guide.md).
 
 #### Example
 
@@ -484,7 +484,7 @@ This parameter can take two values:
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
 :::
 
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-and-using-facets)
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/faceted_search.md#configuring-and-using-facets)
 
 #### Example
 
