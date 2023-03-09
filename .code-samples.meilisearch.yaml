@@ -993,7 +993,7 @@ swap_indexes_1: |
         ]
       }
     ]'
-multi_search_1: |-
+multi_search_1: |
   curl \
     -X POST 'http://localhost:7700/multi-search' \
     -H 'Content-Type: application/json' \
@@ -1008,58 +1008,6 @@ multi_search_1: |-
           "indexUid": "movies",
           "q": "nemo",
           "limit": 5
-        },
-        {
-          "indexUid": "movie_ratings",
-          "q": "us"
-        }
-      ]
-    }'
-faceted_search_update_settings_1: |-
-  curl \
-    -X PUT 'http://localhost:7700/indexes/books/settings/filterable-attributes' \
-    -H 'Content-Type: application/json' \
-    --data-binary '[
-      "genres", "rating", "language"
-    ]'
-faceted_search_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/books/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "classic",
-      "facets": [
-      "genres", "rating", "language"
-    ]
-  }'
-search_parameter_guide_facet_stats_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "Batman",
-      "facets": ["genres", "rating"]
-    }'
-faceted_search_2: |-
-  curl \
-    -X POST 'http://localhost:7700/multi-search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "queries": [
-        {
-          "indexUid": "books",
-          "facets": ["language", "genres", "author", "format"],
-          "filter": "(language = English AND language = French) OR genres = Fiction"
-        },
-        {
-          "indexUid": "books",
-          "facets": ["language"],
-          "filter": "genres = Fiction"
-        },
-        {
-          "indexUid": "books",
-          "facets": ["genres"],
-          "filter": "language = English OR language = French"
         }
       ]
     }'

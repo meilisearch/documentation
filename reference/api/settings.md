@@ -416,7 +416,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 ## Faceting
 
 With Meilisearch, you can create [faceted search interfaces](/learn/advanced/faceted_search.md#faceted-search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
+With Meilisearch, you can create [faceted search interfaces](/learn/advanced/faceted_search.md#faceted-search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
 
+[To learn more about faceting, refer to our dedicated guide.](/learn/advanced/faceted_search.md)
 [To learn more about faceting, refer to our dedicated guide.](/learn/advanced/faceted_search.md)
 
 ### Faceting object
@@ -531,7 +533,7 @@ Attributes in the `filterableAttributes` list can be used as filters or facets.
 Updating filterable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering.md)
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_guide.md)
 
 ### Get filterable attributes
 
@@ -585,7 +587,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 :::
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering.md)
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_guide.md)
 
 #### Example
 

@@ -132,7 +132,11 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 Search for documents matching a specific query in the given index.
 
 ::: warning
+<<<<<<< HEAD
 This endpoint only accepts [string filter expressions](/learn/advanced/filtering.md#filter-expressions).
+=======
+This endpoint only accepts [string filter expressions](/learn/advanced/filtering_guide.md#filter-expressions).
+>>>>>>> 09145590 (create API page,faceted guide, fix links)
 :::
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
@@ -231,7 +235,11 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search parameters
 
+<<<<<<< HEAD
 Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-search` routes.
+=======
+Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET`, `POST`, and `/multi-index` routes.
+>>>>>>> 09145590 (create API page,faceted guide, fix links)
 
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
@@ -435,7 +443,11 @@ The following example returns the second page of search results:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
 
+<<<<<<< HEAD
 For more information on how to use filters and build filter expressions, [read our guide on filtering and filter expressions](/learn/advanced/filtering.md).
+=======
+For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search, and filter expressions](/learn/advanced/filtering_guide.md).
+>>>>>>> 09145590 (create API page,faceted guide, fix links)
 
 #### Example
 
@@ -482,6 +494,7 @@ Returns the number of documents matching the current search query for each given
 
 When `facets` is set, the search results object contains the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
 
+<<<<<<< HEAD
 #### `facetDistribution`
 
 `facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object.
@@ -491,6 +504,9 @@ When `facets` is set, the search results object contains the [`facetDistribution
 When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query.
 
 If none of the matching documents have a numeric value for a facet, that facet is not  included in the `facetStats` object.
+=======
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/faceted_search.md#configuring-and-using-facets)
+>>>>>>> 09145590 (create API page,faceted guide, fix links)
 
 #### Example
 

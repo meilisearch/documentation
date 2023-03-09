@@ -190,6 +190,8 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
+            '/learn/advanced/filtering_guide',
+            '/learn/advanced/faceted_search',
             '/learn/advanced/filtering',
             '/learn/advanced/faceted_search',
             '/learn/advanced/geosearch',
@@ -320,7 +322,7 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
-            '/reference/api/multi_search',
+            '/reference/api/multi_index',
             '/reference/api/tasks',
             '/reference/api/keys',
             '/reference/api/settings',
