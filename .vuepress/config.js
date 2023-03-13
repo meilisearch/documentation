@@ -213,6 +213,13 @@ module.exports = {
               ],
             },
             {
+              title: 'Experimental',
+              collapsable: false,
+              children: [
+                '/learn/experimental/metrics',
+              ],
+            },
+            {
               title: 'Inner workings',
               collapsable: false,
               children: [
