@@ -346,7 +346,7 @@ release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 
 If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
 
-`_geoRadius` establishes a circular area based on a central point and a radius, while `_geoBoundingBox` establishes a rectangular area based on the bounding box's top left and bottom right corners. Results beyond the specified area will be excluded from your search.
+`_geoRadius` establishes a circular area based on a central point and a radius, while `_geoBoundingBox` establishes a rectangular area based on the bounding box's top left and bottom right corners. Results beyond the specified area are excluded from your search.
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
