@@ -455,7 +455,7 @@ You can then use the filter in a search query:
 
 #### Filtering results with `_geoRadius` and `_geoBoundingBox`
 
-If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position. Results outside the given area are excluded from your search.
+If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
 
 `_geoRadius` establishes a circular area based on a central point and a radius. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 

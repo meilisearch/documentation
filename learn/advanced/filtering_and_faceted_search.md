@@ -342,15 +342,13 @@ If you only want recent `Planet of the Apes` movies that weren't directed by `Ti
 release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
-### Filtering with `_geoRadius` and `_geoBoundingBox`
+### Filtering by geographic location
 
-If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
-
-`_geoRadius` establishes a circular area based on a central point and a radius, while `_geoBoundingBox` establishes a rectangular area based on the bounding box's top left and bottom right corners. Results beyond the specified area are excluded from your search.
+If your documents contain `_geo` data, you can filter results according to their geographic position using one of our built-in geosearch filter rules:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-[You can read more about filtering results with `_geoRadius` and `_geoBoundingBox` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius-and-geoboundingbox)
+[Read more about filtering results with `_geoRadius` and `_geoBoundingBox` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius-and-geoboundingbox)
 
 ### Filtering by nested fields
 
