@@ -213,13 +213,6 @@ module.exports = {
               ],
             },
             {
-              title: 'Experimental',
-              collapsable: false,
-              children: [
-                '/learn/experimental/metrics',
-              ],
-            },
-            {
               title: 'Inner workings',
               collapsable: false,
               children: [
@@ -294,6 +287,14 @@ module.exports = {
                 },
               ],
             },
+          ],
+        },
+        {
+          title: '🧪 Experimental',
+          path: '/learn/experimental/metrics.html',
+          collapsable: false,
+          children: [
+            '/learn/experimental/metrics',
           ],
         },
         {
