@@ -27,10 +27,9 @@ By [providing Meilisearch with a master key at launch](/learn/security/master_ap
 
 The [`/keys`](/reference/api/keys.md) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
 
-::: note
- v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:
+<Capsule intent="tip" title=" v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:">
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
-:::
+</Capsule>
 
 [To learn more about keys and security, refer to our dedicated guide.](/learn/security/master_api_keys.md)
 

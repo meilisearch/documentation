@@ -29,7 +29,7 @@ When updating the `minWordSizeForTypos` object, keep in mind that:
 
 We recommend keeping the value of `oneTypo` between `2` and `8` and the value of `twoTypos` between `4` and `14`. If either value is too low, you may get a large number of false-positive results. On the other hand, if both values are set too high, many search queries may not benefit from typo tolerance.
 
-::: note Typo tolerance: special cases
+<Capsule intent="tip" title="Typo tolerance: special cases">
 **Typo on the first character**
 Meilisearch considers a typo on a query's first character as two typos.
 
@@ -37,7 +37,7 @@ Meilisearch considers a typo on a query's first character as two typos.
 When considering possible candidates for typo tolerance, Meilisearch will concatenate multiple search terms separated by a [space separator](/learn/advanced/datatypes.md#string). This is treated as one typo. For example, a search for `any way` would match documents containing `anyway`.
 
 For more about typo calculations, [see below](#understanding-typo-calculations).
-:::
+</Capsule>
 
 ### `disableOnWords`
 
