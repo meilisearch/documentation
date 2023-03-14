@@ -36,9 +36,9 @@ After a few minutes, the deployment will be complete. You'll be able to access y
 
 ![The Azure portal showing information about your Meilisearch deployment](/azure/02.azure-output.png)
 
-::: tip
+<Capsule intent="tip">
 While Meilisearch is usually exposed on port `7700`, this deployment will expose your instance on port `433`. An SSL certificate will be generated and managed for you by Azure.
-:::
+</Capsule>
 
 ### What is happening with this one-click button?
 
@@ -59,9 +59,9 @@ The one-click button creates a storage with the "LRS" redundancy option. That me
 
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
-::: tip
+<Capsule intent="tip">
 Meilisearch has snapshot and dump features that can help improve your backup capabilities. See [Data Backup documentation](/learn/advanced/snapshots_vs_dumps.md) for more information.
-:::
+</Capsule>
 
 ### Always-on
 

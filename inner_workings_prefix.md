@@ -36,6 +36,6 @@ response:
 
 Meilisearch also handles typos while performing the prefix search. You can [read more about the typo rules on the dedicated page](/learn/configuration/typo_tolerance.md).
 
-::: tip
+<Capsule intent="tip">
 We also [apply splitting and concatenating on search queries](/learn/advanced/concat.md).
-:::
+</Capsule>

@@ -864,9 +864,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Reset the ranking rules of an index to their [default value](#default-order).
 
-::: tip
+<Capsule intent="tip">
 Resetting ranking rules is not the same as removing them. To remove a ranking rule, use the [update ranking rules endpoint](#update-ranking-rules).
-:::
+</Capsule>
 
 #### Path parameters
 

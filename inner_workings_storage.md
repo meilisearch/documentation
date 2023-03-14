@@ -38,12 +38,12 @@ Thus, if you run Meilisearch as a standalone program on a server, LMDB will use 
 
 On the other hand, if you run Meilisearch along with other programs, the OS will manage memory based on everyone's need. This makes Meilisearch's memory usage quite flexible when used in development.
 
-::: tip
+<Capsule intent="tip">
 **Virtual Memory != Real Memory**
 Virtual memory is the disk space a program requests from the OS. It is not the memory that the program will actually use.
 
 Meilisearch will always demand a certain amount of space to use as a [memory map](#memory-mapping). This space will be used as virtual memory, but the amount of real memory (RAM) used will be much smaller.
-:::
+</Capsule>
 
 ## Measured disk usage
 

@@ -29,9 +29,9 @@ When you perform a search, all searchable fields are checked for matching query 
 
 Non-searchable fields are most useful for internal information that's not relevant to the search experience, such as URLs, sales numbers, or ratings used exclusively for sorting results.
 
-::: tip
+<Capsule intent="tip">
 Even if you make a field non-searchable, it will remain [stored in the database](#data-storing) and can be made searchable again at a later time.
-:::
+</Capsule>
 
 ### The `searchableAttributes` list
 
