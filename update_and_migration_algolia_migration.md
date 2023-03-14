@@ -212,7 +212,7 @@ This section compares Algolia and Meilisearch's respective API methods, using Ja
 
 | Method                | Algolia                                                                             | Meilisearch                                                                                                            |
 |-----------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| Index Instantiation   | `client.initIndex()`<br>Here, client is an Algolia instance.                        | `client.index()`<br>Here, client is a Meilisearch instance.                                                            |
+| Index Instantiation   | `client.initIndex()`<br />Here, client is an Algolia instance.                        | `client.index()`<br />Here, client is a Meilisearch instance.                                                            |
 | Create Index          | Algolia automatically creates an index the first time you add a record or settings. | The same applies to Meilisearch, but users can also create an index explicitly: `client.createIndex(string indexName)` |
 | Get All Indexes       | `client.listIndices()`                                                              | `client.getIndexes()`                                                                                                  |
 | Get Single Index      | No method available                                                                 | `client.getIndex(string indexName)`                                                                                    |
