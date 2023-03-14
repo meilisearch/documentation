@@ -117,10 +117,10 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 **Limitation:** The maximum index size Meilisearch supports on Linux environments is around 80TiB. For performance reasons, Meilisearch recommends keeping indexes under 2TiB.
 
-**Explanation:** Meilisearch can accommodate indexes of any size as long the combined active databases remains below the maximum virtual address space the OS devotes to a single process. On Linux, this limit sits around 80TiB. Due to their size, updating indexes bigger than 2TiB might result in reduced performance.
+**Explanation:** Meilisearch can accommodate indexes of any size as long the combined size of active databases is below the maximum virtual address space the OS devotes to a single process. On Linux, this limit is approximmately 80TiB.
 
 ## Maximum number of indexes in an instance
 
 **Limitation:** Meilisearch can accommodate an arbitrary number of indexes as long as their size does not exceed 2TiB. When dealing with larger indexes, Meilisearch can accommodate up to 20 indexes as long as their combined size does not exceed the OS's virtual address space limit.
 
-**Explanation:** Though Meilisearch supports an arbitrary number of indexes under 2TiB, accessing hundreds of different databases in short periods of time might lead to decreased performance and should be avoided when possible.
+**Explanation:** While Meilisearch supports an arbitrary number of indexes under 2TiB, accessing hundreds of different databases in short periods of time might lead to decreased performance and should be avoided when possible.
