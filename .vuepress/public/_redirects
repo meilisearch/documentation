@@ -205,8 +205,8 @@
 /learn/advanced/updating.html                       /learn/update_and_migration/updating.html
 
 # Move faceting to a new guide
-/learn/advanced/filtering_and_faceted_search.html#faceted-search   /learn/advanced/faceted_search.html
+/learn/advanced/filtering_and_faceted_search.html   /learn/advanced/faceted_search.html
 
 # Rename filtering guide
-/learn/advanced/filtering_and_faceted_search.html   /learn/advanced/filtering.html
+/learn/advanced/filtering_and_faceted_search.html   /learn/advanced/filtering_guide.html
 

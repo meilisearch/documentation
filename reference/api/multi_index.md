@@ -45,20 +45,21 @@ The `/multi-search` route allows you to perform multiple search queries on one o
 
 Each search result object is composed of:
 
-| Name                     | Type             | Description                                                               |
-| :----------------------- | :--------------- | :------------------------------------------------------------------------ |
-| **`indexUid`**           | String           | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
-| **`hits`**               | Array of objects | Results of the query                                                      |
-| **`offset`**             | Number           | Number of documents skipped                                               |
-| **`limit`**              | Number           | Number of documents to take                                               |
-| **`estimatedTotalHits`** | Number           | Estimated total number of matches                                         |
-| **`totalHits`**          | Number           | Exhaustive total number of matches                                        |
-| **`totalPages`**         | Number           | Exhaustive total number of search result pages                            |
-| **`hitsPerPage`**        | Number           | Number of results on each page                                            |
-| **`page`**               | Number           | Current search results page                                               |
-| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/search.md#facets)**   |
-| **`processingTimeMs`**   | Number           | Processing time of the query                                              |
-| **`query`**              | String           | Query originating the response                                            |
+| Name                     | Type             | Description                                                                             |
+| :----------------------- | :--------------- | :-------------------------------------------------------------------------------------- |
+| **`indexUid`**           | String           | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index               |
+| **`hits`**               | Array of objects | Results of the query                                                                    |
+| **`offset`**             | Number           | Number of documents skipped                                                             |
+| **`limit`**              | Number           | Number of documents to take                                                             |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                                                       |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                                                      |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages                                          |
+| **`hitsPerPage`**        | Number           | Number of results on each page                                                          |
+| **`page`**               | Number           | Current search results page                                                             |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](/reference/api/search.md#facetdistribution)**      |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                                            |
+| **`query`**              | String           | Query originating the response                                                          |
+| **`facetStats`**         | Object           | [The the numeric `min` and `max` values per facet](/reference/api/search.md#facetstats) |
 
 ### Example
 

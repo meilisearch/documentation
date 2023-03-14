@@ -1011,3 +1011,38 @@ multi_search_1: |
         }
       ]
     }'
+faceted_search_update_settings_1: |
+  curl \
+    -X PUT 'http://localhost:7700/indexes/ecom/settings/filterable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "rating", "brand"
+    ]'
+faceted_search_1: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/ecom/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "pie server",
+      "facets": [
+      "rating", "category","reviews_count", "brand"
+    ]
+  }'
+search_parameter_guide_facet_stats_1: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "Batman",
+      "facets": ["genres", "rating"]
+    }'
+faceted_search_2: |
+  curl \
+    -X POST 'http://localhost:7700/indexes/ecom/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "table skirt",
+      "facets": [
+      "rating", "category", "brand"
+    ]
+  }'

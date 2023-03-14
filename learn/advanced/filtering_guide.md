@@ -4,11 +4,7 @@ sidebarDepth: 2
 
 ---
 
-<<<<<<<< HEAD:learn/advanced/filtering.md
 # Filtering
-========
-# Filtering guide
->>>>>>>> 09145590 (create API page,faceted guide, fix links):learn/advanced/filtering_guide.md
 
 Filters have several use-cases, such as refining search results and creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
 
