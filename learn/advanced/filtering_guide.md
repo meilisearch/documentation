@@ -4,7 +4,7 @@ sidebarDepth: 2
 
 ---
 
-# Filtering guide
+# Filtering
 
 Filters have several use-cases, such as refining search results and creating faceted search interfaces. Faceted search interfaces are particularly efficient in helping users navigate a great number of results across many broad categories.
 
@@ -35,7 +35,7 @@ Suppose you have a collection of movies called `movie_ratings` containing the fo
 
 If you want to filter results based on the `director` and `genres` attributes, you must first add them to the `filterableAttributes` list:
 
-<CodeSamples id="faceted_search_update_settings_1" />
+<CodeSamples id="filtering_update_settings_1" />
 
 **This step is mandatory and cannot be done at search time**. Updating `filterableAttributes` requires Meilisearch to re-configure your index, which will take an amount of time proportionate to your dataset size and complexity.
 

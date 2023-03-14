@@ -203,3 +203,10 @@
 # New "Update and migration" section
 /learn/getting_started/algolia_migration.html       /learn/update_and_migration/algolia_migration.html
 /learn/advanced/updating.html                       /learn/update_and_migration/updating.html
+
+# Move faceting to a new guide
+/learn/advanced/filtering_and_faceted_search.html   /learn/advanced/faceted_search.html
+
+# Rename filtering guide
+/learn/advanced/filtering_and_faceted_search.html   /learn/advanced/filtering_guide.html
+
