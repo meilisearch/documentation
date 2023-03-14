@@ -316,9 +316,9 @@ Suppose that your `movie_ratings` dataset contains several movies in the followi
 ]
 ```
 
-::: warning
+<Capsule intent="warning">
 [Synonyms](/learn/configuration/synonyms.md) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
-:::
+</Capsule>
 
 After adding `director`, `release_date`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes), you can use them for filtering.
 
@@ -390,9 +390,9 @@ Like any other filter, attributes you want to use as facets must be added to the
 
 Once they have been configured, you can search for facets with [the `facets` search parameter](/reference/api/search.md#facets).
 
-::: warning
+<Capsule intent="warning">
 Synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
-:::
+</Capsule>
 
 <Capsule intent="note">
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facets` can be used with any attributes added to `filterableAttributes`.

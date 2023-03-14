@@ -176,12 +176,12 @@ The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch ins
 
 These three fields are mandatory, but more [optional fields are available](https://github.com/meilisearch/vuepress-plugin-meilisearch#customization) to customize your search bar.
 
-::: warning
+<Capsule intent="warning">
 
 Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/api/search.md) , such as the `Default Search API Key`, in a production environment.
 Read more about [Meilisearch security](/learn/security/master_api_keys.md).
 
-:::
+</Capsule>
 
 ### For all kinds of documentation
 
@@ -217,13 +217,13 @@ The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch ins
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
 
-::: warning
+<Capsule intent="warning">
 
 We strongly recommend providing a `Default Search API Key` in a production environment, which is enough to perform search requests.
 
 Read more about [Meilisearch security](/learn/security/master_api_keys.md).
 
-:::
+</Capsule>
 
 The default behavior of this library fits perfectly for a documentation search bar, but you might need [some customizations](https://github.com/meilisearch/docs-searchbar.js#customization).
 

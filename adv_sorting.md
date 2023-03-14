@@ -26,11 +26,11 @@ Uppercase letters are sorted as if they were lowercase. They will still appear u
 
 Meilisearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
 
-::: warning
+<Capsule intent="warning">
 If a field has values of different types across documents, Meilisearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
 
 This can lead to unexpected behavior when sorting, so we strongly recommend you only allow sorting at query time on fields containing the same type of value.
-:::
+</Capsule>
 
 ### Adding attributes to `sortableAttributes`
 

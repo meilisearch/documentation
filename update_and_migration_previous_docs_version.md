@@ -4,11 +4,11 @@ This documentation website only covers the latest stable release of Meilisearch.
 
 This guide shows you how to clone Meilisearch's documentation repository, fetch the content for a specific version, and read it in your local machine.
 
-::: warning
+<Capsule intent="warning">
 While this guide's goal is to help users of old versions accomplish their bare minimum needs, it is not intended as a long-term solution or to encourage users to continue using outdated versions of Meilisearch. In almost every case, **it is better to upgrade to the latest Meilisearch version**.
 
 Depending on the version in question, the process of accessing old documentation may be difficult or error-prone. You have been warned!
-:::
+</Capsule>
 
 ## Prerequisites
 

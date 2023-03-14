@@ -28,9 +28,9 @@ When clicking this button, you'll be redirected to the Azure Portal and asked a 
 
 Once you have filled in these fields, click the "Review + create" button and then the "Create" button.
 
-::: warning
+<Capsule intent="warning">
 By default, the instance created is on a Standard plan. This will incur costs in your subscription. You can change it to a Free tier later, or by editing the Infrastructure as Code ([see below](#what-is-happening-with-this-one-click-button)).
-:::
+</Capsule>
 
 After a few minutes, the deployment will be complete. You'll be able to access your instance URL by clicking on the "Outputs" tabs on the left.
 

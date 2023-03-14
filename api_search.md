@@ -130,9 +130,9 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 
 Search for documents matching a specific query in the given index.
 
-::: warning
+<Capsule intent="warning">
 This endpoint only accepts [string filter expressions](/learn/advanced/filtering_and_faceted_search.md#filter-expressions).
-:::
+</Capsule>
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
 
@@ -231,11 +231,11 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for both `GET` and `POST` routes.
 
-::: warning
+<Capsule intent="warning">
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
 
 This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
-:::
+</Capsule>
 
 ### Overview
 
@@ -267,9 +267,9 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 
 Sets the search terms.
 
-::: warning
+<Capsule intent="warning">
 Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations.md#maximum-number-of-query-words).
-:::
+</Capsule>
 
 #### Example
 
@@ -339,9 +339,9 @@ Queries using `offset` and `limit` only return an estimate of the total number o
 
 You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
 
-::: warning
+<Capsule intent="warning">
 Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings.md#update-pagination-settings) returns an empty array.
-:::
+</Capsule>
 
 #### Example
 
@@ -359,9 +359,9 @@ Sets the maximum number of documents returned by a single query.
 
 You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
 
-::: warning
+<Capsule intent="warning">
 A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings.md#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
-:::
+</Capsule>
 
 #### Example
 
@@ -387,9 +387,9 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
 </Capsule>
 
-::: warning
+<Capsule intent="warning">
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
-:::
+</Capsule>
 
 #### Example
 
@@ -415,9 +415,9 @@ You can use `hitsPerPage` and `page` to [paginate search results](/learn/advance
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
 </Capsule>
 
-::: warning
+<Capsule intent="warning">
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
-:::
+</Capsule>
 
 #### Example
 
@@ -651,9 +651,9 @@ By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may
 `attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings.md#synonyms) and [stop words](/reference/api/settings.md#stop-words).
 </Capsule>
 
-::: warning
+<Capsule intent="warning">
 `attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
-:::
+</Capsule>
 
 #### Example
 
@@ -729,15 +729,15 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
-::: warning
+<Capsule intent="warning">
 `showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
-:::
+</Capsule>
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
-::: warning
+<Capsule intent="warning">
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-:::
+</Capsule>
 
 #### Example
 

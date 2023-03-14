@@ -57,11 +57,11 @@ After indexed, the dataset size in LMDB is about 122MB.
 
 This means the database is using **305 MB of RAM and 224 MB of disk space.** Note that [virtual memory](https://www.enterprisestorageforum.com/hardware/virtual-memory/) **refers only to disk space allocated by your computer for Meilisearch—it does not mean that it's actually in use by the database.** See [Memory Usage](#memory-usage) for more details.
 
-::: warning
+<Capsule intent="warning">
 
 These metrics are highly dependent on the machine that is running Meilisearch. Running this test in significantly underpowered machines is likely to give different results.
 
-:::
+</Capsule>
 
 It is important to note that **there is no reliable way to predict the final size of a database**. This is true for just about any search engine on the market—we're just the only ones saying it out loud.
 

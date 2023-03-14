@@ -127,9 +127,9 @@ You can configure any environment variable or CLI option using a configuration f
 import_dump = "./example.dump"
 ```
 
-::: warning
+<Capsule intent="warning">
 Specifying the `config_file_path` option within the configuration file will throw an error. This is the only configuration option that cannot be set within a configuration file.
-:::
+</Capsule>
 
 ## All instance options
 
@@ -142,9 +142,9 @@ Specifying the `config_file_path` option within the configuration file will thro
 
 Designates the location of the configuration file to load at launch.
 
-::: warning
+<Capsule intent="warning">
 Specifying this option in the configuration file itself will throw an error (assuming Meilisearch is able to find your configuration file).
-:::
+</Capsule>
 
 ### Database path
 
@@ -206,9 +206,9 @@ If you do not supply a master key in `production` or `development` environments 
 
 ### Disable analytics
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_NO_ANALYTICS`
 **CLI option**: `--no-analytics`
@@ -243,9 +243,9 @@ Meilisearch will only launch once the dump data has been fully indexed. The time
 
 ### Ignore missing dump
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_IGNORE_MISSING_DUMP`
 **CLI option**: `--ignore-missing-dump`
@@ -256,9 +256,9 @@ This option will trigger an error if `--import-dump` is not defined.
 
 ### Ignore dump if DB exists
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_IGNORE_DUMP_IF_DB_EXISTS`
 **CLI option**: `--ignore-dump-if-db-exists`
@@ -374,9 +374,9 @@ This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignor
 
 ### Ignore missing snapshot
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
 **CLI option**: `--ignore-missing-snapshot`
@@ -387,9 +387,9 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 ### Ignore snapshot if DB exists
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
 **CLI option**: `--ignore-snapshot-if-db-exists`
@@ -444,9 +444,9 @@ Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 
 #### SSL require auth
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
 **CLI option**: `--ssl-require-auth`
@@ -458,9 +458,9 @@ Sends a fatal alert if the client does not complete client authentication.
 
 #### SSL resumption
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_SSL_RESUMPTION`
 **CLI option**: `--ssl-resumption`
@@ -470,9 +470,9 @@ Activates SSL session resumption.
 
 #### SSL tickets
 
-::: warning
+<Capsule intent="warning">
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
-:::
+</Capsule>
 
 **Environment variable**: `MEILI_SSL_TICKETS`
 **CLI option**: `--ssl-tickets`

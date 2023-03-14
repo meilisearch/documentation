@@ -339,9 +339,9 @@ Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `sta
 
 Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
-::: warning
+<Capsule intent="warning">
 To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (`POST /tasks/cancel`).
-:::
+</Capsule>
 
 ::: tip Did you know?
 You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` type tasks are processed in reverse order, such that the last one you enqueue will be processed first.
@@ -404,9 +404,9 @@ The API key used must have access to all indexes (`"indexes": [*]`) and the [`ta
 
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
-::: warning
+<Capsule intent="warning">
 To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
-:::
+</Capsule>
 
 ### Query parameters
 

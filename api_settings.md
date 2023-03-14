@@ -253,9 +253,9 @@ An array of strings. Each string should be an attribute that exists in the selec
 
 If an attribute contains an object, you can use dot notation to specify one or more of its keys, for example, `"displayedAttributes": ["release_date.year"]`.
 
-::: warning
+<Capsule intent="warning">
 If the field does not exist, no error will be thrown.
-:::
+</Capsule>
 
 #### Example
 
@@ -309,9 +309,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The distinct attribute is a field whose value will always be unique in the returned documents.
 
-::: warning
+<Capsule intent="warning">
 Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-:::
+</Capsule>
 
 [To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
 
@@ -359,9 +359,9 @@ A string. The string should be an attribute that exists in the selected index.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting, for example, `"distinctAttribute": "product.skuid"`.
 
-::: warning
+<Capsule intent="warning">
 If the field does not exist, no error will be thrown.
-:::
+</Capsule>
 
 [To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
 
@@ -527,9 +527,9 @@ You can use the returned `taskUid` to get more details on [the status of the tas
 
 Attributes in the `filterableAttributes` list can be used as filters or facets.
 
-::: warning
+<Capsule intent="warning">
 Updating filterable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-:::
+</Capsule>
 
 [To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
@@ -581,9 +581,9 @@ An array of strings containing the attributes that can be used as filters at que
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"filterableAttributes": ["release_date.year"]`.
 
-::: warning
+<Capsule intent="warning">
 If the field does not exist, no error will be thrown.
-:::
+</Capsule>
 
 [To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
@@ -697,9 +697,9 @@ Partially update the pagination settings for an index.
 | :----------------- | :------ | :------------ | :---------------------------------------------------------- |
 | **`maxTotalHits`** | Integer | `1000`        | The maximum number of search results Meilisearch can return |
 
-::: warning
+<Capsule intent="warning">
 Setting `maxTotalHits` to a value higher than the default will negatively impact search performance. Setting `maxTotalHits` to values over `20000` may result in queries taking seconds to complete.
-:::
+</Capsule>
 
 #### Example
 
@@ -832,11 +832,11 @@ To create a custom ranking rule, give an attribute followed by a colon (`:`) and
 - To apply an **ascending sort** (results sorted by increasing value): `attribute_name:asc`
 - To apply a **descending sort** (results sorted by decreasing value): `attribute_name:desc`
 
-::: warning
+<Capsule intent="warning">
 If some documents do not contain the attribute defined in a custom ranking rule, the application of the ranking rule is undefined and the search results might not be sorted as you expected.
 
 Make sure that any attribute used in a custom ranking rule is present in all of your documents. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
-:::
+</Capsule>
 
 [To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy.md#ranking-rules)
 
@@ -898,9 +898,9 @@ The values associated with attributes in the `searchableAttributes` list are sea
 
 By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
-::: warning
+<Capsule intent="warning">
 Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-:::
+</Capsule>
 
 [To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
 
@@ -937,9 +937,9 @@ Get the searchable attributes of an index.
 
 Update the searchable attributes of an index.
 
-::: warning
+<Capsule intent="warning">
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
-:::
+</Capsule>
 
 #### Path parameters
 
@@ -957,9 +957,9 @@ An array of strings. Each string should be an attribute that exists in the selec
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
-::: warning
+<Capsule intent="warning">
 If the field does not exist, no error will be thrown.
-:::
+</Capsule>
 
 [To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
 
@@ -1017,9 +1017,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search.md#sort).
 
-::: warning
+<Capsule intent="warning">
 Updating sortable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-:::
+</Capsule>
 
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
 
@@ -1072,9 +1072,9 @@ An array of strings. Each string should be an attribute that exists in the selec
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"sortableAttributes": ["author.surname"]`.
 
-::: warning
+<Capsule intent="warning">
 If the field does not exist, no error will be thrown.
-:::
+</Capsule>
 
 [To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
 
@@ -1130,9 +1130,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Words added to the `stopWords` list are ignored in future search queries.
 
-::: warning
+<Capsule intent="warning">
 Updating stop words will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
-:::
+</Capsule>
 
 ::: tip
 Stop words are strongly related to the language used in your dataset. For example, most datasets containing English documents will have countless occurrences of `the` and `of`. Italian datasets, instead, will benefit from ignoring words like `a`, `la`, or `il`.

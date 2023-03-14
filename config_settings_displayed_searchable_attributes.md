@@ -58,9 +58,9 @@ You may want to make some attributes non-searchable, or change the [attribute ra
 
 After manually updating the `searchableAttributes` list, **subsequent new attributes will no longer be automatically added** unless the settings are [reset](/reference/api/settings.md#reset-searchable-attributes).
 
-::: warning
+<Capsule intent="warning">
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
-:::
+</Capsule>
 
 #### Example
 
