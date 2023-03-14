@@ -173,13 +173,13 @@ In this example, all queries across all indexes will only return documents whose
 }
 ```
 
-You can also use the `*` wildcard by adding it at the end of an index name string. This allows the tenant token to access all index names starting with that string.
+You can also use the `*` wildcard by adding it at the end of a string. This allows the tenant token to access all index names starting with that string.
 
-The following example queries across all indexes starting with the string `medical_records` and returns documents whose `user_id` equals `1`:
+The following example queries across all indexes starting with the string `medical` (like `medical_records`) and returns documents whose `user_id` equals `1`:
 
 ```json
 {
-  "medical_records*": {
+  "medical*": {
     "filter": "user_id = 1 AND published = true"
   }
 }
