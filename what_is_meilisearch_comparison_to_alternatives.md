@@ -101,8 +101,8 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br> Up to 3 sort fields per search query | ✅ |
 | Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ | ✅ |
 | Faceted search |  ✅ | ✅ | ✅ <br> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
-| Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
-| Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
+| Distinct attributes <br><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
+| Grouping <br><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
 
 ##### Visualize
 
