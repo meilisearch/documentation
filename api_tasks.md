@@ -343,9 +343,9 @@ Task cancelation is an atomic transaction: **either all tasks are successfully c
 To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (`POST /tasks/cancel`).
 </Capsule>
 
-::: tip Did you know?
+<Capsule intent="tip" title="Did you know?">
 You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` type tasks are processed in reverse order, such that the last one you enqueue will be processed first.
-:::
+</Capsule>
 
 ### Query parameters
 
