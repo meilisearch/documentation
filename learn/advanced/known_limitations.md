@@ -115,12 +115,12 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 ## Maximum database size
 
-**Limitation:** The maximum size of an index is 500GiB, and the maximum size of the task database is 10GiB.
+**Limitation:** The maximum index size Meilisearch supports on Linux environments is around 80TiB. For performance reasons, Meilisearch recommends keeping indexes under 2TiB.
 
-**Explanation:** Meilisearch allocates all the virtual memory it requires upfront. The maximum database size ensures instances can contain several large indexes without reaching operating system limits on the amount of virtual memory available to a single process.
+**Explanation:** Meilisearch can accommodate indexes of any size as long the combined active databases remains below the maximum virtual address space the OS devotes to a single process. On Linux, this limit sits around 80TiB. Due to their size, updating indexes bigger than 2TiB might result in reduced performance.
 
 ## Maximum number of indexes in an instance
 
-**Limitation:** A single Meilisearch instance can safely contain around 180 indexes in Linux and macOS environments, and around 15 indexes in Windows environments.
+**Limitation:** Meilisearch can accommodate an arbitrary number of indexes as long as their size does not exceed 2TiB. When dealing with larger indexes, Meilisearch can accommodate up to 20 indexes as long as their combined size does not exceed the OS's virtual address space limit.
 
-**Explanation:** Operating systems restrict the amount of virtual memory available to a single process. Since Meilisearch allocates the maximum index size for each index upfront, this effectively creates a limit on how many indexes an instance can contain. The values provided are indicative: because of the particularities of each specific setup, the actual maximum number of indexes per instance will vary from machine to machine. A Linux install might contain 200 indexes without issue, or return allocation failures at 181 indexes depending on the runtime environment.
+**Explanation:** Though Meilisearch supports an arbitrary number of indexes under 2TiB, accessing hundreds of different databases in short periods of time might lead to decreased performance and should be avoided when possible.
