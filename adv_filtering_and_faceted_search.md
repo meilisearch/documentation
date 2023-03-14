@@ -39,9 +39,9 @@ If you want to filter results based on the `director` and `genres` attributes, y
 
 **This step is mandatory and cannot be done at search time**. Updating `filterableAttributes` requires Meilisearch to re-configure your index, which will take an amount of time proportionate to your dataset size and complexity.
 
-::: note
+<Capsule intent="note">
 By default, `filterableAttributes` is empty. Filters do not work without first explicitly adding attributes to the `filterableAttributes` list.
-:::
+</Capsule>
 
 ### Filters and data types
 
@@ -109,9 +109,9 @@ The following expression returns all action movies:
 genres = action
 ```
 
-::: note
+<Capsule intent="note">
 The equality operator does not return any results for `null` and empty arrays.
-:::
+</Capsule>
 
 #### Inequality
 
@@ -228,9 +228,9 @@ genres = horror OR genres = comedy
 
 Meilisearch reads string expressions from left to right. You can use parentheses to ensure expressions are correctly parsed.
 
-::: note
+<Capsule intent="note">
 Filtering on string values is case-insensitive.
-:::
+</Capsule>
 
 For instance, if you want your results to only include `comedy` and `horror` movies released after March 1995, the parentheses in the following query are mandatory:
 
@@ -394,9 +394,9 @@ Once they have been configured, you can search for facets with [the `facets` sea
 Synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 :::
 
-::: note
+<Capsule intent="note">
 Meilisearch does not differentiate between facets and filters. This means that, despite its name, `facets` can be used with any attributes added to `filterableAttributes`.
-:::
+</Capsule>
 
 #### Facet distribution
 
@@ -428,6 +428,6 @@ The following search query gives you the distribution of `batman` movies per gen
 
 `facetDistribution` contains an object for every given facet. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `romance` movies matching the query, `romance` is not displayed.
 
-::: note
+<Capsule intent="note">
 By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
-:::
+</Capsule>

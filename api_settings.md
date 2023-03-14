@@ -473,9 +473,9 @@ Partially update the faceting settings for an index. Any parameters not provided
 
 For example, suppose a query's search results contain a total of three values for a `colors` facet: `blue`, `green`, and `red`. If you set `maxValuesPerFacet` to `2`, Meilisearch will only return `blue` and `green` in the response body's `facetDistribution` object.
 
-::: note
+<Capsule intent="note">
 Setting `maxValuesPerFacet` to a high value might negatively impact performance.
-:::
+</Capsule>
 
 #### Example
 

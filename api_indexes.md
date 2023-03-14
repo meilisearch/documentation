@@ -151,9 +151,9 @@ Update an index's [primary key](/learn/core_concepts/primary_key.md#primary-key)
 
 To change the primary key of an index that already contains documents, you must first delete all documents in that index. You may then change the primary key and index your dataset again.
 
-::: note
+<Capsule intent="note">
 It is not possible to change an index's `uid`.
-:::
+</Capsule>
 
 ### Path parameters
 
@@ -237,9 +237,9 @@ An array of objects. Each object has only one key: `indexes`.
 
 Each `indexes` array must contain only two elements: the `indexUid`s of the two indexes to be swapped. Sending an empty array (`[]`) is valid, but no swap operation will be performed.
 
-::: note
+<Capsule intent="note">
 You can swap multiple pairs of indexes with a single request. To do so, there must be one object for each pair of indexes to be swapped.
-:::
+</Capsule>
 
 ### Example
 
@@ -257,8 +257,8 @@ You can swap multiple pairs of indexes with a single request. To do so, there mu
 }
 ```
 
-::: note
+<Capsule intent="note">
 Since `indexSwap` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), the `indexUid` is always `null`.
-:::
+</Capsule>
 
 You can use the response's `taskUid` to [track the status of your request](/reference/api/tasks.md#get-one-task).

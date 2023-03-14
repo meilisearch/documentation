@@ -16,11 +16,11 @@ To allow your users to sort results at search time you must:
 2. Add those attributes to the `sortableAttributes` index setting
 3. Update Meilisearch's [ranking rules](/learn/core_concepts/relevancy.md) (optional)
 
-::: note
+<Capsule intent="note">
 Meilisearch sorts strings in lexicographic order based on their byte values. For example, `á`, which has a value of 225, will be sorted after `z`, which has a value of 122.
 
 Uppercase letters are sorted as if they were lowercase. They will still appear uppercase in search results.
-:::
+</Capsule>
 
 ### Select attributes for sorting
 

@@ -54,11 +54,11 @@ Accessing the `/keys` route without setting a master key will throw a [`missing_
 
 This value is also used as the `{key}` path variable to [update](#update-a-key), [delete](#delete-a-key), or [get](#get-one-key) a specific key.
 
-::: note
+<Capsule intent="note">
 Since `key` is a hash of the `uid` and master key, `key` values are deterministic between instances sharing the same configuration. This means if the master key changes, all `key` values are automatically changed.
 
 Since the `key` field depends on the master key, it is computed at runtime and therefore not propagated to dumps and snapshots. As a result, even if a malicious user comes into possession of your dumps or snapshots, they will not have access to your instance's API keys.
-:::
+</Capsule>
 
 ### `actions`
 
@@ -207,9 +207,9 @@ Results can be paginated using the `offset` and `limit` query parameters.
 }
 ```
 
-::: note
+<Capsule intent="note">
 API keys are displayed in descending order based on their `createdAt` date. This means that the most recently created keys appear first.
-:::
+</Capsule>
 
 ## Get one key
 

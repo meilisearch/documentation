@@ -41,9 +41,9 @@ The task `uid` is incremented **globally.**
 **Type**: String
 **Description**:  Unique identifier of the targeted index
 
-::: note
+<Capsule intent="note">
 This value is always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks).
-:::
+</Capsule>
 
 ### `status`
 
@@ -290,9 +290,9 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 Get a single task.
 
-::: note
+<Capsule intent="note">
 If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
-:::
+</Capsule>
 
 ### Path parameters
 
@@ -362,9 +362,9 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt` date. Use `afterEnqueuedAt=*` to cancel all tasks                                    |
 | **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` to cancel all tasks                                      |
 
-::: note
+<Capsule intent="note">
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
-:::
+</Capsule>
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
 
@@ -384,9 +384,9 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 }
 ```
 
-::: note
+<Capsule intent="note">
 Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
-:::
+</Capsule>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 
@@ -426,9 +426,9 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 | **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` to delete all tasks                                      |
 | **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date. Use `afterFinishedAt=*` to delete all tasks                                    |
 
-::: note
+<Capsule intent="note">
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
-:::
+</Capsule>
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
 
@@ -448,9 +448,9 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 }
 ```
 
-::: note
+<Capsule intent="note">
 Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
-:::
+</Capsule>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 

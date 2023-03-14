@@ -21,9 +21,9 @@ Search for documents matching a specific query in the given index.
 
 This is the preferred endpoint to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
-::: note
+<Capsule intent="note">
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
-:::
+</Capsule>
 
 ### Path parameters
 
@@ -383,9 +383,9 @@ If you set `hitsPerPage` to `0`, Meilisearch processes your request, but does no
 
 You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
 
-::: note
+<Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
-:::
+</Capsule>
 
 ::: warning
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
@@ -411,9 +411,9 @@ If you set `page` to `0`, Meilisearch processes your request, but does not retur
 
 You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
 
-::: note
+<Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
-:::
+</Capsule>
 
 ::: warning
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
@@ -480,9 +480,9 @@ This parameter can take two values:
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
 
-::: note
+<Capsule intent="note">
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
-:::
+</Capsule>
 
 [Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-and-using-facets)
 
@@ -523,9 +523,9 @@ Configures which attributes will be retrieved in the returned documents.
 
 If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/api/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
 
-::: note
+<Capsule intent="note">
 If an attribute has been removed from `displayedAttributes`, `attributesToRetrieve` will silently ignore it and the field will not appear in your returned documents.
-:::
+</Capsule>
 
 #### Example
 
@@ -647,9 +647,9 @@ Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*
 
 By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
-::: note
+<Capsule intent="note">
 `attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings.md#synonyms) and [stop words](/reference/api/settings.md#stop-words).
-:::
+</Capsule>
 
 ::: warning
 `attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).

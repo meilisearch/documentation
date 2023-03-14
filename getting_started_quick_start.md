@@ -53,9 +53,9 @@ Open a new terminal window and run the following command:
 
 Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents.md). Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes.md).
 
-::: note
+<Capsule intent="note">
 Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You can read more about this in our [documents guide](/learn/core_concepts/documents.md#dataset-format).
-:::
+</Capsule>
 
 The previous command added documents from `movies.json` to a new index called `movies` and set `id` as the primary key. If it isn't set manually, Meilisearch [infers](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) it from your dataset.
 

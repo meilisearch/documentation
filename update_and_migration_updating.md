@@ -46,9 +46,9 @@ If your [`pkgVersion`](/reference/api/version.md#version-object) is 0.21 or abov
 
 ### Set all fields as displayed attributes
 
-::: note
+<Capsule intent="note">
 If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
-:::
+</Capsule>
 
 When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 

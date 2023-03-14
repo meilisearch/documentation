@@ -197,9 +197,9 @@ const results = await index.search(
 );
 ```
 
-::: note
+<Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
-:::
+</Capsule>
 
 #### Create a numbered page list
 

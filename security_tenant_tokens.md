@@ -92,9 +92,9 @@ After signing the token, you can use it to make search queries in the same way y
 
 <CodeSamples id="tenant_token_guide_search_no_sdk_1" />
 
-::: note
+<Capsule intent="note">
 The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
-:::
+</Capsule>
 
 ### Generating a tenant token from scratch
 
@@ -133,9 +133,9 @@ Once your token is ready, it can seamlessly replace API keys to authorize reques
 
 <CodeSamples id="tenant_token_guide_search_no_sdk_1" />
 
-::: note
+<Capsule intent="note">
 The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
-:::
+</Capsule>
 
 ## Tenant token payload reference
 
@@ -218,9 +218,9 @@ For security reasons, we strongly recommend you avoid exposing the API key whene
 
 When using an official Meilisearch SDK, you may indicate which API key you wish to use when generating a token. Consult the documentation of the SDK you are using for more specific instructions.
 
-::: note
+<Capsule intent="note">
 If an API key expires, any tenant tokens created with it will become invalid. The same applies if the API key is deleted or regenerated due to a changed master key.
-:::
+</Capsule>
 
 [You can read more about API keys in our dedicated guide.](/learn/security/master_api_keys.md)
 

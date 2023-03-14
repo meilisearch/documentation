@@ -47,9 +47,9 @@ You can disable typo tolerance for a list of query terms by adding them to `disa
 
 Meilisearch won't apply typo tolerance on the query term `Shrek` or `shrek` at search time to match documents.
 
-::: note
+<Capsule intent="note">
 `disableOnWords` is case insensitive.
-:::
+</Capsule>
 
 ### `disableOnAttributes`
 

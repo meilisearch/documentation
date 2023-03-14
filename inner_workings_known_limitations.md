@@ -37,9 +37,9 @@ If your query is `Hello, World`:
 - `,` takes the position `8` of the attribute
 - `World` takes the position `9` of the attribute
 
-::: note
+<Capsule intent="note">
 `,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes.md#string).
-:::
+</Capsule>
 
 If your query is `Hello - World`:
 
@@ -47,9 +47,9 @@ If your query is `Hello - World`:
 - `-` takes the position `1` of the attribute
 - `World` takes the position `2` of the attribute
 
-::: note
+<Capsule intent="note">
 `-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes.md#string).
-:::
+</Capsule>
 
 ## Maximum number of attributes per document
 

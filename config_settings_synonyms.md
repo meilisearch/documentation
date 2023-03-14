@@ -104,10 +104,10 @@ Take note that **multi-word phrases are treated differently** than associations 
 
 When a multi-word phrase is considered the synonym of another word or phrase, the **exact search query will always take precedence over its synonym(s)**.
 
-::: note
+<Capsule intent="note">
 Multi-word synonyms are limited to a maximum of **three words**.
 For example, although you could make `League of Legends` and `LOL` into synonyms, you could not do the same for `The Lord of the Rings` and `LOTR`.
-:::
+</Capsule>
 
 #### Example
 
