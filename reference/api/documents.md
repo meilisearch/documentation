@@ -132,7 +132,7 @@ This endpoint accepts the following content types:
 
 If you want to [set the primary key of your index on document addition](/learn/core_concepts/primary_key.md#setting-the-primary-key-on-document-addition), it can only be done **the first time you add documents** to the index. After this, the `primaryKey` parameter will be ignored if given.
 
-Trying to set `csvDelimiter` to a value other than a string or a string with more than one character will cause Meilisearch to return the `invalid_document_csv_delimiter` error. Configuring `csvDelimiter` and sending data in a format other than CSV will also cause Meilisearch to throw an error.
+Configuring `csvDelimiter` and sending data in a format other than CSV will cause Meilisearch to throw an error.
 
 ### Body
 
@@ -199,7 +199,7 @@ This endpoint accepts the following content types:
 | **`primaryKey`** | `null`        | [Primary key](/learn/core_concepts/primary_key.md#primary-key-2) of the documents |
 | **`csvDelimiter`** | `","`        | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
 
-Trying to set `csvDelimiter` to a value other than a string or a string with more than one character will cause Meilisearch to return the `invalid_document_csv_delimiter` error. Configuring `csvDelimiter` and sending data in a format other than CSV will also cause Meilisearch to throw an error.
+Configuring `csvDelimiter` and sending data in a format other than CSV will cause Meilisearch to throw an error.
 
 ### Body
 

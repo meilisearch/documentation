@@ -132,7 +132,7 @@ The [Content-Type header](/reference/api/overview.md#content-type) is not suppor
 
 ## `invalid_document_csv_delimiter`
 
-The value given to [`csvDelimiter`](/reference/api/documents.md#add-or-replace-documents) is either not a string, contains a non-ASCII character, or contains more than a single ASCII character.
+The value given to [`csvDelimiter`](/reference/api/documents.md#add-or-replace-documents) is either not a string, or is not a single ASCII character.
 
 ## `invalid_document_id`
 
