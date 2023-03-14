@@ -223,7 +223,7 @@ systemctl enable nginx
 systemctl restart nginx
 ```
 
-Meilisearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. You should now be able to send requests to your server from the outside world. Open your web browser and visit: (<http://your-ip-address>). The IP address is the same you used to connect to your machine via SSH in Step 1.
+Meilisearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. You should now be able to send requests to your server from the outside world. Open your web browser and visit: (http://your-ip-address). The IP address is the same you used to connect to your machine via SSH in Step 1.
 
 ::: note
 If you want to learn more about using Nginx as a Reverse Proxy, see [this dedicated documentation](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/).
@@ -239,7 +239,7 @@ In most cases, when enabling SSL, you may want to use your own domain name (or a
 
 ::: tip
 When you register a domain name and add an `A record`, you should be automatically able to request Meilisearch directly by using that domain name.
-To illustrate this, if you had registered your domain name `example.com`, requesting indexes would be done at <http://example.com/indexes>
+To illustrate this, if you had registered your domain name `example.com`, requesting indexes would be done at http://example.com/indexes
 :::
 
 Once your domain name has been set up, you are ready to configure SSL/TLS and use HTTPS. You have two different options to achieve this goal. The first one is using [Certbot](https://certbot.eff.org/), an amazing, free, and very easy to use tool. If you already have SSL certificates issued from a `Certificate Authority or CA` for your domain name, the second option covers the steps you need to follow. Then, you will be ready to use Meilisearch safely in production!
