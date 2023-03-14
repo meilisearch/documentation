@@ -165,7 +165,7 @@ Results can be paginated using the `offset` and `limit` query parameters.
         "documents.delete"
       ],
       "indexes": [
-        "products*",
+        "prod*",
         "reviews"
       ],
       "expiresAt": "2021-12-31T23:59:59Z",
@@ -244,7 +244,7 @@ Get information on the specified key. Attempting to use this endpoint with a non
     "documents.add"
   ],
   "indexes": [
-    "products*"
+    "prod*"
   ],
   "expiresAt": "2021-11-13T00:00:00Z",
   "createdAt": "2021-11-12T10:00:00Z",
