@@ -95,9 +95,9 @@ Meilisearch considers the following task types as global:
 - [`indexSwap`](/reference/api/tasks.md#indexswap)
 - [`snapshotCreation`](/reference/api/tasks.md#snapshotcreation)
 
-::: note
+<Capsule intent="note">
 In a protected instance, your API key must have access to all indexes (`"indexes": [*]`) to view global tasks.
-:::
+</Capsule>
 
 ### Task queue
 

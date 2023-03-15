@@ -47,9 +47,9 @@ Visit the repository on GitHub to [view all documentation tags](https://github.c
 
 There are three different ways of accessing the documentation of previous Meilisearch releases depending on the version you checked out.
 
-:::warning
+<Capsule intent="warning">
 The site search bar is not functional in local copies of the documentation website.
-:::
+</Capsule>
 
 ### v0.17 and above: run a local Vuepress server
 
@@ -71,9 +71,9 @@ yarn dev
 
 Yarn will build the website from the markdown source files. Once the server is online, use your browser to navigate to `http://localhost:8080`.
 
-:::warning
+<Capsule intent="warning">
 SDK code samples are not available in local copies of the documentation for Meilisearch v0.17 and above.
-:::
+</Capsule>
 
 ### v0.11-v0.16: run a simple Python server
 

@@ -136,9 +136,9 @@ This endpoint only accepts [string filter expressions](/learn/advanced/filtering
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
 
-:::note
+<Capsule intent="note">
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
-:::
+</Capsule>
 
 ### Path parameters
 
@@ -717,9 +717,9 @@ You can find the highlighted query terms inside the `_formatted` property:
 }
 ```
 
-::: danger
+<Capsule intent="danger">
 Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in conjunction, be careful to ensure tags are correctly matched. In the above example, not setting `highlightPostTag` would result in malformed HTML: `<span>Winter Feast</em>`.
-:::
+</Capsule>
 
 ### Show matches position
 

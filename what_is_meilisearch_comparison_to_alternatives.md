@@ -14,9 +14,9 @@ There are many search engines on the web, both open-source and otherwise. Decidi
 
 - Finally, we end this article with [an in-depth analysis of the broader search engine landscape](#a-quick-look-at-the-search-engine-landscape)
 
-::: note
+<Capsule intent="note">
 Please be advised that many of the search products described below are constantly evolving—just like Meilisearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
-:::
+</Capsule>
 
 ## Comparison table
 

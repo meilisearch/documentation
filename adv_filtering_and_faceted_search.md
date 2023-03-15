@@ -246,9 +246,9 @@ genres = horror OR (genres = comedy AND release_date > 795484800)
 
 Translated into English, the above expression will only return comedies released after March 1995 or horror movies regardless of their `release_date`.
 
-::: note
+<Capsule intent="note">
 When creating an expression with a field name or value identical to a filter operator such as `AND` or `NOT`, you must wrap it in quotation marks: `title = "NOT" OR title = "AND"`.
-:::
+</Capsule>
 
 #### Creating filter expressions with arrays
 

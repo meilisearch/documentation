@@ -2,9 +2,9 @@
 
 The distinct attribute is a special, user-designated field. It is most commonly used to prevent Meilisearch from returning a set of several similar documents, instead forcing it to return only one.
 
-:::note
+<Capsule intent="note">
 There can be only one `distinctAttribute` per index. Trying to set multiple fields as a `distinctAttribute` will return an error.
-:::
+</Capsule>
 
 The value of a field configured as a distinct attribute will always be unique among returned documents. This means **there will never be more than one occurrence of the same value** in the distinct attribute field among the returned documents.
 

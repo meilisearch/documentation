@@ -37,9 +37,9 @@ For this tutorial, we will be using a Debian 10 server, running on DigitalOcean.
 + An up-to-date server that runs Debian 10
 + An ssh key pair to connect to that machine
 
-::: tip
+<Capsule intent="tip">
 Learn how to connect via SSH to your [DigitalOcean droplet](https://www.digitalocean.com/docs/droplets/how-to/connect-with-ssh/) or any [Linux or Windows server](https://phoenixnap.com/kb/ssh-to-connect-to-remote-server-linux-or-windows)
-:::
+</Capsule>
 
 ## Step 1: Install Meilisearch
 
@@ -109,9 +109,9 @@ chmod 750 /var/lib/meilisearch
 
 In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
 
-::: note
+<Capsule intent="note">
 If you are new to services and `systemd`, you can learn more about the basics of Linux services [here](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/).
-:::
+</Capsule>
 
 In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that Meilisearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart Meilisearch.
 
@@ -182,9 +182,9 @@ It's time to safely make your brand new Meilisearch available to be requested fr
 
 A reverse proxy is basically an application that will handle every communication between the outside world and your internal applications. Nginx will receive external HTTP requests and redirect them to Meilisearch. When Meilisearch has done its amazing job, it will communicate its response to Nginx, which will then transfer the latter to the user who originally sent the request. This is a common way to isolate and protect any application by adding a robust, secure, and fast gate-keeper such as Nginx, one of the safest and most efficient tools available online, and of course, open-source!
 
-::: tip
+<Capsule intent="tip">
 Reverse proxies are very useful regarding security, performance, scalability, and logging concerns. If you are new to Reverse proxies, you may enjoy this article explaining the why and the how of [reverse proxies](https://www.keycdn.com/support/nginx-reverse-proxy).
-:::
+</Capsule>
 
 Configuring Nginx as a proxy server is really simple. First of all, install it on your machine.
 
@@ -225,9 +225,9 @@ systemctl restart nginx
 
 Meilisearch is now up, deployed in a production environment, using a safe API key, and being served by a Reverse Proxy Nginx. You should now be able to send requests to your server from the outside world. Open your web browser and visit: (http://your-ip-address). The IP address is the same you used to connect to your machine via SSH in Step 1.
 
-::: note
+<Capsule intent="note">
 If you want to learn more about using Nginx as a Reverse Proxy, see [this dedicated documentation](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/).
-:::
+</Capsule>
 
 The only remaining problem is that Meilisearch processes requests via HTTP without any additional security. The content that is being transmitted over HTTP could easily be read or modified by attackers, and someone could get full or partial access to your data. In order to prevent this to happen, it's important to use the HTTPS, which will enable you to use a SSL/TLS certificate, and securely transmit data.
 

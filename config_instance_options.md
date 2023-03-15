@@ -298,9 +298,9 @@ The value must either be given in bytes or explicitly state a base unit:  `10737
 
 It is possible that Meilisearch goes over the exact RAM limit during indexing. In most contexts and machines, this should be a negligible amount with little to no impact on stability and performance.
 
-::: danger
+<Capsule intent="danger">
 Setting `--max-indexing-memory` to a value bigger than or equal to your machine's total memory is likely to cause your instance to crash.
-:::
+</Capsule>
 
 ### Max indexing threads
 
@@ -315,9 +315,9 @@ If `--max-indexing-threads` is higher than the real number of cores available in
 
 In single-core machines, Meilisearch has no choice but to use the only core available for indexing. This may lead to a degraded search experience during indexing.
 
-::: danger
+<Capsule intent="danger">
 Avoid setting `--max-indexing-threads` to the total of your machine's processor cores. Though doing so might speed up indexing, it is likely to severely impact search experience.
-:::
+</Capsule>
 
 ### Payload limit size
 

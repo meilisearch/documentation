@@ -55,9 +55,9 @@ game = {
 };
 ```
 
-:::tip
+<Capsule intent="tip">
 When preparing your dataset, it can be useful to leave the original date and time fields in your documents intact. In the example above, we keep the `release_date` field because it is more readable than the raw `release_timestamp`.
-:::
+</Capsule>
 
 After adding a numeric timestamp to all documents, [index your data](/reference/api/documents.md#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
 

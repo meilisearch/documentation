@@ -32,9 +32,9 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 **Type**: Integer
 **Description**: Unique sequential identifier of the task
 
-:::note
+<Capsule intent="note">
 The task `uid` is incremented **globally.**
-:::
+</Capsule>
 
 ### `indexUid`
 
@@ -133,9 +133,9 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 | **`canceledTasks`**  | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                 |
 | **`originalFilter`** | The filter used in the [cancel task](#cancel-tasks) request                                                                                                           |
 
-::: note
+<Capsule intent="note">
 Task cancelation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
-:::
+</Capsule>
 
 #### `taskDeletion`
 
@@ -145,9 +145,9 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 | **`deletedTasks`**   | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                     |
 | **`originalFilter`** | The filter used in the [delete task](#delete-tasks) request                                                                                                           |
 
-::: note
+<Capsule intent="note">
 Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
-:::
+</Capsule>
 
 #### `snapshotCreation`
 

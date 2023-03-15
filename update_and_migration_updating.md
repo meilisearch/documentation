@@ -10,13 +10,13 @@ If you're updating your Meilisearch instance on cloud platforms like DigitalOcea
 
 If migrating to the latest version of Meilisearch will cause you to skip multiple versions, this may require changes to your codebase. [Refer to our version-specific update warnings for more details](#version-specific-warnings).
 
-::: tip
+<Capsule intent="tip">
 If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
-:::
+</Capsule>
 
-::: danger
+<Capsule intent="danger">
 This guide only works for versions v0.15 and above. If you are using an older version, please [contact support](https://discord.gg/meilisearch) for more information.
-:::
+</Capsule>
 
 ## Step 1: Export data
 

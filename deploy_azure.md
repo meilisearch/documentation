@@ -6,9 +6,9 @@ _The following is a guest post by Christopher Maneu, Data Engineering Lead Advoc
 
 In this tutorial, we will see how to deploy a Meilisearch instance on Azure, and also some considerations for hosting a production Meilisearch instance on Azure.
 
-::: tip
+<Capsule intent="tip">
 If you don't yet have an Azure subscription, you can [create one here](https://azure.microsoft.com/free/). With the Azure Free tier, you can run a Meilisearch instance for free for at least 12 months.
-:::
+</Capsule>
 
 ## One-click deploy
 

@@ -121,9 +121,9 @@ The above JSON document would look like this in CSV:
 
 Since CSV does not support arrays or nested objects, `cast` cannot be converted to CSV.
 
-::: note
+<Capsule intent="note">
 If you don't specify the data type for an attribute, it will default to `:string`.
-:::
+</Capsule>
 
 ### Auto-batching
 
