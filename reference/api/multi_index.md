@@ -43,7 +43,7 @@ The `/multi-search` route allows you to perform multiple search queries on one o
 | :------------ | :--------------- | :--------------------------------------------------------------------- |
 | **`results`** | Array of objects | Results of the search queries in the same order they were requested in |
 
-Each search result object is composed of:
+Each search result object is composed of the following fields:
 
 | Name                     | Type             | Description                                                                             |
 | :----------------------- | :--------------- | :-------------------------------------------------------------------------------------- |
@@ -76,7 +76,7 @@ Each search result object is composed of:
         {
           "id":13682,
           "title":"Pooh's Heffalump Movie",
-          "overview":"Who or what exactly is a Heffalump…",
+          "overview":"Who or what exactly is a Heffalump …",
           "genres":[
             "Animation",
             "Family",
@@ -86,51 +86,7 @@ Each search result object is composed of:
           "poster":"https://image.tmdb.org/t/p/w500/5kd5JqccroxOnC9sVMP5NtLrbkr.jpg",
           "release_date":1108080000
         },
-        {
-          "id":14903,
-          "title":"Pooh's Grand Adventure: The Search for Christopher Robin",
-          "overview":"A full length animated film for all the family to enjoy…",
-          "genres":[
-            "Animation",
-            "Family",
-            "Adventure"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/x0VfdebBXlgfLN5lSoapwvXdtMz.jpg",
-          "release_date":877305600
-        },
-        {
-          "id":14885,
-          "title":"Pooh's Heffalump Halloween Movie",
-          "overview":"It's Halloween in the 100 Acre Wood…",
-          "genres":[
-            "Animation",
-            "Family"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/3zVLrNuuEcNcyCz5SLgYimrkBT3.jpg",
-          "release_date":1126569600
-        },
-        {
-          "id":13706,
-          "title":"Winnie the Pooh: A Very Merry Pooh Year",
-          "overview":"It's Christmastime in the Hundred Acre Wood…",
-          "genres":[
-            "Animation",
-            "Family"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/1Xfh2PPZsjEwFyLqp6bisrbdxZs.jpg",
-          "release_date":1009843200
-        },
-        {
-          "id":16394,
-          "title":"Winnie the Pooh: Springtime with Roo",
-          "overview":"Spring has sprung, and baby Roo is…",
-          "genres":[
-            "Animation",
-            "Family"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/yAgVcU1BdPqvnyYnOkb1QtVNd5V.jpg",
-          "release_date":1078790400
-        }
+        …
       ],
       "query":"pooh",
       "processingTimeMs":2,
@@ -144,7 +100,7 @@ Each search result object is composed of:
         {
           "id":12,
           "title":"Finding Nemo",
-          "overview":"Nemo, an adventurous young clownfish…",
+          "overview":"Nemo, an adventurous young clownfish …",
           "genres":[
             "Animation",
             "Family"
@@ -152,55 +108,7 @@ Each search result object is composed of:
           "poster":"https://image.tmdb.org/t/p/w500/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg",
           "release_date":1054252800
         },
-        {
-          "id":22611,
-          "title":"Little Nemo: Adventures in Slumberland",
-          "overview":"A little boy whose dreams transcend reality…",
-          "genres":[
-            "Adventure",
-            "Animation",
-            "Family",
-            "Fantasy"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/kj5MWZjQIivF9w8SKDI5ih53PDK.jpg",
-          "release_date":616464000
-        },
-        {
-          "id":56354,
-          "title":"Captain Nemo and the Underwater City",
-          "overview":"Some survivors of a drowning ship are rescued by Captain…",
-          "genres":[
-            "Adventure",
-            "Family"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/whvYatDbIFsPGSt2Pv9Rrk0q7zT.jpg",
-          "release_date":-1123200
-        },
-        {
-          "id":31011,
-          "title":"Mr. Nobody",
-          "overview":"Nemo Nobody leads an ordinary existence…",
-          "genres":[
-            "Science Fiction",
-            "Drama",
-            "Romance",
-            "Fantasy"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/qNkIONc4Rgmzo23ph7qWp9QfVnW.jpg",
-          "release_date":1257465600
-        },
-        {
-          "id":20609,
-          "title":"30,000 Leagues Under The Sea",
-          "overview":"Captain Nemo goes even deeper into insanity…",
-          "genres":[
-            "Action",
-            "Adventure",
-            "Science Fiction"
-          ],
-          "poster":"https://image.tmdb.org/t/p/w500/zxcM9XbumJHpYAstef4BrUcD6zR.jpg",
-          "release_date":1189296000
-        }
+        …
       ],
       "query":"nemo",
       "processingTimeMs":1,
