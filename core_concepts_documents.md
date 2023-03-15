@@ -4,7 +4,7 @@ A document is an object composed of one or more fields. Each field consists of a
 
 ## Structure
 
-![Diagram illustration Meilisearch's document structure](/document_structure.svg =573x400)
+![Diagram illustration Meilisearch's document structure](/document_structure.svg)
 
 ### Important terms
 
