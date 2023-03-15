@@ -1,0 +1,63 @@
+[
+  {
+      "title": "Category 1",
+      "slug": "api",
+      "routes": [
+          {
+              "source": "api_documents.md",
+              "label": "Documents",
+              "slug": "api_documents"
+          },
+          {
+              "source": "api_dump.md",
+              "label": "Dump",
+              "slug": "api_dump"
+          },
+          {
+              "source": "api_health.md",
+              "label": "Health",
+              "slug": "api_health"
+          },
+          {
+              "source": "api_indexes.md",
+              "label": "Indexes",
+              "slug": "api_indexes"
+          },
+          {
+              "source": "api_keys.md",
+              "label": "Keys",
+              "slug": "api_keys"
+          },
+          {
+              "source": "api_overview.md",
+              "label": "Overview",
+              "slug": "api_overview"
+          },
+          {
+              "source": "api_search.md",
+              "label": "Search",
+              "slug": "api_search"
+          },
+          {
+              "source": "api_settings.md",
+              "label": "Settings",
+              "slug": "api_settings"
+          },
+          {
+              "source": "api_stats.md",
+              "label": "Stats",
+              "slug": "api_stats"
+          },
+          {
+              "source": "api_tasks.md",
+              "label": "Tasks",
+              "slug": "api_tasks"
+          },
+          {
+              "source": "api_version.md",
+              "label": "Version",
+              "slug": "api_version"
+          }
+      ]
+  }
+]
