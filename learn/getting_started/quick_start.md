@@ -145,7 +145,7 @@ In the above code sample, the parameter `q` represents the search query. The doc
 
 By default, Meilisearch only returns the first 20 results for a search query. This can be changed using the [`limit` parameter](/reference/api/search.md#limit).
 
-If you want to perform multiple search queries on one or more indexes in a single request, you can use the [`/multi-search` endpoint](/reference/api/multi_index.md).
+If you want to perform multiple search queries on one or more indexes in a single request, you can use the [`/multi-search` endpoint](/reference/api/multi_search.md).
 
 ## Search preview
 
