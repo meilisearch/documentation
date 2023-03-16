@@ -63,3 +63,7 @@ Use [index swapping](/learn/core_concepts/indexes.md#swapping-indexes) to deploy
 ## Phrase search
 
 [Wrap search terms in double quotes (`"`) for strict queries](/reference/api/search.md#phrase-search) that only return exact matches.
+
+## Multi-index search
+
+Perform [multiple search queries on one or more indexes with a single HTTP request](/reference/api/multi_search.md).

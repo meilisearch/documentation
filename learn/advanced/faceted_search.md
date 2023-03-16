@@ -152,7 +152,7 @@ By default, `facets` returns a maximum of 100 facet values for each faceted fiel
 
 ### Facet stats
 
-When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query.
+When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query. This can be used to create a range slider component allowing users to select a range of values for a facet.
 
 If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object.
 
@@ -204,3 +204,5 @@ The image below shows multi-select facets in action. Even though the user select
 The code sample below shows the query for the search mentioned above:
 
 <CodeSamples id="faceted_search_disjunctive_facets_1" />
+
+To learn more about implementing faceting and filtering, check out our [ecommerce demo](https://github.com/meilisearch/ecommerce-demo).

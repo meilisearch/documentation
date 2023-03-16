@@ -78,9 +78,9 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`hitsPerPage`**        | Number           | Number of results on each page                                  |
 | **`page`**               | Number           | Current search results page                                     |
 | **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**      |
+| **`facetStats`**         | Object           | [The the numeric `min` and `max` values per facet](#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                    |
 | **`query`**              | String           | Query originating the response                                  |
-| **`facetStats`**         | Object           | [The the numeric `min` and `max` values per facet](#facetstats) |
 
 #### Exhaustive and estimated total number of search results
 
@@ -192,9 +192,9 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`page`**               | Number           | Current search results page                                     |
 | **`estimatedTotalHits`** | Number           | Total number of matches                                         |
 | **`facets`**             | Object           | **[Distribution of the given facets](#facetdistribution)**      |
+| **`facetStats`**         | Object           | [The the numeric `min` and `max` values per facet](#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                    |
 | **`query`**              | String           | Query originating the response                                  |
-| **`facetStats`**         | Object           | [The the numeric `min` and `max` values per facet](#facetstats) |
 
 ### Example
 
@@ -231,7 +231,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search parameters
 
-Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET`, `POST`, and `/multi-index` routes.
+Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-index` routes.
 
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
@@ -513,31 +513,12 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
     "genres":{
       "Action":20,
       "Adventure":7,
-      "Animation":13,
-      "Comedy":1,
-      "Crime":8,
-      "Documentary":1,
-      "Drama":3,
-      "Family":9,
-      "Fantasy":6,
-      "Horror":1,
-      "Mystery":2,
-      "Science Fiction":9,
-      "TV Movie":2,
+      …
       "Thriller":3
     },
     "rating":{
       "2":1,
-      "3":2,
-      "5":1,
-      "5.5":1,
-      "6":1,
-      "7":1,
-      "7.8":1,
-      "8":4,
-      "8.9":1,
-      "9":2,
-      "9.5":1,
+      …
       "9.8":1
     }
   },

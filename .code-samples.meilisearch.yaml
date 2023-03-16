@@ -1008,6 +1008,10 @@ multi_search_1: |-
           "indexUid": "movies",
           "q": "nemo",
           "limit": 5
+        },
+        {
+          "indexUid": "movie_ratings",
+          "q": "us"
         }
       ]
     }'
@@ -1030,7 +1034,7 @@ faceted_search_1: |-
   }'
 search_parameter_guide_facet_stats_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/movies/search' \
+    -X POST 'http://localhost:7700/indexes/movie_ratings/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "Batman",
