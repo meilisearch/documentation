@@ -9,5 +9,5 @@ Are you using this feature? Meilisearch wants to hear from you! Tell us about yo
 ::: warning
 `/metrics` is an experimental feature. Experimental features are unstable: their API might significantly change and become incompatible between releases. Meilisearch does not recommend using experimental features in a production environment.
 
-An experimental feature may be removed in a future release. Meilisearch does not guarantee experimental features will become stable.
+Meilisearch makes experimental features available with the expectation they will become stable in future releases. However, it is not possible to guarantee when and if this will happen.
 :::
