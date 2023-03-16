@@ -1,6 +1,6 @@
 # Multi-index search
 
-The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single request.
+The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request.
 
 ## POST route
 
@@ -16,7 +16,7 @@ The `/multi-search` route allows you to perform multiple search queries on one o
 
 | Search parameter                                                                | Type             | Default value | Description                                                               |
 | :------------------------------------------------------------------------------ | :--------------- | :------------ | :------------------------------------------------------------------------ |
-| **[`indexUid`](/reference/api/search.md#query-q)**  *                           | String           | N/A           | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **[`indexUid`](/learn/core_concepts/indexes.md#index-uid)**                           | String           | N/A           | [`uid`] |
 | **[`q`](/reference/api/search.md#query-q)**                                     | String           | `""`          | Query string                                                              |
 | **[`offset`](/reference/api/search.md#offset)**                                 | Integer          | `0`           | Number of documents to skip                                               |
 | **[`limit`](/reference/api/search.md#limit)**                                   | Integer          | `20`          | Maximum number of documents returned                                      |

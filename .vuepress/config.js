@@ -322,7 +322,7 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
-            '/reference/api/multi_index',
+            '/reference/api/multi_search',
             '/reference/api/tasks',
             '/reference/api/keys',
             '/reference/api/settings',
