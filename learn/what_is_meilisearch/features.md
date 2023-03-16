@@ -67,4 +67,4 @@ Use [index swapping](/learn/core_concepts/indexes.md#swapping-indexes) to deploy
 
 ## Multi-index search
 
-Also known as federated search, it allows you to perform [search queries on multiple indexes with a single HTTP request](/reference/api/multi_search.md).
+Perform [multiple search queries on one or more indexes with a single HTTP request](/reference/api/multi_search.md).
