@@ -132,7 +132,7 @@ The [Content-Type header](/reference/api/overview.md#content-type) is not suppor
 
 ## `invalid_document_csv_delimiter`
 
-The value given to [`csvDelimiter`](/reference/api/documents.md#add-or-replace-documents) is either not a string, or is not a single ASCII character.
+The [`csvDelimiter`](/reference/api/documents.md#add-or-replace-documents) parameter is invalid. It should either be a string or [a single ASCII character](https://www.rfc-editor.org/rfc/rfc20).
 
 ## `invalid_document_id`
 
