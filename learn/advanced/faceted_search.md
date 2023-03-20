@@ -193,7 +193,7 @@ The code sample below shows the query for the search mentioned above:
 
 ### Multi-select facets
 
-Multi-select or disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet so they don’t have to perform more than one search to find the products they’re looking for. You can use the `AND` operator to allow users to select different facets. For example, LED lights from the  brand `Sunlite` within the `Tools & Home Improvement` category:
+Multi-select or disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for. You can use the `AND` operator to allow users to select different facets. For example, LED lights from the brand `Sunlite` within the `Tools & Home Improvement` category:
 
 <CodeSamples id="faceted_search_disjunctive_facets_1" />
 
