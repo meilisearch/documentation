@@ -74,9 +74,9 @@ Results are sorted by **the similarity of the matched words with the query words
 
 #### Examples
 
-:::: tabs
+<Tabs.Container labels={["Typo", "Proximity", "Attribute"]}>
 
-::: tab Typo
+<Tabs.Content label="Typo">
 
 ![Demonstrating the typo ranking rule by searching for 'vogli'](/ranking-rules/vogli3.png)
 
@@ -87,9 +87,9 @@ Results are sorted by **the similarity of the matched words with the query words
 
 The `typo` rule sorts the results by increasing number of typos on matched query words.
 
-:::
+</Tabs.Content>
 
-::: tab Proximity
+<Tabs.Content label="Proximity">
 ![Demonstrating the proximity ranking rule by searching for 'new road'](/ranking-rules/new_road.png)
 
 ### Proximity
@@ -97,9 +97,9 @@ The `typo` rule sorts the results by increasing number of typos on matched query
 The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule. The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
 
 The `proximity` rule sorts the results by increasing distance between matched query terms.
-:::
+</Tabs.Content>
 
-::: tab Attribute
+<Tabs.Content label="Attribute">
 ![Demonstrating the attribute ranking rule by searching for 'belgium'](/ranking-rules/belgium.png)
 
 ### Attribute
@@ -108,18 +108,18 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 
 The `attribute` rule sorts the results by [attribute importance](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
-:::
+</Tabs.Content>
 
-::: tab Exactness
+<Tabs.Content label="Exactness">
 ![Demonstrating the exactness ranking rule by searching for 'Knight'](/ranking-rules/knight.png)
 
 ### Exactness
 
 `Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas there is a letter of difference between `Knights` and the search query `Knight`.
 
-:::
+</Tabs.Content>
 
-::::
+</Tabs.Container>
 
 ### Custom rules
 
