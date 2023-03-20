@@ -1046,6 +1046,15 @@ faceted_search_disjunctive_facets_1: |-
     -H 'Content-Type: application/json' \
     --data-binary '{
       "q": "led",
+      "facets": ["category", "brand"],
+      "filter": "category = \"Tools & Home Improvement\" AND brand = Sunlite"
+  }'  
+faceted_search_disjunctive_facets_2: |-
+  curl \
+    -X POST 'http://localhost:7700/indexes/ecom/search' \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "q": "led",
       "facets": ["rating", "category", "brand"],
       "filter": "brand = \"Lithonia Lighting\" OR brand = Sunlite"
   }'
