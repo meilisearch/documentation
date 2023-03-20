@@ -78,7 +78,7 @@ Results are sorted by **the similarity of the matched words with the query words
 
 <Tabs.Content label="Typo">
 
-![Demonstrating the typo ranking rule by searching for 'vogli'](/ranking-rules/vogli3.png)
+![Demonstrating the typo ranking rule by searching for 'vogli'](https://raw.githubusercontent.com/meilisearch/documentation/main/.vuepress/public/ranking-rules/vogli3.png)
 
 ### Typo
 
@@ -90,7 +90,7 @@ The `typo` rule sorts the results by increasing number of typos on matched query
 </Tabs.Content>
 
 <Tabs.Content label="Proximity">
-![Demonstrating the proximity ranking rule by searching for 'new road'](/ranking-rules/new_road.png)
+![Demonstrating the proximity ranking rule by searching for 'new road'](https://raw.githubusercontent.com/meilisearch/documentation/main/.vuepress/public/ranking-rules/new_road.png)
 
 ### Proximity
 
@@ -100,7 +100,7 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 </Tabs.Content>
 
 <Tabs.Content label="Attribute">
-![Demonstrating the attribute ranking rule by searching for 'belgium'](/ranking-rules/belgium.png)
+![Demonstrating the attribute ranking rule by searching for 'belgium'](https://raw.githubusercontent.com/meilisearch/documentation/main/.vuepress/public/ranking-rules/belgium.png)
 
 ### Attribute
 
@@ -111,7 +111,7 @@ The `attribute` rule sorts the results by [attribute importance](/learn/core_con
 </Tabs.Content>
 
 <Tabs.Content label="Exactness">
-![Demonstrating the exactness ranking rule by searching for 'Knight'](/ranking-rules/knight.png)
+![Demonstrating the exactness ranking rule by searching for 'Knight'](https://github.com/meilisearch/documentation/blob/main/.vuepress/public/ranking-rules/knight.png?raw=true)
 
 ### Exactness
 
