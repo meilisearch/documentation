@@ -435,7 +435,7 @@ The following example returns the second page of search results:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
 
-For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search, and filter expressions](/learn/advanced/filtering_guide.md).
+For more information on how to use filters and build filter expressions, [read our guide on filtering and filter expressions](/learn/advanced/filtering_guide.md).
 
 #### Example
 
@@ -481,10 +481,6 @@ Returns the number of documents matching the current search query for each given
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
 
 When `facets` is set, the search results object contains the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
-
-::: note
-If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
-:::
 
 #### `facetDistribution`
 
