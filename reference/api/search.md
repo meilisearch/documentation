@@ -78,7 +78,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`hitsPerPage`**        | Number           | Number of results on each page                                  |
 | **`page`**               | Number           | Current search results page                                     |
 | **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**      |
-| **`facetStats`**         | Object           | [The the numeric `min` and `max` values per facet](#facetstats) |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                    |
 | **`query`**              | String           | Query originating the response                                  |
 
@@ -192,7 +192,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 | **`page`**               | Number           | Current search results page                                     |
 | **`estimatedTotalHits`** | Number           | Total number of matches                                         |
 | **`facets`**             | Object           | **[Distribution of the given facets](#facetdistribution)**      |
-| **`facetStats`**         | Object           | [The the numeric `min` and `max` values per facet](#facetstats) |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
 | **`processingTimeMs`**   | Number           | Processing time of the query                                    |
 | **`query`**              | String           | Query originating the response                                  |
 
@@ -231,7 +231,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search parameters
 
-Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-index` routes.
+Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-search` routes.
 
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
