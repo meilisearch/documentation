@@ -193,7 +193,9 @@ The code sample below shows the query for the search mentioned above:
 
 ### Multi-select facets
 
-Multi-select or disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet so they don’t have to perform more than one search to find the products they’re looking for.
+Multi-select or disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet so they don’t have to perform more than one search to find the products they’re looking for. You can use the `AND` operator to allow users to select different facets. For example, LED lights from the  brand `Sunlite` within the `Tools & Home Improvement` category:
+
+<CodeSamples id="faceted_search_disjunctive_facets_1" />
 
 With single select facets, if a user selects `BrandA` for the `brands` facet, they will see it offers 5 products, nothing more. But with multi-select facets, we want to show users how many products `BrandB` and `BrandC` offer even when they're not selected. This lets the user know if other brands offer similar products and allows them to view products from multiple brands at the same time.
 
@@ -203,6 +205,6 @@ The image below shows multi-select facets in action. Even though the user select
 
 The code sample below shows the query for the search mentioned above:
 
-<CodeSamples id="faceted_search_disjunctive_facets_1" />
+<CodeSamples id="faceted_search_disjunctive_facets_2" />
 
 To learn more about implementing faceting and filtering, check out our [ecommerce demo](https://github.com/meilisearch/ecommerce-demo).
