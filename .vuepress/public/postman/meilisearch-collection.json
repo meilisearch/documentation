@@ -86,7 +86,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=%#",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
@@ -125,7 +125,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=%#",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
 							"host": [
 								"{{url}}"
 							],
