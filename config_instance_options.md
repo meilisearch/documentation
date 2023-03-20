@@ -32,8 +32,8 @@ The above flag disables analytics for the Meilisearch instance and does not acce
 
 To configure a Meilisearch instance using environment variables, set the environment variable prior to launching the instance. If you are unsure how to do this, read more about [setting and listing environment variables](https://linuxize.com/post/how-to-set-and-list-environment-variables-in-linux/), or [use a command-line option](#command-line-options-and-flags) instead.
 
-:::: tabs
-::: tab UNIX
+<Tabs.Container labels={["UNIX", "Windows"]}>
+<Tabs.Content label="UNIX">
 
 ```sh
 export MEILI_DB_PATH=./meilifiles
@@ -41,9 +41,9 @@ export MEILI_HTTP_ADDR=localhost:7700
 ./meilisearch
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Windows
+<Tabs.Content label="Windows">
 
 ```sh
 set MEILI_DB_PATH=./meilifiles
@@ -51,8 +51,8 @@ set MEILI_HTTP_ADDR=127.0.0.1:7700
 ./meilisearch
 ```
 
-:::
-::::
+</Tabs.Content>
+</Tabs.Container>
 
 In the previous example, `./meilisearch` is the command that launches a Meilisearch instance, while `MEILI_DB_PATH` and `MEILI_HTTP_ADDR` are environment variables that modify this instance's behavior.
 
@@ -91,16 +91,16 @@ If the `Config file path` is anything other than `"none"`, it means that a confi
 
 You can override the default location of the configuration file using the `MEILI_CONFIG_FILE_PATH` environment variable or the `--config-file-path` CLI option:
 
-:::: tabs
-::: tab CLI
+<Tabs.Container labels={['CLI', 'Environment variable']}>
+<Tabs.Content label="CLI">
 
 ```sh
 ./meilisearch --config-file-path="./config.toml"
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Environment variable
+<Tabs.Content label="Environment variable">
 
 UNIX:
 
@@ -116,8 +116,8 @@ set MEILI_CONFIG_FILE_PATH="./config.toml"
 ./meilisearch
 ```
 
-:::
-::::
+</Tabs.Content>
+</Tabs.Container>
 
 ### Configuration file formatting
 

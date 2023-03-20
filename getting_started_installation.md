@@ -4,9 +4,9 @@ You can install Meilisearch locally or deploy it over a cloud service. This guid
 
 ## Local installation
 
-:::: tabs
+<Tabs.Container labels={["cURL", "Homebrew", "Docker", "APT", "Source", "Windows", "Direct Download"]}>
 
-::: tab cURL
+<Tabs.Content label="cURL">
 Download the **latest stable release** of Meilisearch with **cURL**.
 
 Launch Meilisearch to start the server.
@@ -19,9 +19,9 @@ curl -L https://install.meilisearch.com | sh
 ./meilisearch
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Homebrew
+<Tabs.Content label="Homebrew">
 Download the **latest stable release** of Meilisearch with **[Homebrew](https://brew.sh/)**, a package manager for MacOS.
 
 Launch Meilisearch to start the server.
@@ -34,9 +34,9 @@ brew update && brew install meilisearch
 meilisearch
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Docker
+<Tabs.Content label="Docker">
 When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).
 
 These commands launch the **latest stable release** of Meilisearch.
@@ -54,9 +54,9 @@ docker run -it --rm \
 ```
 
 You can learn more about [using Meilisearch with Docker in our dedicated guide](/learn/cookbooks/docker.md).
-:::
+</Tabs.Content>
 
-::: tab APT
+<Tabs.Content label="APT">
 
 Download the **latest stable release** of Meilisearch with **APT**.
 
@@ -73,9 +73,9 @@ sudo apt update && sudo apt install meilisearch
 meilisearch
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Source
+<Tabs.Content label="Source">
 
 Meilisearch is written in `Rust`. To compile it, [install the Rust toolchain](https://www.rust-lang.org/tools/install).
 
@@ -107,9 +107,9 @@ cargo build --release
 ./target/release/meilisearch
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Windows
+<Tabs.Content label="Windows">
 
 To install Meilisearch on Windows, you can:
 
@@ -120,17 +120,17 @@ To install Meilisearch on Windows, you can:
 
 To learn more about the Windows command prompt, follow this [introductory guide](https://www.makeuseof.com/tag/a-beginners-guide-to-the-windows-command-line/).
 
-:::
+</Tabs.Content>
 
-::: tab Direct download
+<Tabs.Content label="Direct download">
 
 If none of the other installation options work for you, you can always download the Meilisearch binary directly on GitHub.
 
 Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearch/releases/latest), scroll down to "Assets", and select the binary corresponding to your operating system.
 
-:::
+</Tabs.Content>
 
-::::
+</Tabs.Container>
 
 ## Meilisearch Cloud
 

@@ -134,25 +134,19 @@ If you use VuePress for your documentation, we provide a [Vuepress plugin](https
 
 In your VuePress project:
 
-:::: tabs
-
-::: tab yarn
-
+<Tabs.Container labels={["yarn", "npm"]}>
+<Tabs.Content label="yarn">
 ```bash
 yarn add vuepress-plugin-meilisearch
 ```
+</Tabs.Content>
 
-:::
-
-::: tab npm
-
+<Tabs.Content label="npm">
 ```bash
 npm install vuepress-plugin-meilisearch
 ```
-
-:::
-
-::::
+</Tabs.Content>
+</Tabs.Container>
 
 In your `config.js` file:
 
