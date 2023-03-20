@@ -2,9 +2,9 @@
 
 Meilisearch allows you to filter and sort results based on their geographic location. This can be useful when you only want results within a specific area or when sorting results based on their distance from a specific location.
 
-::: danger `_geo` field in v0.27, v0.28, and v0.29
+<Capsule intent="danger" title={<><code>_geo</code> field in v0.27, v0.28, and v0.29</>}>
 Due to Meilisearch allowing malformed `_geo` fields in the above-mentioned versions, please ensure the `_geo` field follows the correct format.
-:::
+</Capsule>
 
 ## Preparing documents for location-based search
 

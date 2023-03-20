@@ -787,11 +787,11 @@ Sorts search results at query time according to the specified attributes and ind
 
 Each attribute in the list must be followed by a colon (`:`) and the preferred sorting order: either ascending (`asc`) or descending (`desc`).
 
-::: note
+<Capsule intent="note">
 Attribute order is meaningful. The first attributes in a list will be given precedence over those that come later.
 
 For example, `sort="price:asc,author:desc` will prioritize `price` over `author` when sorting results.
-:::
+</Capsule>
 
 When using the `POST` route, `sort` expects an array of strings.
 

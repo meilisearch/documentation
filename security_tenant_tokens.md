@@ -202,11 +202,11 @@ The previous rules can be combined in one tenant token:
 }
 ```
 
-::: danger
+<Capsule intent="danger">
 Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules will only throw errors when they are used in a query.
 
 Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search.md#filter).
-:::
+</Capsule>
 
 ### API key
 
@@ -232,10 +232,10 @@ The expiry date must be a UNIX timestamp or `null`. Additionally, a token's expi
 
 Setting a token expiry date is optional, but recommended. A token without an expiry date never expires and can be used indefinitely as long as its parent API key remains valid.
 
-::: danger
+<Capsule intent="danger">
 The only way to revoke a token without an expiry date is to [delete](/reference/api/keys.md#delete-a-key) its parent API key.
 
 Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
-:::
+</Capsule>
 
 When using an official Meilisearch SDK, you may indicate the expiry date when generating a token. Consult the documentation of the SDK you are using for more specific instructions.

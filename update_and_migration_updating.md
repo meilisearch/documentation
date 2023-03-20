@@ -148,7 +148,7 @@ The server should return a response that looks like this:
 
 Use the `taskUid` to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
-::: note
+<Capsule intent="note">
 The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
 
 ```sh
@@ -157,8 +157,7 @@ The response will vary slightly depending on your version. For v0.27 and below, 
     -H 'Authorization: Bearer API_KEY' 
   # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 ```
-
-:::
+</Capsule>
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 

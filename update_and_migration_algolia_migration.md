@@ -18,7 +18,7 @@ To help with the transition, we have also included a comparison of Meilisearch a
 
 Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/learn/getting_started/quick_start.md).
 
-::: note
+<Capsule intent="note">
 
 This guide was tested with the following package versions:
 
@@ -27,7 +27,7 @@ This guide was tested with the following package versions:
 [`meilisearch-js`](https://www.npmjs.com/package/meilisearch): `0.27.0`
 [`meilisearch`](https://github.com/meilisearch/meilisearch): `0.28`
 
-:::
+</Capsule>
 
 ## Export your Algolia data
 
