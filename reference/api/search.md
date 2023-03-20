@@ -67,20 +67,20 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| Name                     | Type             | Description                                                     |
-| :----------------------- | :--------------- | :-------------------------------------------------------------- |
-| **`hits`**               | Array of objects | Results of the query                                            |
-| **`offset`**             | Number           | Number of documents skipped                                     |
-| **`limit`**              | Number           | Number of documents to take                                     |
-| **`estimatedTotalHits`** | Number           | Estimated total number of matches                               |
-| **`totalHits`**          | Number           | Exhaustive total number of matches                              |
-| **`totalPages`**         | Number           | Exhaustive total number of search result pages                  |
-| **`hitsPerPage`**        | Number           | Number of results on each page                                  |
-| **`page`**               | Number           | Current search results page                                     |
-| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**      |
+| Name                     | Type             | Description                                                 |
+| :----------------------- | :--------------- | :---------------------------------------------------------- |
+| **`hits`**               | Array of objects | Results of the query                                        |
+| **`offset`**             | Number           | Number of documents skipped                                 |
+| **`limit`**              | Number           | Number of documents to take                                 |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                           |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages              |
+| **`hitsPerPage`**        | Number           | Number of results on each page                              |
+| **`page`**               | Number           | Current search results page                                 |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**  |
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
-| **`processingTimeMs`**   | Number           | Processing time of the query                                    |
-| **`query`**              | String           | Query originating the response                                  |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                |
+| **`query`**              | String           | Query originating the response                              |
 
 #### Exhaustive and estimated total number of search results
 
@@ -185,20 +185,20 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| Name                     | Type             | Description                                                     |
-| :----------------------- | :--------------- | :-------------------------------------------------------------- |
-| **`hits`**               | Array of objects | Results of the query                                            |
-| **`offset`**             | Number           | Number of documents skipped                                     |
-| **`limit`**              | Number           | Number of documents to take                                     |
-| **`totalHits`**          | Number           | Exhaustive total number of matches                              |
-| **`totalPages`**         | Number           | Exhaustive total number of search results pages                 |
-| **`hitsPerPage`**        | Number           | Number of results on each page                                  |
-| **`page`**               | Number           | Current search results page                                     |
-| **`estimatedTotalHits`** | Number           | Total number of matches                                         |
-| **`facets`**             | Object           | **[Distribution of the given facets](#facetdistribution)**      |
+| Name                     | Type             | Description                                                 |
+| :----------------------- | :--------------- | :---------------------------------------------------------- |
+| **`hits`**               | Array of objects | Results of the query                                        |
+| **`offset`**             | Number           | Number of documents skipped                                 |
+| **`limit`**              | Number           | Number of documents to take                                 |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`totalPages`**         | Number           | Exhaustive total number of search results pages             |
+| **`hitsPerPage`**        | Number           | Number of results on each page                              |
+| **`page`**               | Number           | Current search results page                                 |
+| **`estimatedTotalHits`** | Number           | Total number of matches                                     |
+| **`facets`**             | Object           | **[Distribution of the given facets](#facetdistribution)**  |
 | **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
-| **`processingTimeMs`**   | Number           | Processing time of the query                                    |
-| **`query`**              | String           | Query originating the response                                  |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                |
+| **`query`**              | String           | Query originating the response                              |
 
 ### Example
 
