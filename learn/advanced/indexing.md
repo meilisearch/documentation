@@ -1,6 +1,6 @@
 # Indexing and performance
 
-Adding new documents to an index is a multi-threaded and memory-intensive operation. Meilisearch's indexes are at the core of what makes our search engine fast, relevant and reliable. In this article, we will go over some of the details regarding RAM consumption and multi-threading.
+Adding new documents to an index is a multi-threaded and memory-intensive operation. Meilisearch's indexes are at the core of what makes our search engine fast, relevant, and reliable. In this article, we will go over some of the details regarding RAM consumption and multi-threading.
 
 ## RAM
 
@@ -10,7 +10,7 @@ It is important to prevent Meilisearch from using all available memory during in
 
 1. Meilisearch may be killed by the OS for over-consuming RAM
 
-2. Users making search requests may experience slowdown while the indexer is processing an update
+2. Users making search requests may experience a slowdown while the indexer is processing an update
 
 Memory overconsumption can still happen in two cases:
 
@@ -38,7 +38,7 @@ If you encounter performance issues during indexing, we recommend trying the fol
 
 - **Meilisearch should not be your main database**. The more documents you add, the longer will indexing and search take, so you should only index documents you want to retrieve when searching.
 
-- By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](/reference/api/settings.md#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields Meilisearch needs to index, the faster is the indexing process.
+- By default, all document fields are searchable. We strongly recommend changing this by [updating the `searchableAttributes` list](/reference/api/settings.md#update-searchable-attributes) so it only contains fields you want to search in. The fewer fields Meilisearch needs to index, the faster the indexing process.
 
 ```json
 [
@@ -57,13 +57,15 @@ If you encounter performance issues during indexing, we recommend trying the fol
 ]
 ```
 
+- If you have a multilingual dataset, create a separate index for each language.
+
 - When creating a new index, first [configure its settings](/reference/api/settings.md) and only then add your documents. Following this order will significantly reduce indexing time.
 
 - Since indexing speed is tightly connected to the size of your payload, using lightweight dataset formats such as CSV and NDJSON can lead to increased performance.
 
 - Prefer machines using SSDs (Solid State Drives). We strongly recommend not running Meilisearch in HDDs (Hard Disk Drives).
 
-- Ensure there are no limit to I/O operations in your machine. The restrictions imposed by cloud providers such as [AWS's Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#IOcredit) can severely impact indexing performance
+- Ensure there is no limit to I/O operations in your machine. The restrictions imposed by cloud providers such as [AWS's Amazon EBS service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html#IOcredit) can severely impact indexing performance
 
 ## Memory crashes
 
