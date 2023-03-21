@@ -86,7 +86,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
 							"host": [
 								"{{url}}"
 							],
@@ -103,7 +103,8 @@
 								},
 								{
 									"key": "csvDelimiter",
-									"value": "#"
+									"value": ";",
+									"disabled": true
 								}
 							]
 						}
@@ -125,7 +126,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/indexes/{{indexUID}}/documents",
+							"raw": "{{url}}/indexes/{{indexUID}}/documents?csvDelimiter=;",
 							"host": [
 								"{{url}}"
 							],
@@ -142,7 +143,8 @@
 								},
 								{
 									"key": "csvDelimiter",
-									"value": "#"
+									"value": ";",
+									"disabled": true
 								}
 							]
 						}
@@ -366,6 +368,38 @@
 								"indexes",
 								"{{indexUID}}",
 								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Multi-search",
+			"item": [
+				{
+					"name": "Search one or more indexes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"queries\": [\n        {\n          \"indexUid\": \"books\",\n          \"q\": \"Pride and Prejudice\"\n        },\n        {\n          \"indexUid\": \"books\",\n          \"q\": \"Alice In Wonderland\",\n          \"attributesToHighlight\": [\"title\"]\n        }\n ]\n }"
+						},
+						"url": {
+							"raw": "{{url}}/multi-search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"multi-search"
 							]
 						}
 					},
@@ -764,7 +798,7 @@
 					"response": []
 				},
 				{
-					"name": "Udpate index ",
+					"name": "Update index",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
@@ -2035,38 +2069,6 @@
 							""
 						]
 					}
-				}
-			]
-		},
-		{
-			"name": "Multi-search",
-			"item": [
-				{
-					"name": "Search one or more indexes",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": " {\"queries\": [\n        {\n          \"indexUid\": \"books\",\n          \"q\": \"Pride and Prejudice\"\n        },\n        {\n          \"indexUid\": \"books\",\n          \"q\": \"Alice In Wonderland\",\n          \"attributesToHighlight\": [\"title\"]\n        }\n ]\n }"
-						},
-						"url": {
-							"raw": "{{url}}/multi-search",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"multi-search"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		}
