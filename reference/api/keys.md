@@ -100,9 +100,9 @@ For security reasons, we do not recommend creating keys that can perform all act
 
 **Type**: Array
 **Default value**: N/A
-**Description**: An array of indexes the key is authorized to act on. `["*"]` for all indexes. Only the key's [permitted actions](#actions) can be used on these indexes.
+**Description**: An array of indexes the key is authorized to act on.  Use`["*"]` for all indexes. Only the key's [permitted actions](#actions) can be used on these indexes.
 
-You can use the `*` character as a wildcard by adding it at the end of a string. This allows an API key access to all index names starting with that string. For example, using `"indexes": ["movie*"]` will give the API key access to the `movies` and `movie_ratings` indexes.
+You can also use the `*` character as a wildcard by adding it at the end of a string. This allows an API key access to all index names starting with that string. For example, using `"indexes": ["movie*"]` will give the API key access to the `movies` and `movie_ratings` indexes.
 
 ### `expiresAt`
 
@@ -244,7 +244,7 @@ Get information on the specified key. Attempting to use this endpoint with a non
     "documents.add"
   ],
   "indexes": [
-    "prod*"
+    "products"
   ],
   "expiresAt": "2021-11-13T00:00:00Z",
   "createdAt": "2021-11-12T10:00:00Z",
