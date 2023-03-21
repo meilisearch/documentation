@@ -4,7 +4,7 @@ You can install Meilisearch locally or deploy it over a cloud service. This guid
 
 ## Local installation
 
-<Tabs.Container labels={["cURL", "Homebrew", "Docker", "APT", "Source", "Windows", "Direct Download"]}>
+<Tabs.Container labels={["cURL", "Homebrew", "Docker", "APT", "Source", "Windows", "Direct download"]}>
 
 <Tabs.Content label="cURL">
 Download the **latest stable release** of Meilisearch with **cURL**.
