@@ -202,11 +202,11 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `searches.avg_search_count`                        | The average number of search queries received per call for the aggregated event             | 4.2
 | `searches.total_search_count`                      | The total number of search queries received for the aggregated event                        | 16023
 | `indexes.avg_distinct_index_count`                 | The average number of queried indexes received per call for the aggregated event            | 1.2
-| `indexes.total_distinct_index_count`               | The total number of distinct indexes queries for the aggregated event                       | 6023
-| `indexes.total_single_index`                       | The total number of calls where only one index where queried                                | 2007
+| `indexes.total_distinct_index_count`               | The total number of distinct index queries for the aggregated event                       | 6023
+| `indexes.total_single_index`                       | The total number of calls when only one index is queried                                | 2007
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
-| `infos.experimental_enable_metrics`                | `true` if `--experimental-enable-metrics` is specified at launch, otherwise `false`         | false
+| `infos.experimental_enable_metrics`                | `true` if `--experimental-enable-metrics`/`MEILI_EXPERIMENTAL_ENABLE_METRICS` is specified, otherwise `false`         | false
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated
 | `per_document_id`                                  | `true` if the `DELETE /indexes/:indexUid/documents/:documentUid` endpoint was used, otherwise `false` | false
