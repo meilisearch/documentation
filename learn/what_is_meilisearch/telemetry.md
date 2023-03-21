@@ -106,7 +106,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `infos.env`                                        | Value of `--env`/`MEILI_ENV`                                                                | production
 | `infos.db_path`                                    | `true` if `--db-path`/`MEILI_DB_PATH` is specified, otherwise `false`                       | true
 | `infos.import_dump`                                | `true` if `--import-dump` is specified, otherwise `false`                                   | true
-| `infos.dump_dir`                                  | `true` if `--dump-dir`/`MEILI_DUMP_DIR` is specified, otherwise `false`                   | true
+| `infos.dump_dir`                                  | `true` if `--dump-dir`/`MEILI_DUMP_DIR` is specified, otherwise `false`                      | true
 | `infos.ignore_missing_dump`                        | `true` if `--ignore-missing-dump` is activated, otherwise `false`                           | true
 | `infos.ignore_dump_if_db_exists`                   | `true` if `--ignore-dump-if-db-exists` is activated, otherwise `false`                      | true
 | `infos.import_snapshot`                            | `true` if `--import-snapshot` is specified, otherwise `false`                               | true
@@ -143,6 +143,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `requests.total_received`                          | Total number of received search requests                                                    | 3480
 | `sort.with_geoPoint`                               | `true` if the sort rule `_geoPoint` is specified, otherwise `false`                         | true
 | `sort.avg_criteria_number`                         | Average number of sort criteria among all search requests containing the `sort` parameter   | 2
+| `filter.with_geoBoundingBox`                       | `true` if the filter rule `_geoBoundingBox` is specified, otherwise `false`                 | false
 | `filter.with_geoRadius`                            | `true` if the filter rule `_geoRadius` is specified, otherwise `false`                      | false
 | `filter.most_used_syntax`                          | Most used filter syntax among all search requests containing the `filter` parameter         | string
 | `q.max_terms_number`                               | Highest number of terms given for the `q` parameter                                         | 5
@@ -152,7 +153,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `formatting.max_attributes_to_highlight`           | Maximum number of attributes to highlight                                                   | 100
 | `formatting.highlight_pre_tag`                     | `true` if `highlightPreTag` is specified, otherwise `false`                                 | false
 | `formatting.highlight_post_tag`                    | `true` if `highlightPostTag` is specified, otherwise `false`                                | false
-| `formatting.max_attributes_to_crop`                | Maximum number of attributes to crop | 100
+| `formatting.max_attributes_to_crop`                | Maximum number of attributes to crop                                                        | 100
 | `formatting.crop_length`                           | `true` if `cropLength` is specified, otherwise `false`                                      | false
 | `formatting.crop_marker`                           | `true` if `cropMarker` is specified, otherwise `false`                                      | false
 | `formatting.show_matches_position`                 | `true` if `showMatchesPosition` is used in this batch, otherwise `false`                    | false
@@ -181,7 +182,7 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `filtered_by_canceled_by`                          | `true` if tasks are filtered by the `canceledBy` query parameter, otherwise `false`         | false
 | `filtered_by_before_enqueued_at`                   | `true` if tasks are filtered by the `beforeEnqueuedAt` query parameter, otherwise `false`   | false
 | `filtered_by_after_enqueued_at`                    | `true` if tasks are filtered by the `afterEnqueuedAt` query parameter, otherwise `false`    | false
-| `filtered_by_before_started_at`                    | `true` if tasks are filtered by the `beforeStartedAt` query parameter, otherwise `false`    |  false
+| `filtered_by_before_started_at`                    | `true` if tasks are filtered by the `beforeStartedAt` query parameter, otherwise `false`    | false
 | `filtered_by_after_started_at`                     | `true` if tasks are filtered by the `afterStartedAt` query parameter, otherwise `false`     | false
 | `filtered_by_before_finished_at`                   | `true` if tasks are filtered by the `beforeFinishedAt` query parameter, otherwise `false`   | false
 | `filtered_by_after_finished_at`                    | `true` if tasks are filtered by the `afterFinishedAt` query parameter, otherwise `false`    | false
@@ -198,8 +199,14 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `stop_words.total`                                 | Number of stop words                                                                        | 3
 | `synonyms.total`                                   | Number of synonyms                                                                          | 3
 | `per_index_uid`                                    | `true` if the `uid` is used to fetch an index stat resource, otherwise `false`              | false
+| `searches.avg_search_count`                        | The average number of search queries received per call for the aggregated event             | 4.2
+| `searches.total_search_count`                      | The total number of search queries received for the aggregated event                        | 16023
+| `indexes.avg_distinct_index_count`                 | The average number of queried indexes received per call for the aggregated event            | 1.2
+| `indexes.total_distinct_index_count`               | The total number of distinct indexes queries for the aggregated event                       | 6023
+| `indexes.total_single_index`                       | The total number of calls where only one index where queried                                | 2007
 | `matching_strategy.most_used_strategy`             | Most used word matching strategy                                                            | last
 | `infos.with_configuration_file`                    | `true` if the instance is launched with a configuration file, otherwise `false`             | false
+| `infos.experimental_enable_metrics`                | `true` if `--experimental-enable-metrics` is specified at launch, otherwise `false`         | false
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated
 | `per_document_id`                                  | `true` if the `DELETE /indexes/:indexUid/documents/:documentUid` endpoint was used, otherwise `false` | false
