@@ -106,7 +106,7 @@ The above JSON document would look like this in NDJSON:
 
 #### CSV
 
-CSV files express data as a sequence of values separated by a delimiter character. By default, Meilisearch uses a single comma (`,`) as the delimiter. You can use the `csvDelimiter` query parameter of the [add or update documents](/reference/api/documents.md#add-or-update-documents) or [add or replace documents](/reference/api/documents.md#add-or-replace-documents) endpoints to set a different character. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
+CSV files express data as a sequence of values separated by a delimiter character. By default, Meilisearch uses a single comma (`,`) as the delimiter. You can use the `csvDelimiter` query parameter with the [add or update documents](/reference/api/documents.md#add-or-update-documents) or [add or replace documents](/reference/api/documents.md#add-or-replace-documents) endpoints to set a different character. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
 
 Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
