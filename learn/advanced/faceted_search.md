@@ -183,9 +183,9 @@ Single-select or conjunctive facets use the `AND` logical operator. They only al
 
 Suppose your `ecommerce` index contains a facet for `brand` with the values `BrandA`, `BrandB`, and `BrandC`. Single select facets will allow you to view products from one brand at a time. If you want to view `BrandA` and `BrandB` products, you will have to try both searches individually. If you want to further narrow down results using the `reviews` facet, you would need to do so separately for both brands.
 
-The image below shows single-select facets in action. When the user searches for `led` and selects `Sunlite`, other brands are no longer visible.
+The GIF below shows single-select facets in action. When the user searches for `led` and selects `Sunlite`, other brands are grayed out and no longer selectable.
 
-![Meilisearch demo for single-select facets searching for 'LED'](/faceted-search/facets-single-select.png)
+![Meilisearch demo for single-select facets searching for 'LED'](/faceted-search/single-select.gif)
 
 The code sample below shows the query for the search mentioned above:
 
@@ -199,9 +199,9 @@ Multi-select or disjunctive facets use the `OR` logical operator. They allow use
 
 With single select facets, if a user selects `BrandA` for the `brands` facet, they will see it offers 5 products, nothing more. But with multi-select facets, we want to show users how many products `BrandB` and `BrandC` offer even when they're not selected. This lets the user know if other brands offer similar products and allows them to view products from multiple brands at the same time.
 
-The image below shows multi-select facets in action. Even though the user selected the `Lithonia Lighting` and `Sunlite` brands when searching for `LED`, they can see other brands and how many LED products they have.
+The GIF below shows multi-select facets in action. Even though the user selected the `Lithonia Lighting` and `Sunlite` brands when searching for `LED`, they can see other brands and how many LED products they have.
 
-![Meilisearch demo for multi-select facets searching for 'LED'](/faceted-search/facets-multi-select.png)
+![Meilisearch demo for multi-select facets searching for 'LED'](/faceted-search/multi-select.gif)
 
 The code sample below shows the query for the search mentioned above:
 
