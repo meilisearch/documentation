@@ -47,6 +47,10 @@ Server listening on: "localhost:7700"
 
 Congratulations! You're ready to move on to the next step!
 
+::: note
+If you started Meilisearch with a master key or using Meilisearch Cloud, you will need to add the [`-H Authorization: Bearer API_KEY` header](/reference/api/overview.md#authorization) to all your curl commands.
+:::
+
 ## Add documents
 
 For this quick start, we will be using a collection of movies as our dataset. To follow along, first click this link to download the file: <a id="downloadMovie" href="/movies.json" download="movies.json">movies.json</a>. Then, move the downloaded file into your working directory.
