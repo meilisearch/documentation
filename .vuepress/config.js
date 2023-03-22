@@ -107,7 +107,6 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/getting_started/installation',
-            '/learn/getting_started/supported_os',
             '/learn/getting_started/quick_start',
             {
               title: 'Meilisearch 101',

@@ -1,8 +1,10 @@
-# Installation
+# Installation and supported operating systems
 
-You can install Meilisearch locally or deploy it over a cloud service. This guide covers each option in detail.
+## Installation
 
-## Local installation
+You can install Meilisearch locally or deploy it over a cloud service. This section covers each option in detail.
+
+### Local installation
 
 :::: tabs
 
@@ -132,11 +134,11 @@ Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearc
 
 ::::
 
-## Meilisearch Cloud
+### Meilisearch Cloud
 
 [Meilisearch Cloud](https://www.meilisearch.com/pricing) is one of the easiest way to get started with Meilisearch. The Build plan allows you to index up to 100k documents and perform 10k search requests per month for free!
 
-## Cloud deploy
+### Cloud deploy
 
 To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
@@ -147,3 +149,27 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 - [Koyeb](/learn/cookbooks/koyeb.md)
 - [Qovery](/learn/cookbooks/qovery.md)
 - [Railway](/learn/cookbooks/railway.md)
+
+## Supported operating systems
+
+This section lists operating systems Meilisearch officially supports and tests with every new release. Meilisearch binaries might still run in unsupported environments. Refer to the [changelog](https://github.com/meilisearch/MeiliSearch/releases) for more information on operating system support changes.
+
+If the provided [binaries](/learn/getting_started/installation.md#local-installation) don't work for you, try building Meilisearch from source. If compilation fails, Meilisearch is not compatible with your machine.
+
+### Linux
+
+The Meilisearch binary works on all Linux distributions with `amd64/x86_64` or `aarch64/arm64` architecture using glibc 2.27 and later. You can check your glibc version using:
+
+```
+ldd --version
+```
+
+### macOS
+
+The Meilisearch binary works with macOS 12 and later with `amd64` or `arm64` architecture.
+
+### Windows
+
+The Meilisearch binary works on Windows Server 2022 and later.
+
+It is likely the Meilisearch binary also works with Windows OS 10 and later. However, due to the differences between Windows OS and Windows Server, Meilisearch does not officially support Windows OS.
