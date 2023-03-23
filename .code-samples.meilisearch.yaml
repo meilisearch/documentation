@@ -1027,7 +1027,7 @@ faceted_search_1: |-
     -X POST 'http://localhost:7700/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "q": "classics",
+      "q": "classic",
       "facets": [
       "genres", "rating", "language"
     ]

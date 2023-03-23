@@ -34,14 +34,15 @@ Suppose you have a dataset on books called `books` containing the following fiel
 
 ```json
 {
-  "id":2,
-  "title": "The Travels of Ibn Battuta",
-  "genres": ["Travel","Adventure"],
-  "publisher": "Dover Publications",
+  "id":5,
+  "title": "Hard Times",
+  "genres": ["Classics","Fiction", "Victorian", "Literature"],
+  "publisher": "Penguin Classics",
   "language": "English",
-  "authors": "Ibn Battuta",
-  "description":"",
-  "rating": 4.9
+  "author": "Charles Dickens",
+  "description":"Hard Times is a novel of social … ",
+  "format": "Hardcover",
+  "rating": 3
 }
 ```
 
@@ -49,38 +50,23 @@ The following code sample allows you to create facets for the `genres`, `languag
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
-Now, if you were to search the `books` index for `classics` using the following code sample:
+Now, if you were to search the `books` index for `classic` using the following code sample:
 
 <CodeSamples id="faceted_search_1" />
 
-The response shows `led` products along with two new fields: [`facetDistribution`](#facet-distribution) and [`facetStats`](#facet-stats):
+The response shows `classic` books along with two new fields: [`facetDistribution`](#facet-distribution) and [`facetStats`](#facet-stats):
 
 ```json
 {
   "hits":[
     …
   ],
-  "query":"classics",
-  "processingTimeMs":2,
-  "limit":20,
-  "offset":0,
-  "estimatedTotalHits":8,
+  "query":"classic",
+  …
   "facetDistribution":{
     "genres":{
       "Classics":6,
-      "Comedy":1,
-      "Coming-of-Age":1,
-      "Fantasy":2,
-      "Fiction":8,
-      "Historical Fiction":1,
-      "Horror":2,
-      "Literature":7,
-      "Novel":2,
-      "Romance":1,
-      "Satire":1,
-      "Tragedy":1,
-      "Vampires":1,
-      "Victorian":2
+      …
     },
     "language":{
       "English":6,
@@ -89,10 +75,7 @@ The response shows `led` products along with two new fields: [`facetDistribution
     },
     "rating":{
       "2.5":1,
-      "3":2,
-      "3.9":1,
-      "4":3,
-      "4.7":1
+      …
     }
   },
   "facetStats":{
@@ -116,18 +99,12 @@ The following response shows the facet distribution when searching for `classics
  "facetDistribution":{
     "genres":{
       "Classics":6,
-      "Comedy":1,
-      "Coming-of-Age":1,
       "Fantasy":2,
       "Fiction":8,
-      "Historical Fiction":1,
       "Horror":2,
       "Literature":7,
-      "Novel":2,
-      "Romance":1,
       "Satire":1,
       "Tragedy":1,
-      "Vampires":1,
       "Victorian":2
     },
     "language":{
@@ -155,11 +132,11 @@ By default, `facets` returns a maximum of 100 facet values for each faceted fiel
 
 ### Facet stats
 
-When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query. This can be used to create a range slider component allowing users to select a range of values for a facet.
+When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query. This can be used to create components like range sliders allowing users to select a range of values for a facet.
 
 If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object.
 
-Meilisearch ignores string values like `"21"` when computing `facetStats`.
+Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
 
 The following response shows the `facetStats` when searching for `classics`:
 
@@ -176,7 +153,7 @@ The following response shows the `facetStats` when searching for `classics`:
 }  
 ```
 
-Since `rating` was the only numeric facet in our example, it is returned in the `facetStats` object.
+Since `rating` was the only numeric facet in our example, it is the only facet returned in the `facetStats` object.
 
 ## Facet types
 
@@ -187,7 +164,11 @@ Conjunctive facets use the `AND` logical operator. When users select one or more
 With conjunctive facets, when a user selects `English` from the `language` facet, all returned books must be in English. If the user further narrows down the search by selecting `Fiction` and `Literature` as `genres`, all returned books must be in English and contain both `genres`.
 
 ```
-["language = English", "genres = Fiction", "genres = Literature"]
+# Filter expression as an array
+[language = English, genres = Fiction, genres = Literature]
+
+# Filter expression as a string
+language = English AND genres = Fiction AND genres = Literature
 ```
 
 The GIF below shows how the facet count for `genres` updates to only include books that meet **all three conditions**.
@@ -196,7 +177,7 @@ The GIF below shows how the facet count for `genres` updates to only include boo
 
 ### Disjunctive facets
 
-Disjunctive or multi-select facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for.
+Disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for.
 
 Let's look at the `books` index from before with disjunctive facets. When the user selects `Fiction` and `Literature` as `genres`, Meilisearch returns all books that are either `Fiction`, `Literature`, or both:
 
@@ -214,10 +195,14 @@ The GIF below shows the `books` dataset with disjunctive facets. Notice how the 
 
 ### Using conjunctive and disjunctive facets
 
-Let's look at the `books` index with both conjunctive and disjunctive facets. When the user selects `English` from the `language` facet, the facet count for the other languages does not change. This lets users know if we offer books in other languages. You can then use the `AND` operator to narrow down search to include `Fiction` and `Literature` as `genres`:
+Let's look at the `books` index with both conjunctive and disjunctive facets. The user selects `English` and `French` from the `language` facet, and then narrows down the search to include `Fiction` and `Literature` as `genres`:
 
 ```
-["language = English", ["genres = Fiction", "genres = Literature"]]
+# Filter expression as an array
+[[language = English, language = French], [genres = Fiction, genres = Literature]
+
+# Filter expression as a string
+language = English OR language = French AND (genres = Fiction AND genres = Literature)
 ```
 
 ![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/faceted-search/conjunctive-and-disjunctive-facets.gif)
