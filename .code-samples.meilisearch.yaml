@@ -1020,16 +1020,16 @@ faceted_search_update_settings_1: |-
     -X PUT 'http://localhost:7700/indexes/books/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-      "genres", "authors"
+      "genres", "rating", "language"
     ]'
 faceted_search_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/ecommerce/search' \
+    -X POST 'http://localhost:7700/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "q": "led",
+      "q": "classics",
       "facets": [
-      "rating", "category", "brand"
+      "genres", "rating", "language"
     ]
   }'
 search_parameter_guide_facet_stats_1: |-
@@ -1040,30 +1040,4 @@ search_parameter_guide_facet_stats_1: |-
       "q": "Batman",
       "facets": ["genres", "rating"]
     }'
-faceted_search_disjunctive_facets_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/ecommerce/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "led",
-      "facets": ["category", "brand"],
-      "filter": "category = \"Tools & Home Improvement\" AND brand = Sunlite"
-  }'  
-faceted_search_disjunctive_facets_2: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/ecommerce/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "led",
-      "facets": ["rating", "category", "brand"],
-      "filter": "brand = \"Lithonia Lighting\" OR brand = Sunlite"
-  }'
-faceted_search_conjunctive_facets_1: |-
-  curl \
-    -X POST 'http://localhost:7700/indexes/books/search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "q": "",
-      "facets": ["genres", "authors"],
-      filter: [["genres=fiction", "genres=literature"]]
-  }'
+
