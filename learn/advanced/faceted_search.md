@@ -183,7 +183,7 @@ Conjunctive facets use the `AND` logical operator. When users select one or more
 With conjunctive facets, when a user selects `English` from the `languages` facet, all returned books must be in English. If the user further narrows down the search by selecting `Fiction` and `Literature` as `genres`, all returned books must be in English and contain both `genres`.
 
 ```
-[["languages = English", "genres = Fiction", "genres = Literature"]]
+["languages = English", "genres = Fiction", "genres = Literature"]
 ```
 
 The GIF below shows how the facet count for `genres` updates to only include books that meet **all three conditions**.
@@ -194,14 +194,14 @@ The GIF below shows how the facet count for `genres` updates to only include boo
 
 Disjunctive or multi-select facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for.
 
-Let's look at the `books` index from before with disjunctive facets. When the user selects `English` from the `languages` facet, the facet count for the other languages does not change. This lets users know if we offer books in other languages. You can use the `AND` operator to narrows down search to include `Fiction` and `Literature` as `genres`:
+Let's look at the `books` index from before with disjunctive facets. When the user selects `Fiction` and `Literature` as `genres`, Meilisearch returns all books that are either `Fiction`, `Literature`, or both:
 
 ```
-["language = English", ["genres = Fiction", "genres = Literature"]]
+[["genres = Fiction", "genres = Literature"]]
 ```
 
 The GIF below shows the same dataset as before, but with disjunctive facets. Notice how the facet count for `genres` remains the same regardless of selection.
 
-![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](/faceted-search/disjunctive-facets.gif)
+![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](/faceted-search/default-disjunctive.gif)
 
 To learn more about implementing faceting and filtering, check out our [ecommerce demo](https://github.com/meilisearch/ecommerce-demo).
