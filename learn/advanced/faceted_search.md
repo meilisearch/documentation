@@ -30,18 +30,17 @@ Like any other filter, attributes you want to use as facets must be added to the
 Synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, faceting by `SF` and `San Francisco` will show you different results.
 :::
 
-Suppose you have an ecommerce dataset called `ecommerce` containing the following fields:
+Suppose you have a dataset on books called `books` containing the following fields:
 
 ```json
 {
-  "id": "1",
-  "title": "Kitchenex Stainless Steel Flatware Pie Server and Pie Cutter Set of 2",
-  "description": "| The Kitchenex Stainless Pie Server|…",
-  "category": "Home & Kitchen",
-  "brand": "Dr. Pet",
-  "price": 16.84,
-  "rating": 4.7,
-  "reviews_count": 7,
+  "id":2,
+  "title": "The Travels of Ibn Battuta",
+  "genres": ["Travel","Adventure"],
+  "publisher": "Dover Publications",
+  "language": "English",
+  "authors": "Ibn Battuta",
+  "description":""
 }
 ```
 
@@ -177,34 +176,32 @@ Since `rating` was the only numeric facet in our example, it is returned in the 
 
 ## Facet types
 
-### Single select facets
+### Conjunctive facets
 
-Single-select or conjunctive facets use the `AND` logical operator. They only allow the selection of a single value per facet.
+Conjunctive facets use the `AND` logical operator. When users select one or more values for a facet, all returned results must contain the selected facet value(s).
 
-Suppose your `ecommerce` index contains a facet for `brand` with the values `BrandA`, `BrandB`, and `BrandC`. Single select facets will allow you to view products from one brand at a time. If you want to view `BrandA` and `BrandB` products, you will have to try both searches individually. If you want to further narrow down results using the `reviews` facet, you would need to do so separately for both brands.
+With conjunctive facets, when a user selects `English` from the `languages` facet, all returned books must be in English. If the user further narrows down the search by selecting `Fiction` and `Literature` as `genres`, all returned books must be in English and contain both `genres`.
 
-The GIF below shows single-select facets in action. When the user searches for `led` and selects `Sunlite`, other brands are grayed out and no longer selectable.
+```
+[["languages = English", "genres = Fiction", "genres = Literature"]]
+```
 
-![Meilisearch demo for single-select facets searching for 'LED'](/faceted-search/single-select.gif)
+The GIF below shows how the facet count for `genres` updates to only include books that meet **all three conditions**.
 
-The code sample below shows the query for the search mentioned above:
+![Selecting English books with 'Fiction' and 'Literature' as 'genres' for the books dataset](/faceted-search/conjunctive-factes.gif)
 
-<CodeSamples id="faceted_search_conjunctive_facets_1" />
+### Disjunctive facets
 
-### Multi-select facets
+Disjunctive or multi-select facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for.
 
-Multi-select or disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for. You can use the `AND` operator to allow users to select different facets. For example, LED lights from the brand `Sunlite` within the `Tools & Home Improvement` category:
+Let's look at the `books` index from before with disjunctive facets. When the user selects `English` from the `languages` facet, the facet count for the other languages does not change. This lets users know if we offer books in other languages. You can use the `AND` operator to narrows down search to include `Fiction` and `Literature` as `genres`:
 
-<CodeSamples id="faceted_search_disjunctive_facets_1" />
+```
+["language = English", ["genres = Fiction", "genres = Literature"]]
+```
 
-With single select facets, if a user selects `BrandA` for the `brands` facet, they will see it offers 5 products, nothing more. But with multi-select facets, we want to show users how many products `BrandB` and `BrandC` offer even when they're not selected. This lets the user know if other brands offer similar products and allows them to view products from multiple brands at the same time.
+The GIF below shows the same dataset as before, but with disjunctive facets. Notice how the facet count for `genres` remains the same regardless of selection.
 
-The GIF below shows multi-select facets in action. Even though the user selected the `Lithonia Lighting` and `Sunlite` brands when searching for `LED`, they can see other brands and how many LED products they have.
-
-![Meilisearch demo for multi-select facets searching for 'LED'](/faceted-search/multi-select.gif)
-
-The code sample below shows the query for the search mentioned above:
-
-<CodeSamples id="faceted_search_disjunctive_facets_2" />
+![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](/faceted-search/disjunctive-facets.gif)
 
 To learn more about implementing faceting and filtering, check out our [ecommerce demo](https://github.com/meilisearch/ecommerce-demo).

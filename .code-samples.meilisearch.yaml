@@ -1017,10 +1017,10 @@ multi_search_1: |-
     }'
 faceted_search_update_settings_1: |-
   curl \
-    -X PUT 'http://localhost:7700/indexes/ecommerce/settings/filterable-attributes' \
+    -X PUT 'http://localhost:7700/indexes/books/settings/filterable-attributes' \
     -H 'Content-Type: application/json' \
     --data-binary '[
-      "rating", "brand"
+      "genres", "authors"
     ]'
 faceted_search_1: |-
   curl \
@@ -1060,10 +1060,10 @@ faceted_search_disjunctive_facets_2: |-
   }'
 faceted_search_conjunctive_facets_1: |-
   curl \
-    -X POST 'http://localhost:7700/indexes/ecommerce/search' \
+    -X POST 'http://localhost:7700/indexes/books/search' \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "q": "led",
-      "facets": ["rating", "category", "brand"],
-      "filter": "brand = Sunlite"
+      "q": "",
+      "facets": ["genres", "authors"],
+      filter: [["genres=fiction", "genres=literature"]]
   }'
