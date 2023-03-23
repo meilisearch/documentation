@@ -40,15 +40,16 @@ Suppose you have a dataset on books called `books` containing the following fiel
   "publisher": "Dover Publications",
   "language": "English",
   "authors": "Ibn Battuta",
-  "description":""
+  "description":"",
+  "rating": 4.9
 }
 ```
 
-The following code sample allows you to create facets for the `brand` and `rating` attributes:
+The following code sample allows you to create facets for the `genres`, `language`, and `rating` attributes:
 
 <CodeSamples id="faceted_search_update_settings_1" />
 
-Now, if you were to search the `ecommerce` index for `led` using the following code sample:
+Now, if you were to search the `books` index for `classics` using the following code sample:
 
 <CodeSamples id="faceted_search_1" />
 
@@ -59,32 +60,45 @@ The response shows `led` products along with two new fields: [`facetDistribution
   "hits":[
     …
   ],
-  "query":"led",
-  "processingTimeMs":20,
+  "query":"classics",
+  "processingTimeMs":2,
   "limit":20,
   "offset":0,
-  "estimatedTotalHits":24,
+  "estimatedTotalHits":8,
   "facetDistribution":{
-    "brand":{
-      "AceLite":1,
-       …
-      "Sunlite":2,
+    "genres":{
+      "Classics":6,
+      "Comedy":1,
+      "Coming-of-Age":1,
+      "Fantasy":2,
+      "Fiction":8,
+      "Historical Fiction":1,
+      "Horror":2,
+      "Literature":7,
+      "Novel":2,
+      "Romance":1,
+      "Satire":1,
+      "Tragedy":1,
+      "Vampires":1,
+      "Victorian":2
     },
-    "category":{
-      "Home & Kitchen":1,
-      "Tools & Home Improvement":22,
-      "Toys & Games":1
+    "language":{
+      "English":6,
+      "French":1,
+      "Spanish":1
     },
     "rating":{
-      "0":7,
-       …
-      "5":3
+      "2.5":1,
+      "3":2,
+      "3.9":1,
+      "4":3,
+      "4.7":1
     }
   },
   "facetStats":{
     "rating":{
-      "min":0.0,
-      "max":5.0
+      "min":2.5,
+      "max":4.7
     }
   }
 }
@@ -94,56 +108,46 @@ The response shows `led` products along with two new fields: [`facetDistribution
 
 The `facetDistribution` object contains the number of matching documents distributed among the values of a given facet. The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
 
-The following response shows the facet distribution when searching for `led`:
+The following response shows the facet distribution when searching for `classics`:
 
 ```json
 {
   …
  "facetDistribution":{
-    "brand":{
-      "AceLite":1,
-      "DALS Lighting":2,
-      "Globe Electric":1,
-      "Hyperikon":2,
-      "LUXRITE":1,
-      "Lithonia Lighting":1,
-      "MODOAO":2,
-      "Nadair":1,
-      "POCKETMAN":2,
-      "QPLUS":1,
-      "Sunlite":2,
-      "Suppromo":1,
-      "TORCHSTAR":1,
-      "Vinkki":1,
-      "WEWILL":1,
-      "hykolity":2,
-      "iHomma":1,
-      "iLintek":1
+    "genres":{
+      "Classics":6,
+      "Comedy":1,
+      "Coming-of-Age":1,
+      "Fantasy":2,
+      "Fiction":8,
+      "Historical Fiction":1,
+      "Horror":2,
+      "Literature":7,
+      "Novel":2,
+      "Romance":1,
+      "Satire":1,
+      "Tragedy":1,
+      "Vampires":1,
+      "Victorian":2
     },
-    "category":{
-      "Home & Kitchen":1,
-      "Tools & Home Improvement":22,
-      "Toys & Games":1
+    "language":{
+      "English":6,
+      "French":1,
+      "Spanish":1
     },
     "rating":{
-      "0":7,
-      "1":1,
-      "3.6":1,
-      "3.8":1,
-      "4":2,
-      "4.1":2,
-      "4.4":1,
-      "4.5":2,
-      "4.6":1,
-      "4.7":3,
-      "5":3
+      "2.5":1,
+      "3":2,
+      "3.9":1,
+      "4":3,
+      "4.7":1
     }
-  }
+  },
   …
 }
 ```
 
-`facetDistribution` contains an object for every given facet, in this case, `brand`, `category`, and `rating`. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no `led` products under the `Electronics` category, it is not displayed.
+`facetDistribution` contains an object for every given facet, in this case, `genres`, `language`, and `rating`. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no results for the Arabic language, it is not displayed.
 
 ::: note
 By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
@@ -157,15 +161,15 @@ If none of the matching documents have a numeric value for a facet, that facet i
 
 Meilisearch ignores string values like `"21"` when computing `facetStats`.
 
-The following response shows the `facetStats` when searching for `led`:
+The following response shows the `facetStats` when searching for `classics`:
 
 ```json
 {
   …
-  "facetStats":{
+"facetStats":{
     "rating":{
-      "min":0.0,
-      "max":5.0
+      "min":2.5,
+      "max":4.7
     }
   }
   …
@@ -180,10 +184,10 @@ Since `rating` was the only numeric facet in our example, it is returned in the 
 
 Conjunctive facets use the `AND` logical operator. When users select one or more values for a facet, all returned results must contain the selected facet value(s).
 
-With conjunctive facets, when a user selects `English` from the `languages` facet, all returned books must be in English. If the user further narrows down the search by selecting `Fiction` and `Literature` as `genres`, all returned books must be in English and contain both `genres`.
+With conjunctive facets, when a user selects `English` from the `language` facet, all returned books must be in English. If the user further narrows down the search by selecting `Fiction` and `Literature` as `genres`, all returned books must be in English and contain both `genres`.
 
 ```
-["languages = English", "genres = Fiction", "genres = Literature"]
+["language = English", "genres = Fiction", "genres = Literature"]
 ```
 
 The GIF below shows how the facet count for `genres` updates to only include books that meet **all three conditions**.
@@ -197,11 +201,23 @@ Disjunctive or multi-select facets use the `OR` logical operator. They allow use
 Let's look at the `books` index from before with disjunctive facets. When the user selects `Fiction` and `Literature` as `genres`, Meilisearch returns all books that are either `Fiction`, `Literature`, or both:
 
 ```
-[["genres = Fiction", "genres = Literature"]]
+# Filter expression as an array
+[[genres = Fiction, genres = Literature]]
+
+# Filter expression as a string
+genres = Fiction OR genres = Literature
 ```
 
-The GIF below shows the same dataset as before, but with disjunctive facets. Notice how the facet count for `genres` remains the same regardless of selection.
+The GIF below shows the `books` dataset with disjunctive facets. Notice how the facet count for `genres` updates based on the selection.
 
-![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](/faceted-search/default-disjunctive.gif)
+![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](/faceted-search/disjunctive_facets.gif)
 
-To learn more about implementing faceting and filtering, check out our [ecommerce demo](https://github.com/meilisearch/ecommerce-demo).
+### Using conjunctive and disjunctive facets
+
+Let's look at the `books` index with both conjunctive and disjunctive facets. When the user selects `English` from the `language` facet, the facet count for the other languages does not change. This lets users know if we offer books in other languages. You can then use the `AND` operator to narrow down search to include `Fiction` and `Literature` as `genres`:
+
+```
+["language = English", ["genres = Fiction", "genres = Literature"]]
+```
+
+![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/faceted-search/conjunctive-and-disjunctive-facets.gif)
