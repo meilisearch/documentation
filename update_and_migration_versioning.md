@@ -10,9 +10,9 @@ Release versions follow the MAJOR.MINOR.PATCH format and adhere to the [Semantic
 - MINOR versions introduce new features that are backwards compatible
 - PATCH versions only contain high-priority bug fixes and security updates
 
-::: warning
+<Capsule intent="warning">
 Prior to Meilisearch v1, MINOR versions also broke compatibility between releases.
-:::
+</Capsule>
 
 ### Release schedule
 

@@ -4,9 +4,9 @@ By default, Meilisearch focuses on ordering results according to their relevancy
 
 This can be useful in many situations, such as when a user wants to see the cheapest products available in a webshop.
 
-::: tip
+<Capsule intent="tip">
 Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search.md#placeholder-search).
-:::
+</Capsule>
 
 ## Configuring Meilisearch for sorting at search time
 
@@ -16,21 +16,21 @@ To allow your users to sort results at search time you must:
 2. Add those attributes to the `sortableAttributes` index setting
 3. Update Meilisearch's [ranking rules](/learn/core_concepts/relevancy.md) (optional)
 
-::: note
+<Capsule intent="note">
 Meilisearch sorts strings in lexicographic order based on their byte values. For example, `á`, which has a value of 225, will be sorted after `z`, which has a value of 122.
 
 Uppercase letters are sorted as if they were lowercase. They will still appear uppercase in search results.
-:::
+</Capsule>
 
 ### Select attributes for sorting
 
 Meilisearch allows you to sort results based on document fields. Only fields containing numbers, strings, arrays of numeric values, and arrays of string values can be used for sorting.
 
-::: warning
+<Capsule intent="warning">
 If a field has values of different types across documents, Meilisearch will give precedence to numbers over strings. This means documents with numeric field values will be ranked higher than those with string values.
 
 This can lead to unexpected behavior when sorting, so we strongly recommend you only allow sorting at query time on fields containing the same type of value.
-:::
+</Capsule>
 
 ### Adding attributes to `sortableAttributes`
 

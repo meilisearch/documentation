@@ -18,7 +18,7 @@ To help with the transition, we have also included a comparison of Meilisearch a
 
 Before continuing, make sure you have both Meilisearch and Node.js installed and have access to a command-line terminal. If you're unsure how to install Meilisearch, see our [quick start](/learn/getting_started/quick_start.md).
 
-::: note
+<Capsule intent="note">
 
 This guide was tested with the following package versions:
 
@@ -27,7 +27,7 @@ This guide was tested with the following package versions:
 [`meilisearch-js`](https://www.npmjs.com/package/meilisearch): `0.27.0`
 [`meilisearch`](https://github.com/meilisearch/meilisearch): `0.28`
 
-:::
+</Capsule>
 
 ## Export your Algolia data
 
@@ -212,7 +212,7 @@ This section compares Algolia and Meilisearch's respective API methods, using Ja
 
 | Method                | Algolia                                                                             | Meilisearch                                                                                                            |
 |-----------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| Index Instantiation   | `client.initIndex()`<br>Here, client is an Algolia instance.                        | `client.index()`<br>Here, client is a Meilisearch instance.                                                            |
+| Index Instantiation   | `client.initIndex()`<br />Here, client is an Algolia instance.                        | `client.index()`<br />Here, client is a Meilisearch instance.                                                            |
 | Create Index          | Algolia automatically creates an index the first time you add a record or settings. | The same applies to Meilisearch, but users can also create an index explicitly: `client.createIndex(string indexName)` |
 | Get All Indexes       | `client.listIndices()`                                                              | `client.getIndexes()`                                                                                                  |
 | Get Single Index      | No method available                                                                 | `client.getIndex(string indexName)`                                                                                    |

@@ -29,9 +29,9 @@ When you perform a search, all searchable fields are checked for matching query 
 
 Non-searchable fields are most useful for internal information that's not relevant to the search experience, such as URLs, sales numbers, or ratings used exclusively for sorting results.
 
-::: tip
+<Capsule intent="tip">
 Even if you make a field non-searchable, it will remain [stored in the database](#data-storing) and can be made searchable again at a later time.
-:::
+</Capsule>
 
 ### The `searchableAttributes` list
 
@@ -58,9 +58,9 @@ You may want to make some attributes non-searchable, or change the [attribute ra
 
 After manually updating the `searchableAttributes` list, **subsequent new attributes will no longer be automatically added** unless the settings are [reset](/reference/api/settings.md#reset-searchable-attributes).
 
-::: warning
+<Capsule intent="warning">
 Due to an implementation bug, manually updating `searchableAttributes` will change the displayed order of document fields in the JSON response. This behavior is inconsistent and will be fixed in a future release.
-:::
+</Capsule>
 
 #### Example
 

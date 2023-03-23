@@ -16,11 +16,11 @@ Dumps export Meilisearch data in a way that is not bound to a specific Meilisear
 
 **Importing a dump requires Meilisearch to re-index all your documents.** This process requires a significant amount of time and memory proportional to the size of the database.
 
-::: note
+<Capsule intent="note">
 We do not recommend using dumps from a new Meilisearch version to import an older version.
 
 For example, you can import a dump from Meilisearch v0.21 into v0.22 without any problems. Importing a dump generated in v0.22 into a v0.21 instance, however, can lead to unexpected behavior.
-:::
+</Capsule>
 
 ## Conclusion
 

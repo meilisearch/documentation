@@ -14,9 +14,9 @@ docker pull getmeili/meilisearch:v1.0
 
 Meilisearch deploys a new Docker image with every release of the engine. Each image is tagged with the corresponding Meilisearch version, indicated in the above example by the text following the `:` symbol. You can see [the full list of available Meilisearch Docker images](https://hub.docker.com/r/getmeili/meilisearch/tags#!) on Docker Hub.
 
-::: warning
+<Capsule intent="warning">
 The `latest` tag will always download the most recent Meilisearch release. Meilisearch advises against using it, as it might result in different machines running different images if significant time passes between setting up each one of them.
-:::
+</Capsule>
 
 ## Run Meilisearch with Docker
 
@@ -92,9 +92,9 @@ docker run -it --rm \
 
 Note that exporting and importing dumps require using command-line arguments. [For more information on how to run Meilisearch with CLI options and Docker, refer to this guide's relevant section.](#passing-instance-options-with-cli-arguments)
 
-::: warning
+<Capsule intent="warning">
 If you are storing your data in a persistent volume as instructed in [the data persistency section](#data-persistency), you must delete `/meili_data/data.ms` in that volume before importing a dump.
-:::
+</Capsule>
 
 Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/update_and_migration/updating.md)
 

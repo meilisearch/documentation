@@ -27,12 +27,13 @@ We provide a few [other installation methods](/learn/getting_started/quick_start
 
 Meilisearch is open-source and can run either on your server or on any cloud provider.
 
-::: note
+<Capsule intent="note">
 
 The host URL and the API key you will provide in the next steps correspond to the credentials of this Meilisearch instance.
 In the example above, the host URL is `http://localhost:7700` and the API key is `MASTER_KEY`.
 
-:::
+</Capsule>
+
 
 ## Scrape your content
 
@@ -86,11 +87,11 @@ All searchable `lvl` elements outside this main documentation container (for ins
 If you use VuePress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/main/.vuepress/docs-scraper/docs-scraper.config.json) we use in production.
 In our case, the main container is `theme-default-content` and the selector the titles and subtitles are `h1`, `h2`...
 
-::: tip
+<Capsule intent="tip">
 
 More [optional fields are available](https://github.com/meilisearch/docs-scraper#all-the-config-file-settings) to fit your needs.
 
-:::
+</Capsule>
 
 ### Run the scraper
 
@@ -105,22 +106,22 @@ docker run -t --rm \
   getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json
 ```
 
-::: note
+<Capsule intent="note">
 
 If you don't want to use Docker, here are [other ways to run the scraper](https://github.com/meilisearch/docs-scraper#installation-and-usage).
 
-:::
+</Capsule>
 
 `<absolute-path-to-your-config-file>` should be the **absolute** path of your configuration file defined at [the previous step](#configuration-file).
 
 The API key should have the permissions to add documents into your Meilisearch instance. In a production environment, we recommend providing the `Default Admin API Key` as it has enough permissions to perform such requests.
 _More about [Meilisearch security](/learn/security/master_api_keys.md)._
 
-::: tip
+<Capsule intent="tip">
 
 We recommend running the scraper at each new deployment of your documentation, [as we do for the Meilisearch's one](https://github.com/meilisearch/documentation/blob/main/.github/workflows/deploy.yml).
 
-:::
+</Capsule>
 
 ## Integrate the search bar
 
@@ -134,25 +135,19 @@ If you use VuePress for your documentation, we provide a [Vuepress plugin](https
 
 In your VuePress project:
 
-:::: tabs
-
-::: tab yarn
-
+<Tabs.Container labels={["yarn", "npm"]}>
+<Tabs.Content label="yarn">
 ```bash
 yarn add vuepress-plugin-meilisearch
 ```
+</Tabs.Content>
 
-:::
-
-::: tab npm
-
+<Tabs.Content label="npm">
 ```bash
 npm install vuepress-plugin-meilisearch
 ```
-
-:::
-
-::::
+</Tabs.Content>
+</Tabs.Container>
 
 In your `config.js` file:
 
@@ -176,12 +171,12 @@ The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch ins
 
 These three fields are mandatory, but more [optional fields are available](https://github.com/meilisearch/vuepress-plugin-meilisearch#customization) to customize your search bar.
 
-::: warning
+<Capsule intent="warning">
 
 Since the configuration file is public, we strongly recommend providing a key that can only access [the search endpoint](/reference/api/search.md) , such as the `Default Search API Key`, in a production environment.
 Read more about [Meilisearch security](/learn/security/master_api_keys.md).
 
-:::
+</Capsule>
 
 ### For all kinds of documentation
 
@@ -217,21 +212,21 @@ The `hostUrl` and the `apiKey` fields are the credentials of the Meilisearch ins
 `indexUid` is the index identifier in your Meilisearch instance in which your website content is stored. It has been defined in the [config file](#configuration-file).
 `inputSelector` is the `id` attribute of the HTML search input tag.
 
-::: warning
+<Capsule intent="warning">
 
 We strongly recommend providing a `Default Search API Key` in a production environment, which is enough to perform search requests.
 
 Read more about [Meilisearch security](/learn/security/master_api_keys.md).
 
-:::
+</Capsule>
 
 The default behavior of this library fits perfectly for a documentation search bar, but you might need [some customizations](https://github.com/meilisearch/docs-searchbar.js#customization).
 
-::: note
+<Capsule intent="note">
 
 For more concrete examples, you can check out this [basic HTML file](https://github.com/meilisearch/docs-searchbar.js/blob/main/playgrounds/html/index.html) or [this more advanced Vue file](https://github.com/meilisearch/vuepress-plugin-meilisearch/blob/main/MeiliSearchBox.vue).
 
-:::
+</Capsule>
 
 ## What's next?
 

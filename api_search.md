@@ -21,9 +21,9 @@ Search for documents matching a specific query in the given index.
 
 This is the preferred endpoint to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
-::: note
+<Capsule intent="note">
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
-:::
+</Capsule>
 
 ### Path parameters
 
@@ -130,15 +130,15 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 
 Search for documents matching a specific query in the given index.
 
-::: warning
+<Capsule intent="warning">
 This endpoint only accepts [string filter expressions](/learn/advanced/filtering_and_faceted_search.md#filter-expressions).
-:::
+</Capsule>
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
 
-:::note
+<Capsule intent="note">
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
-:::
+</Capsule>
 
 ### Path parameters
 
@@ -231,11 +231,11 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for both `GET` and `POST` routes.
 
-::: warning
+<Capsule intent="warning">
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
 
 This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
-:::
+</Capsule>
 
 ### Overview
 
@@ -267,9 +267,9 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 
 Sets the search terms.
 
-::: warning
+<Capsule intent="warning">
 Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations.md#maximum-number-of-query-words).
-:::
+</Capsule>
 
 #### Example
 
@@ -311,9 +311,9 @@ When `q` isn't specified, Meilisearch performs a **placeholder search**.  A plac
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
-::: tip
+<Capsule intent="tip">
 Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
-:::
+</Capsule>
 
 #### Phrase search
 
@@ -339,9 +339,9 @@ Queries using `offset` and `limit` only return an estimate of the total number o
 
 You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
 
-::: warning
+<Capsule intent="warning">
 Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings.md#update-pagination-settings) returns an empty array.
-:::
+</Capsule>
 
 #### Example
 
@@ -359,9 +359,9 @@ Sets the maximum number of documents returned by a single query.
 
 You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
 
-::: warning
+<Capsule intent="warning">
 A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings.md#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
-:::
+</Capsule>
 
 #### Example
 
@@ -383,13 +383,13 @@ If you set `hitsPerPage` to `0`, Meilisearch processes your request, but does no
 
 You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
 
-::: note
+<Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
-:::
+</Capsule>
 
-::: warning
+<Capsule intent="warning">
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
-:::
+</Capsule>
 
 #### Example
 
@@ -411,13 +411,13 @@ If you set `page` to `0`, Meilisearch processes your request, but does not retur
 
 You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
 
-::: note
+<Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
-:::
+</Capsule>
 
-::: warning
+<Capsule intent="warning">
 `hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
-:::
+</Capsule>
 
 #### Example
 
@@ -480,9 +480,9 @@ This parameter can take two values:
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
 
-::: note
+<Capsule intent="note">
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
-:::
+</Capsule>
 
 [Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-and-using-facets)
 
@@ -523,9 +523,9 @@ Configures which attributes will be retrieved in the returned documents.
 
 If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/api/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
 
-::: note
+<Capsule intent="note">
 If an attribute has been removed from `displayedAttributes`, `attributesToRetrieve` will silently ignore it and the field will not appear in your returned documents.
-:::
+</Capsule>
 
 #### Example
 
@@ -647,13 +647,13 @@ Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*
 
 By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
-::: note
+<Capsule intent="note">
 `attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings.md#synonyms) and [stop words](/reference/api/settings.md#stop-words).
-:::
+</Capsule>
 
-::: warning
+<Capsule intent="warning">
 `attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
-:::
+</Capsule>
 
 #### Example
 
@@ -717,9 +717,9 @@ You can find the highlighted query terms inside the `_formatted` property:
 }
 ```
 
-::: danger
+<Capsule intent="danger">
 Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in conjunction, be careful to ensure tags are correctly matched. In the above example, not setting `highlightPostTag` would result in malformed HTML: `<span>Winter Feast</em>`.
-:::
+</Capsule>
 
 ### Show matches position
 
@@ -729,15 +729,15 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
-::: warning
+<Capsule intent="warning">
 `showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
-:::
+</Capsule>
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
 
-::: warning
+<Capsule intent="warning">
 `start` and `length` are measured in bytes and not the number of characters. For example, `ü` represents two bytes but one character.
-:::
+</Capsule>
 
 #### Example
 
@@ -787,11 +787,11 @@ Sorts search results at query time according to the specified attributes and ind
 
 Each attribute in the list must be followed by a colon (`:`) and the preferred sorting order: either ascending (`asc`) or descending (`desc`).
 
-::: note
+<Capsule intent="note">
 Attribute order is meaningful. The first attributes in a list will be given precedence over those that come later.
 
 For example, `sort="price:asc,author:desc` will prioritize `price` over `author` when sorting results.
-:::
+</Capsule>
 
 When using the `POST` route, `sort` expects an array of strings.
 

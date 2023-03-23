@@ -53,9 +53,9 @@ Open a new terminal window and run the following command:
 
 Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents.md). Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes.md).
 
-::: note
+<Capsule intent="note">
 Meilisearch currently only accepts data in JSON, NDJSON, and CSV formats. You can read more about this in our [documents guide](/learn/core_concepts/documents.md#dataset-format).
-:::
+</Capsule>
 
 The previous command added documents from `movies.json` to a new index called `movies` and set `id` as the primary key. If it isn't set manually, Meilisearch [infers](/learn/core_concepts/primary_key.md#meilisearch-guesses-your-primary-key) it from your dataset.
 
@@ -227,9 +227,9 @@ The master key should only be used for retrieving and managing API keys. For reg
 
 <CodeSamples id="getting_started_communicating_with_a_protected_instance" />
 
-::: warning
+<Capsule intent="warning">
 Accessing the `/keys` route without setting a master key will return an [error](/reference/errors/error_codes.md#missing-master-key).
-:::
+</Capsule>
 
 To learn more about key management, refer to our [dedicated guide](/learn/security/master_api_keys.md).
 

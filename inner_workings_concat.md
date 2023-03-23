@@ -14,9 +14,9 @@ A search on `The news paper` will also search for the following concatenated que
 - `the newspaper`
 - `Thenewspaper`
 
-::: warning
+<Capsule intent="warning">
 This concatenation is done on a **maximum of 3 words**.
-:::
+</Capsule>
 
 ## Split queries
 

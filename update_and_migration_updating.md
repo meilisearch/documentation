@@ -10,13 +10,13 @@ If you're updating your Meilisearch instance on cloud platforms like DigitalOcea
 
 If migrating to the latest version of Meilisearch will cause you to skip multiple versions, this may require changes to your codebase. [Refer to our version-specific update warnings for more details](#version-specific-warnings).
 
-::: tip
+<Capsule intent="tip">
 If you are running Meilisearch as a `systemctl` service using v0.22 or above, try our [migration script](https://github.com/meilisearch/meilisearch-migration).
-:::
+</Capsule>
 
-::: danger
+<Capsule intent="danger">
 This guide only works for versions v0.15 and above. If you are using an older version, please [contact support](https://discord.gg/meilisearch) for more information.
-:::
+</Capsule>
 
 ## Step 1: Export data
 
@@ -36,19 +36,18 @@ The response should look something like this:
 }
 ```
 
-::: note
-If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. For each command, replace the `Authorization: Bearer` header with the `X-Meili-API-Key: API_KEY` header:
+<Capsule intent="tip" title="If you get the `missing_authorization_header` error, you might be using **v0.24 or below**. For each command, replace the `Authorization: Bearer` header with the `X-Meili-API-Key: API_KEY` header:">
 
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
-:::
+</Capsule>
 
 If your [`pkgVersion`](/reference/api/version.md#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
 
 ### Set all fields as displayed attributes
 
-::: note
+<Capsule intent="note">
 If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
-:::
+</Capsule>
 
 When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
 
@@ -149,7 +148,7 @@ The server should return a response that looks like this:
 
 Use the `taskUid` to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
-::: note
+<Capsule intent="note">
 The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
 
 ```sh
@@ -158,8 +157,7 @@ The response will vary slightly depending on your version. For v0.27 and below, 
     -H 'Authorization: Bearer API_KEY' 
   # -H 'X-Meili-API-Key: API_KEY' for v0.24 or below
 ```
-
-:::
+</Capsule>
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 

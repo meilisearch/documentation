@@ -6,9 +6,9 @@ _The following is a guest post by Christopher Maneu, Data Engineering Lead Advoc
 
 In this tutorial, we will see how to deploy a Meilisearch instance on Azure, and also some considerations for hosting a production Meilisearch instance on Azure.
 
-::: tip
+<Capsule intent="tip">
 If you don't yet have an Azure subscription, you can [create one here](https://azure.microsoft.com/free/). With the Azure Free tier, you can run a Meilisearch instance for free for at least 12 months.
-:::
+</Capsule>
 
 ## One-click deploy
 
@@ -28,17 +28,17 @@ When clicking this button, you'll be redirected to the Azure Portal and asked a 
 
 Once you have filled in these fields, click the "Review + create" button and then the "Create" button.
 
-::: warning
+<Capsule intent="warning">
 By default, the instance created is on a Standard plan. This will incur costs in your subscription. You can change it to a Free tier later, or by editing the Infrastructure as Code ([see below](#what-is-happening-with-this-one-click-button)).
-:::
+</Capsule>
 
 After a few minutes, the deployment will be complete. You'll be able to access your instance URL by clicking on the "Outputs" tabs on the left.
 
 ![The Azure portal showing information about your Meilisearch deployment](/azure/02.azure-output.png)
 
-::: tip
+<Capsule intent="tip">
 While Meilisearch is usually exposed on port `7700`, this deployment will expose your instance on port `433`. An SSL certificate will be generated and managed for you by Azure.
-:::
+</Capsule>
 
 ### What is happening with this one-click button?
 
@@ -59,9 +59,9 @@ The one-click button creates a storage with the "LRS" redundancy option. That me
 
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
-::: tip
+<Capsule intent="tip">
 Meilisearch has snapshot and dump features that can help improve your backup capabilities. See [Data Backup documentation](/learn/advanced/snapshots_vs_dumps.md) for more information.
-:::
+</Capsule>
 
 ### Always-on
 

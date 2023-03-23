@@ -95,9 +95,9 @@ Meilisearch considers the following task types as global:
 - [`indexSwap`](/reference/api/tasks.md#indexswap)
 - [`snapshotCreation`](/reference/api/tasks.md#snapshotcreation)
 
-::: note
+<Capsule intent="note">
 In a protected instance, your API key must have access to all indexes (`"indexes": [*]`) to view global tasks.
-:::
+</Capsule>
 
 ### Task queue
 
@@ -130,11 +130,11 @@ You can cancel a task while it is `enqueued` or `processing` by using [the cance
 
 Meilisearch does not automatically delete tasks once their status is `succeeded`, `failed`, or `canceled`. These tasks remain visible in [the task list](/reference/api/tasks.md#get-tasks). To delete them, use the [delete tasks route](/reference/api/tasks.md#delete-tasks).
 
-::: note
+<Capsule intent="note">
 **Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
 
 Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch discards all progress made on `processing` tasks and resets them to `enqueued`. Task handling proceeds as normal once the instance is relaunched.
-:::
+</Capsule>
 
 #### Examples
 
@@ -264,9 +264,9 @@ This filter accepts dates formatted according to [RFC 3339](https://www.ietf.org
 
 The above code sample will return all tasks `enqueued` **after** 11:49:53:00 on 11 Oct 2020.
 
-::: note
+<Capsule intent="note">
 Date filters are equivalent to `<` or `>` operations and do not include the specified value. It is not possible to perform `≤` or `≥` operations with a task date filter.
-:::
+</Capsule>
 
 ### Combine filters
 

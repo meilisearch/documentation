@@ -4,7 +4,7 @@ A document is an object composed of one or more fields. Each field consists of a
 
 ## Structure
 
-![Diagram illustration Meilisearch's document structure](/document_structure.svg =573x400)
+![Diagram illustration Meilisearch's document structure](https://raw.githubusercontent.com/meilisearch/documentation/2800e5821c06d6adc6c5a35ffbb01e7f80ff801f/.vuepress/public/document_structure.svg)
 
 ### Important terms
 
@@ -121,9 +121,9 @@ The above JSON document would look like this in CSV:
 
 Since CSV does not support arrays or nested objects, `cast` cannot be converted to CSV.
 
-::: note
+<Capsule intent="note">
 If you don't specify the data type for an attribute, it will default to `:string`.
-:::
+</Capsule>
 
 ### Auto-batching
 

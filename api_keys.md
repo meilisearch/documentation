@@ -2,9 +2,9 @@
 
 The `/keys` route allows you to create, manage, and delete API keys. To use these endpoints, you must first [set the master key](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance). Once a master key is set, you can access these endpoints by supplying it in the header of the request, or using API keys that have access to the `keys.get`, `keys.create`, `keys.update`, or `keys.delete` actions.
 
-::: warning
+<Capsule intent="warning">
 Accessing the `/keys` route without setting a master key will throw a [`missing_master_key`](/reference/errors/error_codes.md#missing-master-key) error.
-:::
+</Capsule>
 
 [Learn more about managing keys and their rights](/learn/security/master_api_keys.md).
 
@@ -54,11 +54,11 @@ Accessing the `/keys` route without setting a master key will throw a [`missing_
 
 This value is also used as the `{key}` path variable to [update](#update-a-key), [delete](#delete-a-key), or [get](#get-one-key) a specific key.
 
-::: note
+<Capsule intent="note">
 Since `key` is a hash of the `uid` and master key, `key` values are deterministic between instances sharing the same configuration. This means if the master key changes, all `key` values are automatically changed.
 
 Since the `key` field depends on the master key, it is computed at runtime and therefore not propagated to dumps and snapshots. As a result, even if a malicious user comes into possession of your dumps or snapshots, they will not have access to your instance's API keys.
-:::
+</Capsule>
 
 ### `actions`
 
@@ -68,9 +68,9 @@ Since the `key` field depends on the master key, it is computed at runtime and t
 
 You can use `*` as a wildcard to access all endpoints for the `documents`, `indexes`, `tasks`, `settings`, `stats` and `dumps` actions. For example, `documents.*` gives access to all document actions.
 
-::: warning
+<Capsule intent="warning">
 For security reasons, we do not recommend creating keys that can perform all actions.
-:::
+</Capsule>
 
 | Name                   | Description                                                                                                                                                                                                                                                                      |
 | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -207,9 +207,9 @@ Results can be paginated using the `offset` and `limit` query parameters.
 }
 ```
 
-::: note
+<Capsule intent="note">
 API keys are displayed in descending order based on their `createdAt` date. This means that the most recently created keys appear first.
-:::
+</Capsule>
 
 ## Get one key
 

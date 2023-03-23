@@ -8,9 +8,9 @@ Words set as synonyms won't always return the same results. With the default set
 
 With the new settings, searching for `great` returns 595 results and `fantastic` returns 423 results. This is due to various factors like [typos](/learn/configuration/typo_tolerance.md#minwordsizefortypos) and [splitting the query](/learn/advanced/concat.md#split-queries) to find relevant documents. The search for `great` will allow only one typo (for example, `create`) and take into account all variations of `great` (for instance, `greatest`) along with `fantastic`.
 
-::: warning
+<Capsule intent="warning">
 The number of search results may vary depending on changes to the `movies` dataset.
-:::
+</Capsule>
 
 ## Normalization
 
@@ -104,10 +104,10 @@ Take note that **multi-word phrases are treated differently** than associations 
 
 When a multi-word phrase is considered the synonym of another word or phrase, the **exact search query will always take precedence over its synonym(s)**.
 
-::: note
+<Capsule intent="note">
 Multi-word synonyms are limited to a maximum of **three words**.
 For example, although you could make `League of Legends` and `LOL` into synonyms, you could not do the same for `The Lord of the Rings` and `LOTR`.
-:::
+</Capsule>
 
 #### Example
 

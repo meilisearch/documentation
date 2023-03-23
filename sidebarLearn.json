@@ -1,0 +1,369 @@
+[
+  {
+      "title": "Core concepts",
+      "slug": "core",
+      "routes": [
+          {
+              "source": "core_concepts_documents.md",
+              "label": "documents",
+              "slug": "core_concepts_documents"
+          },
+          {
+              "source": "core_concepts_indexes.md",
+              "label": "indexes",
+              "slug": "core_concepts_indexes"
+          },
+          {
+              "source": "core_concepts_primary_key.md",
+              "label": "primary key",
+              "slug": "core_concepts_primary_key"
+          },
+          {
+              "source": "core_concepts_relevancy.md",
+              "label": "relevancy",
+              "slug": "core_concepts_relevancy"
+          }
+      ]
+  },
+  {
+      "title": "Configuration",
+      "slug": "config",
+      "routes": [
+          {
+              "source": "config_instance_options.md",
+              "label": "instance options",
+              "slug": "config_instance_options"
+          },
+          {
+              "source": "config_settings_displayed_searchable_attributes.md",
+              "label": "settings displayed searchable attributes",
+              "slug": "config_settings_displayed_searchable_attributes"
+          },
+          {
+              "source": "config_settings_distinct.md",
+              "label": "settings distinct",
+              "slug": "config_settings_distinct"
+          },
+          {
+              "source": "config_settings_overview.md",
+              "label": "settings overview",
+              "slug": "config_settings_overview"
+          },
+          {
+              "source": "config_settings_synonyms.md",
+              "label": "settings synonyms",
+              "slug": "config_settings_synonyms"
+          },
+          {
+              "source": "config_settings_typo_tolerance.md",
+              "label": "settings typo tolerance",
+              "slug": "config_settings_typo_tolerance"
+          }
+      ]
+  },
+  {
+      "title": "Contributing",
+      "slug": "contribute",
+      "routes": [
+          {
+              "source": "contributing_docs.md",
+              "label": "docs",
+              "slug": "contributing_docs"
+          },
+          {
+              "source": "contributing_overview.md",
+              "label": "overview",
+              "slug": "contributing_overview"
+          }
+      ]
+  },
+  {
+      "title": "Backup",
+      "slug": "backup",
+      "routes": [
+          {
+              "source": "backup_dumps.md",
+              "label": "dumps",
+              "slug": "backup_dumps"
+          },
+          {
+              "source": "backup_snapshots.md",
+              "label": "snapshots",
+              "slug": "backup_snapshots"
+          },
+          {
+              "source": "backup_snapshots_vs_dumps.md",
+              "label": "snapshots vs dumps",
+              "slug": "backup_snapshots_vs_dumps"
+          }
+      ]
+  },
+  {
+      "title": "Cookbooks",
+      "slug": "cookbooks",
+      "routes": [
+          {
+              "source": "cookbooks_docker.md",
+              "label": "docker",
+              "slug": "cookbooks_docker"
+          },
+          {
+              "source": "cookbooks_http2_ssl.md",
+              "label": "http2 ssl",
+              "slug": "cookbooks_http2_ssl"
+          },
+          {
+              "source": "cookbooks_postman_collection.md",
+              "label": "postman collection",
+              "slug": "cookbooks_postman_collection"
+          },
+          {
+              "source": "cookbooks_running_production.md",
+              "label": "running production",
+              "slug": "cookbooks_running_production"
+          },
+          {
+              "source": "cookbooks_search_bar_for_docs.md",
+              "label": "search bar for docs",
+              "slug": "cookbooks_search_bar_for_docs"
+          }
+      ]
+  },
+  {
+      "title": "Advanced",
+      "slug": "advanced",
+      "routes": [
+          {
+              "source": "adv_asynchronous_operations.md",
+              "label": "Asynchronous operations",
+              "slug": "asynchronous-operations"
+          },
+          {
+              "source": "adv_filtering_and_faceted_search.md",
+              "label": "filtering and faceted search",
+              "slug": "filtering_and_faceted_search"
+          },
+          {
+              "source": "adv_geosearch.md",
+              "label": "Geosearch",
+              "slug": "geosearch"
+          },
+          {
+              "source": "adv_pagination.md",
+              "label": "adv pagination",
+              "slug": "adv_pagination"
+          },
+          {
+              "source": "adv_sorting.md",
+              "label": "adv sorting",
+              "slug": "adv_sorting"
+          },
+          {
+              "source": "adv_working_with_dates.md",
+              "label": "adv working with dates",
+              "slug": "adv_working_with_dates"
+          }
+      ]
+  },
+  {
+      "title": "What is meilisearch",
+      "slug": "what-is-meilisearch",
+      "routes": [
+          {
+              "source": "deploy_aws.md",
+              "label": "aws",
+              "slug": "deploy_aws"
+          },
+          {
+              "source": "deploy_azure.md",
+              "label": "azure",
+              "slug": "deploy_azure"
+          },
+          {
+              "source": "deploy_digitalocean.md",
+              "label": "digitalocean",
+              "slug": "deploy_digitalocean"
+          },
+          {
+              "source": "deploy_gcp.md",
+              "label": "gcp",
+              "slug": "deploy_gcp"
+          },
+          {
+              "source": "deploy_koyeb.md",
+              "label": "koyeb",
+              "slug": "deploy_koyeb"
+          },
+          {
+              "source": "deploy_qovery.md",
+              "label": "qovery",
+              "slug": "deploy_qovery"
+          },
+          {
+              "source": "deploy_railway.md",
+              "label": "railway",
+              "slug": "deploy_railway"
+          },
+          {
+              "source": "errors_codes.md",
+              "label": "errors codes",
+              "slug": "errors_codes"
+          },
+          {
+              "source": "errors_overview.md",
+              "label": "errors overview",
+              "slug": "errors_overview"
+          },
+          {
+              "source": "faq.md",
+              "label": "faq",
+              "slug": "faq"
+          },
+          {
+              "source": "getting_started_customizing_relevancy.md",
+              "label": "getting started customizing relevancy",
+              "slug": "getting_started_customizing_relevancy"
+          },
+          {
+              "source": "getting_started_filtering_and_sorting.md",
+              "label": "getting started filtering and sorting",
+              "slug": "getting_started_filtering_and_sorting"
+          },
+          {
+              "source": "getting_started_getting_ready_for_production.md",
+              "label": "getting started getting ready for production",
+              "slug": "getting_started_getting_ready_for_production"
+          },
+          {
+              "source": "getting_started_installation.md",
+              "label": "getting started installation",
+              "slug": "getting_started_installation"
+          },
+          {
+              "source": "getting_started_quick_start.md",
+              "label": "getting started quick start",
+              "slug": "getting_started_quick_start"
+          },
+          {
+              "source": "getting_started_supported_os.md",
+              "label": "getting started supported os",
+              "slug": "getting_started_supported_os"
+          },
+          {
+              "source": "inner_workings_concat.md",
+              "label": "inner workings concat",
+              "slug": "inner_workings_concat"
+          },
+          {
+              "source": "inner_workings_datatypes.md",
+              "label": "inner workings datatypes",
+              "slug": "inner_workings_datatypes"
+          },
+          {
+              "source": "inner_workings_indexing.md",
+              "label": "inner workings indexing",
+              "slug": "inner_workings_indexing"
+          },
+          {
+              "source": "inner_workings_known_limitations.md",
+              "label": "inner workings known limitations",
+              "slug": "inner_workings_known_limitations"
+          },
+          {
+              "source": "inner_workings_prefix.md",
+              "label": "inner workings prefix",
+              "slug": "inner_workings_prefix"
+          },
+          {
+              "source": "inner_workings_storage.md",
+              "label": "inner workings storage",
+              "slug": "inner_workings_storage"
+          },
+          {
+              "source": "inner_workings_tokenization.md",
+              "label": "inner workings tokenization",
+              "slug": "inner_workings_tokenization"
+          },
+          {
+              "source": "open-api-readme.md",
+              "label": "open-api-readme",
+              "slug": "open-api-readme"
+          },
+          {
+              "source": "security_master_api_keys.md",
+              "label": "security master api keys",
+              "slug": "security_master_api_keys"
+          },
+          {
+              "source": "security_tenant_tokens.md",
+              "label": "security tenant tokens",
+              "slug": "security_tenant_tokens"
+          },
+          {
+              "source": "update_and_migration_algolia_migration.md",
+              "label": "update and migration algolia migration",
+              "slug": "update_and_migration_algolia_migration"
+          },
+          {
+              "source": "update_and_migration_previous_docs_version.md",
+              "label": "update and migration previous docs version",
+              "slug": "update_and_migration_previous_docs_version"
+          },
+          {
+              "source": "update_and_migration_updating.md",
+              "label": "update and migration updating",
+              "slug": "update_and_migration_updating"
+          },
+          {
+              "source": "update_and_migration_versioning.md",
+              "label": "update and migration versioning",
+              "slug": "update_and_migration_versioning"
+          },
+          {
+              "source": "what_is_meilisearch_comparison_to_alternatives.md",
+              "label": "what is meilisearch comparison to alternatives",
+              "slug": "what_is_meilisearch_comparison_to_alternatives"
+          },
+          {
+              "source": "what_is_meilisearch_contact.md",
+              "label": "what is meilisearch contact",
+              "slug": "what_is_meilisearch_contact"
+          },
+          {
+              "source": "what_is_meilisearch_features.md",
+              "label": "what is meilisearch features",
+              "slug": "what_is_meilisearch_features"
+          },
+          {
+              "source": "what_is_meilisearch_language.md",
+              "label": "what is meilisearch language",
+              "slug": "what_is_meilisearch_language"
+          },
+          {
+              "source": "what_is_meilisearch_overview.md",
+              "label": "what is meilisearch overview",
+              "slug": "what_is_meilisearch_overview"
+          },
+          {
+              "source": "what_is_meilisearch_philosophy.md",
+              "label": "what is meilisearch philosophy",
+              "slug": "what_is_meilisearch_philosophy"
+          },
+          {
+              "source": "what_is_meilisearch_sdks.md",
+              "label": "what is meilisearch sdks",
+              "slug": "what_is_meilisearch_sdks"
+          },
+          {
+              "source": "what_is_meilisearch_search_preview.md",
+              "label": "what is meilisearch search preview",
+              "slug": "what_is_meilisearch_search_preview"
+          },
+          {
+              "source": "what_is_meilisearch_telemetry.md",
+              "label": "what is meilisearch telemetry",
+              "slug": "what_is_meilisearch_telemetry"
+          }
+      ]
+  }
+]

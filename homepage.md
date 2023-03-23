@@ -16,5 +16,4 @@ Looking for SDK documentation? Check out [this list of official Meilisearch libr
 
 Meilisearch and its documentation are both completely open source. You can **support the project by starring** [our main GitHub repository](https://github.com/meilisearch/meilisearch). In addition, all documentation pages are editable—just use the handy "Edit this page" button in the bottom left corner. Happy searching 🔎
 
-<a class="github-button" href="https://github.com/meilisearch/meilisearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/meilisearch on GitHub">Star</a><!-- prettier-ignore
---><script async defer src="https://buttons.github.io/buttons.js"></script>
+<a class="github-button" href="https://github.com/meilisearch/meilisearch" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star meilisearch/meilisearch on GitHub">Star</a><script async defer src="https://buttons.github.io/buttons.js"></script>

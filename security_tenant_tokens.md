@@ -92,9 +92,9 @@ After signing the token, you can use it to make search queries in the same way y
 
 <CodeSamples id="tenant_token_guide_search_no_sdk_1" />
 
-::: note
+<Capsule intent="note">
 The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
-:::
+</Capsule>
 
 ### Generating a tenant token from scratch
 
@@ -133,9 +133,9 @@ Once your token is ready, it can seamlessly replace API keys to authorize reques
 
 <CodeSamples id="tenant_token_guide_search_no_sdk_1" />
 
-::: note
+<Capsule intent="note">
 The `curl` example presented here is only for illustration purposes. In production environments, you would likely send the token to the front-end of your application and query indexes from there.
-:::
+</Capsule>
 
 ## Tenant token payload reference
 
@@ -202,11 +202,11 @@ The previous rules can be combined in one tenant token:
 }
 ```
 
-::: danger
+<Capsule intent="danger">
 Because tenant tokens are generated in your application, Meilisearch cannot check if search rule filters are valid. Invalid search rules will only throw errors when they are used in a query.
 
 Consult the search API reference for [more information on Meilisearch filter syntax](/reference/api/search.md#filter).
-:::
+</Capsule>
 
 ### API key
 
@@ -218,9 +218,9 @@ For security reasons, we strongly recommend you avoid exposing the API key whene
 
 When using an official Meilisearch SDK, you may indicate which API key you wish to use when generating a token. Consult the documentation of the SDK you are using for more specific instructions.
 
-::: note
+<Capsule intent="note">
 If an API key expires, any tenant tokens created with it will become invalid. The same applies if the API key is deleted or regenerated due to a changed master key.
-:::
+</Capsule>
 
 [You can read more about API keys in our dedicated guide.](/learn/security/master_api_keys.md)
 
@@ -232,10 +232,10 @@ The expiry date must be a UNIX timestamp or `null`. Additionally, a token's expi
 
 Setting a token expiry date is optional, but recommended. A token without an expiry date never expires and can be used indefinitely as long as its parent API key remains valid.
 
-::: danger
+<Capsule intent="danger">
 The only way to revoke a token without an expiry date is to [delete](/reference/api/keys.md#delete-a-key) its parent API key.
 
 Changing an instance's master key forces Meilisearch to regenerate all API keys and will also render all existing tenant tokens invalid.
-:::
+</Capsule>
 
 When using an official Meilisearch SDK, you may indicate the expiry date when generating a token. Consult the documentation of the SDK you are using for more specific instructions.

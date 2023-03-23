@@ -40,11 +40,11 @@ Depending on your needs, you might want to change this order. To do so, you can 
 
 Results are sorted by **decreasing number of matched query terms**. Returns documents that contain all query terms first.
 
-::: note
+<Capsule intent="note">
 The `words` rule works from right to left. Therefore, the order of the query string impacts the order of results.
 
 For example, if someone were to search `batman dark knight`, the `words` rule would rank documents containing all three terms first, documents containing only `batman` and `dark` second, and documents containing only `batman` third.
-:::
+</Capsule>
 
 #### 2. Typo
 
@@ -64,9 +64,9 @@ Also, note the documents with attributes containing the query words at the begin
 
 Results are sorted **according to parameters decided at query time**. When the `sort` ranking rule is in a higher position, sorting is exhaustive: results will be less relevant but follow the user-defined sorting order more closely. When `sort` is in a lower position, sorting is relevant: results will be very relevant but might not always follow the order defined by the user.
 
-::: note
+<Capsule intent="note">
 Differently from other ranking rules, sort is only active for queries containing the [`sort` search parameter](/reference/api/search.md#sort). If a search request does not contain `sort`, or if its value is invalid, this rule will be ignored.
-:::
+</Capsule>
 
 #### 6. Exactness
 
@@ -74,11 +74,11 @@ Results are sorted by **the similarity of the matched words with the query words
 
 #### Examples
 
-:::: tabs
+<Tabs.Container labels={["Typo", "Proximity", "Attribute"]}>
 
-::: tab Typo
+<Tabs.Content label="Typo">
 
-![Demonstrating the typo ranking rule by searching for 'vogli'](/ranking-rules/vogli3.png)
+![Demonstrating the typo ranking rule by searching for 'vogli'](https://raw.githubusercontent.com/meilisearch/documentation/main/.vuepress/public/ranking-rules/vogli3.png)
 
 ### Typo
 
@@ -87,20 +87,20 @@ Results are sorted by **the similarity of the matched words with the query words
 
 The `typo` rule sorts the results by increasing number of typos on matched query words.
 
-:::
+</Tabs.Content>
 
-::: tab Proximity
-![Demonstrating the proximity ranking rule by searching for 'new road'](/ranking-rules/new_road.png)
+<Tabs.Content label="Proximity">
+![Demonstrating the proximity ranking rule by searching for 'new road'](https://raw.githubusercontent.com/meilisearch/documentation/main/.vuepress/public/ranking-rules/new_road.png)
 
 ### Proximity
 
 The reason why `Creature` is listed before `Mississippi Grind` is because of the `proximity` rule. The smallest **distance** between the matching words in `creature` is smaller than the smallest **distance** between the matching words in `Mississippi Grind`.
 
 The `proximity` rule sorts the results by increasing distance between matched query terms.
-:::
+</Tabs.Content>
 
-::: tab Attribute
-![Demonstrating the attribute ranking rule by searching for 'belgium'](/ranking-rules/belgium.png)
+<Tabs.Content label="Attribute">
+![Demonstrating the attribute ranking rule by searching for 'belgium'](https://raw.githubusercontent.com/meilisearch/documentation/main/.vuepress/public/ranking-rules/belgium.png)
 
 ### Attribute
 
@@ -108,18 +108,18 @@ The `proximity` rule sorts the results by increasing distance between matched qu
 
 The `attribute` rule sorts the results by [attribute importance](/learn/core_concepts/relevancy.md#attribute-ranking-order).
 
-:::
+</Tabs.Content>
 
-::: tab Exactness
-![Demonstrating the exactness ranking rule by searching for 'Knight'](/ranking-rules/knight.png)
+<Tabs.Content label="Exactness">
+![Demonstrating the exactness ranking rule by searching for 'Knight'](https://github.com/meilisearch/documentation/blob/main/.vuepress/public/ranking-rules/knight.png?raw=true)
 
 ### Exactness
 
 `Knight Moves` is displayed before `Knights of Badassdom`. `Knight` is exactly the same as the search query `Knight` whereas there is a letter of difference between `Knights` and the search query `Knight`.
 
-:::
+</Tabs.Content>
 
-::::
+</Tabs.Container>
 
 ### Custom rules
 
@@ -215,6 +215,6 @@ The attribute ranking order can also be set manually. For a more detailed look a
 
 With the above attribute ranking order, matching words found in the `title` field would have a higher impact on relevancy than the same words found in `overview` or `release_date`. If you searched "1984", for example, results like Michael Radford's film "1984" would be ranked higher than movies released in the year 1984.
 
-:::note
+<Capsule intent="note">
 The `attribute` rule's position in [`rankingRules`](#built-in-rules) determines how the results are sorted. Meaning, **if `attribute` is at the bottom of the ranking rules list, it will have almost no impact on your search results.**
-:::
+</Capsule>

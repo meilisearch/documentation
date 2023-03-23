@@ -36,9 +36,9 @@ Select the specifications of the server you want Meilisearch to run on.
 
 We recommend prioritizing memory allocation for better Meilisearch performance.
 
-::: tip
+<Capsule intent="tip">
 The free tier is sufficient for tests or prototypes, but not recommended for large datasets.
-:::
+</Capsule>
 
 Once you've made your choice, click on "Next: Configure instance details" to continue.
 

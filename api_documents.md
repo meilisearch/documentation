@@ -12,9 +12,9 @@ Get a set of documents.
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents.
 
-::: note
+<Capsule intent="note">
 Documents are ordered by Meilisearch depending on the hash of their id.
-:::
+</Capsule>
 
 ### Path parameters
 

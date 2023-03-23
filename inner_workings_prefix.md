@@ -8,9 +8,9 @@ In other words, prefix search means that it's not necessary to type a word in it
 
 Note that prefix search is only performed on the last word in a search query—prior words must be typed out fully in order to get accurate results.
 
-::: note
+<Capsule intent="note">
 Searching by prefix (rather than using complete words) has a significant impact on search time. The shorter the query term, the more possible matches in the dataset.
-:::
+</Capsule>
 
 ### Example
 
@@ -36,6 +36,6 @@ response:
 
 Meilisearch also handles typos while performing the prefix search. You can [read more about the typo rules on the dedicated page](/learn/configuration/typo_tolerance.md).
 
-::: tip
+<Capsule intent="tip">
 We also [apply splitting and concatenating on search queries](/learn/advanced/concat.md).
-:::
+</Capsule>

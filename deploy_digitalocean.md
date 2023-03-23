@@ -116,9 +116,9 @@ ssh root@DIGITAL_OCEAN_IP_ADDRESS
 
 Type `yes` and press Enter to accept the authentication process.
 
-::: note
+<Capsule intent="note">
 The above command is not required if you are using the Droplet Console.
-:::
+</Capsule>
 
 A script will run automatically, asking for your settings and desired configuration. If you want to run this script again anytime, you can do so by using the following command:
 

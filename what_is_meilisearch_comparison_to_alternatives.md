@@ -14,9 +14,9 @@ There are many search engines on the web, both open-source and otherwise. Decidi
 
 - Finally, we end this article with [an in-depth analysis of the broader search engine landscape](#a-quick-look-at-the-search-engine-landscape)
 
-::: note
+<Capsule intent="note">
 Please be advised that many of the search products described below are constantly evolving—just like Meilisearch. These are only our own impressions, and may not reflect recent changes. If something appears inaccurate, please don't hesitate to open an [issue or pull request](https://github.com/meilisearch/documentation).
-:::
+</Capsule>
 
 ## Comparison table
 
@@ -24,8 +24,8 @@ Please be advised that many of the search products described below are constantl
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:----:|:----:|:-----:|:----:|
-| Source code licensing | [MIT](https://choosealicense.com/licenses/mit/) <br> (Fully open-source) |  Closed-source  | [GPL-3](https://choosealicense.com/licenses/gpl-3.0/) <br> (Fully open-source) | SSPL <br>([Not open-source](https://opensource.org/node/1099))  |
-| Built with | Rust <br> [Check out why we believe in Rust](https://www.abetterinternet.org/docs/memory-safety/). | C++ | C++ | Java |
+| Source code licensing | [MIT](https://choosealicense.com/licenses/mit/) <br /> (Fully open-source) |  Closed-source  | [GPL-3](https://choosealicense.com/licenses/gpl-3.0/) <br /> (Fully open-source) | SSPL <br />([Not open-source](https://opensource.org/node/1099))  |
+| Built with | Rust <br /> [Check out why we believe in Rust](https://www.abetterinternet.org/docs/memory-safety/). | C++ | C++ | Java |
 | Data storage | Disk with Memory Mapping -- Not limited by RAM | Limited by RAM | Limited by RAM | Disk with RAM cache |
 
 ### Features
@@ -46,13 +46,13 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | [Java client](https://github.com/meilisearch/meilisearch-java)              | ✅          | ✅      |        ✅   |       ✅        |
 | [Swift client](https://github.com/meilisearch/meilisearch-swift)              | ✅          | ✅      |   ✅  |       ❌        |
 | [.NET client](https://github.com/meilisearch/meilisearch-dotnet)               | ✅          | ✅      |        ✅   |       ✅        |
-| [Rust client](https://github.com/meilisearch/meilisearch-rust)             | ✅          | ❌      |        🔶 <br> WIP  |       ✅        |
+| [Rust client](https://github.com/meilisearch/meilisearch-rust)             | ✅          | ❌      |        🔶 <br /> WIP  |       ✅        |
 | [Go client](https://github.com/meilisearch/meilisearch-go)              | ✅          | ✅     |        ✅   |       ✅        |
 | [Dart client](https://github.com/meilisearch/meilisearch-dart)               | ✅          | ✅     |        ✅   |       ❌        |
 | [Symfony](https://github.com/meilisearch/meilisearch-symfony) | ✅ | ✅ | ✅ | ❌ |
 | [Django](https://roadmap.meilisearch.com/c/60-django) | ❌ | ✅ | ❌ | ❌ |
-| [Rails](https://github.com/meilisearch/meilisearch-rails) | ✅ | ✅ | 🔶 <br>WIP | ✅ ||
-| [Official Laravel Scout Support](https://github.com/laravel/scout) | ✅ | ✅ | ❌ <br> Available as a standalone module | ❌ <br> Available as a standalone module |
+| [Rails](https://github.com/meilisearch/meilisearch-rails) | ✅ | ✅ | 🔶 <br />WIP | ✅ ||
+| [Official Laravel Scout Support](https://github.com/laravel/scout) | ✅ | ✅ | ❌ <br /> Available as a standalone module | ❌ <br /> Available as a standalone module |
 | [UI Search Kit](https://github.com/meilisearch/instant-meilisearch) | ✅ | ✅ | ✅ | ✅ |
 | [Docsearch](https://github.com/meilisearch/docs-scraper) | ✅ | ✅ | ✅ | ❌ |
 | [Strapi](https://github.com/meilisearch/strapi-plugin-meilisearch) | ✅ | ✅ | ❌ | ❌ |
@@ -74,9 +74,9 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br>Needs to be specified by fuzzy queries |
-| Orderable ranking rules | ✅ | ✅ | 🔶 <br>Field weight can be changed, but ranking rules order cannot be changed. | ❌|
-| Custom ranking rules | ✅ | ✅ | ✅ | 🔶 <br>Function score query |
+| Typo tolerant  | ✅ | ✅ | ✅ | 🔶 <br />Needs to be specified by fuzzy queries |
+| Orderable ranking rules | ✅ | ✅ | 🔶 <br />Field weight can be changed, but ranking rules order cannot be changed. | ❌|
+| Custom ranking rules | ✅ | ✅ | ✅ | 🔶 <br />Function score query |
 | Query field weights | ✅ | ✅ | ✅ | ✅ |
 | Synonyms | ✅ | ✅ | ✅ | ✅ |
 | Stop words | ✅ | ✅ | ❌ | ✅ |
@@ -88,7 +88,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | API Key Management | ✅ | ✅ | ✅ | ✅ |
-| Tenant tokens & multi-tenant indexes | ✅ <br> [Multitenancy support](/learn/security/tenant_tokens.md) | ✅ | ✅ | ✅ <br> Role-based |
+| Tenant tokens & multi-tenant indexes | ✅ <br /> [Multitenancy support](/learn/security/tenant_tokens.md) | ✅ | ✅ | ✅ <br /> Role-based |
 
 ##### Search
 
@@ -98,24 +98,24 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 | Multi-index search | [2023](https://github.com/meilisearch/product/issues/74) | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ✅ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
-| Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br> Up to 3 sort fields per search query | ✅ |
-| Filtering |  ✅ <br> Support complex filter queries with an SQL-like syntax.  | 🔶 <br> Does not support `OR` operation across multiple fields | ✅ | ✅ |
-| Faceted search |  ✅ | ✅ | ✅ <br> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
-| Distinct attributes <br><div style="color:#A9A9A9;font-size:0.9em;">De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
-| Grouping <br><div style="color:#A9A9A9;font-size:0.9em;">Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
+| Sort by  |  ✅  | 🔶 <br /> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br /> Up to 3 sort fields per search query | ✅ |
+| Filtering |  ✅ <br /> Support complex filter queries with an SQL-like syntax.  | 🔶 <br /> Does not support `OR` operation across multiple fields | ✅ | ✅ |
+| Faceted search |  ✅ | ✅ | ✅ <br /> Faceting can take several seconds when >10 million facet values must be returned | ✅ |
+| Distinct attributes <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>De-duplicate documents by a field value</div>| ✅ | ✅ | ✅  | ✅ |
+| Grouping <br /><div style={{color: "#A9A9A9", fontSize: "0.9em"}}>Bucket documents by field values</div> | ❌ | ✅ | ✅  | ✅ |
 
 ##### Visualize
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
-| [Mini Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br> Cloud product | 🔶 <br> Cloud product | ✅ |
+| [Mini Dashboard](https://github.com/meilisearch/mini-dashboard) | ✅ | 🔶 <br /> Cloud product | 🔶 <br /> Cloud product | ✅ |
 
 #### Deployment
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Self-hosted | ✅  | ❌  | ✅  | ✅ |
-| Official 1-click deploy | ✅ <br> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) <br> [Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json) <br> [Railway](https://railway.app/new/template/TXxa09?referralCode=YltNo3) <br> [Koyeb](https://app.koyeb.com/deploy?type=docker&image=getmeili/meilisearch&name=meilisearch-on-koyeb&ports=7700;http;/&env%5BMEILI_MASTER_KEY%5D=REPLACE_ME_WITH_A_STRONG_KEY) | ❌ | 🔶 <br>Only for the cloud-hosted solution | ❌ |
+| Official 1-click deploy | ✅ <br /> [DigitalOcean](https://marketplace.digitalocean.com/apps/meilisearch) <br /> [Platform.sh](https://console.platform.sh/projects/create-project?template=https://raw.githubusercontent.com/platformsh/template-builder/master/templates/meilisearch/.platform.template.yaml) <br /> [Azure](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fcmaneu%2Fmeilisearch-on-azure%2Fmain%2Fmain.json) <br /> [Railway](https://railway.app/new/template/TXxa09?referralCode=YltNo3) <br /> [Koyeb](https://app.koyeb.com/deploy?type=docker&image=getmeili/meilisearch&name=meilisearch-on-koyeb&ports=7700;http;/&env%5BMEILI_MASTER_KEY%5D=REPLACE_ME_WITH_A_STRONG_KEY) | ❌ | 🔶 <br />Only for the cloud-hosted solution | ❌ |
 | Official cloud-hosted solution | [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | High availability | Available with [Meilisearch Cloud](https://cloud.meilisearch.com/register) | ✅ | ✅ | ✅ |
 | Run-time dependencies | None | N/A | None | None |
@@ -144,8 +144,8 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Status page | ✅ | ✅ | ✅ | ✅ |
-| Free support channels | Instant messaging / chatbox (2-3h delay),<br> emails, <br> public Discord community, <br> GitHub issues & discussions | Instant messaging / chatbox, <br> public community forum |  Instant messaging/chatbox (24h-48h delay),<br> public Slack community, <br> GitHub issues. | Public Slack community, <br> public community forum,<br> GitHub issues |
-| Paid support channels | _Support is free!_ | Emails | Emails, <br> phone, <br> private Slack | Web support, <br> emails, <br> phone |
+| Free support channels | Instant messaging / chatbox (2-3h delay),<br /> emails, <br /> public Discord community, <br /> GitHub issues & discussions | Instant messaging / chatbox, <br /> public community forum |  Instant messaging/chatbox (24h-48h delay),<br /> public Slack community, <br /> GitHub issues. | Public Slack community, <br /> public community forum,<br /> GitHub issues |
+| Paid support channels | _Support is free!_ | Emails | Emails, <br /> phone, <br /> private Slack | Web support, <br /> emails, <br /> phone |
 
 ## Approach comparison
 

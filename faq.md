@@ -106,9 +106,9 @@ The following factors have a great impact on the size of your database (in no pa
 - The size of each update
 - The number of different words present in the dataset
 
-:::tip
+<Capsule intent="tip">
 Beware heavily multi-lingual datasets and datasets with many unique words, such as IDs or URLs, as they can slow search speed and greatly increase database size. If you do have ID or URL fields, [make them non-searchable](/reference/api/settings.md#update-searchable-attributes) unless they are useful as search criteria.
-:::
+</Capsule>
 
 ### Search speed
 

@@ -32,18 +32,18 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 **Type**: Integer
 **Description**: Unique sequential identifier of the task
 
-:::note
+<Capsule intent="note">
 The task `uid` is incremented **globally.**
-:::
+</Capsule>
 
 ### `indexUid`
 
 **Type**: String
 **Description**:  Unique identifier of the targeted index
 
-::: note
+<Capsule intent="note">
 This value is always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks).
-:::
+</Capsule>
 
 ### `status`
 
@@ -133,9 +133,9 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 | **`canceledTasks`**  | The number of tasks successfully canceled. If the task cancelation fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                 |
 | **`originalFilter`** | The filter used in the [cancel task](#cancel-tasks) request                                                                                                           |
 
-::: note
+<Capsule intent="note">
 Task cancelation can be successful and still have `canceledTasks: 0`. This happens when `matchedTasks` matches finished tasks (`succeeded`, `failed`, or `canceled`).
-:::
+</Capsule>
 
 #### `taskDeletion`
 
@@ -145,9 +145,9 @@ Task cancelation can be successful and still have `canceledTasks: 0`. This happe
 | **`deletedTasks`**   | The number of tasks successfully deleted. If the task deletion fails, this will be `0`. `null` when the task status is `enqueued` or `processing`                     |
 | **`originalFilter`** | The filter used in the [delete task](#delete-tasks) request                                                                                                           |
 
-::: note
+<Capsule intent="note">
 Task deletion can be successful and still have `deletedTasks: 0`. This happens when `matchedTasks` matches `enqueued` or `processing` tasks.
-:::
+</Capsule>
 
 #### `snapshotCreation`
 
@@ -290,9 +290,9 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 
 Get a single task.
 
-::: note
+<Capsule intent="note">
 If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
-:::
+</Capsule>
 
 ### Path parameters
 
@@ -339,13 +339,13 @@ Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `sta
 
 Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
-::: warning
+<Capsule intent="warning">
 To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (`POST /tasks/cancel`).
-:::
+</Capsule>
 
-::: tip Did you know?
+<Capsule intent="tip" title="Did you know?">
 You can also cancel `taskCancelation` type tasks as long as they are in the `enqueued` or `processing` state. This is possible because `taskCancelation` type tasks are processed in reverse order, such that the last one you enqueue will be processed first.
-:::
+</Capsule>
 
 ### Query parameters
 
@@ -362,9 +362,9 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 | **`afterEnqueuedAt`**  | Cancel tasks **after** a specified `enqueuedAt` date. Use `afterEnqueuedAt=*` to cancel all tasks                                    |
 | **`afterStartedAt`**   | Cancel tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` to cancel all tasks                                      |
 
-::: note
+<Capsule intent="note">
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
-:::
+</Capsule>
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
 
@@ -384,9 +384,9 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 }
 ```
 
-::: note
+<Capsule intent="note">
 Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
-:::
+</Capsule>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 
@@ -404,9 +404,9 @@ The API key used must have access to all indexes (`"indexes": [*]`) and the [`ta
 
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
-::: warning
+<Capsule intent="warning">
 To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
-:::
+</Capsule>
 
 ### Query parameters
 
@@ -426,9 +426,9 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 | **`afterStartedAt`**   | Delete tasks **after** a specified `startedAt` date. Use `afterStartedAt=*` to delete all tasks                                      |
 | **`afterFinishedAt`**  | Delete tasks **after** a specified `finishedAt` date. Use `afterFinishedAt=*` to delete all tasks                                    |
 
-::: note
+<Capsule intent="note">
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
-:::
+</Capsule>
 
 [To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
 
@@ -448,9 +448,9 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 }
 ```
 
-::: note
+<Capsule intent="note">
 Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
-:::
+</Capsule>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
 

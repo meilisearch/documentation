@@ -91,11 +91,11 @@ For example, if you search the `movies` index for `2012`, Meilisearch searches f
 
 Meilisearch will now only consider `title` during search, and you will see fewer results.
 
-::: note
+<Capsule intent="note">
 
 Meilisearch will still highlight matches in other fields, but they won’t be used to compute results.
 
-:::
+</Capsule>
 
 ### The order of `searchableAttributes`
 

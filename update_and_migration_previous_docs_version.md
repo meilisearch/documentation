@@ -4,11 +4,11 @@ This documentation website only covers the latest stable release of Meilisearch.
 
 This guide shows you how to clone Meilisearch's documentation repository, fetch the content for a specific version, and read it in your local machine.
 
-::: warning
+<Capsule intent="warning">
 While this guide's goal is to help users of old versions accomplish their bare minimum needs, it is not intended as a long-term solution or to encourage users to continue using outdated versions of Meilisearch. In almost every case, **it is better to upgrade to the latest Meilisearch version**.
 
 Depending on the version in question, the process of accessing old documentation may be difficult or error-prone. You have been warned!
-:::
+</Capsule>
 
 ## Prerequisites
 
@@ -47,9 +47,9 @@ Visit the repository on GitHub to [view all documentation tags](https://github.c
 
 There are three different ways of accessing the documentation of previous Meilisearch releases depending on the version you checked out.
 
-:::warning
+<Capsule intent="warning">
 The site search bar is not functional in local copies of the documentation website.
-:::
+</Capsule>
 
 ### v0.17 and above: run a local Vuepress server
 
@@ -71,9 +71,9 @@ yarn dev
 
 Yarn will build the website from the markdown source files. Once the server is online, use your browser to navigate to `http://localhost:8080`.
 
-:::warning
+<Capsule intent="warning">
 SDK code samples are not available in local copies of the documentation for Meilisearch v0.17 and above.
-:::
+</Capsule>
 
 ### v0.11-v0.16: run a simple Python server
 
