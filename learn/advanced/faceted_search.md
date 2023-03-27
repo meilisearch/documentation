@@ -165,10 +165,10 @@ With conjunctive facets, when a user selects `English` from the `language` facet
 
 ```
 # Filter expression as an array
-[language = English, genres = Fiction, genres = Literature]
+["language = English", "genres = Fiction", "genres = Literature"]
 
 # Filter expression as a string
-language = English AND genres = Fiction AND genres = Literature
+"language = English AND genres = Fiction AND genres = Literature"
 ```
 
 The GIF below shows how the facet count for `genres` updates to only include books that meet **all three conditions**.
@@ -183,10 +183,10 @@ Let's look at the `books` index from before with disjunctive facets. When the us
 
 ```
 # Filter expression as an array
-[[genres = Fiction, genres = Literature]]
+[["genres = Fiction", "genres = Literature"]]
 
 # Filter expression as a string
-genres = Fiction OR genres = Literature
+"genres = Fiction OR genres = Literature"
 ```
 
 The GIF below shows the `books` dataset with disjunctive facets. Notice how the facet count for `genres` updates based on the selection.
@@ -199,10 +199,10 @@ Let's look at the `books` index with both conjunctive and disjunctive facets. Th
 
 ```
 # Filter expression as an array
-[[language = English, language = French], [genres = Fiction, genres = Literature]
+[["language = English", "language = French"], ["genres = Fiction", "genres = Literature"]]
 
 # Filter expression as a string
-language = English OR language = French AND (genres = Fiction AND genres = Literature)
+"(language = English OR language = French) AND (genres = Fiction AND genres = Literature)"
 ```
 
 ![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/faceted-search/conjunctive-and-disjunctive-facets.gif)
