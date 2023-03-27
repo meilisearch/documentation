@@ -14,18 +14,19 @@ You need to set a master key to access the [`/keys`](/reference/api/keys.md) rou
 
 Setting up a master key can be done with either command-line options or environment variables. You can read more about [master key configuration in our instance configuration guide](/learn/configuration/instance_options.md#master-key).
 
-:::: tabs
-::: tab CLI
+<Tabs.Container labels={['CLI', 'Environment variable']}>
+
+<Tabs.Content label="CLI">
 
 ```sh
 ./meilisearch --master-key="MASTER_KEY"
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Environment variable
+<Tabs.Content label="Environment variable">
 
-Linux/MacOS:
+UNIX:
 
 ```sh
 export MEILI_MASTER_KEY="MASTER_KEY"
@@ -39,8 +40,8 @@ set MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 
-:::
-::::
+</Tabs.Content>
+</Tabs.Container>
 
 Once you launch Meilisearch with a master key, all API endpoints except [the health endpoint](/reference/api/health.md#get-health) are automatically protected from unauthorized requests.
 
@@ -249,16 +250,17 @@ To change the master key, first terminate your Meilisearch instance. Then relaun
 
 You can run an unprotected Meilisearch instance in the `development` environment without providing a master key:
 
-:::: tabs
-::: tab CLI
+<Tabs.Container labels={['CLI', 'Environment variable']}>
+
+<Tabs.Content label="CLI">
 
 ```sh
 ./meilisearch --env development
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Environment variable
+<Tabs.Content label="Environment variable">
 
 UNIX:
 
@@ -274,8 +276,8 @@ set MEILI_ENV=development
 ./meilisearch
 ```
 
-:::
-::::
+</Tabs.Content>
+</Tabs.Container>
 
 ## Further security measures
 
