@@ -30,7 +30,7 @@ Like any other filter, attributes you want to use as facets must be added to the
 Synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, faceting by `SF` and `San Francisco` will show you different results.
 :::
 
-Suppose you have a dataset on books called `books` containing the following fields:
+Suppose you have a <a id="downloadBooks" href="/books.json" download="books.json">dataset on books</a> containing the following fields:
 
 ```json
 {
@@ -99,12 +99,18 @@ The following response shows the facet distribution when searching for `classics
  "facetDistribution":{
     "genres":{
       "Classics":6,
+      "Comedy":1,
+      "Coming-of-Age":1,
       "Fantasy":2,
       "Fiction":8,
+      "Historical Fiction":1,
       "Horror":2,
       "Literature":7,
+      "Novel":2,
+      "Romance":1,
       "Satire":1,
       "Tragedy":1,
+      "Vampires":1,
       "Victorian":2
     },
     "language":{
@@ -199,10 +205,23 @@ Let's look at the `books` index with both conjunctive and disjunctive facets. Th
 
 ```
 # Filter expression as an array
-[["language = English", "language = French"], ["genres = Fiction", "genres = Literature"]]
+[["language = English", "language = French"], "genres = Fiction", "genres = Literature"]
 
 # Filter expression as a string
 "(language = English OR language = French) AND (genres = Fiction AND genres = Literature)"
 ```
 
 ![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/faceted-search/conjunctive-and-disjunctive-facets.gif)
+
+::: tip Improving user experience
+Most ecommerce websites use different ways for handling facet counts depending on their use case. By keeping the facet count visible, you allow the user to make more informed decisions. They can select or deselect different facets based on how many results they get for each facet and how those results overlap with other selected facets. This can help the user quickly refine their search results to find the most relevant items.
+
+Let's look at the `books` index again. If the user selects `English` and `French` as languages, the facet count for each language updates to show the number of books available in that language. For this example it updates to: `English:10` and `French:2`. If the user then selects `Fiction` from the `genres` facets, the facet count for each genre updates to show how many `Fiction` books are available in English and French. For this example it updates to: `English:8` and `French:2`. This means 8 of the 10 English books and both French books have the `Fiction` genre. Note that the facet count is not impacted by filters on its own facet values.
+
+![Selecting 'Fiction' as 'genres' for English and French books](/faceted-search/multi-search.gif)
+
+You can use the [`/multi-search`](/reference/api/multi_search.md) route to bundle multiple queries from the above example in one request:
+
+<CodeSamples id="faceted_search_2" />
+
+:::
