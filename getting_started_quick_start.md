@@ -184,17 +184,17 @@ You should now have a working front-end search interface 🚀🔥
 
 The Meilisearch API is unprotected by default, making all routes publicly accessible. You can set a master key of at least 16 bytes to protect your instance from unauthorized use:
 
-:::: tabs
+<Tabs.Container labels={['CLI', 'Environment variable']}>
 
-::: tab CLI
+<Tabs.Content label="CLI">
 
 ```bash
 ./meilisearch --master-key="MASTER_KEY"
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Environment variable
+<Tabs.Content label="Environment variable">
 
 UNIX:
 
@@ -210,9 +210,8 @@ set MEILI_MASTER_KEY="MASTER_KEY"
 ./meilisearch
 ```
 
-:::
-
-::::
+</Tabs.Content>
+</Tabs.Container>
 
 When you launch your Meilisearch instance with a master key, two things happen:
 
