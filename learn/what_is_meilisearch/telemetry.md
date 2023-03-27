@@ -44,26 +44,26 @@ No company is perfect. If you ever feel that we are being anything less than 100
 
 Data collection can be disabled at any time by setting a command-line option or environment variable, then restarting the Meilisearch instance.
 
-:::: tabs
+<Tabs.Container labels={['Command-line option', 'Environment variable', 'Cloud service']}>
 
-::: tab Command-line option
+<Tabs.Content label="Command-line option">
 
 ```bash
 meilisearch --no-analytics
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Environment variable
+<Tabs.Content label="Environment variable">
 
 ```bash
 export MEILI_NO_ANALYTICS=true
 meilisearch
 ```
 
-:::
+</Tabs.Content>
 
-::: tab Cloud service
+<Tabs.Content label="Cloud service">
 
 ```bash
 # The following procedure should work for all cloud providers,
@@ -80,9 +80,9 @@ systemctl daemon-reload
 systemctl restart meilisearch
 ```
 
-:::
+</Tabs.Content>
 
-::::
+</Tabs.Container>
 
 For more information about configuring Meilisearch, read our [configuration reference](/learn/configuration/instance_options.md).
 
@@ -96,9 +96,9 @@ To do so, send an email to [privacy@meilisearch.com](mailto:privacy@meilisearch.
 
 Whenever an event is triggered that collects some piece of data, Meilisearch does not send it immediately. Instead, it bundles it with other data in a batch of up to `500kb`. Batches are sent either every hour, or after reaching `500kb`—whichever occurs first. This is done in order to improve performance and reduce network traffic.
 
-::: tip Be advised!
+<Capsule intent="tip" title="Be advised!">
 This list is liable to change with every new version of Meilisearch. It's not because we're trying to be sneaky! It's because when we add new features we need to collect additional data points to see how they perform.
-:::
+</Capsule>
 
 | Metric name                                        | Description                                                                                 | Example
 |----------------------------------------------------|---------------------------------------------------------------------------------------------|--------------------
