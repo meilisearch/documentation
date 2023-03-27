@@ -32,9 +32,9 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 **Type**: Integer
 **Description**: Unique sequential identifier of the task
 
-:::note
+<Capsule intent="note">
 The task `uid` is incremented **globally.**
-:::
+</Capsule>
 
 ### `indexUid`
 
