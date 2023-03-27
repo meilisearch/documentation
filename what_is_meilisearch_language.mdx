@@ -17,7 +17,7 @@ We aim to provide global language support, and your feedback helps us move close
 
 While we have employees from all over the world at Meilisearch, we don't speak every language. We rely almost entirely on feedback from external contributors to understand how our engine is performing across different languages.
 
-If you'd like to request optimized support for a language, please upvote the related [discussion in our product repository](https://github.com/meilisearch/product/discussions?discussions_q=label%3Aproduct%3Acore%3Atokenizer) or [open a new one](https://github.com/meilisearch/product/discussions/new?category=feedback-feature-proposal) if it doesn't exist.
+If you'd like to request optimized support for a language, please upvote the related [discussion in our product repository](https://github.com/meilisearch/product/discussions?discussions_q=label%3Ascope%3Atokenizer+) or [open a new one](https://github.com/meilisearch/product/discussions/new?category=feedback-feature-proposal) if it doesn't exist.
 
 If you'd like to help by developing a tokenizer pipeline yourself: first of all, thank you! We recommend that you take a look at the [tokenizer contribution guide](https://github.com/meilisearch/charabia/blob/main/CONTRIBUTING.md) before making a PR.
 
@@ -37,4 +37,4 @@ Yes—our users work with many different alphabets and writing systems, such as 
 
 ### Does Meilisearch plan to support additional languages in the future?
 
-Yes, we definitely do. The more [feedback](https://github.com/meilisearch/product/discussions?discussions_q=label%3Aproduct%3Acore%3Atokenizer) we get from native speakers, the easier it is for us to understand how to improve performance for those languages. Similarly, the more requests we get to improve support for a specific language, the more likely we are to devote resources to that project.
+Yes, we definitely do. The more feedback we get from native speakers, the easier it is for us to understand how to improve performance for those languages. Similarly, the more requests we get to improve support for a specific language, the more likely we are to devote resources to that project.
