@@ -10,7 +10,7 @@ It is important to prevent Meilisearch from using all available memory during in
 
 1. Meilisearch may be killed by the OS for over-consuming RAM
 
-2. Users making search requests may experience a slowdown while the indexer is processing an update
+2. Search performance may decrease while the indexer is processing an update
 
 Memory overconsumption can still happen in two cases:
 
