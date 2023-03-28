@@ -6,11 +6,10 @@ sidebarDepth: 2
 
 # Faceted search
 
-Meilisearch filters can be used to build faceted search interfaces. This type of interface allows users to refine search results based on broad categories or facets. Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**. Facets are used in the UI as filters that users can apply to refine the results in real-time.
+You can use Meilisearch filters to build faceted search interfaces. This type of interface allows users to refine search results based on broad categories or facets. Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**.
 
-Done right, facets allow users to find their way as they would in a physical store. Not only would users be able to find what they’re looking for, they can also see other relevant products you have. If your user is looking for a blanket, facets would ask questions like: What color do you want? Do you have a particular brand in mind? Any preferences for materials? How much are you willing to pay?
 
-Facets are common in ecommerce sites like Amazon. When users perform a search, they are presented not only with a list of results but also with a list of facets which you can see on the sidebar in the image below:
+Facets are common in ecommerce sites like Amazon. When users search for products, they are presented with a list of results and a list of facets which you can see on the sidebar in the image below:
 
 ![Meilisearch demo for an ecommerce website displaying faceting UI](/faceted-search/facets-ecommerce.png)
 
@@ -18,19 +17,17 @@ Faceted search interfaces often have a count of how many results belong to each 
 
 ### Filters or facets
 
-In Meilisearch, facets are a specific use-case of filters. The question of whether something is a filter or a facet is mostly one pertaining to UX and UI design.
-
-Meilisearch does not differentiate between facets and filters. This means that, despite its name, facets can be used with any attributes added to `filterableAttributes`.
+Meilisearch does not differentiate between facets and filters. Facets are a specific use-case of filters, meaning you can use any attribute added to `filterableAttributes` as a facet. Whether something is a filter or a facet depends above all on UX and UI design.
 
 ## Configuring and using facets
 
-Like any other filter, attributes you want to use as facets must be added to the [`filterableAttributes`](/reference/api/settings.md#filterable-attributes) list in the index's settings before they can be used. Once they have been configured, you can search for facets with [the `facets` search parameter](/reference/api/search.md#facets).
+Like any other filter, you must add any attributes you want to use as facets to the [`filterableAttributes`](/reference/api/settings.md#filterable-attributes) list in an index's settings. Once you have configured `filterableAttributes`, you can search for facets with [the `facets` search parameter](/reference/api/search.md#facets).
 
 ::: warning
-Synonyms don't apply to facets. Meaning, if you have `SF` and `San Francisco` set as synonyms, faceting by `SF` and `San Francisco` will show you different results.
+Synonyms don't apply to facets. If you have `SF` and `San Francisco` set as synonyms, faceting by `SF` and `San Francisco` will show you different results.
 :::
 
-Suppose you have a <a id="downloadBooks" href="/books.json" download="books.json">dataset on books</a> containing the following fields:
+Suppose you have a <a id="downloadBooks" href="/books.json" download="books.json">books dataset</a> containing the following fields:
 
 ```json
 {
@@ -89,7 +86,7 @@ The response shows `classic` books along with two new fields: [`facetDistributio
 
 ### Facet distribution
 
-The `facetDistribution` object contains the number of matching documents distributed among the values of a given facet. The `facets` search parameter expects an array of strings. Each string is an attribute present in the `filterableAttributes` list.
+The `facetDistribution` object contains the number of matching documents distributed among the values of a given facet. Meilisearch automatically adds `facetDistribution` to the response of any query using the `facets` search parameter.
 
 The following response shows the facet distribution when searching for `classics`:
 
@@ -130,7 +127,7 @@ The following response shows the facet distribution when searching for `classics
 }
 ```
 
-`facetDistribution` contains an object for every given facet, in this case, `genres`, `language`, and `rating`. For each of these facets, there is another object containing all the different values and the count of matching documents. Note that zero values will not be returned: if there are no results for the Arabic language, it is not displayed.
+`facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the different values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets: if there are no results for the Arabic language, it will not be present in `facetDistribution`.
 
 ::: note
 By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
@@ -138,15 +135,15 @@ By default, `facets` returns a maximum of 100 facet values for each faceted fiel
 
 ### Facet stats
 
-When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query. This can be used to create components like range sliders allowing users to select a range of values for a facet.
+When using the `facets` parameter, Meilisearch results includes a `facetStats` object. `facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet. 
 
-If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object.
+`facetStats` is useful when creating UI components such as range sliders. These allow users to refine their search by selecting from a range of facet values.
 
 ::: note
 Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
 :::
 
-The following response shows the `facetStats` when searching for `classics`:
+The following response shows the the lowest and highest book ratings when searching for `"classics"`:
 
 ```json
 {
@@ -161,21 +158,17 @@ The following response shows the `facetStats` when searching for `classics`:
 }  
 ```
 
-Since `rating` was the only numeric facet in our example, it is the only facet returned in the `facetStats` object.
+If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object. Since `rating` was the only numeric facet in our example, it is the only facet returned in the `facetStats` object.
 
 ## Facet types
 
 ### Conjunctive facets
 
-Conjunctive facets use the `AND` logical operator. When users select one or more values for a facet, all returned results must contain the selected facet value(s).
+Conjunctive facets use the `AND` logical operator. When users select multiple values for a facet, returned results must contain all selected facet values.
 
 With conjunctive facets, when a user selects `English` from the `language` facet, all returned books must be in English. If the user further narrows down the search by selecting `Fiction` and `Literature` as `genres`, all returned books must be in English and contain both `genres`.
 
-```
-# Filter expression as an array
-["language = English", "genres = Fiction", "genres = Literature"]
-
-# Filter expression as a string
+```sql
 "language = English AND genres = Fiction AND genres = Literature"
 ```
 
@@ -187,13 +180,9 @@ The GIF below shows how the facet count for `genres` updates to only include boo
 
 Disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for.
 
-Let's look at the `books` index from before with disjunctive facets. When the user selects `Fiction` and `Literature` as `genres`, Meilisearch returns all books that are either `Fiction`, `Literature`, or both:
+With disjunctive facets, when a user selects `Fiction`, and `Literature`, Meilisearch returns all books that are either `Fiction`, `Literature`, or both:
 
-```
-# Filter expression as an array
-[["genres = Fiction", "genres = Literature"]]
-
-# Filter expression as a string
+```sql
 "genres = Fiction OR genres = Literature"
 ```
 
@@ -201,16 +190,25 @@ The GIF below shows the `books` dataset with disjunctive facets. Notice how the 
 
 ![Selecting 'Fiction' and 'Literature' as 'genres' for the books dataset](/faceted-search/disjunctive_facets.gif)
 
-### Using conjunctive and disjunctive facets
+### Combining conjunctive and disjunctive facets
 
-Let's look at the `books` index with both conjunctive and disjunctive facets. The user selects `English` and `French` from the `language` facet, and then narrows down the search to include `Fiction` and `Literature` as `genres`:
+It is possible to create search queries with both conjunctive and disjunctive facets. 
 
+For example, a user might select `English` and `French` from the `language` facet so they can see books written either in English or in French. This query uses an `OR` operator and is a disjunctive facet:
+
+```sql
+language = English OR language = French
 ```
-# Filter expression as an array
-[["language = English", "language = French"], "genres = Fiction", "genres = Literature"]
 
-# Filter expression as a string
-"(language = English OR language = French) AND (genres = Fiction AND genres = Literature)"
+The same user might also be interested in literary fiction books and select `Fiction` and `Literature` as `genres`. Since the user wants a specific combination of genres, their query uses an AND operator:
+
+```sql
+genres = Fiction AND genres = Literature
+
+The user can combine these two filter expressions in one by wrapping them in parentheses and using an `AND` operator:
+
+```sql
+(language = English OR language = French) AND (genres = Fiction AND genres = Literature)
 ```
 
 ![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/faceted-search/conjunctive-and-disjunctive-facets.gif)
