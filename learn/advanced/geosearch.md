@@ -121,7 +121,7 @@ In order to filter results based on their location, you must add the `_geo` attr
 
 Note that Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
-[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/advanced/filtering_guide.md#configuring-filters)
+[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/advanced/filtering.md#configuring-filters)
 
 ### Usage
 
@@ -135,7 +135,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 `lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter. If any of these three parameters are invalid or missing, Meilisearch will return an [`invalid_search_filter`](/reference/errors/error_codes.md#invalid-search-filter) error.
 
-[You can read more about using `filter` in our dedicated guide.](/learn/advanced/filtering_guide.md#using-filters)
+[You can read more about using `filter` in our dedicated guide.](/learn/advanced/filtering.md#using-filters)
 
 ::: warning
 `_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_search_filter`](/reference/errors/error_codes.md#invalid-search-filter) error.

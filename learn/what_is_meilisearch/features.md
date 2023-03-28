@@ -34,7 +34,7 @@ Search in the real world. [Geosearch](/learn/advanced/geosearch.md), also known 
 
 ## Filtering
 
-Create [filters](/learn/advanced/filtering_guide.md) to refine results based on user-defined criteria.
+Create [filters](/learn/advanced/filtering.md) to refine results based on user-defined criteria.
 
 ## Faceting
 
