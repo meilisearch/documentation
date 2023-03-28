@@ -190,7 +190,7 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
-            '/learn/advanced/filtering_guide',
+            '/learn/advanced/filtering',
             '/learn/advanced/faceted_search',
             '/learn/advanced/geosearch',
             '/learn/advanced/pagination',
