@@ -1,0 +1,2074 @@
+{
+	"info": {
+		"_postman_id": "bcc2fb5b-d130-4a7b-9acf-c481248b2b9d",
+		"name": "Meilisearch v1.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "Get one document",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents",
+								"2"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get documents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add or replace documents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  { \"id\": 2,    \"title\": \"Pride and Prejudice\",                    \"author\": \"Jane Austen\",              \"genre\": \"romance\",    \"price\": 3.5 },\n  { \"id\": 456,  \"title\": \"Le Petit Prince\",                        \"author\": \"Antoine de Saint-Exupéry\", \"genre\": \"adventure\" , \"price\": 10.0 },\n  { \"id\": 1,    \"title\": \"Alice In Wonderland\",                    \"author\": \"Lewis Carroll\",            \"genre\": \"fantasy\",    \"price\": 25.99 },\n  { \"id\": 1344, \"title\": \"The Hobbit\",                             \"author\": \"J. R. R. Tolkien\",         \"genre\": \"fantasy\" },\n  { \"id\": 4,    \"title\": \"Harry Potter and the Half-Blood Prince\", \"author\": \"J. K. Rowling\",            \"genre\": \"fantasy\" },\n  { \"id\": 42,   \"title\": \"The Hitchhiker's Guide to the Galaxy\",   \"author\": \"Douglas Adams\" }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents"
+							],
+							"query": [
+								{
+									"key": "primaryKey",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add or update documents",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n\t\"id\": 2,\n\t\"author\": \"J. Austen\",\n\t\"date\": \"1813\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents"
+							],
+							"query": [
+								{
+									"key": "primaryKey",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete one document",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete documents",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[1, 2]"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete-batch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents",
+								"delete-batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all documents",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search in index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/search?q=prinec",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "prinec"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "attributesToRetrieve",
+									"value": "title,author",
+									"disabled": true
+								},
+								{
+									"key": "attributesToCrop",
+									"value": "title",
+									"disabled": true
+								},
+								{
+									"key": "attributesToHighlight",
+									"value": "*",
+									"disabled": true
+								},
+								{
+									"key": "cropLength",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "cropMarker",
+									"value": "[...]",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "genre=\"fantasy\"",
+									"disabled": true
+								},
+								{
+									"key": "showMatchesPosition",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "facets",
+									"value": "genre",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "price",
+									"disabled": true
+								},
+								{
+									"key": "highlightPreTag",
+									"value": "<mark>",
+									"disabled": true
+								},
+								{
+									"key": "highlightPostTag",
+									"value": "</mark>",
+									"disabled": true
+								},
+								{
+									"key": "matchingStrategy",
+									"value": "all",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "hitsPerPage",
+									"value": "50",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search in index",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"q\": \"\",\n    \"attributesToHighlight\": [\"title\"]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Get one task",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tasks/0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tasks",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tasks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "uids",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "indexUids",
+									"value": "books",
+									"disabled": true
+								},
+								{
+									"key": "types",
+									"value": "documentAdditionOrUpdate",
+									"disabled": true
+								},
+								{
+									"key": "statuses",
+									"value": "failed",
+									"disabled": true
+								},
+								{
+									"key": "beforeEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "canceledBy",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel tasks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tasks/cancel",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tasks",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "uids",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "indexUids",
+									"value": "books",
+									"disabled": true
+								},
+								{
+									"key": "types",
+									"value": "documentAdditionOrUpdate",
+									"disabled": true
+								},
+								{
+									"key": "statuses",
+									"value": "failed",
+									"disabled": true
+								},
+								{
+									"key": "beforeEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "canceledBy",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete tasks",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/tasks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "uids",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "indexUids",
+									"value": "books",
+									"disabled": true
+								},
+								{
+									"key": "types",
+									"value": "documentAdditionOrUpdate",
+									"disabled": true
+								},
+								{
+									"key": "statuses",
+									"value": "failed",
+									"disabled": true
+								},
+								{
+									"key": "beforeEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterEnqueuedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterStartedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "beforeFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "afterFinishedAt",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "canceledBy",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Indexes",
+			"item": [
+				{
+					"name": "Get indexes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create index",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create index with primary key",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"uid\": \"{{indexUID}}\",\n\t\"primaryKey\": \"number\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Udpate index ",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"primaryKey\": \"title\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}"
+							]
+						},
+						"description": "Can only change the document identifier if it has not already been added before."
+					},
+					"response": []
+				},
+				{
+					"name": "Swap indexes",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    { \"indexes\": [\"books\", \"books_temp\"] }\n]"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/swap-indexes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"swap-indexes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an index",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "Sub-routes",
+					"item": [
+						{
+							"name": "Get ranking rules",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/ranking-rules",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"ranking-rules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update ranking rules",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t\"typo\"\n]\n"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/ranking-rules",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"ranking-rules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset ranking rules",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/ranking-rules",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"ranking-rules"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get distinct attribute",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/distinct-attribute",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"distinct-attribute"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update distinct attribute",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"genre\""
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/distinct-attribute",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"distinct-attribute"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset distinct attribute",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/distinct-attribute",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"distinct-attribute"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get searchable attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/searchable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"searchable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update searchable attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"title\", \"author\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/searchable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"searchable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset searchable attributes",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/searchable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"searchable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get displayed attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/displayed-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"displayed-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update displayed attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"title\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/displayed-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"displayed-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset displayed attributes",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/displayed-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"displayed-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get synonyms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update synonyms",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"hp\": [\"harry potter\"],\n    \"harry potter\": [\"hp\"]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset synonyms",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"[\"wizard\"]\""
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/synonyms",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"synonyms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get stop-words",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"the\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/stop-words",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"stop-words"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update stop-words",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"the\", \"of\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/stop-words",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"stop-words"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset stop-words",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/stop-words",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"stop-words"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get filterable attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/filterable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"filterable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update filterable attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"genre\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/filterable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"filterable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset filterable attributes",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/filterable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"filterable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get sortable attributes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/sortable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"sortable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update sortable attributes",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\"price\"]"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/sortable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"sortable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset sortable attributes",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/sortable-attributes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"sortable-attributes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get typo-tolerance",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"typo-tolerance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update typo-tolerance",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"minWordSizeForTypos\": {\n        \"oneTypo\": 2,\n        \"twoTypos\": 11\n    },\n    \"disableOnWords\": [\"Prince\"],\n    \"disableOnAttributes\": [\"genre\"]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"typo-tolerance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset typo-tolerance",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/typo-tolerance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"typo-tolerance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get pagination",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/pagination",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"pagination"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update pagination",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"maxTotalHits\": 2000\n}"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/pagination",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"pagination"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset pagination",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/pagination",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"pagination"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get faceting",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"faceting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update faceting",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"maxValuesPerFacet\": 3000\n}"
+								},
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"faceting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reset faceting",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/indexes/{{indexUID}}/settings/faceting",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"indexes",
+										"{{indexUID}}",
+										"settings",
+										"faceting"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get all settings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/settings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update settings",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"searchableAttributes\": [\"title\", \"author\"],\n\t\"stopWords\": [\"of\", \"the\"],\n    \"displayedAttributes\": [\"title\", \"author\", \"genre\", \"price\"],\n    \"filterableAttributes\": [\"genre\", \"price\"],\n    \"sortableAttributes\": [\"price\"]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/settings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset all settings",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/settings",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Key Management",
+			"item": [
+				{
+					"name": "Get keys",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/keys",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/keys/L8l05tFb188aab693735bbaf1f898b9902fb39f865160d39dddba2b47b940115a0430705",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys",
+								"L8l05tFb188aab693735bbaf1f898b9902fb39f865160d39dddba2b47b940115a0430705"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a key",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"docs-key\",\n    \"description\": \"Key to add and delete documents, in `books` index.\",\n    \"actions\": [\n        \"documents.add\",\n        \"documents.delete\" \n    ],\n    \"indexes\": [\n        \"books\"\n    ],\n    \"expiresAt\": null\n}"
+						},
+						"url": {
+							"raw": "{{url}}/keys",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a key",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Key to add and delete documents, but also to create indexes, in `book` index.\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/keys/wYZjGJyBcdb0621b97999c233246a8ec0a35d0fcd9a6417ef8ccee0c8978b64b123af2dd",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys",
+								"wYZjGJyBcdb0621b97999c233246a8ec0a35d0fcd9a6417ef8ccee0c8978b64b123af2dd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a key",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/keys/kN2aK9EO8a7b627e425717d9196c8081552ca004e513545ed178f8a56981dbd3080d4a5b",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"keys",
+								"kN2aK9EO8a7b627e425717d9196c8081552ca004e513545ed178f8a56981dbd3080d4a5b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Global stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/stats",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Stats of an index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/stats",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/version",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"version"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/health",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dumps",
+			"item": [
+				{
+					"name": "Create a dump",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/dumps",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dumps"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "aSampleMasterKey",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:7700/"
+		},
+		{
+			"key": "indexUID",
+			"value": "books"
+		}
+	]
+}
