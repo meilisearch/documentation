@@ -1,369 +1,391 @@
 [
+	{
+			"title": "What is meilisearch",
+			"slug": "what_is_meilisearch",
+			"routes": [
+					{
+						"source": "learn/what_is_meilisearch/overview.mdx",
+						"label": "Overview",
+						"slug": "overview"
+					},
+					{
+						"source": "learn/what_is_meilisearch/features.mdx",
+						"label": "Features",
+						"slug": "features"
+					},
+					{
+						"source": "learn/what_is_meilisearch/philosophy.mdx",
+						"label": "Philosophy",
+						"slug": "philosophy"
+					},
+					{
+							"source": "learn/what_is_meilisearch/sdks.mdx",
+							"label": "Official SDKs/libraries",
+							"slug": "sdks"
+					},
+					{
+							"source": "learn/what_is_meilisearch/comparison_to_alternatives.mdx",
+							"label": "Comparison to alternatives",
+							"slug": "comparison_to_alternatives"
+					},
+					{
+							"source": "learn/what_is_meilisearch/telemetry.mdx",
+							"label": "Telemetry",
+							"slug": "telemetry"
+					},
+					{
+							"source": "learn/what_is_meilisearch/search_preview.mdx",
+							"label": "Search preview",
+							"slug": "search_preview"
+					},
+					{
+							"source": "learn/what_is_meilisearch/language.mdx",
+							"label": "Language",
+							"slug": "language"
+					},
+					{
+							"source": "learn/what_is_meilisearch/contact.mdx",
+							"label": "Contact",
+							"slug": "contact"
+					}
+			]
+	},
+	{
+			"title": "Getting started",
+			"slug": "learn/getting_started",
+			"routes": [
+					{
+							"source": "learn/getting_started/installation.mdx",
+							"label": "Installation",
+							"slug": "installation"
+					},
+					{
+							"source": "learn/getting_started/supported_os.mdx",
+							"label": "Supported operating systems",
+							"slug": "supported_os"
+					},
+					{
+							"source": "learn/getting_started/quick_start.mdx",
+							"label": "Quick start",
+							"slug": "quick_start"
+					},
+					{
+							"title": "Meilisearch 101",
+							"slug": "learn/getting_started",
+							"routes": [
+									{
+											"source": "learn/getting_started/filtering_and_sorting.mdx",
+											"label": "Filtering and sorting",
+											"slug": "filtering_and_sorting"
+									},
+									{
+											"source": "learn/getting_started/customizing_relevancy.mdx",
+											"label": "Customizing relevancy",
+											"slug": "customizing_relevancy"
+									},
+									{
+											"source": "learn/getting_started/getting_ready_for_production.mdx",
+											"label": "Getting ready for production",
+											"slug": "getting_ready_for_production"
+									}	
+							]
+					}
+			]
+	},
   {
       "title": "Core concepts",
       "slug": "core",
       "routes": [
           {
-              "source": "core_concepts_documents.mdx",
-              "label": "documents",
-              "slug": "core_concepts_documents"
+              "source": "learn/core_concepts/documents.mdx",
+              "label": "Documents",
+              "slug": "documents"
           },
           {
-              "source": "core_concepts_indexes.mdx",
-              "label": "indexes",
-              "slug": "core_concepts_indexes"
+              "source": "learn/core_concepts/indexes.mdx",
+              "label": "Indexes",
+              "slug": "indexes"
           },
           {
-              "source": "core_concepts_primary_key.mdx",
-              "label": "primary key",
-              "slug": "core_concepts_primary_key"
+              "source": "learn/core_concepts/relevancy.mdx",
+              "label": "Relevancy",
+              "slug": "relevancy"
           },
-          {
-              "source": "core_concepts_relevancy.mdx",
-              "label": "relevancy",
-              "slug": "core_concepts_relevancy"
-          }
+					{
+							"source": "learn/core_concepts/primary_key.mdx",
+							"label": "Primary key",
+							"slug": "primary_key"
+					}
       ]
   },
   {
       "title": "Configuration",
-      "slug": "config",
+      "slug": "learn/configuration",
       "routes": [
           {
-              "source": "config_instance_options.mdx",
-              "label": "instance options",
-              "slug": "config_instance_options"
+							"source": "learn/configuration/instance_options.mdx",
+							"label": "Configure Meilisearch at launch",
+							"slug": "instance_options"
           },
-          {
-              "source": "config_settings_displayed_searchable_attributes.mdx",
-              "label": "settings displayed searchable attributes",
-              "slug": "config_settings_displayed_searchable_attributes"
-          },
-          {
-              "source": "config_settings_distinct.mdx",
-              "label": "settings distinct",
-              "slug": "config_settings_distinct"
-          },
-          {
-              "source": "config_settings_overview.mdx",
-              "label": "settings overview",
-              "slug": "config_settings_overview"
-          },
-          {
-              "source": "config_settings_synonyms.mdx",
-              "label": "settings synonyms",
-              "slug": "config_settings_synonyms"
-          },
-          {
-              "source": "config_settings_typo_tolerance.mdx",
-              "label": "settings typo tolerance",
-              "slug": "config_settings_typo_tolerance"
-          }
-      ]
+					{
+							"title": "Configuration",
+							"slug": "learn/configuration",
+							"routes": [
+									{
+											"source": "learn/configuration/overview.mdx",
+											"label": "Overview",
+											"slug": "overview"
+									},
+									{
+											"source": "learn/configuration/distinct.mdx",
+											"label": "Distinct attribute",
+											"slug": "distinct"
+									},
+									{
+											"source": "learn/configuration/displayed_searchable_attributes.mdx",
+											"label": "Displayed searchable attributes",
+											"slug": "displayed_searchable_attributes"
+									},
+									{
+											"source": "learn/configuration/synonyms.mdx",
+											"label": "Synonyms",
+											"slug": "synonyms"
+									},
+									{
+											"source": "learn/configuration/typo_tolerance.mdx",
+											"label": "Typo tolerance",
+											"slug": "typo_tolerance"
+									}
+							]
+					}
+			]
   },
-  {
-      "title": "Contributing",
-      "slug": "contribute",
-      "routes": [
-          {
-              "source": "contributing_docs.mdx",
-              "label": "docs",
-              "slug": "contributing_docs"
-          },
-          {
-              "source": "contributing_overview.mdx",
-              "label": "overview",
-              "slug": "contributing_overview"
-          }
-      ]
-  },
-  {
-      "title": "Backup",
-      "slug": "backup",
-      "routes": [
-          {
-              "source": "backup_dumps.mdx",
-              "label": "dumps",
-              "slug": "backup_dumps"
-          },
-          {
-              "source": "backup_snapshots.mdx",
-              "label": "snapshots",
-              "slug": "backup_snapshots"
-          },
-          {
-              "source": "backup_snapshots_vs_dumps.mdx",
-              "label": "snapshots vs dumps",
-              "slug": "backup_snapshots_vs_dumps"
-          }
-      ]
-  },
-  {
-      "title": "Cookbooks",
-      "slug": "cookbooks",
-      "routes": [
-          {
-              "source": "cookbooks_docker.mdx",
-              "label": "docker",
-              "slug": "cookbooks_docker"
-          },
-          {
-              "source": "cookbooks_http2_ssl.mdx",
-              "label": "http2 ssl",
-              "slug": "cookbooks_http2_ssl"
-          },
-          {
-              "source": "cookbooks_postman_collection.mdx",
-              "label": "postman collection",
-              "slug": "cookbooks_postman_collection"
-          },
-          {
-              "source": "cookbooks_running_production.mdx",
-              "label": "running production",
-              "slug": "cookbooks_running_production"
-          },
-          {
-              "source": "cookbooks_search_bar_for_docs.mdx",
-              "label": "search bar for docs",
-              "slug": "cookbooks_search_bar_for_docs"
-          }
-      ]
-  },
-  {
-      "title": "Advanced",
-      "slug": "advanced",
-      "routes": [
-          {
-              "source": "adv_asynchronous_operations.mdx",
-              "label": "Asynchronous operations",
-              "slug": "asynchronous-operations"
-          },
-          {
-              "source": "adv_filtering_and_faceted_search.mdx",
-              "label": "filtering and faceted search",
-              "slug": "filtering_and_faceted_search"
-          },
-          {
-              "source": "adv_geosearch.mdx",
-              "label": "Geosearch",
-              "slug": "geosearch"
-          },
-          {
-              "source": "adv_pagination.mdx",
-              "label": "adv pagination",
-              "slug": "adv_pagination"
-          },
-          {
-              "source": "adv_sorting.mdx",
-              "label": "adv sorting",
-              "slug": "adv_sorting"
-          },
-          {
-              "source": "adv_working_with_dates.mdx",
-              "label": "adv working with dates",
-              "slug": "adv_working_with_dates"
-          }
-      ]
-  },
-  {
-      "title": "What is meilisearch",
-      "slug": "what-is-meilisearch",
-      "routes": [
-          {
-              "source": "deploy_aws.mdx",
-              "label": "aws",
-              "slug": "deploy_aws"
-          },
-          {
-              "source": "deploy_azure.mdx",
-              "label": "azure",
-              "slug": "deploy_azure"
-          },
-          {
-              "source": "deploy_digitalocean.mdx",
-              "label": "digitalocean",
-              "slug": "deploy_digitalocean"
-          },
-          {
-              "source": "deploy_gcp.mdx",
-              "label": "gcp",
-              "slug": "deploy_gcp"
-          },
-          {
-              "source": "deploy_koyeb.mdx",
-              "label": "koyeb",
-              "slug": "deploy_koyeb"
-          },
-          {
-              "source": "deploy_qovery.mdx",
-              "label": "qovery",
-              "slug": "deploy_qovery"
-          },
-          {
-              "source": "deploy_railway.mdx",
-              "label": "railway",
-              "slug": "deploy_railway"
-          },
-          {
-              "source": "errors_codes.mdx",
-              "label": "errors codes",
-              "slug": "errors_codes"
-          },
-          {
-              "source": "errors_overview.mdx",
-              "label": "errors overview",
-              "slug": "errors_overview"
-          },
-          {
-              "source": "faq.mdx",
-              "label": "faq",
-              "slug": "faq"
-          },
-          {
-              "source": "getting_started_customizing_relevancy.mdx",
-              "label": "getting started customizing relevancy",
-              "slug": "getting_started_customizing_relevancy"
-          },
-          {
-              "source": "getting_started_filtering_and_sorting.mdx",
-              "label": "getting started filtering and sorting",
-              "slug": "getting_started_filtering_and_sorting"
-          },
-          {
-              "source": "getting_started_getting_ready_for_production.mdx",
-              "label": "getting started getting ready for production",
-              "slug": "getting_started_getting_ready_for_production"
-          },
-          {
-              "source": "getting_started_installation.mdx",
-              "label": "getting started installation",
-              "slug": "getting_started_installation"
-          },
-          {
-              "source": "getting_started_quick_start.mdx",
-              "label": "getting started quick start",
-              "slug": "getting_started_quick_start"
-          },
-          {
-              "source": "getting_started_supported_os.mdx",
-              "label": "getting started supported os",
-              "slug": "getting_started_supported_os"
-          },
-          {
-              "source": "inner_workings_concat.mdx",
-              "label": "inner workings concat",
-              "slug": "inner_workings_concat"
-          },
-          {
-              "source": "inner_workings_datatypes.mdx",
-              "label": "inner workings datatypes",
-              "slug": "inner_workings_datatypes"
-          },
-          {
-              "source": "inner_workings_indexing.mdx",
-              "label": "inner workings indexing",
-              "slug": "inner_workings_indexing"
-          },
-          {
-              "source": "inner_workings_known_limitations.mdx",
-              "label": "inner workings known limitations",
-              "slug": "inner_workings_known_limitations"
-          },
-          {
-              "source": "inner_workings_prefix.mdx",
-              "label": "inner workings prefix",
-              "slug": "inner_workings_prefix"
-          },
-          {
-              "source": "inner_workings_storage.mdx",
-              "label": "inner workings storage",
-              "slug": "inner_workings_storage"
-          },
-          {
-              "source": "inner_workings_tokenization.mdx",
-              "label": "inner workings tokenization",
-              "slug": "inner_workings_tokenization"
-          },
-          {
-              "source": "open-api-readme.mdx",
-              "label": "open-api-readme",
-              "slug": "open-api-readme"
-          },
-          {
-              "source": "security_master_api_keys.mdx",
-              "label": "security master api keys",
-              "slug": "security_master_api_keys"
-          },
-          {
-              "source": "security_tenant_tokens.mdx",
-              "label": "security tenant tokens",
-              "slug": "security_tenant_tokens"
-          },
-          {
-              "source": "update_and_migration_algolia_migration.mdx",
-              "label": "update and migration algolia migration",
-              "slug": "update_and_migration_algolia_migration"
-          },
-          {
-              "source": "update_and_migration_previous_docs_version.mdx",
-              "label": "update and migration previous docs version",
-              "slug": "update_and_migration_previous_docs_version"
-          },
-          {
-              "source": "update_and_migration_updating.mdx",
-              "label": "update and migration updating",
-              "slug": "update_and_migration_updating"
-          },
-          {
-              "source": "update_and_migration_versioning.mdx",
-              "label": "update and migration versioning",
-              "slug": "update_and_migration_versioning"
-          },
-          {
-              "source": "what_is_meilisearch_comparison_to_alternatives.mdx",
-              "label": "what is meilisearch comparison to alternatives",
-              "slug": "what_is_meilisearch_comparison_to_alternatives"
-          },
-          {
-              "source": "what_is_meilisearch_contact.mdx",
-              "label": "what is meilisearch contact",
-              "slug": "what_is_meilisearch_contact"
-          },
-          {
-              "source": "what_is_meilisearch_features.mdx",
-              "label": "what is meilisearch features",
-              "slug": "what_is_meilisearch_features"
-          },
-          {
-              "source": "what_is_meilisearch_language.mdx",
-              "label": "what is meilisearch language",
-              "slug": "what_is_meilisearch_language"
-          },
-          {
-              "source": "what_is_meilisearch_overview.mdx",
-              "label": "what is meilisearch overview",
-              "slug": "what_is_meilisearch_overview"
-          },
-          {
-              "source": "what_is_meilisearch_philosophy.mdx",
-              "label": "what is meilisearch philosophy",
-              "slug": "what_is_meilisearch_philosophy"
-          },
-          {
-              "source": "what_is_meilisearch_sdks.mdx",
-              "label": "what is meilisearch sdks",
-              "slug": "what_is_meilisearch_sdks"
-          },
-          {
-              "source": "what_is_meilisearch_search_preview.mdx",
-              "label": "what is meilisearch search preview",
-              "slug": "what_is_meilisearch_search_preview"
-          },
-          {
-              "source": "what_is_meilisearch_telemetry.mdx",
-              "label": "what is meilisearch telemetry",
-              "slug": "what_is_meilisearch_telemetry"
-          }
-      ]
-  }
+	{
+			"title": "Security and permissions",
+			"slug": "learn/security",
+			"routes": [
+					{
+							"source": "learn/security/master_api_keys.mdx",
+							"label": "Master key and API keys",
+							"slug": "master_api_keys"
+					},
+					{
+							"source": "learn/security/master_api_keys.mdx",
+							"label": "Multitenancy and tenant tokens",
+							"slug": "tenant_tokens"
+					}
+			]
+	},
+	{
+			"title": "Update and migration",
+			"slug": "learn/update_and_migration",
+			"routes": [
+					{
+							"source": "learn/update_and_migration/algolia_migration.mdx",
+							"label": "Migrating from Algolia",
+							"slug": "algolia_migration"
+					},
+					{
+							"source": "learn/update_and_migration/previous_docs_version.mdx",
+							"label": "Accessing previous docs versions",
+							"slug": "previous_docs_version"
+					},
+					{
+							"source": "learn/update_and_migration/updating.mdx",
+							"label": "Updating Meilisearch",
+							"slug": "updating"
+					},
+					{
+							"source": "learn/update_and_migration/versioning.mdx",
+							"label": "Versioning policy",
+							"slug": "versioning"
+					}
+			]
+	},
+	{
+			"title": "Advanced topics",
+			"slug": "learn/advanced",
+			"routes": [
+					{
+							"source": "learn/advanced/asynchronous_operations.mdx",
+							"label": "Task and asynchronous operations",
+							"slug": "asynchronous_operations"
+					},
+					{
+							"source": "learn/advanced/filtering_and_faceted_search.mdx",
+							"label": "Filtering and faceted search",
+							"slug": "filtering_and_faceted_search"
+					},
+					{
+							"source": "learn/advanced/geosearch.mdx",
+							"label": "Geosearch",
+							"slug": "geosearch"
+					},
+					{
+							"source": "learn/advanced/pagination.mdx",
+							"label": "Search result pagination",
+							"slug": "pagination"
+					},
+					{
+							"source": "learn/advanced/sorting.mdx",
+							"label": "Sorting",
+							"slug": "sorting"
+					},
+					{
+							"source": "learn/advanced/working_with_dates.mdx",
+							"label": "Working with dates",
+							"slug": "working_with_dates"
+					},
+					{
+						"title": "Data backup",
+						"slug": "learn/advanced",
+						"routes": [
+								{
+										"source": "learn/advanced/snapshots_vs_dumps.mdx",
+										"label": "Snapshots vs dumps",
+										"slug": "snapshots_vs_dumps"
+								},
+								{
+										"source": "learn/advanced/dumps.mdx",
+										"label": "Dumps",
+										"slug": "dumps"
+								},
+								{
+										"source": "learn/advanced/snapshots.mdx",
+										"label": "Snapshots",
+										"slug": "snapshots"
+								}							
+						]
+				},
+				{
+						"title": "Inner workings",
+						"slug": "learn/advanced",
+						"routes": [
+								{
+										"source": "learn/advanced/concat.mdx",
+										"label": "Concatenate and split queries",
+										"slug": "concat"
+								},
+								{
+										"source": "learn/advanced/datatypes.mdx",
+										"label": "Data types",
+										"slug": "datatypes"
+								},
+								{
+										"source": "learn/advanced/indexing.mdx",
+										"label": "Indexing and performance",
+										"slug": "indexing"
+								},
+								{
+										"source": "learn/advanced/known_limitations.mdx",
+										"label": "Known limitations",
+										"slug": "known_limitations"
+								},
+								{
+										"source": "learn/advanced/prefix.mdx",
+										"label": "Prefix search",
+										"slug": "prefix"
+								},
+								{
+										"source": "learn/advanced/storage.mdx",
+										"label": "Storage",
+										"slug": "storage"
+								},
+								{
+										"source": "learn/advanced/tokenization.mdx",
+										"label": "Tokenization",
+										"slug": "tokenization"
+								}					
+						]
+				}
+		]
+	},
+	{
+			"title": "Cookbooks",
+			"slug": "cookbooks",
+			"routes": [
+					{
+							"source": "learn/cookbooks/running_production.mdx",
+							"label": "Run in production",
+							"slug": "running_production"
+					},
+					{
+							"source": "learn/cookbooks/postman_collection.mdx",
+							"label": "Use with Postman",
+							"slug": "postman_collection"
+					},
+					{
+							"source": "learn/cookbooks/docker.mdx",
+							"label": "Use with docker",
+							"slug": "docker"
+					},
+					{
+							"source": "learn/cookbooks/search_bar_for_docs.mdx",
+							"label": "Add a search bar to your docs",
+							"slug": "search_bar_for_docs"
+					},
+					{
+							"source": "learn/cookbooks/http2_ssl.mdx",
+							"label": "Set up HTTP/2 SSL",
+							"slug": "http2_ssl"
+					},
+					{
+							"title": "Deployment",
+							"slug": "learn/cookbooks",
+							"routes": [
+									{
+											"source": "learn/cookbooks/aws.mdx",
+											"label": "Deploy on AWS",
+											"slug": "aws"
+									},
+									{
+											"source": "learn/cookbooks/azure.mdx",
+											"label": "Deploy on Azure",
+											"slug": "azure"
+									},
+									{
+											"source": "learn/cookbooks/digitalocean.mdx",
+											"label": "Deploy on DigitalOcean",
+											"slug": "digitalocean"
+									},
+									{
+											"source": "learn/cookbooks/gcp.mdx",
+											"label": "Deploy on GCP",
+											"slug": "gcp"
+									},
+									{
+											"source": "learn/cookbooks/koyeb.mdx",
+											"label": "Deploy on Koyeb",
+											"slug": "koyeb"
+									},
+									{
+											"source": "learn/cookbooks/qovery.mdx",
+											"label": "Deploy on Qovery",
+											"slug": "qovery"
+									},
+									{
+											"source": "learn/cookbooks/railway.mdx",
+											"label": "Deploy on Railway",
+											"slug": "railway"
+									}
+							]
+					},
+					{
+							"title": "Contributing",
+							"slug": "learn/contributing",
+							"routes": [
+									{
+										"source": "learn/contributing/overview.mdx",
+										"label": "Overview",
+										"slug": "overview"
+									},
+									{
+										"source": "learn/contributing/contributing_docs.mdx",
+										"label": "Contributing to our documentation",
+										"slug": "contributing_docs"
+									}
+							]
+					}
+			]
+	}
 ]
