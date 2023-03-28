@@ -132,11 +132,7 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 Search for documents matching a specific query in the given index.
 
 ::: warning
-<<<<<<< HEAD
 This endpoint only accepts [string filter expressions](/learn/advanced/filtering.md#filter-expressions).
-=======
-This endpoint only accepts [string filter expressions](/learn/advanced/filtering_guide.md#filter-expressions).
->>>>>>> 09145590 (create API page,faceted guide, fix links)
 :::
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
@@ -439,7 +435,7 @@ The following example returns the second page of search results:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
 
-For more information on how to use filters and build filter expressions, [read our guide on filtering and filter expressions](/learn/advanced/filtering_guide.md).
+For more information on how to use filters and build filter expressions, [read our guide on filtering and filter expressions](/learn/advanced/filtering.md).
 
 #### Example
 
