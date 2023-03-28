@@ -142,7 +142,9 @@ When using the `facets` parameter, any matching documents with facets containing
 
 If none of the matching documents have a numeric value for a facet, that facet is not included in the `facetStats` object.
 
+::: note
 Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
+:::
 
 The following response shows the `facetStats` when searching for `classics`:
 
@@ -216,7 +218,7 @@ Let's look at the `books` index with both conjunctive and disjunctive facets. Th
 ::: tip Improving user experience
 Most ecommerce websites use different ways for handling facet counts depending on their use case. By keeping the facet count visible, you allow the user to make more informed decisions. They can select or deselect different facets based on how many results they get for each facet and how those results overlap with other selected facets. This can help the user quickly refine their search results to find the most relevant items.
 
-Let's look at the `books` index again. If the user selects `English` and `French` as languages, the facet count for each language updates to show the number of books available in that language. For this example it updates to: `English:10` and `French:2`. If the user then selects `Fiction` from the `genres` facets, the facet count for each genre updates to show how many `Fiction` books are available in English and French. For this example it updates to: `English:8` and `French:2`. This means 8 of the 10 English books and both French books have the `Fiction` genre. Note that the facet count is not impacted by filters on its own facet values.
+Let's look at the `books` index again. If the user selects `English` and `French` as languages, the facet count shows the number of books available in that language. For this example it updates to: `English:10` and `French:2`. Notice how the facet count doesn't change when selecting both languages. If the user then selects `Fiction` from the `genres` facets, the facet count for each genre updates to show how many `Fiction` books are available in English and French. For this example it updates to: `English:8` and `French:2`. This means 8 of the 10 English books and both French books have the `Fiction` genre. Note that the facet count is not impacted by filters on its own facet values.
 
 ![Selecting 'Fiction' as 'genres' for English and French books](/faceted-search/multi-search.gif)
 
