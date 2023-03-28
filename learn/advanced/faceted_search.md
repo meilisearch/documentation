@@ -8,7 +8,6 @@ sidebarDepth: 2
 
 You can use Meilisearch filters to build faceted search interfaces. This type of interface allows users to refine search results based on broad categories or facets. Faceted search provides users with a quick way to narrow down search results by selecting categories relevant to what they are looking for. A faceted navigation system is an **intuitive interface to display and navigate through content**.
 
-
 Facets are common in ecommerce sites like Amazon. When users search for products, they are presented with a list of results and a list of facets which you can see on the sidebar in the image below:
 
 ![Meilisearch demo for an ecommerce website displaying faceting UI](/faceted-search/facets-ecommerce.png)
@@ -135,7 +134,7 @@ By default, `facets` returns a maximum of 100 facet values for each faceted fiel
 
 ### Facet stats
 
-When using the `facets` parameter, Meilisearch results includes a `facetStats` object. `facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet. 
+When using the `facets` parameter, Meilisearch results include a `facetStats` object. `facetStats` contains the lowest (`min`) and highest (`max`) numerical values across all documents in each facet.
 
 `facetStats` is useful when creating UI components such as range sliders. These allow users to refine their search by selecting from a range of facet values.
 
@@ -143,7 +142,7 @@ When using the `facets` parameter, Meilisearch results includes a `facetStats` o
 Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
 :::
 
-The following response shows the the lowest and highest book ratings when searching for `"classics"`:
+The following response shows the lowest and highest book ratings when searching for `"classics"`:
 
 ```json
 {
@@ -192,7 +191,7 @@ The GIF below shows the `books` dataset with disjunctive facets. Notice how the 
 
 ### Combining conjunctive and disjunctive facets
 
-It is possible to create search queries with both conjunctive and disjunctive facets. 
+It is possible to create search queries with both conjunctive and disjunctive facets.
 
 For example, a user might select `English` and `French` from the `language` facet so they can see books written either in English or in French. This query uses an `OR` operator and is a disjunctive facet:
 

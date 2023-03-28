@@ -101,7 +101,7 @@ Filtering allows you to refine your search based on different categories. For ex
 
 Before filtering on any document attribute, you must add it to `filterableAttributes` using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update filterable attributes endpoint](/reference/api/settings.md#update-filterable-attributes). Then, make a search query using the [`filter` search parameter](/reference/api/search.md#filter).
 
-[Learn more about filtering.](/learn/advanced/filtering_guide.md)
+[Learn more about filtering.](/learn/advanced/filtering.md)
 
 ### Pagination
 
