@@ -51,7 +51,7 @@ Let's say you only want to view meteorites that weigh less than 200g:
 
 Filtering is intended to be combined with search queries to refine your results.
 
-To learn more about filters and how to configure them, refer to our [dedicated guide](/learn/advanced/filtering_guide.md).
+To learn more about filters and how to configure them, refer to our [dedicated guide](/learn/advanced/filtering.md).
 
 ## Sorting
 

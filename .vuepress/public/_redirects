@@ -11,8 +11,8 @@
 /guides/advanced_guides/installation.html           /learn/getting_started/installation.html
 /guides/advanced_guides/configuration.html          /learn/configuration/instance_options.html
 /guides/advanced_guides/search_parameters.html      /reference/api/search.html
-/guides/advanced_guides/filtering.html              /learn/advanced/filtering_and_faceted_search.html
-/guides/advanced_guides/faceted_search.html         /learn/advanced/filtering_and_faceted_search.html
+/guides/advanced_guides/filtering.html              /learn/advanced/filtering.html
+/guides/advanced_guides/faceted_search.html         /learn/advanced/faceted_search.html
 /guides/advanced_guides/authentication.html         /learn/security/master_api_keys.html
 /guides/advanced_guides/asynchronous_updates.html   /learn/advanced/asynchronous_operations.html
 /guides/advanced_guides/web_interface.html          /learn/what_is_meilisearch/search_preview.html
@@ -77,8 +77,8 @@
 
 # Group filters and facets content
 /reference/api/attributes_for_faceting.html         /reference/api/settings.html
-/reference/features/filtering.html                  /learn/advanced/filtering_and_faceted_search.html
-/reference/features/faceted_search.html             /learn/advanced/filtering_and_faceted_search.html
+/reference/features/filtering.html                  /learn/advanced/filtering.html
+/reference/features/faceted_search.html             /learn/advanced/faceted_search.html
 
 # Rename Asynchronous updates to Asynchronous operations
 /learn/advanced/asynchronous_updates.html           /learn/advanced/asynchronous_operations.html
@@ -208,5 +208,5 @@
 /learn/advanced/filtering_and_faceted_search.html#faceted-search   /learn/advanced/faceted_search.html
 
 # Rename filtering guide
-/learn/advanced/filtering_and_faceted_search.html   /learn/advanced/filtering_guide.html
+/learn/advanced/filtering_and_faceted_search.html   /learn/advanced/filtering.html
 

@@ -531,7 +531,7 @@ Attributes in the `filterableAttributes` list can be used as filters or facets.
 Updating filterable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 :::
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_guide.md)
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering.md)
 
 ### Get filterable attributes
 
@@ -585,7 +585,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 :::
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering_guide.md)
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering.md)
 
 #### Example
 
