@@ -4,22 +4,22 @@
       "slug": "core",
       "routes": [
           {
-              "source": "core_concepts_documents.md",
+              "source": "core_concepts_documents.mdx",
               "label": "documents",
               "slug": "core_concepts_documents"
           },
           {
-              "source": "core_concepts_indexes.md",
+              "source": "core_concepts_indexes.mdx",
               "label": "indexes",
               "slug": "core_concepts_indexes"
           },
           {
-              "source": "core_concepts_primary_key.md",
+              "source": "core_concepts_primary_key.mdx",
               "label": "primary key",
               "slug": "core_concepts_primary_key"
           },
           {
-              "source": "core_concepts_relevancy.md",
+              "source": "core_concepts_relevancy.mdx",
               "label": "relevancy",
               "slug": "core_concepts_relevancy"
           }
@@ -30,32 +30,32 @@
       "slug": "config",
       "routes": [
           {
-              "source": "config_instance_options.md",
+              "source": "config_instance_options.mdx",
               "label": "instance options",
               "slug": "config_instance_options"
           },
           {
-              "source": "config_settings_displayed_searchable_attributes.md",
+              "source": "config_settings_displayed_searchable_attributes.mdx",
               "label": "settings displayed searchable attributes",
               "slug": "config_settings_displayed_searchable_attributes"
           },
           {
-              "source": "config_settings_distinct.md",
+              "source": "config_settings_distinct.mdx",
               "label": "settings distinct",
               "slug": "config_settings_distinct"
           },
           {
-              "source": "config_settings_overview.md",
+              "source": "config_settings_overview.mdx",
               "label": "settings overview",
               "slug": "config_settings_overview"
           },
           {
-              "source": "config_settings_synonyms.md",
+              "source": "config_settings_synonyms.mdx",
               "label": "settings synonyms",
               "slug": "config_settings_synonyms"
           },
           {
-              "source": "config_settings_typo_tolerance.md",
+              "source": "config_settings_typo_tolerance.mdx",
               "label": "settings typo tolerance",
               "slug": "config_settings_typo_tolerance"
           }
@@ -66,12 +66,12 @@
       "slug": "contribute",
       "routes": [
           {
-              "source": "contributing_docs.md",
+              "source": "contributing_docs.mdx",
               "label": "docs",
               "slug": "contributing_docs"
           },
           {
-              "source": "contributing_overview.md",
+              "source": "contributing_overview.mdx",
               "label": "overview",
               "slug": "contributing_overview"
           }
@@ -82,17 +82,17 @@
       "slug": "backup",
       "routes": [
           {
-              "source": "backup_dumps.md",
+              "source": "backup_dumps.mdx",
               "label": "dumps",
               "slug": "backup_dumps"
           },
           {
-              "source": "backup_snapshots.md",
+              "source": "backup_snapshots.mdx",
               "label": "snapshots",
               "slug": "backup_snapshots"
           },
           {
-              "source": "backup_snapshots_vs_dumps.md",
+              "source": "backup_snapshots_vs_dumps.mdx",
               "label": "snapshots vs dumps",
               "slug": "backup_snapshots_vs_dumps"
           }
@@ -103,27 +103,27 @@
       "slug": "cookbooks",
       "routes": [
           {
-              "source": "cookbooks_docker.md",
+              "source": "cookbooks_docker.mdx",
               "label": "docker",
               "slug": "cookbooks_docker"
           },
           {
-              "source": "cookbooks_http2_ssl.md",
+              "source": "cookbooks_http2_ssl.mdx",
               "label": "http2 ssl",
               "slug": "cookbooks_http2_ssl"
           },
           {
-              "source": "cookbooks_postman_collection.md",
+              "source": "cookbooks_postman_collection.mdx",
               "label": "postman collection",
               "slug": "cookbooks_postman_collection"
           },
           {
-              "source": "cookbooks_running_production.md",
+              "source": "cookbooks_running_production.mdx",
               "label": "running production",
               "slug": "cookbooks_running_production"
           },
           {
-              "source": "cookbooks_search_bar_for_docs.md",
+              "source": "cookbooks_search_bar_for_docs.mdx",
               "label": "search bar for docs",
               "slug": "cookbooks_search_bar_for_docs"
           }
@@ -134,32 +134,32 @@
       "slug": "advanced",
       "routes": [
           {
-              "source": "adv_asynchronous_operations.md",
+              "source": "adv_asynchronous_operations.mdx",
               "label": "Asynchronous operations",
               "slug": "asynchronous-operations"
           },
           {
-              "source": "adv_filtering_and_faceted_search.md",
+              "source": "adv_filtering_and_faceted_search.mdx",
               "label": "filtering and faceted search",
               "slug": "filtering_and_faceted_search"
           },
           {
-              "source": "adv_geosearch.md",
+              "source": "adv_geosearch.mdx",
               "label": "Geosearch",
               "slug": "geosearch"
           },
           {
-              "source": "adv_pagination.md",
+              "source": "adv_pagination.mdx",
               "label": "adv pagination",
               "slug": "adv_pagination"
           },
           {
-              "source": "adv_sorting.md",
+              "source": "adv_sorting.mdx",
               "label": "adv sorting",
               "slug": "adv_sorting"
           },
           {
-              "source": "adv_working_with_dates.md",
+              "source": "adv_working_with_dates.mdx",
               "label": "adv working with dates",
               "slug": "adv_working_with_dates"
           }
@@ -170,197 +170,197 @@
       "slug": "what-is-meilisearch",
       "routes": [
           {
-              "source": "deploy_aws.md",
+              "source": "deploy_aws.mdx",
               "label": "aws",
               "slug": "deploy_aws"
           },
           {
-              "source": "deploy_azure.md",
+              "source": "deploy_azure.mdx",
               "label": "azure",
               "slug": "deploy_azure"
           },
           {
-              "source": "deploy_digitalocean.md",
+              "source": "deploy_digitalocean.mdx",
               "label": "digitalocean",
               "slug": "deploy_digitalocean"
           },
           {
-              "source": "deploy_gcp.md",
+              "source": "deploy_gcp.mdx",
               "label": "gcp",
               "slug": "deploy_gcp"
           },
           {
-              "source": "deploy_koyeb.md",
+              "source": "deploy_koyeb.mdx",
               "label": "koyeb",
               "slug": "deploy_koyeb"
           },
           {
-              "source": "deploy_qovery.md",
+              "source": "deploy_qovery.mdx",
               "label": "qovery",
               "slug": "deploy_qovery"
           },
           {
-              "source": "deploy_railway.md",
+              "source": "deploy_railway.mdx",
               "label": "railway",
               "slug": "deploy_railway"
           },
           {
-              "source": "errors_codes.md",
+              "source": "errors_codes.mdx",
               "label": "errors codes",
               "slug": "errors_codes"
           },
           {
-              "source": "errors_overview.md",
+              "source": "errors_overview.mdx",
               "label": "errors overview",
               "slug": "errors_overview"
           },
           {
-              "source": "faq.md",
+              "source": "faq.mdx",
               "label": "faq",
               "slug": "faq"
           },
           {
-              "source": "getting_started_customizing_relevancy.md",
+              "source": "getting_started_customizing_relevancy.mdx",
               "label": "getting started customizing relevancy",
               "slug": "getting_started_customizing_relevancy"
           },
           {
-              "source": "getting_started_filtering_and_sorting.md",
+              "source": "getting_started_filtering_and_sorting.mdx",
               "label": "getting started filtering and sorting",
               "slug": "getting_started_filtering_and_sorting"
           },
           {
-              "source": "getting_started_getting_ready_for_production.md",
+              "source": "getting_started_getting_ready_for_production.mdx",
               "label": "getting started getting ready for production",
               "slug": "getting_started_getting_ready_for_production"
           },
           {
-              "source": "getting_started_installation.md",
+              "source": "getting_started_installation.mdx",
               "label": "getting started installation",
               "slug": "getting_started_installation"
           },
           {
-              "source": "getting_started_quick_start.md",
+              "source": "getting_started_quick_start.mdx",
               "label": "getting started quick start",
               "slug": "getting_started_quick_start"
           },
           {
-              "source": "getting_started_supported_os.md",
+              "source": "getting_started_supported_os.mdx",
               "label": "getting started supported os",
               "slug": "getting_started_supported_os"
           },
           {
-              "source": "inner_workings_concat.md",
+              "source": "inner_workings_concat.mdx",
               "label": "inner workings concat",
               "slug": "inner_workings_concat"
           },
           {
-              "source": "inner_workings_datatypes.md",
+              "source": "inner_workings_datatypes.mdx",
               "label": "inner workings datatypes",
               "slug": "inner_workings_datatypes"
           },
           {
-              "source": "inner_workings_indexing.md",
+              "source": "inner_workings_indexing.mdx",
               "label": "inner workings indexing",
               "slug": "inner_workings_indexing"
           },
           {
-              "source": "inner_workings_known_limitations.md",
+              "source": "inner_workings_known_limitations.mdx",
               "label": "inner workings known limitations",
               "slug": "inner_workings_known_limitations"
           },
           {
-              "source": "inner_workings_prefix.md",
+              "source": "inner_workings_prefix.mdx",
               "label": "inner workings prefix",
               "slug": "inner_workings_prefix"
           },
           {
-              "source": "inner_workings_storage.md",
+              "source": "inner_workings_storage.mdx",
               "label": "inner workings storage",
               "slug": "inner_workings_storage"
           },
           {
-              "source": "inner_workings_tokenization.md",
+              "source": "inner_workings_tokenization.mdx",
               "label": "inner workings tokenization",
               "slug": "inner_workings_tokenization"
           },
           {
-              "source": "open-api-readme.md",
+              "source": "open-api-readme.mdx",
               "label": "open-api-readme",
               "slug": "open-api-readme"
           },
           {
-              "source": "security_master_api_keys.md",
+              "source": "security_master_api_keys.mdx",
               "label": "security master api keys",
               "slug": "security_master_api_keys"
           },
           {
-              "source": "security_tenant_tokens.md",
+              "source": "security_tenant_tokens.mdx",
               "label": "security tenant tokens",
               "slug": "security_tenant_tokens"
           },
           {
-              "source": "update_and_migration_algolia_migration.md",
+              "source": "update_and_migration_algolia_migration.mdx",
               "label": "update and migration algolia migration",
               "slug": "update_and_migration_algolia_migration"
           },
           {
-              "source": "update_and_migration_previous_docs_version.md",
+              "source": "update_and_migration_previous_docs_version.mdx",
               "label": "update and migration previous docs version",
               "slug": "update_and_migration_previous_docs_version"
           },
           {
-              "source": "update_and_migration_updating.md",
+              "source": "update_and_migration_updating.mdx",
               "label": "update and migration updating",
               "slug": "update_and_migration_updating"
           },
           {
-              "source": "update_and_migration_versioning.md",
+              "source": "update_and_migration_versioning.mdx",
               "label": "update and migration versioning",
               "slug": "update_and_migration_versioning"
           },
           {
-              "source": "what_is_meilisearch_comparison_to_alternatives.md",
+              "source": "what_is_meilisearch_comparison_to_alternatives.mdx",
               "label": "what is meilisearch comparison to alternatives",
               "slug": "what_is_meilisearch_comparison_to_alternatives"
           },
           {
-              "source": "what_is_meilisearch_contact.md",
+              "source": "what_is_meilisearch_contact.mdx",
               "label": "what is meilisearch contact",
               "slug": "what_is_meilisearch_contact"
           },
           {
-              "source": "what_is_meilisearch_features.md",
+              "source": "what_is_meilisearch_features.mdx",
               "label": "what is meilisearch features",
               "slug": "what_is_meilisearch_features"
           },
           {
-              "source": "what_is_meilisearch_language.md",
+              "source": "what_is_meilisearch_language.mdx",
               "label": "what is meilisearch language",
               "slug": "what_is_meilisearch_language"
           },
           {
-              "source": "what_is_meilisearch_overview.md",
+              "source": "what_is_meilisearch_overview.mdx",
               "label": "what is meilisearch overview",
               "slug": "what_is_meilisearch_overview"
           },
           {
-              "source": "what_is_meilisearch_philosophy.md",
+              "source": "what_is_meilisearch_philosophy.mdx",
               "label": "what is meilisearch philosophy",
               "slug": "what_is_meilisearch_philosophy"
           },
           {
-              "source": "what_is_meilisearch_sdks.md",
+              "source": "what_is_meilisearch_sdks.mdx",
               "label": "what is meilisearch sdks",
               "slug": "what_is_meilisearch_sdks"
           },
           {
-              "source": "what_is_meilisearch_search_preview.md",
+              "source": "what_is_meilisearch_search_preview.mdx",
               "label": "what is meilisearch search preview",
               "slug": "what_is_meilisearch_search_preview"
           },
           {
-              "source": "what_is_meilisearch_telemetry.md",
+              "source": "what_is_meilisearch_telemetry.mdx",
               "label": "what is meilisearch telemetry",
               "slug": "what_is_meilisearch_telemetry"
           }

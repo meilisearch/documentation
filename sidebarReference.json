@@ -4,57 +4,57 @@
       "slug": "api",
       "routes": [
           {
-              "source": "api_documents.md",
+              "source": "api_documents.mdx",
               "label": "Documents",
               "slug": "api_documents"
           },
           {
-              "source": "api_dump.md",
+              "source": "api_dump.mdx",
               "label": "Dump",
               "slug": "api_dump"
           },
           {
-              "source": "api_health.md",
+              "source": "api_health.mdx",
               "label": "Health",
               "slug": "api_health"
           },
           {
-              "source": "api_indexes.md",
+              "source": "api_indexes.mdx",
               "label": "Indexes",
               "slug": "api_indexes"
           },
           {
-              "source": "api_keys.md",
+              "source": "api_keys.mdx",
               "label": "Keys",
               "slug": "api_keys"
           },
           {
-              "source": "api_overview.md",
+              "source": "api_overview.mdx",
               "label": "Overview",
               "slug": "api_overview"
           },
           {
-              "source": "api_search.md",
+              "source": "api_search.mdx",
               "label": "Search",
               "slug": "api_search"
           },
           {
-              "source": "api_settings.md",
+              "source": "api_settings.mdx",
               "label": "Settings",
               "slug": "api_settings"
           },
           {
-              "source": "api_stats.md",
+              "source": "api_stats.mdx",
               "label": "Stats",
               "slug": "api_stats"
           },
           {
-              "source": "api_tasks.md",
+              "source": "api_tasks.mdx",
               "label": "Tasks",
               "slug": "api_tasks"
           },
           {
-              "source": "api_version.md",
+              "source": "api_version.mdx",
               "label": "Version",
               "slug": "api_version"
           }
