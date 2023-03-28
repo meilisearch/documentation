@@ -99,15 +99,7 @@ The following response shows the facet distribution when searching for `classics
       "Coming-of-Age":1,
       "Fantasy":2,
       "Fiction":8,
-      "Historical Fiction":1,
-      "Horror":2,
-      "Literature":7,
-      "Novel":2,
-      "Romance":1,
-      "Satire":1,
-      "Tragedy":1,
-      "Vampires":1,
-      "Victorian":2
+      …
     },
     "language":{
       "English":6,
