@@ -62,7 +62,7 @@
   },
   {
     "title": "Errors",
-    "slug": "reference/errors",
+    "slug": "errors",
     "routes": [
         {
             "source": "reference/errors/overview.mdx",

@@ -129,7 +129,7 @@
           },
 					{
 							"title": "Configuration",
-							"slug": "learn/configuration",
+							"slug": "configuration",
 							"routes": [
 									{
 											"source": "learn/configuration/overview.mdx",
@@ -162,7 +162,7 @@
   },
 	{
 			"title": "Security and permissions",
-			"slug": "learn/security",
+			"slug": "security",
 			"routes": [
 					{
 							"source": "learn/security/master_api_keys.mdx",
@@ -238,7 +238,7 @@
 					},
 					{
 						"title": "Data backup",
-						"slug": "learn/advanced",
+						"slug": "advanced",
 						"routes": [
 								{
 										"source": "learn/advanced/snapshots_vs_dumps.mdx",
@@ -259,7 +259,7 @@
 				},
 				{
 						"title": "Inner workings",
-						"slug": "learn/advanced",
+						"slug": "advanced",
 						"routes": [
 								{
 										"source": "learn/advanced/concat.mdx",
@@ -331,7 +331,7 @@
 					},
 					{
 							"title": "Deployment",
-							"slug": "learn/cookbooks",
+							"slug": "cookbooks",
 							"routes": [
 									{
 											"source": "learn/cookbooks/aws.mdx",
@@ -372,7 +372,7 @@
 					},
 					{
 							"title": "Contributing",
-							"slug": "learn/contributing",
+							"slug": "contributing",
 							"routes": [
 									{
 										"source": "learn/contributing/overview.mdx",
