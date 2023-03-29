@@ -128,13 +128,13 @@
 							"slug": "instance_options"
           },
 					{
-							"title": "Configuration",
+							"title": "Settings",
 							"slug": "configuration",
 							"routes": [
 									{
 											"source": "learn/configuration/overview.mdx",
 											"label": "Overview",
-											"slug": "overview"
+											"slug": "settings"
 									},
 									{
 											"source": "learn/configuration/distinct.mdx",
@@ -170,7 +170,7 @@
 							"slug": "master_api_keys"
 					},
 					{
-							"source": "learn/security/master_api_keys.mdx",
+							"source": "learn/security/tenant_tokens.mdx",
 							"label": "Multitenancy and tenant tokens",
 							"slug": "tenant_tokens"
 					}
@@ -178,7 +178,7 @@
 	},
 	{
 			"title": "Update and migration",
-			"slug": "learn/update_and_migration",
+			"slug": "update_and_migration",
 			"routes": [
 					{
 							"source": "learn/update_and_migration/algolia_migration.mdx",
@@ -204,11 +204,11 @@
 	},
 	{
 			"title": "Advanced topics",
-			"slug": "learn/advanced",
+			"slug": "advanced",
 			"routes": [
 					{
 							"source": "learn/advanced/asynchronous_operations.mdx",
-							"label": "Task and asynchronous operations",
+							"label": "Tasks and asynchronous operations",
 							"slug": "asynchronous_operations"
 					},
 					{
