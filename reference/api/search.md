@@ -472,17 +472,17 @@ _geoRadius(lat, lng, distance_in_meters)
 :::
 
 ::: tab _geoBoundingBox
-`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top left and bottom right corners. This filter rule requires two arrays of geographic coordinates:
+`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays of geographic coordinates:
 
 ```
 _geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
 ```
 
-`lat` and `lng` should be geographic coordinates expressed as floating point numbers. The first array indicates the top left corner and the second array indicates the bottom right corner of the bounding box.
+`lat` and `lng` should be geographic coordinates expressed as floating point numbers. The first array indicates the top right corner and the second array indicates the bottom left corner of the bounding box.
 
 <CodeSamples id="geosearch_guide_filter_usage_3" />
 
-Meilisearch will throw an error if the top left corner is under the bottom right corner.
+Meilisearch will throw an error if the top right corner is under the bottom left corner.
 
 :::
 ::::

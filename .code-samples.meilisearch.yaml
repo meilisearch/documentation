@@ -697,7 +697,7 @@ geosearch_guide_filter_usage_3: |-
   curl \
     -X POST 'http://localhost:7700/indexes/restaurants/search' \
     -H 'Content-type:application/json' \
-    --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.179175], [45.449484, 9.214024])" }'
+    --data-binary '{ "filter": "_geoBoundingBox([45.494181, 9.214024], [45.449484, 9.179175])" }'
 geosearch_guide_sort_settings_1: |-
   curl \
     -X PUT 'http://localhost:7700/indexes/restaurants/settings/sortable-attributes' \

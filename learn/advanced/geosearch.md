@@ -145,7 +145,7 @@ _geoRadius(lat, lng, distance_in_meters)
 _geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
 ```
 
-`lat` and `lng` must be floating point numbers indicating a geographic position. The first array indicates the geographic coordinates of the top left corner of the rectangular area. The second array indicates the coordinates of the bottom right corner of the rectangular area.
+`lat` and `lng` must be floating point numbers indicating a geographic position. The first array indicates the geographic coordinates of the top right corner of the rectangular area. The second array indicates the coordinates of the bottom left corner of the rectangular area.
 
 ### Examples
 
