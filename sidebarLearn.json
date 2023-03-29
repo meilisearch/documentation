@@ -1,6 +1,6 @@
 [
 	{
-			"title": "What is meilisearch",
+			"title": "What is Meilisearch",
 			"slug": "what_is_meilisearch",
 			"routes": [
 					{
@@ -52,7 +52,7 @@
 	},
 	{
 			"title": "Getting started",
-			"slug": "learn/getting_started",
+			"slug": "getting_started",
 			"routes": [
 					{
 							"source": "learn/getting_started/installation.mdx",
@@ -71,7 +71,7 @@
 					},
 					{
 							"title": "Meilisearch 101",
-							"slug": "learn/getting_started",
+							"slug": "getting_started",
 							"routes": [
 									{
 											"source": "learn/getting_started/filtering_and_sorting.mdx",
@@ -94,7 +94,7 @@
 	},
   {
       "title": "Core concepts",
-      "slug": "core",
+      "slug": "core_concepts",
       "routes": [
           {
               "source": "learn/core_concepts/documents.mdx",
