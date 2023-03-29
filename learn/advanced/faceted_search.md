@@ -50,7 +50,7 @@ Now, if you were to search the `books` index for `classic` using the following c
 
 <CodeSamples id="faceted_search_1" />
 
-The response shows `classic` books along with two new fields: [`facetDistribution`](#facet-distribution) and [`facetStats`](#facet-stats):
+The response would return `classic` books along with two new fields: [`facetDistribution`](#facet-distribution) and [`facetStats`](#facet-stats):
 
 ```json
 {
@@ -134,7 +134,7 @@ When using the `facets` parameter, Meilisearch results include a `facetStats` ob
 Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
 :::
 
-The following response shows the lowest and highest book ratings when searching for `"classics"`:
+The following response shows the lowest and highest book ratings when searching for `"classic"`:
 
 ```json
 {
@@ -159,7 +159,7 @@ Conjunctive facets use the `AND` logical operator. When users select multiple va
 
 With conjunctive facets, when a user selects `English` from the `language` facet, all returned books must be in English. If the user further narrows down the search by selecting `Fiction` and `Literature` as `genres`, all returned books must be in English and contain both `genres`.
 
-```sql
+```
 "language = English AND genres = Fiction AND genres = Literature"
 ```
 
@@ -169,11 +169,11 @@ The GIF below shows how the facet count for `genres` updates to only include boo
 
 ### Disjunctive facets
 
-Disjunctive facets use the `OR` logical operator. They allow users to choose multiple options within a facet, so they don’t have to perform more than one search to find the products they’re looking for.
+Disjunctive facets use the `OR` logical operator. When users select multiple values for a facet, returned results must contain at least one of the selected values.
 
 With disjunctive facets, when a user selects `Fiction`, and `Literature`, Meilisearch returns all books that are either `Fiction`, `Literature`, or both:
 
-```sql
+```
 "genres = Fiction OR genres = Literature"
 ```
 
@@ -187,31 +187,28 @@ It is possible to create search queries with both conjunctive and disjunctive fa
 
 For example, a user might select `English` and `French` from the `language` facet so they can see books written either in English or in French. This query uses an `OR` operator and is a disjunctive facet:
 
-```sql
-language = English OR language = French
+```
+"language = English OR language = French"
 ```
 
-The same user might also be interested in literary fiction books and select `Fiction` and `Literature` as `genres`. Since the user wants a specific combination of genres, their query uses an AND operator:
+The same user might also be interested in literary fiction books and select `Fiction` and `Literature` as `genres`. Since the user wants a specific combination of genres, their query uses an `AND` operator:
 
-```sql
-genres = Fiction AND genres = Literature
+```
+"genres = Fiction AND genres = Literature"
+```
 
 The user can combine these two filter expressions in one by wrapping them in parentheses and using an `AND` operator:
 
-```sql
-(language = English OR language = French) AND (genres = Fiction AND genres = Literature)
 ```
+"(language = English OR language = French) AND (genres = Fiction AND genres = Literature)"
+```
+
+The GIF below shows the `books` dataset with conjunctive and disjunctive facets. Notice how the facet count for each facet updates based on the selection.
 
 ![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/faceted-search/conjunctive-and-disjunctive-facets.gif)
 
 ::: tip Improving user experience
-Most ecommerce websites use different ways for handling facet counts depending on their use case. By keeping the facet count visible, you allow the user to make more informed decisions. They can select or deselect different facets based on how many results they get for each facet and how those results overlap with other selected facets. This can help the user quickly refine their search results to find the most relevant items.
-
-Let's look at the `books` index again. If the user selects `English` and `French` as languages, the facet count shows the number of books available in that language. For this example it updates to: `English:10` and `French:2`. Notice how the facet count doesn't change when selecting both languages. If the user then selects `Fiction` from the `genres` facets, the facet count for each genre updates to show how many `Fiction` books are available in English and French. For this example it updates to: `English:8` and `French:2`. This means 8 of the 10 English books and both French books have the `Fiction` genre. Note that the facet count is not impacted by filters on its own facet values.
-
-![Selecting 'Fiction' as 'genres' for English and French books](/faceted-search/multi-search.gif)
-
-You can use the [`/multi-search`](/reference/api/multi_search.md) route to bundle multiple queries from the above example in one request:
+Did you know you can use the [`/multi-search`](/reference/api/multi_search.md) route to bundle multiple queries with different filter expressions and facets?
 
 <CodeSamples id="faceted_search_2" />
 
