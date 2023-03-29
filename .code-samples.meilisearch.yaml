@@ -1049,17 +1049,17 @@ faceted_search_2: |-
         {
           "indexUid": "books",
           "facets": ["language", "genres", "author", "format"],
-          "filter": [["language = English", "language = French"], ["genres = Fiction"]]
+          "filter": "(language = English AND language = French) OR genres = Fiction"
         },
         {
           "indexUid": "books",
           "facets": ["language"],
-          "filter": [["genres = Fiction"]]
+          "filter": "genres = Fiction"
         },
         {
           "indexUid": "books",
           "facets": ["genres"],
-          "filter": [["language = English", "language = French"]]
+          "filter": "language = English OR language = French"
         }
       ]
     }'
