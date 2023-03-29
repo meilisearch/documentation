@@ -3,7 +3,8 @@ on:
   push:
     branches:
       - main
-      - new-docs-content
+      - new-docs-content-migration
+      - joaco/deployment-actions
 
 jobs:
   deploy-to-staging:
