@@ -1,0 +1,65 @@
+{
+  "index_uid": "new-docs-structure",
+  "start_urls": [
+      "https://meilisearch-staging.vercel.app/docs"
+  ],
+  "sitemap_urls": [
+      "https://meilisearch-staging.vercel.app/sitemap.xml"
+  ],
+  "selectors": {
+      "lvl0": {
+          "selector": "#sidebar-list .sidebar-link[data-active=true] ~ .sidebar-category",
+          "global": true,
+          "default_value": "Documentation"
+      },
+      "lvl1": {
+          "selector": ".docs-main h1",
+          "global": true
+      },
+      "lvl2": ".docs-main h2",
+      "lvl3": ".docs-main h3",
+      "lvl4": ".docs-main h4",
+      "lvl5": ".docs-main h5",
+      "text": ".docs-main p, .docs-main li, .docs-main td"
+  },
+  "strip_chars": " .,;:#",
+  "scrap_start_urls": true,
+  "custom_settings": {
+      "searchableAttributes": [
+          "content",
+          "hierarchy_radio_lvl1",
+          "hierarchy_radio_lvl2",
+          "hierarchy_radio_lvl3",
+          "hierarchy_radio_lvl4",
+          "hierarchy_radio_lvl5",
+          "hierarchy_radio_lvl0",
+          "hierarchy_lvl1",
+          "hierarchy_lvl2",
+          "hierarchy_lvl3",
+          "hierarchy_lvl4",
+          "hierarchy_lvl5",
+          "hierarchy_lvl0",
+          "objectID",
+          "anchor"
+      ],
+      "synonyms": {
+          "relevancy": [
+              "relevant",
+              "relevance"
+          ],
+          "relevant": [
+              "relevancy",
+              "relevance"
+          ],
+          "relevance": [
+              "relevancy",
+              "relevant"
+          ]
+      }
+  },
+  "min_indexed_level": 2,
+  "selectors_exclude": [
+      "#page-navigation",
+      "#feedback"
+  ]
+}
