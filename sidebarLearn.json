@@ -111,16 +111,16 @@
               "label": "Relevancy",
               "slug": "relevancy"
           },
-					{
-							"source": "learn/core_concepts/primary_key.mdx",
-							"label": "Primary key",
-							"slug": "primary_key"
-					}
+			{
+					"source": "learn/core_concepts/primary_key.mdx",
+					"label": "Primary key",
+					"slug": "primary_key"
+			}
       ]
   },
   {
       "title": "Configuration",
-      "slug": "learn/configuration",
+      "slug": "configuration",
       "routes": [
           {
 							"source": "learn/configuration/instance_options.mdx",
