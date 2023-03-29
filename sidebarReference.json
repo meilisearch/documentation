@@ -1,63 +1,79 @@
 [
   {
-      "title": "Category 1",
-      "slug": "api",
+      "title": "API reference",
+      "slug": "reference/api",
       "routes": [
-          {
-              "source": "api_documents.mdx",
-              "label": "Documents",
-              "slug": "api_documents"
-          },
-          {
-              "source": "api_dump.mdx",
-              "label": "Dump",
-              "slug": "api_dump"
-          },
-          {
-              "source": "api_health.mdx",
-              "label": "Health",
-              "slug": "api_health"
-          },
-          {
-              "source": "api_indexes.mdx",
-              "label": "Indexes",
-              "slug": "api_indexes"
-          },
-          {
-              "source": "api_keys.mdx",
-              "label": "Keys",
-              "slug": "api_keys"
-          },
-          {
-              "source": "api_overview.mdx",
-              "label": "Overview",
-              "slug": "api_overview"
-          },
-          {
-              "source": "api_search.mdx",
-              "label": "Search",
-              "slug": "api_search"
-          },
-          {
-              "source": "api_settings.mdx",
-              "label": "Settings",
-              "slug": "api_settings"
-          },
-          {
-              "source": "api_stats.mdx",
-              "label": "Stats",
-              "slug": "api_stats"
-          },
-          {
-              "source": "api_tasks.mdx",
-              "label": "Tasks",
-              "slug": "api_tasks"
-          },
-          {
-              "source": "api_version.mdx",
-              "label": "Version",
-              "slug": "api_version"
-          }
+        {
+            "source": "reference/api/overview.mdx",
+            "label": "Overview",
+            "slug": "overview"
+        },
+        {
+            "source": "reference/api/indexes.mdx",
+            "label": "Indexes",
+            "slug": "indexes"
+        },
+        {
+            "source": "reference/api/documents.mdx",
+            "label": "Documents",
+            "slug": "documents"
+        },
+        {
+            "source": "reference/api/search.mdx",
+            "label": "Search",
+            "slug": "search"
+        },
+        {
+            "source": "reference/api/tasks.mdx",
+            "label": "Tasks",
+            "slug": "tasks"
+        },
+        {
+            "source": "reference/api/keys.mdx",
+            "label": "Keys",
+            "slug": "keys"
+        },
+        {
+            "source": "reference/api/settings.mdx",
+            "label": "Settings",
+            "slug": "settings"
+        },
+        {
+            "source": "reference/api/stats.mdx",
+            "label": "Stats",
+            "slug": "stats"
+        },
+        {
+            "source": "reference/api/health.mdx",
+            "label": "Health",
+            "slug": "health"
+        },
+        {
+            "source": "reference/api/version.mdx",
+            "label": "Version",
+            "slug": "version"
+        },
+        {
+            "source": "reference/api/dump.mdx",
+            "label": "Dumps",
+            "slug": "dump"
+        }
       ]
+  },
+  {
+    "title": "Errors",
+    "slug": "errors",
+    "routes": [
+        {
+            "source": "reference/errors/overview.mdx",
+            "label": "Overview",
+            "slug": "overview"
+        },
+        {
+            "source": "reference/errors/error_codes.mdx",
+            "label": "Error codes",
+            "slug": "error_codes"
+        }
+    ]
   }
 ]
