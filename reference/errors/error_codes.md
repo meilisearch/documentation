@@ -130,6 +130,10 @@ The given [`uid`](/reference/api/keys.md#uid) is invalid. The `uid` must follow 
 
 The [Content-Type header](/reference/api/overview.md#content-type) is not supported by Meilisearch. Currently, Meilisearch only supports JSON, CSV, and NDJSON.
 
+## `invalid_document_csv_delimiter`
+
+The [`csvDelimiter`](/reference/api/documents.md#add-or-replace-documents) parameter is invalid. It should either be a string or [a single ASCII character](https://www.rfc-editor.org/rfc/rfc20).
+
 ## `invalid_document_id`
 
 The provided [document identifier](/learn/core_concepts/primary_key.md#document-id) does not meet the format requirements. A document identifier must be of type integer or string, composed only of alphanumeric characters (a-z A-Z 0-9), hyphens (-), and underscores (_).
