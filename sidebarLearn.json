@@ -68,28 +68,28 @@
 							"source": "learn/getting_started/quick_start.mdx",
 							"label": "Quick start",
 							"slug": "quick_start"
+					}
+			]
+	},
+	{
+			"title": "Meilisearch 101",
+			"slug": "getting_started",
+			"routes": [
+					{
+							"source": "learn/getting_started/filtering_and_sorting.mdx",
+							"label": "Filtering and sorting",
+							"slug": "filtering_and_sorting"
 					},
 					{
-							"title": "Meilisearch 101",
-							"slug": "getting_started",
-							"routes": [
-									{
-											"source": "learn/getting_started/filtering_and_sorting.mdx",
-											"label": "Filtering and sorting",
-											"slug": "filtering_and_sorting"
-									},
-									{
-											"source": "learn/getting_started/customizing_relevancy.mdx",
-											"label": "Customizing relevancy",
-											"slug": "customizing_relevancy"
-									},
-									{
-											"source": "learn/getting_started/getting_ready_for_production.mdx",
-											"label": "Getting ready for production",
-											"slug": "getting_ready_for_production"
-									}	
-							]
-					}
+							"source": "learn/getting_started/customizing_relevancy.mdx",
+							"label": "Customizing relevancy",
+							"slug": "customizing_relevancy"
+					},
+					{
+							"source": "learn/getting_started/getting_ready_for_production.mdx",
+							"label": "Getting ready for production",
+							"slug": "getting_ready_for_production"
+					}	
 			]
 	},
   {
@@ -111,11 +111,11 @@
               "label": "Relevancy",
               "slug": "relevancy"
           },
-			{
-					"source": "learn/core_concepts/primary_key.mdx",
-					"label": "Primary key",
-					"slug": "primary_key"
-			}
+					{
+							"source": "learn/core_concepts/primary_key.mdx",
+							"label": "Primary key",
+							"slug": "primary_key"
+					}
       ]
   },
   {
@@ -126,40 +126,40 @@
 							"source": "learn/configuration/instance_options.mdx",
 							"label": "Configure Meilisearch at launch",
 							"slug": "instance_options"
-          },
-					{
-							"title": "Settings",
-							"slug": "configuration",
-							"routes": [
-									{
-											"source": "learn/configuration/overview.mdx",
-											"label": "Overview",
-											"slug": "settings"
-									},
-									{
-											"source": "learn/configuration/distinct.mdx",
-											"label": "Distinct attribute",
-											"slug": "distinct"
-									},
-									{
-											"source": "learn/configuration/displayed_searchable_attributes.mdx",
-											"label": "Displayed searchable attributes",
-											"slug": "displayed_searchable_attributes"
-									},
-									{
-											"source": "learn/configuration/synonyms.mdx",
-											"label": "Synonyms",
-											"slug": "synonyms"
-									},
-									{
-											"source": "learn/configuration/typo_tolerance.mdx",
-											"label": "Typo tolerance",
-											"slug": "typo_tolerance"
-									}
-							]
-					}
+          }
 			]
   },
+	{
+			"title": "Index settings",
+			"slug": "configuration",
+			"routes": [
+					{
+							"source": "learn/configuration/overview.mdx",
+							"label": "Overview",
+							"slug": "settings"
+					},
+					{
+							"source": "learn/configuration/distinct.mdx",
+							"label": "Distinct attribute",
+							"slug": "distinct"
+					},
+					{
+							"source": "learn/configuration/displayed_searchable_attributes.mdx",
+							"label": "Displayed searchable attributes",
+							"slug": "displayed_searchable_attributes"
+					},
+					{
+							"source": "learn/configuration/synonyms.mdx",
+							"label": "Synonyms",
+							"slug": "synonyms"
+					},
+					{
+							"source": "learn/configuration/typo_tolerance.mdx",
+							"label": "Typo tolerance",
+							"slug": "typo_tolerance"
+					}
+			]
+	},
 	{
 			"title": "Security and permissions",
 			"slug": "security",
@@ -235,70 +235,70 @@
 							"source": "learn/advanced/working_with_dates.mdx",
 							"label": "Working with dates",
 							"slug": "working_with_dates"
+					}
+		]
+	},
+	{
+			"title": "Data backup",
+			"slug": "advanced",
+			"routes": [
+					{
+							"source": "learn/advanced/snapshots_vs_dumps.mdx",
+							"label": "Snapshots vs dumps",
+							"slug": "snapshots_vs_dumps"
 					},
 					{
-						"title": "Data backup",
-						"slug": "advanced",
-						"routes": [
-								{
-										"source": "learn/advanced/snapshots_vs_dumps.mdx",
-										"label": "Snapshots vs dumps",
-										"slug": "snapshots_vs_dumps"
-								},
-								{
-										"source": "learn/advanced/dumps.mdx",
-										"label": "Dumps",
-										"slug": "dumps"
-								},
-								{
-										"source": "learn/advanced/snapshots.mdx",
-										"label": "Snapshots",
-										"slug": "snapshots"
-								}							
-						]
-				},
-				{
-						"title": "Inner workings",
-						"slug": "advanced",
-						"routes": [
-								{
-										"source": "learn/advanced/concat.mdx",
-										"label": "Concatenate and split queries",
-										"slug": "concat"
-								},
-								{
-										"source": "learn/advanced/datatypes.mdx",
-										"label": "Data types",
-										"slug": "datatypes"
-								},
-								{
-										"source": "learn/advanced/indexing.mdx",
-										"label": "Indexing and performance",
-										"slug": "indexing"
-								},
-								{
-										"source": "learn/advanced/known_limitations.mdx",
-										"label": "Known limitations",
-										"slug": "known_limitations"
-								},
-								{
-										"source": "learn/advanced/prefix.mdx",
-										"label": "Prefix search",
-										"slug": "prefix"
-								},
-								{
-										"source": "learn/advanced/storage.mdx",
-										"label": "Storage",
-										"slug": "storage"
-								},
-								{
-										"source": "learn/advanced/tokenization.mdx",
-										"label": "Tokenization",
-										"slug": "tokenization"
-								}					
-						]
-				}
-		]
+							"source": "learn/advanced/dumps.mdx",
+							"label": "Dumps",
+							"slug": "dumps"
+					},
+					{
+							"source": "learn/advanced/snapshots.mdx",
+							"label": "Snapshots",
+							"slug": "snapshots"
+					}							
+			]
+	},
+	{
+			"title": "Inner workings",
+			"slug": "advanced",
+			"routes": [
+					{
+							"source": "learn/advanced/concat.mdx",
+							"label": "Concatenate and split queries",
+							"slug": "concat"
+					},
+					{
+							"source": "learn/advanced/datatypes.mdx",
+							"label": "Data types",
+							"slug": "datatypes"
+					},
+					{
+							"source": "learn/advanced/indexing.mdx",
+							"label": "Indexing and performance",
+							"slug": "indexing"
+					},
+					{
+							"source": "learn/advanced/known_limitations.mdx",
+							"label": "Known limitations",
+							"slug": "known_limitations"
+					},
+					{
+							"source": "learn/advanced/prefix.mdx",
+							"label": "Prefix search",
+							"slug": "prefix"
+					},
+					{
+							"source": "learn/advanced/storage.mdx",
+							"label": "Storage",
+							"slug": "storage"
+					},
+					{
+							"source": "learn/advanced/tokenization.mdx",
+							"label": "Tokenization",
+							"slug": "tokenization"
+					}					
+			]
 	},
 	{
 			"title": "Cookbooks",
@@ -328,63 +328,63 @@
 							"source": "learn/cookbooks/http2_ssl.mdx",
 							"label": "Set up HTTP/2 SSL",
 							"slug": "http2_ssl"
+					}
+			]
+	},
+	{
+			"title": "Deployment",
+			"slug": "cookbooks",
+			"routes": [
+					{
+							"source": "learn/cookbooks/aws.mdx",
+							"label": "Deploy on AWS",
+							"slug": "aws"
 					},
 					{
-							"title": "Deployment",
-							"slug": "cookbooks",
-							"routes": [
-									{
-											"source": "learn/cookbooks/aws.mdx",
-											"label": "Deploy on AWS",
-											"slug": "aws"
-									},
-									{
-											"source": "learn/cookbooks/azure.mdx",
-											"label": "Deploy on Azure",
-											"slug": "azure"
-									},
-									{
-											"source": "learn/cookbooks/digitalocean.mdx",
-											"label": "Deploy on DigitalOcean",
-											"slug": "digitalocean"
-									},
-									{
-											"source": "learn/cookbooks/gcp.mdx",
-											"label": "Deploy on GCP",
-											"slug": "gcp"
-									},
-									{
-											"source": "learn/cookbooks/koyeb.mdx",
-											"label": "Deploy on Koyeb",
-											"slug": "koyeb"
-									},
-									{
-											"source": "learn/cookbooks/qovery.mdx",
-											"label": "Deploy on Qovery",
-											"slug": "qovery"
-									},
-									{
-											"source": "learn/cookbooks/railway.mdx",
-											"label": "Deploy on Railway",
-											"slug": "railway"
-									}
-							]
+							"source": "learn/cookbooks/azure.mdx",
+							"label": "Deploy on Azure",
+							"slug": "azure"
 					},
 					{
-							"title": "Contributing",
-							"slug": "contributing",
-							"routes": [
-									{
-										"source": "learn/contributing/overview.mdx",
-										"label": "Overview",
-										"slug": "overview"
-									},
-									{
-										"source": "learn/contributing/contributing_docs.mdx",
-										"label": "Contributing to our documentation",
-										"slug": "contributing_docs"
-									}
-							]
+							"source": "learn/cookbooks/digitalocean.mdx",
+							"label": "Deploy on DigitalOcean",
+							"slug": "digitalocean"
+					},
+					{
+							"source": "learn/cookbooks/gcp.mdx",
+							"label": "Deploy on GCP",
+							"slug": "gcp"
+					},
+					{
+							"source": "learn/cookbooks/koyeb.mdx",
+							"label": "Deploy on Koyeb",
+							"slug": "koyeb"
+					},
+					{
+							"source": "learn/cookbooks/qovery.mdx",
+							"label": "Deploy on Qovery",
+							"slug": "qovery"
+					},
+					{
+							"source": "learn/cookbooks/railway.mdx",
+							"label": "Deploy on Railway",
+							"slug": "railway"
+					}
+			]
+	},
+	{
+			"title": "Contributing",
+			"slug": "contributing",
+			"routes": [
+					{
+							"source": "learn/contributing/overview.mdx",
+							"label": "Overview",
+							"slug": "overview"
+					},
+					{
+								"source": "learn/contributing/contributing_docs.mdx",
+								"label": "Contributing to our documentation",
+								"slug": "contributing_docs"
 					}
 			]
 	}
