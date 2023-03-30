@@ -127,7 +127,7 @@ Multi-index search (federated search) | ✅ | ✅ | ✅ | ✅ |
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | 1000, increasing limit possible by contacting support | No limitation | No limitation |
-| Maximum index size | 100GiB default, configurable  | 128GB | Constrained by RAM | No limitation |
+| Maximum index size | 80TiB  | 128GB | Constrained by RAM | No limitation |
 | Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
 | Maximum document size | No limitation | 100KB, configurable | No limitation | 100KB default, configurable  |
 

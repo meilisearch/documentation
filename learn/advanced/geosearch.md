@@ -109,9 +109,9 @@ If your dataset is formatted as CSV, the file header must have a `_geo` column. 
 "3", "Artico Gelateria Tradizionale", "Via Dogana, 1, 20123 Milan, Italy", "ice cream", 10, "48.8826517,2.3352748"
 ```
 
-## Filtering results with `_geoRadius`
+## Filtering results with `_geoRadius` and `_geoBoundingBox`
 
-You can use `_geo` data to filter queries and make sure you only receive results located within a certain geographic area.
+You can use `_geo` data to filter queries so you only receive results located within a given geographic area.
 
 ### Configuration
 
@@ -119,35 +119,45 @@ In order to filter results based on their location, you must add the `_geo` attr
 
 <CodeSamples id="geosearch_guide_filter_settings_1" />
 
-Note that Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
+Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
 [You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/advanced/filtering.md#configuring-filters)
 
 ### Usage
 
-First, ensure your documents contain valid geolocation data and that you have added the `_geo` attribute to the `filterableAttributes` list. Then, you can use the [`filter` search parameter](/reference/api/search.md#filter) along with `_geoRadius`, a special filter rule, to ensure Meilisearch only returns results located within a specific geographic area.
+Use the [`filter` search parameter](/reference/api/search.md#filter) along with `_geoRadius` or `_geoBoundingBox`. These are special filter rules that ensure Meilisearch only returns results located within a specific geographic area.
 
-`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+### `_geoRadius`
+
+`_geoRadius` establishes a circular area based on a central point and a radius. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
 ```
 _geoRadius(lat, lng, distance_in_meters)
 ```
 
-`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter. If any of these three parameters are invalid or missing, Meilisearch will return an [`invalid_search_filter`](/reference/errors/error_codes.md#invalid-search-filter) error.
+`lat` and `lng` must be floating point numbers indicating a geographic position. `distance_in_meters` must be an integer indicating the radius covered by the `_geoRadius` filter.
 
-[You can read more about using `filter` in our dedicated guide.](/learn/advanced/filtering.md#using-filters)
+### `_geoBoundingBox`
 
-::: warning
-`_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_search_filter`](/reference/errors/error_codes.md#invalid-search-filter) error.
-:::
+`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays:
+
+```
+_geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
+```
+
+`lat` and `lng` must be floating point numbers indicating a geographic position. The first array indicates the geographic coordinates of the top right corner of the rectangular area. The second array indicates the coordinates of the bottom left corner of the rectangular area.
 
 ### Examples
 
-`_geoRadius` works like any other filter rule. Using our <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json">example dataset</a>, we can search for places to eat near the center of Milan:
+Using our <a id="downloadRestaurants" href="/restaurants.json" download="restaurants.json">example dataset</a>, we can search for places to eat near the center of Milan with `_geoRadius`:
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-The results should look like this:
+We also make a similar query using `_geoBoundingBox`:
+
+<CodeSamples id="geosearch_guide_filter_usage_3" />
+
+In both cases, the results should look like this:
 
 ```json
 [
@@ -176,11 +186,9 @@ The results should look like this:
 ]
 ```
 
-It is also possible to use `_geoRadius` together with other filters. We can narrow down our previous search so it only includes pizzerias:
+It is also possible to combine `_geoRadius` and `_geoBoundingBox` with other filters. We can narrow down our previous search so it only includes pizzerias:
 
 <CodeSamples id="geosearch_guide_filter_usage_2" />
-
-The above command will only work if you have previously added `type` to `filterableAttributes`.
 
 ```json
 [
@@ -197,6 +205,12 @@ The above command will only work if you have previously added `type` to `filtera
   }
 ]
 ```
+
+The above command will only work if you have previously added `type` to `filterableAttributes`.
+
+::: warning
+`_geo`, `_geoDistance`, and `_geoPoint` are not valid filter rules. Trying to use any of them with the `filter` search parameter will result in an [`invalid_search_filter`](/reference/errors/error_codes.md#invalid-search-filter) error.
+:::
 
 ## Sorting results with `_geoPoint`
 

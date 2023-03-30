@@ -292,6 +292,14 @@ module.exports = {
           ],
         },
         {
+          title: '🧪 Experimental',
+          path: '/learn/experimental/metrics.html',
+          collapsable: false,
+          children: [
+            '/learn/experimental/metrics',
+          ],
+        },
+        {
           title: '👐 Contributing',
           path: '/learn/contributing/overview.html',
           collapsable: false,
