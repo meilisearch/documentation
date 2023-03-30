@@ -206,10 +206,3 @@ The user can combine these two filter expressions in one by wrapping them in par
 The GIF below shows the `books` dataset with conjunctive and disjunctive facets. Notice how the facet count for each facet updates based on the selection.
 
 ![Selecting 'Fiction' and 'Literature' as 'genres' for English books](/faceted-search/conjunctive-and-disjunctive-facets.gif)
-
-::: tip Improving user experience
-Did you know you can use the [`/multi-search`](/reference/api/multi_search.md) route to bundle multiple queries with different filter expressions and facets?
-
-<CodeSamples id="faceted_search_2" />
-
-:::
