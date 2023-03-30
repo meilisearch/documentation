@@ -453,11 +453,14 @@ You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
-#### Filtering results with `_geoRadius`
+#### Filtering results with `_geoRadius` and `_geoBoundingBox`
 
-If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
+If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
 
-`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+:::: tabs
+
+::: tab _geoRadius
+`_geoRadius` establishes a circular area based on a central point and a radius. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
 ```json
 _geoRadius(lat, lng, distance_in_meters)
@@ -466,6 +469,25 @@ _geoRadius(lat, lng, distance_in_meters)
 `lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
+:::
+
+::: tab _geoBoundingBox
+`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays of geographic coordinates:
+
+```
+_geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
+```
+
+`lat` and `lng` should be geographic coordinates expressed as floating point numbers. The first array indicates the top right corner and the second array indicates the bottom left corner of the bounding box.
+
+<CodeSamples id="geosearch_guide_filter_usage_3" />
+
+Meilisearch will throw an error if the top right corner is under the bottom left corner.
+
+:::
+::::
+
+If any parameters are invalid or missing, Meilisearch returns an [`invalid_search_filter`](/reference/errors/error_codes.md#invalid-search-filter) error.
 
 ### Facets
 

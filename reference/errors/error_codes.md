@@ -243,7 +243,7 @@ This error occurs if:
 
 - The syntax for the [`sort`](/reference/api/search.md#sort) parameter is invalid
 - The attribute used for sorting is not defined in the [`sortableAttributes`](/reference/api/settings.md#sortable-attributes) list or the `sort` ranking rule is missing from the settings
-- A reserved keyword like `_geo`, `_geoDistance`, or `_geoPoint` is used as a filter
+- A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, or `_geoBoundingBox` is used as a filter
 
 ## `invalid_settings_displayed_attributes`
 
@@ -272,7 +272,7 @@ This error occurs if:
 - The [settings payload](/reference/api/settings.md#body) has an invalid format
 - A non-existent ranking rule is specified
 - A custom ranking rule is malformed
-- A reserved keyword like `_geo`, `_geoDistance`, or `_geoPoint` is used as a custom ranking rule
+- A reserved keyword like `_geo`, `_geoDistance`, `_geoRadius`, `_geoBoundingBox`, or `_geoPoint` is used as a custom ranking rule
 
 ## `invalid_settings_searchable_attributes`
 
