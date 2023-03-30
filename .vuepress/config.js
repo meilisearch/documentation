@@ -192,8 +192,6 @@ module.exports = {
             '/learn/advanced/asynchronous_operations',
             '/learn/advanced/filtering',
             '/learn/advanced/faceted_search',
-            '/learn/advanced/filtering',
-            '/learn/advanced/faceted_search',
             '/learn/advanced/geosearch',
             '/learn/advanced/pagination',
             '/learn/advanced/sorting',

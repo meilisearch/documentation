@@ -93,8 +93,7 @@ Facets are a specific use-case of filters in Meilisearch: whether something is a
 
 By default, Meilisearch returns `100` facet values for each faceted field. You can change this using the [update settings endpoint](/reference/api/settings.md#update-settings) or the [update faceting settings endpoint](/reference/api/settings.md#update-faceting-settings).
 
-[Learn more about faceting.](/learn/advanced/faceted_search.md)
-[Learn more about faceting.](/learn/advanced/faceted_search.md)
+[Learn more about faceting.](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Filterable attributes
 

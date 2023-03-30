@@ -415,11 +415,9 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Faceting
 
-With Meilisearch, you can create [faceted search interfaces](/learn/advanced/faceted_search.md#faceted-search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
-With Meilisearch, you can create [faceted search interfaces](/learn/advanced/faceted_search.md#faceted-search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
+With Meilisearch, you can create [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
 
-[To learn more about faceting, refer to our dedicated guide.](/learn/advanced/faceted_search.md)
-[To learn more about faceting, refer to our dedicated guide.](/learn/advanced/faceted_search.md)
+[To learn more about filtering and faceting, refer to our dedicated guide.](/learn/advanced/filtering_and_faceted_search.md)
 
 ### Faceting object
 

@@ -475,71 +475,45 @@ _geoRadius(lat, lng, distance_in_meters)
 **Expected value**: An array of `attribute`s or `["*"]`
 **Default value**: `null`
 
-Returns the number of documents matching the current search query for each given facet. This parameter can take two values:
-Returns the number of documents matching the current search query for each given facet. This parameter can take two values:
+Returns the number of documents matching the current search query for each given facet. When `facets` is set, the search results object contains the `facetDistribution` field that shows the number of remaining candidates for each specified facet.
+
+This parameter can take two values:
 
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
 
-When `facets` is set, the search results object contains the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
+::: note
+If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
+:::
 
-#### `facetDistribution`
-
-`facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object.
-
-#### `facetStats`
-
-When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query.
-
-If none of the matching documents have a numeric value for a facet, that facet is not  included in the `facetStats` object.
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-and-using-facets)
 
 #### Example
 
-Given a movie ratings database, the following code sample returns the number of `Batman` movies per genre along with the minimum and maximum ratings:
-Given a movie ratings database, the following code sample returns the number of `Batman` movies per genre along with the minimum and maximum ratings:
+Given a movie database, suppose that you want to know the number of `Batman` movies per genre:
 
-<CodeSamples id="search_parameter_guide_facet_stats_1" />
-<CodeSamples id="search_parameter_guide_facet_stats_1" />
+<CodeSamples id="faceted_search_facets_1" />
 
-The response shows the facet distribution for `genres` and `rating`. Since `rating` is a numeric field, you get its minimum and maximum values in `facetStats`.
-The response shows the facet distribution for `genres` and `rating`. Since `rating` is a numeric field, you get its minimum and maximum values in `facetStats`.
+You would get the following response:
 
 ```json
 {
   …
-  "estimatedTotalHits":22,
-  "query":"Batman",
-  "facetDistribution":{
-    "genres":{
-      "Action":20,
-      "Adventure":7,
-      …
-      "Thriller":3
-    },
-    "rating":{
-      "2":1,
-      …
-      "9.8":1
-    }
-  },
-  "facetStats":{
-    "rating":{
-      "min":2.0,
-      "max":9.8
-    }
-  },
-  "facetStats":{
-    "rating":{
-      "min":2.0,
-      "max":9.8
+  "estimatedTotalHits": 1684,
+  "query": "Batman",
+  "facetDistribution": {
+    "genres": {
+      "action": 273,
+      "animation": 118,
+      "adventure": 132,
+      "fantasy": 67,
+      "comedy": 475,
+      "mystery": 70,
+      "thriller": 217
     }
   }
 }
 ```
-
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/faceted_search.md#configuring-and-using-facets)
-
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/faceted_search.md#configuring-and-using-facets)
 
 ### Attributes to retrieve
 

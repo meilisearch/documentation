@@ -38,8 +38,7 @@ Create [filters](/learn/advanced/filtering.md) to refine results based on user-d
 
 ## Faceting
 
-Classify search results into categories and build intuitive navigation interfaces with [faceted search](/learn/advanced/faceted_search.md).
-Classify search results into categories and build intuitive navigation interfaces with [faceted search](/learn/advanced/faceted_search.md).
+Classify search results into categories and build intuitive navigation interfaces with [faceted search](/learn/advanced/filtering_and_faceted_search.md).
 
 ## Sorting
 

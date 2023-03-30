@@ -147,8 +147,6 @@ By default, Meilisearch only returns the first 20 results for a search query. Th
 
 To search on multiple indexes at the same time with a single request, use the [`/multi-search` endpoint.](/reference/api/multi_search.md)
 
-To search on multiple indexes at the same time with a single request, use the [`/multi-search` endpoint.](/reference/api/multi_search.md)
-
 ## Search preview
 
 Meilisearch offers a browser-based search preview where you can search through a selected index. You can access it any time Meilisearch is running at `http://localhost:7700`.
