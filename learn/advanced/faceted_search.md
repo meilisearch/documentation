@@ -140,9 +140,9 @@ The following response shows the lowest and highest book ratings when searching 
 {
   …
 "facetStats":{
-    "rating":{
-      "min":2.5,
-      "max":4.7
+  "rating":{
+    "min":2.5,
+    "max":4.7
     }
   }
   …
