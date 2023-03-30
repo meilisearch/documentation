@@ -139,7 +139,7 @@ _geoRadius(lat, lng, distance_in_meters)
 
 ### `_geoBoundingBox`
 
-`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top left and bottom right corners. This filter rule requires two arrays:
+`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays:
 
 ```
 _geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
