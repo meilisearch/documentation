@@ -60,11 +60,6 @@
 							"slug": "installation"
 					},
 					{
-							"source": "learn/getting_started/supported_os.mdx",
-							"label": "Supported operating systems",
-							"slug": "supported_os"
-					},
-					{
 							"source": "learn/getting_started/quick_start.mdx",
 							"label": "Quick start",
 							"slug": "quick_start"
