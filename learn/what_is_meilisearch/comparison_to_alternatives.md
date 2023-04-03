@@ -95,7 +95,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
-| Multi-index search | [2023](https://github.com/meilisearch/product/issues/74) | ✅ | ✅ | ✅ |
+| Multi-index search (Federated search) | ✅ | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ✅ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br> Up to 3 sort fields per search query | ✅ |
@@ -127,7 +127,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | 1000, increasing limit possible by contacting support | No limitation | No limitation |
-| Maximum index size | 100GiB default, configurable  | 128GB | Constrained by RAM | No limitation |
+| Maximum index size | 80TiB  | 128GB | Constrained by RAM | No limitation |
 | Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
 | Maximum document size | No limitation | 100KB, configurable | No limitation | 100KB default, configurable  |
 

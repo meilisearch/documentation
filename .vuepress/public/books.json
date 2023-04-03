@@ -1,0 +1,145 @@
+[
+  {
+  "id":5,
+  "title": "Hard Times",
+  "genres": ["Classics","Fiction", "Victorian", "Literature"],
+  "publisher": "Penguin Classics",
+  "language": "English",
+  "author": "Charles Dickens",
+  "description":"Hard Times is a novel of social protest which attacks utilitarianism, Bentham's theory which only considered the practical aspects of happiness and ignored emotional, spiritual and moral values. It is set in Coketown, a fictious industrial city in northern England in the mid-1800s.",
+  "format": "Hardcover",
+  "rating": 3
+  },
+  {
+    "id":1,
+    "title": "Don Quixote",
+    "genres": ["Satire","Fiction"],
+    "publisher": "Penguin Classics",
+    "language": "Spanish",
+    "author": "Miguel de Cervantes",
+    "description":"Don Quixote is a classic novel from 1605 which portraits the life and insightful journey of Don Quixote de la Mancha, a Spanish man who seems to be losing his mind on his quest to become a knight and restore chivalry alongside with a farmer named Sancho Panza, with whom he fights multiple imaginary ",
+    "format": "Hardcover",
+    "rating": 4
+  },
+  {
+    "id":2,
+    "title": "The Travels of Ibn Battuta",
+    "genres": ["Travel","Adventure"],
+    "publisher": "Dover Publications",
+    "language": "English",
+    "author": "Ibn Battuta",
+    "description":"His main reason to travel was to go on a Hajj, or a Pilgrimage to Mecca, to fulfill the fifth pillar of Isla.. But his traveling went on for around 29 years and he covered about 75,000 miles visiting the equivalent of 44 modern countries which were then mostly under the governments of Muslim leaders of the World of ",
+    "format": "Hardcover",
+    "rating": 4.5
+  },
+  {
+  "id":3,
+  "title": "Les Misérables",
+  "genres": ["Tragedy", "Fiction", "Novel", "Historical Fiction", "Literature", "Classics"],
+  "publisher": "Simon & Schuster",
+  "language": "French",
+  "author": "Victor Hugo",
+  "description":"Les Misérables centres on the character Jean Valjean, an ex-convict in 19th-century France. The story spans many years as it tells of Valjean's release from prison and reformation as an industrialist while being constantly pursued by the morally strict inspector Javert.",
+  "format": "Hardcover",
+  "rating": 4.7
+  },
+  {
+    "id":4,
+    "title": "James and the Giant Peach",
+    "genres": ["Novel","Children's Literature", "Fantasy"],
+    "publisher": "Puffin Books",
+    "language": "English",
+    "author": "Roald Dahl",
+    "description":"When his parents are unceremoniously eaten by a rhinoceros that escapes from London Zoo, James is forced to go and live with his unpleasant aunts. Through a series of peculiar and magical happenings, James finds himself in a giant peach with a bunch of friendly giant insects for travelling companions.",
+    "format": "Paperback",
+    "rating": 4
+  },
+  {
+    "id":6,
+    "title": "Pride and Prejudice",
+    "genres": ["Classics","Fiction", "Romance", "Literature"],
+    "publisher": "Penguin Classics",
+    "language": "English",
+    "author": "Jane Austen",
+    "description":"Pride and Prejudice follows the turbulent relationship between Elizabeth Bennet, the daughter of a country gentleman, and Fitzwilliam Darcy, a rich aristocratic landowner. They must overcome the titular sins of pride and prejudice in order to fall in love and marry.",
+    "format": "Hardcover",
+    "rating": 4
+  },
+  {
+  "id":7,
+  "title": "Diary of a Wimpy Kid",
+  "genres": ["Humor", "Fiction", "Young Adult", "Comedy","Diary Fiction"],
+  "publisher": "",
+  "language": "English",
+  "author": "Jeff Kinney",
+  "description":"It's a new school year, and Greg Heffley finds himself thrust into middle school, where undersized weaklings share the hallways with kids who are taller, meaner, and already shaving. The hazards of growing up before you're ready are uniquely revealed through words and drawings as Greg records them in his diary.",
+  "format": "Hardcover",
+  "rating": 4.8
+  },
+  {
+    "id":8,
+    "title": "Anne of Green Gables",
+    "genres": ["Literature", "Fiction", "Novel", "Comedy", "Coming-of-Age"],
+    "publisher": "Wordsworth Editions Ltd",
+    "language": "English",
+    "author": "Lucy M. Montgomery",
+    "description":"Anne of Green Gables, children's novel by Canadian author Lucy Maud Montgomery, published in 1908. The work, a sentimental but charming coming-of-age story about a spirited and unconventional orphan girl who finds a home with elderly siblings, became a classic of children's literature and led to several sequels.",
+    "format": "Hardcover",
+    "rating": 4
+  },
+  {
+    "id":9,
+    "title": "Harry Potter and the Chamber of Secrets",
+    "genres": ["Fantasy", "Fiction", "Magic", "Adventure", "Young Adult"],
+    "publisher": "Bloomsbury Publishing PLC",
+    "language": "English",
+    "author": "J.K. Rowling",
+    "description":"The second instalment of boy wizard Harry Potter's adventures at Hogwarts School of Witchcraft and Wizardry, based on the novel by JK Rowling. A mysterious elf tells Harry to expect trouble during his second year at Hogwarts, but nothing can prepare him for trees that fight back, flying cars, spiders that talk and deadly warnings written in blood on the walls of the school.",
+    "format": "Paperback",
+    "rating": 2
+  },
+  {
+    "id":10,
+    "title": "David Copperfield",
+    "genres": ["Classics","Fiction", "Victorian", "Literature"],
+    "publisher": "Penguin UK",
+    "language": "English",
+    "author": "Charles Dickens",
+    "description":"The story follows the life of David Copperfield from childhood to maturity. David was born in Blunderstone, Suffolk, England, six months after the death of his father. David spends his early years in relative happiness with his loving, childish mother and their kindly housekeeper, Clara Peggotty.",
+    "format": "Hardcover",
+    "rating": 3.9
+  },
+  {
+    "id":11,
+    "title": "Dracula",
+    "genres": ["Classics","Fiction", "Horror", "Literature", "Vampires", "Fantasy"],
+    "publisher": "Penguin UK",
+    "language": "English",
+    "author": "Bram Stoker",
+    "description":"Dracula is a gothic novel by Bram Stoker published in 1897. Stoker tells the story of the fight against the vampire Dracula in an epistolary format. The story comprises various letters, telegrams, journal entries, and newspaper articles written by the main characters.",
+    "format": "Hardcover",
+    "rating": 2.5
+  },
+  {
+    "id":12,
+    "title": "Frankenstein",
+    "genres": ["Classics","Fiction", "Horror", "Literature", "Fantasy"],
+    "publisher": "Penguin UK",
+    "language": "English",
+    "author": "Mary Shelley",
+    "description":"Frankenstein tells the story of gifted scientist Victor Frankenstein who succeeds in giving life to a being of his own creation. However, this is not the perfect specimen he imagines that it will be, but rather a hideous creature who is rejected by Victor and mankind in general.",
+    "format": "Hardcover",
+    "rating": 3
+  },
+  {
+    "id":13,
+    "title": "Madame Bovary",
+    "genres": ["Novel","Fiction", "Realism", "Literature"],
+    "publisher": "Penguin UK",
+    "language": "French",
+    "author": "Gustave Flaubert",
+    "description":"Madame Bovary is the debut novel of French writer Gustave Flaubert, published in 1856. The character lives beyond her means in order to escape the banalities and emptiness of provincial life. When the novel was first serialized in La Revue de Paris between 1 October 1856 and 15 December 1856, public prosecutors attacked the novel for obscenity. The resulting trial in January 1857 made the story notorious. After Flaubert's acquittal on 7 February 1857, Madame Bovary became a bestseller in April 1857 when it was published in two volumes. A seminal work of literary realism, the novel is now considered Flaubert's masterpiece, and one of the most influential literary works in history.",
+    "format": "Hardcover",
+    "rating": 4
+  }
+]

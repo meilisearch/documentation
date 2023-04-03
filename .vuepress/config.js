@@ -1,6 +1,6 @@
 const ogprefix = 'og: http://ogp.me/ns#'
 module.exports = {
-  title: 'Meilisearch Documentation v1.0',
+  title: 'Meilisearch Documentation v1.1',
   description: 'Open source Instant Search Engine',
   theme: 'default-prefers-color-scheme',
   themeConfig: {
@@ -190,7 +190,8 @@ module.exports = {
           collapsable: false,
           children: [
             '/learn/advanced/asynchronous_operations',
-            '/learn/advanced/filtering_and_faceted_search',
+            '/learn/advanced/filtering',
+            '/learn/advanced/faceted_search',
             '/learn/advanced/geosearch',
             '/learn/advanced/pagination',
             '/learn/advanced/sorting',
@@ -291,6 +292,14 @@ module.exports = {
           ],
         },
         {
+          title: '🧪 Experimental',
+          path: '/learn/experimental/metrics.html',
+          collapsable: false,
+          children: [
+            '/learn/experimental/metrics',
+          ],
+        },
+        {
           title: '👐 Contributing',
           path: '/learn/contributing/overview.html',
           collapsable: false,
@@ -319,6 +328,7 @@ module.exports = {
             '/reference/api/indexes',
             '/reference/api/documents',
             '/reference/api/search',
+            '/reference/api/multi_search',
             '/reference/api/tasks',
             '/reference/api/keys',
             '/reference/api/settings',

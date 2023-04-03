@@ -84,7 +84,7 @@ getting_started_geo_radius: |-
 getting_started_geo_point: |-
 getting_started_sorting: |-
 getting_started_filtering: |-
-faceted_search_update_settings_1: |-
+filtering_update_settings_1: |-
 faceted_search_facets_1: |-
 faceted_search_walkthrough_filter_1: |-
 add_movies_json_1: |-
@@ -102,6 +102,7 @@ search_parameter_guide_sort_1: |-
 geosearch_guide_filter_settings_1: |-
 geosearch_guide_filter_usage_1: |-
 geosearch_guide_filter_usage_2: |-
+geosearch_guide_filter_usage_3: |-
 geosearch_guide_sort_settings_1: |-
 geosearch_guide_sort_usage_1: |-
 geosearch_guide_sort_usage_2: |-
@@ -157,3 +158,8 @@ async_guide_filter_by_index_uids_1: |
 cancel_tasks_1: |
 delete_tasks_1: |
 swap_indexes_1: |
+multi_search_1: |
+faceted_search_update_settings_1: |-
+search_parameter_guide_facet_stats_1: |-
+faceted_search_1: |-
+faceted_search_2: |-
