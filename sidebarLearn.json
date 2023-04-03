@@ -76,17 +76,17 @@
 			"slug": "getting_started",
 			"routes": [
 					{
-							"source": "learn/getting_started/filtering_and_sorting.mdx",
+							"source": "learn/meilisearch_101/filtering_and_sorting.mdx",
 							"label": "Filtering and sorting",
 							"slug": "filtering_and_sorting"
 					},
 					{
-							"source": "learn/getting_started/customizing_relevancy.mdx",
+							"source": "learn/meilisearch_101/customizing_relevancy.mdx",
 							"label": "Customizing relevancy",
 							"slug": "customizing_relevancy"
 					},
 					{
-							"source": "learn/getting_started/getting_ready_for_production.mdx",
+							"source": "learn/meilisearch_101/getting_ready_for_production.mdx",
 							"label": "Getting ready for production",
 							"slug": "getting_ready_for_production"
 					}	
@@ -134,27 +134,27 @@
 			"slug": "configuration",
 			"routes": [
 					{
-							"source": "learn/configuration/overview.mdx",
+							"source": "learn/index_settings/overview.mdx",
 							"label": "Overview",
 							"slug": "settings"
 					},
 					{
-							"source": "learn/configuration/distinct.mdx",
+							"source": "learn/index_settings/distinct.mdx",
 							"label": "Distinct attribute",
 							"slug": "distinct"
 					},
 					{
-							"source": "learn/configuration/displayed_searchable_attributes.mdx",
+							"source": "learn/index_settings/displayed_searchable_attributes.mdx",
 							"label": "Displayed searchable attributes",
 							"slug": "displayed_searchable_attributes"
 					},
 					{
-							"source": "learn/configuration/synonyms.mdx",
+							"source": "learn/index_settings/synonyms.mdx",
 							"label": "Synonyms",
 							"slug": "synonyms"
 					},
 					{
-							"source": "learn/configuration/typo_tolerance.mdx",
+							"source": "learn/index_settings/typo_tolerance.mdx",
 							"label": "Typo tolerance",
 							"slug": "typo_tolerance"
 					}
@@ -248,17 +248,17 @@
 			"slug": "advanced",
 			"routes": [
 					{
-							"source": "learn/advanced/snapshots_vs_dumps.mdx",
+							"source": "learn/data_backup/snapshots_vs_dumps.mdx",
 							"label": "Snapshots vs dumps",
 							"slug": "snapshots_vs_dumps"
 					},
 					{
-							"source": "learn/advanced/dumps.mdx",
+							"source": "learn/data_backup/dumps.mdx",
 							"label": "Dumps",
 							"slug": "dumps"
 					},
 					{
-							"source": "learn/advanced/snapshots.mdx",
+							"source": "learn/data_backup/snapshots.mdx",
 							"label": "Snapshots",
 							"slug": "snapshots"
 					}							
@@ -269,37 +269,37 @@
 			"slug": "advanced",
 			"routes": [
 					{
-							"source": "learn/advanced/concat.mdx",
+							"source": "learn/inner_workings/concat.mdx",
 							"label": "Concatenate and split queries",
 							"slug": "concat"
 					},
 					{
-							"source": "learn/advanced/datatypes.mdx",
+							"source": "learn/inner_workings/datatypes.mdx",
 							"label": "Data types",
 							"slug": "datatypes"
 					},
 					{
-							"source": "learn/advanced/indexing.mdx",
+							"source": "learn/inner_workings/indexing.mdx",
 							"label": "Indexing and performance",
 							"slug": "indexing"
 					},
 					{
-							"source": "learn/advanced/known_limitations.mdx",
+							"source": "learn/inner_workings/known_limitations.mdx",
 							"label": "Known limitations",
 							"slug": "known_limitations"
 					},
 					{
-							"source": "learn/advanced/prefix.mdx",
+							"source": "learn/inner_workings/prefix.mdx",
 							"label": "Prefix search",
 							"slug": "prefix"
 					},
 					{
-							"source": "learn/advanced/storage.mdx",
+							"source": "learn/inner_workings/storage.mdx",
 							"label": "Storage",
 							"slug": "storage"
 					},
 					{
-							"source": "learn/advanced/tokenization.mdx",
+							"source": "learn/inner_workings/tokenization.mdx",
 							"label": "Tokenization",
 							"slug": "tokenization"
 					}					
@@ -341,37 +341,37 @@
 			"slug": "cookbooks",
 			"routes": [
 					{
-							"source": "learn/cookbooks/aws.mdx",
+							"source": "learn/deployment/aws.mdx",
 							"label": "Deploy on AWS",
 							"slug": "aws"
 					},
 					{
-							"source": "learn/cookbooks/azure.mdx",
+							"source": "learn/deployment/azure.mdx",
 							"label": "Deploy on Azure",
 							"slug": "azure"
 					},
 					{
-							"source": "learn/cookbooks/digitalocean.mdx",
+							"source": "learn/deployment/digitalocean.mdx",
 							"label": "Deploy on DigitalOcean",
 							"slug": "digitalocean"
 					},
 					{
-							"source": "learn/cookbooks/gcp.mdx",
+							"source": "learn/deployment/gcp.mdx",
 							"label": "Deploy on GCP",
 							"slug": "gcp"
 					},
 					{
-							"source": "learn/cookbooks/koyeb.mdx",
+							"source": "learn/deployment/koyeb.mdx",
 							"label": "Deploy on Koyeb",
 							"slug": "koyeb"
 					},
 					{
-							"source": "learn/cookbooks/qovery.mdx",
+							"source": "learn/deployment/qovery.mdx",
 							"label": "Deploy on Qovery",
 							"slug": "qovery"
 					},
 					{
-							"source": "learn/cookbooks/railway.mdx",
+							"source": "learn/deployment/railway.mdx",
 							"label": "Deploy on Railway",
 							"slug": "railway"
 					}
