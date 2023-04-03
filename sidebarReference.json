@@ -24,6 +24,11 @@
             "slug": "search"
         },
         {
+            "source": "reference/api/multi_search.mdx",
+            "label": "Multi-index search",
+            "slug": "multi_search"
+        },
+        {
             "source": "reference/api/tasks.mdx",
             "label": "Tasks",
             "slug": "tasks"

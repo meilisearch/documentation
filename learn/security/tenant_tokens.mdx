@@ -159,7 +159,7 @@ Search rules are a set of instructions defining search parameters that will be e
 }
 ```
 
-The object key must be an index name. You may also use the `*` wildcard instead of a specific index name—in this case, search rules will be applied to all indexes.
+The object key must be an index name. You may use the `*` wildcard instead of a specific index name—in this case, search rules will be applied to all indexes.
 
 The object value must consist of `search_parameter:value` pairs. Currently, **tenant tokens only support the `filter` [search parameter](/reference/api/search.md#filter)**.
 
@@ -169,6 +169,18 @@ In this example, all queries across all indexes will only return documents whose
 {
   "*": {
     "filter": "user_id = 1"
+  }
+}
+```
+
+You can also use the `*` wildcard by adding it at the end of a string. This allows the tenant token to access all index names starting with that string.
+
+The following example queries across all indexes starting with the string `medical` (like `medical_records`) and returns documents whose `user_id` equals `1`:
+
+```json
+{
+  "medical*": {
+    "filter": "user_id = 1 AND published = true"
   }
 }
 ```
