@@ -51,6 +51,7 @@ docker run -it --rm \
     -e MEILI_ENV='development' \
     -v $(pwd)/meili_data:/meili_data \
     getmeili/meilisearch:v1.0
+# Use ${pwd} instead of $(pwd) in PowerShell
 ```
 
 You can learn more about [using Meilisearch with Docker in our dedicated guide](/learn/cookbooks/docker.md).
