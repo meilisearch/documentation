@@ -121,7 +121,7 @@ In order to filter results based on their location, you must add the `_geo` attr
 
 Meilisearch will rebuild your index whenever you update `filterableAttributes`. Depending on the size of your dataset, this might take a considerable amount of time.
 
-[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-filters)
+[You can read more about configuring `filterableAttributes` in our dedicated filtering guide.](/learn/advanced/filtering.md#configuring-filters)
 
 ### Usage
 
