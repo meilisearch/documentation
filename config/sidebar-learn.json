@@ -212,9 +212,14 @@
 							"slug": "asynchronous_operations"
 					},
 					{
-							"source": "learn/advanced/filtering_and_faceted_search.mdx",
-							"label": "Filtering and faceted search",
-							"slug": "filtering_and_faceted_search"
+							"source": "learn/advanced/filtering.mdx",
+							"label": "Filtering",
+							"slug": "filtering"
+					},
+					{
+						"source": "learn/advanced/faceted_search.mdx",
+						"label": "Faceted search",
+						"slug": "faceted_search"
 					},
 					{
 							"source": "learn/advanced/geosearch.mdx",
@@ -369,6 +374,17 @@
 							"source": "learn/cookbooks/railway.mdx",
 							"label": "Deploy on Railway",
 							"slug": "railway"
+					}
+			]
+	},
+	{
+			"title": "Experimental",
+			"slug": "experimental",
+			"routes": [
+					{
+							"source": "learn/experimental/metrics.mdx",
+							"label": "Metrics",
+							"slug": "metrics"
 					}
 			]
 	},
