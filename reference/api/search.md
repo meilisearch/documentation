@@ -67,19 +67,20 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| Name                     | Type             | Description                                     |
-| :----------------------- | :--------------- | :---------------------------------------------- |
-| **`hits`**               | Array of objects | Results of the query                            |
-| **`offset`**             | Number           | Number of documents skipped                     |
-| **`limit`**              | Number           | Number of documents to take                     |
-| **`estimatedTotalHits`** | Number           | Estimated total number of matches               |
-| **`totalHits`**          | Number           | Exhaustive total number of matches              |
-| **`totalPages`**         | Number           | Exhaustive total number of search result pages  |
-| **`hitsPerPage`**        | Number           | Number of results on each page                  |
-| **`page`**               | Number           | Current search results page                     |
-| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facets)** |
-| **`processingTimeMs`**   | Number           | Processing time of the query                    |
-| **`query`**              | String           | Query originating the response                  |
+| Name                     | Type             | Description                                                 |
+| :----------------------- | :--------------- | :---------------------------------------------------------- |
+| **`hits`**               | Array of objects | Results of the query                                        |
+| **`offset`**             | Number           | Number of documents skipped                                 |
+| **`limit`**              | Number           | Number of documents to take                                 |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                           |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages              |
+| **`hitsPerPage`**        | Number           | Number of results on each page                              |
+| **`page`**               | Number           | Current search results page                                 |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**  |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                |
+| **`query`**              | String           | Query originating the response                              |
 
 #### Exhaustive and estimated total number of search results
 
@@ -131,7 +132,7 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 Search for documents matching a specific query in the given index.
 
 ::: warning
-This endpoint only accepts [string filter expressions](/learn/advanced/filtering_and_faceted_search.md#filter-expressions).
+This endpoint only accepts [string filter expressions](/learn/advanced/filtering.md#filter-expressions).
 :::
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
@@ -180,19 +181,20 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| Name                     | Type             | Description                                     |
-| :----------------------- | :--------------- | :---------------------------------------------- |
-| **`hits`**               | Array of objects | Results of the query                            |
-| **`offset`**             | Number           | Number of documents skipped                     |
-| **`limit`**              | Number           | Number of documents to take                     |
-| **`totalHits`**          | Number           | Exhaustive total number of matches              |
-| **`totalPages`**         | Number           | Exhaustive total number of search results pages |
-| **`hitsPerPage`**        | Number           | Number of results on each page                  |
-| **`page`**               | Number           | Current search results page                     |
-| **`estimatedTotalHits`** | Number           | Total number of matches                         |
-| **`facets`**             | Object           | **[Distribution of the given facets](#facets)** |
-| **`processingTimeMs`**   | Number           | Processing time of the query                    |
-| **`query`**              | String           | Query originating the response                  |
+| Name                     | Type             | Description                                                 |
+| :----------------------- | :--------------- | :---------------------------------------------------------- |
+| **`hits`**               | Array of objects | Results of the query                                        |
+| **`offset`**             | Number           | Number of documents skipped                                 |
+| **`limit`**              | Number           | Number of documents to take                                 |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                           |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages              |
+| **`hitsPerPage`**        | Number           | Number of results on each page                              |
+| **`page`**               | Number           | Current search results page                                 |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**  |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                |
+| **`query`**              | String           | Query originating the response                              |
 
 ### Example
 
@@ -229,7 +231,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search parameters
 
-Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for both `GET` and `POST` routes.
+Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-search` routes.
 
 ::: warning
 If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
@@ -312,7 +314,7 @@ When `q` isn't specified, Meilisearch performs a **placeholder search**.  A plac
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 ::: tip
-Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
+Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/faceted_search.md), as it allows users to view the catalog and alter sorting rules without entering a query.
 :::
 
 #### Phrase search
@@ -433,7 +435,7 @@ The following example returns the second page of search results:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
 
-For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search, and filter expressions](/learn/advanced/filtering_and_faceted_search.md).
+For more information on how to use filters and build filter expressions, [read our guide on filtering and filter expressions](/learn/advanced/filtering.md).
 
 #### Example
 
@@ -494,46 +496,62 @@ If any parameters are invalid or missing, Meilisearch returns an [`invalid_searc
 **Parameter**: `facets`
 **Expected value**: An array of `attribute`s or `["*"]`
 **Default value**: `null`
-
-Returns the number of documents matching the current search query for each given facet. When `facets` is set, the search results object contains the `facetDistribution` field that shows the number of remaining candidates for each specified facet.
-
-This parameter can take two values:
+Returns the number of documents matching the current search query for each given facet. This parameter can take two values:
 
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
+
+When `facets` is set, the search results object contains the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
 
 ::: note
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
 :::
 
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-and-using-facets)
+#### `facetDistribution`
+
+`facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object.
+
+#### `facetStats`
+
+When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query.
+If none of the matching documents have a numeric value for a facet, that facet is not  included in the `facetStats` object.
 
 #### Example
 
-Given a movie database, suppose that you want to know the number of `Batman` movies per genre:
+Given a movie ratings database, the following code sample returns the number of `Batman` movies per genre along with the minimum and maximum ratings:
 
-<CodeSamples id="faceted_search_facets_1" />
+<CodeSamples id="search_parameter_guide_facet_stats_1" />
 
-You would get the following response:
+The response shows the facet distribution for `genres` and `rating`. Since `rating` is a numeric field, you get its minimum and maximum values in `facetStats`.
 
 ```json
 {
   …
-  "estimatedTotalHits": 1684,
-  "query": "Batman",
-  "facetDistribution": {
-    "genres": {
-      "action": 273,
-      "animation": 118,
-      "adventure": 132,
-      "fantasy": 67,
-      "comedy": 475,
-      "mystery": 70,
-      "thriller": 217
+  "estimatedTotalHits":22,
+  "query":"Batman",
+  "facetDistribution":{
+    "genres":{
+      "Action":20,
+      "Adventure":7,
+      …
+      "Thriller":3
+    },
+    "rating":{
+      "2":1,
+      …
+      "9.8":1
+    }
+  },
+  "facetStats":{
+    "rating":{
+      "min":2.0,
+      "max":9.8
     }
   }
 }
 ```
+
+[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/faceted_search.md#configuring-and-using-facets)
 
 ### Attributes to retrieve
 
