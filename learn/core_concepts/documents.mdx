@@ -38,6 +38,8 @@ You can modify this behavior using the [update settings endpoint](/reference/api
 
 In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes.md#data-storing) in the document.
 
+To learn more, refer to our [displayed and searchable attributes guide](/learn/configuration/displayed_searchable_attributes.md).
+
 ## Primary field
 
 The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id). If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's missing a primary key or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
