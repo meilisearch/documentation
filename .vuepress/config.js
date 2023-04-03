@@ -74,6 +74,7 @@ module.exports = {
           { text: 'GitHub', link: 'https://github.com/meilisearch/meilisearch' },
           { text: 'Discord', link: 'https://discord.gg/meilisearch' },
           { text: 'Blog', link: 'https://blog.meilisearch.com/' },
+          { text: 'Awesome Meilisearch', link: 'https://github.com/meilisearch/awesome-meilisearch' },
           { text: 'meilisearch.com', link: 'https://meilisearch.com' },
         ],
       },
