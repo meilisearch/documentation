@@ -6,7 +6,7 @@ sidebarDepth:  2
 
 The `/settings` route allows you to customize search settings for the given index. You can either modify all of an index's settings at once using the [update settings endpoint](#update-settings), or modify each one individually using the child routes.
 
-For a conceptual overview of index settings, refer to our [indexes guide](/learn/core_concepts/indexes.md#index-settings).
+For a conceptual overview of index settings, refer to our [indexes guide](/learn/core_concepts/indexes#index-settings).
 
 ## Settings object
 
@@ -66,7 +66,7 @@ Get the settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -130,7 +130,7 @@ If the provided index does not exist, it will be created.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -164,7 +164,7 @@ If the provided index does not exist, it will be created.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset settings
 
@@ -176,7 +176,7 @@ Reset all the settings of an index to their [default value](#settings-object).
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -194,15 +194,15 @@ Reset all the settings of an index to their [default value](#settings-object).
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Displayed attributes
 
-The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints. It has no impact on the [GET documents endpoint](/reference/api/documents.md#get-documents).
+The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints. It has no impact on the [GET documents endpoint](/reference/api/documents#get-documents).
 
 By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
-[To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#displayed-fields)
+[To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#displayed-fields)
 
 ### Get displayed attributes
 
@@ -214,7 +214,7 @@ Get the displayed attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -241,7 +241,7 @@ Update the displayed attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -273,7 +273,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset displayed attributes
 
@@ -285,7 +285,7 @@ Reset the displayed attributes of the index to the default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -303,7 +303,7 @@ Reset the displayed attributes of the index to the default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Distinct attribute
 
@@ -313,7 +313,7 @@ The distinct attribute is a field whose value will always be unique in the retur
 Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
 
 ### Get distinct attribute
 
@@ -325,7 +325,7 @@ Get the distinct attribute of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -347,7 +347,7 @@ Update the distinct attribute field of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -363,7 +363,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct.md)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
 
 #### Example
 
@@ -381,7 +381,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset distinct attribute
 
@@ -393,7 +393,7 @@ Reset the distinct attribute of an index to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -411,13 +411,13 @@ Reset the distinct attribute of an index to its default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Faceting
 
-With Meilisearch, you can create [faceted search interfaces](/learn/advanced/faceted_search.md). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
+With Meilisearch, you can create [faceted search interfaces](/learn/advanced/faceted_search). This setting allows you to define the maximum number of values returned by the `facets` search parameter.
 
-[To learn more about faceting, refer to our dedicated guide.](/learn/advanced/faceted_search.md)
+[To learn more about faceting, refer to our dedicated guide.](/learn/advanced/faceted_search)
 
 ### Faceting object
 
@@ -435,7 +435,7 @@ Get the faceting settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -459,7 +459,7 @@ Partially update the faceting settings for an index. Any parameters not provided
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -493,7 +493,7 @@ Setting `maxValuesPerFacet` to a high value might negatively impact performance.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset faceting settings
 
@@ -503,7 +503,7 @@ Reset an index's faceting settings to their [default value](#faceting-object).
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -521,7 +521,7 @@ Reset an index's faceting settings to their [default value](#faceting-object).
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Filterable attributes
 
@@ -531,7 +531,7 @@ Attributes in the `filterableAttributes` list can be used as filters or facets.
 Updating filterable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering.md)
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering)
 
 ### Get filterable attributes
 
@@ -543,7 +543,7 @@ Get the filterable attributes for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -569,7 +569,7 @@ Update an index's filterable attributes list.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -585,7 +585,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering.md)
+[To learn more about filterable attributes, refer to our dedicated guide.](/learn/advanced/filtering)
 
 #### Example
 
@@ -603,7 +603,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset filterable attributes
 
@@ -615,7 +615,7 @@ Reset an index's filterable attributes list back to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -633,7 +633,7 @@ Reset an index's filterable attributes list back to its default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Pagination
 
@@ -643,7 +643,7 @@ To protect your database from malicious scraping, Meilisearch has a default limi
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
-[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/learn/advanced/pagination.md)
+[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/learn/advanced/pagination)
 
 ### Pagination object
 
@@ -661,7 +661,7 @@ Get the pagination settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -685,7 +685,7 @@ Partially update the pagination settings for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -717,7 +717,7 @@ Setting `maxTotalHits` to a value higher than the default will negatively impact
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset pagination settings
 
@@ -727,7 +727,7 @@ Reset an index's pagination settings to their [default value](#pagination-object
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -745,13 +745,13 @@ Reset an index's pagination settings to their [default value](#pagination-object
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Ranking rules
 
 Ranking rules are built-in rules that rank search results according to certain criteria. They are applied in the same order in which they appear in the `rankingRules` array.
 
-[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy.md)
+[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy)
 
 ### Ranking rules array
 
@@ -787,7 +787,7 @@ Get the ranking rules of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -817,7 +817,7 @@ Update the ranking rules of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -838,7 +838,7 @@ If some documents do not contain the attribute defined in a custom ranking rule,
 Make sure that any attribute used in a custom ranking rule is present in all of your documents. For example, if you set the custom ranking rule `desc(year)`, make sure that all your documents contain the attribute `year`.
 </Capsule>
 
-[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy.md#ranking-rules)
+[To learn more about ranking rules, refer to our dedicated guide.](/learn/core_concepts/relevancy#ranking-rules)
 
 #### Example
 
@@ -856,7 +856,7 @@ Make sure that any attribute used in a custom ranking rule is present in all of 
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset ranking rules
 
@@ -872,7 +872,7 @@ Resetting ranking rules is not the same as removing them. To remove a ranking ru
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -890,11 +890,11 @@ Resetting ranking rules is not the same as removing them. To remove a ranking ru
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Searchable attributes
 
-The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy.md#attribute-ranking-order).
+The values associated with attributes in the `searchableAttributes` list are searched for matching query words. The order of the list also determines the [attribute ranking order](/learn/core_concepts/relevancy#attribute-ranking-order).
 
 By default, the `searchableAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
@@ -902,7 +902,7 @@ By default, the `searchableAttributes` array is equal to all fields in your data
 Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#searchable-fields)
 
 ### Get searchable attributes
 
@@ -914,7 +914,7 @@ Get the searchable attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -945,7 +945,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -953,7 +953,7 @@ Due to an implementation bug, manually updating `searchableAttributes` will chan
 [<String>, <String>, …]
 ```
 
-An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/core_concepts/relevancy.md#attribute-ranking-order): from the most important attribute to the least important attribute.
+An array of strings. Each string should be an attribute that exists in the selected index. The array should be given in [order of importance](/learn/core_concepts/relevancy#attribute-ranking-order): from the most important attribute to the least important attribute.
 
 If an attribute contains an object, you can use dot notation to set one or more of its keys as a value for this setting: `"searchableAttributes": ["release_date.year"]`.
 
@@ -961,7 +961,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes.md#searchable-fields)
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#searchable-fields)
 
 #### Example
 
@@ -981,7 +981,7 @@ In this example, a document with a match in `title` will be more relevant than a
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset searchable attributes
 
@@ -993,7 +993,7 @@ Reset the searchable attributes of the index to the default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1011,17 +1011,17 @@ Reset the searchable attributes of the index to the default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Sortable attributes
 
-Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search.md#sort).
+Attributes that can be used when sorting search results using the [`sort` search parameter](/reference/api/search#sort).
 
 <Capsule intent="warning">
 Updating sortable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
+[To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting)
 
 ### Get sortable attributes
 
@@ -1033,7 +1033,7 @@ Get the sortable attributes of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1054,13 +1054,13 @@ Get the sortable attributes of an index.
 
 Update an index's sortable attributes list.
 
-[You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting.md)
+[You can read more about sorting at query time on our dedicated guide.](/learn/advanced/sorting)
 
 #### Path parameters
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1076,7 +1076,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting.md)
+[To learn more about sortable attributes, refer to our dedicated guide.](/learn/advanced/sorting)
 
 #### Example
 
@@ -1094,7 +1094,7 @@ If the field does not exist, no error will be thrown.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset sortable attributes
 
@@ -1106,7 +1106,7 @@ Reset an index's sortable attributes list back to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1124,7 +1124,7 @@ Reset an index's sortable attributes list back to its default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Stop words
 
@@ -1150,7 +1150,7 @@ Get the stop words list of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1176,7 +1176,7 @@ Update the list of stop words of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1204,7 +1204,7 @@ If a list of stop words already exists, it will be overwritten (_replaced_).
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset stop words
 
@@ -1216,7 +1216,7 @@ Reset the list of stop words of an index to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1234,13 +1234,13 @@ Reset the list of stop words of an index to its default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Synonyms
 
 The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word for the purposes of calculating search results.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms.md)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
 
 ### Get synonyms
 
@@ -1252,7 +1252,7 @@ Get the list of synonyms of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1280,13 +1280,13 @@ Get the list of synonyms of an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms.md#normalization).
+Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms#normalization).
 
 #### Path parameters
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1299,7 +1299,7 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/config
 
 An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms.md)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
 
 #### Example
 
@@ -1317,7 +1317,7 @@ An object that contains all synonyms and their associated words. Add the associa
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset synonyms
 
@@ -1329,7 +1329,7 @@ Reset the list of synonyms of an index to its default value.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1347,13 +1347,13 @@ Reset the list of synonyms of an index to its default value.
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Typo tolerance
 
 Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. This setting allows you to configure the minimum word size for typos and disable typo tolerance for specific words or attributes.
 
-[To learn more about typo tolerance, refer to our dedicated guide.](/learn/configuration/typo_tolerance.md)
+[To learn more about typo tolerance, refer to our dedicated guide.](/learn/configuration/typo_tolerance)
 
 ### Typo tolerance object
 
@@ -1375,7 +1375,7 @@ Get the typo tolerance settings of an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1405,7 +1405,7 @@ Partially update the typo tolerance settings for an index.
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Body
 
@@ -1445,7 +1445,7 @@ Partially update the typo tolerance settings for an index.
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ### Reset typo tolerance settings
 
@@ -1457,7 +1457,7 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 #### Example
 
@@ -1475,4 +1475,4 @@ Reset an index's typo tolerance settings to their [default value](#typo-toleranc
 }
 ```
 
-You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use the returned `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).

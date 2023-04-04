@@ -4,7 +4,7 @@ sidebarDepth: 2
 
 # Update to the latest Meilisearch version
 
-Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps.md) to migrate an existing database from an older version of Meilisearch to the most recent one.
+Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
@@ -41,7 +41,7 @@ The response should look something like this:
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 </Capsule>
 
-If your [`pkgVersion`](/reference/api/version.md#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
+If your [`pkgVersion`](/reference/api/version#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
 
 ### Set all fields as displayed attributes
 
@@ -49,7 +49,7 @@ If your [`pkgVersion`](/reference/api/version.md#version-object) is 0.21 or abov
 If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
 </Capsule>
 
-When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes.md#displayed-fields) in order to be saved in the dump.
+When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes#displayed-fields) in order to be saved in the dump.
 
 Start by verifying that all attributes are included in the displayed attributes list:
 
@@ -74,7 +74,7 @@ Once the status is `processed`, you're good to go. Repeat this process for all i
 
 ### Create the dump
 
-Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options.md#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
+Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
 **Cloud platforms** like DigitalOcean, AWS, and GCP are configured to store dumps in the `/var/opt/meilisearch/dumps` directory.
 
@@ -126,7 +126,7 @@ It should return something like this:
 </Tabs.Container>
 
 <Capsule intent="danger" title={<><code>_geo</code> field in v0.27, v0.28, and v0.29</>}>
-Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search) before creating your dump.
+Due to an error allowing malformed `_geo` fields in Meilisearch **v0.27, v0.28, and v0.29**, you might not be able to import your dump. Please ensure the `_geo` field follows the [correct format](/learn/advanced/geosearch#preparing-documents-for-location-based-search) before creating your dump.
 </Capsule>
 
 You can then create a dump of your database:
@@ -145,7 +145,7 @@ The server should return a response that looks like this:
 }
 ```
 
-Use the `taskUid` to [track the status](/reference/api/tasks.md#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
+Use the `taskUid` to [track the status](/reference/api/tasks#get-one-task) of your dump. Keep in mind that the process can take some time to complete.
 
 <Capsule intent="note">
 The response will vary slightly depending on your version. For v0.27 and below, the response returns a dump `uid`. You can track the status of the dump using the get dumps status endpoint:
@@ -189,7 +189,7 @@ You may need to prefix the above command with `sudo` if you are not connected as
 
 ### Create a backup
 
-Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/configuration/instance_options.md#database-path).
+Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/configuration/instance_options#database-path).
 
 On **cloud platforms**, you will find the `data.ms` folder at `/var/lib/meilisearch/data.ms`.
 
@@ -289,7 +289,7 @@ If you're running a **cloud instance**, press `Ctrl`+`C`  to stop Meilisearch on
 meilisearch-setup
 ```
 
-If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings.md#update-displayed-attributes).
+If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings#update-displayed-attributes).
 
 ## Conclusion
 

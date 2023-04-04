@@ -47,13 +47,13 @@ By default, `filterableAttributes` is empty. Filters do not work without first e
 
 Filters work with numeric and string values. Empty fields or fields containing an empty array will be ignored.
 
-Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/advanced/geosearch.md#preparing-documents-for-location-based-search).
+Filters do not work with [`NaN`](https://en.wikipedia.org/wiki/NaN) and infinite values such as `inf` and `-inf` as they are [not supported by JSON](https://en.wikipedia.org/wiki/JSON#Data_types). It is possible to filter infinite and `NaN` values if you parse them as strings, except when handling [`_geo` fields](/learn/advanced/geosearch#preparing-documents-for-location-based-search).
 
 We recommend homogeneous typing across fields, especially when dealing with large numbers. This is because Meilisearch does not enforce a specific schema when indexing data, the filtering engine will try to coerce the type of `value`. This can lead to undefined behavior when big floats are coerced into integers and reciprocally.
 
 ## Filter basics
 
-Once you have designated certain attributes as `filterableAttributes`, you can use [the `filter` search parameter](/reference/api/search.md#filter) to filter your search according to those attributes. The `filter` search parameter refines search results by selecting documents matching the given filter and running the search query only on those documents.
+Once you have designated certain attributes as `filterableAttributes`, you can use [the `filter` search parameter](/reference/api/search#filter) to filter your search according to those attributes. The `filter` search parameter refines search results by selecting documents matching the given filter and running the search query only on those documents.
 
 `filter` expects a **filter expression** containing one or more **conditions**. A filter expression can be written as a string, array, or mix of both.
 
@@ -317,10 +317,10 @@ Suppose that your `movie_ratings` dataset contains several movies in the followi
 ```
 
 <Capsule intent="warning">
-[Synonyms](/learn/configuration/synonyms.md) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
+[Synonyms](/learn/configuration/synonyms) don't apply to filters. Meaning, if you have `SF` and `San Francisco` set as synonyms, filtering by `SF` and `San Francisco` will show you different results.
 </Capsule>
 
-After adding `director`, `release_date`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings.md#filterable-attributes), you can use them for filtering.
+After adding `director`, `release_date`, and `genres` to the [`filterableAttributes` index setting](//reference/api/settings#filterable-attributes), you can use them for filtering.
 
 The following code sample returns `Avengers` movies released after 18 March 1995:
 
@@ -348,7 +348,7 @@ If your documents contain `_geo` data, you can filter results according to their
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
-[Read more about filtering results with `_geoRadius` and `_geoBoundingBox` in our geosearch guide.](/learn/advanced/geosearch.md#filtering-results-with-georadius-and-geoboundingbox)
+[Read more about filtering results with `_geoRadius` and `_geoBoundingBox` in our geosearch guide.](/learn/advanced/geosearch#filtering-results-with-georadius-and-geoboundingbox)
 
 ### Filtering by nested fields
 
@@ -356,4 +356,4 @@ Use dot notation to filter results based on a document's nested fields. The foll
 
 <CodeSamples id="filtering_guide_nested_1" />
 
-[You can read more about nested fields in our guide on data types.](/learn/advanced/datatypes.md)
+[You can read more about nested fields in our guide on data types.](/learn/advanced/datatypes)

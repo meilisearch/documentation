@@ -2,17 +2,17 @@
 
 The `/dumps` route allows the creation of database dumps. Dumps are `.dump` files that can be used to restore Meilisearch data or migrate between different versions.
 
-[Learn more about dumps](/learn/advanced/dumps.md).
+[Learn more about dumps](/learn/advanced/dumps).
 
 ## Create a dump
 
 <RouteHighlighter method="POST" route="/dumps"/>
 
-Triggers a dump creation task. Once the process is complete, a dump is created in the [dump directory](/learn/configuration/instance_options.md#dump-directory). If the dump directory does not exist yet, it will be created.
+Triggers a dump creation task. Once the process is complete, a dump is created in the [dump directory](/learn/configuration/instance_options#dump-directory). If the dump directory does not exist yet, it will be created.
 
 Dump tasks take priority over all other tasks in the queue. This means that a newly created dump task will be processed as soon as the current task is finished.
 
-[Learn more about asynchronous operations](/learn/advanced/asynchronous_operations.md).
+[Learn more about asynchronous operations](/learn/advanced/asynchronous_operations).
 
 ### Example
 
@@ -30,4 +30,4 @@ Dump tasks take priority over all other tasks in the queue. This means that a ne
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task)
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task)

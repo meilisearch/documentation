@@ -16,7 +16,7 @@ Meilisearch uses the following standard HTTP codes for a successful or failed AP
 
 ## Errors
 
-All detailed task responses contain an [`error`](/reference/api/tasks.md#error) field. When a task fails, it is always accompanied by a JSON-formatted error response. Meilisearch errors can be of one of the following types:
+All detailed task responses contain an [`error`](/reference/api/tasks#error) field. When a task fails, it is always accompanied by a JSON-formatted error response. Meilisearch errors can be of one of the following types:
 
 | Type                  | Description                                                                                                                                                                                     |
 | :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -39,8 +39,8 @@ All detailed task responses contain an [`error`](/reference/api/tasks.md#error) 
 | Field         | Description                                       |
 | :------------ | :------------------------------------------------ |
 | **`message`** | Human-readable description of the error           |
-| **`code`**    | [Error code](/reference/errors/error_codes.md)    |
+| **`code`**    | [Error code](/reference/errors/error_codes)    |
 | **`type`**    | [Type](#errors) of error returned                 |
 | **`link`**    | Link to the relevant section of the documentation |
 
-If you're having trouble understanding an error, take a look at the [complete list](/reference/errors/error_codes.md) of `code` values and descriptions.
+If you're having trouble understanding an error, take a look at the [complete list](/reference/errors/error_codes) of `code` values and descriptions.

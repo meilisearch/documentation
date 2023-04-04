@@ -31,7 +31,7 @@ docker run -it --rm \
 
 ### Configure Meilisearch
 
-Meilisearch accepts a number of instance options during launch. You can configure these in two ways: environment variables and CLI arguments. Note that some options are only available as CLI arguments—[consult our configuration reference for more details](/learn/configuration/instance_options.md).
+Meilisearch accepts a number of instance options during launch. You can configure these in two ways: environment variables and CLI arguments. Note that some options are only available as CLI arguments—[consult our configuration reference for more details](/learn/configuration/instance_options).
 
 #### Passing instance options with environment variables
 
@@ -78,7 +78,7 @@ The example above uses `$(pwd)/meili_data`, which is a directory in the host mac
 
 ### Generating dumps and updating Meilisearch
 
-To export a dump, [use the create dump endpoint as described in our dumps guide](/learn/advanced/dumps.md). Once the task is complete, you can access the dump file in `/meili_data/dumps` inside the volume you passed with `-v`.
+To export a dump, [use the create dump endpoint as described in our dumps guide](/learn/advanced/dumps). Once the task is complete, you can access the dump file in `/meili_data/dumps` inside the volume you passed with `-v`.
 
 To import a dump, use Meilisearch's `--import-dump` command-line option and specify the path to the dump file. Make sure the path points to a volume reachable by Docker:
 
@@ -96,7 +96,7 @@ Note that exporting and importing dumps require using command-line arguments. [F
 If you are storing your data in a persistent volume as instructed in [the data persistency section](#data-persistency), you must delete `/meili_data/data.ms` in that volume before importing a dump.
 </Capsule>
 
-Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/update_and_migration/updating.md)
+Use dumps to migrate data between different Meilisearch releases. [Read more about updating Meilisearch in our dedicated guide.](/learn/update_and_migration/updating)
 
 ### Snapshots
 
@@ -122,4 +122,4 @@ docker run -it --rm \
   meilisearch --import-snapshot /meili_data/snapshots/data.ms.snapshot
 ```
 
-Use snapshots for backup or when migrating data between two Meilisearch instances of the same version. [Read more about snapshots in our guide.](/learn/advanced/snapshots.md)
+Use snapshots for backup or when migrating data between two Meilisearch instances of the same version. [Read more about snapshots in our guide.](/learn/advanced/snapshots)

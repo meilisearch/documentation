@@ -25,13 +25,13 @@ The order of the `rankingRules` array matters: the first rule has the most impac
 ]
 ```
 
-You can read more about each ranking rule and what it does in our [dedicated guide](/learn/core_concepts/relevancy.md#built-in-rules).
+You can read more about each ranking rule and what it does in our [dedicated guide](/learn/core_concepts/relevancy#built-in-rules).
 
 In this example, we change the order of the ranking rules for the `movies` index by moving `exactness` to the top:
 
 <CodeSamples id= "getting_started_update_ranking_rules" />
 
-You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy.md).
+You can read more about ranking rules in our [dedicated guide](/learn/core_concepts/relevancy).
 
 ## Displayed attributes
 
@@ -41,7 +41,7 @@ If you only want to display the `title`, `poster`, and `overview` for the `movie
 
 <CodeSamples id= "getting_started_update_displayed_attributes" />
 
-You can read more about displayed attributes in our [dedicated guide](/learn/configuration/displayed_searchable_attributes.md#displayed-fields).
+You can read more about displayed attributes in our [dedicated guide](/learn/configuration/displayed_searchable_attributes#displayed-fields).
 
 ## Distinct attribute
 
@@ -79,11 +79,11 @@ Suppose you have an e-commerce dataset with an index on jackets. There are sever
 
 If you searched for `lee leather jacket` with the default settings, you would get all three documents. But if you set `product_id` as the `distinctAttribute`, Meilisearch will only return one of those jackets.
 
-You can read more about the distinct attribute in our [dedicated guide](/learn/configuration/distinct.md).
+You can read more about the distinct attribute in our [dedicated guide](/learn/configuration/distinct).
 
 ## Searchable attributes
 
-[Documents](/learn/core_concepts/documents.md) in Meilisearch are composed of multiple fields. By default, Meilisearch looks for matches in every field, but the `searchableAttributes` array in the `settings` object allows you to change that.
+[Documents](/learn/core_concepts/documents) in Meilisearch are composed of multiple fields. By default, Meilisearch looks for matches in every field, but the `searchableAttributes` array in the `settings` object allows you to change that.
 
 For example, if you search the `movies` index for `2012`, Meilisearch searches for `2012` in every field: the `title`, `overview`, `release_year`, and so on. If you just want to search in the `title` field:
 
@@ -108,7 +108,7 @@ The order of the `searchableAttributes` array corresponds to the order of import
   ]
 ```
 
-With the above order, matching words found in the `overview` field will have a higher impact on relevancy than the same words found in `title`. You can read more about this in our [relevancy guide](/learn/core_concepts/relevancy.md#attribute-ranking-order).
+With the above order, matching words found in the `overview` field will have a higher impact on relevancy than the same words found in `title`. You can read more about this in our [relevancy guide](/learn/core_concepts/relevancy#attribute-ranking-order).
 
 ## Stop words
 
@@ -118,7 +118,7 @@ Meilisearch allows you to ignore certain words in your search queries by adding 
 
 If you search for `the cat` after running the above command, Meilisearch will consider your search query to be `cat`, improving the speed and relevancy of your search.
 
-You can read more about stop words in the [API reference](/reference/api/settings.md#stop-words).
+You can read more about stop words in the [API reference](/reference/api/settings#stop-words).
 
 ## Synonyms
 
@@ -128,7 +128,7 @@ The `synonyms` array lets you associate certain words in your dataset, telling M
 
 This will set `winnie` and `piglet` as synonyms. Searching for either won't always return the same results due to factors like typos and splitting the query.
 
-You can read more about it in our [dedicated guide](/learn/configuration/synonyms.md).
+You can read more about it in our [dedicated guide](/learn/configuration/synonyms).
 
 ## Typo tolerance
 
@@ -147,13 +147,13 @@ Meilisearch accepts one typo for query terms containing `5` or more characters b
 
 The above code sample sets the minimum word size for one typo to `4` characters. If you search for `swaj` now, you should get some results.
 
-You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance.md).
+You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance).
 
 ## Faceting
 
 Meilisearch allows you to create faceted search interfaces, refining search results based on broad categories called facets. Like filters, you need to add the attributes you want to use as facets to `filterableAttributes`.
 
-When creating a faceted search interface, it is helpful to display how results are distributed between the different categories. For example, a user might want to know how many of their results have a `genre` of `comedy` and how many have a `genre` of `horror`. Meilisearch supports this with [the `facets` search parameter](/reference/api/search.md#facets).
+When creating a faceted search interface, it is helpful to display how results are distributed between the different categories. For example, a user might want to know how many of their results have a `genre` of `comedy` and how many have a `genre` of `horror`. Meilisearch supports this with [the `facets` search parameter](/reference/api/search#facets).
 
 Using the faceting settings, you can configure the maximum number of facet values returned for each facet.
 
@@ -161,7 +161,7 @@ Suppose your results contain the following values for the `genres` facet: `Actio
 
 <CodeSamples id= "getting_started_faceting" />
 
-You can read more about faceting in our [dedicated guide](/learn/advanced/faceted_search.md).
+You can read more about faceting in our [dedicated guide](/learn/advanced/faceted_search).
 
 ## Pagination
 
@@ -173,6 +173,6 @@ The code sample below sets this limit to 500:
 
 Now, users won't be able to access search results beyond 500.
 
-You can read more about pagination in our [dedicated guide](/learn/advanced/pagination.md).
+You can read more about pagination in our [dedicated guide](/learn/advanced/pagination).
 
 The next chapter tackles more advanced topics, including security and data backup.

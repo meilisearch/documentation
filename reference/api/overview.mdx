@@ -1,6 +1,6 @@
 # API reference
 
-Welcome to the Meilisearch API documentation. If you are new to Meilisearch, check out our [quick start guide!](/learn/getting_started/quick_start.md)
+Welcome to the Meilisearch API documentation. If you are new to Meilisearch, check out our [quick start guide!](/learn/getting_started/quick_start)
 
 Meilisearch is a RESTful API. This page describes the general behavior of the API.
 
@@ -21,17 +21,17 @@ This API documentation uses the following conventions:
 
 ## Authorization
 
-By [providing Meilisearch with a master key at launch](/learn/security/master_api_keys.md#protecting-a-meilisearch-instance), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health.md).
+By [providing Meilisearch with a master key at launch](/learn/security/master_api_keys#protecting-a-meilisearch-instance), you protect your instance from unauthorized requests. The provided master key must be at least 16 bytes. From then on, you must include the `Authorization` header along with a valid API key to access protected routes (all routes except [`/health`](/reference/api/health).
 
 <CodeSamples id="authorization_header_1" />
 
-The [`/keys`](/reference/api/keys.md) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
+The [`/keys`](/reference/api/keys) route can only be accessed using the master key. For security reasons, we recommend using regular API keys for all other routes.
 
 <Capsule intent="tip" title=" v0.24 and below use the `X-MEILI-API-KEY: apiKey` authorization header:">
 <CodeSamples id="updating_guide_check_version_old_authorization_header" />
 </Capsule>
 
-[To learn more about keys and security, refer to our dedicated guide.](/learn/security/master_api_keys.md)
+[To learn more about keys and security, refer to our dedicated guide.](/learn/security/master_api_keys)
 
 ## Pagination
 
@@ -47,7 +47,7 @@ All paginated responses contain the following fields:
 
 ### `/tasks` endpoint
 
-Since the `/tasks` endpoint uses a different type of pagination, the response contains different fields. You can read more about it in the [tasks API reference](/reference/api/tasks.md#get-tasks).
+Since the `/tasks` endpoint uses a different type of pagination, the response contains different fields. You can read more about it in the [tasks API reference](/reference/api/tasks#get-tasks).
 
 ## Parameters
 
@@ -81,7 +81,7 @@ Meilisearch currently supports the following formats:
 - `Content-Type: application/x-ndjson` for NDJSON
 - `Content-Type: text/csv` for CSV
 
-Only the [add documents](/reference/api/documents.md#add-or-replace-documents) and [update documents](/reference/api/documents.md#add-or-update-documents) endpoints accept NDJSON and CSV. For all others, use `Content-Type: application/json`.
+Only the [add documents](/reference/api/documents#add-or-replace-documents) and [update documents](/reference/api/documents#add-or-update-documents) endpoints accept NDJSON and CSV. For all others, use `Content-Type: application/json`.
 
 ### Content encoding
 
@@ -127,9 +127,9 @@ Meilisearch is an **asynchronous API**. This means that in response to most writ
 }
 ```
 
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks.md#get-one-task).
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
-See more information about [asynchronous operations](/learn/advanced/asynchronous_operations.md).
+See more information about [asynchronous operations](/learn/advanced/asynchronous_operations).
 
 ## Data types
 

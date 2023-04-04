@@ -1,20 +1,20 @@
 # Known limitations
 
-Currently, Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage.md), the key-value store that Meilisearch uses under the hood.
+Currently, Meilisearch has a number of known limitations. Some of these limitations are the result of intentional design trade-offs, while others can be attributed to [LMDB](/learn/advanced/storage), the key-value store that Meilisearch uses under the hood.
 
-This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options.md#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search.md#limit).
+This guide covers hard limits that cannot be altered. Meilisearch also has some default limits that _can_ be changed, such as a [default payload limit of 100MB](/learn/configuration/instance_options#payload-limit-size) and a [default search limit of 20 hits](/reference/api/search#limit).
 
 ## Maximum number of query words
 
-**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search.md#query-q) is 10. If a search query includes more than 10 words, all words after the 10th will be ignored.
+**Limitation:** The maximum number of terms taken into account for each [search query](/reference/api/search#query-q) is 10. If a search query includes more than 10 words, all words after the 10th will be ignored.
 
-**Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy.md#front-facing-search).
+**Explanation:** Queries with many search terms can lead to long response times. This goes against our goal of providing a [fast search-as-you-type experience](/learn/what_is_meilisearch/philosophy#front-facing-search).
 
 ## Maximum number of document fields
 
 **Limitation:** Documents have a soft maximum of 1000 fields.
 
-**Explanation:** There is no limit on how many fields a document can have. However, documents with more than 1000 fields may cause the [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) to stop working, leading to undefined behavior.
+**Explanation:** There is no limit on how many fields a document can have. However, documents with more than 1000 fields may cause the [ranking rules](/learn/core_concepts/relevancy#ranking-rules) to stop working, leading to undefined behavior.
 
 ## Maximum number of words per attribute
 
@@ -38,7 +38,7 @@ If your query is `Hello, World`:
 - `World` takes the position `9` of the attribute
 
 <Capsule intent="note">
-`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes.md#string).
+`,` takes 8 positions as it is a hard separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes#string).
 </Capsule>
 
 If your query is `Hello - World`:
@@ -48,7 +48,7 @@ If your query is `Hello - World`:
 - `World` takes the position `2` of the attribute
 
 <Capsule intent="note">
-`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes.md#string).
+`-` takes 1 position as it is a soft separator. You can read more about word separators in our [article about data types](/learn/advanced/datatypes#string).
 </Capsule>
 
 ## Maximum number of attributes per document
@@ -61,7 +61,7 @@ If your query is `Hello - World`:
 
 **Limitation:** Meilisearch can receive a maximum of 1024 API requests at the exact same time. Requests exceeding this limit will cause Meilisearch to thrown an internal error.
 
-**Explanation:** This limit applies only to receiving requests, not to processing or adding them to the Tasks queue. It is set by [LMDB](/learn/advanced/storage.md#lmdb), Meilisearch's storage engine.
+**Explanation:** This limit applies only to receiving requests, not to processing or adding them to the Tasks queue. It is set by [LMDB](/learn/advanced/storage#lmdb), Meilisearch's storage engine.
 
 ## Maximum number of documents in an index
 
@@ -105,7 +105,7 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 **Limitation:** By default, Meilisearch returns up to 1000 documents per search.
 
-**Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings.md#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/search.md) and has no effect on the [get documents endpoint](/reference/api/documents.md#get-documents).
+**Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/search) and has no effect on the [get documents endpoint](/reference/api/documents#get-documents).
 
 ## Large datasets and internal errors
 
