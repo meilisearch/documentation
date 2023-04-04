@@ -1,0 +1,41 @@
+# Getting ready for production
+
+This chapter will help you get ready to use Meilisearch in production by covering topics such as instance-wide options, data backup, and multitenancy.
+
+## Instance options
+
+Meilisearch allows you to configure your entire instance through **[environment variables](/learn/configuration/instance_options#environment-variables)** before launch or **[command-line options](/learn/configuration/instance_options#command-line-options-and-flags)** at launch.
+
+Meilisearch has configuration options for many critical actions, such as:
+
+- Changing the database path
+- Starting Meilisearch in a development or production environment
+- Setting a master key to protect API endpoints
+
+You can read about all of them in our [configuration guide](/learn/configuration/instance_options).
+
+## Data backup
+
+Meilisearch offers two options for backing up your data: `dumps` and `snapshots`.
+
+Dumps export data in a raw unprocessed form and can be used to migrate your database between Meilisearch versions. A dump isn't an exact copy of your database—it is closer to a blueprint that allows you to rebuild an identical database.
+
+Snapshots, on the other hand, are an exact copy of your database. The documents in a snapshot are already "indexed" and ready to go, therefore they import faster than dumps. However, as a result, **snapshots are not compatible between different versions of Meilisearch.** You can schedule snapshots at regular intervals and use them for rolling back data.
+
+You can read more about [dumps](/learn/advanced/dumps) and [snapshots](/learn/advanced/snapshots) in their dedicated guides.
+
+## Multitenancy and tenant tokens
+
+Multi-tenant indexes store data belonging to different users in one index. In such situations, users should only be able to search through their own documents. Meilisearch allows you to do this with tenant tokens.
+
+Tenant tokens are small, short-lived packages of encrypted data that prove a user has access to a certain index. They contain security credentials and instructions on which documents the user is allowed to see within that index. You can generate tenant tokens using one of our [SDKs](/learn/security/tenant_tokens#generating-tenant-tokens-with-an-sdk) or [from scratch](/learn/security/tenant_tokens#generating-tenant-tokens-with-an-sdk).
+
+You can read more about tenant tokens and how to generate them in our [dedicated guide](/learn/security/tenant_tokens).
+
+## What's next
+
+Hopefully, these chapters have given you a basic introduction to Meilisearch and some of the things it can do. Once you get the hang of the basics, the possibilities are endless. To continue exploring Meilisearch, check out:
+
+- [Advanced topics](/learn/advanced/asynchronous_operations)
+- [API references](/reference/api/overview)
+- [Configuration](/learn/configuration/instance_options)

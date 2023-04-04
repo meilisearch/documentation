@@ -59,13 +59,13 @@ game = {
 When preparing your dataset, it can be useful to leave the original date and time fields in your documents intact. In the example above, we keep the `release_date` field because it is more readable than the raw `release_timestamp`.
 </Capsule>
 
-After adding a numeric timestamp to all documents, [index your data](/reference/api/documents.md#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
+After adding a numeric timestamp to all documents, [index your data](/reference/api/documents#add-or-replace-documents) as usual. The example below adds a <a id="downloadVideogames" href="https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/datasets/videogames.json" download="videogames.json">videogame dataset</a> to a `games` index:
 
 <CodeSamples id="date_guide_index_1" />
 
 ## Filtering by timestamp
 
-To filter search results based on their timestamp, add your document's timestamp field to the list of [`filterableAttributes`](/reference/api/settings.md#update-filterable-attributes):
+To filter search results based on their timestamp, add your document's timestamp field to the list of [`filterableAttributes`](/reference/api/settings#update-filterable-attributes):
 
 <CodeSamples id="date_guide_filterable_attributes_1" />
 
@@ -75,7 +75,7 @@ Once you have configured `filterableAttributes`, you can filter search results b
 
 ## Sorting by timestamp
 
-To sort search results chronologically, add your document's timestamp field to the list of [`sortableAttributes`](/reference/api/settings.md#update-sortable-attributes):
+To sort search results chronologically, add your document's timestamp field to the list of [`sortableAttributes`](/reference/api/settings#update-sortable-attributes):
 
 <CodeSamples id="date_guide_sortable_attributes_1" />
 

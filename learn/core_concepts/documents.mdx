@@ -1,10 +1,10 @@
 # Documents
 
-A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data, and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/learn/core_concepts/indexes.md).
+A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data, and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/learn/core_concepts/indexes).
 
 ## Structure
 
-![Diagram illustration Meilisearch's document structure](https://raw.githubusercontent.com/meilisearch/documentation/2800e5821c06d6adc6c5a35ffbb01e7f80ff801f/.vuepress/public/document_structure.svg)
+![Diagram illustration Meilisearch's document structure](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/document_structure.svg)
 
 ### Important terms
 
@@ -18,41 +18,41 @@ A document is an object composed of one or more fields. Each field consists of a
 
 A field is a set of two data items linked together: an attribute and a value. Documents are made up of fields.
 
-An attribute functions a bit like a variable in most programming languages. It is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations.md#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
+An attribute functions a bit like a variable in most programming languages. It is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
 
 Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-If a field contains an object, Meilisearch flattens it during indexing using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes.md#objects).
+If a field contains an object, Meilisearch flattens it during indexing using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes#objects).
 
-With [ranking rules](/learn/core_concepts/relevancy.md#ranking-rules), you can decide which fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also designate certain fields as displayed or searchable.
+With [ranking rules](/learn/core_concepts/relevancy#ranking-rules), you can decide which fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also designate certain fields as displayed or searchable.
 
 ### Displayed and searchable fields
 
 By default, all fields in a document are both displayed and searchable. Displayed fields are contained in each matching document, while searchable fields are searched for matching query words.
 
-You can modify this behavior using the [update settings endpoint](/reference/api/settings.md#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/settings.md#update-displayed-attributes), and [searchable attributes](/reference/api/settings.md#update-searchable-attributes) so that a field is:
+You can modify this behavior using the [update settings endpoint](/reference/api/settings#update-settings), or the respective update endpoints for [displayed attributes](/reference/api/settings#update-displayed-attributes), and [searchable attributes](/reference/api/settings#update-searchable-attributes) so that a field is:
 
 - Searchable but not displayed
 - Displayed but not searchable
 - Neither displayed nor searchable
 
-In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes.md#data-storing) in the document.
+In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes#data-storing) in the document.
 
-To learn more, refer to our [displayed and searchable attributes guide](/learn/configuration/displayed_searchable_attributes.md).
+To learn more, refer to our [displayed and searchable attributes guide](/learn/configuration/displayed_searchable_attributes).
 
 ## Primary field
 
-The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id). If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's missing a primary key or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
+The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key#document-id). If you try to [index a document](/learn/getting_started/quick_start#add-documents) that's missing a primary key or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
 
-To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key.md).
+To learn more, refer to the [primary key explanation](/learn/core_concepts/primary_key).
 
 ## Upload
 
-By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB. You can [change the payload size limit](/learn/configuration/instance_options.md#payload-limit-size) at runtime using the `http-payload-size-limit` option.
+By default, Meilisearch limits the size of all payloads—and therefore document uploads—to 100MB. You can [change the payload size limit](/learn/configuration/instance_options#payload-limit-size) at runtime using the `http-payload-size-limit` option.
 
 Meilisearch uses a lot of RAM when indexing documents. Be aware of your [RAM availability](https://docs.meilisearch.com/faq.html#what-are-the-recommended-requirements-for-hosting-a-meilisearch-instance) as you increase your batch size as this could cause Meilisearch to crash.
 
-When using the [add new documents endpoint](/reference/api/documents.md#add-or-update-documents), ensure:
+When using the [add new documents endpoint](/reference/api/documents#add-or-update-documents), ensure:
 
 - The payload format is correct. There are no extraneous commas, mismatched brackets, missing quotes, etc.
 - All documents are sent in an array, even if there is only one document
@@ -108,7 +108,7 @@ The above JSON document would look like this in NDJSON:
 
 #### CSV
 
-CSV files express data as a sequence of values separated by a delimiter character. By default, Meilisearch uses a single comma (`,`) as the delimiter. You can use the `csvDelimiter` query parameter with the [add or update documents](/reference/api/documents.md#add-or-update-documents) or [add or replace documents](/reference/api/documents.md#add-or-replace-documents) endpoints to set a different character. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
+CSV files express data as a sequence of values separated by a delimiter character. By default, Meilisearch uses a single comma (`,`) as the delimiter. You can use the `csvDelimiter` query parameter with the [add or update documents](/reference/api/documents#add-or-update-documents) or [add or replace documents](/reference/api/documents#add-or-replace-documents) endpoints to set a different character. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
 
 Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
@@ -138,7 +138,7 @@ Meilisearch batches document addition and deletion requests when they:
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.
 
-If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally. If an [`internal`](/reference/errors/overview.md#errors) error occurs, the whole batch will fail and all tasks within it will share the same `error` object.
+If a task fails due to an invalid document, it will be removed from the batch. The rest of the batch will still process normally. If an [`internal`](/reference/errors/overview#errors) error occurs, the whole batch will fail and all tasks within it will share the same `error` object.
 
 #### Auto-batching and task cancelation
 

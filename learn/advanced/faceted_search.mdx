@@ -20,7 +20,7 @@ Meilisearch does not differentiate between facets and filters. Facets are a spec
 
 ## Configuring and using facets
 
-Like any other filter, you must add any attributes you want to use as facets to the [`filterableAttributes`](/reference/api/settings.md#filterable-attributes) list in an index's settings. Once you have configured `filterableAttributes`, you can search for facets with [the `facets` search parameter](/reference/api/search.md#facets).
+Like any other filter, you must add any attributes you want to use as facets to the [`filterableAttributes`](/reference/api/settings#filterable-attributes) list in an index's settings. Once you have configured `filterableAttributes`, you can search for facets with [the `facets` search parameter](/reference/api/search#facets).
 
 ::: warning
 Synonyms don't apply to facets. If you have `SF` and `San Francisco` set as synonyms, faceting by `SF` and `San Francisco` will show you different results.
@@ -121,7 +121,7 @@ The following response shows the facet distribution when searching for `classics
 `facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the different values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets: if there are no results for the Arabic language, it will not be present in `facetDistribution`.
 
 ::: note
-By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings.md#faceting).
+By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings#faceting).
 :::
 
 ### Facet stats
