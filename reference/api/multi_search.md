@@ -1,4 +1,4 @@
-# Multi-index search
+# Multi search
 
 The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-index search is also known as federated search.
 
