@@ -18,7 +18,7 @@ If you are running Meilisearch as a `systemctl` service using v0.22 or above, tr
 This guide only works for versions v0.15 and above. If you are using an older version, please [contact support](https://discord.gg/meilisearch) for more information.
 :::
 
-## Updating Meilisearch Cloud
+## Updating on Meilisearch Cloud
 
 If you're using Meilisearch Cloud, you don't need to follow the rest of this guide. Clicking the "Update to `vX.Y.Z`" will take care of the update for you.
 
