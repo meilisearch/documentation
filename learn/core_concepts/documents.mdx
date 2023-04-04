@@ -38,6 +38,8 @@ You can modify this behavior using the [update settings endpoint](/reference/api
 
 In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes.md#data-storing) in the document.
 
+To learn more, refer to our [displayed and searchable attributes guide](/learn/configuration/displayed_searchable_attributes.md).
+
 ## Primary field
 
 The primary field is a special field that must be present in all documents. Its attribute is the [primary key](/learn/core_concepts/primary_key.md#primary-key-2) and its value is the [document id](/learn/core_concepts/primary_key.md#document-id). If you try to [index a document](/learn/getting_started/quick_start.md#add-documents) that's missing a primary key or possessing the wrong primary key for a given index, it will cause an error and no documents will be added.
@@ -106,7 +108,7 @@ The above JSON document would look like this in NDJSON:
 
 #### CSV
 
-CSV files express data as a sequence of values separated by a delimiter character. Currently, Meilisearch **only supports the comma (`,`) delimiter**. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
+CSV files express data as a sequence of values separated by a delimiter character. By default, Meilisearch uses a single comma (`,`) as the delimiter. You can use the `csvDelimiter` query parameter with the [add or update documents](/reference/api/documents.md#add-or-update-documents) or [add or replace documents](/reference/api/documents.md#add-or-replace-documents) endpoints to set a different character. Any [rules that apply to formatting CSV](https://datatracker.ietf.org/doc/html/rfc4180) also apply to Meilisearch documents.
 
 Meilisearch will only accept CSV documents when it receives the `text/csv` content-type header.
 
@@ -127,12 +129,11 @@ If you don't specify the data type for an attribute, it will default to `:string
 
 ### Auto-batching
 
-Auto-batching combines consecutive document addition requests into a single batch and processes them together. This significantly speeds up the indexing process.
+Auto-batching combines consecutive document addition and deletion requests into a single batch and processes them together while respecting the order. This significantly speeds up the indexing process.
 
-Meilisearch batches document addition requests when they:
+Meilisearch batches document addition and deletion requests when they:
 
 - Target the same index
-- Have the same update method ([POST](/reference/api/documents.md#add-or-replace-documents) or [PUT](/reference/api/documents.md#add-or-update-documents))
 - Are immediately consecutive
 
 Tasks within the same batch share the same values for `startedAt`, `finishedAt`, and `duration`.

@@ -161,7 +161,7 @@ Suppose your results contain the following values for the `genres` facet: `Actio
 
 <CodeSamples id= "getting_started_faceting" />
 
-You can read more about faceting in our [dedicated guide](/learn/advanced/filtering_and_faceted_search.md).
+You can read more about faceting in our [dedicated guide](/learn/advanced/faceted_search.md).
 
 ## Pagination
 
