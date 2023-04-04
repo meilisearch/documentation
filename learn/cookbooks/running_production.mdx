@@ -110,24 +110,24 @@ chmod 750 /var/lib/meilisearch
 In Linux environments, a `service` is a process that can be launched when the operating system is booting and which will keep running in the background. One of its biggest advantages is making your program available at any moment. Even if some execution problems or crashes occur, the service will be restarted and your program will be run again.
 
 <Capsule intent="note">
-If you are new to services and `syst`, you can learn more about the basics of Linux services [here](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/).
+If you are new to services and `systemd`, you can learn more about the basics of Linux services [here](https://www.hostinger.com/tutorials/manage-and-list-services-in-linux/).
 </Capsule>
 
-In Debian and other Linux distributions, `syst` allows you to create and manage your own custom services. In order to make sure that Meilisearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `syst` will automatically restart Meilisearch.
+In Debian and other Linux distributions, `systemd` allows you to create and manage your own custom services. In order to make sure that Meilisearch will always respond to your requests, you can build your own service. This way, you will ensure its availability in case of a crash or in case of system reboot. If any of these occur, `systemd` will automatically restart Meilisearch.
 
 ### 4.1. Create a service file
 
-Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/syst/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
+Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
 
 To run Meilisearch in a production environment, use the `--env` flag. Set a master key of at least 16 bytes using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
 
 Remember to choose a safe and random key and avoid exposing it in publicly accessible applications. You can change the master key with the following command:
 
 ```bash
-cat << EOF > /etc/syst/system/meilisearch.service
+cat << EOF > /etc/systemd/system/meilisearch.service
 [Unit]
 Description=Meilisearch
-After=syst-user-sessions.service
+After=systemd-user-sessions.service
 
 [Service]
 Type=simple
@@ -165,7 +165,7 @@ systemctl status meilisearch
 ```bash
 -# --- Expected output ---
 ● meilisearch.service - MeiliSearch
-   Loaded: loaded (/etc/syst/system/meilisearch.service; enabled; vendor preset: enabled)
+   Loaded: loaded (/etc/systemd/system/meilisearch.service; enabled; vendor preset: enabled)
    Active: active (running) since Fri 2020-04-10 14:27:49 UTC; 1min 8s ago
  Main PID: 14960 (meilisearch)
 ```
