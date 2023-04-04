@@ -5,7 +5,7 @@ By default, Meilisearch focuses on ordering results according to their relevancy
 This can be useful in many situations, such as when a user wants to see the cheapest products available in a webshop.
 
 <Capsule intent="tip">
-Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search.md#placeholder-search).
+Sorting at search time can be particularly effective when combined with [placeholder searches](/reference/api/search#placeholder-search).
 </Capsule>
 
 ## Configuring Meilisearch for sorting at search time
@@ -14,7 +14,7 @@ To allow your users to sort results at search time you must:
 
 1. Decide which attributes you want to use for sorting
 2. Add those attributes to the `sortableAttributes` index setting
-3. Update Meilisearch's [ranking rules](/learn/core_concepts/relevancy.md) (optional)
+3. Update Meilisearch's [ranking rules](/learn/core_concepts/relevancy) (optional)
 
 <Capsule intent="note">
 Meilisearch sorts strings in lexicographic order based on their byte values. For example, `á`, which has a value of 225, will be sorted after `z`, which has a value of 122.
@@ -34,7 +34,7 @@ This can lead to unexpected behavior when sorting, so we strongly recommend you 
 
 ### Adding attributes to `sortableAttributes`
 
-After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings.md#sortable-attributes).
+After you have decided which fields you will allow your users to sort on, you must add their attributes to the [`sortableAttributes` index setting](/reference/api/settings#sortable-attributes).
 
 `sortableAttributes` accepts an array of strings, each corresponding to one attribute. Note that the attribute order in `sortableAttributes` has no impact on sorting.
 
@@ -107,7 +107,7 @@ If you are using this dataset in a webshop, you might want to allow your users t
 
 ### Customize ranking rule order (optional)
 
-When users sort results at search time, [Meilisearch's ranking rules](/learn/core_concepts/relevancy.md) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
+When users sort results at search time, [Meilisearch's ranking rules](/learn/core_concepts/relevancy) are set up so the top matches emphasize relevant results over sorting order. You might need to alter this behavior depending on your application's needs.
 
 This is the default configuration of Meilisearch's ranking rules:
 
@@ -134,7 +134,7 @@ If your users care more about finding cheaper books than they care about finding
 
 ## Sorting results at search time
 
-After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/search.md#sort) to control the sorting order of your search results.
+After configuring `sortableAttributes`, you can use the [`sort` search parameter](/reference/api/search#sort) to control the sorting order of your search results.
 
 ### Using `sort`
 
@@ -257,7 +257,7 @@ Use dot notation to sort results based on a document's nested fields. The follow
 
 ## Sorting and custom ranking rules
 
-There is a lot of overlap between sorting and configuring [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules), as both can greatly influence which results a user will see first.
+There is a lot of overlap between sorting and configuring [custom ranking rules](/learn/core_concepts/relevancy#custom-rules), as both can greatly influence which results a user will see first.
 
 Sorting is most useful when you want your users to be able to alter the order of returned results at query time. For example, webshop users might want to order results by price depending on what they are searching and to change whether they see the most expensive or the cheapest products first.
 
@@ -293,7 +293,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our geosearch guide.](/learn/advanced/geosearch.md#sorting-results-with-geopoint)
+[You can read more about location-based sorting in our geosearch guide.](/learn/advanced/geosearch#sorting-results-with-geopoint)
 
 ### Example
 

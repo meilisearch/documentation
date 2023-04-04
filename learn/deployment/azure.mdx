@@ -24,7 +24,7 @@ When clicking this button, you'll be redirected to the Azure Portal and asked a 
 - "Environment": The name of the environment you want to deploy to, like `dev` (for development) or `prod` (for production). This setting has no effect on the type of resources deployed. It's just for convenience
 - "Application Name": The name of your application. This name should be **unique across all Azure customers**. The URL where your application is deployed will contain this value
 - "Location": This is the resources' location. For reasons out of scope of this documentation, this parameter is different from the _Region_ one. By default, it is set to `eastus`, but you can type any Azure location (like `francecentral`, `westeurope`, or `japaneast`)
-- "`Meilisearch_apikey`": This will be the [master key](/learn/security/master_api_keys.md) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key
+- "`Meilisearch_apikey`": This will be the [master key](/learn/security/master_api_keys) of your Meilisearch instance. While we generate a random key by default, we encourage you to set your own key
 
 Once you have filled in these fields, click the "Review + create" button and then the "Create" button.
 
@@ -60,7 +60,7 @@ The one-click button creates a storage with the "LRS" redundancy option. That me
 By default, there is no automatic backup of your index. If you want to use Azure Backup capabilities to achieve this result, you can look at [Azure File Share Backup](https://docs.microsoft.com/azure/backup/azure-file-share-backup-overview).
 
 <Capsule intent="tip">
-Meilisearch has snapshot and dump features that can help improve your backup capabilities. See [Data Backup documentation](/learn/advanced/snapshots_vs_dumps.md) for more information.
+Meilisearch has snapshot and dump features that can help improve your backup capabilities. See [Data Backup documentation](/learn/advanced/snapshots_vs_dumps) for more information.
 </Capsule>
 
 ### Always-on
