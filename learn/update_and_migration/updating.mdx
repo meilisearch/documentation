@@ -18,9 +18,29 @@ If you are running Meilisearch as a `systemctl` service using v0.22 or above, tr
 This guide only works for versions v0.15 and above. If you are using an older version, please [contact support](https://discord.gg/meilisearch) for more information.
 </Capsule>
 
-## Step 1: Export data
+## Updating on Meilisearch Cloud
 
-### Verify your database version
+If you're using Meilisearch Cloud, you don't need to follow the rest of this guide. Clicking the "Update to `vX.Y.Z`" will take care of the update for you.
+
+Once a new version of Meilisearch is available, you should see it next to the "Meilisearch version" field under "Project overview".
+
+![Button to update Meilisearch version to 1.0.2](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/updating/update-button.png)
+
+Clicking the button will take you to a pop up informing you that the update may take time. You cannot send any updates to the project but will still be able to continue searches during the update.
+
+![Pop up for confirming update to latest version](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/updating/pop-up.png)
+
+Once you agree to the update, the "Status" changes to "updating".
+
+![Project update in progress](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/updating/update-in-progress.png)
+
+On successfully updating the project, you will receive an email confirming the update and the "Status" will change to "running".
+
+## Updating a local or deployed Meilisearch instance
+
+### Step 1: Export data
+
+#### Verify your database version
 
 First, verify the version of Meilisearch that's compatible with your database using the get version endpoint:
 
@@ -43,7 +63,7 @@ The response should look something like this:
 
 If your [`pkgVersion`](/reference/api/version#version-object) is 0.21 or above, you can jump to [creating the dump](#create-the-dump). If not, proceed to the next step.
 
-### Set all fields as displayed attributes
+#### Set all fields as displayed attributes
 
 <Capsule intent="note">
 If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
@@ -72,7 +92,7 @@ This command returns an `updateId`. Use the get update endpoint to track the sta
 
 Once the status is `processed`, you're good to go. Repeat this process for all indexes, then move on to creating your dump.
 
-### Create the dump
+#### Create the dump
 
 Before creating your dump, make sure that your [dump directory](/learn/configuration/instance_options#dump-directory) is somewhere accessible. By default, dumps are created in a folder called `dumps` at the root of your Meilisearch directory.
 
@@ -160,9 +180,9 @@ The response will vary slightly depending on your version. For v0.27 and below, 
 
 Once the `dumpCreation` task shows `"status": "succeeded"`, you're ready to move on.
 
-## Step 2: Prepare for migration
+### Step 2: Prepare for migration
 
-### Stop the Meilisearch instance
+#### Stop the Meilisearch instance
 
 Stop your Meilisearch instance.
 
@@ -187,7 +207,7 @@ You may need to prefix the above command with `sudo` if you are not connected as
 </Tabs.Content>
 </Tabs.Container>
 
-### Create a backup
+#### Create a backup
 
 Instead of deleting `data.ms`, we suggest creating a backup in case something goes wrong. `data.ms` should be at the root of the Meilisearch binary unless you chose [another location](/learn/configuration/instance_options#database-path).
 
@@ -216,7 +236,7 @@ mv /var/lib/meilisearch/data.ms /tmp/
 </Tabs.Content>
 </Tabs.Container>
 
-### Install the desired version of Meilisearch
+#### Install the desired version of Meilisearch
 
 Install the latest version of Meilisearch using:
 
@@ -252,9 +272,9 @@ For **cloud platforms**, move the new Meilisearch binary to the `/usr/bin` direc
 mv meilisearch /usr/bin/meilisearch
 ```
 
-## Step 3: Import data
+### Step 3: Import data
 
-### Launch Meilisearch and import the dump
+#### Launch Meilisearch and import the dump
 
 Execute the command below to import the dump at launch:
 
@@ -281,7 +301,7 @@ meilisearch --db-path /var/lib/meilisearch/data.ms --import-dump "/var/opt/meili
 
 Importing a dump requires indexing all the documents it contains. Depending on the size of your dataset, this process can take a long time and cause a spike in memory usage.
 
-### Restart Meilisearch as a service
+#### Restart Meilisearch as a service
 
 If you're running a **cloud instance**, press `Ctrl`+`C`  to stop Meilisearch once your dump has been correctly imported. Next, execute the following command to run the script to configure Meilisearch and restart it as a service:
 
@@ -291,7 +311,7 @@ meilisearch-setup
 
 If required, set `displayedAttributes` back to its previous value using the [update displayed attributes endpoint](/reference/api/settings#update-displayed-attributes).
 
-## Conclusion
+### Conclusion
 
 Now that your updated Meilisearch instance is up and running, verify that the dump import was successful and no data was lost.
 
@@ -299,7 +319,7 @@ If everything looks good, then congratulations! You successfully migrated your d
 
 If something went wrong, you can always roll back to the previous version. Feel free to [reach out for help](https://discord.gg/meilisearch) if the problem continues. If you successfully migrated your database but are having problems with your codebase, be sure to check out our [version-specific warnings](#version-specific-warnings).
 
-### Delete backup files or rollback (_optional_)
+#### Delete backup files or rollback (_optional_)
 
 Delete the Meilisearch binary and `data.ms` folder created by the previous steps. Next, move the backup files back to their previous location using:
 
