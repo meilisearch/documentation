@@ -22,14 +22,14 @@ Search for documents matching a specific query in the given index.
 This is the preferred endpoint to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
 <Capsule intent="note">
-By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
+By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents) instead.
 </Capsule>
 
 ### Path parameters
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Body
 
@@ -57,7 +57,7 @@ By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/kn
 
 #### Placeholder search
 
-Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy.md#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules) are taken into account.
+Placeholder search is a search with an empty `q` parameter. Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy#ranking-rules) **do not apply.** Only [sort](/learn/core_concepts/relevancy#_5-sort) and [custom ranking rules](/learn/core_concepts/relevancy#custom-rules) are taken into account.
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
@@ -67,19 +67,20 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| Name                     | Type             | Description                                     |
-| :----------------------- | :--------------- | :---------------------------------------------- |
-| **`hits`**               | Array of objects | Results of the query                            |
-| **`offset`**             | Number           | Number of documents skipped                     |
-| **`limit`**              | Number           | Number of documents to take                     |
-| **`estimatedTotalHits`** | Number           | Estimated total number of matches               |
-| **`totalHits`**          | Number           | Exhaustive total number of matches              |
-| **`totalPages`**         | Number           | Exhaustive total number of search result pages  |
-| **`hitsPerPage`**        | Number           | Number of results on each page                  |
-| **`page`**               | Number           | Current search results page                     |
-| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facets)** |
-| **`processingTimeMs`**   | Number           | Processing time of the query                    |
-| **`query`**              | String           | Query originating the response                  |
+| Name                     | Type             | Description                                                 |
+| :----------------------- | :--------------- | :---------------------------------------------------------- |
+| **`hits`**               | Array of objects | Results of the query                                        |
+| **`offset`**             | Number           | Number of documents skipped                                 |
+| **`limit`**              | Number           | Number of documents to take                                 |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                           |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages              |
+| **`hitsPerPage`**        | Number           | Number of results on each page                              |
+| **`page`**               | Number           | Current search results page                                 |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**  |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                |
+| **`query`**              | String           | Query originating the response                              |
 
 #### Exhaustive and estimated total number of search results
 
@@ -87,9 +88,9 @@ By default, Meilisearch only returns an estimate of the total number of search r
 
 If you require the total number of search results, use the `hitsPerPage` and `page` search parameters in your query. The response to this query replaces `estimatedTotalHits` with `totalHits` and includes an extra field with number of search results pages based on your `hitsPerPage`: `totalPages`. Using `totalHits` and `totalPages` may result in slightly reduced performance, but is recommended when creating UI elements such as numbered page selectors.
 
-Neither `estimatedTotalHits` nor `totalHits` can exceed the limit configured in [the `maxTotalHits` index setting](/reference/api/settings.md#pagination).
+Neither `estimatedTotalHits` nor `totalHits` can exceed the limit configured in [the `maxTotalHits` index setting](/reference/api/settings#pagination).
 
-You can [read more about pagination in our dedicated guide](/learn/advanced/pagination.md).
+You can [read more about pagination in our dedicated guide](/learn/advanced/pagination).
 
 ### Example
 
@@ -131,20 +132,20 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 Search for documents matching a specific query in the given index.
 
 <Capsule intent="warning">
-This endpoint only accepts [string filter expressions](/learn/advanced/filtering_and_faceted_search.md#filter-expressions).
+This endpoint only accepts [string filter expressions](/learn/advanced/filtering#filter-expressions).
 </Capsule>
 
-This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search.md#search-in-an-index-with-post-route) route instead.
+This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post-route) route instead.
 
 <Capsule intent="note">
-By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations.md#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents.md#get-documents) instead.
+By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents) instead.
 </Capsule>
 
 ### Path parameters
 
 | Name              | Type   | Description                                                               |
 | :---------------- | :----- | :------------------------------------------------------------------------ |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes.md#index-uid) of the requested index |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
@@ -180,19 +181,20 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ### Response
 
-| Name                     | Type             | Description                                     |
-| :----------------------- | :--------------- | :---------------------------------------------- |
-| **`hits`**               | Array of objects | Results of the query                            |
-| **`offset`**             | Number           | Number of documents skipped                     |
-| **`limit`**              | Number           | Number of documents to take                     |
-| **`totalHits`**          | Number           | Exhaustive total number of matches              |
-| **`totalPages`**         | Number           | Exhaustive total number of search results pages |
-| **`hitsPerPage`**        | Number           | Number of results on each page                  |
-| **`page`**               | Number           | Current search results page                     |
-| **`estimatedTotalHits`** | Number           | Total number of matches                         |
-| **`facets`**             | Object           | **[Distribution of the given facets](#facets)** |
-| **`processingTimeMs`**   | Number           | Processing time of the query                    |
-| **`query`**              | String           | Query originating the response                  |
+| Name                     | Type             | Description                                                 |
+| :----------------------- | :--------------- | :---------------------------------------------------------- |
+| **`hits`**               | Array of objects | Results of the query                                        |
+| **`offset`**             | Number           | Number of documents skipped                                 |
+| **`limit`**              | Number           | Number of documents to take                                 |
+| **`estimatedTotalHits`** | Number           | Estimated total number of matches                           |
+| **`totalHits`**          | Number           | Exhaustive total number of matches                          |
+| **`totalPages`**         | Number           | Exhaustive total number of search result pages              |
+| **`hitsPerPage`**        | Number           | Number of results on each page                              |
+| **`page`**               | Number           | Current search results page                                 |
+| **`facetDistribution`**  | Object           | **[Distribution of the given facets](#facetdistribution)**  |
+| **`facetStats`**         | Object           | [The numeric `min` and `max` values per facet](#facetstats) |
+| **`processingTimeMs`**   | Number           | Processing time of the query                                |
+| **`query`**              | String           | Query originating the response                              |
 
 ### Example
 
@@ -229,12 +231,12 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 
 ## Search parameters
 
-Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for both `GET` and `POST` routes.
+Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-search` routes.
 
 <Capsule intent="warning">
-If [using the `GET` route to perform a search](/reference/api/search.md#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
+If [using the `GET` route to perform a search](/reference/api/search#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
 
-This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks.md).
+This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks).
 </Capsule>
 
 ### Overview
@@ -268,7 +270,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 Sets the search terms.
 
 <Capsule intent="warning">
-Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations.md#maximum-number-of-query-words).
+Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations#maximum-number-of-query-words).
 </Capsule>
 
 #### Example
@@ -307,21 +309,21 @@ Normalization also converts all letters to lowercase. Searching for `"Video"` re
 
 #### Placeholder search
 
-When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/core_concepts/relevancy.md#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy.md#ranking-rules) **do not apply.**
+When `q` isn't specified, Meilisearch performs a **placeholder search**.  A placeholder search returns all searchable documents in an index, modified by any search parameters used and sorted by that index's [custom ranking rules](/learn/core_concepts/relevancy#custom-rules). Since there is no query term, the [built-in ranking rules](/learn/core_concepts/relevancy#ranking-rules) **do not apply.**
 
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 <Capsule intent="tip">
-Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/filtering_and_faceted_search.md#faceted-search), as it allows users to view the catalog and alter sorting rules without entering a query.
+Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/faceted_search), as it allows users to view the catalog and alter sorting rules without entering a query.
 </Capsule>
 
 #### Phrase search
 
 If you enclose search terms in double quotes (`"`), Meilisearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
 
-Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/advanced/datatypes.md). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
+Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/advanced/datatypes). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
-You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy.md).
+You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy).
 
 ##### Example
 
@@ -337,10 +339,10 @@ Sets the starting point in the search results, effectively skipping over a given
 
 Queries using `offset` and `limit` only return an estimate of the total number of search results.
 
-You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
+You can [paginate search results](/learn/advanced/pagination) by making queries combining both `offset` and `limit`.
 
 <Capsule intent="warning">
-Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings.md#update-pagination-settings) returns an empty array.
+Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings#update-pagination-settings) returns an empty array.
 </Capsule>
 
 #### Example
@@ -357,10 +359,10 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 
 Sets the maximum number of documents returned by a single query.
 
-You can [paginate search results](/learn/advanced/pagination.md) by making queries combining both `offset` and `limit`.
+You can [paginate search results](/learn/advanced/pagination) by making queries combining both `offset` and `limit`.
 
 <Capsule intent="warning">
-A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings.md#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
+A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
 </Capsule>
 
 #### Example
@@ -381,14 +383,14 @@ Queries containing `hitsPerPage` are exhaustive and do not return an `estimatedT
 
 If you set `hitsPerPage` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive value for `totalHits`. The response body will also include `totalPages`, but its value will be `0`.
 
-You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
+You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination).
 
 <Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
 </Capsule>
 
 <Capsule intent="warning">
-`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
+`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings#pagination) is set to a value higher than its default.
 </Capsule>
 
 #### Example
@@ -409,14 +411,14 @@ Queries containing `page` are exhaustive and do not return an `estimatedTotalHit
 
 If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `totalPages` and `totalHits`.
 
-You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination.md).
+You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination).
 
 <Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
 </Capsule>
 
 <Capsule intent="warning">
-`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings.md#pagination) is set to a value higher than its default.
+`hitsPerPage` and `page` are resource-intensive options and might negatively impact search performance. This is particularly likely if [`maxTotalHits`](/reference/api/settings#pagination) is set to a value higher than its default.
 </Capsule>
 
 #### Example
@@ -431,9 +433,9 @@ The following example returns the second page of search results:
 **Expected value**: A filter expression written as a string or an array of strings
 **Default value**: `[]`
 
-Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings.md#filterable-attributes).
+Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
 
-For more information on how to use filters and build filter expressions, [read our guide on filtering, faceted search, and filter expressions](/learn/advanced/filtering_and_faceted_search.md).
+For more information on how to use filters and build filter expressions, [read our guide on filtering and filter expressions](/learn/advanced/filtering).
 
 #### Example
 
@@ -453,11 +455,14 @@ You can then use the filter in a search query:
 
 <CodeSamples id="faceted_search_walkthrough_filter_1" />
 
-#### Filtering results with `_geoRadius`
+#### Filtering results with `_geoRadius` and `_geoBoundingBox`
 
-If your documents contain `_geo` data, you can use the `_geoRadius` built-in filter rule to filter results according to their geographic position.
+If your documents contain `_geo` data, you can use the `_geoRadius` and `_geoBoundingBox` built-in filter rules to filter results according to their geographic position.
 
-`_geoRadius` establishes a circular area based on a central point and a radius. Results beyond this area will be excluded from your search. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
+<Tabs.Container labels={["_geoRadius", "_geoBoundingBox"]}>
+
+<Tabs.Content label="_geoRadius">
+`_geoRadius` establishes a circular area based on a central point and a radius. This filter rule requires three parameters: `lat`, `lng` and `distance_in_meters`.
 
 ```json
 _geoRadius(lat, lng, distance_in_meters)
@@ -467,51 +472,89 @@ _geoRadius(lat, lng, distance_in_meters)
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
 
+</Tabs.Content>
+
+<Tabs.Content label="_geoBoundingBox">
+`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays of geographic coordinates:
+
+```
+_geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
+```
+
+`lat` and `lng` should be geographic coordinates expressed as floating point numbers. The first array indicates the top right corner and the second array indicates the bottom left corner of the bounding box.
+
+<CodeSamples id="geosearch_guide_filter_usage_3" />
+
+Meilisearch will throw an error if the top right corner is under the bottom left corner.
+
+</Tabs.Content>
+
+</Tabs.Container>
+
+If any parameters are invalid or missing, Meilisearch returns an [`invalid_search_filter`](/reference/errors/error_codes#invalid-search-filter) error.
+
 ### Facets
 
 **Parameter**: `facets`
 **Expected value**: An array of `attribute`s or `["*"]`
 **Default value**: `null`
 
-Returns the number of documents matching the current search query for each given facet. When `facets` is set, the search results object contains the `facetDistribution` field that shows the number of remaining candidates for each specified facet.
-
-This parameter can take two values:
+Returns the number of documents matching the current search query for each given facet. This parameter can take two values:
 
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
 - An asterisk—this will return a count for all facets present in `filterableAttributes`
+
+When `facets` is set, the search results object contains the [`facetDistribution`](#facetdistribution) and [`facetStats`](#facetstats) fields.
 
 <Capsule intent="note">
 If an attribute used on `facets` has not been added to the `filterableAttributes` list, it will be ignored.
 </Capsule>
 
-[Learn more about facet distribution in the filtering and faceted search guide.](/learn/advanced/filtering_and_faceted_search.md#configuring-and-using-facets)
+#### `facetDistribution`
+
+`facetDistribution` contains the number of matching documents distributed among the values of a given facet. Each facet is represented as an object.
+
+#### `facetStats`
+
+When using the `facets` parameter, any matching documents with facets containing numeric values are displayed in a `facetStats` object. `facetStats` contains the numeric minimum (`min`) and maximum (`max`) values per facet for all documents matching the search query.
+If none of the matching documents have a numeric value for a facet, that facet is not  included in the `facetStats` object.
 
 #### Example
 
-Given a movie database, suppose that you want to know the number of `Batman` movies per genre:
+Given a movie ratings database, the following code sample returns the number of `Batman` movies per genre along with the minimum and maximum ratings:
 
-<CodeSamples id="faceted_search_facets_1" />
+<CodeSamples id="search_parameter_guide_facet_stats_1" />
 
-You would get the following response:
+The response shows the facet distribution for `genres` and `rating`. Since `rating` is a numeric field, you get its minimum and maximum values in `facetStats`.
 
 ```json
 {
   …
-  "estimatedTotalHits": 1684,
-  "query": "Batman",
-  "facetDistribution": {
-    "genres": {
-      "action": 273,
-      "animation": 118,
-      "adventure": 132,
-      "fantasy": 67,
-      "comedy": 475,
-      "mystery": 70,
-      "thriller": 217
+  "estimatedTotalHits":22,
+  "query":"Batman",
+  "facetDistribution":{
+    "genres":{
+      "Action":20,
+      "Adventure":7,
+      …
+      "Thriller":3
+    },
+    "rating":{
+      "2":1,
+      …
+      "9.8":1
+    }
+  },
+  "facetStats":{
+    "rating":{
+      "min":2.0,
+      "max":9.8
     }
   }
 }
 ```
+
+[Learn more about facet distribution in the faceted search guide.](/learn/advanced/faceted_search#configuring-and-using-facets)
 
 ### Attributes to retrieve
 
@@ -521,7 +564,7 @@ You would get the following response:
 
 Configures which attributes will be retrieved in the returned documents.
 
-If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/api/settings.md#displayed-attributes), which by default contains all attributes found in the documents.
+If no value is specified, `attributesToRetrieve` uses the [`displayedAttributes` list](/reference/api/settings#displayed-attributes), which by default contains all attributes found in the documents.
 
 <Capsule intent="note">
 If an attribute has been removed from `displayedAttributes`, `attributesToRetrieve` will silently ignore it and the field will not appear in your returned documents.
@@ -648,11 +691,11 @@ Instead of a list of attributes, you can use `["*"]`: `attributesToHighlight=["*
 By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may change this by using the [`highlightPreTag` and `highlightPostTag` search parameters](#highlight-tags).
 
 <Capsule intent="note">
-`attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings.md#synonyms) and [stop words](/reference/api/settings.md#stop-words).
+`attributesToHighlight` also highlights terms configured as [synonyms](/reference/api/settings#synonyms) and [stop words](/reference/api/settings#stop-words).
 </Capsule>
 
 <Capsule intent="warning">
-`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
+`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 #### Example
@@ -730,7 +773,7 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
 <Capsule intent="warning">
-`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes.md#searchable-fields).
+`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
@@ -797,7 +840,7 @@ When using the `POST` route, `sort` expects an array of strings.
 
 When using the `GET` route, `sort` expects the list as a comma-separated string.
 
-[Read more about sorting search results in our dedicated guide.](/learn/advanced/sorting.md)
+[Read more about sorting search results in our dedicated guide.](/learn/advanced/sorting)
 
 #### Example
 
@@ -829,7 +872,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our dedicated guide.](/learn/advanced/geosearch.md#sorting-results-with-geopoint)
+[You can read more about location-based sorting in our dedicated guide.](/learn/advanced/geosearch#sorting-results-with-geopoint)
 
 ### Matching strategy
 

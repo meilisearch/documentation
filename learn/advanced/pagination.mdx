@@ -8,9 +8,9 @@ In this guide, we discuss two different approaches to pagination supported by Me
 
 There are many UI patterns that help your users navigate through search results. One common and efficient solution in Meilisearch is using `offset` and `limit` to create interfaces centered around ["Previous" and "Next" buttons](#previous-and-next-buttons).
 
-Other solutions, such as [creating a page selector](/learn/advanced/pagination.md#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents. These tend to be less efficient and may result in decreased performance.
+Other solutions, such as [creating a page selector](/learn/advanced/pagination#numbered-page-selectors) allowing users to jump to any search results page, make use of `hitsPerPage` and `page` to obtain the exhaustive total number of matched documents. These tend to be less efficient and may result in decreased performance.
 
-Whatever UI pattern you choose, there is a limited maximum number of search results Meilisearch will return for any given query. You can use [the `maxTotalHits` index setting](/reference/api/settings.md#pagination) to configure this, but be aware that higher limits will negatively impact search performance.
+Whatever UI pattern you choose, there is a limited maximum number of search results Meilisearch will return for any given query. You can use [the `maxTotalHits` index setting](/reference/api/settings#pagination) to configure this, but be aware that higher limits will negatively impact search performance.
 
 ## "Previous" and "Next" buttons
 
@@ -37,7 +37,7 @@ To implement this interface in a website or application, we make our queries wit
 
 #### `limit` and `offset`
 
-"Previous" and "Next" buttons can be implemented using the [`limit`](/reference/api/search.md#limit) and [`offset`](/reference/api/search.md#offset) search parameters.
+"Previous" and "Next" buttons can be implemented using the [`limit`](/reference/api/search#limit) and [`offset`](/reference/api/search#offset) search parameters.
 
 `limit` sets the size of a page. If you set `limit` to `10`, Meilisearch's response will contain a maximum of 10 search results. `offset` skips a number of search results. If you set `offset` to `20`, Meilisearch's response will skip the first 20 search results.
 
@@ -152,7 +152,7 @@ Calculating the total amount of search results for a query is a resource-intensi
 
 By default, Meilisearch queries only return `estimatedTotalHits`. This value is likely to change as a user navigates search results and should not be used to create calculate the number of search result pages.
 
-When your query contains either [`hitsPerPage`](/reference/api/search.md#number-of-results-per-page), [`page`](/reference/api/search.md#page), or both these search parameters, Meilisearch returns `totalHits` and `totalPages` instead of `estimatedTotalHits`. `totalHits` contains the exhaustive number of results for that query, and `totalPages` contains the exhaustive number of pages of search results for the same query:
+When your query contains either [`hitsPerPage`](/reference/api/search#number-of-results-per-page), [`page`](/reference/api/search#page), or both these search parameters, Meilisearch returns `totalHits` and `totalPages` instead of `estimatedTotalHits`. `totalHits` contains the exhaustive number of results for that query, and `totalPages` contains the exhaustive number of pages of search results for the same query:
 
 ```json
 {

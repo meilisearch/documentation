@@ -88,14 +88,14 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | API Key Management | ✅ | ✅ | ✅ | ✅ |
-| Tenant tokens & multi-tenant indexes | ✅ <br /> [Multitenancy support](/learn/security/tenant_tokens.md) | ✅ | ✅ | ✅ <br /> Role-based |
+| Tenant tokens & multi-tenant indexes | ✅ <br /> [Multitenancy support](/learn/security/tenant_tokens) | ✅ | ✅ | ✅ <br /> Role-based |
 
 ##### Search
 
 |   | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Placeholder search | ✅ | ✅ | ✅ | ✅ |
-| Multi-index search | [2023](https://github.com/meilisearch/product/issues/74) | ✅ | ✅ | ✅ |
+| Multi-index search (Federated search) | ✅ | ✅ | ✅ | ✅ |
 | Exact phrase search | ✅ | ✅ | ✅ | ✅ |
 | Geo search |  ✅  | ✅ | ✅ | ✅ |
 | Sort by  |  ✅  | 🔶 <br /> Limited to one `sort_by` rule per index. Indexes may have to be duplicated for each sort field and sort order | ✅ <br /> Up to 3 sort fields per search query | ✅ |
@@ -127,7 +127,7 @@ Can't find a client you'd like us to support? [Submit your idea or vote for it](
 |  | Meilisearch | Algolia | Typesense | Elasticsearch |
 |---|:---:|:----:|:---:|:---:|
 | Maximum number of indexes | No limitation | 1000, increasing limit possible by contacting support | No limitation | No limitation |
-| Maximum index size | 100GiB default, configurable  | 128GB | Constrained by RAM | No limitation |
+| Maximum index size | 80TiB | 128GB | Constrained by RAM | No limitation |
 | Maximum words per attribute | No limitation | No limitation | No limitation | No limitation |
 | Maximum document size | No limitation | 100KB, configurable | No limitation | 100KB default, configurable  |
 
@@ -167,13 +167,13 @@ Meilisearch was inspired by Algolia's product and the algorithms behind it. We i
 
 Meilisearch provides similar features and reaches the same level of relevance just as quickly as its competitor.
 
-If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/update_and_migration/algolia_migration.md).
+If you are a current Algolia user considering a switch to Meilisearch, you may be interested in our [migration guide](/learn/update_and_migration/algolia_migration).
 
 #### Key similarities
 
 Some of the most significant similarities between Algolia and Meilisearch are:
 
-- [Features](/learn/what_is_meilisearch/overview.md#features) such as search-as-you-type, typo tolerance, faceting, etc.
+- [Features](/learn/what_is_meilisearch/overview#features) such as search-as-you-type, typo tolerance, faceting, etc.
 - Fast results targeting an instant search experience (answers < 50 milliseconds)
 - Schemaless indexing
 - Support for all JSON data types

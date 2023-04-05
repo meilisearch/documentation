@@ -1,6 +1,6 @@
 # Tasks
 
-The `/tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations.md).
+The `/tasks` route gives information about the progress of [asynchronous operations](/learn/advanced/asynchronous_operations).
 
 ## Task object
 
@@ -42,7 +42,7 @@ The task `uid` is incremented **globally.**
 **Description**:  Unique identifier of the targeted index
 
 <Capsule intent="note">
-This value is always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks).
+This value is always `null` for [global tasks](/learn/advanced/asynchronous_operations#global-tasks).
 </Capsule>
 
 ### `status`
@@ -161,8 +161,8 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 | Name          | Description                                            |
 | :------------ | :----------------------------------------------------- |
 | **`message`** | A human-readable description of the error              |
-| **`code`**    | The [error code](/reference/errors/error_codes.md)     |
-| **`type`**    | The [error type](/reference/errors/overview.md#errors) |
+| **`code`**    | The [error code](/reference/errors/error_codes)     |
+| **`type`**    | The [error type](/reference/errors/overview#errors) |
 | **`link`**    | A link to the relevant section of the documentation    |
 
 ### `duration`
@@ -192,7 +192,7 @@ When an API request triggers an asynchronous process, Meilisearch returns a summ
 | Field            | Type    | Description                                                                                                                   |
 | :--------------- | :------ | :---------------------------------------------------------------------------------------------------------------------------- |
 | **`taskUid`**    | Integer | Unique sequential identifier                                                                                                  |
-| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](/learn/advanced/asynchronous_operations.md#global-tasks))           |
+| **`indexUid`**   | String  | Unique index identifier (always `null` for [global tasks](/learn/advanced/asynchronous_operations#global-tasks))           |
 | **`status`**     | String  | Status of the task. Value is `enqueued`                                                                                       |
 | **`type`**       | String  | Type of task                                                                                                                  |
 | **`enqueuedAt`** | String  | Represents the date and time in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format when the task has been `enqueued` |
@@ -207,7 +207,7 @@ List all tasks globally, regardless of index. The `task` objects are contained i
 
 Tasks are always returned in descending order of `uid`. This means that by default, **the most recently created `task` objects appear first**.
 
-Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginating-tasks) and can be [filtered](/learn/advanced/asynchronous_operations.md#filtering-tasks).
+Task results are [paginated](/learn/advanced/asynchronous_operations#paginating-tasks) and can be [filtered](/learn/advanced/asynchronous_operations#filtering-tasks).
 
 ### Query parameters
 
@@ -215,17 +215,17 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 | :--------------------- | :----------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                             |
 | **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                      |
-| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                           |
-| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                    |
-| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                         |
-| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations.md#filtering-tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
-| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)         |
-| **`beforeEnqueuedAt`** | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                 |
-| **`beforeStartedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                  |
-| **`beforeFinishedAt`** | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                 |
-| **`afterEnqueuedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `enqueuedAt` field                                                                 |
-| **`afterStartedAt`**   | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `startedAt` field                                                                  |
-| **`afterFinishedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations.md#filter-by-date) by their `finishedAt` field                                                                 |
+| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/advanced/asynchronous_operations#filtering-tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                           |
+| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/advanced/asynchronous_operations#filtering-tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                    |
+| **`types`**            | `*` (all types)                | [Filter tasks](/learn/advanced/asynchronous_operations#filtering-tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                         |
+| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/advanced/asynchronous_operations#filtering-tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
+| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/advanced/asynchronous_operations#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)         |
+| **`beforeEnqueuedAt`** | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations#filter-by-date) by their `enqueuedAt` field                                                                 |
+| **`beforeStartedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations#filter-by-date) by their `startedAt` field                                                                  |
+| **`beforeFinishedAt`** | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations#filter-by-date) by their `finishedAt` field                                                                 |
+| **`afterEnqueuedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations#filter-by-date) by their `enqueuedAt` field                                                                 |
+| **`afterStartedAt`**   | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations#filter-by-date) by their `startedAt` field                                                                  |
+| **`afterFinishedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/advanced/asynchronous_operations#filter-by-date) by their `finishedAt` field                                                                 |
 
 ### Response
 
@@ -291,7 +291,7 @@ Task results are [paginated](/learn/advanced/asynchronous_operations.md#paginati
 Get a single task.
 
 <Capsule intent="note">
-If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes.md#task-not-found) error.
+If you try retrieving a deleted task, Meilisearch will return a [`task_not_found`](/reference/errors/error_codes#task-not-found) error.
 </Capsule>
 
 ### Path parameters
@@ -340,7 +340,7 @@ Cancel any number of `enqueued` or `processing` tasks based on their `uid`, `sta
 Task cancelation is an atomic transaction: **either all tasks are successfully canceled or none are**.
 
 <Capsule intent="warning">
-To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (`POST /tasks/cancel`).
+To prevent users from accidentally canceling all enqueued and processing tasks, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing-task-filters) error if this route is used without any filters (`POST /tasks/cancel`).
 </Capsule>
 
 <Capsule intent="tip" title="Did you know?">
@@ -366,7 +366,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
 </Capsule>
 
-[To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
+[To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations#filtering-tasks)
 
 ### Example
 
@@ -385,7 +385,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 ```
 
 <Capsule intent="note">
-Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
+Since `taskCancelation` is a [global task](/learn/advanced/asynchronous_operations#global-tasks), its `indexUid` is always `null`.
 </Capsule>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
@@ -396,7 +396,7 @@ You can cancel all `processing` and `enqueued` tasks using the following filter:
 
 <RouteHighlighter method="POST" route="/tasks/cancel?statuses=processing,enqueued" />
 
-The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys.md#actions) action.
+The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.cancel`](/reference/api/keys#actions) action.
 
 ## Delete tasks
 
@@ -405,7 +405,7 @@ The API key used must have access to all indexes (`"indexes": [*]`) and the [`ta
 Delete a finished (`succeeded`, `failed`, or `canceled`) task based on `uid`, `status`, `type`, `indexUid`, `canceledBy`, or date. Task deletion is an atomic transaction: **either all tasks are successfully deleted, or none are**.
 
 <Capsule intent="warning">
-To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes.md#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
+To prevent users from accidentally deleting the entire task history, Meilisearch throws the [`missing_task_filters`](/reference/errors/error_codes#missing-task-filters) error if this route is used without any filters (DELETE `/tasks`).
 </Capsule>
 
 ### Query parameters
@@ -430,7 +430,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
 </Capsule>
 
-[To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations.md#filtering-tasks)
+[To learn more about filtering tasks, refer to our dedicated guide.](/learn/advanced/asynchronous_operations#filtering-tasks)
 
 ### Example
 
@@ -449,7 +449,7 @@ Date filters are equivalent to `<` or `>` operations. At this time, there is no 
 ```
 
 <Capsule intent="note">
-Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations.md#global-tasks), its `indexUid` is always `null`.
+Since `taskDeletion` is a [global task](/learn/advanced/asynchronous_operations#global-tasks), its `indexUid` is always `null`.
 </Capsule>
 
 You can use this `taskUid` to get more details on the [status of the task](#get-one-task).
@@ -460,4 +460,4 @@ You can delete all finished tasks by using the following filter:
 
 <RouteHighlighter method="DELETE" route="/tasks?statuses=failed,canceled,succeeded" />
 
-The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys.md#actions) action.
+The API key used must have access to all indexes (`"indexes": [*]`) and the [`task.delete`](/reference/api/keys#actions) action.

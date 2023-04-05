@@ -1,0 +1,95 @@
+# Typo tolerance
+
+Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos, for example, typing `phnoe` instead of `phone`. You can [configure the typo tolerance feature for each index](/reference/api/settings#update-typo-tolerance-settings).
+
+## Configuring typo tolerance
+
+Typo tolerance is enabled by default, but you can disable it if needed:
+
+<CodeSamples id="typo_tolerance_guide_1" />
+
+With typo tolerance disabled, Meilisearch no longer considers words that are a few characters off from your query terms as matches. For example, a query for `phnoe` will no longer return a document containing the word `phone`.
+
+**We recommend keeping typo tolerance enabled for most uses.** Massive or multilingual datasets may be exceptions, as typo tolerance can cause false-positive matches in these cases.
+
+### `minWordSizeForTypos`
+
+By default, Meilisearch accepts one typo for query terms containing five or more characters, and up to two typos if the term is at least nine characters long.
+
+If your dataset contains `seven`, searching for `sevem` or `sevan` will match `seven`. But `tow` won't match `two` as it's less than `5` characters.
+
+You can override these default settings using the `minWordSizeForTypos` object. The code sample below sets the minimum word size for one typo to `4` and the minimum word size for two typos to `10`.
+
+<CodeSamples id="typo_tolerance_guide_4" />
+
+When updating the `minWordSizeForTypos` object, keep in mind that:
+
+- the value of `twoTypos` should be greater or equal to `oneTypo`
+- the value for both `oneTypo` and `twoTypos` should be between `0` and `255`
+
+We recommend keeping the value of `oneTypo` between `2` and `8` and the value of `twoTypos` between `4` and `14`. If either value is too low, you may get a large number of false-positive results. On the other hand, if both values are set too high, many search queries may not benefit from typo tolerance.
+
+<Capsule intent="tip" title="Typo tolerance: special cases">
+**Typo on the first character**
+Meilisearch considers a typo on a query's first character as two typos.
+
+**Concatenation**
+When considering possible candidates for typo tolerance, Meilisearch will concatenate multiple search terms separated by a [space separator](/learn/advanced/datatypes#string). This is treated as one typo. For example, a search for `any way` would match documents containing `anyway`.
+
+For more about typo calculations, [see below](#understanding-typo-calculations).
+</Capsule>
+
+### `disableOnWords`
+
+You can disable typo tolerance for a list of query terms by adding them to `disableOnWords`.
+
+<CodeSamples id="typo_tolerance_guide_3" />
+
+Meilisearch won't apply typo tolerance on the query term `Shrek` or `shrek` at search time to match documents.
+
+<Capsule intent="note">
+`disableOnWords` is case insensitive.
+</Capsule>
+
+### `disableOnAttributes`
+
+You can disable typo tolerance for a specific [document attribute](/learn/core_concepts/documents) by adding it to `disableOnAttributes`. The code sample below disables typo tolerance for `title`:
+
+<CodeSamples id="typo_tolerance_guide_2" />
+
+With the above settings, matches in the `title` attribute will not tolerate any typos. For example, a search for `beautiful` (9 characters) will not match the movie "Biutiful" starring Javier Bardem. With the default settings, this would be a match.
+
+## Impact of typo tolerance on the `typo` ranking rule
+
+The [`typo` ranking rule](/learn/core_concepts/relevancy#_2-typo) sorts search results by increasing number of typos on matched query words. Documents with 0 typos will rank highest, followed by those with 1 and then 2 typos.
+
+The presence or absence of the `typo` ranking rule has no impact on the typo tolerance setting. However, **[disabling the typo tolerance setting](#configuring-typo-tolerance) effectively also disables the `typo` ranking rule.** This is because all returned documents will contain `0` typos.
+
+To summarize:
+
+- Typo tolerance affects how lenient Meilisearch is when matching documents
+- The `typo` ranking rule affects how Meilisearch sorts its results
+- Disabling typo tolerance also disables `typo`
+
+## Understanding typo calculations
+
+Meilisearch uses a prefix [Levenshtein algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) to determine if a word in a document could be a possible match for a query term.
+
+The [number of typos referenced above](#minwordsizefortypos) is roughly equivalent to Levenshtein distance. The Levenshtein distance between two words _M_ and _P_ can be thought of as "the minimum cost of transforming _M_ into _P_" by performing the following elementary operations on _M_:
+
+- substitution of a character (for example, `kitten` → `sitten`)
+- insertion of a character (for example, `siting` → `sitting`)
+- deletion of a character (for example, `saturday` → `satuday`)
+
+By default, Meilisearch uses the following rules for matching documents. Note that these rules are **by word** and not for the whole query string.
+
+- If the query word is between `1` and `4` characters, **no typo** is allowed. Only documents that contain words that **start with** or are of the **same length** with this query word are considered valid
+- If the query word is between `5` and `8` characters, **one typo** is allowed. Documents that contain words that match with **one typo** are retained for the next steps.
+- If the query word contains more than `8` characters, we accept a maximum of **two typos**
+
+This means that `saturday` which is `7` characters long, uses the second rule and matches every document containing **one typo**. For example:
+
+- `saturday` is accepted because it is the same word
+- `satuday` is accepted because it contains **one typo**
+- `sutuday` is not accepted because it contains **two typos**
+- `caturday` is not accepted because it contains **two typos** (as explained [above](#minwordsizefortypos), a typo on the first letter of a word is treated as two typos)

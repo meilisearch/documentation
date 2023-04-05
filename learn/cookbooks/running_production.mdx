@@ -4,29 +4,29 @@
 
 Hopefully, you already know that [Meilisearch](https://github.com/meilisearch/meilisearch) is a powerful and fast open-source search engine built in [Rust](https://www.rust-lang.org). It was designed to provide users with a very useful and customizable search experience including out-of-the-box features such as typo-tolerance, filtering, and synonyms for any kind of project.
 
-Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/getting_started/quick_start.md): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to Meilisearch, we suggest that you take a tour around the documentation.
+Running a Meilisearch instance for testing purposes is incredibly easy and can be done in [many ways](/learn/getting_started/quick_start): using Docker, Homebrew, Aptitude, binaries, a simple `curl`, or even the source code. If you are new to Meilisearch, we suggest that you take a tour around the documentation.
 
 Using Meilisearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy Meilisearch in production** and ensure it is **safe and ready to use**?
 
 ## Content of this article
 
-[Step 1: Install Meilisearch](/learn/cookbooks/running_production.md#step-1-install-meilisearch)
+[Step 1: Install Meilisearch](/learn/cookbooks/running_production#step-1-install-meilisearch)
 
-[Step 2: Create system user](/learn/cookbooks/running_production.md#step-2-create-system-user)
+[Step 2: Create system user](/learn/cookbooks/running_production#step-2-create-system-user)
 
-[Step 3: Create a configuration file](/learn/cookbooks/running_production.md#step-3-create-a-configuration-file)
+[Step 3: Create a configuration file](/learn/cookbooks/running_production#step-3-create-a-configuration-file)
 
-[Step 4: Run Meilisearch as a service](/learn/cookbooks/running_production.md#step-4-run-meilisearch-as-a-service)
+[Step 4: Run Meilisearch as a service](/learn/cookbooks/running_production#step-4-run-meilisearch-as-a-service)
 
-+ [4.1. Create a service file](/learn/cookbooks/running_production.md#_4-1-create-a-service-file)
-+ [4.2. Enable and start service](/learn/cookbooks/running_production.md#_4-2-enable-and-start-service)
++ [4.1. Create a service file](/learn/cookbooks/running_production#_4-1-create-a-service-file)
++ [4.2. Enable and start service](/learn/cookbooks/running_production#_4-2-enable-and-start-service)
 
-[Step 5: Secure and finish your setup](/learn/cookbooks/running_production.md#step-5-secure-and-finish-your-setup)
+[Step 5: Secure and finish your setup](/learn/cookbooks/running_production#step-5-secure-and-finish-your-setup)
 
-+ [5.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production.md#_5-1-creating-a-reverse-proxy-with-nginx)
-+ [5.2. Set up SSL/TLS for your Meilisearch](/learn/cookbooks/running_production.md#_5-2-set-up-ssl-tls-for-your-meilisearch)
++ [5.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production#_5-1-creating-a-reverse-proxy-with-nginx)
++ [5.2. Set up SSL/TLS for your Meilisearch](/learn/cookbooks/running_production#_5-2-set-up-ssl-tls-for-your-meilisearch)
 
-[Conclusion](/learn/cookbooks/running_production.md#conclusion)
+[Conclusion](/learn/cookbooks/running_production#conclusion)
 
 ## Get your Meilisearch ready for production
 
@@ -56,7 +56,7 @@ apt install curl -y
 curl -L https://install.meilisearch.com | sh
 ```
 
-The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/quick_start.md#setup-and-installation).
+The different Meilisearch installation options are detailed in [this guide](/learn/getting_started/quick_start#setup-and-installation).
 
 **There are many different ways to get Meilisearch running on your machine.** As an open-source project, you can always compile the latest stable release of Meilisearch from its source code to ensure the binary uses your architecture in the best possible way.
 
@@ -119,7 +119,7 @@ In Debian and other Linux distributions, `systemd` allows you to create and mana
 
 Service files are text files that tell your operating system how to run your program, and when. They live in the `/etc/systemd/system` directory, and your system will load them at boot time. In this case, let's use a very simple service file that will run Meilisearch on port `7700`.
 
-To run Meilisearch in a production environment, use the `--env` flag. Set a master key of at least 16 bytes using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys.md#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
+To run Meilisearch in a production environment, use the `--env` flag. Set a master key of at least 16 bytes using the `--master-key` option. When you launch an instance for the first time, Meilisearch creates two default API keys: [`Default Search API Key` and `Default Admin API Key`](/learn/security/master_api_keys#using-default-api-keys-for-authorization). With the `Default Admin API Key`, you can control who can access or create new documents, indexes, or change the configuration.
 
 Remember to choose a safe and random key and avoid exposing it in publicly accessible applications. You can change the master key with the following command:
 
@@ -142,7 +142,7 @@ EOF
 ```
 
 <Capsule intent="tip">
-For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys.md). You can check our [quick start](/learn/getting_started/quick_start.md#setup-and-installation) guide for more information on how to get Meilisearch up and running.
+For more information on Meilisearch security and API keys see the [security docs](/learn/security/master_api_keys). You can check our [quick start](/learn/getting_started/quick_start#setup-and-installation) guide for more information on how to get Meilisearch up and running.
 </Capsule>
 
 As for now, it is not time yet to expose your Meilisearch instance to the external world. To keep running it safely inside your own environment, make it available locally at `local`. This means that only programs running on your machine are allowed to make requests to your Meilisearch instance.
