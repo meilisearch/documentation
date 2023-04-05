@@ -6,16 +6,79 @@ Updates and major changes come in quickly and are not always immediately communi
 
 ## Repository structure
 
-The docs repository no longer contains any code, only mdx files for content and a couple of JSON files for section menus.
+The docs repository no longer contains any code, only `.mdx` files for content and a few configuration JSON files.
 
-Files can be stored in any structure. User-visible URLs and permalinks are determined manually via the `json` files inside the `/config` directory.
+### Site structure
+
+Files can be stored in any structure. User-facing URLs and permalinks are determined manually via the `json` files inside the `/config` directory.
+
+### Navigation and menus
+
+It is possible to configure three menus directly from the docs repo: the sidebar menus for the `Learn` and `API reference` sections, and the footer menu at the bottom of the sidebars.
+
+Each menu has its own config file. The config file should follow this pattern:
+
+```json
+[
+  {
+    "title": "Section",
+    "slug": "section_name",
+    "routes": [
+    // Each route is an object corresponding to a page
+      {
+        "source": "sidebar_name/section_name/file.mdx",
+        "label": "Page title",
+        "slug": "file"
+      }
+    ]
+  }
+]
+```
+
+#### `/config/sidebar-learn.json`
+
+Configures the `Learn` section in the left sidebar menu.
+
+#### `/config/sidebar-reference.json`
+
+Configures the `Reference` section in the left sidebar menu.
+
+#### `/config/sidebar-footer.json`
+
+Configures links at the bottom of the lefthand sidebar menu (e.g. `FAQ`, `Back to meilisearch.com`).
+
+Not to be confused with the big site footer, which cannot be changed from the docs repo.
+
+## Code samples
+
+Work as in the previous site version.
+
+To add new code samples:
+
+1. Create an `id` (e.g. `new_codesample_1`)
+2. Add a curl code sample to `/.code-samples.meilisearch.yaml`
+3. Add `id` to `./sample-template.yaml`
+4. Notify the integrations team we need them to create new samples for each SDK based on our curl example
 
 ## Static assets (images/datasets)
 
-The new website does not currently support static asset hosting.
+The build process does not currently support static assets with relative paths. Images and sample datasets must be linked via an external service. 
 
-Images and sample datasets must be linked via an external service. At the moment we're adding hard absolute links to the files on github.
+At the moment we're adding hard absolute links to the files on github:
 
+```markdown
+\!\[Image description\]\(https://raw.githubusercontent.com/meilisearch/documentation/[branch_name]/assets/images/[guide_name]/diagram.png\)
+```
+
+## Scraper
+
+There's a GitHub action set up to trigger the scraping using a Vercel webhook. Will be migrated by basement into the repo before release.
+
+## Tests and linting
+
+- broken links checker: disabled, will be complex to implement
+- vale: disabled, struggles with `.mdx` files
+- markdown lint: disabled, must be replaced with `eslint` and `eslint-plugin-mdx`
 
 ## Components
 
@@ -121,15 +184,6 @@ Components can be configured with props: `<Component propName="propValue" />`. *
 
 This will **not** work:
 
-```
+```jsx
 <Component propName="_italics_" />
 ```
-
-## Scraper
-
-We do not yet know how it works. Differently from our current setup, it should run post-deploy and negate issues with slightly out-of-date search results.
-
-## Tests and linting
-
-Currently disabled. Must be heavily reworked before we can reactivate them.
-
