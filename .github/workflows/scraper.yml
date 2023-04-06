@@ -1,0 +1,59 @@
+name: Deploy to staging & run scraper
+on:
+  push:
+    branches:
+      - main
+      - new-docs-content-migration
+      - joaco/deployment-actions
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Ping the deployment hook
+        run: |
+          response="$(curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_hqVc8cCGcLtlNKTtjDy37umkXlKp/hNXqWEPK1U)" 
+          timestamp="$(jq -r ".job.createdAt" <<< "$response")"
+          echo "timestamp=$timestamp" >> $GITHUB_OUTPUT
+
+  await-deploy:
+    needs: trigger-deploy
+    runs-on: ubuntu-22.04
+    steps:
+      - env:
+          TIMESTAMP: ${{ needs.trigger-deploy.outputs.timestamp }}
+          TEAM_ID: team_okdUhHpKkohHXyqJWQOuloqC
+          APP_NAME: website
+        name: Wait for deployment
+        run: |
+          for i in {1..10}; do
+            sleep 30
+            response=$(curl -s -X GET "https://api.vercel.com/v6/deployments?app=$APP_NAME&teamId=$TEAM_ID&since=$TIMESTAMP" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
+            ready_deployment_url=$(echo "$response" | jq -r '.deployments[0] | select(.state == "READY") | .url // ""')
+            if [ -n "$ready_deployment_url" ]; then
+              echo "Deployment is ready: $ready_deployment_url"
+              break
+            elif [ "$i" -eq 10 ]; then
+              echo "Deployment failed to become ready after 5 attempts"
+              exit 1
+            fi
+            echo "Deployment is not ready yet, retrying..."
+          done
+
+  scrape-docs:
+    needs: await-deploy
+    runs-on: ubuntu-20.04
+    name: scrape and push content on Meilisearch instance
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run docs-scraper
+        env:
+          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
+          CONFIG_FILE_PATH: ${{ github.workspace }}/docs-scraper.config.json
+        run: |
+          docker run -t --rm \
+            -e MEILISEARCH_HOST_URL=$HOST_URL \
+            -e MEILISEARCH_API_KEY=$API_KEY \
+            -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
+            getmeili/docs-scraper:v0.12.8 pipenv run ./docs_scraper config.json
