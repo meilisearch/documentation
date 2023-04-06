@@ -42,11 +42,6 @@
 							"source": "learn/what_is_meilisearch/language.mdx",
 							"label": "Language",
 							"slug": "language"
-					},
-					{
-							"source": "learn/what_is_meilisearch/contact.mdx",
-							"label": "Contact",
-							"slug": "contact"
 					}
 			]
 	},
