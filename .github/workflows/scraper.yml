@@ -4,7 +4,6 @@ on:
     branches:
       - main
       - new-docs-content-migration
-      - joaco/deployment-actions
 
 jobs:
   trigger-deploy:
@@ -12,7 +11,7 @@ jobs:
     steps:
       - name: Ping the deployment hook
         run: |
-          response="$(curl -X POST https://api.vercel.com/v1/integrations/deploy/prj_hqVc8cCGcLtlNKTtjDy37umkXlKp/hNXqWEPK1U)" 
+          response="$(curl -X POST ${{ secrets.DEPLOY_HOOK }})" 
           timestamp="$(jq -r ".job.createdAt" <<< "$response")"
           echo "timestamp=$timestamp" >> $GITHUB_OUTPUT
 
