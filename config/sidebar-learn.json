@@ -316,7 +316,7 @@
 					},
 					{
 							"source": "learn/cookbooks/docker.mdx",
-							"label": "Use with docker",
+							"label": "Use with Docker",
 							"slug": "docker"
 					},
 					{
