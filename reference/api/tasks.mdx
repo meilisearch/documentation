@@ -30,6 +30,7 @@ The `/tasks` route gives information about the progress of [asynchronous operati
 ### `uid`
 
 **Type**: Integer
+
 **Description**: Unique sequential identifier of the task
 
 <Capsule intent="note">
@@ -39,6 +40,7 @@ The task `uid` is incremented **globally.**
 ### `indexUid`
 
 **Type**: String
+
 **Description**:  Unique identifier of the targeted index
 
 <Capsule intent="note">
@@ -48,21 +50,25 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 ### `status`
 
 **Type**: String
+
 **Description**: Status of the task. Possible values are `enqueued`, `processing`, `succeeded`, `failed`, and `canceled`
 
 ### `type`
 
 **Type**: String
+
 **Description**: Type of operation performed by the task. Possible values are `indexCreation`, `indexUpdate`, `indexDeletion`, `indexSwap`, `documentAdditionOrUpdate`, `documentDeletion`, `settingsUpdate`, `dumpCreation`, `taskCancelation`, `taskDeletion`, and `snapshotCreation`
 
 ### `canceledBy`
 
 **Type**: Integer
+
 **Description**: If the task was canceled, `canceledBy` contains the `uid` of a `taskCancelation` task. If the task was not canceled, `canceledBy` is always `null`
 
 ### `details`
 
 **Type**: Object
+
 **Description**: Detailed information on the task payload. This object's contents depend on the task's `type`
 
 #### `documentAdditionOrUpdate`
@@ -156,6 +162,7 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 ### `error`
 
 **Type**: Object
+
 **Description**: If the task has the `failed` [status](#status), then this object contains the error definition. Otherwise, set to `null`
 
 | Name          | Description                                            |
@@ -168,21 +175,25 @@ The `details` object is set to `null` for `snapshotCreation` tasks.
 ### `duration`
 
 **Type**: String
+
 **Description**: The total elapsed time the task spent in the `processing` state, in [ISO 8601](https://www.ionos.com/digitalguide/websites/web-development/iso-8601/) format
 
 ### `enqueuedAt`
 
 **Type**: String
+
 **Description**: The date and time when the task was first `enqueued`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ### `startedAt`
 
 **Type**: String
+
 **Description**: The date and time when the task began `processing`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ### `finishedAt`
 
 **Type**: String
+
 **Description**: The date and time when the task finished `processing`, whether `failed`, `succeeded`, or `canceled`, in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format
 
 ### Summarized task object
