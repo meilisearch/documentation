@@ -1,5 +1,5 @@
 {
-  "index_uid": "new-docs-staging",
+  "index_uid": "new-docs-structure",
   "start_urls": [
       "https://meilisearch-staging.vercel.app/docs"
   ],
