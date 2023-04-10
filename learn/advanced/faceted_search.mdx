@@ -22,9 +22,9 @@ Meilisearch does not differentiate between facets and filters. Facets are a spec
 
 Like any other filter, you must add any attributes you want to use as facets to the [`filterableAttributes`](/reference/api/settings#filterable-attributes) list in an index's settings. Once you have configured `filterableAttributes`, you can search for facets with [the `facets` search parameter](/reference/api/search#facets).
 
-::: warning
+<Capsule intent="warning">
 Synonyms don't apply to facets. If you have `SF` and `San Francisco` set as synonyms, faceting by `SF` and `San Francisco` will show you different results.
-:::
+</Capsule>
 
 Suppose you have a <a id="downloadBooks" href="/books.json" download="books.json">books dataset</a> containing the following fields:
 
@@ -120,9 +120,9 @@ The following response shows the facet distribution when searching for `classics
 
 `facetDistribution` contains an object for every attribute passed to the `facets` parameter. Each object contains the different values for that attribute and the count of matching documents with that value. Meilisearch does not return empty facets: if there are no results for the Arabic language, it will not be present in `facetDistribution`.
 
-::: note
+<Capsule intent="note">
 By default, `facets` returns a maximum of 100 facet values for each faceted field. You can change this value using the `maxValuesPerFacet` property of the [`faceting` index settings](/reference/api/settings#faceting).
-:::
+</Capsule>
 
 ### Facet stats
 
@@ -130,9 +130,9 @@ When using the `facets` parameter, Meilisearch results include a `facetStats` ob
 
 `facetStats` is useful when creating UI components such as range sliders. These allow users to refine their search by selecting from a range of facet values.
 
-::: note
+<Capsule intent="note">
 Meilisearch ignores numeric strings like `"21"` when computing `facetStats`.
-:::
+</Capsule>
 
 The following response shows the lowest and highest book ratings when searching for `"classic"`:
 
