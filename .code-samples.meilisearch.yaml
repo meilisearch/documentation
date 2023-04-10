@@ -1057,3 +1057,11 @@ faceted_search_2: |-
         }
       ]
     }'
+filtering_update_settings_1: |-
+  curl \
+    -X PUT 'http://localhost:7700/indexes/movie_ratings/settings/filterable-attributes' \
+    -H 'Content-Type: application/json' \
+    --data-binary '[
+      "genres",
+      "director"
+    ]'
