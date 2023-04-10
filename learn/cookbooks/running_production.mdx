@@ -8,26 +8,6 @@ Running a Meilisearch instance for testing purposes is incredibly easy and can b
 
 Using Meilisearch on your own machine for your weekend project is fun, let's agree on that. However, you may want to go live and deploy a project in production, to take it to the next level. What steps and details would you need to **deploy Meilisearch in production** and ensure it is **safe and ready to use**?
 
-## Content of this article
-
-[Step 1: Install Meilisearch](/learn/cookbooks/running_production#step-1-install-meilisearch)
-
-[Step 2: Create system user](/learn/cookbooks/running_production#step-2-create-system-user)
-
-[Step 3: Create a configuration file](/learn/cookbooks/running_production#step-3-create-a-configuration-file)
-
-[Step 4: Run Meilisearch as a service](/learn/cookbooks/running_production#step-4-run-meilisearch-as-a-service)
-
-+ [4.1. Create a service file](/learn/cookbooks/running_production#_4-1-create-a-service-file)
-+ [4.2. Enable and start service](/learn/cookbooks/running_production#_4-2-enable-and-start-service)
-
-[Step 5: Secure and finish your setup](/learn/cookbooks/running_production#step-5-secure-and-finish-your-setup)
-
-+ [5.1. Creating a reverse proxy with Nginx](/learn/cookbooks/running_production#_5-1-creating-a-reverse-proxy-with-nginx)
-+ [5.2. Set up SSL/TLS for your Meilisearch](/learn/cookbooks/running_production#_5-2-set-up-ssl-tls-for-your-meilisearch)
-
-[Conclusion](/learn/cookbooks/running_production#conclusion)
-
 ## Get your Meilisearch ready for production
 
 For this tutorial, we will be using a Debian 10 server, running on DigitalOcean. You can easily try it on your own, with plans starting at $5/month. And if you want some credits to start running your Meilisearch and are not already registered on DigitalOcean, you can get $100 for free using [this referral link](https://m.do.co/c/7c67bd97e101).
