@@ -1,11 +1,5 @@
 # Integrate a relevant search bar to your documentation
 
-You might have noticed the search bar in this documentation.
-
-![Meilisearch docs search bar updating results for 'faq'](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/tuto-searchbar-for-docs/vuepress-searchbar-demo.gif)
-
-And you are probably wanting the same for your own documentation!
-
 This tutorial will guide you through the steps of building a relevant and powerful search bar for your documentation 🚀
 
 1. [Run a Meilisearch Instance](#run-a-meilisearch-instance)
@@ -33,7 +27,6 @@ The host URL and the API key you will provide in the next steps correspond to th
 In the example above, the host URL is `http://localhost:7700` and the API key is `MASTER_KEY`.
 
 </Capsule>
-
 
 ## Scrape your content
 
@@ -85,7 +78,7 @@ The `docs-content` class is the main container of the textual content in this ex
 All searchable `lvl` elements outside this main documentation container (for instance, in a sidebar) must be `global` selectors. They will be globally picked up and injected to every document built from your page.
 
 If you use VuePress for your documentation, you can check out the [configuration file](https://github.com/meilisearch/documentation/blob/main/.vuepress/docs-scraper/docs-scraper.config.json) we use in production.
-In our case, the main container is `theme-default-content` and the selector the titles and subtitles are `h1`, `h2`...
+In our case, the main container is `theme-default-content` and the selector titles and subtitles are `h1`, `h2`...
 
 <Capsule intent="tip">
 
@@ -130,8 +123,6 @@ If your documentation is not a VuePress application, you can directly go to [thi
 ### For VuePress documentation sites
 
 If you use VuePress for your documentation, we provide a [Vuepress plugin](https://github.com/meilisearch/vuepress-plugin-meilisearch). This plugin is used in production in the Meilisearch documentation.
-
-![Search bar demo for 'synon' using the Vuepress plugin](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/tuto-searchbar-for-docs/vuepress-plugin-example.png)
 
 In your VuePress project:
 
@@ -230,5 +221,5 @@ For more concrete examples, you can check out this [basic HTML file](https://git
 
 ## What's next?
 
-At this point you should have a working search engine on your website, congrats! 🎉
+At this point, you should have a working search engine on your website, congrats! 🎉
 You can check [this tutorial](/learn/cookbooks/running_production) if you now want to run Meilisearch in production!
