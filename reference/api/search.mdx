@@ -261,8 +261,8 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 
 ### Query (q)
 
-**Parameter**: `q`
-**Expected value**: Any string
+**Parameter**: `q`<br />
+**Expected value**: Any string<br />
 **Default value**: `null`
 
 Sets the search terms.
@@ -329,8 +329,8 @@ You can combine phrase search and normal queries in a single search request. In 
 
 ### Offset
 
-**Parameter**: `offset`
-**Expected value**: Any positive integer
+**Parameter**: `offset`<br />
+**Expected value**: Any positive integer<br />
 **Default value**: `0`
 
 Sets the starting point in the search results, effectively skipping over a given number of documents.
@@ -351,8 +351,8 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 
 ### Limit
 
-**Parameter**: `limit`
-**Expected value**: Any positive integer
+**Parameter**: `limit`<br />
+**Expected value**: Any positive integer<br />
 **Default value**: `20`
 
 Sets the maximum number of documents returned by a single query.
@@ -371,8 +371,8 @@ If you want your query to return only **two** documents, set `limit` to `2`:
 
 ### Number of results per page
 
-**Parameter**: `hitsPerPage`
-**Expected value**: Any positive integer
+**Parameter**: `hitsPerPage`<br />
+**Expected value**: Any positive integer<br />
 **Default value**: `20`
 
 Sets the maximum number of documents returned for a single query. The value configured with this parameter dictates the number of total pages: if Meilisearch finds a total of `20` matches for a query and your `hitsPerPage` is set to `5`, `totalPages` is `4`.
@@ -399,8 +399,8 @@ The following example returns the first 15 results for a query:
 
 ### Page
 
-**Parameter**: `page`
-**Expected value**: Any positive integer
+**Parameter**: `page`<br />
+**Expected value**: Any positive integer<br />
 **Default value**: `1`
 
 Requests a specific results page. Pages are calculated using the `hitsPerPage` search parameter.
@@ -427,8 +427,8 @@ The following example returns the second page of search results:
 
 ### Filter
 
-**Parameter**: `filter`
-**Expected value**: A filter expression written as a string or an array of strings
+**Parameter**: `filter`<br />
+**Expected value**: A filter expression written as a string or an array of strings<br />
 **Default value**: `[]`
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
@@ -493,8 +493,8 @@ If any parameters are invalid or missing, Meilisearch returns an [`invalid_searc
 
 ### Facets
 
-**Parameter**: `facets`
-**Expected value**: An array of `attribute`s or `["*"]`
+**Parameter**: `facets`<br />
+**Expected value**: An array of `attribute`s or `["*"]`<br />
 **Default value**: `null`
 
 Returns the number of documents matching the current search query for each given facet. This parameter can take two values:
@@ -556,8 +556,8 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
 
 ### Attributes to retrieve
 
-**Parameter**: `attributesToRetrieve`
-**Expected value**: An array of `attribute`s or `["*"]`
+**Parameter**: `attributesToRetrieve`<br />
+**Expected value**: An array of `attribute`s or `["*"]`<br />
 **Default value**: `["*"]`
 
 Configures which attributes will be retrieved in the returned documents.
@@ -576,8 +576,8 @@ To get only the `overview` and `title` fields, set `attributesToRetrieve` to `["
 
 ### Attributes to crop
 
-**Parameter**: `attributesToCrop`
-**Expected value**: An array of attributes or `["*"]`
+**Parameter**: `attributesToCrop`<br />
+**Expected value**: An array of attributes or `["*"]`<br />
 **Default value**: `null`
 
 Crops the selected fields in the returned results to the length indicated by the [`cropLength`](#crop-length) parameter. When `attributesToCrop` is set, each returned document contains an extra field called `_formatted`. This object contains the cropped version of the selected attributes.
@@ -627,8 +627,8 @@ You will get the following response with the **cropped text in the `_formatted` 
 
 ### Crop length
 
-**Parameter**: `cropLength`
-**Expected value**: A positive integer
+**Parameter**: `cropLength`<br />
+**Expected value**: A positive integer<br />
 **Default value**: `10`
 
 Configures the total number of words to appear in the cropped value when using [`attributesToCrop`](#attributes-to-crop). If `attributesToCrop` is not configured, `cropLength` has no effect on the returned results.
@@ -641,8 +641,8 @@ If `attributesToCrop` uses the `attributeName:number` syntax to specify a custom
 
 ### Crop marker
 
-**Parameter**: `cropMarker`
-**Expected value**: A string
+**Parameter**: `cropMarker`<br />
+**Expected value**: A string<br />
 **Default value**: `"…"`
 
 Sets a string to mark crop boundaries when using the [`attributesToCrop`](#attributes-to-crop) parameter. The crop marker will be inserted on both sides of the crop. If `attributesToCrop` is not configured, `cropMarker` has no effect on the returned search results.
@@ -676,8 +676,8 @@ When searching for `shifu`, you can use `cropMarker` to change the default `…`
 
 ### Attributes to highlight
 
-**Parameter**: `attributesToHighlight`
-**Expected value**: An array of attributes or `["*"]`
+**Parameter**: `attributesToHighlight`<br />
+**Expected value**: An array of attributes or `["*"]`<br />
 **Default value**: `null`
 
 Highlights matching query terms in the specified attributes.  `attributesToHighlight` only works on values of the following types: string, number, array, object.
@@ -723,8 +723,8 @@ The highlighted version of the text would then be found in the `_formatted` obje
 
 ### Highlight tags
 
-**Parameters**: `highlightPreTag` and `highlightPostTag`
-**Expected value**: A string
+**Parameters**: `highlightPreTag` and `highlightPostTag`<br />
+**Expected value**: A string<br />
 **Default value**: `"<em>"` and `"</em>"` respectively
 
 `highlightPreTag` and `highlightPostTag` configure, respectively, the strings to be inserted before and after a word highlighted by `attributesToHighlight`. If `attributesToHighlight` has not been configured, `highlightPreTag` and `highlightPostTag` have no effect on the returned search results.
@@ -764,8 +764,8 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 
 ### Show matches position
 
-**Parameter**: `showMatchesPosition`
-**Expected value**: `true` or `false`
+**Parameter**: `showMatchesPosition`<br />
+**Expected value**: `true` or `false`<br />
 **Default value**: `false`
 
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
@@ -820,8 +820,8 @@ You would get the following response with **information about the matches in the
 
 ### Sort
 
-**Parameter**: `sort`
-**Expected value**: A list of attributes written as an array or as a comma-separated string
+**Parameter**: `sort`<br />
+**Expected value**: A list of attributes written as an array or as a comma-separated string<br />
 **Default value**: `null`
 
 Sorts search results at query time according to the specified attributes and indicated order.
@@ -874,8 +874,8 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 
 ### Matching strategy
 
-**Parameter**: `matchingStrategy`
-**Expected value**: `last` or `all`
+**Parameter**: `matchingStrategy`<br />
+**Expected value**: `last` or `all`<br />
 **Default value**: `last`
 
 Defines the strategy used to match query terms in documents.
