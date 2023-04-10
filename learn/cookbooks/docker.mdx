@@ -78,7 +78,7 @@ The example above uses `$(pwd)/meili_data`, which is a directory in the host mac
 
 ### Generating dumps and updating Meilisearch
 
-To export a dump, [use the create dump endpoint as described in our dumps guide](/learn/advanced/dumps). Once the task is complete, you can access the dump file in `/meili_data/dumps` inside the volume you passed with `-v`.
+To export a dump, [use the create dump endpoint as described in our dumps guide](/learn/data_backup/dumps). Once the task is complete, you can access the dump file in `/meili_data/dumps` inside the volume you passed with `-v`.
 
 To import a dump, use Meilisearch's `--import-dump` command-line option and specify the path to the dump file. Make sure the path points to a volume reachable by Docker:
 
@@ -122,4 +122,4 @@ docker run -it --rm \
   meilisearch --import-snapshot /meili_data/snapshots/data.ms.snapshot
 ```
 
-Use snapshots for backup or when migrating data between two Meilisearch instances of the same version. [Read more about snapshots in our guide.](/learn/advanced/snapshots)
+Use snapshots for backup or when migrating data between two Meilisearch instances of the same version. [Read more about snapshots in our guide.](/learn/data_backup/snapshots)

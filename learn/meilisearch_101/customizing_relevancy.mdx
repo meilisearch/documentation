@@ -41,7 +41,7 @@ If you only want to display the `title`, `poster`, and `overview` for the `movie
 
 <CodeSamples id= "getting_started_update_displayed_attributes" />
 
-You can read more about displayed attributes in our [dedicated guide](/learn/configuration/displayed_searchable_attributes#displayed-fields).
+You can read more about displayed attributes in our [dedicated guide](/learn/index_settings/displayed_searchable_attributes#displayed-fields).
 
 ## Distinct attribute
 
@@ -79,7 +79,7 @@ Suppose you have an e-commerce dataset with an index on jackets. There are sever
 
 If you searched for `lee leather jacket` with the default settings, you would get all three documents. But if you set `product_id` as the `distinctAttribute`, Meilisearch will only return one of those jackets.
 
-You can read more about the distinct attribute in our [dedicated guide](/learn/configuration/distinct).
+You can read more about the distinct attribute in our [dedicated guide](/learn/index_settings/distinct).
 
 ## Searchable attributes
 
@@ -128,7 +128,7 @@ The `synonyms` array lets you associate certain words in your dataset, telling M
 
 This will set `winnie` and `piglet` as synonyms. Searching for either won't always return the same results due to factors like typos and splitting the query.
 
-You can read more about it in our [dedicated guide](/learn/configuration/synonyms).
+You can read more about it in our [dedicated guide](/learn/index_settings/synonyms).
 
 ## Typo tolerance
 
@@ -147,7 +147,7 @@ Meilisearch accepts one typo for query terms containing `5` or more characters b
 
 The above code sample sets the minimum word size for one typo to `4` characters. If you search for `swaj` now, you should get some results.
 
-You can read more about typo tolerance in our [dedicated guide](/learn/configuration/typo_tolerance).
+You can read more about typo tolerance in our [dedicated guide](/learn/index_settings/typo_tolerance).
 
 ## Faceting
 
