@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 You can configure Meilisearch at launch with **command-line options**, **environment variables**, or a **configuration file**.
 
-These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/learn/configuration/settings).
+These startup options affect your entire Meilisearch instance, not just a single index. For settings that affect search within a single index, see [index settings](/learn/index_settings/settings).
 
 ## Command-line options and flags
 
@@ -345,7 +345,7 @@ For more control over snapshot scheduling, pass an integer representing the inte
 When using the configuration file, it is also possible to explicitly pass a boolean value to `schedule_snapshot`. Meilisearch takes a new snapshot every 24 hours when `schedule_snapshot=true`, and takes no snapshots when `schedule_snapshot=false`.
 </Capsule>
 
-[Learn more about snapshots](/learn/advanced/snapshots).
+[Learn more about snapshots](/learn/data_backup/snapshots).
 
 ### Snapshot destination
 

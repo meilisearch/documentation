@@ -22,11 +22,11 @@ A document is an object composed of one or more fields. Each field consists of a
 
 A field is a set of two data items linked together: an attribute and a value. Documents are made up of fields.
 
-An attribute functions a bit like a variable in most programming languages. It is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/advanced/known_limitations#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
+An attribute functions a bit like a variable in most programming languages. It is a name that allows you to store, access, and describe some data. That data is the attribute's value. In the case of strings, a value **[can contain at most 65535 positions](/learn/inner_workings/known_limitations#maximum-number-of-words-per-attribute)**. Words exceeding the 65535 position limit will be ignored.
 
 Every field has a data type dictated by its value. Every value must be a valid [JSON data type](https://www.w3schools.com/js/js_json_datatypes.asp).
 
-If a field contains an object, Meilisearch flattens it during indexing using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/advanced/datatypes#objects).
+If a field contains an object, Meilisearch flattens it during indexing using dot notation and brings the object's keys and values to the root level of the document itself. This flattened object is only an intermediary representation—you will get the original structure upon search. You can read more about this in our [dedicated guide](/learn/inner_workings/datatypes#objects).
 
 With [ranking rules](/learn/core_concepts/relevancy#ranking-rules), you can decide which fields are more relevant than others. For example, you may decide recent movies should be more relevant than older ones. You can also designate certain fields as displayed or searchable.
 
@@ -40,9 +40,9 @@ You can modify this behavior using the [update settings endpoint](/reference/api
 - Displayed but not searchable
 - Neither displayed nor searchable
 
-In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/configuration/displayed_searchable_attributes#data-storing) in the document.
+In the latter case, the field will be completely ignored during search. However, it will still be [stored](/learn/index_settings/displayed_searchable_attributes#data-storing) in the document.
 
-To learn more, refer to our [displayed and searchable attributes guide](/learn/configuration/displayed_searchable_attributes).
+To learn more, refer to our [displayed and searchable attributes guide](/learn/index_settings/displayed_searchable_attributes).
 
 ## Primary field
 
