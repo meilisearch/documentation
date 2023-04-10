@@ -181,7 +181,7 @@ Some Meilisearch parameters require index settings to be configured beforehand. 
 The below table compares Algolia's **API parameters** with the equivalent Meilisearch **setting** or **search parameter**.
 
 | Algolia                             | Meilisearch                                                                      |
-| :---------------------------------- | -------------------------------------------------------------------------------- |
+| :---------------------------------- | :------------------------------------------------------------------------------- |
 | `query`                             | `q`                                                                              |
 | `attributesToRetrieve`              | `attributesToRetrieve`                                                           |
 | `filters`                           | `filter`                                                                         |
@@ -215,7 +215,7 @@ The below table compares Algolia's **API parameters** with the equivalent Meilis
 This section compares Algolia and Meilisearch's respective API methods, using JavaScript for reference.
 
 | Method                | Algolia                                                                             | Meilisearch                                                                                                            |
-| --------------------- | ----------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| :-------------------- | :---------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
 | Index Instantiation   | `client.initIndex()`<br />Here, client is an Algolia instance.                      | `client.index()`<br />Here, client is a Meilisearch instance.                                                          |
 | Create Index          | Algolia automatically creates an index the first time you add a record or settings. | The same applies to Meilisearch, but users can also create an index explicitly: `client.createIndex(string indexName)` |
 | Get All Indexes       | `client.listIndices()`                                                              | `client.getIndexes()`                                                                                                  |
