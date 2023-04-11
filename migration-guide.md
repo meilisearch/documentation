@@ -64,7 +64,7 @@ To add new code samples:
 
 The build process does not currently support static assets with relative paths. Images and sample datasets must be linked via an external service. 
 
-At the moment we're adding hard absolute links to the files on github:
+At the moment, we're adding hard absolute links to the files on GitHub:
 
 ```markdown
 \!\[Image description\]\(https://raw.githubusercontent.com/meilisearch/documentation/[branch_name]/assets/images/[guide_name]/diagram.png\)
@@ -76,9 +76,9 @@ There's a GitHub action set up to trigger the scraping using a Vercel webhook. W
 
 ## Tests and linting
 
-- broken links checker: disabled, will be complex to implement
-- vale: disabled, struggles with `.mdx` files
-- markdown lint: disabled, must be replaced with `eslint` and `eslint-plugin-mdx`
+- Broken links checker: disabled, will be complex to implement
+- Vale: disabled, struggles with `.mdx` files
+- markdownlint: disabled, must be replaced with `eslint` and `eslint-plugin-mdx`
 
 ## Components
 
@@ -95,7 +95,7 @@ Objects can have the following fields:
 
 #### Usage
 
-`<Featured>` should be standalone and not enclose regular markdown/HTML content:
+`<Featured>` should be standalone and not enclose regular Markdown/HTML content:
 
 ```jsx
 <Featured items=[{…}] />
@@ -114,7 +114,7 @@ List of currently accepted `icon` strings:
 - `globe`
 - `user`
 
-[Basement has created other all icons](https://drive.google.com/drive/folders/10Fvz6d6jPBhXYGhqFRR2G5GQQK43Nt2O), but these are not available for use in the website.
+[Basement has created other icons](https://drive.google.com/drive/folders/10Fvz6d6jPBhXYGhqFRR2G5GQQK43Nt2O), but these are not available for use in the website.
 
 #### `size`
 
@@ -126,7 +126,7 @@ Default: `1`
 
 Default: `null` (no content)
 
-Accepts any string value. Strings are not parsed as markdown. Any formatting must be done with HTML tags.
+Accepts any string value. Strings are not parsed as Markdown. Any formatting must be done with HTML tags.
 
 #### `link`
 
@@ -160,13 +160,13 @@ Accepted `intent` values:
 
 ## MDX basics
 
-MDX is a mix of markdown and React components. All markdown files are valid MDX. All MDX is valid markdown, but content within React components will not display as expected.
+MDX is a mix of Markdown and React components. All Markdown files are valid MDX. All MDX is valid Markdown, but content within React components will not display as expected.
 
 ### Components
 
 React components are similar to HTML tags, but start with a capital letter: `<Featured>`.
 
-Components can contain HTML elements, other components, and markdown:
+Components can contain HTML elements, other components, and Markdown:
 
 ```jsx
 <Component>
@@ -180,7 +180,7 @@ Components can contain HTML elements, other components, and markdown:
 
 ### Props
 
-Components can be configured with props: `<Component propName="propValue" />`. **Prop strings cannot contain markdown.**
+Components can be configured with props: `<Component propName="propValue" />`. **Prop strings cannot contain Markdown.**
 
 This will **not** work:
 
