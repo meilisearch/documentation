@@ -20,7 +20,7 @@ Search for documents matching a specific query in the given index.
 This is the preferred endpoint to perform search when an API key is required, as it allows for [preflight requests](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) to be cached. Caching preflight requests **considerably improves search speed**.
 
 <Capsule intent="note">
-By default, [this endpoint returns a maximum of 1000 results](/learn/inner_workings/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents) instead.
+By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents) instead.
 </Capsule>
 
 ### Path parameters
@@ -136,7 +136,7 @@ This endpoint only accepts [string filter expressions](/learn/advanced/filtering
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post-route) route instead.
 
 <Capsule intent="note">
-By default, [this endpoint returns a maximum of 1000 results](/learn/inner_workings/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents) instead.
+By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents) instead.
 </Capsule>
 
 ### Path parameters
@@ -268,7 +268,7 @@ This is not necessary when using the `POST` route or one of our [SDKs](/learn/wh
 Sets the search terms.
 
 <Capsule intent="warning">
-Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/inner_workings/known_limitations#maximum-number-of-query-words).
+Meilisearch only considers the first ten words of any given search query. This is necessary in order to deliver a [fast search-as-you-type experience](/learn/advanced/known_limitations#maximum-number-of-query-words).
 </Capsule>
 
 #### Example
@@ -319,7 +319,7 @@ Placeholder search is particularly useful when building a [faceted search interf
 
 If you enclose search terms in double quotes (`"`), Meilisearch will only return documents containing those terms in the order they were given. This is called a **phrase search**.
 
-Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/inner_workings/datatypes). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
+Phrase searches are case-insensitive and ignore [soft separators such as `-`, `,`, and `:`](/learn/advanced/datatypes). Using a hard separator within a phrase search effectively splits it into multiple separate phrase searches: `"Octavia.Butler"` will return the same results as `"Octavia" "Butler"`.
 
 You can combine phrase search and normal queries in a single search request. In this case, Meilisearch will first fetch all documents with exact matches to the given phrase(s), and [then proceed with its default behavior](/learn/core_concepts/relevancy).
 
@@ -693,7 +693,7 @@ By default highlighted elements are enclosed in `<em>` and `</em>` tags. You may
 </Capsule>
 
 <Capsule intent="warning">
-`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/index_settings/displayed_searchable_attributes#searchable-fields).
+`attributesToHighlight` will highlight matches within all attributes added to the `attributesToHighlight` array, even if those attributes are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 #### Example
@@ -771,7 +771,7 @@ Though it is not necessary to use `highlightPreTag` and `highlightPostTag` in co
 Adds a `_matchesPosition` object to the search response that contains the location of each occurrence of queried terms across all fields. This is useful when you need more control than offered by our [built-in highlighting](#attributes-to-highlight). `showMatchesPosition` only works for strings, numbers, and arrays of strings and numbers.
 
 <Capsule intent="warning">
-`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/index_settings/displayed_searchable_attributes#searchable-fields).
+`showMatchesPosition` returns the location of matched query terms within all attributes, even attributes that are not set as [`searchableAttributes`](/learn/configuration/displayed_searchable_attributes#searchable-fields).
 </Capsule>
 
 The beginning of a matching term within a field is indicated by `start`, and its length by `length`.
