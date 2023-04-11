@@ -63,7 +63,7 @@
 	},
 	{
 			"title": "Meilisearch 101",
-			"slug": "meilisearch_101",
+			"slug": "getting_started",
 			"routes": [
 					{
 							"source": "learn/meilisearch_101/filtering_and_sorting.mdx",
@@ -121,7 +121,7 @@
   },
 	{
 			"title": "Index settings",
-			"slug": "index_settings",
+			"slug": "configuration",
 			"routes": [
 					{
 							"source": "learn/index_settings/overview.mdx",
@@ -235,7 +235,7 @@
 	},
 	{
 			"title": "Data backup",
-			"slug": "data_backup",
+			"slug": "advanced",
 			"routes": [
 					{
 							"source": "learn/data_backup/snapshots_vs_dumps.mdx",
@@ -256,7 +256,7 @@
 	},
 	{
 			"title": "Inner workings",
-			"slug": "inner_workings",
+			"slug": "advanced",
 			"routes": [
 					{
 							"source": "learn/inner_workings/concat.mdx",
@@ -328,7 +328,7 @@
 	},
 	{
 			"title": "Deployment",
-			"slug": "deployment",
+			"slug": "cookbooks",
 			"routes": [
 					{
 							"source": "learn/deployment/aws.mdx",
