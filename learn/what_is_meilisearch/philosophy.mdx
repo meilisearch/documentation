@@ -28,6 +28,6 @@ Meilisearch is designed for front-facing search, search for users of your site, 
 
 ### Anti-pattern
 
-Meilisearch should **not be your main data store**. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/index_settings/displayed_searchable_attributes#searchable-fields) to improve relevancy and response time.
+Meilisearch should **not be your main data store**. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/configuration/displayed_searchable_attributes#searchable-fields) to improve relevancy and response time.
 
 Meilisearch queries should be sent directly from the front-end. The more proxies there are between Meilisearch and the end-user, the slower the queries and search experience will be.

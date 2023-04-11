@@ -4,7 +4,7 @@ sidebarDepth: 3
 
 # Update to the latest Meilisearch version
 
-Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/data_backup/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
+Currently, Meilisearch databases are only compatible with the version of Meilisearch used to create them. The following guide will walk you through using a [dump](/learn/advanced/dumps) to migrate an existing database from an older version of Meilisearch to the most recent one.
 
 If you're updating your Meilisearch instance on cloud platforms like DigitalOcean, AWS, or GCP, ensure that you can connect to your cloud instance via SSH. Depending on the user you are connecting with (root, admin, etc.), you may need to prefix some commands with `sudo`.
 
@@ -66,7 +66,7 @@ If your [`pkgVersion`](/reference/api/version#version-object) is 0.21 or above, 
 If your dump was created in Meilisearch v0.21 or above, [skip this step](#create-the-dump).
 </Capsule>
 
-When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/index_settings/displayed_searchable_attributes#displayed-fields) in order to be saved in the dump.
+When creating dumps using Meilisearch versions below v0.21, all fields must be [displayed](/learn/configuration/displayed_searchable_attributes#displayed-fields) in order to be saved in the dump.
 
 Start by verifying that all attributes are included in the displayed attributes list:
 

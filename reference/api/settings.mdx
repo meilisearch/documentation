@@ -202,7 +202,7 @@ The attributes added to the `displayedAttributes` list appear in search results.
 
 By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
-[To learn more about displayed attributes, refer to our dedicated guide.](/learn/index_settings/displayed_searchable_attributes#displayed-fields)
+[To learn more about displayed attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#displayed-fields)
 
 ### Get displayed attributes
 
@@ -313,7 +313,7 @@ The distinct attribute is a field whose value will always be unique in the retur
 Updating distinct attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/index_settings/distinct)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
 
 ### Get distinct attribute
 
@@ -363,7 +363,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/index_settings/distinct)
+[To learn more about the distinct attribute, refer to our dedicated guide.](/learn/configuration/distinct)
 
 #### Example
 
@@ -902,7 +902,7 @@ By default, the `searchableAttributes` array is equal to all fields in your data
 Updating searchable attributes will re-index all documents in the index, which can take some time. We recommend updating your index settings first and then adding documents as this reduces RAM consumption.
 </Capsule>
 
-[To learn more about searchable attributes, refer to our dedicated guide.](/learn/index_settings/displayed_searchable_attributes#searchable-fields)
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#searchable-fields)
 
 ### Get searchable attributes
 
@@ -961,7 +961,7 @@ If an attribute contains an object, you can use dot notation to set one or more 
 If the field does not exist, no error will be thrown.
 </Capsule>
 
-[To learn more about searchable attributes, refer to our dedicated guide.](/learn/index_settings/displayed_searchable_attributes#searchable-fields)
+[To learn more about searchable attributes, refer to our dedicated guide.](/learn/configuration/displayed_searchable_attributes#searchable-fields)
 
 #### Example
 
@@ -1240,7 +1240,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 The `synonyms` object contains words and their respective synonyms. A synonym in Meilisearch is considered equal to its associated word for the purposes of calculating search results.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/index_settings/synonyms)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
 
 ### Get synonyms
 
@@ -1280,7 +1280,7 @@ Get the list of synonyms of an index.
 
 <RouteHighlighter method="PUT" route="/indexes/{index_uid}/settings/synonyms"/>
 
-Update the list of synonyms of an index. Synonyms are [normalized](/learn/index_settings/synonyms#normalization).
+Update the list of synonyms of an index. Synonyms are [normalized](/learn/configuration/synonyms#normalization).
 
 #### Path parameters
 
@@ -1299,7 +1299,7 @@ Update the list of synonyms of an index. Synonyms are [normalized](/learn/index_
 
 An object that contains all synonyms and their associated words. Add the associated words in an array to set a synonym for a word.
 
-[To learn more about synonyms, refer to our dedicated guide.](/learn/index_settings/synonyms)
+[To learn more about synonyms, refer to our dedicated guide.](/learn/configuration/synonyms)
 
 #### Example
 
@@ -1353,7 +1353,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 Typo tolerance helps users find relevant results even when their search queries contain spelling mistakes or typos. This setting allows you to configure the minimum word size for typos and disable typo tolerance for specific words or attributes.
 
-[To learn more about typo tolerance, refer to our dedicated guide.](/learn/index_settings/typo_tolerance)
+[To learn more about typo tolerance, refer to our dedicated guide.](/learn/configuration/typo_tolerance)
 
 ### Typo tolerance object
 
