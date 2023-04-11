@@ -49,6 +49,24 @@ Configures links at the bottom of the lefthand sidebar menu (e.g. `FAQ`, `Back t
 
 Not to be confused with the big site footer, which cannot be changed from the docs repo.
 
+## Links
+
+The docs site is a directory within `meilisearch.com`: `meilisearch.com/docs`. This means the website root, as far as we're concerned, is effectively `/docs` instead of `/`.
+
+Markdown links (`[link text](url)`) are transformed automatically during build and must reference the root of the docs repository:
+
+```markdown
+A paragraph with a link to the [search API reference](/reference/api/search).
+```
+
+Links using HTML/JS/JSX, such as those inside props, are not transformed automatically and must be manually prefixed with `/docs`:
+
+```jsx
+<Component link="/docs/reference/api/search" />
+```
+
+Internal links should never include an extension such as `.mdx`, `.md`, or `.html`.
+
 ## Code samples
 
 Work as in the previous site version.
@@ -134,7 +152,7 @@ Default: `null`
 
 Accepts a URL, either relative or absolute. If `link` is specified, the link will wrap the whole featured item.
 
-### `<Capsule intent="string"></Capsule>`
+### `<Capsule intent="string"></Capsule> title="string"`
 
 Creates a callout box. Colour depends on `intent`.
 
@@ -144,6 +162,10 @@ Accepted `intent` values:
 - `warning` (red)
 - `danger` (yellow)
 - `tip` (blue)
+
+`title` accepts any string value. When supplied, replaces the `intent` title (e.g. `# Note`).
+
+If `title` requires formatting, wrap it in an empty React fragment and use raw HTML tags: `title={<>Title <code>varName</code></>}`.
 
 #### Usage
 
@@ -162,7 +184,7 @@ Accepted `intent` values:
 
 MDX is a mix of Markdown and React components. All Markdown files are valid MDX. All MDX is valid Markdown, but content within React components will not display as expected.
 
-### Components
+### Using `<Components >/`
 
 React components are similar to HTML tags, but start with a capital letter: `<Featured>`.
 
@@ -178,7 +200,7 @@ Components can contain HTML elements, other components, and Markdown:
 </Component>
 ```
 
-### Props
+### Component props
 
 Components can be configured with props: `<Component propName="propValue" />`. **Prop strings cannot contain Markdown.**
 
@@ -186,4 +208,10 @@ This will **not** work:
 
 ```jsx
 <Component propName="_italics_" />
+```
+
+To format strings inside props, pass an empty React fragment (e.g. `<>`) and format the text withing with raw HTML tags:
+
+```jsx
+<Component propName={<>Text in <em>italics</em></>} />
 ```
