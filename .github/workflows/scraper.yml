@@ -1,10 +1,9 @@
-name: Deploy to staging & run scraper
+name: Deploy to main & run scraper
 on:
   push:
     branches:
       - main
       - new-docs-content-migration
-      - joaco/action-update
 
 jobs:
   trigger-deploy:
