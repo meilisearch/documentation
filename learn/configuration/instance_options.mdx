@@ -135,12 +135,9 @@ Specifying the `config_file_path` option within the configuration file will thro
 
 ### Configuration file path
 
-**Environment variable**: `MEILI_CONFIG_FILE_PATH`
-
-**CLI option**: `--config-file-path`
-
-**Default**: `./config.toml`
-
+**Environment variable**: `MEILI_CONFIG_FILE_PATH`<br/>
+**CLI option**: `--config-file-path`<br/>
+**Default**: `./config.toml`<br/>
 **Expected value**: a filepath
 
 Designates the location of the configuration file to load at launch.
@@ -151,24 +148,19 @@ Specifying this option in the configuration file itself will throw an error (ass
 
 ### Database path
 
-**Environment variable**: `MEILI_DB_PATH`
-
-**CLI option**: `--db-path`
-
-**Default value**: `"data.ms/"`
-
+**Environment variable**: `MEILI_DB_PATH`<br />
+**CLI option**: `--db-path`<br />
+**Default value**: `"data.ms/"`<br />
+**Expected value**: a filepath
 **Expected value**: a filepath
 
 Designates the location where database files will be created and retrieved.
 
 ### Environment
 
-**Environment variable**: `MEILI_ENV`
-
-**CLI option**: `--env`
-
-**Default value**: `development`
-
+**Environment variable**: `MEILI_ENV`<br />
+**CLI option**: `--env`<br />
+**Default value**: `development`<br />
 **Expected value**: `production` or `development`
 
 
@@ -190,25 +182,18 @@ When the server environment is set to `development`, providing a master key is n
 
 ### HTTP address & port binding
 
-**Environment variable**: `MEILI_HTTP_ADDR`
-
-**CLI option**: `--http-addr`
-
-**Default value**: `"localhost:7700"`
-
+**Environment variable**: `MEILI_HTTP_ADDR`<br />
+**CLI option**: `--http-addr`<br />
+**Default value**: `"localhost:7700"`<br />
 **Expected value**: an HTTP address and port
 
 
 Sets the HTTP address and port Meilisearch will use.
 
 ### Master key
-
-**Environment variable**: `MEILI_MASTER_KEY`
-
-**CLI option**: `--master-key`
-
-**Default value**: `None`
-
+**Environment variable**: `MEILI_MASTER_KEY`<br />
+**CLI option**: `--master-key`<br />
+**Default value**: `None`<br />
 **Expected value**: a UTF-8 string of at least 16 bytes
 
 Sets the instance's master key, automatically protecting all routes except [`GET /health`](/reference/api/health). This means you will need a valid API key to access all other endpoints.
@@ -227,8 +212,7 @@ If you do not supply a master key in `production` or `development` environments 
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_NO_ANALYTICS`
-
+**Environment variable**: `MEILI_NO_ANALYTICS`<br />
 **CLI option**: `--no-analytics`
 
 Deactivates Meilisearch's built-in telemetry when provided.
@@ -239,12 +223,9 @@ Meilisearch automatically collects data from all instances that do not opt out u
 
 ### Dump directory
 
-**Environment variable**: `MEILI_DUMP_DIR`
-
-**CLI option**: `--dump-dir`
-
-**Default value**: `dumps/`
-
+**Environment variable**: `MEILI_DUMP_DIR`<br />
+**CLI option**: `--dump-dir`<br />
+**Default value**: `dumps/`<br />
 **Expected value**: a filepath pointing to a valid directory
 
 Sets the directory where Meilisearch will create dump files.
@@ -253,12 +234,9 @@ Sets the directory where Meilisearch will create dump files.
 
 ### Import dump
 
-**Environment variable**: `MEILI_IMPORT_DUMP`
-
-**CLI option**: `--import-dump`
-
-**Default value**: none
-
+**Environment variable**: `MEILI_IMPORT_DUMP`<br />
+**CLI option**: `--import-dump`<br />
+**Default value**: none<br />
 **Expected value**: a filepath pointing to a `.dump` file
 
 Imports the dump file located at the specified path. Path must point to a `.dump` file. If a database already exists, Meilisearch will throw an error and abort launch.
@@ -271,8 +249,7 @@ Meilisearch will only launch once the dump data has been fully indexed. The time
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_IGNORE_MISSING_DUMP`
-
+**Environment variable**: `MEILI_IGNORE_MISSING_DUMP`<br />
 **CLI option**: `--ignore-missing-dump`
 
 Prevents Meilisearch from throwing an error when `--import-dump` does not point to a valid dump file. Instead, Meilisearch will start normally without importing any dump.
@@ -285,8 +262,7 @@ This option will trigger an error if `--import-dump` is not defined.
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_IGNORE_DUMP_IF_DB_EXISTS`
-
+**Environment variable**: `MEILI_IGNORE_DUMP_IF_DB_EXISTS`<br />
 **CLI option**: `--ignore-dump-if-db-exists`
 
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-dump`. Instead, the dump will be ignored and Meilisearch will launch using the existing database.
@@ -295,12 +271,9 @@ This option will trigger an error if `--import-dump` is not defined.
 
 ### Log level
 
-**Environment variable**: `MEILI_LOG_LEVEL`
-
-**CLI option**: `--log-level`
-
-**Default value**: `'INFO'`
-
+**Environment variable**: `MEILI_LOG_LEVEL`<br />
+**CLI option**: `--log-level`<br />
+**Default value**: `'INFO'`<br />
 **Expected value**: one of `ERROR`, `WARN`, `INFO`, `DEBUG`, `TRACE`, OR `OFF`
 
 Defines how much detail should be present in Meilisearch's logs.
@@ -316,12 +289,9 @@ Meilisearch currently supports five log levels, listed in order of increasing ve
 
 ### Max indexing memory
 
-**Environment variable**: `MEILI_MAX_INDEXING_MEMORY`
-
-**CLI option**: `--max-indexing-memory`
-
-**Default value**: 2/3 of the available RAM
-
+**Environment variable**: `MEILI_MAX_INDEXING_MEMORY`<br />
+**CLI option**: `--max-indexing-memory`<br />
+**Default value**: 2/3 of the available RAM<br />
 **Expected value**: an integer (`104857600`) or a human readable size (`'100Mb'`)
 
 Sets the maximum amount of RAM Meilisearch can use when indexing. By default, Meilisearch uses no more than two thirds of available memory.
@@ -336,12 +306,9 @@ Setting `--max-indexing-memory` to a value bigger than or equal to your machine'
 
 ### Max indexing threads
 
-**Environment variable**: `MEILI_MAX_INDEXING_THREADS`
-
-**CLI option**: `--max-indexing-threads`
-
-**Default value**: half of the available threads
-
+**Environment variable**: `MEILI_MAX_INDEXING_THREADS`<br />
+**CLI option**: `--max-indexing-threads`<br />
+**Default value**: half of the available threads<br />
 **Expected value**: an integer
 
 Sets the maximum number of threads Meilisearch can use during indexing. By default, the indexer avoids using more than half of a machine's total processing units. This ensures Meilisearch is always ready to perform searches, even while you are updating an index.
@@ -356,24 +323,18 @@ Avoid setting `--max-indexing-threads` to the total of your machine's processor 
 
 ### Payload limit size
 
-**Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`
-
-**CLI option**: `--http-payload-size-limit`
-
-**Default value**: `104857600` (~100MB)
-
+**Environment variable**: `MEILI_HTTP_PAYLOAD_SIZE_LIMIT`<br />
+**CLI option**: `--http-payload-size-limit`<br />
+**Default value**: `104857600` (~100MB)<br />
 **Expected value**: an integer
 
 Sets the maximum size of [accepted payloads](/learn/core_concepts/documents#dataset-format). Value must be given in bytes or explicitly stating a base unit. For example, the default value can be written as `107374182400`, `'107.7Gb'`, or `'107374 Mb'`.
 
 ### Schedule snapshot creation
 
-**Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`
-
-**CLI option**: `--schedule-snapshot`
-
-**Default value**: disabled if not present, `86400` if present without a value
-
+**Environment variable**: `MEILI_SCHEDULE_SNAPSHOT`<br />
+**CLI option**: `--schedule-snapshot`<br />
+**Default value**: disabled if not present, `86400` if present without a value<br />
 **Expected value**: `None` or an integer
 
 Activates scheduled snapshots. Snapshots are disabled by default.
@@ -390,24 +351,18 @@ When using the configuration file, it is also possible to explicitly pass a bool
 
 ### Snapshot destination
 
-**Environment variable**: `MEILI_SNAPSHOT_DIR`
-
-**CLI option**: `--snapshot-dir`
-
-**Default value**: `snapshots/`
-
+**Environment variable**: `MEILI_SNAPSHOT_DIR`<br />
+**CLI option**: `--snapshot-dir`<br />
+**Default value**: `snapshots/`<br />
 **Expected value**: a filepath pointing to a valid directory
 
 Sets the directory where Meilisearch will store snapshots.
 
 ### Import snapshot
 
-**Environment variable**: `MEILI_IMPORT_SNAPSHOT`
-
-**CLI option**: `--import-snapshot`
-
-**Default value**: `None`
-
+**Environment variable**: `MEILI_IMPORT_SNAPSHOT`<br />
+**CLI option**: `--import-snapshot`<br />
+**Default value**: `None`<br />
 **Expected value**: a filepath pointing to a snapshot file
 
 Launches Meilisearch after importing a previously-generated snapshot at the given filepath.
@@ -425,8 +380,7 @@ This behavior can be modified with the [`--ignore-snapshot-if-db-exists`](#ignor
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`
-
+**Environment variable**: `MEILI_IGNORE_MISSING_SNAPSHOT`<br />
 **CLI option**: `--ignore-missing-snapshot`
 
 Prevents a Meilisearch instance from throwing an error when [`--import-snapshot`](#import-snapshot) does not point to a valid snapshot file.
@@ -439,8 +393,7 @@ This command will throw an error if `--import-snapshot` is not defined.
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`
-
+**Environment variable**: `MEILI_IGNORE_SNAPSHOT_IF_DB_EXISTS`<br />
 **CLI option**: `--ignore-snapshot-if-db-exists`
 
 Prevents a Meilisearch instance with an existing database from throwing an error when using `--import-snapshot`. Instead, the snapshot will be ignored and Meilisearch will launch using the existing database.
@@ -451,24 +404,18 @@ This command will throw an error if `--import-snapshot` is not defined.
 
 #### SSL authentication path
 
-**Environment variable**: `MEILI_SSL_AUTH_PATH`
-
-**CLI option**: `--ssl-auth-path`
-
-**Default value**: `None`
-
+**Environment variable**: `MEILI_SSL_AUTH_PATH`<br />
+**CLI option**: `--ssl-auth-path`<br />
+**Default value**: `None`<br />
 **Expected value**: a filepath
 
 Enables client authentication in the specified path.
 
 #### SSL certificates path
 
-**Environment variable**: `MEILI_SSL_CERT_PATH`
-
-**CLI option**: `--ssl-cert-path`
-
-**Default value**: `None`
-
+**Environment variable**: `MEILI_SSL_CERT_PATH`<br />
+**CLI option**: `--ssl-cert-path`<br />
+**Default value**: `None`<br />
 **Expected value**: a filepath pointing to a valid SSL certificate
 
 Sets the server's SSL certificates.
@@ -477,12 +424,9 @@ Value must be a path to PEM-formatted certificates. The first certificate should
 
 #### SSL key path
 
-**Environment variable**: `MEILI_SSL_KEY_PATH`
-
-**CLI option**: `--ssl-key-path`
-
-**Default value**: `None`
-
+**Environment variable**: `MEILI_SSL_KEY_PATH`<br />
+**CLI option**: `--ssl-key-path`<br />
+**Default value**: `None`<br />
 **Expected value**: a filepath pointing to a valid SSL key file
 
 Sets the server's SSL key files.
@@ -491,12 +435,9 @@ Value must be a path to an RSA private key or PKCS8-encoded private key, both in
 
 #### SSL OCSP path
 
-**Environment variable**: `MEILI_SSL_OCSP_PATH`
-
-**CLI option**: `--ssl-ocsp-path`
-
-**Default value**: `None`
-
+**Environment variable**: `MEILI_SSL_OCSP_PATH`<br />
+**CLI option**: `--ssl-ocsp-path`<br />
+**Default value**: `None`<br />
 **Expected value**: a filepath pointing to a valid OCSP certificate
 
 Sets the server's OCSP file. _Optional_
@@ -509,10 +450,8 @@ Reads DER-encoded OCSP response from OCSPFILE and staple to certificate.
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_SSL_REQUIRE_AUTH`
-
-**CLI option**: `--ssl-require-auth`
-
+**Environment variable**: `MEILI_SSL_REQUIRE_AUTH`<br />
+**CLI option**: `--ssl-require-auth`<br />
 **Default value**: `None`
 
 Makes SSL authentication mandatory.
@@ -525,10 +464,8 @@ Sends a fatal alert if the client does not complete client authentication.
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_SSL_RESUMPTION`
-
-**CLI option**: `--ssl-resumption`
-
+**Environment variable**: `MEILI_SSL_RESUMPTION`<br />
+**CLI option**: `--ssl-resumption`<br />
 **Default value**: `None`
 
 Activates SSL session resumption.
@@ -539,10 +476,8 @@ Activates SSL session resumption.
 🚩 This option does not take any values. Assigning a value will throw an error. 🚩
 </Capsule>
 
-**Environment variable**: `MEILI_SSL_TICKETS`
-
-**CLI option**: `--ssl-tickets`
-
+**Environment variable**: `MEILI_SSL_TICKETS`<br />
+**CLI option**: `--ssl-tickets`<br />
 **Default value**: `None`
 
 Activates SSL tickets.
