@@ -25,16 +25,17 @@ jobs:
           APP_NAME: website
         name: Wait for deployment
         run: |
-          for i in {1..10}; do
+          for i in {1..25}; do
             sleep 30
             response=$(curl -s -X GET "https://api.vercel.com/v6/deployments?app=$APP_NAME&teamId=$TEAM_ID&since=$TIMESTAMP" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}")
-            ready_deployment_url=$(echo "$response" | jq -r '.deployments[0] | select(.state == "READY") | .url // ""')
-            if [ -n "$ready_deployment_url" ]; then
-              echo "Deployment is ready: $ready_deployment_url"
+            status=$(echo "$response" | jq -r '.deployments[0] | .state // ""')
+            if [[ $status == "READY" ]]; then
+              ready_deployment_url=$(echo "$response" | jq -r '.deployments[0] | .url // ""')
+              echo "Deployment is ready at $ready_deployment_url"
               break
-            elif [ "$i" -eq 10 ]; then
-              echo "Deployment failed to become ready after 5 attempts"
-              exit 1
+            elif [[ $status == "ERROR" || $status == "CANCELED" ]]; then
+              echo "Deployment failed with status $status"
+              exit 1 # exit with a failure status code
             fi
             echo "Deployment is not ready yet, retrying..."
           done
