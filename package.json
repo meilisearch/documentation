@@ -910,9 +910,7 @@
     "zooming": "^2.1.1"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meilisearch/documentation.git"
@@ -923,5 +921,5 @@
   "bugs": {
     "url": "https://github.com/meilisearch/documentation/issues"
   },
-  "homepage": "https://github.com/meilisearch/documentation#readme"
+  "homepage": "https://meilisearch.com/docs"
 }
