@@ -4,7 +4,7 @@
       "https://www.meilisearch.com/docs"
   ],
   "sitemap_urls": [
-      "https://www.meilisearch.com/docs"
+      "https://www.meilisearch.com/sitemap.xml"
   ],
   "selectors": {
       "lvl0": {
