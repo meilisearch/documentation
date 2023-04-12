@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - new-docs-content-migration
+      - joaco/action-update
 
 jobs:
   trigger-deploy:
