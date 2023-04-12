@@ -1,10 +1,10 @@
 {
   "index_uid": "new-docs-structure",
   "start_urls": [
-      "https://meilisearch.com/docs"
+      "https://www.meilisearch.com/docs"
   ],
   "sitemap_urls": [
-      "https://meilisearch.com/sitemap.xml"
+      "https://www.meilisearch.com/sitemap.xml"
   ],
   "selectors": {
       "lvl0": {
