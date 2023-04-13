@@ -14,8 +14,9 @@
   <a href="https://discord.meilisearch.com">Discord</a>
 </h4>
 
-
+<!--
 <a href="https://app.bors.tech/repositories/28374"><img src="https://bors.tech/images/badge_small.svg" alt="Bors enabled"></a>
+-->
 
 This repository is the documentation for the **open-source search engine API [Meilisearch](https://github.com/meilisearch/meilisearch)**.
 
