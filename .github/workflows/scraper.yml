@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - new-docs-content-migration
 
 jobs:
   trigger-deploy:
@@ -48,8 +47,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run docs-scraper
         env:
-          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL_TEMP }}
-          API_KEY: ${{ secrets.MEILISEARCH_API_KEY_TEMP }}
+          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
           CONFIG_FILE_PATH: ${{ github.workspace }}/docs-scraper.config.json
         run: |
           docker run -t --rm \
