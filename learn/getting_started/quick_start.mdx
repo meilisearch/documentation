@@ -27,6 +27,10 @@ You have the option to install Meilisearch locally or deploy it over a cloud ser
 If you started Meilisearch with a master key or using Meilisearch Cloud, you will need to add the [`-H Authorization: Bearer API_KEY` header](/reference/api/overview#authorization) to all your curl commands.
 </Capsule>
 
+::: note
+If you started Meilisearch with a master key or using Meilisearch Cloud, you will need to add the [`-H Authorization: Bearer API_KEY` header](/reference/api/overview.md#authorization) to all your curl commands.
+:::
+
 ### Running Meilisearch
 
 On successfully running Meilisearch, you should see the following response:
@@ -146,6 +150,8 @@ In the above code sample, the parameter `q` represents the search query. The doc
 By default, Meilisearch only returns the first 20 results for a search query. This can be changed using the [`limit` parameter](/reference/api/search#limit).
 
 To search on multiple indexes at the same time with a single request, use the [`/multi-search` endpoint.](/reference/api/multi_search)
+
+To search on multiple indexes at the same time with a single request, use the [`/multi-search` endpoint.](/reference/api/multi_search.md)
 
 ## Search preview
 

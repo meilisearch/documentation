@@ -190,11 +190,9 @@ In both cases, the results should look like this:
 ]
 ```
 
-It is also possible to use `_geoRadius` together with other filters. We can narrow down our previous search so it only includes pizzerias:
+It is also possible to combine `_geoRadius` and `_geoBoundingBox` with other filters. We can narrow down our previous search so it only includes pizzerias:
 
 <CodeSamples id="geosearch_guide_filter_usage_2" />
-
-The above command will only work if you have previously added `type` to `filterableAttributes`.
 
 ```json
 [

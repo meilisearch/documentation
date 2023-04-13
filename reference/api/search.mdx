@@ -469,6 +469,25 @@ _geoRadius(lat, lng, distance_in_meters)
 `lat` and `lng` should be geographic coordinates expressed as floating point numbers. `distance_in_meters` indicates the radius of the area within which you want your results and should be an integer.
 
 <CodeSamples id="geosearch_guide_filter_usage_1" />
+:::
+
+::: tab _geoBoundingBox
+`_geoBoundingBox` establishes a rectangular area based on the coordinates for its top right and bottom left corners. This filter rule requires two arrays of geographic coordinates:
+
+```
+_geoBoundingBox([{lat}, {lng}], [{lat}, {lng}])
+```
+
+`lat` and `lng` should be geographic coordinates expressed as floating point numbers. The first array indicates the top right corner and the second array indicates the bottom left corner of the bounding box.
+
+<CodeSamples id="geosearch_guide_filter_usage_3" />
+
+Meilisearch will throw an error if the top right corner is under the bottom left corner.
+
+:::
+::::
+
+If any parameters are invalid or missing, Meilisearch returns an [`invalid_search_filter`](/reference/errors/error_codes.md#invalid-search-filter) error.
 
 </Tabs.Content>
 
@@ -496,7 +515,6 @@ If any parameters are invalid or missing, Meilisearch returns an [`invalid_searc
 **Parameter**: `facets`<br />
 **Expected value**: An array of `attribute`s or `["*"]`<br />
 **Default value**: `null`
-
 Returns the number of documents matching the current search query for each given facet. This parameter can take two values:
 
 - An array of attributes: `facets=["attributeA", "attributeB", …]`
