@@ -12,7 +12,7 @@ DigitalOcean Droplets are Linux-based virtual machines in which you can run your
 
 Once you log in to your DigitalOcean account, click the green "Create" button at the top-right of the page and select "Droplets".
 
-![Selecting "Droplets" from the "Create" dropdown](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/create.png)
+![Selecting "Droplets" from the "Create" dropdown](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/create.png)
 
 [Refer to DigitalOcean's documentation to learn more about creating and configuring Droplets.](https://docs.digitalocean.com/tutorials/droplets/)
 
@@ -20,25 +20,25 @@ Once you log in to your DigitalOcean account, click the green "Create" button at
 
 Select the region where you want to deploy your Droplet. Remember, the closer you are to your users, the better their search experience with Meilisearch will be.
 
-![Selecting the London data center region](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/select-region.png)
+![Selecting the London data center region](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/select-region.png)
 
 ### 3. Select Meilisearch image
 
 By default, DigitalOcean displays the "OS" tab. Select the "Marketplace" tab, search for "Meilisearch", and select the image.
 
-![Search results for 'Meilisearch' in Marketplace](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/marketplace.png)
+![Search results for 'Meilisearch' in Marketplace](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/marketplace.png)
 
 ### 4. Choose Droplet size
 
 This is where you choose the amount of RAM, storage, and CPU cores your Droplet will have. Select your plan based on your needs. Memory-optimized options will give you better results when working with big datasets.
 
-![Selecting the plan based on your usage](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/select-plan.png)
+![Selecting the plan based on your usage](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/select-plan.png)
 
 ### 5. Choose an authentication method
 
 You can either use SSH keys or a password to access your Droplet. We recommend using SSH keys as they are more secure.
 
-![Selecting SSH keys for authentication](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/add-ssh-key.png)
+![Selecting SSH keys for authentication](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/add-ssh-key.png)
 
 Select the SSH keys you want to add to your Droplet. If you don't have a key, [follow DigitalOcean's instructions on how to create one](https://www.digitalocean.com/docs/droplets/how-to/add-ssh-keys/to-account/).
 
@@ -46,25 +46,25 @@ Select the SSH keys you want to add to your Droplet. If you don't have a key, [f
 
 Here you can select the name that will be visible everywhere in your DigitalOcean account. Droplets can only contain alphanumeric characters, dashes, and periods.
 
-![Adding 'meilisearch-droplet-name' as the hostname](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/droplet-name.png)
+![Adding 'meilisearch-droplet-name' as the hostname](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/droplet-name.png)
 
 Tags are great for managing resources. They are custom labels you assign to droplets. Tags can contain letters, numbers, colons, dashes, and underscores. You can use multiple tags for a single resource. Try naming tags based on a droplet's function.
 
-![The search bar, meilisearch, and search-team tags](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/add-tags.png)
+![The search bar, meilisearch, and search-team tags](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/add-tags.png)
 
 ### 7. Click on "Create Droplet"
 
-![The "Create Droplet" button](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/create-droplet.png)
+![The "Create Droplet" button](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/create-droplet.png)
 
 ### 8. Test Meilisearch
 
 Once created, click on the Droplet's public IP address to copy it:
 
-![meilisearch-droplet-name instance's IP: 165.227.56.77](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/copy-ip.png)
+![meilisearch-droplet-name instance's IP: 165.227.56.77](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/copy-ip.png)
 
 Paste it into your browser. If you can access the search preview, Meilisearch is ready to use.
 
-![Meilisearch search preview](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/test-meili.png)
+![Meilisearch search preview](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/test-meili.png)
 
 ## Part 2: Configure production settings in your Meilisearch Droplet
 
@@ -74,11 +74,11 @@ To configure Meilisearch for **production** on a DigitalOcean Droplet, [use SSH 
 
 If you want to use your own domain, click the "Create" button and select "Domain/DNS".
 
-![Selecting Domain/DNS from the Create menu](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/domain.png)
+![Selecting Domain/DNS from the Create menu](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/domain.png)
 
 Type in your domain name in the "Enter domain field" and click "Add Domain".
 
-![Domains tab on the Networking page](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/digitalocean/add-domain.png)
+![Domains tab on the Networking page](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/digitalocean/add-domain.png)
 
 This should work out of the box. Your domain name should now be linked to your Meilisearch instance. Use `curl` to access it and verify DNS has been properly configured:
 

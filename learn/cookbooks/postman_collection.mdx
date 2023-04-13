@@ -2,7 +2,7 @@
 
 Are you tired of using the `curl` command in your terminal to test Meilisearch? It can be tedious to re-write every route when wanting to try out an API.
 
-Postman is a platform that lets you create HTTP requests you can easily reuse and share with everyone. We provide a <a href="https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/misc/postman/meilisearch-collection.json" download="meilisearch-collection-postman.json">Postman collection</a> containing all the routes of the Meilisearch API! 🚀
+Postman is a platform that lets you create HTTP requests you can easily reuse and share with everyone. We provide a <a href="https://raw.githubusercontent.com/meilisearch/documentation/main/assets/misc/postman/meilisearch-collection.json" download="meilisearch-collection-postman.json">Postman collection</a> containing all the routes of the Meilisearch API! 🚀
 
 <Capsule intent="tip">
 If you don't have Postman already, you can [download it here](https://www.postman.com/downloads/). It's free and available on many OS distributions.
@@ -10,28 +10,28 @@ If you don't have Postman already, you can [download it here](https://www.postma
 
 ## Import the collection
 
-Once you have downloaded the [Postman collection](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/misc/meilisearch-collection-postman.json), you need to import it into Postman.
+Once you have downloaded the [Postman collection](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/misc/meilisearch-collection-postman.json), you need to import it into Postman.
 
-![The "Import" button](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/postman/import.png)
+![The "Import" button](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/postman/import.png)
 
 ## Edit the configuration
 
-![Selecting "Edit" from the overflow menu](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/postman/edit.png)
+![Selecting "Edit" from the overflow menu](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/postman/edit.png)
 
 Set the "Token" if needed (set to `masterKey` by default):
 
-![The "Token" field set to masterKey and "Type" to Bearer Token in the "Authorization" tab.](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/postman/set_token.png)
+![The "Token" field set to masterKey and "Type" to Bearer Token in the "Authorization" tab.](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/postman/set_token.png)
 
 Set `url` (set to Meilisearch's local port by default) and `indexUID` (set to `indexUID` by default):
 
-![Setting the "url" to http://localhost:7700/ and "indexUID" to indexUId in the Variables tab.](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/postman/set_variables.png)
+![Setting the "url" to http://localhost:7700/ and "indexUID" to indexUId in the Variables tab.](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/postman/set_variables.png)
 
 The `url` and `indexUID` variables are used in all the collection routes, like in this one:
 
-![Highlighting {{url}} and {{indexUID}}](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/postman/url.png)
+![Highlighting {{url}} and {{indexUID}}](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/postman/url.png)
 
 ## Start to use it!
 
 You can now [run your Meilisearch instance](/learn/getting_started/quick_start#setup-and-installation) and create your first index:
 
-![The "Send" button](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/postman/create_index.png)
+![The "Send" button](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/postman/create_index.png)
