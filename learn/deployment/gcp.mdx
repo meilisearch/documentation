@@ -14,11 +14,11 @@ The following guide will walk you through every step to deploy Meilisearch in a 
 
 - Navigate to "Compute Engine" -> "Images"
 
-![Page titled 'Images'](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/01.compute-engine.png)
+![Page titled 'Images'](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/01.compute-engine.png)
 
 - Click on "[+] CREATE IMAGE"
 
-![Adding image name(permanent), source, and cloud storage file](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/02.image-info.png)
+![Adding image name(permanent), source, and cloud storage file](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/02.image-info.png)
 
 - Give it a name (`meilisearch-example`)
 
@@ -36,31 +36,31 @@ meilisearch-image/meilisearch-v1.0.2-debian-10.vmdk
 
 - Click on "Create". You may have to wait up to 6 minutes while the Meilisearch custom image imports to your account
 
-![meilisearch-example successfully imported](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/03.import-image.png)
+![meilisearch-example successfully imported](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/03.import-image.png)
 
 ### 2. Create a new GCP Compute Engine instance from the imported image
 
 - Open the tab "Images" and click on the name of the image that you just imported, and click on the "[+] Create instance" button
 
-![The meilisearch-v-X-X-X instance](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/04.create-instance.png)
+![The meilisearch-v-X-X-X instance](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/04.create-instance.png)
 
 - Give your instance a name
 
 - In the "Machine configuration" section, make sure to pick a "Machine type" with enough memory to run Meilisearch according to your needs. More memory means faster searching
 
-![Selecting the 'E2' series and 'e2-medium (2 vCPU, 4 GB memory)' machine type](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/05.machine-configuration.png)
+![Selecting the 'E2' series and 'e2-medium (2 vCPU, 4 GB memory)' machine type](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/05.machine-configuration.png)
 
 - In the "Boot disk" section, click the "Change" button
 
 - From the "Custom images" tab, select the image that you just imported in the previous steps (meilisearch-vX-X-X) from the drop down menu. Don't forget to set the "Size" of the disk to an amount corresponding to your needs. When you are done, click on "Select"
 
-![Selecting the 'Balanced persistent disk' Boot disk type and 10GB Size](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/06.boot-disk.png)
+![Selecting the 'Balanced persistent disk' Boot disk type and 10GB Size](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/06.boot-disk.png)
 
 - In the "Firewall" section, make sure to check the "Allow HTTP traffic" and "Allow HTTPS traffic" boxes so that your Meilisearch instance can communicate with the internet
 
 - Finally, click on the "Create" button. After a minute or two, your Meilisearch instance should be up and running
 
-![The meilisearch-gcp-test instance running successfully](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/07.instance-running.png)
+![The meilisearch-gcp-test instance running successfully](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/07.instance-running.png)
 
 You can check that your instance is running correctly by copying and pasting the "External IP" address provided by GCP into your browser, or by typing the following command on your terminal:
 
@@ -82,7 +82,7 @@ Configuring your Meilisearch instance in a production environment is not just st
 
 If you want to use a custom domain name (or sub-domain), add an `A record` in your domain name provider account. Otherwise, you can skip this step.
 
-![The my-gcp-instance domain](https://raw.githubusercontent.com/meilisearch/documentation/new-docs-content-migration/assets/images/gcp/08.domain.png)
+![The my-gcp-instance domain](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/gcp/08.domain.png)
 
 Your domain name should now be linked to your Meilisearch instance. Run a health check to verify that your instance is running and your DNS is well configured:
 
