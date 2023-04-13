@@ -9,8 +9,8 @@
   <a href="https://www.meilisearch.com">Website</a> |
   <a href="https://roadmap.meilisearch.com/tabs/1-under-consideration">Roadmap</a> |
   <a href="https://blog.meilisearch.com">Blog</a> |
-  <a href="https://meilisearch.com/docs">Documentation</a> |
-  <a href="https://meilisearch.com/docs/faq">FAQ</a> |
+  <a href="https://www.meilisearch.com/docs">Documentation</a> |
+  <a href="https://www.meilisearch.com/docs/faq">FAQ</a> |
   <a href="https://discord.meilisearch.com">Discord</a>
 </h4>
 
