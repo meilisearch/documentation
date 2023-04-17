@@ -383,6 +383,6 @@ After migrating to the most recent version of Meilisearch, your code-base may re
   - The `private` and `public` keys have been deprecated and replaced by two default API keys with similar permissions: `Default Admin API Key` and `Default Search API Key`.
   - The `updates` API has been replaced with the `tasks` API.
 - If you are **updating from v0.27 or below**, existing keys will have their `key` and `uid` fields regenerated.
-- If you are **updating from v0.30 or below on a cloud platform**, update the following files to rename `--dumps-dir` to `--dump-dir`:
+- If you are **updating from v0.30 or below to v1.0 or above on a cloud platform**, update the following files to rename `--dumps-dir` to `--dump-dir`:
   - `/etc/systemd/system/meilisearch.service`
   - `/var/opt/meilisearch/scripts/first-login/001-setup-prod.sh`
