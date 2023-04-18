@@ -101,6 +101,10 @@ In a protected instance, your API key must have access to all indexes (`"indexes
 
 After creating a task, Meilisearch places it in a queue. Enqueued tasks are processed one at a time, following the order in which they were requested.
 
+<Capsule intent="warning" title="Task queue limit">
+When the task queue reaches its limit (about 10GiB), it will throw a `no_space_left_on_device` error. Users will need to delete tasks using the [delete tasks endpoint](/reference/api/tasks#delete-tasks) to continue write operations.
+</Capsule>
+
 #### Task queue priority
 
 Meilisearch considers certain tasks high-priority and always places them at the front of the queue.
