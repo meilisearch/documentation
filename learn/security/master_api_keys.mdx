@@ -47,6 +47,14 @@ set MEILI_MASTER_KEY="MASTER_KEY"
 </Tabs.Content>
 </Tabs.Container>
 
+<Capsule intent="tip" title="Tools for generating a master key">
+You can use one of the following tools to generate a master key for your Meilisearch instance:
+- [`uuidgen`](https://www.digitalocean.com/community/tutorials/workflow-command-line-basics-generating-uuids)
+- [`openssl rand`](https://www.openssl.org/docs/man1.0.2/man1/rand.html)
+- [`shasum`](https://www.commandlinux.com/man-page/man1/shasum.1.html)
+- [randomkeygen.com](https://randomkeygen.com/)
+</Capsule>
+
 Once you launch Meilisearch with a master key, all API endpoints except [the health endpoint](/reference/api/health#get-health) are automatically protected from unauthorized requests.
 
 From that point on, API requests must include the `Authorization` header to be successful. Read on to learn more.
