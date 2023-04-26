@@ -1,69 +1,19 @@
 {
   "name": "documentation",
   "version": "1.0.0",
-  "description": "Documentation for Meilisearch",
+  "description": "",
   "main": "index.js",
-  "scripts": {
-    "pretest": "yarn style",
-    "test": "yarn check-links",
-    "prebuild": "yarn test",
-    "build": "vuepress build .",
-    "dev": "vuepress dev",
-    "check-links": "yarn check-md && yarn check-config-paths",
-    "check-md": "vuepress check-md .",
-    "style": "yarn lint && yarn marklint",
-    "check-config-paths": "vuepress check-config-paths .",
-    "style:fix": "yarn lint:fix && yarn marklint:fix",
-    "lint": "npx eslint . --ext .js,.vue",
-    "lint:fix": "npx eslint . --ext .js,.vue --fix",
-    "marklint:fix": "markdownlint '**/*.md' --config .markdownlint.jsonc --fix",
-    "marklint": "markdownlint '**/*.md' --config .markdownlint.jsonc"
-  },
+  "dependencies": {},
+  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:meilisearch/public/documentation.git"
+    "url": "git+https://github.com/meilisearch/documentation.git"
   },
-  "keywords": [
-    "documentation",
-    "vuepress",
-    "meilisearch"
-  ],
-  "author": "tpayet",
+  "keywords": [],
+  "author": "",
   "license": "MIT",
-  "dependencies": {
-    "@bidoubiwa/vuepress-plugin-element-tabs": "^0.2.9",
-    "vuepress": "^1.9.9",
-    "vuepress-plugin-code-copy": "^1.0.6",
-    "vuepress-plugin-container": "^2.1.5",
-    "vuepress-plugin-img-lazy": "^1.0.4",
-    "vuepress-plugin-meilisearch": "^0.13.0",
-    "vuepress-plugin-seo": "^0.1.4",
-    "vuepress-plugin-sitemap": "^2.3.1",
-    "vuepress-plugin-zooming": "^1.1.8",
-    "vuepress-theme-default-prefers-color-scheme": "^2.0.0",
-    "vuex": "^3.6.2"
+  "bugs": {
+    "url": "https://github.com/meilisearch/documentation/issues"
   },
-  "engines": {
-    "node": ">=14 <=16"
-  },
-  "resolutions": {
-    "vuepress-plugin-check-md/check-md": "https://github.com/bidoubiwa/check-md#add_ignore_pattern"
-  },
-  "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "bent": "^7.3.12",
-    "eslint": "^7.25.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-vue": "^7.9.0",
-    "js-yaml": "^3.14.1",
-    "markdownlint-cli": "^0.33.0",
-    "vue-eslint-parser": "^9.1.1",
-    "vuepress-plugin-check-md": "^0.0.2"
-  }
+  "homepage": "https://meilisearch.com/docs"
 }
