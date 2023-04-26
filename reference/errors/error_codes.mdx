@@ -432,7 +432,10 @@ The [cancel tasks](/reference/api/tasks#cancel-tasks) and [delete tasks](/refere
 
 ## `no_space_left_on_device`
 
-The host system partition has reached its maximum capacity and can no longer accept writes.
+This error occurs if:
+
+- The host system partition reaches its maximum capacity and can no longer accept writes
+- The tasks queue reaches its limit and can no longer accept writes. You can delete tasks using the [delete tasks endpoint](/reference/api/tasks#delete-tasks) to continue write operations
 
 ## `not_found`
 
