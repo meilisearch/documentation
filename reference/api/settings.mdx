@@ -153,7 +153,7 @@ If the provided index does not exist, it will be created.
 <CodeSamples id="update_settings_1" />
 
 <Capsule intent="warning">
-If one or more settings have an error, Meilisearch will not return any results. In case of multiple errors, the error message will only address the first erroneous setting.
+If one or more settings are badly formatted or cause an error, Meilisearch will throw an error. In case of multiple errors in the settings, the error message will only address the first erroneous setting.
 </Capsule>
 
 ##### Response: `202 Accepted`
