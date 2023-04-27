@@ -171,6 +171,11 @@
 			"slug": "update_and_migration",
 			"routes": [
 					{
+							"source": "learn/update_and_migration/updating.mdx",
+							"label": "Updating Meilisearch",
+							"slug": "updating"
+					},
+					{
 							"source": "learn/update_and_migration/algolia_migration.mdx",
 							"label": "Migrating from Algolia",
 							"slug": "algolia_migration"
@@ -179,11 +184,6 @@
 							"source": "learn/update_and_migration/previous_docs_version.mdx",
 							"label": "Accessing previous docs versions",
 							"slug": "previous_docs_version"
-					},
-					{
-							"source": "learn/update_and_migration/updating.mdx",
-							"label": "Updating Meilisearch",
-							"slug": "updating"
 					},
 					{
 							"source": "learn/update_and_migration/versioning.mdx",
@@ -259,6 +259,11 @@
 			"slug": "advanced",
 			"routes": [
 					{
+							"source": "learn/inner_workings/indexing.mdx",
+							"label": "Indexing and performance",
+							"slug": "indexing"
+					},
+					{
 							"source": "learn/inner_workings/concat.mdx",
 							"label": "Concatenate and split queries",
 							"slug": "concat"
@@ -267,11 +272,6 @@
 							"source": "learn/inner_workings/datatypes.mdx",
 							"label": "Data types",
 							"slug": "datatypes"
-					},
-					{
-							"source": "learn/inner_workings/indexing.mdx",
-							"label": "Indexing and performance",
-							"slug": "indexing"
 					},
 					{
 							"source": "learn/inner_workings/known_limitations.mdx",
