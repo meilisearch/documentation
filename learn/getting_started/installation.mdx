@@ -136,8 +136,8 @@ If none of the other installation options work for you, you can always download 
 Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearch/releases/latest), scroll down to "Assets", and select the binary corresponding to your operating system.
 
 ```bash
-# Rename binary to meilisearch. Replace {meilisearch-os} with the name of your binary
-mv {meilisearch-os} meilisearch
+# Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
+mv {meilisearch_os} meilisearch
 
 # Give the binary execute permission
 chmod +x meilisearch
@@ -175,12 +175,12 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 View all available binaries under [GitHub assets](https://github.com/meilisearch/meilisearch/releases).
 
 ```bash
-# Replace {meilisearch_version} and {meilisearch-os} with the specific version and OS you want to download
-# For example, if want to download v1.0 on macOS, replace {meilisearch_version} and {meilisearch-os} with v1.0 and meilisearch-macos-amd64 respectively
-curl -OL https://github.com/meilisearch/meilisearch/releases/download/{meilisearch_version}/{meilisearch-os}
+# Replace {meilisearch_version} and {meilisearch_os} with the specific version and OS you want to download
+# For example, if want to download v1.0 on macOS, replace {meilisearch_version} and {meilisearch_os} with v1.0 and meilisearch-macos-amd64 respectively
+curl -OL https://github.com/meilisearch/meilisearch/releases/download/{meilisearch_version}/{meilisearch_os}
 
-# Rename binary to meilisearch. Replace {meilisearch-os} with the name of your binary
-mv {meilisearch-os} meilisearch
+# Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
+mv {meilisearch_os} meilisearch
 
 # Give the binary execute permission
 chmod +x meilisearch
@@ -252,8 +252,8 @@ cargo build --release
 Download the binary of a specific version from [GitHub assets](https://github.com/meilisearch/meilisearch/releases).
 
 ```bash
-# Rename binary to meilisearch. Replace {meilisearch-os} with the name of your binary
-mv {meilisearch-os} meilisearch
+# Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
+mv {meilisearch_os} meilisearch
 
 # Give the binary execute permission
 chmod +x meilisearch
