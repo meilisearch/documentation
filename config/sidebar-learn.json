@@ -14,11 +14,6 @@
 						"slug": "features"
 					},
 					{
-						"source": "learn/what_is_meilisearch/philosophy.mdx",
-						"label": "Philosophy",
-						"slug": "philosophy"
-					},
-					{
 							"source": "learn/what_is_meilisearch/sdks.mdx",
 							"label": "Official SDKs/libraries",
 							"slug": "sdks"
