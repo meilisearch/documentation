@@ -124,8 +124,8 @@
 			"slug": "configuration",
 			"routes": [
 					{
-							"source": "learn/index_settings/overview.mdx",
-							"label": "Overview",
+							"source": "learn/index_settings/all_index_settings.mdx",
+							"label": "All index settings",
 							"slug": "settings"
 					},
 					{
@@ -382,11 +382,6 @@
 			"title": "Contributing",
 			"slug": "contributing",
 			"routes": [
-					{
-							"source": "learn/contributing/overview.mdx",
-							"label": "Overview",
-							"slug": "overview"
-					},
 					{
 								"source": "learn/contributing/contributing_docs.mdx",
 								"label": "Contributing to our documentation",
