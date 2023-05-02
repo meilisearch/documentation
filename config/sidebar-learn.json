@@ -238,11 +238,6 @@
 			"slug": "advanced",
 			"routes": [
 					{
-							"source": "learn/data_backup/snapshots_vs_dumps.mdx",
-							"label": "Snapshots vs dumps",
-							"slug": "snapshots_vs_dumps"
-					},
-					{
 							"source": "learn/data_backup/dumps.mdx",
 							"label": "Dumps",
 							"slug": "dumps"
