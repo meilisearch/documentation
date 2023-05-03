@@ -2,15 +2,19 @@
 
 The `/multi-search` route allows you to perform multiple search queries on one or more indexes by bundling them into a single HTTP request. Multi-search is also known as federated search.
 
+## Search with `multi-search`
+
+Search for documents matching a specific query in one or more indexes.
+
 <RouteHighlighter method="POST" route="/multi-search"/>
 
-## Body
+### Body
 
 | Name          | Type             | Description                                                                                                                                          |
 | :------------ | :--------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`queries`** | Array of objects | Contains the list of search queries to perform. The [`indexUid`](#search-parameters) search parameter is required, all other parameters are optional |
 
-### Search parameters
+#### Search parameters
 
 | Search parameter                                                                | Type             | Default value | Description                                         |
 | :------------------------------------------------------------------------------ | :--------------- | :------------ | :-------------------------------------------------- |
@@ -35,7 +39,7 @@ The `/multi-search` route allows you to perform multiple search queries on one o
 
 [Learn more about how to use each search parameter](/reference/api/search#search-parameters).
 
-## Response
+### Response
 
 | Name          | Type             | Description                                                            |
 | :------------ | :--------------- | :--------------------------------------------------------------------- |
@@ -59,11 +63,11 @@ Each search result object is composed of the following fields:
 | **`processingTimeMs`**   | Number           | Processing time of the query                                                            |
 | **`query`**              | String           | Query originating the response                                                          |
 
-## Example
+### Example
 
 <CodeSamples id="multi_search_1" />
 
-### Response: `200 Ok`
+#### Response: `200 Ok`
 
 ```json
 {
