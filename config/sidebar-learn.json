@@ -34,11 +34,6 @@
 							"slug": "telemetry"
 					},
 					{
-							"source": "learn/what_is_meilisearch/search_preview.mdx",
-							"label": "Search preview",
-							"slug": "search_preview"
-					},
-					{
 							"source": "learn/what_is_meilisearch/language.mdx",
 							"label": "Language",
 							"slug": "language"
@@ -58,6 +53,11 @@
 							"source": "learn/getting_started/quick_start.mdx",
 							"label": "Quick start",
 							"slug": "quick_start"
+					},
+					{
+							"source": "learn/getting_started/search_preview.mdx",
+							"label": "Search preview",
+							"slug": "search_preview"
 					}
 			]
 	},
