@@ -66,7 +66,7 @@ Each search result object is composed of the following fields:
 <CodeSamples id="multi_search_1" />
 
 <Capsule intent="warning">
-If one or more sent queries are badly formatted or cause an error, Meilisearch will throw an error. In case of multiple errors in the query, the error message will only address the first erroneous query.
+If Meilisearch encounters an error when processing any of the queries in a multi-search request, it immediately interrupts the process and returns an error message. In case of multiple errors in the query, the error message will only address the first erroneous query.
 </Capsule>
 
 #### Response: `200 Ok`
