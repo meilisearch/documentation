@@ -4,7 +4,9 @@ sidebarDepth: 3
 
 # Documents
 
-A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data, and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/learn/core_concepts/indexes).
+A document is an object composed of one or more fields. Each field consists of an **attribute** and its associated **value**. Documents function as containers for organizing data and are the basic building blocks of a Meilisearch database. To search for a document, you must first add it to an [index](/learn/core_concepts/indexes).
+
+If two indexes contain the exact same document, they will be treated as different documents and nothing will be shared between the indexes. Both documents might have different sizes depending on the [index's settings](/reference/api/settings). For example, documents in an index with `filterableAttributes` will occupy more space.
 
 ## Structure
 
