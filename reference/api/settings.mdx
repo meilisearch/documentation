@@ -153,7 +153,7 @@ If the provided index does not exist, it will be created.
 <CodeSamples id="update_settings_1" />
 
 <Capsule intent="warning">
-If Meilisearch encounters an error when updating any of the settings in a request, it immediately stops processing the request and returns an error message. In this case, the database settings remain unchanged. If a request contains multiple issues, the returned message only addresses the first error. 
+If Meilisearch encounters an error when updating any of the settings in a request, it immediately stops processing the request and returns an error message. In this case, the database settings remain unchanged. The returned error message will only address the first error encountered.
 </Capsule>
 
 ##### Response: `202 Accepted`
