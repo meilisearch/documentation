@@ -43,7 +43,7 @@ meilisearch
 </Tabs.Content>
 
 <Tabs.Content label="Docker">
-When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).<br />
+When using **Docker**, you can run [any tag available in our official Docker image](https://hub.docker.com/r/getmeili/meilisearch/tags).<br />
 
 These commands launch the **latest stable release** of Meilisearch.
 
@@ -110,7 +110,7 @@ rustup update
 # Compile the project
 cargo build --release
 
-# Execute the server binary
+# Execute the binary
 ./target/release/meilisearch
 ```
 
@@ -172,11 +172,12 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 
 <Tabs.Content label="cURL">
 
-View all available binaries under [GitHub assets](https://github.com/meilisearch/meilisearch/releases).
+Download the binary of a specific version under "Assets" on our [GitHub changelog](https://github.com/meilisearch/meilisearch/releases).
 
 ```bash
 # Replace {meilisearch_version} and {meilisearch_os} with the specific version and OS you want to download
-# For example, if want to download v1.0 on macOS, replace {meilisearch_version} and {meilisearch_os} with v1.0 and meilisearch-macos-amd64 respectively
+# For example, if you want to download v1.0 on macOS,
+# replace {meilisearch_version} and {meilisearch_os} with v1.0 and meilisearch-macos-amd64 respectively
 curl -OL https://github.com/meilisearch/meilisearch/releases/download/{meilisearch_version}/{meilisearch_os}
 
 # Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
@@ -193,7 +194,7 @@ chmod +x meilisearch
 
 <Tabs.Content label="Docker">
 
-When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).<br />
+When using **Docker**, you can run [any tag available in our official Docker image](https://hub.docker.com/r/getmeili/meilisearch/tags).<br />
 
 ```bash
 # Fetch specific version of Meilisearch image from DockerHub. Replace vX.Y.Z with the version you want to use
@@ -241,7 +242,7 @@ rustup update
 # Compile the project
 cargo build --release
 
-# Execute the server binary
+# Execute the binary
 ./target/release/meilisearch
 ```
 
@@ -249,7 +250,7 @@ cargo build --release
 
 <Tabs.Content label="Direct download">
 
-Download the binary of a specific version from [GitHub assets](https://github.com/meilisearch/meilisearch/releases).
+Download the binary of a specific version under "Assets" on our [GitHub changelog](https://github.com/meilisearch/meilisearch/releases).
 
 ```bash
 # Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
