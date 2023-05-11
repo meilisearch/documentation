@@ -1074,3 +1074,5 @@ fetch_documents_1: |-
         "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English"
       ]
     }'
+delete_documents_by_filter_1: |-
+    

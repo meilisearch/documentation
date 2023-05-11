@@ -383,7 +383,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 
-Delete a selection of documents based on an array of document id's.
+Delete a selection of documents based on an array of document ids.
 
 ### Path parameters
 
@@ -417,3 +417,36 @@ An array of numbers containing the unique ids of the documents to be deleted.
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
+## Delete documents by filter
+
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete"/>
+
+Delete documents based on a filter. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes).
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+### Body
+
+A filter expression written as a string or array of array of strings for the documents to be deleted.
+
+### Example
+
+<CodeSamples id="delete_documents_by_filter_1" />
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
