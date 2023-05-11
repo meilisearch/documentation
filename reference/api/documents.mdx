@@ -4,13 +4,18 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 [Learn more about documents.](/learn/core_concepts/documents)
 
-## Get documents
+Meilisearch exposes two routes for getting a set of documents:
+
+- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances
+- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)
+
+## Get documents with GET
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents"/>
 
 Get a set of documents.
 
-Using the query parameters `offset` and `limit`, you can browse through all your documents.
+Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes).
 
 <Capsule intent="note">
 Documents are ordered by Meilisearch depending on the hash of their id.
@@ -18,17 +23,18 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 ### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
-| Query Parameter | Default Value | Description                                                   |
-| :-------------- | :------------ | :------------------------------------------------------------ |
-| **`offset`**    | `0`           | Number of documents to skip                                   |
-| **`limit`**     | `20`          | Number of documents to return                                 |
-| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated) |
+| Query Parameter | Default Value | Description                                                           |
+| :-------------- | :------------ | :-------------------------------------------------------------------- |
+| **`offset`**    | `0`           | Number of documents to skip                                           |
+| **`limit`**     | `20`          | Number of documents to return                                         |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
+| **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
 
 ### Response
 
@@ -47,25 +53,97 @@ Documents are ordered by Meilisearch depending on the hash of their id.
 
 ```json
 {
-  "results": [
+  "results":[
     {
-      "id": 25684,
-      "release_date": "1993-01-01",
-      "poster": "https://image.tmdb.org/t/p/w1280/iuAQVI4mvjI83wnirpD8GVNRVuY.jpg",
-      "title": "American Ninja 5",
-      "overview": "When a scientists daughter is kidnapped, American Ninja, attempts to find her, but this time he teams up with a youngster he has trained in the ways of the ninja."
+      "id":364,
+      "title":"Batman Returns",
+      "overview":"While Batman deals with a deformed man calling himself the Penguin, an employee of a corrupt businessman transforms into the Catwoman.",
+      "genres":[
+        "Action",
+        "Fantasy"
+      ],
+      "poster":"https://image.tmdb.org/t/p/w500/jKBjeXM7iBBV9UkUcOXx3m7FSHY.jpg",
+      "release_date":708912000
     },
     {
-      "id": 468219,
-      "title": "Dead in a Week (Or Your Money Back)",
-      "release_date": "2018-09-12",
-      "poster": "https://image.tmdb.org/t/p/w1280/f4ANVEuEaGy2oP5M0Y2P1dwxUNn.jpg",
-      "overview": "William has failed to kill himself so many times that he outsources his suicide to aging assassin Leslie. But with the contract signed and death assured within a week (or his money back), William suddenly discovers reasons to live... However Leslie is under pressure from his boss to make sure the contract is completed."
+      "id":13851,
+      "title":"Batman: Gotham Knight",
+      "overview":"A collection of key events mark Bruce Wayne's life as he journeys from beginner to Dark Knight.",
+      "genres":[
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "poster":"https://image.tmdb.org/t/p/w500/f3xUrqo7yEiU0guk2Ua3Znqiw6S.jpg",
+      "release_date":1215475200
     }
   ],
-  "offset": 0,
-  "limit": 2,
-  "total": 500134
+  "offset":0,
+  "limit":2,
+  "total":5403
+}
+```
+
+## Get documents with POST
+
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/fetch"/>
+
+Get a set of documents.
+
+Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). You can send the filter as an array of array of strings.
+
+<Capsule intent="note">
+Meilisearch orders documents depending on the order they were inserted into the database.
+</Capsule>
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+### Query parameters
+
+| Query Parameter | Default Value | Description                                                           |
+| :-------------- | :------------ | :-------------------------------------------------------------------- |
+| **`offset`**    | `0`           | Number of documents to skip                                           |
+| **`limit`**     | `20`          | Number of documents to return                                         |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
+| **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+
+### Response
+
+| Name          | Type    | Description                            |
+| :------------ | :------ | :------------------------------------- |
+| **`results`** | Array   | An array of documents                  |
+| **`offset`**  | Integer | Number of documents skipped            |
+| **`limit`**   | Integer | Number of documents returned           |
+| **`total`**   | Integer | Total number of documents in the index |
+
+### Example
+
+<CodeSamples id="fetch_documents_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "results":[
+    {
+      "id":2,
+      "title":"The Travels of Ibn Battuta",
+      …
+    },
+    {
+      "id":6,
+      "title":"Pride and Prejudice",
+      …
+    },
+    …
+  ],
+  "offset":0,
+  "limit":20,
+  "total":5
 }
 ```
 
@@ -77,8 +155,8 @@ Get one document using its unique id.
 
 ### Path parameters
 
-| Name                | Type           | Description                                                                              |
-| :------------------ | :------------- | :--------------------------------------------------------------------------------------- |
+| Name                | Type           | Description                                                                           |
+| :------------------ | :------------- | :------------------------------------------------------------------------------------ |
 | **`index_uid`** *   | String         | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index                |
 | **`document_id`** * | String/Integer | [Document id](/learn/core_concepts/primary_key#document-id) of the requested document |
 
@@ -119,15 +197,15 @@ This endpoint accepts the following content types:
 
 ### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`primaryKey`**   | `null`        | [Primary key](/learn/core_concepts/primary_key#primary-key-2) of the index                                                           |
+| **`primaryKey`**   | `null`        | [Primary key](/learn/core_concepts/primary_key#primary-key-2) of the index                                                              |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
 
 <Capsule intent="warning">
@@ -190,15 +268,15 @@ This endpoint accepts the following content types:
 
 ### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Query parameters
 
 | Query Parameter    | Default Value | Description                                                                                                                             |
 | :----------------- | :------------ | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **`primaryKey`**   | `null`        | [Primary key](/learn/core_concepts/primary_key#primary-key-2) of the documents                                                       |
+| **`primaryKey`**   | `null`        | [Primary key](/learn/core_concepts/primary_key#primary-key-2) of the documents                                                          |
 | **`csvDelimiter`** | `","`         | Configure the character separating CSV fields. Must be a string containing [one ASCII character](https://www.rfc-editor.org/rfc/rfc20). |
 
 <Capsule intent="warning">
@@ -248,8 +326,8 @@ Delete all documents in the specified index.
 
 ### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Example
@@ -278,8 +356,8 @@ Delete one document based on its unique id.
 
 ### Path parameters
 
-| Name                | Type           | Description                                                                              |
-| :------------------ | :------------- | :--------------------------------------------------------------------------------------- |
+| Name                | Type           | Description                                                                           |
+| :------------------ | :------------- | :------------------------------------------------------------------------------------ |
 | **`index_uid`** *   | String         | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index                |
 | **`document_id`** * | String/Integer | [Document id](/learn/core_concepts/primary_key#document-id) of the requested document |
 
@@ -309,13 +387,13 @@ Delete a selection of documents based on an array of document id's.
 
 ### Path parameters
 
-| Name              | Type   | Description                                                               |
-| :---------------- | :----- | :------------------------------------------------------------------------ |
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Body
 
-An array of numbers containing the unique id's of the documents to be deleted.
+An array of numbers containing the unique ids of the documents to be deleted.
 
 ```json
 [23488, 153738, 437035, 363869]
@@ -338,3 +416,4 @@ An array of numbers containing the unique id's of the documents to be deleted.
 ```
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
