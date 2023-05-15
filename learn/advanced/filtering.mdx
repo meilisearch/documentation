@@ -92,6 +92,8 @@ Meilisearch supports the following filter operators:
 - [Inequality `!=`](#inequality)
 - [Comparison `> < <= >=`](#comparison)
 - [`EXISTS`](#exists)
+- [`IS EMPTY`](#is-empty)
+- [`IS NULL`](#is-null)
 - [`IN`](#in)
 - [`NOT`](#not)
 - [`AND`](#and)
@@ -160,6 +162,48 @@ The negated form of the above expression can be written as:
 ```
 release_date NOT EXISTS
 NOT release_date EXISTS
+```
+
+Both forms are equivalent.
+
+#### `IS EMPTY`
+
+The `IS EMPTY` operator selects documents with fields that exist, but contain empty values. The following expression only returns documents with an empty synopsis field:
+
+```
+synopsis IS EMPTY
+```
+
+`IS EMPTY` matches the following JSON values:
+
+- `""`
+- `[]`
+- `{}`
+
+Meilisearch does not treat `null` values as empty. To match `null` fields, use the [`IS NULL`](#is-null) operator.
+
+Use `NOT` to build the negated form of `IS EMPTY`:
+
+```
+attribute IS NOT EMPTY
+NOT attribute IS EMPTY
+```
+
+Both forms are equivalent.
+
+#### `IS NULL`
+
+The `IS NULL` operator selects documents with fields that exist, but contain `null` values. The following expression only returns documents with a `null` synopsis field:
+
+```
+synopsis IS NULL
+```
+
+Use `NOT` to build the negated form of `IS NULL`:
+
+```
+attribute IS NOT NULL
+NOT attribute IS NULL
 ```
 
 Both forms are equivalent.
