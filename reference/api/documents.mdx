@@ -4,22 +4,78 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 [Learn more about documents.](/learn/core_concepts/documents)
 
-Meilisearch exposes two routes for getting a set of documents:
+## Get documents with POST
 
-- A POST route: this is the preferred route when using API authentication, as it allows [preflight request](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) caching and better performances
-- A GET route: the usage of this route is discouraged, unless you have good reason to do otherwise (specific caching abilities for example)
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/fetch"/>
+
+Get a set of documents.
+
+Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+
+Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+### Query parameters
+
+| Query Parameter | Default Value | Description                                                                                              |
+| :-------------- | :------------ | :------------------------------------------------------------------------------------------------------- |
+| **`offset`**    | `0`           | Number of documents to skip                                                                              |
+| **`limit`**     | `20`          | Number of documents to return                                                                            |
+| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)                                            |
+| **`filter`**    | N/A           | An array of array of strings for refining results based on attributes in the `filterableAttributes` list |
+
+### Response
+
+| Name          | Type    | Description                            |
+| :------------ | :------ | :------------------------------------- |
+| **`results`** | Array   | An array of documents                  |
+| **`offset`**  | Integer | Number of documents skipped            |
+| **`limit`**   | Integer | Number of documents returned           |
+| **`total`**   | Integer | Total number of documents in the index |
+
+### Example
+
+<CodeSamples id="fetch_documents_1" />
+
+#### Response: `200 Ok`
+
+```json
+{
+  "results":[
+    {
+      "id":2,
+      "title":"The Travels of Ibn Battuta",
+      …
+    },
+    {
+      "id":6,
+      "title":"Pride and Prejudice",
+      …
+    },
+    …
+  ],
+  "offset":0,
+  "limit":20,
+  "total":5
+}
+```
 
 ## Get documents with GET
+
+<Capsule intent="danger">
+We recommend using POST `/indexes/{index_uid}/documents/fetch` as this endpoint will be deprecated in the near future.
+</Capsule>
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents"/>
 
 Get a set of documents.
 
-Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes).
-
-<Capsule intent="note">
-Documents are ordered by Meilisearch depending on the hash of their id.
-</Capsule>
+Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
 
 ### Path parameters
 
@@ -81,69 +137,6 @@ Documents are ordered by Meilisearch depending on the hash of their id.
   "offset":0,
   "limit":2,
   "total":5403
-}
-```
-
-## Get documents with POST
-
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/fetch"/>
-
-Get a set of documents.
-
-Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). You can send the filter as an array of array of strings.
-
-<Capsule intent="note">
-Meilisearch orders documents depending on the order they were inserted into the database.
-</Capsule>
-
-### Path parameters
-
-| Name              | Type   | Description                                                            |
-| :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
-
-### Query parameters
-
-| Query Parameter | Default Value | Description                                                           |
-| :-------------- | :------------ | :-------------------------------------------------------------------- |
-| **`offset`**    | `0`           | Number of documents to skip                                           |
-| **`limit`**     | `20`          | Number of documents to return                                         |
-| **`fields`**    | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
-| **`filter`**    | N/A           | Refine results based on attributes in the `filterableAttributes` list |
-
-### Response
-
-| Name          | Type    | Description                            |
-| :------------ | :------ | :------------------------------------- |
-| **`results`** | Array   | An array of documents                  |
-| **`offset`**  | Integer | Number of documents skipped            |
-| **`limit`**   | Integer | Number of documents returned           |
-| **`total`**   | Integer | Total number of documents in the index |
-
-### Example
-
-<CodeSamples id="fetch_documents_1" />
-
-#### Response: `200 Ok`
-
-```json
-{
-  "results":[
-    {
-      "id":2,
-      "title":"The Travels of Ibn Battuta",
-      …
-    },
-    {
-      "id":6,
-      "title":"Pride and Prejudice",
-      …
-    },
-    …
-  ],
-  "offset":0,
-  "limit":20,
-  "total":5
 }
 ```
 
@@ -379,7 +372,45 @@ Delete one document based on its unique id.
 
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
+## Delete documents by filter
+
+<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete"/>
+
+Delete documents based on a filter. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes).
+
+### Path parameters
+
+| Name              | Type   | Description                                                            |
+| :---------------- | :----- | :--------------------------------------------------------------------- |
+| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
+
+### Body
+
+A filter expression written as a string or array of array of strings for the documents to be deleted. [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+
+### Example
+
+<CodeSamples id="delete_documents_by_filter_1" />
+
+#### Response: `202 Accepted`
+
+```json
+{
+    "taskUid": 1,
+    "indexUid": "movies",
+    "status": "enqueued",
+    "type": "documentDeletion",
+    "enqueuedAt": "2023-05-15T08:38:48.024551Z"
+}
+```
+
+You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
+
 ## Delete documents by batch
+
+<Capsule intent="danger">
+We recommend using POST `/indexes/{index_uid}/documents/delete` as this endpoint will be deprecated in the near future.
+</Capsule>
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 
@@ -402,40 +433,6 @@ An array of numbers containing the unique ids of the documents to be deleted.
 ### Example
 
 <CodeSamples id="delete_documents_1" />
-
-#### Response: `202 Accepted`
-
-```json
-{
-    "taskUid": 1,
-    "indexUid": "movies",
-    "status": "enqueued",
-    "type": "documentDeletion",
-    "enqueuedAt": "2021-08-11T09:25:53.000000Z"
-}
-```
-
-You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
-
-## Delete documents by filter
-
-<RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete"/>
-
-Delete documents based on a filter. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes).
-
-### Path parameters
-
-| Name              | Type   | Description                                                            |
-| :---------------- | :----- | :--------------------------------------------------------------------- |
-| **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
-
-### Body
-
-A filter expression written as a string or array of array of strings for the documents to be deleted.
-
-### Example
-
-<CodeSamples id="delete_documents_by_filter_1" />
 
 #### Response: `202 Accepted`
 

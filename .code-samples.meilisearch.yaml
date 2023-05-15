@@ -1075,4 +1075,13 @@ fetch_documents_1: |-
       ]
     }'
 delete_documents_by_filter_1: |-
+  curl \
+    -X POST http://localhost:7700/indexes/movies/documents/delete \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+        "filter": [
+          "genres = action AND genres = adventure"
+        ]
+    }'
+
     
