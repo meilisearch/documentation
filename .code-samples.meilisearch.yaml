@@ -1070,18 +1070,14 @@ fetch_documents_1: |-
     -X POST http://localhost:7700/indexes/books/documents/fetch \
     -H 'Content-Type: application/json' \
     --data-binary '{ 
-      "filter": [
-        "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English"
-      ]
+      "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English"
     }'
 delete_documents_by_filter_1: |-
   curl \
     -X POST http://localhost:7700/indexes/movies/documents/delete \
     -H 'Content-Type: application/json' \
     --data-binary '{
-        "filter": [
-          "genres = action AND genres = adventure"
-        ]
+      "filter": "genres = action AND genres = adventure"
     }'
 
     

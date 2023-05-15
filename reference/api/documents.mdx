@@ -12,7 +12,9 @@ Get a set of documents.
 
 Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
 
+<Capsule intent="note">
 Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
+</Capsule>
 
 ### Path parameters
 
@@ -376,7 +378,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete"/>
 
-Delete documents based on a filter. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes).
+Delete a selection of documents based on a filter. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes).
 
 ### Path parameters
 
@@ -387,6 +389,10 @@ Delete documents based on a filter. `filter` will not work without first explici
 ### Body
 
 A filter expression written as a string or array of array of strings for the documents to be deleted. [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+
+```
+ "filter": "rating > 3.5"
+```
 
 ### Example
 
