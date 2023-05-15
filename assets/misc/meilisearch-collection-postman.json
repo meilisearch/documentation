@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "0807ba0a-e13a-49f7-970f-2f5b0eec892b",
-		"name": "Meilisearch v1.1",
+		"_postman_id": "01fa1db8-f183-4b88-adaa-d139f7d945e3",
+		"name": "Meilisearch v1.2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -38,6 +38,43 @@
 				{
 					"name": "Get documents",
 					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/indexes/{{indexUID}}/documents/fetch",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents",
+								"fetch"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "genre=\"adventure\"",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get documents",
+					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -64,6 +101,11 @@
 								{
 									"key": "fields",
 									"value": "id",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "genres=\"adventure\"",
 									"disabled": true
 								}
 							]
@@ -176,7 +218,28 @@
 					"response": []
 				},
 				{
-					"name": "Delete documents",
+					"name": "Delete documents by filter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"genres = adventure\""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete documents by batch",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"content-type": true
