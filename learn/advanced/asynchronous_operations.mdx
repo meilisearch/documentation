@@ -126,17 +126,23 @@ When you make a [request for an asynchronous operation](#which-operations-are-as
 2. When your task reaches the front of the queue, Meilisearch begins working on it. Task `status` set to `processing`
 3. Meilisearch finishes the task. Status set to `succeeded` if task was successfully processed, or `failed` if there was an error
 
-### Canceling and deleting tasks
+<Capsule intent="note">
+**Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
+</Capsule>
+
+### Canceling tasks
 
 You can cancel a task while it is `enqueued` or `processing` by using [the cancel tasks endpoint](/reference/api/tasks#cancel-tasks). Doing so changes a task's `status` to `canceled`.
 
-Meilisearch does not automatically delete tasks once their status is `succeeded`, `failed`, or `canceled`. These tasks remain visible in [the task list](/reference/api/tasks#get-tasks). To delete them, use the [delete tasks route](/reference/api/tasks#delete-tasks).
-
 <Capsule intent="note">
-**Terminating a Meilisearch instance in the middle of an asynchronous operation is completely safe** and will never adversely affect the database.
-
 Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch discards all progress made on `processing` tasks and resets them to `enqueued`. Task handling proceeds as normal once the instance is relaunched.
 </Capsule>
+
+### Deleting tasks
+
+Completed tasks remain visible in [the task list](/reference/api/tasks#get-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks#delete-tasks).
+
+Meilisearch stores up to 1M tasks in the task database. If enqueuing a new task would exceed this limit, Meilisearch automatically tries to delete the oldest 100K finished tasks. If there are no unfinished tasks in the database, Meilisearch does not delete anything and enqueues the new task as usual.
 
 #### Examples
 
