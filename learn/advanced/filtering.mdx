@@ -168,10 +168,10 @@ Both forms are equivalent.
 
 #### `IS EMPTY`
 
-The `IS EMPTY` operator selects documents with fields that exist, but contain empty values. The following expression only returns documents with an empty synopsis field:
+The `IS EMPTY` operator selects documents in which the specified attribute exists but contains empty values. The following expression only returns documents with an empty `overview` field:
 
 ```
-synopsis IS EMPTY
+overview IS EMPTY
 ```
 
 `IS EMPTY` matches the following JSON values:
@@ -193,10 +193,10 @@ Both forms are equivalent.
 
 #### `IS NULL`
 
-The `IS NULL` operator selects documents with fields that exist, but contain `null` values. The following expression only returns documents with a `null` synopsis field:
+The `IS NULL` operator selects documents in which the specified attribute exists but contains a `null` value. The following expression only returns documents with a `null` `overview` field:
 
 ```
-synopsis IS NULL
+overview IS NULL
 ```
 
 Use `NOT` to build the negated form of `IS NULL`:
