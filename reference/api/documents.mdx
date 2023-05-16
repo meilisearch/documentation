@@ -20,12 +20,12 @@ Using `offset` and `limit`, you can browse through all your documents. `filter` 
 
 ### Body
 
-| Name         | Type                             | Default Value | Description                                                           |
-| :----------- | :------------------------------- | :------------ | :-------------------------------------------------------------------- |
-| **`offset`** | Integer                          | `0`           | Number of documents to skip                                           |
-| **`limit`**  | Integer                          | `20`          | Number of documents to return                                         |
-| **`fields`** | Array of strings                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
-| **`filter`** | String/Array of array of strings | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+| Name         | Type                                    | Default Value | Description                                                           |
+| :----------- | :-------------------------------------- | :------------ | :-------------------------------------------------------------------- |
+| **`offset`** | Integer                                 | `0`           | Number of documents to skip                                           |
+| **`limit`**  | Integer                                 | `20`          | Number of documents to return                                         |
+| **`fields`** | Array of strings/`null`                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
+| **`filter`** | String/Array of array of strings/`null` | N/A           | Refine results based on attributes in the `filterableAttributes` list |
 
 <Capsule intent="note">
 Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
@@ -388,7 +388,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete"/>
 
-Delete a selection of documents based on a filter. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes).
+Delete a selection of documents based on a filter.
 
 ### Path parameters
 
@@ -398,7 +398,7 @@ Delete a selection of documents based on a filter. `filter` will not work withou
 
 ### Body
 
-A filter expression written as a string or array of array of strings for the documents to be deleted. [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+A filter expression written as a string or array of array of strings for the documents to be deleted. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
 
 ```
  "filter": "rating > 3.5"
