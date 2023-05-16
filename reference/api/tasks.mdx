@@ -74,11 +74,11 @@ This value is always `null` for [global tasks](/learn/advanced/asynchronous_oper
 
 #### `documentDeletion`
 
-| Name                   | Description                                                                                           |
-| :--------------------- | :---------------------------------------------------------------------------------------------------- |
-| **`providedIds`**      | Number of documents queued for deletion                                                               |
-| **`originalFilter`**   | The filter used in the [delete document request](/reference/api/documents#delete-documents-by-filter) |
-| **`deletedDocuments`** | Number of documents deleted. `null` while the task status is `enqueued` or `processing`               |
+| Name                   | Description                                                                                                                                                                                     |
+| :--------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`providedIds`**      | Number of documents queued for deletion                                                                                                                                                         |
+| **`originalFilter`**   | The filter used in the [delete document by filter request](/reference/api/documents#delete-documents-by-filter). This field is only visible when the delete document by filter endpoint is used |
+| **`deletedDocuments`** | Number of documents deleted. `null` while the task status is `enqueued` or `processing`                                                                                                         |
 
 #### `indexCreation`
 

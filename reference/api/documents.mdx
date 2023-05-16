@@ -10,11 +10,7 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 Get a set of documents.
 
-Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
-
-<Capsule intent="note">
-Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
-</Capsule>
+Using `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
 
 ### Path parameters
 
@@ -22,13 +18,18 @@ Sending an empty payload (`--data-binary '{}'`) will return all documents in the
 | :---------------- | :----- | :--------------------------------------------------------------------- |
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
-### Query parameters
+### Body
 
-| Query Parameter | Default Value | Description                                                                                              |
-| :-------------- | :------------ | :------------------------------------------------------------------------------------------------------- |
-| **`offset`**    | `0`           | Number of documents to skip                                                                              |
-| **`limit`**     | `20`          | Number of documents to return                                                                            |
-| **`filter`**    | N/A           | An array of array of strings for refining results based on attributes in the `filterableAttributes` list |
+| Name         | Type                             | Default Value | Description                                                           |
+| :----------- | :------------------------------- | :------------ | :-------------------------------------------------------------------- |
+| **`offset`** | Integer                          | `0`           | Number of documents to skip                                           |
+| **`limit`**  | Integer                          | `20`          | Number of documents to return                                         |
+| **`fields`** | Array of strings                 | `*`           | Document attributes to show (case-sensitive, comma-separated)         |
+| **`filter`** | String/Array of array of strings | N/A           | Refine results based on attributes in the `filterableAttributes` list |
+
+<Capsule intent="note">
+Sending an empty payload (`--data-binary '{}'`) will return all documents in the index.
+</Capsule>
 
 ### Response
 
@@ -49,19 +50,29 @@ Sending an empty payload (`--data-binary '{}'`) will return all documents in the
 {
   "results":[
     {
-      "id":2,
       "title":"The Travels of Ibn Battuta",
-      …
+      "genres":[
+        "Travel",
+        "Adventure"
+      ],
+      "language":"English",
+      "rating":4.5
     },
     {
-      "id":6,
       "title":"Pride and Prejudice",
-      …
+      "genres":[
+        "Classics",
+        "Fiction",
+        "Romance",
+        "Literature"
+      ],
+      "language":"English",
+      "rating":4
     },
     …
   ],
   "offset":0,
-  "limit":20,
+  "limit":3,
   "total":5
 }
 ```
@@ -394,7 +405,7 @@ A filter expression written as a string or array of array of strings for the doc
 ```
 
 <Capsule intent="warning">
-Sending an empty payload will return a `bad_request` error.
+Sending an empty payload (`--data-binary '{}'`) will return a `bad_request` error.
 </Capsule>
 
 ### Example
