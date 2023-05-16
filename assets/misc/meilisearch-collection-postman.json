@@ -36,10 +36,20 @@
 					"response": []
 				},
 				{
-					"name": "Get documents",
+					"name": "Get documents with POST",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": \"genres = adventure\",\n    \"fields\": [\"title\"],\n    \"limit\": 2\n}"
+						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents/fetch",
 							"host": [
@@ -50,30 +60,13 @@
 								"{{indexUID}}",
 								"documents",
 								"fetch"
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "1",
-									"disabled": true
-								},
-								{
-									"key": "offset",
-									"value": "10",
-									"disabled": true
-								},
-								{
-									"key": "filter",
-									"value": "genre=\"adventure\"",
-									"disabled": true
-								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get documents",
+					"name": "Get documents with GET",
 					"request": {
 						"method": "GET",
 						"header": [],
