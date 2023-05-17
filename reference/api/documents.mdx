@@ -10,7 +10,11 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 Get a set of documents.
 
-Using `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+Using `offset` and `limit`, you can browse through all your documents.
+
+<Capsule intent="warning">
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+</Capsule>
 
 ### Path parameters
 
@@ -87,7 +91,11 @@ We recommend using POST `/indexes/{index_uid}/documents/fetch` as this endpoint 
 
 Get a set of documents.
 
-Using the query parameters `offset` and `limit`, you can browse through all your documents. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+Using the query parameters `offset` and `limit`, you can browse through all your documents.
+
+<Capsule intent="warning">
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+</Capsule>
 
 ### Path parameters
 
@@ -398,7 +406,11 @@ Delete a selection of documents based on a filter.
 
 ### Body
 
-A filter expression written as a string or array of array of strings for the documents to be deleted. `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settings#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+A filter expression written as a string or array of array of strings for the documents to be deleted.
+
+<Capsule intent="warning">
+`filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
+</Capsule>
 
 ```
  "filter": "rating > 3.5"
