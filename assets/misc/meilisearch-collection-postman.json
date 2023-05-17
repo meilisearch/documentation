@@ -48,7 +48,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"filter\": \"genres = adventure\",\n    \"fields\": [\"title\"],\n    \"limit\": 2\n}"
+							"raw": "{\n    \"filter\": \"genre = adventure\",\n    \"fields\": [\"title\"],\n    \"limit\": 2\n}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents/fetch",
@@ -98,7 +98,7 @@
 								},
 								{
 									"key": "filter",
-									"value": "genres=\"adventure\"",
+									"value": "genre=\"adventure\"",
 									"disabled": true
 								}
 							]
@@ -223,10 +223,19 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\"genres = adventure\""
+							"raw": "\"genre = adventure\""
 						},
 						"url": {
-							"raw": ""
+							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"indexes",
+								"{{indexUID}}",
+								"documents",
+								"delete"
+							]
 						}
 					},
 					"response": []
