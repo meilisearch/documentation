@@ -211,6 +211,6 @@ This list is liable to change with every new version of Meilisearch. It's not be
 | `swap_operation_number`                            | Number of swap operations                                                                   | 2
 | `pagination.most_used_navigation`                  | Most used search results navigation                                                         | estimated
 | `per_document_id`                                  | `true` if the `DELETE /indexes/:indexUid/documents/:documentUid` endpoint was used, otherwise `false` | false
-| `per_filter`                                       | `true` if `POST /indexes/:indexUid/documents/fetch` or `GET /indexes/:indexUid/documents/` endpoint was used, otherwise `false` | false
+| `per_filter`                                       | `true` if `POST /indexes/:indexUid/documents/fetch`, `GET /indexes/:indexUid/documents/`, or `POST /indexes/:indexUid/documents/delete` endpoints were used, otherwise `false` | false
 | `clear_all`                                        | `true` if `DELETE /indexes/:indexUid/documents` endpoint was used, otherwise `false`        | false
 | `per_batch`                                        | `true` if the `POST /indexes/:indexUid/documents/delete-batch` endpoint was used, otherwise `false`   | false
