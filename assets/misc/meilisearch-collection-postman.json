@@ -223,7 +223,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\"genre = adventure\""
+							"raw": "{\"filter\": \"genre = adventure\"}"
 						},
 						"url": {
 							"raw": "{{url}}/indexes/{{indexUID}}/documents/delete",
