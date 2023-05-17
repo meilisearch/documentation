@@ -1065,7 +1065,7 @@ filtering_update_settings_1: |-
       "genres",
       "director"
     ]'
-fetch_documents_1: |-
+get_documents_post_1: |-
   curl \
     -X POST http://localhost:7700/indexes/books/documents/fetch \
     -H 'Content-Type: application/json' \
@@ -1081,5 +1081,3 @@ delete_documents_by_filter_1: |-
     --data-binary '{
       "filter": "genres = action AND genres = adventure"
     }'
-
-    
