@@ -10,7 +10,7 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 Get a set of documents.
 
-Using `offset` and `limit`, you can browse through all your documents.
+Use `offset` and `limit` to browse through documents.
 
 <Capsule intent="warning">
 `filter` will not work without first explicitly adding attributes to the [`filterableAttributes` list](/reference/api/settingss#update-filterable-attributes). [Learn more about filters in our dedicated guide.](/learn/advanced/filtering#filter-basics)
@@ -396,7 +396,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete"/>
 
-Delete a selection of documents based on a filter.
+Delete a set of documents based on a filter.
 
 ### Path parameters
 
@@ -446,7 +446,7 @@ We recommend using POST `/indexes/{index_uid}/documents/delete` as this endpoint
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
 
-Delete a selection of documents based on an array of document ids.
+Delete a set of documents based on an array of document ids.
 
 ### Path parameters
 
