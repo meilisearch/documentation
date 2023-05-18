@@ -60,7 +60,7 @@ delete_all_documents_1: |-
 delete_one_document_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/documents/25684'
-delete_documents_1: |-
+delete_documents_by_batch_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents/delete-batch' \
     -H 'Content-Type: application/json' \
