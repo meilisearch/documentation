@@ -81,6 +81,10 @@ Tasks always contain a field indicating the task's current `status`. This field 
 - **`failed`**: a failure occurred when processing the task. No changes were made to the database
 - **`canceled`**: the task was canceled
 
+`succeeded`, `failed`, and `canceled` tasks are finished tasks. Meilisearch keeps them in the task database, but has finished processing these tasks.
+
+`enqueued` and `processing` tasks are unfinished tasks. Meilisearch is either processing them, or will do so in the future.
+
 #### Global tasks
 
 Some task types are not associated with a particular index but apply to the entire instance. These tasks are called global tasks. Global tasks always display `null` for the `indexUid` field.
@@ -140,9 +144,9 @@ Tasks are not canceled when you terminate a Meilisearch instance. Meilisearch di
 
 ### Deleting tasks
 
-Completed tasks remain visible in [the task list](/reference/api/tasks#get-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks#delete-tasks).
+[Finished tasks](#task-status) remain visible in [the task list](/reference/api/tasks#get-tasks). To delete them manually, use the [delete tasks route](/reference/api/tasks#delete-tasks).
 
-Meilisearch stores up to 1M tasks in the task database. If enqueuing a new task would exceed this limit, Meilisearch automatically tries to delete the oldest 100K finished tasks. If there are no unfinished tasks in the database, Meilisearch does not delete anything and enqueues the new task as usual.
+Meilisearch stores up to 1M tasks in the task database. If enqueuing a new task would exceed this limit, Meilisearch automatically tries to delete the oldest 100K finished tasks. If there are no finished tasks in the database, Meilisearch does not delete anything and enqueues the new task as usual.
 
 #### Examples
 
