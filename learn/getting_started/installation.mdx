@@ -43,7 +43,7 @@ meilisearch
 </Tabs.Content>
 
 <Tabs.Content label="Docker">
-When using **Docker**, you can run [any available tag](https://hub.docker.com/r/getmeili/meilisearch/tags).<br />
+When using **Docker**, you can run [any tag available in our official Docker image](https://hub.docker.com/r/getmeili/meilisearch/tags).<br />
 
 These commands launch the **latest stable release** of Meilisearch.
 
@@ -84,9 +84,9 @@ meilisearch
 
 <Tabs.Content label="Source">
 
-Meilisearch is written in `Rust`. To compile it, [install the Rust toolchain](https://www.rust-lang.org/tools/install).<br />
+Meilisearch is written in Rust. To compile it, [install the Rust toolchain](https://www.rust-lang.org/tools/install).<br />
 
-If the Rust toolchain is already installed, clone the repository on your local system and change it to your working directory.
+Once the Rust toolchain is installed, clone the repository on your local system and change it to your working directory.
 
 ```bash
 git clone https://github.com/meilisearch/meilisearch
@@ -101,16 +101,16 @@ In the cloned repository, run the following command to access the most recent ve
 git checkout latest
 ```
 
-Finally, update the rust toolchain, compile the project, and execute the binary.
+Finally, update the Rust toolchain, compile the project, and execute the binary.
 
 ```bash
-# Update the rust toolchain to the latest version
+# Update the Rust toolchain to the latest version
 rustup update
 
 # Compile the project
 cargo build --release
 
-# Execute the server binary
+# Execute the binary
 ./target/release/meilisearch
 ```
 
@@ -135,6 +135,17 @@ If none of the other installation options work for you, you can always download 
 
 Go to the [latest Meilisearch release](https://github.com/meilisearch/meilisearch/releases/latest), scroll down to "Assets", and select the binary corresponding to your operating system.
 
+```bash
+# Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
+mv {meilisearch_os} meilisearch
+
+# Give the binary execute permission
+chmod +x meilisearch
+
+# Launch Meilisearch
+./meilisearch
+```
+
 </Tabs.Content>
 
 </Tabs.Container>
@@ -154,6 +165,109 @@ To deploy Meilisearch on a cloud service, follow one of our dedicated guides:
 - [Koyeb](/learn/cookbooks/koyeb)
 - [Qovery](/learn/cookbooks/qovery)
 - [Railway](/learn/cookbooks/railway)
+
+### Installing older versions of Meilisearch
+
+We discourage the use of older Meilisearch versions. Before installing an older version, please [contact support](https://discord.gg/meilisearch) to check if the latest version might work as well.
+
+<Tabs.Container labels={["cURL", "Docker", "Source", "Direct download"]}>
+
+<Tabs.Content label="cURL">
+
+Download the binary of a specific version under "Assets" on our [GitHub changelog](https://github.com/meilisearch/meilisearch/releases).
+
+```bash
+# Replace {meilisearch_version} and {meilisearch_os} with the specific version and OS you want to download
+# For example, if you want to download v1.0 on macOS,
+# replace {meilisearch_version} and {meilisearch_os} with v1.0 and meilisearch-macos-amd64 respectively
+curl -OL https://github.com/meilisearch/meilisearch/releases/download/{meilisearch_version}/{meilisearch_os}
+
+# Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
+mv {meilisearch_os} meilisearch
+
+# Give the binary execute permission
+chmod +x meilisearch
+
+# Launch Meilisearch
+./meilisearch
+```
+
+</Tabs.Content>
+
+<Tabs.Content label="Docker">
+
+When using **Docker**, you can run [any tag available in our official Docker image](https://hub.docker.com/r/getmeili/meilisearch/tags).<br />
+
+```bash
+# Fetch specific version of Meilisearch image from DockerHub. Replace vX.Y.Z with the version you want to use
+docker pull getmeili/meilisearch:vX.Y.Z
+
+# Launch Meilisearch in development mode with a master key
+docker run -it --rm \
+    -p 7700:7700 \
+    -e MEILI_ENV='development' \
+    -v $(pwd)/meili_data:/meili_data \
+    getmeili/meilisearch:vX.Y.Z
+# Use ${pwd} instead of $(pwd) in PowerShell
+```
+
+Learn more about [using Meilisearch with Docker in our dedicated guide](/learn/cookbooks/docker).
+
+</Tabs.Content>
+
+<Tabs.Content label="Source">
+
+Meilisearch is written in Rust. To compile it, [install the Rust toolchain](https://www.rust-lang.org/tools/install).<br />
+
+Once the Rust toolchain is installed, clone the repository on your local system and change it to your working directory.
+
+```bash
+git clone https://github.com/meilisearch/meilisearch
+cd meilisearch
+```
+
+Choose the release you want to use. You can find the full list [here](https://github.com/meilisearch/meilisearch/releases).<br />
+
+In the cloned repository, run the following command to access a specific version of Meilisearch:
+
+```bash
+# Replace vX.Y.Z with the specific version you want to use
+git checkout vX.Y.Z
+```
+
+Finally, update the Rust toolchain, compile the project, and execute the binary.
+
+```bash
+# Update the Rust toolchain to the latest version
+rustup update
+
+# Compile the project
+cargo build --release
+
+# Execute the binary
+./target/release/meilisearch
+```
+
+</Tabs.Content>
+
+<Tabs.Content label="Direct download">
+
+Download the binary of a specific version under "Assets" on our [GitHub changelog](https://github.com/meilisearch/meilisearch/releases).
+
+```bash
+# Rename binary to meilisearch. Replace {meilisearch_os} with the name of the downloaded binary
+mv {meilisearch_os} meilisearch
+
+# Give the binary execute permission
+chmod +x meilisearch
+
+# Launch Meilisearch
+./meilisearch
+```
+
+</Tabs.Content>
+
+</Tabs.Container>
 
 ## Supported operating systems
 
