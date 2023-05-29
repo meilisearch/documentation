@@ -9,11 +9,6 @@
 						"slug": "overview"
 					},
 					{
-						"source": "learn/what_is_meilisearch/features.mdx",
-						"label": "Features",
-						"slug": "features"
-					},
-					{
 						"source": "learn/what_is_meilisearch/philosophy.mdx",
 						"label": "Philosophy",
 						"slug": "philosophy"
