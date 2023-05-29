@@ -84,7 +84,7 @@ Sending an empty payload (`--data-binary '{}'`) will return all documents in the
 ## Get documents with GET
 
 <Capsule intent="danger">
-We recommend using POST `/indexes/{index_uid}/documents/fetch` as this endpoint will be deprecated in the near future.
+This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/fetch` instead.
 </Capsule>
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/documents"/>
@@ -131,32 +131,32 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 {
   "results":[
     {
-      "id":364,
-      "title":"Batman Returns",
-      "overview":"While Batman deals with a deformed man calling himself the Penguin, an employee of a corrupt businessman transforms into the Catwoman.",
-      "genres":[
+      "id": 364,
+      "title": "Batman Returns",
+      "overview": "While Batman deals with a deformed man calling himself the Penguin, an employee of a corrupt businessman transforms into the Catwoman.",
+      "genres": [
         "Action",
         "Fantasy"
       ],
-      "poster":"https://image.tmdb.org/t/p/w500/jKBjeXM7iBBV9UkUcOXx3m7FSHY.jpg",
-      "release_date":708912000
+      "poster": "https://image.tmdb.org/t/p/w500/jKBjeXM7iBBV9UkUcOXx3m7FSHY.jpg",
+      "release_date": 708912000
     },
     {
-      "id":13851,
-      "title":"Batman: Gotham Knight",
-      "overview":"A collection of key events mark Bruce Wayne's life as he journeys from beginner to Dark Knight.",
-      "genres":[
+      "id": 13851,
+      "title":" Batman: Gotham Knight",
+      "overview": "A collection of key events mark Bruce Wayne's life as he journeys from beginner to Dark Knight.",
+      "genres": [
         "Animation",
         "Action",
         "Adventure"
       ],
-      "poster":"https://image.tmdb.org/t/p/w500/f3xUrqo7yEiU0guk2Ua3Znqiw6S.jpg",
-      "release_date":1215475200
+      "poster": "https://image.tmdb.org/t/p/w500/f3xUrqo7yEiU0guk2Ua3Znqiw6S.jpg",
+      "release_date": 1215475200
     }
   ],
-  "offset":0,
-  "limit":2,
-  "total":5403
+  "offset": 0,
+  "limit": 2,
+  "total": 5403
 }
 ```
 
@@ -449,7 +449,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 ## Delete documents by batch
 
 <Capsule intent="danger">
-We recommend using POST `/indexes/{index_uid}/documents/delete` as this endpoint will be deprecated in the near future.
+This endpoint will be deprecated in the near future. Consider using POST `/indexes/{index_uid}/documents/delete` instead .
 </Capsule>
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete-batch"/>
