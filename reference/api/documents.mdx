@@ -202,10 +202,6 @@ Add an array of documents or replace them if they already exist. If the provided
 
 If you send an already existing document (same [document id](/learn/core_concepts/primary_key#document-id)) the **whole existing document** will be overwritten by the new document. Fields that are no longer present in the new document are removed. For a partial update of the document see the [add or update documents](/reference/api/documents#add-or-update-documents) endpoint.
 
-<Capsule intent="note">
-Meilisearch orders documents in the order they were inserted into the database.
-</Capsule>
-
 This endpoint accepts the following content types:
 
 - `application/json`
@@ -274,10 +270,6 @@ Add a list of documents or update them if they already exist. If the provided in
 If you send an already existing document (same [document id](/learn/core_concepts/primary_key#document-id)) the old document will be only partially updated according to the fields of the new document. Thus, any fields not present in the new document are kept and remain unchanged.
 
 To completely overwrite a document, check out the [add or replace documents route](/reference/api/documents#add-or-replace-documents).
-
-<Capsule intent="note">
-Meilisearch orders documents in the order they were inserted into the database.
-</Capsule>
 
 If you want to set the [**primary key** of your index](/learn/core_concepts/primary_key#setting-the-primary-key-on-document-addition) through this route, you may only do so **the first time you add documents** to the index. If you try to set the primary key after having added documents to the index, the task will return an error.
 
