@@ -30,7 +30,11 @@ Next, launch Meilisearch by running the following command in your terminal:
 ./meilisearch --master-key="aSampleMasterKey"
 ```
 
-You should see something a bit like this in response:
+<Capsule intent="note">
+Setting a master key is optional but strongly recommended in development environments. Master keys are mandatory in production environments.
+</Capsule>
+
+You should see something like this in response:
 
 ```
 888b     d888          d8b 888 d8b                                            888
@@ -48,7 +52,9 @@ Server listening on: "localhost:7700"
 
 You now have a Meilisearch instance running in your terminal window. Keep this window open for the rest of this tutorial.
 
+<Capsule intent="note">
 This command uses the `--master-key` configuration option to secure Meilisearch. This tutorial uses `aSampleMasterKey` as a master key, but you may change it to any alphanumeric string with 16 or more characters.
+</Capsule>
 
 To learn more about securing Meilisearch, refer to the [master and API keys guide](/learn/security/master_api_keys).
 
@@ -62,7 +68,7 @@ To follow along, first click this link to download the file: <ButtonLink as="a" 
 Meilisearch accepts data in JSON, NDJSON, and CSV formats.
 </Capsule>
 
-Run the following command, opening a new terminal window if you are following this tutorial using `cURL`:
+Open a new terminal window and run the following command:
 
 <CodeSamples id="getting_started_add_documents_md" />
 
@@ -77,9 +83,13 @@ Meilisearch stores data in the form of discrete records, called [documents](/lea
 
 Documents are grouped into collections, called [indexes](/learn/core_concepts/indexes).
 
+The previous command added documents from `movies.json` to a new index called `movies`. It also set `id` as the primary key.
+
+<Capsule intent="note">
 Every index must have a [primary key](/learn/core_concepts/primary_key#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-The previous command added documents from `movies.json` to a new index called `movies`. It also set `id` as the primary key. If the primary key is not set manually, Meilisearch [infers](/learn/core_concepts/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
+If the primary key is not set manually, Meilisearch [infers](/learn/core_concepts/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
+</Capsule>
 
 After adding documents, you should receive a response like this:
 
@@ -93,11 +103,13 @@ After adding documents, you should receive a response like this:
 }
 ```
 
-Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations). Rather than being processed instantly, **API requests are added to a queue and processed at a later time**.
-
 Use the returned `taskUid` to [check the status](/reference/api/tasks) of your documents:
 
 <CodeSamples id="getting_started_check_task_status" />
+
+<Capsule intent="note">
+Most database operations in Meilisearch are [asynchronous](/learn/advanced/asynchronous_operations). Rather than being processed instantly, **API requests are added to a queue and processed one at a time**.
+</Capsule>
 
 If the document addition is successful, the response should look like this:
 
@@ -127,6 +139,10 @@ If `status` is `enqueued` or `processing`, all you have to do is wait a short ti
 Now that you have Meilisearch set up, you can start searching!
 
 <CodeSamples id="getting_started_search_md" />
+
+<Capsule intent="note">
+This tutorial queries Meilisearch with the master key. In production environments, this is a security risk. Prefer using API keys to access Meilisearch's API in any public-facing application.
+</Capsule>
 
 In the above code sample, the parameter `q` represents the search query. This query instructs Meilisearch to search for `botman` in the documents you added in [the previous step](#add-documents):
 
