@@ -31,7 +31,7 @@ Next, launch Meilisearch by running the following command in your terminal:
 ```
 
 <Capsule intent="note">
-Setting a master key is optional but strongly recommended in development environments. Master keys are mandatory in production environments.
+This tutorial uses `aSampleMasterKey` as a master key, but you may change it to any alphanumeric string with 16 or more characters.
 </Capsule>
 
 You should see something like this in response:
@@ -53,7 +53,7 @@ Server listening on: "localhost:7700"
 You now have a Meilisearch instance running in your terminal window. Keep this window open for the rest of this tutorial.
 
 <Capsule intent="note">
-This command uses the `--master-key` configuration option to secure Meilisearch. This tutorial uses `aSampleMasterKey` as a master key, but you may change it to any alphanumeric string with 16 or more characters.
+The above command uses the `--master-key` configuration option to secure Meilisearch. Setting a master key is optional but strongly recommended in development environments. Master keys are mandatory in production environments.
 </Capsule>
 
 To learn more about securing Meilisearch, refer to the [master and API keys guide](/learn/security/master_api_keys).
