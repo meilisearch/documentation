@@ -375,6 +375,11 @@
 							"source": "learn/experimental/metrics.mdx",
 							"label": "Metrics",
 							"slug": "metrics"
+					},
+					{
+							"source": "learn/experimental/reduce-indexing-memory-usage.mdx",
+							"label": "Reduce indexing memory usage",
+							"slug": "reduce-indexing-memory-usage"
 					}
 			]
 	},
