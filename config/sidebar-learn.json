@@ -217,11 +217,6 @@
 							"slug": "geosearch"
 					},
 					{
-							"source": "learn/advanced/pagination.mdx",
-							"label": "Search result pagination",
-							"slug": "pagination"
-					},
-					{
 							"source": "learn/advanced/sorting.mdx",
 							"label": "Sorting",
 							"slug": "sorting"
@@ -295,6 +290,22 @@
 					}					
 			]
 	},
+  {
+			"title": "Building a front-end",
+			"slug": "front_end",
+			"routes": [
+					{
+							"source": "learn/front_end/front_end_integration.mdx",
+							"label": "Front-end integration",
+							"slug": "front_end_integration"
+					},
+					{
+							"source": "learn/front_end/pagination.mdx",
+							"label": "Search result pagination",
+							"slug": "pagination"
+					}
+      ]
+  },
 	{
 			"title": "Cookbooks",
 			"slug": "cookbooks",
