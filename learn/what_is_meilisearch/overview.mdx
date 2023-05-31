@@ -38,7 +38,9 @@ The returned results are **sorted according to a set of consecutive rules called
 
 You can also **configure the [search parameters](/reference/api/search)** to refine your search even further. We support [filters](/learn/advanced/filtering) and [faceting](/learn/advanced/faceted_search#faceted-search).
 
-For end-users, Meilisearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results. Meilisearch is designed for front-facing search, search for users of your site, app, or product. As a result, we are fully committed to the philosophy of [prefix search](https://en.wikipedia.org/wiki/Trie).
+Meilisearch should **not be your main data store**. It is a search engine, not a database. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/configuration/displayed_searchable_attributes#searchable-fields) to improve relevancy and response time.
+
+For end-users, Meilisearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results. Meilisearch is designed for front-facing search, search for users of your site, app, or product. As a result, we are fully committed to the philosophy of [prefix search](/learn/advanced/prefix).
 
 ## SDKs and integrations
 
