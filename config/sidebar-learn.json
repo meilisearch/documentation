@@ -29,11 +29,6 @@
 							"slug": "telemetry"
 					},
 					{
-							"source": "learn/what_is_meilisearch/search_preview.mdx",
-							"label": "Search preview",
-							"slug": "search_preview"
-					},
-					{
 							"source": "learn/what_is_meilisearch/language.mdx",
 							"label": "Language",
 							"slug": "language"
@@ -53,6 +48,11 @@
 							"source": "learn/getting_started/quick_start.mdx",
 							"label": "Quick start",
 							"slug": "quick_start"
+					},
+					{
+							"source": "learn/getting_started/search_preview.mdx",
+							"label": "Search preview",
+							"slug": "search_preview"
 					}
 			]
 	},
@@ -212,11 +212,6 @@
 							"slug": "geosearch"
 					},
 					{
-							"source": "learn/advanced/pagination.mdx",
-							"label": "Search result pagination",
-							"slug": "pagination"
-					},
-					{
 							"source": "learn/advanced/sorting.mdx",
 							"label": "Sorting",
 							"slug": "sorting"
@@ -290,6 +285,22 @@
 					}					
 			]
 	},
+  {
+			"title": "Building a front end",
+			"slug": "front_end",
+			"routes": [
+					{
+							"source": "learn/front_end/front_end_integration.mdx",
+							"label": "Front-end integration",
+							"slug": "front_end_integration"
+					},
+					{
+							"source": "learn/front_end/pagination.mdx",
+							"label": "Search result pagination",
+							"slug": "pagination"
+					}
+      ]
+  },
 	{
 			"title": "Cookbooks",
 			"slug": "cookbooks",
