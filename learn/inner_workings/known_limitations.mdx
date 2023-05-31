@@ -119,6 +119,12 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 **Explanation:** Meilisearch can accommodate indexes of any size as long the combined size of active databases is below the maximum virtual address space the OS devotes to a single process. On 64-bit Linux, this limit is approximately 80TiB.
 
+## Maximum task database size
+
+**Limitation:** Meilisearch supports a maximum task dabatase size of 10GiB.
+
+**Explanation:** Depending on your setup, 10GiB should correspond to 5M to 15M tasks. Once the task database contains over 1M entries (roughly 1GiB on average), Meilisearch tries to automatically delete finished tasks while continuing to enqueue new tasks as usual. This ensures the task database does not use an excessive amount of resources. If your database reaches the 10GiB limit, Meilisearch will log a warning indicating the engine is not working properly and refuse to enqueue new tasks.
+
 ## Maximum number of indexes in an instance
 
 **Limitation:** Meilisearch can accommodate an arbitrary number of indexes as long as their size does not exceed 2TiB. When dealing with larger indexes, Meilisearch can accommodate up to 20 indexes as long as their combined size does not exceed the OS's virtual address space limit.
