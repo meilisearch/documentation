@@ -65,6 +65,10 @@ Each search result object is composed of the following fields:
 
 <CodeSamples id="multi_search_1" />
 
+<Capsule intent="warning">
+If Meilisearch encounters an error when handling any of the queries in a multi-search request, it immediately stops processing the request and returns an error message. The returned message will only address the first error encountered.
+</Capsule>
+
 #### Response: `200 Ok`
 
 ```json

@@ -9,11 +9,6 @@
 						"slug": "overview"
 					},
 					{
-						"source": "learn/what_is_meilisearch/features.mdx",
-						"label": "Features",
-						"slug": "features"
-					},
-					{
 						"source": "learn/what_is_meilisearch/philosophy.mdx",
 						"label": "Philosophy",
 						"slug": "philosophy"
@@ -124,8 +119,8 @@
 			"slug": "configuration",
 			"routes": [
 					{
-							"source": "learn/index_settings/overview.mdx",
-							"label": "Overview",
+							"source": "learn/index_settings/all_index_settings.mdx",
+							"label": "All index settings",
 							"slug": "settings"
 					},
 					{
@@ -171,6 +166,11 @@
 			"slug": "update_and_migration",
 			"routes": [
 					{
+							"source": "learn/update_and_migration/updating.mdx",
+							"label": "Updating Meilisearch",
+							"slug": "updating"
+					},
+					{
 							"source": "learn/update_and_migration/algolia_migration.mdx",
 							"label": "Migrating from Algolia",
 							"slug": "algolia_migration"
@@ -179,11 +179,6 @@
 							"source": "learn/update_and_migration/previous_docs_version.mdx",
 							"label": "Accessing previous docs versions",
 							"slug": "previous_docs_version"
-					},
-					{
-							"source": "learn/update_and_migration/updating.mdx",
-							"label": "Updating Meilisearch",
-							"slug": "updating"
 					},
 					{
 							"source": "learn/update_and_migration/versioning.mdx",
@@ -254,6 +249,11 @@
 			"slug": "advanced",
 			"routes": [
 					{
+							"source": "learn/inner_workings/indexing.mdx",
+							"label": "Indexing and performance",
+							"slug": "indexing"
+					},
+					{
 							"source": "learn/inner_workings/concat.mdx",
 							"label": "Concatenate and split queries",
 							"slug": "concat"
@@ -262,11 +262,6 @@
 							"source": "learn/inner_workings/datatypes.mdx",
 							"label": "Data types",
 							"slug": "datatypes"
-					},
-					{
-							"source": "learn/inner_workings/indexing.mdx",
-							"label": "Indexing and performance",
-							"slug": "indexing"
 					},
 					{
 							"source": "learn/inner_workings/known_limitations.mdx",
@@ -393,11 +388,6 @@
 			"title": "Contributing",
 			"slug": "contributing",
 			"routes": [
-					{
-							"source": "learn/contributing/overview.mdx",
-							"label": "Overview",
-							"slug": "overview"
-					},
 					{
 								"source": "learn/contributing/contributing_docs.mdx",
 								"label": "Contributing to our documentation",
