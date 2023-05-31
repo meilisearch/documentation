@@ -72,11 +72,10 @@ Open a new terminal window and run the following command:
 
 <CodeSamples id="getting_started_add_documents_md" />
 
-Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents). Each document is composed of multiple fields, which are pairs of one attribute and one value:
+Meilisearch stores data in the form of discrete records, called [documents](/learn/core_concepts/documents). Each document is an object composed of multiple fields, which are pairs of one attribute and one value:
 
 ```json
 {
-  "id": 0,
   "attribute": "value"
 }
 ```
@@ -88,7 +87,7 @@ The previous command added documents from `movies.json` to a new index called `m
 <Capsule intent="note">
 Every index must have a [primary key](/learn/core_concepts/primary_key#primary-field), an attribute shared across all documents in that index. If you try adding documents to an index and even a single one is missing the primary key, none of the documents will be stored.
 
-If the primary key is not set manually, Meilisearch [infers](/learn/core_concepts/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
+If you do not explicitly set the primary key, Meilisearch [infers](/learn/core_concepts/primary_key#meilisearch-guesses-your-primary-key) it from your dataset.
 </Capsule>
 
 After adding documents, you should receive a response like this:
