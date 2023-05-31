@@ -6,10 +6,6 @@ The `/documents` route allows you to create, manage, and delete documents.
 
 ## Get documents with POST
 
-<Capsule intent="note">
-This endpoint is only available in v1.2 and above.
-</Capsule>
-
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/fetch"/>
 
 Get a set of documents.
@@ -108,10 +104,6 @@ Using the query parameters `offset` and `limit`, you can browse through all your
 | **`index_uid`** * | String | [`uid`](/learn/core_concepts/indexes#index-uid) of the requested index |
 
 ### Query parameters
-
-<Capsule intent="note">
-`filter` is only available in v1.2 and above.
-</Capsule>
 
 | Query Parameter | Default Value | Description                                                           |
 | :-------------- | :------------ | :-------------------------------------------------------------------- |
@@ -401,10 +393,6 @@ Delete one document based on its unique id.
 You can use this `taskUid` to get more details on [the status of the task](/reference/api/tasks#get-one-task).
 
 ## Delete documents by filter
-
-<Capsule intent="note">
-This endpoint is only available in v1.2 and above.
-</Capsule>
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/documents/delete"/>
 
