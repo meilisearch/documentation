@@ -11,7 +11,7 @@ Meilisearch exposes 2 routes to perform searches:
 
 You may find exhaustive descriptions of the parameters accepted by the two routes [at the end of this article](#search-parameters).
 
-## Search in an index with POST route
+## Search in an index with POST
 
 <RouteHighlighter method="POST" route="/indexes/{index_uid}/search"/>
 
@@ -88,7 +88,7 @@ If you require the total number of search results, use the `hitsPerPage` and `pa
 
 Neither `estimatedTotalHits` nor `totalHits` can exceed the limit configured in [the `maxTotalHits` index setting](/reference/api/settings#pagination).
 
-You can [read more about pagination in our dedicated guide](/learn/advanced/pagination).
+You can [read more about pagination in our dedicated guide](/learn/front_end/pagination).
 
 ### Example
 
@@ -123,7 +123,7 @@ You can [read more about pagination in our dedicated guide](/learn/advanced/pagi
 }
 ```
 
-## Search in an index with GET route
+## Search in an index with GET
 
 <RouteHighlighter method="GET" route="/indexes/{index_uid}/search"/>
 
@@ -133,7 +133,7 @@ Search for documents matching a specific query in the given index.
 This endpoint only accepts [string filter expressions](/learn/advanced/filtering#filter-expressions).
 </Capsule>
 
-This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post-route) route instead.
+This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post) route instead.
 
 <Capsule intent="note">
 By default, [this endpoint returns a maximum of 1000 results](/learn/advanced/known_limitations#maximum-number-of-results-per-search). If you want to scrape your database, use the [get documents endpoint](/reference/api/documents#get-documents-with-post) instead.
@@ -232,7 +232,7 @@ Query terms enclosed in double quotes are treated as [phrase searches](#query-q)
 Here follows an exhaustive description of each search parameter currently available when using the search endpoint. Unless otherwise noted, all parameters are valid for the `GET /indexes/{index_uid}/search`, `POST /indexes/{index_uid}/search`, and `/multi-search` routes.
 
 <Capsule intent="warning">
-If [using the `GET` route to perform a search](/reference/api/search#search-in-an-index-with-get-route), all parameters must be **URL-encoded**.
+If [using the `GET` route to perform a search](/reference/api/search#search-in-an-index-with-get), all parameters must be **URL-encoded**.
 
 This is not necessary when using the `POST` route or one of our [SDKs](/learn/what_is_meilisearch/sdks).
 </Capsule>
@@ -337,7 +337,7 @@ Sets the starting point in the search results, effectively skipping over a given
 
 Queries using `offset` and `limit` only return an estimate of the total number of search results.
 
-You can [paginate search results](/learn/advanced/pagination) by making queries combining both `offset` and `limit`.
+You can [paginate search results](/learn/front_end/pagination) by making queries combining both `offset` and `limit`.
 
 <Capsule intent="warning">
 Setting `offset` to a value greater than an [index's `maxTotalHits`](/reference/api/settings#update-pagination-settings) returns an empty array.
@@ -357,7 +357,7 @@ If you want to skip the **first** result in a query, set `offset` to `1`:
 
 Sets the maximum number of documents returned by a single query.
 
-You can [paginate search results](/learn/advanced/pagination) by making queries combining both `offset` and `limit`.
+You can [paginate search results](/learn/front_end/pagination) by making queries combining both `offset` and `limit`.
 
 <Capsule intent="warning">
 A search query cannot return more results than configured in [`maxTotalHits`](/reference/api/settings#pagination-object), even if the value of `limit` is greater than the value of `maxTotalHits`.
@@ -381,7 +381,7 @@ Queries containing `hitsPerPage` are exhaustive and do not return an `estimatedT
 
 If you set `hitsPerPage` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive value for `totalHits`. The response body will also include `totalPages`, but its value will be `0`.
 
-You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination).
+You can use `hitsPerPage` and `page` to [paginate search results](/learn/front_end/pagination).
 
 <Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.
@@ -409,7 +409,7 @@ Queries containing `page` are exhaustive and do not return an `estimatedTotalHit
 
 If you set `page` to `0`, Meilisearch processes your request, but does not return any documents. In this case, the response body will include the exhaustive values for `totalPages` and `totalHits`.
 
-You can use `hitsPerPage` and `page` to [paginate search results](/learn/advanced/pagination).
+You can use `hitsPerPage` and `page` to [paginate search results](/learn/front_end/pagination).
 
 <Capsule intent="note">
 `hitsPerPage` and `page` take precedence over `offset` and `limit`. If a query contains either `hitsPerPage` or `page`, any values passed to `offset` and `limit` are ignored.

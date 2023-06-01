@@ -9,11 +9,6 @@
 						"slug": "overview"
 					},
 					{
-						"source": "learn/what_is_meilisearch/features.mdx",
-						"label": "Features",
-						"slug": "features"
-					},
-					{
 						"source": "learn/what_is_meilisearch/philosophy.mdx",
 						"label": "Philosophy",
 						"slug": "philosophy"
@@ -32,11 +27,6 @@
 							"source": "learn/what_is_meilisearch/telemetry.mdx",
 							"label": "Telemetry",
 							"slug": "telemetry"
-					},
-					{
-							"source": "learn/what_is_meilisearch/search_preview.mdx",
-							"label": "Search preview",
-							"slug": "search_preview"
 					},
 					{
 							"source": "learn/what_is_meilisearch/language.mdx",
@@ -58,6 +48,11 @@
 							"source": "learn/getting_started/quick_start.mdx",
 							"label": "Quick start",
 							"slug": "quick_start"
+					},
+					{
+							"source": "learn/getting_started/search_preview.mdx",
+							"label": "Search preview",
+							"slug": "search_preview"
 					}
 			]
 	},
@@ -124,8 +119,8 @@
 			"slug": "configuration",
 			"routes": [
 					{
-							"source": "learn/index_settings/overview.mdx",
-							"label": "Overview",
+							"source": "learn/index_settings/all_index_settings.mdx",
+							"label": "All index settings",
 							"slug": "settings"
 					},
 					{
@@ -217,11 +212,6 @@
 							"slug": "geosearch"
 					},
 					{
-							"source": "learn/advanced/pagination.mdx",
-							"label": "Search result pagination",
-							"slug": "pagination"
-					},
-					{
 							"source": "learn/advanced/sorting.mdx",
 							"label": "Sorting",
 							"slug": "sorting"
@@ -295,6 +285,22 @@
 					}					
 			]
 	},
+  {
+			"title": "Building a front end",
+			"slug": "front_end",
+			"routes": [
+					{
+							"source": "learn/front_end/front_end_integration.mdx",
+							"label": "Front-end integration",
+							"slug": "front_end_integration"
+					},
+					{
+							"source": "learn/front_end/pagination.mdx",
+							"label": "Search result pagination",
+							"slug": "pagination"
+					}
+      ]
+  },
 	{
 			"title": "Cookbooks",
 			"slug": "cookbooks",
@@ -387,11 +393,6 @@
 			"title": "Contributing",
 			"slug": "contributing",
 			"routes": [
-					{
-							"source": "learn/contributing/overview.mdx",
-							"label": "Overview",
-							"slug": "overview"
-					},
 					{
 								"source": "learn/contributing/contributing_docs.mdx",
 								"label": "Contributing to our documentation",

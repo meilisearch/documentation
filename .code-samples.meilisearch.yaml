@@ -467,16 +467,19 @@ getting_started_add_documents_md: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents?primaryKey=id' \
     -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary @movies.json
   ```
 getting_started_check_task_status: |-
   curl \
     -X GET 'http://localhost:7700/tasks/0'
+    -H 'Authorization: Bearer aSampleMasterKey'
 getting_started_search_md: |-
   ```bash
   curl \
     -X POST 'http://localhost:7700/indexes/movies/search' \
     -H 'Content-Type: application/json' \
+    -H 'Authorization: Bearer aSampleMasterKey' \
     --data-binary '{ "q": "botman" }'
   ```
 getting_started_add_meteorites: |-
@@ -1033,29 +1036,6 @@ search_parameter_guide_facet_stats_1: |-
     --data-binary '{
       "q": "Batman",
       "facets": ["genres", "rating"]
-    }'
-faceted_search_2: |-
-  curl \
-    -X POST 'http://localhost:7700/multi-search' \
-    -H 'Content-Type: application/json' \
-    --data-binary '{
-      "queries": [
-        {
-          "indexUid": "books",
-          "facets": ["language", "genres", "author", "format"],
-          "filter": "(language = English AND language = French) OR genres = Fiction"
-        },
-        {
-          "indexUid": "books",
-          "facets": ["language"],
-          "filter": "genres = Fiction"
-        },
-        {
-          "indexUid": "books",
-          "facets": ["genres"],
-          "filter": "language = English OR language = French"
-        }
-      ]
     }'
 filtering_update_settings_1: |-
   curl \
