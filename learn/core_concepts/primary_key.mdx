@@ -147,7 +147,7 @@ The code below updates the primary key to `title`:
 
 Suppose you add documents to an index without previously setting its primary key. In this case, Meilisearch will automatically look for an attribute ending with the string `id` in a case-insensitive manner (for example, `uid`, `BookId`, `ID`) in your first document and set it as the index's primary key.
 
-If Meilisearch finds [multiple attributes ending with `id`](#index-primary-key-multiple-candidates-found) or [cannot find a suitable attribute](#index-primary-key-no-candidate-found), it will throw an error. In both cases, the document addition process will be interrupted and no documents will be added to your index.
+If Meilisearch finds [multiple attributes ending with `id`](#index_primary_key_multiple_candidates_found) or [cannot find a suitable attribute](#index_primary_key_no_candidate_found), it will throw an error. In both cases, the document addition process will be interrupted and no documents will be added to your index.
 
 ## Primary key errors
 
