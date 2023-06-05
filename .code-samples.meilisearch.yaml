@@ -1059,5 +1059,5 @@ delete_documents_by_filter_1: |-
     -X POST http://localhost:7700/indexes/movies/documents/delete \
     -H 'Content-Type: application/json' \
     --data-binary '{
-      "filter": "genres = action AND genres = adventure"
+      "filter": "genres = action OR genres = adventure"
     }'
