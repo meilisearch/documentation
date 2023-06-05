@@ -130,7 +130,7 @@ You can [read more about pagination in our dedicated guide](/learn/front_end/pag
 Search for documents matching a specific query in the given index.
 
 <Capsule intent="warning">
-This endpoint only accepts [string filter expressions](/learn/advanced/filtering#filter-expressions).
+This endpoint only accepts [string filter expressions](/learn/fine_tuning_results/filtering#filter-expressions).
 </Capsule>
 
 This endpoint should only be used when no API key is required. If an API key is required, use the [POST](/reference/api/search#search-in-an-index-with-post) route instead.
@@ -312,7 +312,7 @@ When `q` isn't specified, Meilisearch performs a **placeholder search**.  A plac
 If the index has no sort or custom ranking rules, the results are returned in the order of their internal database position.
 
 <Capsule intent="tip">
-Placeholder search is particularly useful when building a [faceted search interfaces](/learn/advanced/faceted_search), as it allows users to view the catalog and alter sorting rules without entering a query.
+Placeholder search is particularly useful when building a [faceted search interfaces](/learn/fine_tuning_results/faceted_search), as it allows users to view the catalog and alter sorting rules without entering a query.
 </Capsule>
 
 #### Phrase search
@@ -433,7 +433,7 @@ The following example returns the second page of search results:
 
 Uses filter expressions to refine search results. Attributes used as filter criteria must be added to the [`filterableAttributes` list](/reference/api/settings#filterable-attributes).
 
-For more information, [read our guide on how to use filters and build filter expressions](/learn/advanced/filtering).
+For more information, [read our guide on how to use filters and build filter expressions](/learn/fine_tuning_results/filtering).
 
 #### Example
 
@@ -551,7 +551,7 @@ The response shows the facet distribution for `genres` and `rating`. Since `rati
 }
 ```
 
-[Learn more about facet distribution in the faceted search guide.](/learn/advanced/faceted_search#configuring-and-using-facets)
+[Learn more about facet distribution in the faceted search guide.](/learn/fine_tuning_results/faceted_search#configuring-and-using-facets)
 
 ### Attributes to retrieve
 
@@ -869,7 +869,7 @@ Queries using `_geoPoint` will always include a `geoDistance` field containing t
 ]
 ```
 
-[You can read more about location-based sorting in our dedicated guide.](/learn/advanced/geosearch#sorting-results-with-geopoint)
+[You can read more about location-based sorting in our dedicated guide.](/learn/fine_tuning_results/geosearch#sorting-results-with-geopoint)
 
 ### Matching strategy
 
