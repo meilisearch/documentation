@@ -29,7 +29,7 @@ get_one_document_1: |-
     -X GET 'http://localhost:7700/indexes/movies/documents/25684?fields=id,title,poster,release_date'
 get_documents_1: |-
   curl \
-    -X GET 'http://localhost:7700/indexes/movies/documents?limit=2'
+    -X GET 'http://localhost:7700/indexes/movies/documents?limit=2&filter=genres=action'
 add_or_replace_documents_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents' \
@@ -60,7 +60,7 @@ delete_all_documents_1: |-
 delete_one_document_1: |-
   curl \
     -X DELETE 'http://localhost:7700/indexes/movies/documents/25684'
-delete_documents_1: |-
+delete_documents_by_batch_1: |-
   curl \
     -X POST 'http://localhost:7700/indexes/movies/documents/delete-batch' \
     -H 'Content-Type: application/json' \
@@ -1045,3 +1045,19 @@ filtering_update_settings_1: |-
       "genres",
       "director"
     ]'
+get_documents_post_1: |-
+  curl \
+    -X POST http://localhost:7700/indexes/books/documents/fetch \
+    -H 'Content-Type: application/json' \
+    --data-binary '{ 
+      "filter": "(rating > 3 AND (genres = Adventure OR genres = Fiction)) AND language = English",
+      "fields": ["title", "genres", "rating", "language"],
+      "limit": 3
+    }'
+delete_documents_by_filter_1: |-
+  curl \
+    -X POST http://localhost:7700/indexes/movies/documents/delete \
+    -H 'Content-Type: application/json' \
+    --data-binary '{
+      "filter": "genres = action OR genres = adventure"
+    }'
