@@ -472,7 +472,7 @@ getting_started_add_documents_md: |-
   ```
 getting_started_check_task_status: |-
   curl \
-    -X GET 'http://localhost:7700/tasks/0'
+    -X GET 'http://localhost:7700/tasks/0' \
     -H 'Authorization: Bearer aSampleMasterKey'
 getting_started_search_md: |-
   ```bash
