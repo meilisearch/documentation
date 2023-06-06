@@ -104,6 +104,22 @@
       ]
   },
   {
+        "title": "Tasks and asynchronous workflow",
+        "slug": "async",
+        "routes": [
+            {
+                "source": "learn/async/asynchronous_operations.mdx",
+                "label": "Asynchronous operations",
+                "slug": "asynchronous_operations"
+            },
+            {
+                "source": "learn/async/filtering_and_paginating_tasks.mdx",
+                "label": "Filtering and paginating tasks",
+                "slug": "filtering_and_paginating_tasks"
+            }
+    ]
+  }, 
+  {
       "title": "Configuration",
       "slug": "configuration",
       "routes": [
@@ -191,11 +207,6 @@
 			"title": "Advanced topics",
 			"slug": "advanced",
 			"routes": [
-					{
-							"source": "learn/advanced/asynchronous_operations.mdx",
-							"label": "Tasks and asynchronous operations",
-							"slug": "asynchronous_operations"
-					},
 					{
 							"source": "learn/advanced/filtering.mdx",
 							"label": "Filtering",
