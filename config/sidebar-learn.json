@@ -113,9 +113,9 @@
                 "slug": "asynchronous_operations"
             },
             {
-                "source": "learn/async/filtering_and_paginating_tasks.mdx",
-                "label": "Filtering and paginating tasks",
-                "slug": "filtering_and_paginating_tasks"
+                "source": "learn/async/managing_tasks.mdx",
+                "label": "Managing the task database",
+                "slug": "managing_tasks"
             }
     ]
   }, 

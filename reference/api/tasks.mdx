@@ -208,7 +208,7 @@ List all tasks globally, regardless of index. The `task` objects are contained i
 
 Tasks are always returned in descending order of `uid`. This means that by default, **the most recently created `task` objects appear first**.
 
-Task results are [paginated](/learn/async/filtering_and_paginating_tasks#paginating-tasks) and can be [filtered](/learn/async/filtering_and_paginating_tasks#filtering-tasks).
+Task results are [paginated](/learn/async/managing_tasks#paginating-tasks) and can be [filtered](/learn/async/managing_tasks#filtering-tasks).
 
 ### Query parameters
 
@@ -216,17 +216,17 @@ Task results are [paginated](/learn/async/filtering_and_paginating_tasks#paginat
 | :--------------------- | :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`limit`**            | `20`                           | Number of tasks to return                                                                                                                                          |
 | **`from`**             | `uid` of the last created task | `uid` of the first task returned                                                                                                                                   |
-| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filtering-tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                           |
-| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filtering-tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                    |
-| **`types`**            | `*` (all types)                | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filtering-tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                         |
-| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filtering-tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
-| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)         |
-| **`beforeEnqueuedAt`** | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filter-by-date) by their `enqueuedAt` field                                                                 |
-| **`beforeStartedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filter-by-date) by their `startedAt` field                                                                  |
-| **`beforeFinishedAt`** | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filter-by-date) by their `finishedAt` field                                                                 |
-| **`afterEnqueuedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filter-by-date) by their `enqueuedAt` field                                                                 |
-| **`afterStartedAt`**   | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filter-by-date) by their `startedAt` field                                                                  |
-| **`afterFinishedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/async/filtering_and_paginating_tasks#filter-by-date) by their `finishedAt` field                                                                 |
+| **`uids`**             | `*` (all uids)                 | [Filter tasks](/learn/async/managing_tasks#filtering-tasks) by their `uid`. Separate multiple task `uids` with a comma (`,`)                           |
+| **`statuses`**         | `*` (all statuses)             | [Filter tasks](/learn/async/managing_tasks#filtering-tasks) by their `status`. Separate multiple task `statuses` with a comma (`,`)                    |
+| **`types`**            | `*` (all types)                | [Filter tasks](/learn/async/managing_tasks#filtering-tasks) by their `type`. Separate multiple task `types` with a comma (`,`)                         |
+| **`indexUids`**        | `*` (all indexes)              | [Filter tasks](/learn/async/managing_tasks#filtering-tasks) by their `indexUid`. Separate multiple task `indexUids` with a comma (`,`). Case-sensitive |
+| **`canceledBy`**       | N/A                            | [Filter tasks](/learn/async/managing_tasks#filter-by-canceledby) by their `canceledBy` field. Separate multiple task `uids` with a comma (`,`)         |
+| **`beforeEnqueuedAt`** | `*` (all tasks)                | [Filter tasks](/learn/async/managing_tasks#filter-by-date) by their `enqueuedAt` field                                                                 |
+| **`beforeStartedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/async/managing_tasks#filter-by-date) by their `startedAt` field                                                                  |
+| **`beforeFinishedAt`** | `*` (all tasks)                | [Filter tasks](/learn/async/managing_tasks#filter-by-date) by their `finishedAt` field                                                                 |
+| **`afterEnqueuedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/async/managing_tasks#filter-by-date) by their `enqueuedAt` field                                                                 |
+| **`afterStartedAt`**   | `*` (all tasks)                | [Filter tasks](/learn/async/managing_tasks#filter-by-date) by their `startedAt` field                                                                  |
+| **`afterFinishedAt`**  | `*` (all tasks)                | [Filter tasks](/learn/async/managing_tasks#filter-by-date) by their `finishedAt` field                                                                 |
 
 ### Response
 
@@ -367,7 +367,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, or date(`beforeXAt` or `afterX
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
 </Capsule>
 
-[To learn more about filtering tasks, refer to our dedicated guide.](/learn/async/filtering_and_paginating_tasks#filtering-tasks)
+[To learn more about filtering tasks, refer to our dedicated guide.](/learn/async/managing_tasks#filtering-tasks)
 
 ### Example
 
@@ -431,7 +431,7 @@ A valid `uids`, `statuses`, `types`, `indexUids`, `canceledBy`, or date(`beforeX
 Date filters are equivalent to `<` or `>` operations. At this time, there is no way to perform a `≤` or `≥` operations with a date filter.
 </Capsule>
 
-[To learn more about filtering tasks, refer to our dedicated guide.](/learn/async/filtering_and_paginating_tasks#filtering-tasks)
+[To learn more about filtering tasks, refer to our dedicated guide.](/learn/async/managing_tasks#filtering-tasks)
 
 ### Example
 
