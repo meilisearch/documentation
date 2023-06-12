@@ -32,15 +32,13 @@ _Meilisearch helps the Rust community find crates on [crates.meilisearch.com](ht
 
 ## Philosophy
 
-We always aim for a simple and intuitive experience for both developers and end-users. Ease of use was our primary goal starting out, and continues to drive the development of Meilisearch today. Meilisearch requires very little configuration to get up and running. It works out-of-the-box with default settings that meet the needs of most projects. However, searching is still highly customizable.
+Our goal is to provide a simple and intuitive experience for both developers and end-users. Ease of use was the primary focus of Meilisearch from its first release, and it continues to drive its development today.
 
-The returned results are **sorted according to a set of consecutive rules called [ranking rules](/learn/core_concepts/relevancy#ranking-rules)**. Our default ranking rules work for most use cases as we developed them by working directly with our users. You can delete existing rules, add new ones, or even change the order in which they are executed.
-
-You can also **configure the [search parameters](/reference/api/search)** to refine your search even further. We support [filters](/learn/advanced/filtering) and [faceting](/learn/advanced/faceted_search#faceted-search).
+Meilisearch's ease-of-use goes hand-in-hand with ultra relevant search results. Meilisearch **sorts results according to a set of [ranking rules](/learn/core_concepts/relevancy#ranking-rules)**. Our default ranking rules work for most use cases as we developed them by working directly with our users. You can also **configure the [search parameters](/reference/api/search)** to refine your search even further.
 
 Meilisearch should **not be your main data store**. It is a search engine, not a database. Meilisearch should contain only the data you want your users to search through. If you must add data that is irrelevant to search, be sure to [make those fields non-searchable](/learn/configuration/displayed_searchable_attributes#searchable-fields) to improve relevancy and response time.
 
-For end-users, Meilisearch aims to provide an intuitive search-as-you-type experience, with a response time under 50 milliseconds. This helps users spend less time tinkering with search queries, and more time looking at results. Meilisearch is designed for front-facing search, search for users of your site, app, or product. As a result, we are fully committed to the philosophy of [prefix search](/learn/advanced/prefix).
+Meilisearch provides an intuitive search-as-you-type experience with response times under 50 milliseconds, no matter whether you are developing a site or an app. This helps end-users find what they are looking for quickly and efficiently. To make that happen, we are fully committed to the philosophy of [prefix search](/learn/advanced/prefix).
 
 ## SDKs and integrations
 
