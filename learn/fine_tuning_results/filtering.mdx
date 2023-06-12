@@ -367,7 +367,7 @@ If you only want recent `Planet of the Apes` movies that weren't directed by `Ti
 
 `NOT director = "Tim Burton"` will include both documents that do not contain `"Tim Burton"` in its `director` field and documents without a `director` field. To return only documents that have a `director` field, expand the filter expression with the `EXISTS` operator:
 
-```SQL
+```
 release_date > 1577884550 AND (NOT director = "Tim Burton" AND director EXISTS)
 ```
 
