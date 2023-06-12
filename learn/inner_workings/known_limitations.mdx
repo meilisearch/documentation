@@ -105,7 +105,7 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 
 **Limitation:** By default, Meilisearch returns up to 1000 documents per search.
 
-**Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/search) and has no effect on the [get documents endpoint](/reference/api/documents#get-documents).
+**Explanation:** Meilisearch limits the maximum amount of returned search results to protect your database from malicious scraping. You may change this by using the `maxTotalHits` property of the [pagination index settings](/reference/api/settings#pagination-object). `maxTotalHits` only applies to the [search route](/reference/api/search) and has no effect on the [get documents with POST](/reference/api/documents#get-documents-with-post) and [get documents with GET](/reference/api/documents#get-documents-with-get) endpoints.
 
 ## Large datasets and internal errors
 
@@ -118,6 +118,12 @@ user = 1 OR user = 2 […] OR user = 1500 OR user = 1501 […] OR user = 2000 OR
 **Limitation:** Meilisearch supports a maximum index size of around 80TiB on Linux environments. For performance reasons, Meilisearch recommends keeping indexes under 2TiB.
 
 **Explanation:** Meilisearch can accommodate indexes of any size as long the combined size of active databases is below the maximum virtual address space the OS devotes to a single process. On 64-bit Linux, this limit is approximately 80TiB.
+
+## Maximum task database size
+
+**Limitation:** Meilisearch supports a maximum task dabatase size of 10GiB.
+
+**Explanation:** Depending on your setup, 10GiB should correspond to 5M to 15M tasks. Once the task database contains over 1M entries (roughly 1GiB on average), Meilisearch tries to automatically delete finished tasks while continuing to enqueue new tasks as usual. This ensures the task database does not use an excessive amount of resources. If your database reaches the 10GiB limit, Meilisearch will log a warning indicating the engine is not working properly and refuse to enqueue new tasks.
 
 ## Maximum number of indexes in an instance
 

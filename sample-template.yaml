@@ -13,7 +13,7 @@ add_or_replace_documents_1: |-
 add_or_update_documents_1: |-
 delete_all_documents_1: |-
 delete_one_document_1: |-
-delete_documents_1: |-
+delete_documents_by_batch_1: |-
 search_post_1: |-
 get_all_tasks_1: |-
 get_task_1: |-
@@ -161,4 +161,5 @@ multi_search_1: |
 faceted_search_update_settings_1: |-
 search_parameter_guide_facet_stats_1: |-
 faceted_search_1: |-
-faceted_search_2: |-
+get_documents_post_1: |-
+delete_documents_by_filter_1: |-

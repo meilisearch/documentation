@@ -152,6 +152,10 @@ If the provided index does not exist, it will be created.
 
 <CodeSamples id="update_settings_1" />
 
+<Capsule intent="warning">
+If Meilisearch encounters an error when updating any of the settings in a request, it immediately stops processing the request and returns an error message. In this case, the database settings remain unchanged. The returned error message will only address the first error encountered.
+</Capsule>
+
 ##### Response: `202 Accepted`
 
 ```json
@@ -198,7 +202,7 @@ You can use this `taskUid` to get more details on [the status of the task](/refe
 
 ## Displayed attributes
 
-The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints. It has no impact on the [GET documents endpoint](/reference/api/documents#get-documents).
+The attributes added to the `displayedAttributes` list appear in search results. `displayedAttributes` only affects the search endpoints. It has no impact on the [get documents with POST](/reference/api/documents#get-documents-with-post) and [get documents with GET](/reference/api/documents#get-documents-with-get) endpoints.
 
 By default, the `displayedAttributes` array is equal to all fields in your dataset. This behavior is represented by the value `["*"]`.
 
@@ -643,7 +647,7 @@ To protect your database from malicious scraping, Meilisearch has a default limi
 
 For example, if you set `maxTotalHits` to 100, you will not be able to access search results beyond 100 no matter the value configured for `offset`.
 
-[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/learn/advanced/pagination)
+[To learn more about paginating search results with Meilisearch, refer to our dedicated guide.](/learn/front_end/pagination)
 
 ### Pagination object
 

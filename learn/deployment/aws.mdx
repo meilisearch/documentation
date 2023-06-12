@@ -6,7 +6,7 @@ sidebarDepth: 3
 
 Using our **Meilisearch [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html)**, Meilisearch can be deployed on AWS in just a few minutes.
 
-The following guide will walk you through every step to deploy Meilisearch in an AWS EC2 instance. If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
+The following guide will walk you through every step to deploy Meilisearch in an AWS EC2 instance. If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/cloud-providers/).
 
 ## Part 1: Deploy an out-of-the-box Meilisearch instance
 
@@ -100,7 +100,7 @@ Your instance may take a minute or two to get up and running (see the "Instance 
 
 ![AWS dashboard showing an active instance](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/aws/09.launch.png)
 
-Once the "Instance state" is "Running", use your web browser to navigate to the "Public IPv4 address" or the "Public IPv4 DNS" displayed in your AWS instances dashboard. You should see the Meilisearch [search preview](/learn/what_is_meilisearch/search_preview).
+Once the "Instance state" is "Running", use your web browser to navigate to the "Public IPv4 address" or the "Public IPv4 DNS" displayed in your AWS instances dashboard. You should see the Meilisearch [search preview](/learn/getting_started/search_preview).
 
 ![Meilisearch search preview allowing users to search an example dataset](https://raw.githubusercontent.com/meilisearch/documentation/main/assets/images/aws/10.enjoy.png)
 
@@ -144,7 +144,7 @@ To start the configuration process, connect via SSH to your new Meilisearch inst
 
 ### 2.1. Secure your key pair
 
-Open a terminal window and navigate to wherever you saved your [key pair](#_8-set-and-download-key-pair). It should be a `.pem` file.
+Open a terminal window and navigate to wherever you saved your [key pair](#8-set-and-download-key-pair). It should be a `.pem` file.
 
 Run the following command to secure your key pair.
 
@@ -207,4 +207,4 @@ The server should answer with a `200 OK` status code as shown in the example bel
 ...
 ```
 
-You're all set to use Meilisearch in production with AWS! If you have any issues with our AWS image, please create an issue in [this repository](https://github.com/meilisearch/meilisearch-aws).
+You're all set to use Meilisearch in production with AWS! If you have any issues with our AWS image, please create an issue in [this repository]( https://github.com/meilisearch/cloud-providers/).

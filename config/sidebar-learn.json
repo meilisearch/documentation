@@ -9,11 +9,6 @@
 						"slug": "overview"
 					},
 					{
-						"source": "learn/what_is_meilisearch/features.mdx",
-						"label": "Features",
-						"slug": "features"
-					},
-					{
 							"source": "learn/what_is_meilisearch/sdks.mdx",
 							"label": "Official SDKs/libraries",
 							"slug": "sdks"
@@ -27,11 +22,6 @@
 							"source": "learn/what_is_meilisearch/telemetry.mdx",
 							"label": "Telemetry",
 							"slug": "telemetry"
-					},
-					{
-							"source": "learn/what_is_meilisearch/search_preview.mdx",
-							"label": "Search preview",
-							"slug": "search_preview"
 					},
 					{
 							"source": "learn/what_is_meilisearch/language.mdx",
@@ -53,6 +43,11 @@
 							"source": "learn/getting_started/quick_start.mdx",
 							"label": "Quick start",
 							"slug": "quick_start"
+					},
+					{
+							"source": "learn/getting_started/search_preview.mdx",
+							"label": "Search preview",
+							"slug": "search_preview"
 					}
 			]
 	},
@@ -119,8 +114,8 @@
 			"slug": "configuration",
 			"routes": [
 					{
-							"source": "learn/index_settings/overview.mdx",
-							"label": "Overview",
+							"source": "learn/index_settings/all_index_settings.mdx",
+							"label": "All index settings",
 							"slug": "settings"
 					},
 					{
@@ -166,6 +161,11 @@
 			"slug": "update_and_migration",
 			"routes": [
 					{
+							"source": "learn/update_and_migration/updating.mdx",
+							"label": "Updating Meilisearch",
+							"slug": "updating"
+					},
+					{
 							"source": "learn/update_and_migration/algolia_migration.mdx",
 							"label": "Migrating from Algolia",
 							"slug": "algolia_migration"
@@ -174,11 +174,6 @@
 							"source": "learn/update_and_migration/previous_docs_version.mdx",
 							"label": "Accessing previous docs versions",
 							"slug": "previous_docs_version"
-					},
-					{
-							"source": "learn/update_and_migration/updating.mdx",
-							"label": "Updating Meilisearch",
-							"slug": "updating"
 					},
 					{
 							"source": "learn/update_and_migration/versioning.mdx",
@@ -210,11 +205,6 @@
 							"source": "learn/advanced/geosearch.mdx",
 							"label": "Geosearch",
 							"slug": "geosearch"
-					},
-					{
-							"source": "learn/advanced/pagination.mdx",
-							"label": "Search result pagination",
-							"slug": "pagination"
 					},
 					{
 							"source": "learn/advanced/sorting.mdx",
@@ -254,6 +244,11 @@
 			"slug": "advanced",
 			"routes": [
 					{
+							"source": "learn/inner_workings/indexing.mdx",
+							"label": "Indexing and performance",
+							"slug": "indexing"
+					},
+					{
 							"source": "learn/inner_workings/concat.mdx",
 							"label": "Concatenate and split queries",
 							"slug": "concat"
@@ -262,11 +257,6 @@
 							"source": "learn/inner_workings/datatypes.mdx",
 							"label": "Data types",
 							"slug": "datatypes"
-					},
-					{
-							"source": "learn/inner_workings/indexing.mdx",
-							"label": "Indexing and performance",
-							"slug": "indexing"
 					},
 					{
 							"source": "learn/inner_workings/known_limitations.mdx",
@@ -290,6 +280,22 @@
 					}					
 			]
 	},
+  {
+			"title": "Building a front end",
+			"slug": "front_end",
+			"routes": [
+					{
+							"source": "learn/front_end/front_end_integration.mdx",
+							"label": "Front-end integration",
+							"slug": "front_end_integration"
+					},
+					{
+							"source": "learn/front_end/pagination.mdx",
+							"label": "Search result pagination",
+							"slug": "pagination"
+					}
+      ]
+  },
 	{
 			"title": "Cookbooks",
 			"slug": "cookbooks",
@@ -370,6 +376,11 @@
 							"source": "learn/experimental/metrics.mdx",
 							"label": "Metrics",
 							"slug": "metrics"
+					},
+					{
+							"source": "learn/experimental/reduce-indexing-memory-usage.mdx",
+							"label": "Reduce indexing memory usage",
+							"slug": "reduce-indexing-memory-usage"
 					}
 			]
 	},
@@ -377,11 +388,6 @@
 			"title": "Contributing",
 			"slug": "contributing",
 			"routes": [
-					{
-							"source": "learn/contributing/overview.mdx",
-							"label": "Overview",
-							"slug": "overview"
-					},
 					{
 								"source": "learn/contributing/contributing_docs.mdx",
 								"label": "Contributing to our documentation",
