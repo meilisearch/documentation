@@ -147,30 +147,30 @@
 	},
 	{
 			"title": "Fine-tuning results",
-			"slug": "filtering_and_sorting",
+			"slug": "fine_tuning_results",
 			"routes": [
 					{
-							"source": "learn/filtering_and_sorting/faceted_search.mdx",
+							"source": "learn/fine_tuning_results/faceted_search.mdx",
 							"label": "Faceted search",
 							"slug": "faceted_search"
 					},
 					{
-							"source": "learn/filtering_and_sorting/filtering.mdx",
+							"source": "learn/fine_tuning_results/filtering.mdx",
 							"label": "Filtering",
 							"slug": "filtering"
 					},
 					{
-							"source": "learn/filtering_and_sorting/working_with_dates.mdx",
+							"source": "learn/fine_tuning_results/working_with_dates.mdx",
 							"label": "Filtering and sorting by date",
 							"slug": "working_with_dates"
 					},
 					{
-							"source": "learn/filtering_and_sorting/geosearch.mdx",
+							"source": "learn/fine_tuning_results/geosearch.mdx",
 							"label": "Geosearch",
 							"slug": "geosearch"
 					},			
 					{
-							"source": "learn/filtering_and_sorting/sorting.mdx",
+							"source": "learn/fine_tuning_results/sorting.mdx",
 							"label": "Sorting",
 							"slug": "sorting"
 					}
